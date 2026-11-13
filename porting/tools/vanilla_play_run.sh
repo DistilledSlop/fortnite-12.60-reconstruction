@@ -47,7 +47,7 @@ if [[ ${FN_RENDERER:-} == dxvk ]]; then
 fi
 export FN_ACTIONS="${FN_ACTIONS:-125:click,640,592 235:click,1144,473 300:shot 400:hold,w,6 410:shot 430:hold,d,6 440:shot 560:shot}"
 # Extra server URL options (e.g. '?RequiredPlayers=1') and switches (e.g. '-FortniteWarmupSeconds=20').
-server_url="/Game/Maps/FortniteEmptyDedicated${FN_SERVER_URL_OPTS:-}"
+server_url="${FN_SERVER_MAP:-/Game/Maps/FortniteEmptyDedicated}${FN_SERVER_URL_OPTS:-}"
 read -r -a server_extra <<< "${FN_SERVER_ARGS:-}"
 printf -v FN_SERVER_CMD 'exec %q %q -FortniteOriginalClient -nullrhi -nosound -unattended -port=7777 -log -LogCmds=%q '"${server_extra[*]/#/}"' > %q 2>&1' "$server" "$server_url" 'LogHandshake VeryVerbose, LogNet VeryVerbose, LogNetTraffic Verbose, PacketHandlerLog VeryVerbose' "$out/server.log"
 export FN_SERVER_CMD

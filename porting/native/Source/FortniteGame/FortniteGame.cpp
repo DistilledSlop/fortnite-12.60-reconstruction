@@ -273,6 +273,11 @@ private:
             {
                 AsyncLoadVar->Set(1, ECVF_SetByCode);
             }
+            // stand-in: gameplay-cue RPC parameters are not serialised like the original client expects (see FortAthenaHealth.cpp).
+            if (IConsoleVariable* DisableCuesVar = IConsoleManager::Get().FindConsoleVariable(TEXT("AbilitySystem.DisableGameplayCues")))
+            {
+                DisableCuesVar->Set(1, ECVF_SetByCode);
+            }
         }
         LogCVar(TEXT("net.MagicHeader"));
         LogCVar(TEXT("net.MaxChannelSize"));

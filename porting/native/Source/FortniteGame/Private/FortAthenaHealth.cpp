@@ -166,6 +166,10 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 		ASC->RegisterComponent();
 		UE_LOG(LogFortHealth, Display, TEXT("Health: Created and registered AbilitySystemComponent on %s"), *PlayerState->GetName());
 	}
+	// stand-in: the vanilla client reads gameplay-cue RPCs (NetMulticast_InvokeGameplayCue*) with Fortnite's own
+	// FGameplayEffectContext / FGameplayCueParameters serialisation; our stock-engine layout fails with "ReceivePropertiesForRPC -
+	// Mismatch read" and the client closes the connection (run 43). Suppress cue invocation on the server until that is ported.
+	ASC->bSuppressGameplayCues = true;
 
 	// 2. Initialize AbilityActorInfo: Owner is PlayerState, Avatar is Pawn.
 	ASC->InitAbilityActorInfo(PlayerState, Pawn);

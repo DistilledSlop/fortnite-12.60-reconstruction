@@ -37,6 +37,8 @@
 #include "Components/SkyAtmosphereComponent.h"
 #include "Dom/JsonObject.h"
 #include "Engine/World.h"
+#include "LandscapeProxy.h"
+#include "EngineUtils.h"
 #include "Engine/NetDriver.h"
 #include "UObject/CoreNet.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -545,6 +547,38 @@ void AFortGameModeAthena::PositionPawnOnTerrain(AController* Player)
 {
     if (!Player || !Player->GetPawn() || !GetWorld())
         return;
+    if (FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")) && GetWorld()->GetMapName().EndsWith(TEXT("Apollo_Terrain")))
+    {
+        // Real map: the pre-bus island is the Apollo_Terrain_LS_Lobby landscape level (no PlayerStart actors are
+        // loaded for it, FindPlayerStart reports none). Trace down onto that level's landscape collision and stand there.
+        FBox LobbyBounds(ForceInit);
+        for (TActorIterator<ALandscapeProxy> It(GetWorld()); It; ++It)
+        {
+            const FString LevelName = It->GetLevel() && It->GetLevel()->GetOutermost() ? It->GetLevel()->GetOutermost()->GetName() : FString();
+            if (LevelName.Contains(TEXT("Apollo_Terrain_LS_Lobby")))
+                LobbyBounds += It->GetComponentsBoundingBox(true);
+        }
+        if (LobbyBounds.IsValid)
+        {
+            const FVector Centre = LobbyBounds.GetCenter();
+            FHitResult LobbyHit;
+            FCollisionQueryParams Query(NAME_None, false);
+            if (GetWorld()->LineTraceSingleByChannel(LobbyHit, FVector(Centre.X, Centre.Y, LobbyBounds.Max.Z + 20000.0f),
+                    FVector(Centre.X, Centre.Y, LobbyBounds.Min.Z - 20000.0f), ECC_WorldStatic, Query))
+            {
+                const FVector Spawn = LobbyHit.ImpactPoint + FVector(0.0f, 0.0f, 200.0f);
+                Player->GetPawn()->SetActorLocation(Spawn, false, nullptr, ETeleportType::TeleportPhysics);
+                UE_LOG(LogTemp, Display, TEXT("Lobby island: pawn positioned at %s (landscape bounds %s)"), *Spawn.ToString(), *LobbyBounds.ToString());
+                return;
+            }
+            UE_LOG(LogTemp, Warning, TEXT("Lobby island: trace at %s hit nothing (bounds %s)"), *Centre.ToString(), *LobbyBounds.ToString());
+        }
+        else
+        {
+            UE_LOG(LogTemp, Warning, TEXT("Lobby island: no landscape proxy found in Apollo_Terrain_LS_Lobby"));
+        }
+        return;
+    }
     const FVector Start(16000.0f, -16000.0f, 10000.0f);
     const FVector End(16000.0f, -16000.0f, -10000.0f);
     FHitResult Hit;

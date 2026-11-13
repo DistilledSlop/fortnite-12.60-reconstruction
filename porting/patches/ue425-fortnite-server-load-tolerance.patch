@@ -1,0 +1,65 @@
+diff --git a/Engine/Source/Runtime/CoreUObject/Private/Serialization/AsyncLoading.cpp b/Engine/Source/Runtime/CoreUObject/Private/Serialization/AsyncLoading.cpp
+index dfad9b7b2..86c68bcc8 100644
+--- a/Engine/Source/Runtime/CoreUObject/Private/Serialization/AsyncLoading.cpp
++++ b/Engine/Source/Runtime/CoreUObject/Private/Serialization/AsyncLoading.cpp
+@@ -2746,6 +2746,14 @@ UObject* FAsyncPackage::EventDrivenIndexToObject(FPackageIndex Index, bool bChec
+ 		}
+ 		else
+ 		{
++			// Fortnite server: Blueprint exports whose native super function is not reconstructed are skipped
++			// (see the missing-super tolerance above) and stay RF_NeedLoad. Report and treat the dependency as null.
++			static const bool bTolerateNeedLoad = FParse::Param(FCommandLine::Get(), TEXT("FortniteTolerateNeedLoadDependencies"));
++			if (bTolerateNeedLoad)
++			{
++				UE_LOG(LogStreaming, Error, TEXT("Missing Dependency, request for %s but it still has RF_NeedLoad (tolerated, treating as null)."), *Linker->GetPathName(Index));
++				return nullptr;
++			}
+ 			UE_LOG(LogStreaming, Fatal, TEXT("Missing Dependency, request for %s but it was still has RF_NeedLoad."), *Linker->GetPathName(Index));
+ 		}
+ 	}
+@@ -3120,11 +3128,19 @@ void FAsyncPackage::EventDrivenSerializeExport(int32 LocalExportIndex)
+ 			if (!Export.SuperIndex.IsNull())
+ 			{
+ 				SuperStruct = CastEventDrivenIndexToObject<UStruct>(Export.SuperIndex, true, FPackageIndex::FromExport(LocalExportIndex));
+-				if (!SuperStruct)
++				static const bool bTolerateMissingSuperFunction = FParse::Param(FCommandLine::Get(), TEXT("FortniteTolerateNeedLoadDependencies"));
++				if (!SuperStruct && bTolerateMissingSuperFunction && Object->IsA(UFunction::StaticClass()))
++				{
++					// Fortnite server: a Blueprint function overrides a function the reconstructed native class does
++					// not declare. Keep the function (without a super) so its owning class can still be created.
++					UE_LOG(LogStreaming, Warning, TEXT("Super function %s of %s is not declared; loading the function without a super."), *Linker->ImpExp(Export.SuperIndex).ObjectName.ToString(), *Export.ObjectName.ToString());
++				}
++				else if (!SuperStruct)
+ 				{
+ 					// see FLinkerLoad::CreateExport, there may be some more we can do here
+-					UE_LOG(LogStreaming, Fatal, TEXT("Could not find SuperStruct %s to create %s"), *Linker->ImpExp(Export.SuperIndex).ObjectName.ToString(), *Export.ObjectName.ToString());
++					UE_LOG(LogStreaming, Error, TEXT("Could not find SuperStruct %s to create %s (skipping the export; the reconstructed native class does not declare it)"), *Linker->ImpExp(Export.SuperIndex).ObjectName.ToString(), *Export.ObjectName.ToString());
+ 					Export.bExportLoadFailed = true;
++					Object->ClearFlags(RF_NeedLoad);
+ 					return;
+ 				}
+ 			}
+diff --git a/Engine/Source/Runtime/Engine/Private/PackageMapClient.cpp b/Engine/Source/Runtime/Engine/Private/PackageMapClient.cpp
+index 8c6de912a..5fdc83d67 100644
+--- a/Engine/Source/Runtime/Engine/Private/PackageMapClient.cpp
++++ b/Engine/Source/Runtime/Engine/Private/PackageMapClient.cpp
+@@ -3426,8 +3426,18 @@ uint32 FNetGUIDCache::GetNetworkChecksum( UObject* Obj )
+ 
+ 	// If Obj is already a class, we can use that directly
+ 	UClass* Class = Cast< UClass >( Obj );
++	UClass* ChecksumClass = ( Class != NULL ) ? Class : Obj->GetClass();
+ 
+-	return ( Class != NULL ) ? GetClassNetworkChecksum( Class ) : GetClassNetworkChecksum( Obj->GetClass() );
++	// Fortnite original client: the shipping client's fork of engine classes (UBrushComponent, UStaticMeshComponent...)
++	// has a different layout checksum than stock 4.25, and the client breaks the connection on a mismatch. Send 0
++	// ("not checked") for classes that live in /Script/Engine; Fortnite's own classes keep their real checksum.
++	static const bool bFortniteSkipEngineClassChecksum = FParse::Param( FCommandLine::Get(), TEXT( "FortniteSkipEngineClassNetChecksum" ) );
++	if ( bFortniteSkipEngineClassChecksum && ChecksumClass && ChecksumClass->GetOutermost()->GetFName() == FName( TEXT( "/Script/Engine" ) ) )
++	{
++		return 0;
++	}
++
++	return GetClassNetworkChecksum( ChecksumClass );
+ }
+ 
+ void FNetGUIDCache::SetNetworkChecksumMode( const ENetworkChecksumMode NewMode )
