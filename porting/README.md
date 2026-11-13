@@ -272,6 +272,17 @@ were recorded without the legacy option. Their compatibility with it remains
 unverified. New Linux cooked replacement packages load.
 The repository stores only patches; the supplied UE source remains outside Git.
 
+`patches/ue425-fortnite-scene-component-replication.patch` restores the original
+`USceneComponent` visibility/attachment bitfield packing. The original places
+`bHiddenInGame` before `bShouldBeAttached`, so both attachment snap flags start in
+the following byte. Stock 4.25 packs the location snap flag beside `bVisible`,
+changing the offset/name order used by the class network checksum. Apply this
+patch in the UE checkout and rebuild all affected modules; it changes the
+component layout rather than disabling checksum validation. Use
+`-FortniteDumpClassChecksums -FortniteDumpChecksumClasses=FortPooledSkelMeshComponent`
+to record each ancestor's checksum and ordered property accumulators. This
+diagnostic does not establish complete replication compatibility.
+
 `python3 porting/probe_apollo_blueprints.py` temporarily stages each of the four
 original Apollo Blueprint dependencies from the full extraction, preserving and
 restoring the existing staged packages after each run. It passes the legacy

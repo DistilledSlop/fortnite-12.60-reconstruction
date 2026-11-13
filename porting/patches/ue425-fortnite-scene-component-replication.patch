@@ -1,0 +1,36 @@
+diff --git a/Engine/Source/Runtime/Engine/Classes/Components/SceneComponent.h b/Engine/Source/Runtime/Engine/Classes/Components/SceneComponent.h
+index f87902429..2bcb50a75 100644
+--- a/Engine/Source/Runtime/Engine/Classes/Components/SceneComponent.h
++++ b/Engine/Source/Runtime/Engine/Classes/Components/SceneComponent.h
+@@ -197,6 +197,13 @@ private:
+ 	UPROPERTY(EditAnywhere, BlueprintReadOnly, ReplicatedUsing=OnRep_Visibility,  Category = Rendering, meta=(AllowPrivateAccess="true"))
+ 	uint8 bVisible:1;
+ 
++public:
++	// Preserve the original client's bitfield packing: attachment snap flags start in the next byte.
++	/** Whether to hide the primitive in game, if the primitive is Visible. */
++	UPROPERTY(Interp, EditAnywhere, BlueprintReadOnly, Category=Rendering, meta=(SequencerTrackClass = "MovieSceneVisibilityTrack"))
++	uint8 bHiddenInGame:1;
++
++private:
+ 	/** Whether or not we should be attached. */
+ 	UPROPERTY(Transient, Replicated)
+ 	uint8 bShouldBeAttached : 1;
+@@ -215,10 +222,6 @@ private:
+ 	uint8 bShouldUpdatePhysicsVolume:1;
+ 
+ public:
+-	/** Whether to hide the primitive in game, if the primitive is Visible. */
+-	UPROPERTY(Interp, EditAnywhere, BlueprintReadOnly, Category=Rendering, meta=(SequencerTrackClass = "MovieSceneVisibilityTrack"))
+-	uint8 bHiddenInGame:1;
+-
+ 	/** If true, a change in the bounds of the component will call trigger a streaming data rebuild */
+ 	UPROPERTY()
+ 	uint8 bBoundsChangeTriggersStreamingDataRebuild:1;
+@@ -1896,4 +1899,4 @@ FORCEINLINE_DEBUGGABLE bool USceneComponent::UpdateOverlaps(const TOverlapArrayV
+ FORCEINLINE_DEBUGGABLE bool USceneComponent::GetShouldUpdatePhysicsVolume() const
+ {
+ 	return bShouldUpdatePhysicsVolume;
+-}
+\ No newline at end of file
++}

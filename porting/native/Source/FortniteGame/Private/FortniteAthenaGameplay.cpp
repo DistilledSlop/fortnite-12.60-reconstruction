@@ -154,9 +154,17 @@ static void DumpFortniteClassChecksums(UWorld* World)
         UE_LOG(LogTemp, Warning, TEXT("FortChecksumDump: no net driver or class net cache"));
         return;
     }
-    const TCHAR* Roots[] = { TEXT("FortPlayerControllerAthena"), TEXT("FortPlayerPawnAthena"), TEXT("FortGameStateAthena"), TEXT("FortPlayerStateAthena") };
-    for (const TCHAR* RootName : Roots)
+    FString RequestedRoots;
+    FParse::Value(FCommandLine::Get(), TEXT("FortniteDumpChecksumClasses="), RequestedRoots);
+    TArray<FString> Roots;
+    RequestedRoots.ParseIntoArray(Roots, TEXT(","));
+    if (Roots.Num() == 0)
     {
+        Roots = { TEXT("FortPlayerControllerAthena"), TEXT("FortPlayerPawnAthena"), TEXT("FortGameStateAthena"), TEXT("FortPlayerStateAthena") };
+    }
+    for (const FString& RootString : Roots)
+    {
+        const TCHAR* RootName = *RootString;
         UClass* Root = FindObject<UClass>(ANY_PACKAGE, RootName);
         if (!Root)
         {
@@ -173,6 +181,26 @@ static void DumpFortniteClassChecksums(UWorld* World)
                 if (It->PropertyFlags & CPF_Net) { ++OwnedReps; }
             }
             UE_LOG(LogTemp, Display, TEXT("FortChecksumDump: CLASS %s %s checksum=%u ownedReps=%d"), RootName, *C->GetPathName(), Sum, OwnedReps);
+            // Match CoreNet's actual owned-property sequence, including static-array skipping.
+            TArray<FProperty*> ChecksumProperties;
+            for (int32 Index = C->FirstOwnedClassRep; Index < C->ClassReps.Num(); ++Index)
+            {
+                FProperty* Property = C->ClassReps[Index].Property;
+                ChecksumProperties.Add(Property);
+                Index += Property->ArrayDim - 1;
+            }
+            Driver->NetCache->SortProperties(ChecksumProperties);
+            uint32 Accumulator = C->GetSuperClass()
+                ? Driver->NetCache->GetClassNetCache(C->GetSuperClass())->GetClassChecksum() : 0;
+            for (const FProperty* Property : ChecksumProperties)
+            {
+                const uint32 Before = Accumulator;
+                Accumulator = Driver->NetCache->GetPropertyChecksum(Property, Before, true);
+                UE_LOG(LogTemp, Display, TEXT("FortChecksumDump:   FOLD %s | %s | dim=%d | off=%d | before=%u | after=%u"),
+                    *Property->GetName(), *Property->GetCPPType(nullptr, 0), Property->ArrayDim,
+                    Property->GetOffset_ForInternal(), Before, Accumulator);
+            }
+            ensureMsgf(Accumulator == Sum, TEXT("Checksum diagnostic must reproduce the engine cache"));
             for (TFieldIterator<FProperty> It(C, EFieldIteratorFlags::ExcludeSuper); It; ++It)
             {
                 if (It->PropertyFlags & CPF_Net)
