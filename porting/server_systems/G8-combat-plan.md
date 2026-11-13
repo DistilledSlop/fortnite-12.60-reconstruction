@@ -397,3 +397,22 @@ WP: research-combat. Result: done (research plan; implementation pending).
 What I changed: this file only. What I observed: binary/data/source evidence cited above; no game runs.
 Gate impact: none; G8 unchanged.
 Follow-ups: C1–C8, especially stripped resource grant, authoritative grants, melee receiver/graph and death caller.
+
+## 9. Harvest award rule (re-creation; the client's award virtual `+0xb28` is the no-op `0x1406801c0`)
+
+Evidence class: **public behaviour + cooked data**, not recovered code (added 2026-11-13).
+
+- Observed in play (community guides, 2018–2020): each harvestable object yields a **fixed total** when broken
+  (examples: trees about 26 wood when broken in 3 hits with both weak spots hit; fences 17 wood); weak-spot hits do
+  **double damage**, so the object breaks faster and each swing yields more; critical pickaxe hits yield more.
+  Sources: <https://fortnite-archive.fandom.com/wiki/Harvesting_Tool_(Battle_Royale)>,
+  <https://mein-mmo.de/en/fortnite-hit-weak-points-while-mining-what-is-it,418221/>,
+  <https://thegamehaus.com/fortnite/fortnite-analysis-how-to-farm-efficiently/2019/01/07/>.
+- Cooked data supplies every input: the building's resource type (`ResourceType`), its total
+  (`BuildingResourceAmountOverride` curve row, evaluated through `AthenaResourceRates`), its max health, and the
+  weak-spot multiplier from the pickaxe's hit (D6 §3 lists the tables).
+- Rule to implement (stand-in, mark it so): `award = round(Total * DamageDealt / MaxHealth)` per hit, with the remainder
+  so that the sum over all hits equals `Total` when the building is destroyed; add to the inventory stack (respecting the
+  stack max) and call `ClientReportDamagedResourceBuilding(Building, ResourceType, award, bDestroyed, bJustHitWeakspot)`.
+- Validate against the public numbers above with the vanilla client: a full-health tree broken with weak-spot hits must
+  give its table total; the HUD wood counter must match the server inventory after each hit.
