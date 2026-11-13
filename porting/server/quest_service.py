@@ -33,6 +33,13 @@ from season12_weekly_quest_data import (WEEKLY_QUESTS, WEEKLY_BUNDLES, WEEKLY_SC
 from season12_brutus_faction_data import (QUESTS as BRUTUS_QUESTS, BUNDLES as BRUTUS_BUNDLES,
                                            GRANT_QUEST as BRUTUS_GRANT, TOKEN as BRUTUS_TOKEN,
                                            OBJECTIVE as BRUTUS_OBJECTIVE, SCHEDULE as BRUTUS_SCHEDULE)
+from season12_tntina_faction_data import (QUESTS as TNTINA_QUESTS, BUNDLES as TNTINA_BUNDLES,
+                                           GRANT_QUEST as TNTINA_GRANT, TOKEN as TNTINA_TOKEN,
+                                           OBJECTIVE as TNTINA_OBJECTIVE, SCHEDULE as TNTINA_SCHEDULE)
+from season12_remaining_faction_data import (QUESTS as REMAINING_FACTION_QUESTS,
+                                            BUNDLES as REMAINING_FACTION_BUNDLES,
+                                            FACTIONS as REMAINING_FACTIONS)
+from season12_faction_variant_data import FACTION_VARIANTS, AUTO_EQUIP_VARIANTS
 from daily_quest_service import DailyService
 
 from api_common import ApiError, Err
@@ -41,9 +48,18 @@ from profile_service import CommandContext, _invalid
 EVENTS = {'accolade_assault_specialist': 'quest_s12_styles1_q01_accolade_ar',
           'donut_w1_startquest': 'Quest_S12_Donut_W1_A',
           'dont_thank_bus_driver': 'Quest_S12_Donut_W1_B'}
-EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS, **WEEKLY_QUESTS, **LOCATION_QUESTS, **BRUTUS_QUESTS}
-EVENT_BUNDLES = {**DONUT_BUNDLES, **WEEKLY_BUNDLES, **LOCATION_BUNDLES, **BRUTUS_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
-VALID_EVENTS = (set(EVENTS) | {stat for quest in EVENT_QUESTS.values() for _, stat, _ in quest['objectives']}) - {'item_acquire_brutus_token'}
+FACTION_BUNDLES = {**BRUTUS_BUNDLES, **TNTINA_BUNDLES, **REMAINING_FACTION_BUNDLES}
+FACTION_GRANTS = {
+    BRUTUS_GRANT: (BRUTUS_TOKEN, BRUTUS_OBJECTIVE, BRUTUS_SCHEDULE, 18),
+    TNTINA_GRANT: (TNTINA_TOKEN, TNTINA_OBJECTIVE, TNTINA_SCHEDULE, 18),
+    **{f['grant_quest']: (f['token'], f['objective'], f['schedule'], f['threshold'])
+       for f in REMAINING_FACTIONS.values()},
+}
+EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS, **WEEKLY_QUESTS, **LOCATION_QUESTS, **BRUTUS_QUESTS, **TNTINA_QUESTS, **REMAINING_FACTION_QUESTS}
+EVENT_BUNDLES = {**DONUT_BUNDLES, **WEEKLY_BUNDLES, **LOCATION_BUNDLES, **FACTION_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
+ACQUISITION_EVENTS = {'item_acquire_brutus_token', 'item_acquire_tntina_token'} | {
+    f['acquisition_event'] for f in REMAINING_FACTIONS.values()}
+VALID_EVENTS = (set(EVENTS) | {stat for quest in EVENT_QUESTS.values() for _, stat, _ in quest['objectives']}) - ACQUISITION_EVENTS
 TOKENS = {'cosmeticvarianttoken:vtid_560_bananaagent_styleb': 'Stage2',
           'cosmeticvarianttoken:vtid_561_bananaagent_stylec': 'Stage3'}
 
@@ -115,7 +131,7 @@ class QuestService:
         for quest, grant_type, days, start_active in definition['quest_infos']:
             if grant_type == 'GrantWithBundle' or (grant_type == 'DaysFromEventStart' and
                     self._date_reached(definition['calendar_event_tag'], days)):
-                self._quest(tx, quest, bundle_id, start_active if name in BRUTUS_BUNDLES else True)
+                self._quest(tx, quest, bundle_id, start_active if name in FACTION_BUNDLES else True)
         if name in LOCATION_BUNDLES:
             # Repair a missing successor without replaying the claimed stage's
             # rewards. Restrict the scan to chains belonging to this bundle.
@@ -190,13 +206,106 @@ class QuestService:
                 self._reconcile_bundle(tx, name, bundle_id)
                 if name == 'QuestBundle_Styles_PaperDoll':
                     self._award_maya_bundle(tx, bundle_id)
+        # Purchase/XP reward handling can call login recursively before the
+        # current quest's token is awarded. Reconcile only on explicit login.
+        if include_daily:
+            self._reconcile_faction_entitlements(tx)
+
+    def _reconcile_faction_entitlements(self, tx):
+        # Weekly bundle completion rewards were awarded before faction grant
+        # quests existed. Reconstruct only from unambiguous retained claims;
+        # token balances alone do not prove when or how they were acquired.
+        items = list(tx.profile['items'].items())
+        by_template = {}
+        for item_id, item in items:
+            by_template.setdefault(item['templateId'].casefold(), []).append((item_id, item))
+        proven = {token.casefold(): 0 for token, _, _, _ in FACTION_GRANTS.values()}
+        weekly_quests = {name.casefold(): quest for name, quest in WEEKLY_QUESTS.items()}
+        for bundle_name, definition in WEEKLY_BUNDLES.items():
+            bundles = by_template.get(('ChallengeBundle:' + bundle_name).casefold(), [])
+            if len(bundles) != 1:
+                continue
+            bundle_id = bundles[0][0]
+            claimed = 0
+            for quest_name in {q.casefold() for q, _, _, _ in definition['quest_infos']}:
+                matches = by_template.get('quest:' + quest_name, [])
+                if len(matches) != 1:
+                    continue
+                attrs = matches[0][1].get('attributes', {})
+                if attrs.get('quest_state') != 'Claimed' or attrs.get('challenge_bundle_id') != bundle_id:
+                    continue
+                quest = weekly_quests[quest_name]
+                values = [attrs.get('completion_' + objective.lower())
+                          for objective, _, _ in quest['objectives']]
+                targets = [target for _, _, target in quest['objectives']]
+                if any(type(value) is not int or not 0 <= value <= target
+                       for value, target in zip(values, targets)):
+                    continue
+                if sum(value == target for value, target in zip(values, targets)) < quest.get('ObjectiveCompletionCount', len(targets)):
+                    continue
+                claimed += 1
+            for threshold, rewards in definition['completion_rewards'].items():
+                if threshold > claimed:
+                    continue
+                for kind, reward, quantity in rewards:
+                    if kind == 'Token' and reward.casefold() in proven:
+                        proven[reward.casefold()] += quantity
+
+        for grant, (token, objective, _, threshold) in FACTION_GRANTS.items():
+            grants = by_template.get(('Quest:' + grant).casefold(), [])
+            if len(grants) != 1:
+                continue
+            item_id, item = grants[0]
+            if item['attributes'].get('quest_state') != 'Active':
+                continue
+            key = 'completion_' + objective
+            old = item['attributes'].get(key)
+            if type(old) is not int or not 0 <= old <= threshold:
+                raise _invalid('Invalid faction grant progress.')
+            new = max(old, min(threshold, proven[token.casefold()]))
+            if new != old:
+                tx.set_item_attr(item_id, key, new)
+            if new == threshold:
+                self._award_completed(None, tx, item_id, item, grant)
 
     def consume_variants(self, tx):
         items = list(tx.profile['items'].items())
         character = next(((i, v) for i, v in items if v['templateId'].casefold() ==
                           'athenacharacter:cid_701_athena_commando_m_bananaagent'), None)
-        if not character:
-            return
+        if character:
+            self._consume_peely_variants(tx, items, character)
+
+        # Local policy: retain a token until its target is owned; apply to every
+        # matching owned item, then consume it atomically with the unlock. The
+        # original backend token-consumption timing is not recovered.
+        items = list(tx.profile['items'].items())
+        for token_id, token in items:
+            spec = FACTION_VARIANTS.get(token['templateId'].casefold())
+            if spec is None:
+                continue
+            target, channel, unlocked, default = spec
+            targets = [(i, v) for i, v in items if v['templateId'].casefold() == target.casefold()]
+            if not targets:
+                continue
+            for item_id, item in targets:
+                variants = copy.deepcopy(item['attributes'].get('variants', []))
+                if not isinstance(variants, list):
+                    raise _invalid('Invalid owned variant data.')
+                entry = next((v for v in variants if isinstance(v, dict) and v.get('channel') == channel), None)
+                if entry is None:
+                    entry = {'channel': channel, 'active': default, 'owned': [default]}
+                    variants.append(entry)
+                if not isinstance(entry.get('owned'), list) or not isinstance(entry.get('active'), str):
+                    raise _invalid('Invalid owned variant data.')
+                if unlocked not in entry['owned']:
+                    entry['owned'].append(unlocked)
+                if token['templateId'].casefold() in AUTO_EQUIP_VARIANTS:
+                    entry['active'] = unlocked
+                tx.set_item_attr(item_id, 'variants', variants)
+                tx.set_item_attr(item_id, 'item_seen', False)
+            tx.remove_item(token_id)
+
+    def _consume_peely_variants(self, tx, items, character):
         character_id, character_item = character
         variants = copy.deepcopy(character_item['attributes'].get('variants', []))
         for token_id, token in items:
@@ -315,11 +424,13 @@ class QuestService:
                 self._quest(tx, reward, bundle_id)
             elif kind == 'ChallengeBundle' and reward in EVENT_BUNDLES:
                 schedule_id = tx.item(bundle_id)['attributes'].get('challenge_bundle_schedule_id') if bundle_id in tx.profile['items'] else None
-                if name == BRUTUS_GRANT:
-                    schedule_id = next((i for i, v in tx.profile['items'].items() if v['templateId'].casefold() == ('ChallengeBundleSchedule:' + BRUTUS_SCHEDULE).casefold()), None)
+                if name in FACTION_GRANTS:
+                    schedule = FACTION_GRANTS[name][2]
+                    schedule_id = next((i for i, v in tx.profile['items'].items() if v['templateId'].casefold() == ('ChallengeBundleSchedule:' + schedule).casefold()), None)
                 self._bundle(tx, reward, schedule_id)
             else:
                 self._grant(tx, kind + ':' + reward, {'item_seen': False})
+        self.consume_variants(tx)
         if bundle_id in tx.profile['items'] and tx.item(bundle_id)['templateId'].casefold() == 'challengebundle:questbundle_styles_paperdoll':
             self._sync_bundle_progress(tx, 'QuestBundle_Styles_PaperDoll', bundle_id)
             self._award_maya_bundle(tx, bundle_id)
@@ -370,22 +481,24 @@ class QuestService:
             if quantity != 1:
                 tx.set_item_quantity(item_id, quantity)
 
-        if reward.casefold() == BRUTUS_TOKEN.casefold():
-            self._acquire_brutus_token(tx, quantity)
+        for grant, (token, objective, _, _) in FACTION_GRANTS.items():
+            if reward.casefold() == token.casefold():
+                self._acquire_faction_token(tx, quantity, grant, objective)
 
-    def _acquire_brutus_token(self, tx, quantity):
+    def _acquire_faction_token(self, tx, quantity, grant, objective):
+        threshold = FACTION_GRANTS[grant][3]
         for item_id, item in list(tx.profile['items'].items()):
-            if (item['templateId'].casefold() != ('Quest:' + BRUTUS_GRANT).casefold()
+            if (item['templateId'].casefold() != ('Quest:' + grant).casefold()
                     or item['attributes'].get('quest_state') != 'Active'):
                 continue
-            key = 'completion_' + BRUTUS_OBJECTIVE
+            key = 'completion_' + objective
             old = item['attributes'].get(key)
-            if type(old) is not int or not 0 <= old <= 18:
-                raise _invalid('Invalid Brutus grant progress.')
-            new = min(18, old + quantity)
+            if type(old) is not int or not 0 <= old <= threshold:
+                raise _invalid('Invalid faction grant progress.')
+            new = min(threshold, old + quantity)
             tx.set_item_attr(item_id, key, new)
-            if new == 18:
-                self._award_completed(None, tx, item_id, item, BRUTUS_GRANT)
+            if new == threshold:
+                self._award_completed(None, tx, item_id, item, grant)
 
     def progress(self, account_id, event, amount=1, *, event_id, match_id=None):
         """Trusted server-only event, with durable per-account replay protection.

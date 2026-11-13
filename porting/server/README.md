@@ -529,11 +529,18 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   through `ClientQuestLogin`, including for free accounts. The owned schedule grants week 1
   immediately, then weeks 2–10 at day offsets 10, 17, 24, 31, 38, 45, 52, 59 and 66; sharing the configured
   LobbySeason12 calendar anchor is a local policy. Free login now also grants the
-  cooked Brutus eligibility quest and AB schedule. Supported quest rewards count
-  Brutus token acquisitions atomically; at 18, the faction bundle grants both
-  branch quests inactive. Existing token balances alone do not count as new
-  acquisitions. Faction choice activation and
-  other seasonal mission families remain incomplete. Location Domination now adds
+  five cooked agent eligibility quests and the AB schedule. Supported weekly
+  rewards count each agent's token acquisitions atomically; at 18, its faction
+  bundle grants both branch quests inactive. Validated retained weekly claims
+  repair eligibility for older profiles without replaying XP or token rewards;
+  token balances alone do not establish eligibility. `ToggleQuestActiveState`
+  selects or switches one agent's earned branches and locks completed choices.
+  Completing a selected branch unlocks its cooked cosmetic variants. Skye's
+  tokens auto-equip the unlocked style; the other four agents keep the prior style.
+  Targets become unseen, and tokens for unowned targets wait for later login.
+  The combined backend baseline passed 336 tests. Original-client faction
+  selection/reward presentation and other seasonal mission families remain
+  unverified or incomplete. Location Domination now adds
   60 stages across 20 three-stage chains, cooked XP and feat/token rewards, and
   the mission schedule offsets 73 and 87. Missing successors of claimed stages
   are repaired on login without re-awarding rewards. Its counter policy is

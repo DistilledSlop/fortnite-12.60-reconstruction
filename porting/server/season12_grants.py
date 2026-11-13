@@ -16,6 +16,10 @@ SUPPORTED_GRANTS_TO_EVERYONE = (
     (MAYA_GRAPH, 1),
     ('ChallengeBundleSchedule:Season12_ABChallenges_Schedule', 1),
     ('Quest:quest_AB_skulldude_grant', 1),
+    ('Quest:quest_AB_tntina_grant', 1),
+    ('Quest:quest_AB_meowscles_grant', 1),
+    ('Quest:quest_AB_adventuregirl_grant', 1),
+    ('Quest:quest_AB_midas_grant', 1),
 )
 
 
@@ -29,9 +33,16 @@ def initial_grant_attributes(template):
     graph state and the separately granted Battle Pass purchase token.
     """
     attributes = {'item_seen': False}
-    if template.casefold() == 'quest:quest_ab_skulldude_grant':
+    faction_objectives = {
+        'quest:quest_ab_skulldude_grant': 'season12_cumulative_skulldude_token',
+        'quest:quest_ab_tntina_grant': 'season12_cumulative_tntina_token',
+        'quest:quest_ab_meowscles_grant': 'season12_cumulative_meowscles_token',
+        'quest:quest_ab_adventuregirl_grant': 'season12_cumulative_adventuregirl_token',
+        'quest:quest_ab_midas_grant': 'season12_cumulative_midas_token',
+    }
+    if template.casefold() in faction_objectives:
         attributes.update({'quest_state': 'Active', 'level': -1,
-                           'completion_season12_cumulative_skulldude_token': 0})
+                           'completion_' + faction_objectives[template.casefold()]: 0})
     if template.casefold() == MAYA_GRAPH.casefold():
         attributes.update({
             'player_random_seed': 0,

@@ -514,6 +514,13 @@ def _mark_new_quest_notification_sent(ctx):
         tx.set_item_attr(item_id, "sent_new_notification", True)
 
 
+@command("ToggleQuestActiveState", ("athena",), "observed",
+         "questIds: owned faction quest instance IDs; native callers toggle one/two branches. Local validation policy applies.")
+def _toggle_quest_active_state(ctx):
+    from faction_quest_service import toggle_faction_selection
+    toggle_faction_selection(ctx, ctx.list_field("questIds"))
+
+
 @command("MarkItemSeen", ("athena", "common_core"), "observed", "itemIds: list of item ids (inferred).")
 def _mark_item_seen(ctx):
     tx = ctx.tx(ctx.profile_id)

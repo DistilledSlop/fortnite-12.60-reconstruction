@@ -1,0 +1,45 @@
+"""Cooked faction VTIDs and target default variants, from 12.60 property reports.
+
+Each VTID specifies cosmetic_item, VariantChanelTag and VariantNameTag.
+Brutus/TNTina/Meowscles/Midas explicitly disable auto-equip; Skye inherits true. Target ItemVariants label the listed first tag DEFAULT.
+Hashes are (uasset, uexp); tags here are their MCP suffixes.
+"""
+# token suffix: (target template, channel, unlocked tag, target default, source hashes)
+_ROWS = {
+ 'VTID_507_HenchmanTough_StyleC': ('AthenaCharacter:CID_692_Athena_Commando_M_HenchmanTough', 'Progressive', 'Stage3', 'Stage1', '89fa23ea8457cb5fb79140d490bf061055e410297640cd167c3cebc64313bbc5', '525ad90c537dc34a2fc96f0d08c2b597a49ef273a4dfc5c4127745b83853d266'),
+ 'VTID_509_HenchmanTough_Backbling_StyleC': ('AthenaBackpack:BID_478_HenchmanTough', 'Progressive', 'Stage3', 'Stage1', 'c3676c4ad0010e3910a8abd33b1e1d9406f50041f939a34e05b6b2bf7591c391', '09b3f038aab9d7beafac0783914472251df34313f8aeab5f9ba172b90a370e03'),
+ 'VTID_547_HenchmanMaleGlider_StyleC': ('AthenaGlider:Glider_ID_197_HenchmanMale', 'Particle', 'Particle3', 'Particle1', '9013e83d0538da4db066eaa75ca7b1a002e67a7a4a22e6a1d91778a45395cdac', 'a41ee781f887c9dff9ebafe10a6f8731b44e37c55f60e8740e14e6298f1734a6'),
+ 'VTID_506_HenchmanTough_StyleB': ('AthenaCharacter:CID_692_Athena_Commando_M_HenchmanTough', 'Progressive', 'Stage2', 'Stage1', '1d6c36047b8628099f46bfdf7abd44db00b70c8f27c04f8dd11ea992e05b7cd7', '4fa41f99ecc71893f95968d816cd01cceeb5055aef613e346b83279419dd17cc'),
+ 'VTID_508_HenchmanTough_Backbling_StyleB': ('AthenaBackpack:BID_478_HenchmanTough', 'Progressive', 'Stage2', 'Stage1', 'c63f9c758322d7f5a08773997eca37f9146f98dcbca93da5480d53e2d2364c93', '8a98966cc33083ad27c77f3fad9cc06b7c6efb08943f5a9f50d181bd72285ca5'),
+ 'VTID_546_HenchmanMaleGlider_StyleB': ('AthenaGlider:Glider_ID_197_HenchmanMale', 'Particle', 'Particle2', 'Particle1', 'ccd02c6dfeffafad3fe2e9c86ab5e9bf04d2c711dd6d0f76b195bcb823f5db66', '73efc0e940f2541a9811ef2ddf07922bf8509222f38b34aa54a8498a6ec31487'),
+ 'VTID_499_TNTina_StyleC': ('AthenaCharacter:CID_691_Athena_Commando_F_TNTina', 'Progressive', 'Stage3', 'Stage1', '082f325038d6497f5ab2c68f564d68aff66efaef26ac299166020f7459a285fc', '14efae44876bcd09e4b68c7ed8a9e7e24be2c961c83ef29210b3690889f54481'),
+ 'VTID_501_TNTina_Backbling_StyleC': ('AthenaBackpack:BID_437_TNTina', 'Progressive', 'Stage3', 'Stage1', 'b77a773207bb4d3184c107ee36c06b2144d024342efd99873bb31bedbae6f9c2', '20a330d29bc87cf629925c42d1659e4e7a8ec32fb5ad211579f1e550dd8e875c'),
+ 'VTID_545_TNTinaFemalePickaxe_StyleC': ('AthenaPickaxe:Pickaxe_ID_336_TNTinaFemale', 'Mesh', 'Stage3', 'Stage1', '3a600ea3c86935070f7070a8c6ef8fc9f7961880c28749629254664fe5ab3a0b', 'eff3303e5ee5ee7e07f200bd4f4000434f5fcb892ce89c8c494d6e59fe77fdc2'),
+ 'VTID_551_TNTinaFemaleGlider_StyleC': ('AthenaGlider:Glider_ID_201_TNTinaFemale', 'Particle', 'Particle3', 'Particle1', '7de12e5a9895f8f9a8a457196567f0e643e6ae245311df371c2063bde85f906d', '10b7304c8247360dc1bc7445e0b8ea5c18d79d23c3e2ff2285388fb8b0dd27e4'),
+ 'VTID_498_TNTina_StyleB': ('AthenaCharacter:CID_691_Athena_Commando_F_TNTina', 'Progressive', 'Stage2', 'Stage1', 'a07fb61a917214bc3929fbd79c635b120a50a6f00534ca724f84308e934a0f14', '854f13d1312956ba9cf00b63a9c674f1ce82f4310061f27ddb857f92ed7ae972'),
+ 'VTID_500_TNTina_Backbling_StyleB': ('AthenaBackpack:BID_437_TNTina', 'Progressive', 'Stage2', 'Stage1', '9f8110281fed05df0b43456ffab0d740b8f49eb3ef0d649bd4dab692c386b453', '99edd6cb194b20575ef0201bde39a595a987f5fb29b244d9489661a2109d7a90'),
+ 'VTID_544_TNTinaFemalePickaxe_StyleB': ('AthenaPickaxe:Pickaxe_ID_336_TNTinaFemale', 'Mesh', 'Stage2', 'Stage1', '9a750cf018fcc7ef64bd5eff7c068f1746f00e31626b8464d3efdb8716cb659a', 'e586a8841e9ec3cf09ea466b36ded6e8a4930dfb64a1158280dbffea78558b57'),
+ 'VTID_550_TNTinaFemaleGlider_StyleB': ('AthenaGlider:Glider_ID_201_TNTinaFemale', 'Particle', 'Particle2', 'Particle1', '2ee4bdf4a53b4b4ae164a5294a2787d079ed6eb5e0face735b2b4d4806e394d7', '68534d1e59f6a0eb94ef5463b1b98ab6bc813f728f54c2010c1ac94c1dcd7116'),
+ 'VTID_494_BuffCat_StyleB': ('AthenaCharacter:CID_693_Athena_Commando_M_BuffCat', 'Progressive', 'Stage2', 'Stage1', 'c37695ebeeee0e89650e2f5e61faf5e48d110065aade99d0f7b051186db14363', '6e7598006b4c5a22051a19c50adc100255f70e3344442518968eb91d20e0e420'),
+ 'VTID_495_BuffCat_StyleC': ('AthenaCharacter:CID_693_Athena_Commando_M_BuffCat', 'Progressive', 'Stage3', 'Stage1', '2b192e7d54cc4d9aa065f8d79650b016c6939ede4504962fdc4c4f042191cdd2', '6efcc70078a39b5b2081a8f8cacbac7958c11368e08721ac01e063de8987f7f0'),
+ 'VTID_496_BuffCat_Backbling_StyleB': ('AthenaBackpack:BID_477_BuffCat', 'Progressive', 'Stage2', 'Stage1', 'c8df3830c8ffbf0a029011073f2b88622886b981128add5c7f44c5afa88e2add', 'd8a754faf85faf12f0abfbf950a86f6dc64df98ba37af376f1d87dec80992114'),
+ 'VTID_497_BuffCat_Backbling_StyleC': ('AthenaBackpack:BID_477_BuffCat', 'Progressive', 'Stage3', 'Stage1', '33e8a6d90ad304448b0b4ff247e3186afcaa92cfc8a441808fdc136b8d08a5b4', 'd757ba1b73d1f0e7bb3f70ec1ba295ec2cfeef6ef8502269e536126876a091a1'),
+ 'VTID_510_CatBurglar_StyleB': ('AthenaCharacter:CID_694_Athena_Commando_M_CatBurglar', 'Progressive', 'Stage2', 'Stage1', '4e363443717ee49fb2a76f2b199f877eb6f5c078f71df82328e358383fc61cb9', 'a70b24441a50270765f8d9b53feacc0c8045356d634aeb6d616ff681a07247f9'),
+ 'VTID_511_CatBurglar_StyleC': ('AthenaCharacter:CID_694_Athena_Commando_M_CatBurglar', 'Progressive', 'Stage3', 'Stage1', 'ef97364644ad29e396c32729327824e75cca412e64208de96bc9032dbf6b5eca', '9a5357d3c2007b6a56a462e7fdc271338396b7d4a09b228b39a586a640a1eb44'),
+ 'VTID_512_CatBurglar_Backbling_StyleB': ('AthenaBackpack:BID_479_CatBurglar', 'Progressive', 'Stage2', 'Stage1', '6d5f7937f5a144aae91e108b9efc79e42a61c4c32750add8235c09798dc9f8ea', '3e6669c415f5b054b3499150695b3252f1a28d308f7752ed3ed651aeccd2b868'),
+ 'VTID_513_CatBurglar_Backbling_StyleC': ('AthenaBackpack:BID_479_CatBurglar', 'Progressive', 'Stage3', 'Stage1', 'a5a9ef66a18172b9fbc078ed2659fe5aa455dbe86702096aa321bd50d4e31f3f', '24330ecdc5fb547f4369e4b2465aa89bc80887a49b98fd2f53724a07aaab4b15'),
+ 'VTID_502_Photographer_StyleB': ('AthenaCharacter:CID_690_Athena_Commando_F_Photographer', 'Progressive', 'Stage2', 'Stage1', '1c866a1f055c779168a536a65deea2f159bb54eb3495d5108a25d8dd8dd503bd', '9bc28e6ae7c850641977d99b25412a07557ec2455005b664b0b933d3eadf72aa'),
+ 'VTID_503_Photographer_StyleC': ('AthenaCharacter:CID_690_Athena_Commando_F_Photographer', 'Progressive', 'Stage3', 'Stage1', 'e794340e4aa526c1fe0801b49bf1f71b6f48c60ac9ec135f3c0a2d7fa1e2e4f8', 'aa2825572201ddd0e860b029db603cc1818fcece1f9a8fe3b3eb28c113ac6a05'),
+ 'VTID_504_Photographer_Backbling_StyleB': ('AthenaBackpack:BID_473_Photographer', 'Progressive', 'Stage2', 'Stage1', '069ceaa886059faaf5fceb04741d24e87ca338e729c5cf0f4bc5a9b1aeaa2ef7', '0051c3f62b9b4859fbd549c14e5fc2cc2d7d607198cf9d506663450b4bfb5df7'),
+ 'VTID_505_Photographer_Backbling_StyleC': ('AthenaBackpack:BID_473_Photographer', 'Progressive', 'Stage3', 'Stage1', 'f62dcfbbc6941f44132bf2df2b305ec724d315aacae3db854b694e50b40e4de8', 'd60ef38e7210cbe4d41b424d27329247112ff3faf15c107275d11c288c42fba2'),
+ 'VTID_542_PhotographerFemalePickaxe_ColorB': ('AthenaPickaxe:Pickaxe_ID_364_PhotographerFemale1H', 'Particle', 'Particle2', 'Particle1', '01f88e43041a1eca862b079268cd338ee3db633060e1fba973b93a15d9c02f0c', 'a5c396784dfc52140cb7403abd37218f25b7325caa65ac27bff54cdf5427aff2'),
+ 'VTID_543_PhotographerFemalePickaxe_ColorC': ('AthenaPickaxe:Pickaxe_ID_364_PhotographerFemale1H', 'Particle', 'Particle3', 'Particle1', '67eecc1496e56d5387d03951ef13b4e6762faa811414af44118e5585f64ae8cf', '97f858af4ff13c5ea511d247a42ad9dce3744ec0a73965c295d312e51d628823'),
+ 'VTID_548_PhotographerFemaleGlider_StyleB': ('AthenaGlider:Glider_ID_200_PhotographerFemale', 'Particle', 'Particle2', 'Particle1', '1dccc472afe421bde5c68676fce7e7527d2b1693f446e0fc53c9c071119d70b6', '2ebe09440ecd7fbd8e3d2ee2ad0bae3d347de5d3bf2cb7683e77dfa562928190'),
+ 'VTID_549_PhotographerFemaleGlider_StyleC': ('AthenaGlider:Glider_ID_200_PhotographerFemale', 'Particle', 'Particle3', 'Particle1', '8c16b1ff6f146bf3c5e1eff933f5006a4d1f0c97368b55039b8a54b794b61f45', '3a75abcb685d6d3d8e4f60abfb3c4632a1dc4df8910b4879c988cf086afb04d2'),
+}
+FACTION_VARIANTS = {('CosmeticVariantToken:' + name).casefold(): row[:4] for name, row in _ROWS.items()}
+
+# Native constructor 0x141ffd450 writes auto-equip/unseen bytes at +0x3b8/9
+# to true. Skye omits auto-equip; all 30 tokens omit bMarkItemUnseen.
+# Raw write at 0x141ffd4ad is mov word [rbx+0x3b8],0x0101.
+AUTO_EQUIP_VARIANTS = frozenset(['cosmeticvarianttoken:vtid_502_photographer_styleb', 'cosmeticvarianttoken:vtid_503_photographer_stylec', 'cosmeticvarianttoken:vtid_504_photographer_backbling_styleb', 'cosmeticvarianttoken:vtid_505_photographer_backbling_stylec', 'cosmeticvarianttoken:vtid_542_photographerfemalepickaxe_colorb', 'cosmeticvarianttoken:vtid_543_photographerfemalepickaxe_colorc', 'cosmeticvarianttoken:vtid_548_photographerfemaleglider_styleb', 'cosmeticvarianttoken:vtid_549_photographerfemaleglider_stylec'])

@@ -956,3 +956,65 @@ Private source hashes, request summaries, screenshots and logs are retained in
 `porting/generated/chrono-social-probe/` (`result.json` and `social-tests.log`).
 Native Windows, reconnect/expiry edge cases, voice transport and full match
 integration remain outside this runtime result.
+
+A subsequent secure client restart loaded the same persisted social state.
+The native GET returned five nonempty interaction records covering friendship
+creation/acceptance, ping, party join and departure, with integer millisecond
+timestamps. The client reached the frontend/XMPP session without `cant_parse`,
+required-field, parse or fatal log errors. This verifies the populated response
+path in addition to the earlier empty query; it does not establish a visual
+interaction-history screen. The controlled probe completed normally, with its
+response summary and private client log in
+`porting/generated/chrono-social-history-probe/`.
+
+## Agent faction selection and variant rewards (2026-11-12)
+
+All five grant quests and the AB schedule are present in AthenaSeason12's
+`SeasonGrantsToEveryone`. The Brutus/TNTina reports and
+`porting/generated/remaining-faction-contracts/normalized.json` supply the
+grant, branch, bundle and objective contracts. Each grant requires acquisition
+of 18 corresponding weekly tokens. Selected branch objective targets are
+Brutus 1, TNTina 2, Meowscles 10, Skye 1 and Midas 2. The trusted branch events
+use the cooked objective-stat row names; their actual gameplay producers still
+require end-to-end verification.
+
+The recovered native callers at `0x144e64070` and `0x144e643b0` send one or
+two owned quest instance IDs to `ToggleQuestActiveState`, including the active
+opposite when switching. Local validation requires an earned grant and exactly
+one owning bundle, rejects mixed or partial invalid batches, preserves one
+active branch, and prevents reopening a completed choice. These validation
+rules are local policies; the original backend was not shipped. Native UI
+selection across all five agents has not yet been verified.
+
+Weekly rewards issued before a faction grant existed no longer strand older
+profiles. Explicit quest login validates unique retained claimed weekly quests,
+their objective counts and exact bundle membership, then raises eligibility
+progress to the greater of its current value and proven historical rewards.
+It never infers acquisition from a token balance or re-awards weekly XP/tokens.
+Reconciliation skips nested login during an unfinished XP/token transaction to
+avoid counting the same acquisition twice. Threshold grants and their profile
+changes roll back together on failure.
+
+Thirty cooked VTID assets identify the cosmetic target, channel and unlock tag;
+source hashes and target defaults were checked against the extracted 12.60
+assets. Brutus, TNTina, Meowscles and Midas explicitly disable auto-equip.
+Skye omits that property and inherits true. Constructor `0x141ffd450` writes
+`0x0101` to the adjacent auto-equip/unseen bytes at `+0x3b8/+0x3b9`, confirmed
+in the original runtime image; `0x141ffd4ad` is the word-store instruction.
+Reflected setters `0x14281e8c0` and `0x142b2acd0` independently confirm the
+auto-equip and giftbox byte offsets. Giftbox's native default at `+0x3ba` is
+false, though individual assets can override it. All thirty tokens omit the
+unseen property, inheriting true. Runtime and reflection evidence are retained
+in the existing maps-world-ready-settings capture and reflection reports.
+
+Unlocks update owned variants and unseen state in the same transaction that
+consumes the token. Skye also changes the active style. Missing targets retain
+their tokens until a later login, an explicit local consumption policy.
+The quest path currently sends profile deltas without a giftbox or explicit
+reward notification; native reward presentation remains unverified.
+
+The combined backend discovery suite passed 336 tests, including all ten branch
+completions, switching and completed-choice rejection, deferred target rewards,
+restart persistence, historical eligibility, ambiguous history rejection,
+threshold rollback/retry and real weekly completion after partial history.
+The log is `porting/generated/chrono-faction-integration/final-tests.log`.
