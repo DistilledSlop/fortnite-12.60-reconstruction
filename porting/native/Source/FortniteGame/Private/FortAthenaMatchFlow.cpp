@@ -13,6 +13,9 @@
 // Everything is inactive unless -FortniteOriginalClient is set.
 
 #include "FortAthenaMatchFlow.h"
+#include "EngineUtils.h"
+#include "Engine/LevelStreaming.h"
+#include "LandscapeProxy.h"
 
 #include "AFortGameModeAthena.h"
 #include "AFortGameStateAthena.h"
@@ -1169,6 +1172,26 @@ namespace FortAthenaMatchFlowPrivate
         Movement->bServerAcceptClientAuthoritativePosition = false;
     }
 
+    // The Apollo_Background level (cloud sheets, skybox meshes) is decoration. The server loads its static-mesh collision,
+    // which makes a skydiver "land" on BP_GiantCloudSheet at about Z 52000. Switch collision off for every actor in it.
+    void DisableBackgroundCollision(UWorld* World)
+    {
+        if (!World)
+            return;
+        int32 Count = 0;
+        for (TActorIterator<AActor> It(World); It; ++It)
+        {
+            ULevel* Level = It->GetLevel();
+            if (Level && Level->GetOutermost() && Level->GetOutermost()->GetName().Contains(TEXT("Apollo_Background")) && It->GetActorEnableCollision())
+            {
+                It->SetActorEnableCollision(false);
+                ++Count;
+            }
+        }
+        if (Count)
+            UE_LOG(LogTemp, Display, TEXT("MatchFlow: collision disabled on %d actors of the Apollo_Background level"), Count);
+    }
+
     void TickSkydivers(UWorld* World)
     {
         FMatchFlowState& S = State();
@@ -1195,12 +1218,55 @@ namespace FortAthenaMatchFlowPrivate
                 {
                     Diver.bLanded = true;
                     Diver.LandedTime = NowTime;
+                    if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeLanding")))
+                    {
+                        // Diagnostic: everything solid below the landing point, to see which collision the server really has.
+                        TArray<FHitResult> Hits;
+                        FCollisionQueryParams MultiQuery(FName(TEXT("MatchFlowLandingProbe")), false, Pawn);
+                        World->LineTraceMultiByChannel(Hits, FVector(From.X, From.Y, 30000.0f), FVector(From.X, From.Y, -20000.0f), ECC_Visibility, MultiQuery);
+                        for (int32 HitIndex = 0; HitIndex < Hits.Num() && HitIndex < 10; ++HitIndex)
+                            UE_LOG(LogTemp, Display, TEXT("MatchFlow: landing probe hit %d: z=%.1f %s [%s]"), HitIndex, Hits[HitIndex].ImpactPoint.Z,
+                                Hits[HitIndex].GetActor() ? *Hits[HitIndex].GetActor()->GetPathName() : TEXT("none"),
+                                Hits[HitIndex].GetComponent() ? *Hits[HitIndex].GetComponent()->GetClass()->GetName() : TEXT("none"));
+                        if (Hits.Num() == 0)
+                            UE_LOG(LogTemp, Display, TEXT("MatchFlow: landing probe: no collision under %s"), *From.ToString());
+                        int32 LevelsLoaded = 0, LevelsVisible = 0;
+                        for (ULevelStreaming* StreamingLevel : World->GetStreamingLevels())
+                        {
+                            if (StreamingLevel && StreamingLevel->IsLevelLoaded()) ++LevelsLoaded;
+                            if (StreamingLevel && StreamingLevel->IsLevelVisible()) ++LevelsVisible;
+                        }
+                        UE_LOG(LogTemp, Display, TEXT("MatchFlow: landing probe: %d streaming levels, %d loaded, %d visible"), World->GetStreamingLevels().Num(), LevelsLoaded, LevelsVisible);
+                        int32 Shown = 0;
+                        for (TActorIterator<ALandscapeProxy> LandscapeIt(World); LandscapeIt && Shown < 6; ++LandscapeIt)
+                        {
+                            const FBox LandscapeBox = LandscapeIt->GetComponentsBoundingBox(true);
+                            const FVector2D Near(FMath::Clamp(From.X, LandscapeBox.Min.X, LandscapeBox.Max.X), FMath::Clamp(From.Y, LandscapeBox.Min.Y, LandscapeBox.Max.Y));
+                            if (FVector2D::Distance(Near, FVector2D(From.X, From.Y)) > 25000.0f)
+                                continue;
+                            int32 Registered = 0, Total = 0;
+                            for (UActorComponent* Comp : LandscapeIt->GetComponents())
+                            {
+                                if (Comp && Comp->GetClass()->GetName().Contains(TEXT("HeightfieldCollision")))
+                                {
+                                    ++Total;
+                                    if (Comp->IsRegistered()) ++Registered;
+                                }
+                            }
+                            ++Shown;
+                            UE_LOG(LogTemp, Display, TEXT("MatchFlow: landing probe landscape %s level %s bounds %s collision comps %d registered %d"),
+                                *LandscapeIt->GetName(), LandscapeIt->GetLevel() ? *LandscapeIt->GetLevel()->GetOutermost()->GetName() : TEXT("?"),
+                                *LandscapeBox.ToString(), Total, Registered);
+                        }
+                    }
                     Pawn->bIsSkydiving = false;
                     Pawn->bIsParachuteOpen = false;
                     Pawn->bIsSkydivingFromBus = 0;
                     Pawn->ForceNetUpdate();
-                    UE_LOG(LogTemp, Display, TEXT("MatchFlow: %s reached the ground at %s (mode %s)"), *Pawn->GetName(), *From.ToString(),
-                        Movement ? *Movement->GetMovementName() : TEXT("none"));
+                    UE_LOG(LogTemp, Display, TEXT("MatchFlow: %s reached the ground at %s (mode %s, client on ground %d, trace hit %s / %s at %s)"), *Pawn->GetName(), *From.ToString(),
+                        Movement ? *Movement->GetMovementName() : TEXT("none"), bClientOnGround ? 1 : 0,
+                        Hit.GetActor() ? *Hit.GetActor()->GetPathName() : TEXT("none"), Hit.GetComponent() ? *Hit.GetComponent()->GetClass()->GetName() : TEXT("none"),
+                        *Hit.ImpactPoint.ToString());
                 }
             }
             if (Diver.bLanded && (bClientOnGround || NowTime - Diver.LandedTime > 10.0f))
@@ -1496,6 +1562,7 @@ namespace FortAthenaMatchFlowPrivate
         {
             if (GameMode->GetNumPlayers() < S.RequiredPlayers)
                 return;
+            DisableBackgroundCollision(GameMode->GetWorld());  // streamed levels may have finished after the driver armed
             UE_LOG(LogTemp, Display, TEXT("MatchFlow: %d of %d required players joined; starting warmup"), GameMode->GetNumPlayers(), S.RequiredPlayers);
             if (!StartWarmupPhase(GameMode))
                 WarmupEnd(GameMode);
@@ -1596,6 +1663,7 @@ namespace FortAthenaMatchFlow
             return;
         }
         GameMode->GetWorldTimerManager().SetTimer(S.DriverHandle, FTimerDelegate::CreateStatic(&DriverTick), DriverInterval, true);
+        DisableBackgroundCollision(GameMode->GetWorld());
         UE_LOG(LogTemp, Display, TEXT("MatchFlow: driver armed (%.2f s); waiting for %d player(s)"), DriverInterval, S.RequiredPlayers);
     }
 

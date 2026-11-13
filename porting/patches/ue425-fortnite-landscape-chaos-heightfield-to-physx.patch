@@ -1,0 +1,94 @@
+diff --git a/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp b/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp
+index fc917c46c..e58e420c4 100644
+--- a/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp
++++ b/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp
+@@ -569,6 +569,63 @@ void ULandscapeHeightfieldCollisionComponent::ApplyWorldOffset(const FVector& In
+ 	}
+ }
+ 
++#if WITH_PHYSX && PHYSICS_INTERFACE_PHYSX
++#include "cooking/PxCooking.h"
++// Fortnite server: Windows-cooked landscape collision is Chaos THeightField data (uint16 heights, row-major),
++// which PhysX cannot read. Rebuild a PhysX heightfield with the same orientation ConvertHeightfieldDataForPhysx uses.
++static PxHeightField* FortniteBuildPhysXHeightfieldFromChaosBlob(const TArray<uint8>& Blob, const int32 N, const bool bIsMirrored)
++{
++	const int32 NumSamples = N * N;
++	if (Blob.Num() < 33 + NumSamples * 2 + 40) return nullptr;
++	int32 Count = 0;
++	FMemory::Memcpy(&Count, Blob.GetData() + 29, sizeof(int32));
++	if (Count != NumSamples) { UE_LOG(LogLandscape, Warning, TEXT("Chaos heightfield blob: sample count %d != %d"), Count, NumSamples); return nullptr; }
++	const uint8* Heights8 = Blob.GetData() + 33;
++	const uint8* Tail = Heights8 + NumSamples * 2;
++	float MinValue, MaxValue, HeightPerUnit;
++	uint16 NumRows, NumCols;
++	FMemory::Memcpy(&MinValue, Tail + 12, 4);
++	FMemory::Memcpy(&MaxValue, Tail + 16, 4);
++	FMemory::Memcpy(&NumRows, Tail + 20, 2);
++	FMemory::Memcpy(&NumCols, Tail + 22, 2);
++	FMemory::Memcpy(&HeightPerUnit, Tail + 28, 4);
++	if (NumRows != N || NumCols != N) { UE_LOG(LogLandscape, Warning, TEXT("Chaos heightfield blob: dims %dx%d != %d"), NumRows, NumCols, N); return nullptr; }
++
++	TArray<PxHeightFieldSample> Samples;
++	Samples.AddZeroed(NumSamples);
++	for (int32 RowIndex = 0; RowIndex < N; RowIndex++)
++	{
++		for (int32 ColIndex = 0; ColIndex < N; ColIndex++)
++		{
++			const int32 Src = (ColIndex * N) + (bIsMirrored ? RowIndex : (N - RowIndex - 1));
++			uint16 H;
++			FMemory::Memcpy(&H, Heights8 + Src * 2, 2);
++			const float Value = MinValue + (float)H * HeightPerUnit;
++			PxHeightFieldSample& Sample = Samples[RowIndex * N + ColIndex];
++			Sample.height = (PxI16)FMath::Clamp(FMath::RoundToInt(Value), -32768, 32767);
++			Sample.materialIndex0 = 0;
++			Sample.materialIndex1 = 0;
++		}
++	}
++
++	PxHeightFieldDesc Desc;
++	Desc.nbColumns = N;
++	Desc.nbRows = N;
++	Desc.format = PxHeightFieldFormat::eS16_TM;
++	Desc.samples.data = Samples.GetData();
++	Desc.samples.stride = sizeof(PxU32);
++	Desc.flags = PxHeightFieldFlag::eNO_BOUNDARY_EDGES;
++
++	if (FParse::Param(FCommandLine::Get(), TEXT("FortniteLogLandscapeHeightfield")))
++	{
++		UE_LOG(LogLandscape, Warning, TEXT("Chaos->PhysX heightfield N=%d min=%f max=%f hpu=%f mirrored=%d"), N, MinValue, MaxValue, HeightPerUnit, bIsMirrored ? 1 : 0);
++	}
++	static PxCooking* Cooking = PxCreateCooking(PX_PHYSICS_VERSION, *GPhysXFoundation, PxCookingParams(PxTolerancesScale()));
++	if (!Cooking) return nullptr;
++	return Cooking->createHeightField(Desc, GPhysXSDK->getPhysicsInsertionCallback());
++}
++#endif
++
+ void ULandscapeHeightfieldCollisionComponent::CreateCollisionObject()
+ {
+ #if WITH_CHAOS
+@@ -627,10 +684,24 @@ void ULandscapeHeightfieldCollisionComponent::CreateCollisionObject()
+ 				{
+ 					FPhysXInputStream HeightFieldStream(CookedCollisionData.GetData(), CookedCollisionData.Num());
+ 					HeightfieldRef->RBHeightfield = GPhysXSDK->createHeightField(HeightFieldStream);
+-					if (SimpleCollisionSizeQuads > 0)
++					if (HeightfieldRef->RBHeightfield == nullptr)
++					{
++						// Fortnite server: the Windows cook stores Chaos THeightField data; rebuild a PhysX heightfield from it.
++						HeightfieldRef->RBHeightfield = FortniteBuildPhysXHeightfieldFromChaosBlob(CookedCollisionData, CollisionSizeQuads + 1, (GetComponentTransform().GetScale3D().X * GetComponentTransform().GetScale3D().Y * GetComponentTransform().GetScale3D().Z) < 0.f);
++					}
++					else if (SimpleCollisionSizeQuads > 0)
+ 					{
+ 						HeightfieldRef->RBHeightfieldSimple = GPhysXSDK->createHeightField(HeightFieldStream);
+ 					}
++					if (FParse::Param(FCommandLine::Get(), TEXT("FortniteLogLandscapeHeightfield")))
++					{
++						// Diagnostic (Fortnite server): why Windows-cooked heightfields end up unusable.
++						FString Head;
++						for (int32 ByteIndex = 0; ByteIndex < 48 && ByteIndex < CookedCollisionData.Num(); ++ByteIndex)
++							Head += FString::Printf(TEXT("%02x"), CookedCollisionData[ByteIndex]);
++						UE_LOG(LogLandscape, Warning, TEXT("HF %s bytes=%d simpleQuads=%d full=%p simple=%p head=%s"), *GetName(), CookedCollisionData.Num(),
++							SimpleCollisionSizeQuads, HeightfieldRef->RBHeightfield, HeightfieldRef->RBHeightfieldSimple, *Head);
++					}
+ 				}
+ 
+ 				for (UPhysicalMaterial* PhysicalMaterial : CookedPhysicalMaterials)

@@ -512,10 +512,10 @@ void AFortGameModeAthena::RestartPlayer(AController* NewPlayer)
     FortAthenaInventory::SetupPlayer(this, Cast<AFortPlayerControllerAthena>(NewPlayer));
     if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteNoHealth")))
         FortAthenaHealth::SetupPlayer(this, Cast<AFortPlayerControllerAthena>(NewPlayer));
-    // The vanilla-client tests run on FortniteEmptyDedicated, which has no ground: PositionPawnOnTerrain's trace misses
-    // there and it places the pawn on the replicated test floor instead.
-    if (NewPlayer && NewPlayer->GetPawn() && GetWorld() && FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")) &&
-        !GetWorld()->GetMapName().EndsWith(TEXT("Apollo_Terrain")))
+    // Vanilla-client tests. FortniteEmptyDedicated has no ground: PositionPawnOnTerrain places the pawn on the replicated
+    // test floor. On Apollo_Terrain it places the pawn on the lobby island (no PlayerStart actors load). In both cases the
+    // match flow runs afterwards: for a pending bus exit it moves the pawn out of the aircraft and starts the skydive.
+    if (NewPlayer && NewPlayer->GetPawn() && GetWorld() && FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")))
     {
         PositionPawnOnTerrain(NewPlayer);
         FortAthenaMatchFlow::OnPlayerRestarted(this, NewPlayer);
