@@ -19,6 +19,7 @@
 #include "FFortStartingMissionInfo.h"
 #include "FFortTileLootData.h"
 #include "FFortWindIntensityAndDirection.h"
+#include "FFortZoneInstanceDetails.h"
 #include "FWorldTileSubArray.h"
 #include "FortAssets.h"
 #include "FortDelayedObjectLoader.h"
@@ -26,6 +27,7 @@
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
 #include "SharedFortGameLog.h"
+#include "UObject/Object.h"
 
 class ABuildingFoundation;
 class UFortUserCloudHelperComponent;
@@ -259,5 +261,7 @@ public:
 	bool NativeGetDifficultyRowForPIE(FDataTableRowHandle& OutDifficulty);
 	bool NativeFindGlobalWind(FFortWindIntensityAndDirection& OutWind);
 	bool NativeFindGlobalWindValues(float& OutIntensity, FVector& OutDirection);
+	UFortWorldRecord* CreateNewWorldRecord(const FFortZoneInstanceDetails& InstanceDetails);
+	static UFortZoneRecord* NativeCreateNewZoneRecord(UObject* Outer);
 };
 

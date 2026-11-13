@@ -21,9 +21,11 @@
 #include "UFortMissionInfo.h"
 #include "UFortTimeOfDayData.h"
 #include "UFortWorldRecord.h"
+#include "UFortZoneRecord.h"
 #include "UFortZoneTheme.h"
 #include "UGameDataSTW.h"
 #include "UObject/NoExportTypes.h"
+#include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"
 
 void AFortWorldManager::OnRep_InitialGlobalWind()
@@ -200,6 +202,26 @@ bool AFortWorldManager::NativeFindGlobalWindValues(float& OutIntensity, FVector&
 	OutDirection = FVector(1.0f, 0.0f, 0.0f).RotateAngleAxis(
 	    InitialGlobalWind.WindHeading, FVector(0.0f, 0.0f, 1.0f));
 	return InitialGlobalWind.WindIntensity >= 0.0f;
+}
+
+UFortWorldRecord* AFortWorldManager::CreateNewWorldRecord(const FFortZoneInstanceDetails& InstanceDetails)
+{
+	// CONFIDENCE: HIGH
+	// Original 0x141f85430. NewObject uses this as Outer, NAME_None and RF_NoFlags.
+	UE_LOG(LogFortWorld, Log, TEXT("AFortWorldManager::CreateNewWorldRecord() creating new world record for %s"),
+	    *InstanceDetails.WorldId);
+	UFortWorldRecord* Record = NewObject<UFortWorldRecord>(this);
+	Record->ZoneInstanceInfo = InstanceDetails;
+	Record->WUID = InstanceDetails.WorldId;
+	return Record;
+}
+
+UFortZoneRecord* AFortWorldManager::NativeCreateNewZoneRecord(UObject* Outer)
+{
+	// CONFIDENCE: HIGH
+	// Original 0x141f7c620 is the generic NewObject<UFortZoneRecord> helper.
+	// Its caller supplies the world manager as Outer; preserve the explicit argument.
+	return NewObject<UFortZoneRecord>(Outer);
 }
 
 void AFortWorldManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

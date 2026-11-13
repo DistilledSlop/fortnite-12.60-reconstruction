@@ -1,0 +1,51 @@
+{
+  "status": "Complete bounded creation helpers; integration into foundation lifecycle pending; no gameplay acceptance",
+  "source_windows": [
+    {
+      "address": "0x141f85430",
+      "length": 207,
+      "sha256": "b6b5bd7d97be6691b7af5d1c117bf117baa59f1a23402ac762468f3361c932f1"
+    },
+    {
+      "address": "0x141f7c620",
+      "length": 128,
+      "sha256": "7e780810d27507a56ee5f1faf4e11844672f302cb45caeb395e113c590ad0040"
+    },
+    {
+      "address": "0x1402d0370",
+      "length": 66,
+      "sha256": "4d89729cd60963ca0630fcade72e66086711188483731c14ad740f817ffad90b"
+    }
+  ],
+  "world_record": {
+    "address": "0x141f85430",
+    "effects": [
+      "Log original WorldId diagnostic at Log verbosity",
+      "NewObject<UFortWorldRecord>(this), NAME_None, RF_NoFlags",
+      "Assign ZoneInstanceInfo=InstanceDetails and WUID=InstanceDetails.WorldId"
+    ],
+    "typed_assignment": "Original 0x141f7f130 copies FFortZoneInstanceDetails; assembly at 0x141f85430 establishes constructor flags and FString logging argument."
+  },
+  "zone_record": {
+    "address": "0x141f7c620",
+    "effects": [
+      "Return NewObject<UFortZoneRecord>(Outer)"
+    ],
+    "abi_note": "Original decompiler incorrectly renders void; assembly preserves allocation result in RAX through return. Original helper accepts generic UObject Outer; emitted static member retains that argument."
+  },
+  "log_category": {
+    "initializer": "0x1402d0370",
+    "category_object": "0x148134920",
+    "category_fname": "0x148134924",
+    "name_string": "0x14601fc08",
+    "name": "LogFortWorld",
+    "default_verbosity": "Log (5)",
+    "compile_verbosity": "All (7)"
+  },
+  "lifecycle_boundary": "EnsureWorldManager only spawns a compatibility manager. These helpers do not activate record setup, foundation selection, streamed-level callbacks or saved-world restoration. No runtime fix is claimed.",
+  "corrected_followup_lead": "The default/new-record branch in 0x141f8e5b0 tests AFortGameMode.CurrentZoneInstanceId FString.Num at +0x378; profile-readiness branches test CurrentWUID FString.Num at +0x328. They are not AFortWorldSettings modes.",
+  "research_artifacts": [
+    "porting/generated/agents/foundation-record-closure/recovery.json",
+    "porting/generated/agents/foundation-lifecycle-continuation/recovery.json"
+  ]
+}
