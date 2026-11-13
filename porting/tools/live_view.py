@@ -21,11 +21,13 @@ stopped a few seconds after the last one leaves. No frame is ever written to dis
 """
 import argparse
 import base64
+import fcntl
 import hashlib
 import json
 import os
 import re
 import signal
+import socket
 import struct
 import subprocess
 import sys
@@ -37,6 +39,8 @@ from urllib.parse import parse_qs, urlparse
 BOUNDARY = b"frame"
 IDLE_STOP_SECONDS = 3.0
 FRAME_WAIT_SECONDS = 10.0
+SIOCOUTQ = 0x5411           # bytes of this socket not yet acknowledged by the viewer
+STREAM_BACKLOG_BYTES = 32768  # a new frame is sent only when less than this is still queued or in flight
 MAX_FPS = 30
 XVFB_RE = re.compile(r"Xvfb\s+(:\d+)(.*)$")
 OVERRIDE_DIR = os.environ.get("FN_OVERRIDE_DIR") or "/tmp/fn-manual-override"
@@ -132,31 +136,53 @@ def inject_main(disp):
         keys.clear()
         buttons.clear()
 
-    for raw in iter(sys.stdin.buffer.readline, b""):
-        p = raw.decode("ascii", "ignore").split()
-        try:
-            if not p:
+    def apply(p):
+        if p[0] == "m":
+            xtst.XTestFakeMotionEvent(dpy, -1, int(p[1]), int(p[2]), 0)
+        elif p[0] == "r":
+            xtst.XTestFakeRelativeMotionEvent(dpy, int(p[1]), int(p[2]), 0)
+        elif p[0] == "b":
+            b, down = int(p[1]), p[2] == "1"
+            xtst.XTestFakeButtonEvent(dpy, b, int(down), 0)
+            (buttons.add if down else buttons.discard)(b)
+        elif p[0] == "k":
+            if p[1] not in keycodes:
+                name = keysym_name(p[1])
+                keycodes[p[1]] = x11.XKeysymToKeycode(dpy, x11.XStringToKeysym(name.encode())) if name else 0
+            kc, down = keycodes[p[1]], p[2] == "1"
+            if kc:
+                xtst.XTestFakeKeyEvent(dpy, kc, int(down), 0)
+                (keys.add if down else keys.discard)(kc)
+        elif p[0] == "x":
+            release_all()
+
+    # Take everything that is waiting on stdin at once and merge runs of mouse motion, so a burst (or a slow
+    # moment here) costs one X event instead of a queue of stale ones that would be replayed late.
+    tail = b""
+    while True:
+        chunk = os.read(0, 65536)
+        if not chunk:
+            break
+        lines, sep, tail = (tail + chunk).rpartition(b"\n")
+        todo = []
+        for raw in lines.split(b"\n") if sep else []:
+            p = raw.decode("ascii", "ignore").split()
+            try:
+                if not p:
+                    continue
+                if todo and p[0] == "r" and todo[-1][0] == "r":
+                    todo[-1] = ["r", int(todo[-1][1]) + int(p[1]), int(todo[-1][2]) + int(p[2])]
+                elif todo and p[0] == "m" and todo[-1][0] == "m":
+                    todo[-1] = p
+                else:
+                    todo.append(p)
+            except (ValueError, IndexError):
                 continue
-            if p[0] == "m":
-                xtst.XTestFakeMotionEvent(dpy, -1, int(p[1]), int(p[2]), 0)
-            elif p[0] == "r":
-                xtst.XTestFakeRelativeMotionEvent(dpy, int(p[1]), int(p[2]), 0)
-            elif p[0] == "b":
-                b, down = int(p[1]), p[2] == "1"
-                xtst.XTestFakeButtonEvent(dpy, b, int(down), 0)
-                (buttons.add if down else buttons.discard)(b)
-            elif p[0] == "k":
-                if p[1] not in keycodes:
-                    name = keysym_name(p[1])
-                    keycodes[p[1]] = x11.XKeysymToKeycode(dpy, x11.XStringToKeysym(name.encode())) if name else 0
-                kc, down = keycodes[p[1]], p[2] == "1"
-                if kc:
-                    xtst.XTestFakeKeyEvent(dpy, kc, int(down), 0)
-                    (keys.add if down else keys.discard)(kc)
-            elif p[0] == "x":
-                release_all()
-        except (ValueError, IndexError):
-            continue
+        for p in todo:
+            try:
+                apply(p)
+            except (ValueError, IndexError):
+                continue
         x11.XFlush(dpy)
     release_all()
     x11.XFlush(dpy)
@@ -670,6 +696,7 @@ class Handler(BaseHTTPRequestHandler):
                          base64.b64encode(hashlib.sha1((key + WS_GUID).encode()).digest()).decode())
         self.end_headers()
         self.close_connection = True
+        self.connection.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         try:
             while True:
                 op, data = self._ws_read()
@@ -706,7 +733,17 @@ class Handler(BaseHTTPRequestHandler):
             self.end_headers()
             self.close_connection = True
             last = 0
+            sock = self.connection
+            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
             while True:
+                # Never queue a frame behind unsent ones: on a link slower than the stream the kernel send
+                # buffer (up to 4 MB) would fill and every later frame would arrive that much late. Wait until
+                # the previous frame has left, then send the newest one; slow links get fewer, current frames.
+                stalled = time.monotonic() + FRAME_WAIT_SECONDS
+                while struct.unpack("i", fcntl.ioctl(sock, SIOCOUTQ, b"\0\0\0\0"))[0] > STREAM_BACKLOG_BYTES:
+                    if time.monotonic() > stalled:
+                        raise TimeoutError
+                    time.sleep(0.003)
                 with cap.cond:
                     cap.cond.wait_for(lambda: cap.seq != last or not cap.alive, timeout=FRAME_WAIT_SECONDS)
                     if cap.seq == last:
