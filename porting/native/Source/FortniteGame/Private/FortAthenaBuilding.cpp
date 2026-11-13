@@ -29,23 +29,12 @@ namespace
 	// stand-in: the stripped server body does not reveal the building cost.
 	constexpr int32 BuildCost = 10;
 
-	// stand-in: the client's class handle indexes AllPlayerBuildableClasses, which the client builds from its asset registry
-	// (binary 0x141e92db0 / 0x141df9620) and the server cannot reproduce with a partial staged set. The held building tool
-	// (replicated CurrentWeapon, set by ServerExecuteInventoryItem) names the piece instead: wood tier 1.
-	UClass* ResolveHeldPiece(AFortPlayerController* Controller, FString& OutTool)
+	FString HeldToolName(AFortPlayerController* Controller)
 	{
 		AFortPawn* Pawn = Controller ? Controller->GetPawn<AFortPawn>() : nullptr;
 		AFortWeapon* Weapon = Pawn ? Pawn->CurrentWeapon : nullptr;
 		const UFortItemDefinition* Definition = Weapon ? Weapon->WeaponData : nullptr;
-		if (!Definition)
-			return nullptr;
-		OutTool = Definition->GetName();
-		const TCHAR* Path = nullptr;
-		if (OutTool == TEXT("BuildingItemData_Wall")) Path = TEXT("/Game/Building/ActorBlueprints/Player/Wood/L1/PBWA_W1_Solid.PBWA_W1_Solid_C");
-		else if (OutTool == TEXT("BuildingItemData_Floor")) Path = TEXT("/Game/Building/ActorBlueprints/Player/Wood/L1/PBWA_W1_Floor.PBWA_W1_Floor_C");
-		else if (OutTool == TEXT("BuildingItemData_Stair_W")) Path = TEXT("/Game/Building/ActorBlueprints/Player/Wood/L1/PBWA_W1_StairW.PBWA_W1_StairW_C");
-		else if (OutTool == TEXT("BuildingItemData_RoofS")) Path = TEXT("/Game/Building/ActorBlueprints/Player/Wood/L1/PBWA_W1_RoofS.PBWA_W1_RoofS_C");
-		return Path ? StaticLoadClass(ABuildingSMActor::StaticClass(), nullptr, Path) : nullptr;
+		return GetNameSafe(Definition);
 	}
 
 	void CreateBuilding(AFortPlayerController* Controller, const FCreateBuildingActorData& Data)
@@ -53,27 +42,32 @@ namespace
 		if (!Enabled() || !Controller || !Controller->HasAuthority())
 			return;
 		UWorld* World = Controller->GetWorld();
-		FString Tool;
-		UClass* Class = ResolveHeldPiece(Controller, Tool);
-		if (!Class)
+		if (!World) return;
+		const FString Tool = HeldToolName(Controller);
+		const AFortGameStateAthena* GameState = World ? World->GetGameState<AFortGameStateAthena>() : nullptr;
+		UClass* Class = FortBuildingClassCache::Resolve(GameState, Data.BuildingClassHandle);
+		UE_LOG(LogTemp, Display, TEXT("Building: request handle %u tool '%s' cached class '%s'"),
+			Data.BuildingClassHandle, *Tool, *GetNameSafe(Class));
+		if (!Class || !Class->IsChildOf(ABuildingSMActor::StaticClass()))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Building: refused handle %u: held item '%s' is not a known building tool"), Data.BuildingClassHandle, *Tool);
+			UE_LOG(LogTemp, Warning, TEXT("Building: refused handle %u: class unavailable or not a building mesh"), Data.BuildingClassHandle);
 			return;
 		}
 		const ABuildingSMActor* Default = Cast<ABuildingSMActor>(Class->GetDefaultObject());
+		if (!Default) return;
 		const bool bInfinite = FParse::Param(FCommandLine::Get(), TEXT("FortniteInfiniteBuildMaterials"));
-		UFortWorldItem* Wood = nullptr;
+		UFortWorldItem* Material = nullptr;
 		if (Controller->WorldInventory)
 		{
 			for (UFortWorldItem* Item : Controller->WorldInventory->Inventory.ItemInstances)
 			{
 				const UFortResourceItemDefinition* Resource = Item ? Cast<UFortResourceItemDefinition>(Item->ItemEntry.ItemDefinition) : nullptr;
-				if (Resource && Resource->ResourceType == EFortResourceType::Wood && Item->ItemEntry.Count > 0) { Wood = Item; break; }
+				if (Resource && Resource->ResourceType == Default->ResourceType && Item->ItemEntry.Count > 0) { Material = Item; break; }
 			}
 		}
-		if (!bInfinite && (!Wood || Wood->ItemEntry.Count < BuildCost))
+		if (!bInfinite && (!Material || Material->ItemEntry.Count < BuildCost))
 		{
-			UE_LOG(LogTemp, Display, TEXT("Building: refused %s: %d wood available, %d required"), *Class->GetName(), Wood ? Wood->ItemEntry.Count : 0, BuildCost);
+			UE_LOG(LogTemp, Display, TEXT("Building: refused %s: %d resource type %d available, %d required"), *Class->GetName(), Material ? Material->ItemEntry.Count : 0, int32(Default->ResourceType.GetValue()), BuildCost);
 			return;
 		}
 		FActorSpawnParameters Params;
@@ -95,10 +89,11 @@ namespace
 		if (const AFortPlayerStateAthena* PS = Cast<AFortPlayerStateAthena>(Controller->PlayerState))
 			Piece->SetTeam(PS->TeamIndex);
 		Piece->ForceNetUpdate();
-		if (!bInfinite && Wood)
-			FortAthenaInventory::RemoveItem(Controller, Wood->ItemEntry.ItemGuid, BuildCost);
-		UE_LOG(LogTemp, Display, TEXT("Building: placed %s (%s) at %s yaw %.0f mirrored %d wood left %d"), *Piece->GetName(), *Tool,
-			*FVector(Data.BuildLoc).ToString(), Data.BuildRot.Yaw, Data.bMirrored ? 1 : 0, Wood ? Wood->ItemEntry.Count : -1);
+		const int32 Remaining = Material ? Material->ItemEntry.Count - (bInfinite ? 0 : BuildCost) : -1;
+		if (!bInfinite && Material)
+			FortAthenaInventory::RemoveItem(Controller, Material->ItemEntry.ItemGuid, BuildCost);
+		UE_LOG(LogTemp, Display, TEXT("Building: placed %s (%s) at %s yaw %.0f mirrored %d resource type %d left %d"), *Piece->GetName(), *Tool,
+			*FVector(Data.BuildLoc).ToString(), Data.BuildRot.Yaw, Data.bMirrored ? 1 : 0, int32(Default->ResourceType.GetValue()), Remaining);
 	}
 
 	void ExecCreateBuilding(UObject* Context, FFrame& Stack, RESULT_DECL)
@@ -132,12 +127,8 @@ void FortAthenaBuilding::PrepareBuildableClasses(AFortGameStateAthena* GameState
 {
 	if (!Enabled() || !GameState)
 		return;
-	if (FParse::Param(FCommandLine::Get(), TEXT("FortniteBuildingClassCacheProbe")))
-		FortBuildingClassCache::Prepare(GameState);
-	// Native caps and layout flags now inherit recovered defaults; preserve cooked/playlist overrides.
-	// binary 0x141e92db0 / 0x141df9620: enumerate the object library's
-	// bIsPlayerBuildable entries, then sort them. A partial staged set cannot
-	// reproduce the client's handles; do not create a misleading table from it.
-	UE_LOG(LogTemp, Warning, TEXT("Building: class table has %d entries; complete client-equivalent enumeration and ordering are unresolved"),
-		GameState->AllPlayerBuildableClasses.Num());
+	// Original Athena client observed +0xe17 set, selecting level zero only.
+	// The byte is unreflected and its playlist-dependent setter is not recovered;
+	// this choice is an original-client Athena stand-in, not the constructor default.
+	FortBuildingClassCache::Prepare(GameState, true);
 }

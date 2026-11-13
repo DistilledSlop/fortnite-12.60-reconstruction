@@ -28,6 +28,12 @@ Use subagents as bounded function or task runners, implementers, explorers, or r
 
 # Validation cadence
 
+Current user direction: accumulate related fixes into larger implementation passes
+before building and replaying gameplay. Do not alternate one small fix with one
+client run. Keep cheap source/generation checks fail-closed while implementing;
+use one combined build and an affected end-to-end run for the coherent batch.
+Prioritize advancing several reported issues before the next runtime checkpoint.
+
 Optimize for implementing features as fast as possible without compromising any
 quality or parity. Use that as the governing rule for deciding whether a test
 resolves real correctness/parity uncertainty or wastes resources. Speed must come

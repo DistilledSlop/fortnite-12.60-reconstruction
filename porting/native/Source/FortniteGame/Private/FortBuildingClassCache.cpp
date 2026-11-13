@@ -34,8 +34,9 @@ namespace
     }
 }
 
-bool FortBuildingClassCache::Prepare(AFortGameStateAthena* State)
+bool FortBuildingClassCache::Prepare(AFortGameStateAthena* State, bool bOnlyBaseLevel)
 {
+    CachedState.Reset();
     if (!State) return Fail(TEXT("missing game state"));
 
     const FString File = FPaths::Combine(FPaths::ProjectConfigDir(), TEXT("PlayerBuildingClassRegistry.json"));
@@ -60,12 +61,17 @@ bool FortBuildingClassCache::Prepare(AFortGameStateAthena* State)
     {
         const TSharedPtr<FJsonObject>* Row = nullptr;
         FString Path;
-        if (!Value.IsValid() || !Value->TryGetObject(Row) || !(*Row)->TryGetStringField(TEXT("classPathCandidate"), Path))
+        double Level = -1;
+        if (!Value.IsValid() || !Value->TryGetObject(Row) || !(*Row)->TryGetStringField(TEXT("classPathCandidate"), Path) ||
+            !(*Row)->TryGetNumberField(TEXT("level"), Level) || (Level != 0 && Level != 1 && Level != 2))
             return Fail(TEXT("invalid record"));
         if (!Path.StartsWith(TEXT("/Game/Building/ActorBlueprints/Player/"), ESearchCase::CaseSensitive) ||
             !Path.EndsWith(TEXT("_C"), ESearchCase::CaseSensitive) || Seen.Contains(Path.ToLower()))
             return Fail(TEXT("invalid or duplicate class path"));
         Seen.Add(Path.ToLower());
+        // 0x141df9620: when the game state's +0xe17 byte is set,
+        // exclude nonzero CurrentBuildingLevel. The signed manifest pins the tags.
+        if (bOnlyBaseLevel && Level != 0) continue;
         UClass* Class = StaticLoadClass(ABuildingActor::StaticClass(), nullptr, *Path);
         if (!Class || !Class->IsChildOf(ABuildingActor::StaticClass()) || Class->GetPathName() != Path || !Class->GetDefaultObject())
         {
@@ -74,6 +80,7 @@ bool FortBuildingClassCache::Prepare(AFortGameStateAthena* State)
         }
         Classes.Add(Class);
     }
+    if (Classes.Num() != (bOnlyBaseLevel ? 133 : 331)) return Fail(TEXT("unexpected filtered class count"));
     Classes.Sort([](const UClass& A, const UClass& B) { return PathLess(A.GetPathName(), B.GetPathName()); });
     TMap<TSubclassOf<ABuildingActor>, int32> NewIndex;
     TArray<TSubclassOf<ABuildingSMActor>> ByResource[5];
@@ -95,7 +102,7 @@ bool FortBuildingClassCache::Prepare(AFortGameStateAthena* State)
     State->AllPlayerBuildableClassesIndexLookup = MoveTemp(NewIndex);
     for (int32 I = 0; I < 5; ++I) State->PlayerBuildableClasses[I].BuildingClasses = MoveTemp(ByResource[I]);
     CachedState = State;
-    UE_LOG(LogTemp, Warning, TEXT("Building cache: %d candidates loaded; original runtime ordering/load parity remains unverified"), Classes.Num());
+    UE_LOG(LogTemp, Warning, TEXT("Building cache: %d candidates loaded (base level only %d); original runtime ordering/load parity remains unverified"), Classes.Num(), bOnlyBaseLevel ? 1 : 0);
     return true;
 }
 

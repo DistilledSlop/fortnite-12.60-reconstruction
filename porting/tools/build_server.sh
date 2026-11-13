@@ -41,7 +41,7 @@ subprocess.run([sys.executable, '-I', str(porting / 'tools/stage_server_content.
                 '--src', str(content), '--max', '30000', '--strict', *packages], check=True)
 PYEOF
     fi
-    if [[ ${FN_STAGE_BUILDING_CACHE:-0} == 1 ]]; then
+    if [[ ${FN_STAGE_BUILDING_CACHE:-1} == 1 ]]; then
         registry_sha1=7dfa4a945e3fcf26cc6f0fd5d7b22f4700bd28b1
         registry_sha256=8cdd9e893b9e043d45702fb285d312476105b448330493cbb872ba3d58fe47b0
         if [[ -n ${FN_BUILDING_CLASS_MANIFEST:-} ]]; then
@@ -74,6 +74,19 @@ PYEOF
             exit 1
         fi
         cp "$registry" "$porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Config/PlayerBuildingClassRegistry.json" || exit 1
+    # The registry is also used to resolve requested construction handles. Stage
+    # every candidate as a root; terrain imports do not cover selectable pieces.
+    python3 -I - "$porting" "$registry" "${FN_COOKED_GAME_ROOT:-/mnt/vibrato/fortnite-extracted-full/FortniteGame}" <<'PYBUILDINGS' || exit 1
+from pathlib import Path
+import json, subprocess, sys
+porting, registry, game = map(Path, sys.argv[1:])
+rows = json.loads(registry.read_text())['rows']
+packages = sorted({row['classPathCandidate'].split('.', 1)[0] for row in rows})
+if len(rows) != 331 or len(packages) != 331 or any(not p.startswith('/Game/Building/ActorBlueprints/Player/') for p in packages):
+    raise SystemExit('Unexpected building registry roots; refusing stage')
+subprocess.run([sys.executable, '-I', str(porting / 'tools/stage_server_content.py'),
+                '--src', str(game / 'Content'), '--max', '30000', '--strict', *packages], check=True)
+PYBUILDINGS
     fi
     if [[ ${FN_STAGE_CHARACTER_CACHE:-0} == 1 ]]; then
         char_registry_sha1=aafb2f7788864605068d85fccd1de7e627f18682
