@@ -1150,3 +1150,58 @@ Maya research now also covers all 58 graph reward VTIDs and their target options
 across ten channels. Ten default-option tokens explicitly disable auto-equip and
 set bNeverPersisted; the other 48 omit auto-equip. All omit mark-unseen/giftbox.
 This metadata is private evidence, not a completed customization endpoint.
+
+### Maya reward graph commands and native contracts
+
+The original client now independently confirms the two missing Maya requests.
+On frozen `e10e743f`, selecting hairstyle 2 and confirming FINALIZE sent
+`UnlockRewardNode` with `nodeId: ERG.Node.Tier01.1`, the owned graph instance ID,
+and an empty `rewardCfg`; the old backend returned operation_not_found. Leaving
+Maya sent `SetRewardGraphConfig` with ten selected node tags and
+`Cosmetics.Variant.Channel.RichColor:00000000000000000000000000000000`, even
+though the scarf selection was Tier10.0. This corrects the earlier tentative
+property-tag/config interpretation. Private requests, screenshots and logs are
+in `generated/chrono-maya-native-probe/`. The test account's owned Maya, premium
+level 100 and ten earned keys are artificial fixtures, not gameplay proof.
+
+Recovered native `0x142002780` resolves the required key's full template ID,
+reads the profile's total quantity and subtracts its matching `reward_keys`
+`unlock_keys_used`. Earned tokens therefore remain owned rather than being
+consumed again. `0x1411579c0` matches the full template string. Evidence is in
+`generated/maya-key-accounting/findings.json`. Purchase-token processing and the
+backend's global spent-counter policy remain unrecovered.
+
+RichColor formatter `0x1426ffaf0` and decoder `0x1426fcbe0` use four consecutive
+raw IEEE754 RGBA words. Assembly proves a bit reinterpretation where Ghidra's C
+misleadingly suggests numeric conversion. The hashed CID695 tagged LinearColor
+payload is sixteen zero bytes, establishing default `(0,0,0,0)` independently of
+the inspector's stringified display. Native cosmetic converter `0x141d601f0`
+accepts channel `RichColor`, active `RichColor.<32hex>`, owned tag `RichColor`,
+and extracts custom data for material use. The generic converter's lowercase
+JSON aliases remain inferred; these are the existing backend variant fields.
+Evidence/captures are in `generated/maya-richcolor-contract/findings.json`.
+
+The backend implements preview saving and all 58 permanent graph choices using
+exact cooked node/key/token/option mappings and hashes in
+`season12_maya_graph_data.py`. Ten default tokens explicitly disable auto-equip
+and are never persisted; the other 48 inherit auto-equip. Preview never grants
+styles or spends a key. Permanent tier choices, custom colors and retries are
+validated atomically. Owned challenge quantities remain unchanged and per-key
+spending is persisted. Local purchase reconciliation consumes the corresponding
+purchase token into the owned graph flag/timestamp only when Maya is owned;
+reward repair recognizes that flag and does not repeatedly regrant the token.
+Local validation requires finite hexadecimal color words and prohibits changing
+permanent styles/colors through locker updates. Those backend rules are explicit
+local policy, not recovered original server implementation. Permanent changes
+also refresh equipped/saved locker snapshots, which the local gameplay loadout
+protocol reads.
+
+The current implementation passed **370 backend tests** in 20.825 seconds:
+`python3 -W ignore::ResourceWarning -m unittest discover -s porting/server/tests -p 'test_*.py'`.
+Fifteen Maya tests cover all 58 choices, the actual default-scarf preview shape,
+no preview grants, held key quantities, permanent choices, exact durable retry,
+invalid entitlements/colors, locker restrictions, equipped and saved snapshots,
+and SQLite-trigger rollback with cache/disk parity. The Battle Pass repair test
+also verifies the consumed purchase entitlement and idempotent repeat. Log:
+`generated/chrono-maya-implementation-probe/backend-tests.log`. Successful native
+customization and reward presentation are not established by these tests.

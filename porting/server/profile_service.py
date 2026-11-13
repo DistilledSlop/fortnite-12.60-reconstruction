@@ -257,7 +257,26 @@ def _equip(ctx, locker_id, category, item_id, slot_index, variant_updates=None, 
                 raise _invalid("Duplicate variant channel.")
             seen.add(channel)
             variant = next((v for v in variants if isinstance(v, dict) and v.get("channel") == channel), None)
-            if variant is None or not isinstance(variant.get("owned"), list) or active not in variant["owned"]:
+            maya_item = template.casefold() == 'athenacharacter:cid_695_athena_commando_f_desertopscamo'
+            maya_color = maya_item and channel == 'RichColor'
+            if maya_color:
+                # RichColor is the owned tag; active additionally carries raw
+                # color words. Maya's permanently chosen color may be equipped
+                # again, but locker updates cannot replace it with a new color.
+                owned_active = (variant is not None and
+                                isinstance(variant.get('owned'), list) and
+                                'RichColor' in variant['owned'] and
+                                active == variant.get('active') and
+                                re.fullmatch(r'RichColor\.[0-9A-Fa-f]{32}', active))
+            else:
+                owned_active = (variant is not None and
+                                isinstance(variant.get('owned'), list) and active in variant['owned'])
+                if maya_item and variant is not None and active != variant.get('active'):
+                    # Maya choices are permanent; only UnlockRewardNode changes
+                    # this outfit's selected styles. Ordinary locker equip can
+                    # reapply the existing choice, including its default tag.
+                    owned_active = False
+            if not owned_active:
                 raise _invalid("Variant is not owned by this cosmetic.")
             variant["active"] = active
         if updates:
@@ -296,6 +315,13 @@ def _debit_local_currency(ctx, price):
 def _grant_season12_rewards(ctx, athena, rewards, price):
     """Validate the full grant before committing any debit or profile changes."""
     owned = {item["templateId"].casefold() for item in athena.profile["items"].values()}
+    from season12_maya_graph_data import GRAPH_TEMPLATE, PURCHASE_TOKEN
+    if any(item['templateId'].casefold() == GRAPH_TEMPLATE.casefold() and
+           item['attributes'].get('reward_graph_purchased') is True
+           for item in athena.profile['items'].values()):
+        # The purchase token is consumed into the graph. Reward repair must
+        # recognize the entitlement after consumption rather than regrant it.
+        owned.add(PURCHASE_TOKEN.casefold())
     pending = []
     seen = set()
     credit = 0
@@ -338,6 +364,8 @@ def _grant_season12_rewards(ctx, athena, rewards, price):
     if quests is not None:
         quests.consume_variants(athena)
         quests.login(ctx, include_daily=False)
+    from maya_reward_service import reconcile_purchase
+    reconcile_purchase(ctx)
     convert_banner_tokens(ctx)
     if loot:
         ctx.notifications.append({"type": "CatalogPurchase", "primary": True, "lootResult": {"tierGroupName": "", "items": loot}})
@@ -521,6 +549,20 @@ def _mark_new_quest_notification_sent(ctx):
 def _toggle_quest_active_state(ctx):
     from faction_quest_service import toggle_faction_selection
     toggle_faction_selection(ctx, ctx.list_field("questIds"))
+
+
+@command("UnlockRewardNode", ("athena",), "observed",
+         "nodeId, rewardGraphId instance ID, rewardCfg: recovered Maya native caller; backend validation is local policy.")
+def _unlock_reward_node(ctx):
+    from maya_reward_service import unlock_reward_node
+    unlock_reward_node(ctx)
+
+
+@command("SetRewardGraphConfig", ("athena",), "observed",
+         "state string array and rewardGraphId instance ID: recovered Maya native caller.")
+def _set_reward_graph_config(ctx):
+    from maya_reward_service import set_reward_graph_config
+    set_reward_graph_config(ctx)
 
 
 @command("MarkItemSeen", ("athena", "common_core"), "observed", "itemIds: list of item ids (inferred).")
@@ -911,6 +953,8 @@ class ProfileService:
         ctx.tx(profile_id)
         cmd.fn(ctx)
         if "athena" in ctx.txs:
+            from maya_reward_service import reconcile_purchase
+            reconcile_purchase(ctx)
             convert_banner_tokens(ctx)
         self._store(account_id, ctx.txs, command_profile=profile_id)
         primary = ctx.txs[profile_id]

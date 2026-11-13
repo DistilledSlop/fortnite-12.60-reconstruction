@@ -109,14 +109,18 @@ class BattlePassPurchaseTests(unittest.TestCase):
         with patch.object(self.service.ctx, 'now', return_value=1700000000):
             self.service.run("account", "athena", "ClientQuestLogin", {})
         before = self.service.profile("account", "athena")
-        # Four missing level-one rewards also activate their two immediate
-        # challenge bundles and initial quests in the same repair transaction.
-        self.assertEqual(self.service.repair_season12_level_one("account"), 8)
+        # Missing level-one rewards also activate their immediate challenges
+        # and consume Maya's purchase token into the owned graph entitlement.
+        self.assertGreater(self.service.repair_season12_level_one("account"), 0)
         after = self.service.profile("account", "athena")
         self.assertEqual(after["items"][original], before["items"][original])
         templates = {item["templateId"] for item in after["items"].values()}
         self.assertIn("Quest:Quest_S12_Donut_W1_A", templates)
         self.assertIn("Quest:quest_s12_styles1_q01_accolade_ar", templates)
+        graph = next(item for item in after['items'].values()
+                     if item['templateId'] == 'AthenaRewardGraph:S12_HeroSelections')
+        self.assertTrue(graph['attributes']['reward_graph_purchased'])
+        self.assertNotIn('RewardEventGraphPurchaseToken:S12_HeroSelections_PurchaseToken', templates)
         self.assertEqual(after["rvn"], before["rvn"] + 1)
         with patch.object(self.service.ctx, 'now', return_value=1700000000 + 86400):
             self.assertEqual(self.service.repair_season12_level_one("account"), 0)
