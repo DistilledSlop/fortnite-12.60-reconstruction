@@ -8,7 +8,7 @@ Read `porting/LAYOUT.md` for where code lives and where every run, log, screensh
 
 Dashboard task weights estimate total implementation and verification effort, completed plus remaining. Importance, urgency, milestone criticality, and a desired progress percentage must not affect weights. Define accounting boundaries and avoid allocating the same effort to multiple leaves; report uncertain estimates explicitly.
 
-The primary agent plans, orchestrates, and reviews, and works directly when useful. Use `gpt-6-luna` medium for small read-only tasks, `gpt-6.1-terra` low or medium for regular delegated work, and `gpt-6.1-sol` medium for really complex delegated tasks. The user prefers low or medium reasoning for Terra; preserve this preference in handoffs and compaction summaries. Always set `fork_turns: "none"`. At most three internal subagents work at once. The user authorizes up to ten concurrent external Flash workers with disjoint multi-function batches; reserve single-function assignments for genuinely large functions. Assign one owner to `porting/native/`, promotion, staging, and UE builds; avoid concurrent generation/build operations.
+The primary agent plans, orchestrates, and reviews, and works directly when useful. Use `gpt-6-luna` medium for small read-only tasks, `gpt-6.1-terra` medium or high for regular delegated work (high when complexity warrants it), and `gpt-6.1-sol` medium for really complex delegated tasks. Preserve this model and reasoning configuration in handoffs and compaction summaries. Always set `fork_turns: "none"`. At most three internal subagents work at once. The user authorizes up to ten concurrent external Flash workers with disjoint multi-function batches; reserve single-function assignments for genuinely large functions. Assign one owner to `porting/native/`, promotion, staging, and UE builds; avoid concurrent generation/build operations.
 
 Preserve existing edits. Stage specific paths, review and commit completed validated changes, and never force push. Private origin: https://github.com/DistilledSlop/fortnite-12.60-reconstruction. Use Codex <codex@openai.com> for new commits. The user-authorized identity-only history rewrite is complete; resume ordinary pushes. Keep credentials, recovered game data, and generated runtime artifacts out of Git. Never print or log key material. Do not hand-edit generated native code; change generator inputs and regenerate.
 
@@ -85,7 +85,7 @@ or placeholders as verified bodies or claim their behavior is implemented.
 Integrate completed gameplay code for the UI collaborator to use rather than
 holding it back; the user authorized this shared Native integration.
 
-For bulk native recovery, use Terra 6.1 low/medium effort workers for brute-force
+For bulk native recovery, use Terra 6.1 medium/high effort workers for brute-force
 work that automation cannot handle. Claude is also authorized as a workhorse;
 give it bounded independent source batches with clear file ownership. Keep one
 Native promotion/build stream and skip visual work until the user resumes it.
@@ -98,6 +98,6 @@ and explicitly label bodies added since the tested baseline as build pending.
 # External model workers
 
 Current user instruction: keep Claude workers stopped and its usage free until the user asks to resume.
-Use Terra 6.1 low workers for the current bulk recovery and rotation.
+Use Terra 6.1 medium workers for the current bulk recovery and rotation, choosing high when complexity warrants it.
 
 Antigravity CLI (`agy`) is available. Use Gemini 3.8 Flash for narrow, explicit bulk tasks with complete implementation standards and evidence review; reject stubs, omitted behavior, and unsupported defaults. Reserve Claude Opus 5.5 for short, tightly scoped hard problems: it consumes Antigravity Claude quota very quickly. Use Terra, Flash, and Sonnet for bulk implementation and long source-recovery runs. Keep authorized Claude work moving while its provider has usage. Do not interrupt an existing useful Sonnet run merely to change models.
