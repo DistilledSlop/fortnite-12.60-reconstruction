@@ -2,6 +2,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaHealth.h"
+#include "FortAthenaBuilding.h"
 #include "FortAthenaMatchFlow.h"
 #include "AFortTeamInfoAthena.h"
 #include "AMegaStormManager.h"
@@ -211,6 +212,7 @@ void AFortGameModeAthena::StartPlay()
     }
     Super::StartPlay();
     FortAthenaInventory::InstallRpcOverrides();
+    FortAthenaBuilding::InstallRpcOverrides();
     if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteNoHealth")))
         FortAthenaHealth::InstallRpcOverrides();
     FortAthenaMatchFlow::InstallRpcOverrides();
@@ -484,7 +486,16 @@ static void EnsureTimeOfDayManager(UWorld* World)
         return;
     FActorSpawnParameters Params;
     Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-    AFortTimeOfDayManager* Manager = World->SpawnActor<AFortTimeOfDayManager>(AFortTimeOfDayManager::StaticClass(), FTransform::Identity, Params);
+    // Apollo_Terrain names its manager Blueprint in WorldTimeOfDayManager (data: TODM_BR_s11_C); the client spawns whatever
+    // class the server replicates, so the Blueprint carries the day phases, sky light and fog the native class lacks.
+    UClass* ManagerClass = nullptr;
+    if (FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")))
+    {
+        ManagerClass = StaticLoadClass(AFortTimeOfDayManager::StaticClass(), nullptr, TEXT("/Game/TimeOfDay/TODM/BR/s11/TODM_BR_s11.TODM_BR_s11_C"));
+        if (!ManagerClass)
+            UE_LOG(LogTemp, Warning, TEXT("TimeOfDay: TODM_BR_s11_C not loadable; using the native class"));
+    }
+    AFortTimeOfDayManager* Manager = World->SpawnActor<AFortTimeOfDayManager>(ManagerClass ? ManagerClass : AFortTimeOfDayManager::StaticClass(), FTransform::Identity, Params);
     if (!Manager)
     {
         UE_LOG(LogTemp, Warning, TEXT("TimeOfDayManager spawn failed"));
