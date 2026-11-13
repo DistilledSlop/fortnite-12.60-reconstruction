@@ -60,8 +60,35 @@ Focused log-reader checks (MinGW-w64 and Wine):
 These checks use temporary files and cover stale, split, replaced and truncated
 logs. The full original-client launch remains a separate runtime check.
 
-Wine launcher (Linux)
----------------------
+Native Linux build
+------------------
+build.sh also builds ProjectChrono (no extension), the same launcher window as a
+native Linux program (Qt 6 Widgets, source launcher_linux.cpp). It needs the Qt 6
+development files at build time (Debian/Ubuntu: qt6-base-dev) and is skipped with
+a message when they are missing. Keep it in the same folder as ProjectChrono.exe,
+FortniteLocalHelper.dll and local-server.ini: the game is a Windows program, so
+on Play the native build runs ProjectChrono.exe --headless inside the selected
+prefix, where it starts the game and loads the helper, and shows its status.
+
+The LINUX RUNTIME card selects how the prefix is run:
+  Wine    Prefix folder is a Wine prefix (contains drive_c). Wine binary may be
+          left empty to use wine on PATH.
+  Proton  Prefix folder is a Proton compatdata folder (the one containing pfx;
+          selecting pfx itself also works, and an empty folder is set up by
+          Proton on first Play). Proton script is the file named proton inside a
+          Proton folder; installed copies under the usual Steam folders are
+          found automatically.
+Game executable and certificate are chosen as Linux paths. local-server.ini keeps
+them in the form the Windows build reads (Z:\... paths), so both builds share one
+file; the Linux choices are in its [Linux] section (Runner, Prefix, Wine, Proton,
+and the optional SteamRoot and DllOverrides, for example DllOverrides=d3d11,dxgi=n
+for a Wine prefix with DXVK copied in but not registered). Environment variables
+of the launcher are passed on, so PROTON_LOG=1 or DXVK_HUD=fps work as usual.
+ProjectChrono --headless launches from the saved settings without a window.
+build.sh no longer overwrites an existing local-server.ini in the output folder.
+
+Wine wrapper script (Linux)
+---------------------------
 Build the tools as above, configure local-server.ini and provide the backend's
 public server-ca.pem alongside ProjectChrono.exe, and start the HTTPS backend
 before launching. Select the original game executable in the launcher if it is

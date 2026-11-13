@@ -18,16 +18,43 @@
 
 /* All paths in the configuration are relative to the launcher directory. */
 #define CAP 32768
-static wchar_t dir[CAP], ini[CAP], game[CAP], cert[CAP], dll[CAP], log_path[CAP];
+static wchar_t dir[CAP], ini[CAP], game[CAP], cert[CAP], dll[CAP], log_path[CAP], status_file[CAP];
 static wchar_t server[64], account[64], cmd[CAP];
 
 #define WM_STATUS (WM_APP + 1)
 #define WM_FINISHED (WM_APP + 2)
 static HWND window, fields[4], play_button, status_label;
-static int headless;
+static int headless, tagged;
+static void write_utf8_handle(HANDLE h, const char *prefix, const char *text) {
+    DWORD written = 0;
+    if (prefix && *prefix) WriteFile(h, prefix, (DWORD)strlen(prefix), &written, NULL);
+    if (text && *text) WriteFile(h, text, (DWORD)strlen(text), &written, NULL);
+    WriteFile(h, "\n", 1, &written, NULL);
+}
 static void status(const wchar_t *message) {
-    if (headless) fwprintf(stderr, L"%ls\n", message);
-    else if (window) {
+    /* The native Linux build runs this one headless inside the prefix and picks its status lines from the status file or Wine's output. */
+    if (headless) {
+        char utf8[1024];
+        int n = WideCharToMultiByte(CP_UTF8, 0, message, -1, utf8, (int)sizeof(utf8), NULL, NULL);
+        if (n > 1) {
+            HANDLE err = GetStdHandle(STD_ERROR_HANDLE);
+            if (err && err != INVALID_HANDLE_VALUE) {
+                write_utf8_handle(err, tagged ? "@chrono " : NULL, utf8);
+            } else {
+                fwprintf(stderr, tagged ? L"@chrono %ls\n" : L"%ls\n", message);
+                fflush(stderr);
+            }
+            if (status_file[0]) {
+                HANDLE sf = CreateFileW(status_file, FILE_APPEND_DATA,
+                    FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+                    NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+                if (sf != INVALID_HANDLE_VALUE) {
+                    write_utf8_handle(sf, NULL, utf8);
+                    CloseHandle(sf);
+                }
+            }
+        }
+    } else if (window) {
         size_t bytes = (wcslen(message) + 1) * sizeof(wchar_t);
         wchar_t *copy = (wchar_t *)HeapAlloc(GetProcessHeap(), 0, bytes);
         if (copy) { memcpy(copy, message, bytes); if (!PostMessageW(window, WM_STATUS, 0, (LPARAM)copy)) HeapFree(GetProcessHeap(), 0, copy); }
@@ -318,9 +345,47 @@ event_failure:
 #define ID_CERT_BROWSE 202
 #define ID_PLAY 203
 #define ID_LOG 204
-static HFONT font, title_font, brand_font, small_font, button_font;
+/* Minimal GDI+ flat C API declarations for anti-aliased cards, inputs, buttons and clock motif. */
+typedef struct GpGraphics GpGraphics;
+typedef struct GpPen GpPen;
+typedef struct GpBrush GpBrush;
+typedef struct GpSolidFill GpSolidFill;
+typedef struct GpPath GpPath;
+typedef DWORD ARGB;
+typedef float REAL;
+typedef int GpStatus;
+typedef struct { UINT32 GdiplusVersion; void *DebugEventCallback; BOOL SuppressBackgroundThread; BOOL SuppressExternalCodecs; } GdiplusStartupInput;
+GpStatus WINAPI GdiplusStartup(ULONG_PTR *, const GdiplusStartupInput *, void *);
+void WINAPI GdiplusShutdown(ULONG_PTR);
+GpStatus WINAPI GdipCreateFromHDC(HDC, GpGraphics **);
+GpStatus WINAPI GdipDeleteGraphics(GpGraphics *);
+GpStatus WINAPI GdipSetSmoothingMode(GpGraphics *, int);
+GpStatus WINAPI GdipSetPixelOffsetMode(GpGraphics *, int);
+GpStatus WINAPI GdipCreatePen1(ARGB, REAL, int, GpPen **);
+GpStatus WINAPI GdipSetPenStartCap(GpPen *, int);
+GpStatus WINAPI GdipSetPenEndCap(GpPen *, int);
+GpStatus WINAPI GdipDeletePen(GpPen *);
+GpStatus WINAPI GdipCreateSolidFill(ARGB, GpSolidFill **);
+GpStatus WINAPI GdipDeleteBrush(GpBrush *);
+GpStatus WINAPI GdipCreatePath(int, GpPath **);
+GpStatus WINAPI GdipDeletePath(GpPath *);
+GpStatus WINAPI GdipAddPathArc(GpPath *, REAL, REAL, REAL, REAL, REAL, REAL);
+GpStatus WINAPI GdipClosePathFigure(GpPath *);
+GpStatus WINAPI GdipFillPath(GpGraphics *, GpBrush *, GpPath *);
+GpStatus WINAPI GdipDrawPath(GpGraphics *, GpPen *, GpPath *);
+GpStatus WINAPI GdipDrawEllipse(GpGraphics *, GpPen *, REAL, REAL, REAL, REAL);
+GpStatus WINAPI GdipFillEllipse(GpGraphics *, GpBrush *, REAL, REAL, REAL, REAL);
+GpStatus WINAPI GdipDrawLine(GpGraphics *, GpPen *, REAL, REAL, REAL, REAL);
+static ARGB argb(BYTE a, COLORREF c) {
+    return ((ARGB)a << 24) | ((ARGB)GetRValue(c) << 16) | ((ARGB)GetGValue(c) << 8) | (ARGB)GetBValue(c);
+}
+
+static HFONT font, title_font, brand_font, section_font, label_font, small_font, button_font;
 static HBRUSH background, card_background, edit_background;
-static HWND browse[2], title_label, tag_label, brand_label, subtitle_label, note_label;
+static HWND browse[2], log_button, title_label, tag_label, brand_label, subtitle_label, note_label, hovered_button;
+static HWND section_labels[2], field_labels[4];
+static WNDPROC orig_button_proc;
+static int status_kind;
 static int initialize_paths(void) {
     DWORD n = GetModuleFileNameW(NULL, dir, CAP); wchar_t *slash;
     if (!n || n >= CAP || !(slash = wcsrchr(dir, L'\\'))) return 0;
@@ -329,6 +394,30 @@ static int initialize_paths(void) {
 static HWND control(const wchar_t *cls, const wchar_t *text, DWORD style, int x, int y, int w, int h, int id) {
     HWND hnd = CreateWindowExW(0, cls, text, WS_CHILD | WS_VISIBLE | style, x, y, w, h, window, (HMENU)(INT_PTR)id, GetModuleHandleW(NULL), NULL);
     SendMessageW(hnd, WM_SETFONT, (WPARAM)font, TRUE); return hnd;
+}
+static int classify_status(const wchar_t *msg) {
+    if (!msg || !*msg) return 0;
+    if (wcsstr(msg, L"Local helper ready")) return 2;
+    if (wcsstr(msg, L"failed") || wcsstr(msg, L"missing") || wcsstr(msg, L"must be") ||
+        wcsstr(msg, L"Invalid") || wcsstr(msg, L"Could not") || wcsstr(msg, L"timed out") ||
+        wcsstr(msg, L"unavailable") || wcsstr(msg, L"No helper log") || wcsstr(msg, L"exited with code") ||
+        wcsstr(msg, L"1\x2013" L"32") || wcsstr(msg, L"exited before")) return 1;
+    if (wcsstr(msg, L"\x2026") || wcsstr(msg, L"...") || wcsstr(msg, L"Preparing") ||
+        wcsstr(msg, L"Starting") || wcsstr(msg, L"Loading") || wcsstr(msg, L"Initializing")) return 3;
+    return 0;
+}
+static COLORREF status_dot_color(int kind) {
+    if (kind == 1) return RGB(242, 139, 130);
+    if (kind == 2) return RGB(102, 214, 204);
+    if (kind == 3) return RGB(190, 175, 255);
+    return RGB(92, 106, 135);
+}
+static void set_ui_status(const wchar_t *msg) {
+    RECT dot = {46, 558, 62, 574};
+    status_kind = classify_status(msg);
+    SetWindowTextW(status_label, msg);
+    InvalidateRect(window, &dot, FALSE);
+    InvalidateRect(status_label, NULL, TRUE);
 }
 static void set_enabled(BOOL enabled) {
     int i; for (i = 0; i < 4; ++i) EnableWindow(fields[i], enabled);
@@ -357,15 +446,63 @@ static DWORD WINAPI worker(LPVOID unused) {
     if (window) PostMessageW(window, WM_FINISHED, (WPARAM)result, 0);
     return 0;
 }
-static void rounded(HDC dc, int x, int y, int w, int h, int radius, COLORREF fill, COLORREF edge) {
-    HBRUSH brush = CreateSolidBrush(fill); HPEN pen = CreatePen(PS_SOLID, 1, edge);
-    HGDIOBJ oldbrush = SelectObject(dc, brush), oldpen = SelectObject(dc, pen);
-    RoundRect(dc, x, y, x + w, y + h, radius, radius);
-    SelectObject(dc, oldbrush); SelectObject(dc, oldpen); DeleteObject(brush); DeleteObject(pen);
+static LRESULT CALLBACK button_proc(HWND hwnd, UINT message, WPARAM wp, LPARAM lp) {
+    if (message == WM_MOUSEMOVE) {
+        if (hovered_button != hwnd) {
+            TRACKMOUSEEVENT tme = {sizeof(tme), TME_LEAVE, hwnd, 0};
+            hovered_button = hwnd;
+            TrackMouseEvent(&tme);
+            InvalidateRect(hwnd, NULL, FALSE);
+        }
+    } else if (message == WM_MOUSELEAVE) {
+        if (hovered_button == hwnd) { hovered_button = NULL; InvalidateRect(hwnd, NULL, FALSE); }
+    } else if (message == WM_SETCURSOR && IsWindowEnabled(hwnd)) {
+        SetCursor(LoadCursorW(NULL, IDC_HAND));
+        return TRUE;
+    }
+    return CallWindowProcW(orig_button_proc, hwnd, message, wp, lp);
 }
-static void line(HDC dc, int x1, int y1, int x2, int y2, COLORREF color) {
-    HPEN pen = CreatePen(PS_SOLID, 1, color); HGDIOBJ old = SelectObject(dc, pen);
-    MoveToEx(dc, x1, y1, NULL); LineTo(dc, x2, y2); SelectObject(dc, old); DeleteObject(pen);
+static void gdip_round_rect(GpGraphics *g, REAL x, REAL y, REAL w, REAL h, REAL r, ARGB fill, ARGB edge, REAL stroke_w) {
+    GpPath *path = NULL; GpSolidFill *brush = NULL; GpPen *pen = NULL;
+    REAL d = r * 2.0f;
+    if (GdipCreatePath(0, &path) != 0 || !path) return;
+    GdipAddPathArc(path, x, y, d, d, 180.0f, 90.0f);
+    GdipAddPathArc(path, x + w - d, y, d, d, 270.0f, 90.0f);
+    GdipAddPathArc(path, x + w - d, y + h - d, d, d, 0.0f, 90.0f);
+    GdipAddPathArc(path, x, y + h - d, d, d, 90.0f, 90.0f);
+    GdipClosePathFigure(path);
+    if ((fill >> 24) && GdipCreateSolidFill(fill, &brush) == 0 && brush) {
+        GdipFillPath(g, (GpBrush *)brush, path);
+        GdipDeleteBrush((GpBrush *)brush);
+    }
+    if ((edge >> 24) && stroke_w > 0.0f && GdipCreatePen1(edge, stroke_w, 2, &pen) == 0 && pen) {
+        GdipDrawPath(g, pen, path);
+        GdipDeletePen(pen);
+    }
+    GdipDeletePath(path);
+}
+static void gdip_line(GpGraphics *g, REAL x1, REAL y1, REAL x2, REAL y2, ARGB color, REAL w, int cap) {
+    GpPen *pen = NULL;
+    if (GdipCreatePen1(color, w, 2, &pen) == 0 && pen) {
+        if (cap) { GdipSetPenStartCap(pen, cap); GdipSetPenEndCap(pen, cap); }
+        GdipDrawLine(g, pen, x1, y1, x2, y2);
+        GdipDeletePen(pen);
+    }
+}
+static void gdip_circle(GpGraphics *g, REAL x, REAL y, REAL d, ARGB fill, ARGB edge, REAL stroke_w) {
+    GpSolidFill *brush = NULL; GpPen *pen = NULL;
+    if ((fill >> 24) && GdipCreateSolidFill(fill, &brush) == 0 && brush) {
+        GdipFillEllipse(g, (GpBrush *)brush, x, y, d, d);
+        GdipDeleteBrush((GpBrush *)brush);
+    }
+    if ((edge >> 24) && stroke_w > 0.0f && GdipCreatePen1(edge, stroke_w, 2, &pen) == 0 && pen) {
+        GdipDrawEllipse(g, pen, x, y, d, d);
+        GdipDeletePen(pen);
+    }
+}
+static void hook_button(HWND btn) {
+    WNDPROC prev = (WNDPROC)SetWindowLongPtrW(btn, GWLP_WNDPROC, (LONG_PTR)button_proc);
+    if (!orig_button_proc) orig_button_proc = prev;
 }
 static LRESULT CALLBACK window_proc(HWND hwnd, UINT message, WPARAM wp, LPARAM lp) {
     switch (message) {
@@ -376,70 +513,98 @@ static LRESULT CALLBACK window_proc(HWND hwnd, UINT message, WPARAM wp, LPARAM l
         window = hwnd;
         title_font = CreateFontW(-34, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE, DEFAULT_CHARSET, 0, 0, CLEARTYPE_QUALITY, 0, L"Segoe UI");
         brand_font = CreateFontW(-19, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE, DEFAULT_CHARSET, 0, 0, CLEARTYPE_QUALITY, 0, L"Segoe UI");
-        font = CreateFontW(-15, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, 0, 0, CLEARTYPE_QUALITY, 0, L"Segoe UI");
+        section_font = CreateFontW(-12, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE, DEFAULT_CHARSET, 0, 0, CLEARTYPE_QUALITY, 0, L"Segoe UI");
+        label_font = CreateFontW(-13, 0, 0, 0, FW_SEMIBOLD, FALSE, FALSE, FALSE, DEFAULT_CHARSET, 0, 0, CLEARTYPE_QUALITY, 0, L"Segoe UI");
+        font = CreateFontW(-14, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, 0, 0, CLEARTYPE_QUALITY, 0, L"Segoe UI");
         small_font = CreateFontW(-13, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, 0, 0, CLEARTYPE_QUALITY, 0, L"Segoe UI");
-        button_font = CreateFontW(-15, 0, 0, 0, FW_SEMIBOLD, FALSE, FALSE, FALSE, DEFAULT_CHARSET, 0, 0, CLEARTYPE_QUALITY, 0, L"Segoe UI");
+        button_font = CreateFontW(-14, 0, 0, 0, FW_SEMIBOLD, FALSE, FALSE, FALSE, DEFAULT_CHARSET, 0, 0, CLEARTYPE_QUALITY, 0, L"Segoe UI");
         background = CreateSolidBrush(RGB(15, 20, 33)); card_background = CreateSolidBrush(RGB(27, 34, 51)); edit_background = CreateSolidBrush(RGB(39, 48, 68));
-        brand_label = control(L"STATIC", L"PROJECTCHRONO", 0, 48, 32, 240, 26, 0); SendMessageW(brand_label, WM_SETFONT, (WPARAM)brand_font, TRUE);
-        tag_label = control(L"STATIC", L"FORTNITE 12.60   /   CHAPTER 2  SEASON 2", 0, 48, 75, 420, 22, 0); SendMessageW(tag_label, WM_SETFONT, (WPARAM)small_font, TRUE);
-        title_label = control(L"STATIC", L"Back to the island.", 0, 48, 105, 550, 48, 0); SendMessageW(title_label, WM_SETFONT, (WPARAM)title_font, TRUE);
-        subtitle_label = control(L"STATIC", L"Set up your local session and make your return.", 0, 50, 157, 570, 24, 0);
-        control(L"STATIC", L"YOUR SESSION", 0, 74, 229, 300, 24, 0);
-        control(L"STATIC", L"Server IPv4 address", 0, 74, 270, 320, 22, 0);
-        fields[2] = control(L"EDIT", L"", ES_AUTOHSCROLL | WS_TABSTOP, 84, 300, 354, 23, ID_SERVER);
-        control(L"STATIC", L"Account name", 0, 74, 351, 320, 22, 0);
-        fields[3] = control(L"EDIT", L"", ES_AUTOHSCROLL | WS_TABSTOP, 84, 381, 354, 23, ID_ACCOUNT);
-        control(L"STATIC", L"GAME FILES", 0, 518, 229, 300, 24, 0);
-        control(L"STATIC", L"Game executable", 0, 518, 270, 320, 22, 0);
-        fields[0] = control(L"EDIT", L"", ES_AUTOHSCROLL | WS_TABSTOP, 528, 300, 257, 23, ID_GAME);
-        browse[0] = control(L"BUTTON", L"Browse", WS_TABSTOP | BS_OWNERDRAW, 800, 292, 92, 39, ID_GAME_BROWSE);
-        control(L"STATIC", L"Public CA certificate", 0, 518, 351, 320, 22, 0);
-        fields[1] = control(L"EDIT", L"", ES_AUTOHSCROLL | WS_TABSTOP, 528, 381, 257, 23, ID_CERT);
-        browse[1] = control(L"BUTTON", L"Browse", WS_TABSTOP | BS_OWNERDRAW, 800, 373, 92, 39, ID_CERT_BROWSE);
+        brand_label = control(L"STATIC", L"PROJECTCHRONO", 0, 48, 30, 240, 26, 0); SendMessageW(brand_label, WM_SETFONT, (WPARAM)brand_font, TRUE);
+        tag_label = control(L"STATIC", L"FORTNITE 12.60   /   CHAPTER 2 \x00b7 SEASON 2", 0, 48, 72, 420, 20, 0); SendMessageW(tag_label, WM_SETFONT, (WPARAM)section_font, TRUE);
+        title_label = control(L"STATIC", L"Back to the island.", 0, 48, 100, 550, 46, 0); SendMessageW(title_label, WM_SETFONT, (WPARAM)title_font, TRUE);
+        subtitle_label = control(L"STATIC", L"Set up your local session and make your return.", 0, 49, 154, 570, 22, 0); SendMessageW(subtitle_label, WM_SETFONT, (WPARAM)font, TRUE);
+        section_labels[0] = control(L"STATIC", L"YOUR SESSION", 0, 74, 228, 300, 20, 0); SendMessageW(section_labels[0], WM_SETFONT, (WPARAM)section_font, TRUE);
+        field_labels[0] = control(L"STATIC", L"Server IPv4 address", 0, 74, 266, 320, 20, 0); SendMessageW(field_labels[0], WM_SETFONT, (WPARAM)label_font, TRUE);
+        fields[2] = control(L"EDIT", L"", ES_AUTOHSCROLL | WS_TABSTOP, 86, 299, 340, 21, ID_SERVER);
+        field_labels[1] = control(L"STATIC", L"Account name", 0, 74, 348, 320, 20, 0); SendMessageW(field_labels[1], WM_SETFONT, (WPARAM)label_font, TRUE);
+        fields[3] = control(L"EDIT", L"", ES_AUTOHSCROLL | WS_TABSTOP, 86, 381, 340, 21, ID_ACCOUNT);
+        section_labels[1] = control(L"STATIC", L"GAME FILES", 0, 518, 228, 300, 20, 0); SendMessageW(section_labels[1], WM_SETFONT, (WPARAM)section_font, TRUE);
+        field_labels[2] = control(L"STATIC", L"Game executable", 0, 518, 266, 320, 20, 0); SendMessageW(field_labels[2], WM_SETFONT, (WPARAM)label_font, TRUE);
+        fields[0] = control(L"EDIT", L"", ES_AUTOHSCROLL | WS_TABSTOP, 530, 299, 264, 21, ID_GAME);
+        browse[0] = control(L"BUTTON", L"Browse", WS_TABSTOP | BS_OWNERDRAW, 814, 290, 92, 39, ID_GAME_BROWSE); hook_button(browse[0]);
+        field_labels[3] = control(L"STATIC", L"Public CA certificate", 0, 518, 348, 320, 20, 0); SendMessageW(field_labels[3], WM_SETFONT, (WPARAM)label_font, TRUE);
+        fields[1] = control(L"EDIT", L"", ES_AUTOHSCROLL | WS_TABSTOP, 530, 381, 264, 21, ID_CERT);
+        browse[1] = control(L"BUTTON", L"Browse", WS_TABSTOP | BS_OWNERDRAW, 814, 372, 92, 39, ID_CERT_BROWSE); hook_button(browse[1]);
         for (i = 0; i < 4; ++i) { GetPrivateProfileStringW(L"LocalServer", keys[i], defaults[i], value, CAP, ini); SetWindowTextW(fields[i], value); }
         SendMessageW(fields[2], EM_SETLIMITTEXT, 63, 0); SendMessageW(fields[3], EM_SETLIMITTEXT, 32, 0);
-        play_button = control(L"BUTTON", L"Play  \x2192", WS_TABSTOP | BS_OWNERDRAW, 48, 483, 190, 52, ID_PLAY);
-        control(L"BUTTON", L"Open log", WS_TABSTOP | BS_OWNERDRAW, 249, 483, 120, 52, ID_LOG);
-        status_label = control(L"STATIC", L"Ready to configure your local session.", 0, 48, 557, 850, 38, 0);
-        note_label = control(L"STATIC", L"On Play, the selected public CA is trusted for this Windows account.", 0, 48, 608, 850, 24, 0); SendMessageW(note_label, WM_SETFONT, (WPARAM)small_font, TRUE);
+        play_button = control(L"BUTTON", L"Play  \x2192", WS_TABSTOP | BS_OWNERDRAW, 48, 483, 190, 50, ID_PLAY); hook_button(play_button);
+        log_button = control(L"BUTTON", L"Open log", WS_TABSTOP | BS_OWNERDRAW, 250, 483, 120, 50, ID_LOG); hook_button(log_button);
+        status_label = control(L"STATIC", L"Ready to configure your local session.", 0, 64, 553, 868, 24, 0);
+        note_label = control(L"STATIC", L"On Play, the selected public CA is trusted for this Windows account.", 0, 48, 610, 884, 22, 0); SendMessageW(note_label, WM_SETFONT, (WPARAM)small_font, TRUE);
         return 0;
     }
     case WM_COMMAND:
+        if (HIWORD(wp) == EN_SETFOCUS || HIWORD(wp) == EN_KILLFOCUS) {
+            InvalidateRect(hwnd, NULL, FALSE);
+            return 0;
+        }
         switch (LOWORD(wp)) {
         case ID_GAME_BROWSE: choose_file(0); return 0;
         case ID_CERT_BROWSE: choose_file(1); return 0;
         case ID_LOG: {
             wchar_t path[CAP];
             if (!full_path(L"ProjectChrono-helper.log", path) || !is_file(path) || (INT_PTR)ShellExecuteW(hwnd, L"open", path, NULL, dir, SW_SHOWNORMAL) <= 32)
-                SetWindowTextW(status_label, L"No helper log is available yet.");
+                set_ui_status(L"No helper log is available yet.");
             return 0;
         }
         case ID_PLAY: {
             HANDLE thread;
             if (!IsWindowEnabled(play_button)) return 0;
-            if (!save_settings()) { SetWindowTextW(status_label, L"Could not save settings beside the launcher."); return 0; }
-            set_enabled(FALSE); SetWindowTextW(status_label, L"Preparing local session…");
+            if (!save_settings()) { set_ui_status(L"Could not save settings beside the launcher."); return 0; }
+            set_enabled(FALSE); set_ui_status(L"Preparing local session\x2026");
             thread = CreateThread(NULL, 0, worker, NULL, 0, NULL);
-            if (thread) CloseHandle(thread); else { set_enabled(TRUE); SetWindowTextW(status_label, L"Could not start launcher worker."); }
+            if (thread) CloseHandle(thread); else { set_enabled(TRUE); set_ui_status(L"Could not start launcher worker."); }
             return 0;
         }} break;
     case WM_DRAWITEM: {
         DRAWITEMSTRUCT *draw = (DRAWITEMSTRUCT *)lp;
         BOOL primary = draw->CtlID == ID_PLAY;
         BOOL disabled = (draw->itemState & ODS_DISABLED) != 0;
-        COLORREF fill = disabled ? RGB(49, 53, 68) : primary ? RGB(126, 98, 224) : RGB(48, 58, 80);
-        COLORREF edge = (draw->itemState & ODS_FOCUS) ? RGB(102, 221, 208) : fill;
-        wchar_t label[80]; RECT r = draw->rcItem;
-        FillRect(draw->hDC, &r, (draw->CtlID == ID_GAME_BROWSE || draw->CtlID == ID_CERT_BROWSE) ? card_background : background);
-        if (draw->itemState & ODS_SELECTED) fill = primary ? RGB(105, 79, 196) : RGB(60, 72, 96);
-        rounded(draw->hDC, r.left, r.top, r.right - r.left, r.bottom - r.top, 12, fill, edge);
+        BOOL hovered = !disabled && hovered_button == draw->hwndItem;
+        BOOL pressed = !disabled && (draw->itemState & ODS_SELECTED) != 0;
+        BOOL in_card = draw->CtlID == ID_GAME_BROWSE || draw->CtlID == ID_CERT_BROWSE;
+        COLORREF bg = in_card ? RGB(27, 34, 51) : RGB(15, 20, 33);
+        COLORREF fill = disabled ? RGB(49, 53, 68)
+            : primary ? (pressed ? RGB(105, 79, 196) : hovered ? RGB(141, 115, 234) : RGB(126, 98, 224))
+                      : (pressed ? RGB(60, 72, 96) : hovered ? RGB(58, 70, 95) : RGB(48, 58, 80));
+        COLORREF edge = (draw->itemState & ODS_FOCUS) ? RGB(102, 221, 208)
+            : primary ? fill : disabled ? fill : RGB(62, 75, 102);
+        RECT r = draw->rcItem;
+        int w = r.right - r.left, h = r.bottom - r.top;
+        HDC mem = CreateCompatibleDC(draw->hDC);
+        HBITMAP bmp = CreateCompatibleBitmap(draw->hDC, w, h);
+        HGDIOBJ old = SelectObject(mem, bmp);
+        HBRUSH bg_brush = CreateSolidBrush(bg);
+        RECT mr = {0, 0, w, h};
+        GpGraphics *g = NULL;
+        wchar_t label[80];
+        FillRect(mem, &mr, bg_brush); DeleteObject(bg_brush);
+        if (GdipCreateFromHDC(mem, &g) == 0 && g) {
+            GdipSetSmoothingMode(g, 4);
+            gdip_round_rect(g, 0.5f, 0.5f, (REAL)(w - 1), (REAL)(h - 1), in_card ? 10.0f : 12.0f, argb(255, fill), argb(255, edge), 1.0f);
+            GdipDeleteGraphics(g);
+        }
         GetWindowTextW(draw->hwndItem, label, 80);
-        SetBkMode(draw->hDC, TRANSPARENT); SetTextColor(draw->hDC, disabled ? RGB(148, 153, 170) : RGB(246, 247, 252));
-        SelectObject(draw->hDC, button_font); DrawTextW(draw->hDC, label, -1, &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+        SetBkMode(mem, TRANSPARENT);
+        SetTextColor(mem, disabled ? RGB(148, 153, 170) : primary ? RGB(255, 255, 255) : RGB(242, 245, 252));
+        SelectObject(mem, button_font);
+        DrawTextW(mem, label, -1, &mr, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+        BitBlt(draw->hDC, r.left, r.top, w, h, mem, 0, 0, SRCCOPY);
+        SelectObject(mem, old); DeleteObject(bmp); DeleteDC(mem);
         return TRUE;
     }
-    case WM_STATUS: SetWindowTextW(status_label, (wchar_t *)lp); HeapFree(GetProcessHeap(), 0, (void *)lp); return 0;
-    case WM_FINISHED: if (!wp) SetWindowTextW(status_label, L"Game process exited."); set_enabled(TRUE); return 0;
+    case WM_STATUS: set_ui_status((wchar_t *)lp); HeapFree(GetProcessHeap(), 0, (void *)lp); return 0;
+    case WM_FINISHED: if (!wp) set_ui_status(L"Game process exited."); set_enabled(TRUE); return 0;
     case WM_CTLCOLORSTATIC: {
         HWND child = (HWND)lp; HDC dc = (HDC)wp;
         BOOL on_background;
@@ -447,26 +612,57 @@ static LRESULT CALLBACK window_proc(HWND hwnd, UINT message, WPARAM wp, LPARAM l
             SetTextColor(dc, RGB(148, 153, 170)); SetBkColor(dc, RGB(39, 48, 68)); return (LRESULT)edit_background;
         }
         on_background = child == title_label || child == tag_label || child == brand_label || child == subtitle_label || child == status_label || child == note_label;
-        SetTextColor(dc, child == tag_label ? RGB(102, 214, 204) : child == subtitle_label || child == note_label ? RGB(152, 164, 187) : child == brand_label ? RGB(190, 175, 255) : RGB(232, 237, 247));
-        SetBkColor(dc, on_background ? RGB(15, 20, 33) : RGB(27, 34, 51)); return (LRESULT)(on_background ? background : card_background);
+        if (child == tag_label) SetTextColor(dc, RGB(102, 214, 204));
+        else if (child == brand_label) SetTextColor(dc, RGB(190, 175, 255));
+        else if (child == title_label) SetTextColor(dc, RGB(238, 242, 251));
+        else if (child == subtitle_label) SetTextColor(dc, RGB(152, 164, 187));
+        else if (child == note_label) SetTextColor(dc, RGB(139, 152, 178));
+        else if (child == section_labels[0] || child == section_labels[1]) SetTextColor(dc, RGB(143, 159, 192));
+        else if (child == field_labels[0] || child == field_labels[1] || child == field_labels[2] || child == field_labels[3]) SetTextColor(dc, RGB(212, 220, 237));
+        else if (child == status_label) {
+            SetTextColor(dc, status_kind == 1 ? RGB(242, 139, 130) : status_kind == 2 ? RGB(102, 214, 204) : RGB(232, 237, 247));
+        } else SetTextColor(dc, RGB(232, 237, 247));
+        SetBkColor(dc, on_background ? RGB(15, 20, 33) : RGB(27, 34, 51));
+        return (LRESULT)(on_background ? background : card_background);
     }
     case WM_CTLCOLOREDIT: SetTextColor((HDC)wp, RGB(240, 243, 250)); SetBkColor((HDC)wp, RGB(39, 48, 68)); return (LRESULT)edit_background;
     case WM_ERASEBKGND: return 1;
     case WM_PAINT: {
-        PAINTSTRUCT ps; HDC dc = BeginPaint(hwnd, &ps); RECT r; HPEN pen; HGDIOBJ oldpen, oldbrush;
-        GetClientRect(hwnd, &r); FillRect(dc, &r, background);
-        /* A quiet clock motif gives the header a sense of place. */
-        pen = CreatePen(PS_SOLID, 1, RGB(51, 59, 86)); oldpen = SelectObject(dc, pen); oldbrush = SelectObject(dc, GetStockObject(NULL_BRUSH));
-        Ellipse(dc, 720, -65, 1020, 235); Ellipse(dc, 747, -38, 993, 208); Ellipse(dc, 812, 27, 928, 143);
-        SelectObject(dc, oldbrush); SelectObject(dc, oldpen); DeleteObject(pen);
-        line(dc, 870, 85, 870, 43, RGB(102, 214, 204)); line(dc, 870, 85, 902, 102, RGB(140, 117, 216));
-        rounded(dc, 48, 205, 416, 245, 18, RGB(27, 34, 51), RGB(44, 54, 75));
-        rounded(dc, 492, 205, 440, 245, 18, RGB(27, 34, 51), RGB(44, 54, 75));
-        rounded(dc, 74, 292, 374, 39, 9, RGB(39, 48, 68), RGB(52, 64, 88));
-        rounded(dc, 74, 373, 374, 39, 9, RGB(39, 48, 68), RGB(52, 64, 88));
-        rounded(dc, 518, 292, 277, 39, 9, RGB(39, 48, 68), RGB(52, 64, 88));
-        rounded(dc, 518, 373, 277, 39, 9, RGB(39, 48, 68), RGB(52, 64, 88));
-        line(dc, 48, 590, 932, 590, RGB(42, 51, 70));
+        PAINTSTRUCT ps; HDC dc = BeginPaint(hwnd, &ps); RECT r;
+        HDC mem; HBITMAP bmp; HGDIOBJ old; GpGraphics *g = NULL; HWND focused;
+        GetClientRect(hwnd, &r);
+        mem = CreateCompatibleDC(dc);
+        bmp = CreateCompatibleBitmap(dc, r.right, r.bottom);
+        old = SelectObject(mem, bmp);
+        FillRect(mem, &r, background);
+        if (GdipCreateFromHDC(mem, &g) == 0 && g) {
+            ARGB input_fill = argb(255, RGB(39, 48, 68));
+            ARGB input_edge = argb(255, RGB(52, 64, 88));
+            ARGB focus_edge = argb(255, RGB(102, 221, 208));
+            focused = GetFocus();
+            GdipSetSmoothingMode(g, 4);
+            GdipSetPixelOffsetMode(g, 4);
+            /* Subtle ambient clock motif in the header. */
+            gdip_circle(g, 720.5f, -64.5f, 300.0f, argb(14, RGB(126, 98, 224)), argb(255, RGB(51, 59, 86)), 1.0f);
+            gdip_circle(g, 747.5f, -37.5f, 246.0f, 0, argb(255, RGB(51, 59, 86)), 1.0f);
+            gdip_circle(g, 812.5f, 27.5f, 116.0f, 0, argb(255, RGB(58, 68, 98)), 1.0f);
+            gdip_line(g, 870.5f, 85.5f, 870.5f, 43.5f, argb(255, RGB(102, 214, 204)), 1.8f, 2);
+            gdip_line(g, 870.5f, 85.5f, 902.5f, 102.5f, argb(255, RGB(140, 117, 216)), 1.8f, 2);
+            gdip_circle(g, 868.0f, 83.0f, 5.0f, argb(255, RGB(190, 175, 255)), 0, 0.0f);
+            /* Cards and input boxes. */
+            gdip_round_rect(g, 48.5f, 205.5f, 416.0f, 245.0f, 12.0f, argb(255, RGB(27, 34, 51)), argb(255, RGB(44, 54, 75)), 1.0f);
+            gdip_round_rect(g, 492.5f, 205.5f, 440.0f, 245.0f, 12.0f, argb(255, RGB(27, 34, 51)), argb(255, RGB(44, 54, 75)), 1.0f);
+            gdip_round_rect(g, 74.5f, 290.5f, 364.0f, 39.0f, 9.0f, input_fill, focused == fields[2] ? focus_edge : input_edge, 1.0f);
+            gdip_round_rect(g, 74.5f, 372.5f, 364.0f, 39.0f, 9.0f, input_fill, focused == fields[3] ? focus_edge : input_edge, 1.0f);
+            gdip_round_rect(g, 518.5f, 290.5f, 288.0f, 39.0f, 9.0f, input_fill, focused == fields[0] ? focus_edge : input_edge, 1.0f);
+            gdip_round_rect(g, 518.5f, 372.5f, 288.0f, 39.0f, 9.0f, input_fill, focused == fields[1] ? focus_edge : input_edge, 1.0f);
+            /* Status indicator dot and footer rule. */
+            gdip_circle(g, 49.0f, 560.0f, 8.0f, argb(255, status_dot_color(status_kind)), 0, 0.0f);
+            gdip_line(g, 48.0f, 594.5f, 932.0f, 594.5f, argb(255, RGB(42, 51, 70)), 1.0f, 0);
+            GdipDeleteGraphics(g);
+        }
+        BitBlt(dc, 0, 0, r.right, r.bottom, mem, 0, 0, SRCCOPY);
+        SelectObject(mem, old); DeleteObject(bmp); DeleteDC(mem);
         EndPaint(hwnd, &ps); return 0;
     }
     case WM_DESTROY: window = NULL; PostQuitMessage(0); return 0;
@@ -474,16 +670,25 @@ static LRESULT CALLBACK window_proc(HWND hwnd, UINT message, WPARAM wp, LPARAM l
     return DefWindowProcW(hwnd, message, wp, lp);
 }
 int WINAPI wWinMain(HINSTANCE instance, HINSTANCE previous, PWSTR command, int show) {
-    WNDCLASSW wc; MSG message; RECT size = {0, 0, 980, 650}; (void)previous;
+    WNDCLASSW wc; MSG message; RECT size = {0, 0, 980, 650};
+    GdiplusStartupInput gdip_in = {1, NULL, FALSE, FALSE}; ULONG_PTR gdip_token = 0; (void)previous;
     if (!initialize_paths()) return 1;
-    if (command && !_wcsicmp(command, L"--headless")) { headless = 1; return launch(); }
+    if (command && !_wcsicmp(command, L"--headless")) {
+        headless = 1;
+        tagged = GetEnvironmentVariableW(L"PROJECTCHRONO_STATUS_TAG", NULL, 0) != 0;
+        if (GetEnvironmentVariableW(L"PROJECTCHRONO_STATUS_FILE", status_file, CAP) >= CAP) status_file[0] = 0;
+        return launch();
+    }
+    GdiplusStartup(&gdip_token, &gdip_in, NULL);
     ZeroMemory(&wc, sizeof(wc)); wc.lpfnWndProc = window_proc; wc.hInstance = instance; wc.lpszClassName = L"ProjectChronoWindow"; wc.hCursor = LoadCursorW(NULL, IDC_ARROW);
-    if (!RegisterClassW(&wc)) return 1;
+    if (!RegisterClassW(&wc)) { GdiplusShutdown(gdip_token); return 1; }
     AdjustWindowRect(&size, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, FALSE);
     window = CreateWindowExW(0, wc.lpszClassName, L"ProjectChrono  |  12.60", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, CW_USEDEFAULT, CW_USEDEFAULT, size.right - size.left, size.bottom - size.top, NULL, NULL, instance, NULL);
-    if (!window) return 1;
+    if (!window) { GdiplusShutdown(gdip_token); return 1; }
     ShowWindow(window, show); UpdateWindow(window);
     while (GetMessageW(&message, NULL, 0, 0) > 0) { if (!IsDialogMessageW(window, &message)) { TranslateMessage(&message); DispatchMessageW(&message); } }
-    DeleteObject(font); DeleteObject(title_font); DeleteObject(brand_font); DeleteObject(small_font); DeleteObject(button_font); DeleteObject(background); DeleteObject(card_background); DeleteObject(edit_background);
+    DeleteObject(font); DeleteObject(title_font); DeleteObject(brand_font); DeleteObject(section_font); DeleteObject(label_font); DeleteObject(small_font); DeleteObject(button_font);
+    DeleteObject(background); DeleteObject(card_background); DeleteObject(edit_background);
+    GdiplusShutdown(gdip_token);
     return 0;
 }
