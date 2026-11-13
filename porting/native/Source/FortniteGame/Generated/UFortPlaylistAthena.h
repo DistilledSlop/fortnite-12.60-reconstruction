@@ -557,7 +557,7 @@ public:
 
 	// table index 35, flags 0x10000000010015
 	UPROPERTY()
-	int32 LastSafeZoneIndex;
+	int32 LastSafeZoneIndex = -1;
 
 	// table index 34, flags 0x14000000010001
 	UPROPERTY()

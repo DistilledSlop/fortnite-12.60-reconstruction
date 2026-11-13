@@ -2461,6 +2461,10 @@ _remote_view_replication_spec = _common_activation_import.spec_from_file_locatio
     "remote_view_replication_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "remote_view_replication_runtime", "source_policy.py"))
 _remote_view_replication_policy = _common_activation_import.module_from_spec(_remote_view_replication_spec)
 _remote_view_replication_spec.loader.exec_module(_remote_view_replication_policy)
+_playlist_storm_defaults_spec = _common_activation_import.spec_from_file_location(
+    "playlist_storm_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "playlist_storm_defaults_runtime", "source_policy.py"))
+_playlist_storm_defaults_policy = _common_activation_import.module_from_spec(_playlist_storm_defaults_spec)
+_playlist_storm_defaults_spec.loader.exec_module(_playlist_storm_defaults_policy)
 _pawn_hand_socket_spec = _common_activation_import.spec_from_file_location(
     "pawn_hand_socket_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "pawn_hand_socket_defaults_runtime", "source_policy.py"))
 _pawn_hand_socket_policy = _common_activation_import.module_from_spec(_pawn_hand_socket_spec)
@@ -4881,6 +4885,7 @@ def promote(args):
         header, cpp = _default_subobjects_policy.finalize(model, header, cpp)
         header, cpp = _pawn_hand_socket_policy.finalize(model, header, cpp)
         header, cpp = _replicated_building_defaults_policy.finalize(model, header, cpp)
+        header, cpp = _playlist_storm_defaults_policy.finalize(model, header, cpp)
         header, cpp = _remote_view_replication_policy.finalize(model, header, cpp)
         header, cpp = _player_name_server_policy.finalize(model, header, cpp)
         header, cpp = _athena_phase_defaults_policy.finalize(model, header, cpp)
