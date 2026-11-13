@@ -90669,5 +90669,37 @@
     "notes": "Dedicated-server branch only; client name lifecycle remains unresolved.",
     "scope": "dedicated_server_compatibility",
     "full_shared_body_recovered": false
+  },
+  {
+    "class": "AFortWeaponPickaxeAthena",
+    "function": "GetIdleVFXComponent",
+    "kind": "exec",
+    "signature": "UFXSystemComponent* GetIdleVFXComponent() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/generator_policies/pickaxe_vfx_runtime/GetIdleVFXComponent.inc",
+    "confidence": "high",
+    "address": "0x142b4f770",
+    "status": "ported",
+    "reflection_flags": "0x54020400",
+    "static": false,
+    "access": "public",
+    "virtual": true,
+    "notes": "Original virtual getter uses managed VFX tagged component first and legacy PSC fallback; see pickaxe_vfx_runtime."
+  },
+  {
+    "class": "AFortWeaponPickaxeAthena",
+    "function": "GetSwingVFXComponent",
+    "kind": "exec",
+    "signature": "UFXSystemComponent* GetSwingVFXComponent() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/generator_policies/pickaxe_vfx_runtime/GetSwingVFXComponent.inc",
+    "confidence": "high",
+    "address": "0x142b4f960",
+    "status": "ported",
+    "reflection_flags": "0x54020400",
+    "static": false,
+    "access": "public",
+    "virtual": true,
+    "notes": "Original virtual getter uses managed VFX tagged component first and legacy PSC fallback; see pickaxe_vfx_runtime."
   }
 ]

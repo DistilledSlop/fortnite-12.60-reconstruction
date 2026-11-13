@@ -2605,6 +2605,10 @@ _athena_mode_spec = _common_activation_import.spec_from_file_location(
     "athena_mode_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "athena_mode_reconstruction_runtime", "source_policy.py"))
 _athena_mode_policy = _common_activation_import.module_from_spec(_athena_mode_spec)
 _athena_mode_spec.loader.exec_module(_athena_mode_policy)
+_pickaxe_vfx_spec = _common_activation_import.spec_from_file_location(
+    "pickaxe_vfx_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "pickaxe_vfx_runtime", "source_policy.py"))
+_pickaxe_vfx_policy = _common_activation_import.module_from_spec(_pickaxe_vfx_spec)
+_pickaxe_vfx_spec.loader.exec_module(_pickaxe_vfx_policy)
 _route_spec = _common_activation_import.spec_from_file_location(
     "common_action_route_connected_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_route_connected_runtime", "policy.py"))
 _route_policy = _common_activation_import.module_from_spec(_route_spec)
@@ -2816,6 +2820,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _volume_accessor_policy.apply(model, block, owner_fns)
     model = _playerstate68_policy.apply(model, block, owner_fns)
     model = _athena_mode_policy.apply(model, block, owner_fns)
+    model = _pickaxe_vfx_policy.apply(model)
     model = _mutator_owner_policy.apply(model, block, owner_fns)
     model = _replay_spectator216_policy.apply(model, block, owner_fns)
     model = _controller_analytics_policy.apply(model, block, owner_fns)
@@ -4042,6 +4047,7 @@ def render_interface_header(name, source_label, api, model=None):
         *(['#include "McpProfileItem.h"'] if name == "UMcpItemAware" else []),
         *_volume_accessor_policy.interface_preamble(name),
         *_world_ready_policy.interface_preamble(name),
+        *_pickaxe_vfx_policy.interface_preamble(name),
         *["#include \"%s\"" % inc for inc in model.get("includes", [])],
         "",
         *["class %s;" % ref for ref in model.get("forward_decls", [])],
@@ -4061,6 +4067,7 @@ def render_interface_header(name, source_label, api, model=None):
         *_controller_analytics_policy.interface_declarations(name),
         *_volume_accessor_policy.interface_declarations(name),
         *_world_ready_policy.interface_declarations(name),
+        *_pickaxe_vfx_policy.interface_declarations(name),
         *(["", "public:"] if functions else []),
         *[line for f in functions for line in (
             "\tUFUNCTION(%s)" % ", ".join(f["specifiers"]),
@@ -6070,6 +6077,7 @@ def render_struct_header(model, source_label):
         lines.append("#include \"%s\"" % model["parent_include"])
     native = net.get("kind") == "native"
     includes = list(model.get("includes", []))
+    includes.extend(_pickaxe_vfx_policy.struct_includes(model))
     if name == "FFortItemList":
         includes.append("Misc/Crc.h")
     if delta and NET_SERIALIZATION_HEADER not in includes + [model.get("parent_include")]:
@@ -6102,6 +6110,7 @@ def render_struct_header(model, source_label):
     lines.append("{")
     lines.append("\tGENERATED_BODY()")
     lines.append("")
+    lines.extend(_pickaxe_vfx_policy.struct_fields(model))
     for m in model["members"]:
         lines.append("\t// table index %s, offset %s, flags %s" % (m["table_index"], m["offset"], m["property_flags"]))
         specifiers = list(m.get("runtime_property_specifiers", ["BlueprintReadWrite"] if m.get("blueprint_read_write") else []))

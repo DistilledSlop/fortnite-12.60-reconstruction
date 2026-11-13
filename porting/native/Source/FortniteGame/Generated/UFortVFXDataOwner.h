@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
+struct FMarshalledVFXRuntimeData;
 
 #include "UFortVFXDataOwner.generated.h"
 
@@ -16,5 +17,7 @@ class FORTNITEGAME_API UFortVFXDataOwner : public UInterface
 class FORTNITEGAME_API IFortVFXDataOwner
 {
 	GENERATED_IINTERFACE_BODY()
+public:
+	virtual FMarshalledVFXRuntimeData* GetMarshalledVFXRuntimeData() = 0;
 };
 

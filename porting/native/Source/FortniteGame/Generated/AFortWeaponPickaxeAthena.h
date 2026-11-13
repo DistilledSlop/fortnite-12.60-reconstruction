@@ -125,10 +125,16 @@ public:
 	UParticleSystemComponent* GetIdlePSC() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual UFXSystemComponent* GetIdleVFXComponent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FName GetSwingFXSocketName() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UParticleSystemComponent* GetSwingPSC() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual UFXSystemComponent* GetSwingVFXComponent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetUseAnimTrailsPSC() const;

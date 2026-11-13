@@ -4,6 +4,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 
 class UFXSystemComponent;
 class USceneComponent;
@@ -14,6 +15,9 @@ USTRUCT()
 struct FMarshalledVFXRuntimeData
 {
 	GENERATED_BODY()
+
+	// 0x141dcc1d0: non-reflected weak component -> owned gameplay tags map.
+	TMap<TWeakObjectPtr<UFXSystemComponent>, FGameplayTagContainer> ComponentTags;
 
 	// table index 1, offset 80, flags 0x10008000002008
 	UPROPERTY()
