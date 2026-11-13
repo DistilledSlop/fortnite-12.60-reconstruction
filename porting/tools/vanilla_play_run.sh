@@ -83,7 +83,8 @@ if [[ ${FN_RENDERER:-} == dxvk ]]; then
     export FN_LP_NUM_THREADS="${FN_LP_NUM_THREADS:-8}"
     [[ -d $FN_WINEPREFIX ]] || { echo "DXVK prefix $FN_WINEPREFIX not found" >&2; exit 1; }
 fi
-export FN_ACTIONS="${FN_ACTIONS:-125:click,640,592 235:click,1144,473 300:shot 400:hold,w,6 410:shot 430:hold,d,6 440:shot 560:shot}"
+# An explicit empty value disables input automation; an unset value uses the smoke sequence.
+export FN_ACTIONS="${FN_ACTIONS-125:click,640,592 235:click,1144,473 300:shot 400:hold,w,6 410:shot 430:hold,d,6 440:shot 560:shot}"
 # Extra server URL options (e.g. '?RequiredPlayers=1') and switches (e.g. '-FortniteWarmupSeconds=20').
 server_url="${FN_SERVER_MAP:-/Game/Maps/FortniteEmptyDedicated}${FN_SERVER_URL_OPTS:-}"
 read -r -a server_extra <<< "${FN_SERVER_ARGS:-}"
@@ -114,7 +115,7 @@ if [[ ${FN_SECOND_CLIENT:-0} == 1 ]]; then
                 exec "$porting/tools/second_client.sh" "$out" \
                     --username "${FN_SECOND_USERNAME:-LocalPlayer2}" \
                     --renderer "${FN_SECOND_RENDERER:-${FN_RENDERER:-builtin}}" \
-                    --actions "${FN_SECOND_ACTIONS:-$FN_ACTIONS}"
+                    --actions "${FN_SECOND_ACTIONS-$FN_ACTIONS}"
             fi
             sleep 1
         done
