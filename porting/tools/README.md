@@ -57,3 +57,12 @@ compiled out (example: `RemoveFromAlivePlayers`, see D6 card).
 Groups Warning/Error/Fatal (and Display) lines of a UE log by category (LogNet, LogRep, LogFort*, LogAthena*, ...), with counts,
 first/last timestamps, normalised example messages, a top-15 list and a milestones list (edit `CLIENT_MILESTONES` /
 `SERVER_MILESTONES` at the top). Tokens, account ids, emails and auth strings are redacted. Output is about 70 lines.
+
+## Staging server content (added 2026-11-12)
+
+    python3 -I porting/tools/stage_server_content.py /Game/X/Y [...] [--dry-run] [--max N] [--soft] [-v]
+
+Copies the cooked package(s) and the transitive hard-import closure (`/Game/...` packages from the .uasset import table,
+parsed with the stdlib) from `/mnt/vibrato/fortnite-extracted-full/FortniteGame/Content` into
+`generated/linux-stage/LinuxNoEditor/FortniteLinux/Content`. Never overwrites; prints visited/copied/missing, `/Script` modules and bytes.
+`--soft` also follows `/Game/` names in the name map (soft refs). Default `--max` is 3000 packages; large roots (e.g. `Athena_GameMode`) need more.

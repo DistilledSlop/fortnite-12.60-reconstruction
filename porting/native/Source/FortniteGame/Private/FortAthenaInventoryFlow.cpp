@@ -1,0 +1,494 @@
+// Server-side player inventory for the original 12.60 client (WP D4, G8 first slice). See the header for scope.
+//
+// Evidence summary (labels: binary / data / source / inferred / stand-in):
+// - binary 0x142372de0 (client ClientRestart): on a client, restart waits until controller WorldInventory (+0x1738) and
+//   ClientQuickBars (+0x14d0) are non-null. ClientQuickBars is created by the client itself (controller virtual 0x1423f20a0,
+//   run from OnReadyToStartMatch), never replicated. The server only has to supply a replicated WorldInventory (done by
+//   EnsureWorldInventory in FortniteAthenaGameplay.cpp, reused here, never replaced).
+// - source behavior/AFortInventory/NativeUpdateEntry.inc, behavior/UFortWorldItem/*.inc: an item owns a non-replicated
+//   FFortItemEntry (bIsReplicatedCopy=false); AFortInventory::Inventory.ReplicatedEntries holds the replicated copy
+//   (bIsReplicatedCopy=true), indexed by guid in Inventory.NativeEntriesByGuid (raw pointers into the array).
+// - binary 0x1423150b0 (AFortPawn::EquipWeaponDefinition): reuse a weapon from CurrentWeaponList whose ItemEntryGuid (+0x8c0)
+//   matches, else spawn WeaponData->WeaponActorClass owned by the pawn, set WeaponData/ItemEntryGuid, push it to the front of
+//   CurrentWeaponList and make it the current weapon. EquipWeaponDefinition itself is not emitted in the generated headers.
+// - data (C card): the native game mode has no Blueprint defaults, so StartingItems may be empty; the 12.60 list is
+//   Wall, Floor, Stair_W, RoofS (1 each), EditTool (1), WoodItemData (0).
+
+#include "FortAthenaInventoryFlow.h"
+#include "UObject/ScriptMacros.h"
+
+#include "AFortGameModeAthena.h"
+#include "AFortInventory.h"
+#include "AFortPawn.h"
+#include "AFortPlayerController.h"
+#include "AFortPlayerControllerAthena.h"
+#include "AFortPlayerState.h"
+#include "AFortWeapon.h"
+#include "FFortAthenaLoadout.h"
+#include "FFortItemEntry.h"
+#include "FItemAndCount.h"
+#include "UAthenaPickaxeItemDefinition.h"
+#include "UFortAbilitySystemComponent.h"
+#include "UFortGameplayAbility.h"
+#include "UFortItemDefinition.h"
+#include "UFortWeaponItemDefinition.h"
+#include "UFortWeaponMeleeItemDefinition.h"
+#include "UFortWorldItem.h"
+
+#include "AbilitySystemComponent.h"
+#include "Engine/World.h"
+#include "GameFramework/Controller.h"
+#include "GameFramework/PlayerState.h"
+#include "GameplayAbilitySpec.h"
+#include "Misc/CommandLine.h"
+#include "Misc/Parse.h"
+#include "UObject/UObjectGlobals.h"
+
+DEFINE_LOG_CATEGORY_STATIC(LogFortInventoryFlow, Log, All);
+
+namespace
+{
+	// data: /Game/Athena/Items/Weapons/WID_Harvest_Pickaxe_Athena_C_T01 (extracted content).
+	const TCHAR* const GDefaultPickaxePath = TEXT("/Game/Athena/Items/Weapons/WID_Harvest_Pickaxe_Athena_C_T01.WID_Harvest_Pickaxe_Athena_C_T01");
+
+	struct FDefaultStartItem
+	{
+		const TCHAR* Path;
+		int32 Count;
+	};
+
+	// data: Athena_GameMode StartingItems (C card section 1); asset paths from the extracted content.
+	const FDefaultStartItem GDefaultStartingItems[] = {
+		{ TEXT("/Game/Items/Weapons/BuildingTools/BuildingItemData_Wall.BuildingItemData_Wall"), 1 },
+		{ TEXT("/Game/Items/Weapons/BuildingTools/BuildingItemData_Floor.BuildingItemData_Floor"), 1 },
+		{ TEXT("/Game/Items/Weapons/BuildingTools/BuildingItemData_Stair_W.BuildingItemData_Stair_W"), 1 },
+		{ TEXT("/Game/Items/Weapons/BuildingTools/BuildingItemData_RoofS.BuildingItemData_RoofS"), 1 },
+		{ TEXT("/Game/Items/Weapons/BuildingTools/EditTool.EditTool"), 1 },
+		{ TEXT("/Game/Items/ResourcePickups/WoodItemData.WoodItemData"), 0 },
+	};
+
+	// Guid of the pickaxe item per controller, so a later pawn (respawn) can re-equip it without a second grant.
+	TMap<TWeakObjectPtr<const AController>, FGuid>& PickaxeGuids()
+	{
+		static TMap<TWeakObjectPtr<const AController>, FGuid> Map;
+		return Map;
+	}
+
+	// The index holds raw pointers into ReplicatedEntries, so it must be rebuilt after any add or remove.
+	void RebuildGuidIndex(AFortInventory* Inventory)
+	{
+		Inventory->Inventory.NativeEntriesByGuid.Reset();
+		for (FFortItemEntry& Entry : Inventory->Inventory.ReplicatedEntries)
+		{
+			Inventory->Inventory.NativeEntriesByGuid.Add(Entry.ItemGuid, &Entry);
+		}
+	}
+
+	FFortItemEntry* FindReplicatedEntry(AFortInventory* Inventory, const FGuid& Guid)
+	{
+		FFortItemEntry** Found = Inventory->Inventory.NativeEntriesByGuid.Find(Guid);
+		return Found ? *Found : nullptr;
+	}
+
+	UFortWorldItem* FindItemByGuid(AFortInventory* Inventory, const FGuid& Guid)
+	{
+		for (UFortWorldItem* Item : Inventory->Inventory.ItemInstances)
+		{
+			if (Item && Item->ItemEntry.ItemGuid == Guid)
+			{
+				return Item;
+			}
+		}
+		return nullptr;
+	}
+
+	UFortItemDefinition* LoadDefinition(const TCHAR* Path)
+	{
+		UFortItemDefinition* Definition = LoadObject<UFortItemDefinition>(nullptr, Path);
+		if (!Definition)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Inventory: item definition %s could not be loaded (content not mounted on the server?)"), Path);
+		}
+		return Definition;
+	}
+
+	// The player's equipped pickaxe: loadout cosmetic -> its melee WeaponDefinition (binary 0x1423150b0 swaps the harvest
+	// tool's data from the controller's pickaxe the same way); otherwise the default Athena pickaxe.
+	UFortItemDefinition* ResolvePickaxe(AFortPlayerController* Controller, FString& OutSource)
+	{
+		const UAthenaPickaxeItemDefinition* Cosmetic = Controller->CosmeticLoadoutPC.Pickaxe;
+		if (Cosmetic && Cosmetic->WeaponDefinition)
+		{
+			OutSource = FString::Printf(TEXT("loadout %s"), *Cosmetic->GetName());
+			return Cosmetic->WeaponDefinition;
+		}
+		OutSource = TEXT("default (no pickaxe in CosmeticLoadoutPC; stand-in until the backend loadout is read)");
+		return LoadDefinition(GDefaultPickaxePath);
+	}
+
+	// stand-in: weapon abilities. The original grants them from the weapon's virtual at +0x760 when it is equipped. Only
+	// attempted with -FortniteInventoryAbilities because it loads ability Blueprints on the spawn path and the ability
+	// system component must already have its actor info initialised (not verified).
+	void GrantWeaponAbilities(AFortPlayerController* Controller, AFortPawn* Pawn, AFortWeapon* Weapon, UFortWeaponItemDefinition* Definition, int32 Level)
+	{
+		if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteInventoryAbilities")))
+		{
+			return;
+		}
+		AFortPlayerState* PlayerState = Cast<AFortPlayerState>(Controller->PlayerState);
+		UAbilitySystemComponent* AbilitySystem = PlayerState ? PlayerState->AbilitySystemComponent : nullptr;
+		if (!AbilitySystem)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Inventory: no ability system component on the player state; weapon abilities for %s not granted"), *Definition->GetName());
+			return;
+		}
+		const TSubclassOf<UFortGameplayAbility> Abilities[] = {
+			Definition->GetPrimaryFireAbility(), Definition->GetSecondaryFireAbility(),
+			Definition->GetReloadAbility(), Definition->GetOnHitAbility() };
+		int32 Granted = 0;
+		for (const TSubclassOf<UFortGameplayAbility>& Ability : Abilities)
+		{
+			if (UClass* AbilityClass = Ability.Get())
+			{
+				AbilitySystem->GiveAbility(FGameplayAbilitySpec(TSubclassOf<UGameplayAbility>(AbilityClass), Level, INDEX_NONE, Weapon));
+				++Granted;
+			}
+		}
+		UE_LOG(LogTemp, Display, TEXT("Inventory: granted %d weapon abilities for %s"), Granted, *Definition->GetName());
+	}
+
+	void SetCurrentWeapon(AFortPawn* Pawn, AFortWeapon* Weapon)
+	{
+		if (Pawn->CurrentWeapon == Weapon)
+		{
+			return;
+		}
+		// stand-in: the original goes through pawn virtual +0xc58 / 0x142a16c90 (holster the old weapon, equip animation).
+		// Here only the replicated pointer changes; the client's OnRep_CurrentWeapon does the visible swap.
+		Pawn->PreviousWeapon = Pawn->CurrentWeapon;
+		Pawn->CurrentWeapon = Weapon;
+		Pawn->ForceNetUpdate();
+	}
+
+	AFortWeapon* EquipItem(AFortPlayerController* Controller, AFortPawn* Pawn, UFortWorldItem* Item)
+	{
+		UFortWeaponItemDefinition* Definition = Cast<UFortWeaponItemDefinition>(Item->ItemEntry.ItemDefinition);
+		if (!Definition)
+		{
+			// Gadgets (AthenaGadget slots), consumables and resources are not weapon definitions: not handled in this slice.
+			UE_LOG(LogTemp, Display, TEXT("Inventory: execute %s ignored: %s is not a weapon/building/edit-tool definition"),
+				*Item->ItemEntry.ItemGuid.ToString(), Item->ItemEntry.ItemDefinition ? *Item->ItemEntry.ItemDefinition->GetName() : TEXT("null"));
+			return nullptr;
+		}
+		const FGuid Guid = Item->ItemEntry.ItemGuid;
+
+		for (AFortWeapon* Existing : Pawn->CurrentWeaponList)
+		{
+			if (Existing && !Existing->IsPendingKill() && Existing->ItemEntryGuid == Guid)
+			{
+				SetCurrentWeapon(Pawn, Existing);
+				UE_LOG(LogTemp, Display, TEXT("Inventory: re-equipped %s (%s) on %s"), *Definition->GetName(), *Guid.ToString(), *Pawn->GetName());
+				return Existing;
+			}
+		}
+
+		UClass* WeaponClass = Definition->GetWeaponActorClass().Get();
+		if (!WeaponClass)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Inventory: %s has no weapon actor class; cannot equip"), *Definition->GetName());
+			return nullptr;
+		}
+		FActorSpawnParameters Params;
+		Params.Owner = Pawn;
+		Params.Instigator = Pawn;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		AFortWeapon* Weapon = Pawn->GetWorld()->SpawnActor<AFortWeapon>(WeaponClass, Pawn->GetActorTransform(), Params);
+		if (!Weapon)
+		{
+			// binary 0x1423150b0 logs "EquipWeaponData - Couldn't spawn weapon %s" here.
+			UE_LOG(LogTemp, Warning, TEXT("Inventory: EquipWeaponData - couldn't spawn weapon %s (%s)"), *Definition->GetName(), *WeaponClass->GetName());
+			return nullptr;
+		}
+		Weapon->SetOwner(Pawn);
+		Weapon->WeaponData = Definition;
+		Weapon->ItemEntryGuid = Guid;
+		Weapon->WeaponLevel = Item->ItemEntry.Level;
+		Pawn->CurrentWeaponList.Insert(Weapon, 0);
+		GrantWeaponAbilities(Controller, Pawn, Weapon, Definition, Item->ItemEntry.Level);
+		SetCurrentWeapon(Pawn, Weapon);
+		UE_LOG(LogTemp, Display, TEXT("Inventory: equipped %s (%s) as %s on %s"), *Definition->GetName(), *Guid.ToString(), *WeaponClass->GetName(), *Pawn->GetName());
+		return Weapon;
+	}
+
+	AFortPawn* GetControllerPawn(AFortPlayerController* Controller)
+	{
+		return Controller ? Cast<AFortPawn>(Controller->GetPawn()) : nullptr;
+	}
+}
+
+bool FortAthenaInventory::IsEnabled()
+{
+	static const bool bEnabled = FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient"));
+	return bEnabled;
+}
+
+UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller, UFortItemDefinition* Definition, int32 Count, int32 Level, int32 LoadedAmmo)
+{
+	if (!IsEnabled())
+	{
+		return nullptr;
+	}
+	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
+	if (!Inventory || !Definition || Count < 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Inventory: GiveItem rejected (inventory=%d definition=%s count=%d)"),
+			Inventory ? 1 : 0, Definition ? *Definition->GetName() : TEXT("null"), Count);
+		return nullptr;
+	}
+
+	// Stack onto an existing entry of the same definition.
+	if (Count > 0 && Definition->IsStackable())
+	{
+		if (UFortWorldItem* Existing = Inventory->NativeFindWorldItemByDefinition(Definition, true))
+		{
+			const int32 MaxStack = Definition->NativeGetMaxStackSize(nullptr);
+			const int32 Room = FMath::Max(0, MaxStack - Existing->ItemEntry.Count);
+			const int32 Added = FMath::Min(Room, Count);
+			if (Added > 0)
+			{
+				Existing->ItemEntry.Count += Added;
+				if (FFortItemEntry* Replicated = FindReplicatedEntry(Inventory, Existing->ItemEntry.ItemGuid))
+				{
+					Replicated->Count = Existing->ItemEntry.Count;
+					Inventory->Inventory.MarkItemDirty(*Replicated);
+				}
+				Inventory->NativeNotifyInventoryChanged();
+				UE_LOG(LogTemp, Display, TEXT("Inventory: stacked %d x %s onto %s (now %d)"), Added, *Definition->GetName(), *Existing->ItemEntry.ItemGuid.ToString(), Existing->ItemEntry.Count);
+			}
+			Count -= Added;
+			if (Count == 0 || !Definition->bAllowMultipleStacks)
+			{
+				if (Count > 0)
+				{
+					UE_LOG(LogTemp, Display, TEXT("Inventory: %d x %s did not fit (stack full, single stack only)"), Count, *Definition->GetName());
+				}
+				return Existing;
+			}
+		}
+	}
+
+	FFortItemEntry Entry;
+	Entry.ItemDefinition = Definition;
+	Entry.Count = Count;
+	Entry.Level = Level;
+	Entry.LoadedAmmo = LoadedAmmo;
+	Entry.ItemGuid = FGuid::NewGuid();
+
+	UFortWorldItem* Item = NewObject<UFortWorldItem>(Inventory);
+	Item->OwnerInventory = Inventory;
+	Item->ItemEntry = Entry;
+	UFortWorldItem::NativeSetEntryParentInventory(Item->ItemEntry, Inventory, false);
+	// stand-in: the original creates the item through UFortItemDefinition::CreateTemporaryItemInstanceBP, which picks the
+	// item class from the definition. A plain UFortWorldItem is used here (not verified against the original item classes).
+
+	const int32 Index = Inventory->Inventory.ReplicatedEntries.Add(Entry);
+	FFortItemEntry& Replicated = Inventory->Inventory.ReplicatedEntries[Index];
+	UFortWorldItem::NativeSetEntryParentInventory(Replicated, Inventory, true);
+	Inventory->Inventory.ItemInstances.Add(Item);
+	RebuildGuidIndex(Inventory);
+	Inventory->Inventory.MarkItemDirty(Inventory->Inventory.ReplicatedEntries[Index]);
+	Inventory->NativeNotifyInventoryChanged();
+
+	UE_LOG(LogTemp, Display, TEXT("Inventory: granted %d x %s guid=%s level=%d to %s"),
+		Count, *Definition->GetName(), *Entry.ItemGuid.ToString(), Level, *Controller->GetName());
+	return Item;
+}
+
+int32 FortAthenaInventory::RemoveItem(AFortPlayerController* Controller, const FGuid& ItemGuid, int32 Count)
+{
+	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
+	if (!IsEnabled() || !Inventory)
+	{
+		return 0;
+	}
+	UFortWorldItem* Item = FindItemByGuid(Inventory, ItemGuid);
+	if (!Item)
+	{
+		UE_LOG(LogTemp, Display, TEXT("Inventory: remove %s ignored: unknown guid"), *ItemGuid.ToString());
+		return 0;
+	}
+	const int32 Removed = (Count <= 0) ? Item->ItemEntry.Count : FMath::Min(Count, Item->ItemEntry.Count);
+	Item->ItemEntry.Count -= Removed;
+	if (Item->ItemEntry.Count > 0)
+	{
+		if (FFortItemEntry* Replicated = FindReplicatedEntry(Inventory, ItemGuid))
+		{
+			Replicated->Count = Item->ItemEntry.Count;
+			Inventory->Inventory.MarkItemDirty(*Replicated);
+		}
+	}
+	else
+	{
+		Inventory->Inventory.NativeEntriesByGuid.Remove(ItemGuid);
+		for (int32 Index = 0; Index < Inventory->Inventory.ReplicatedEntries.Num(); ++Index)
+		{
+			if (Inventory->Inventory.ReplicatedEntries[Index].ItemGuid == ItemGuid)
+			{
+				Inventory->Inventory.ReplicatedEntries.RemoveAt(Index);
+				break;
+			}
+		}
+		Inventory->Inventory.ItemInstances.Remove(Item);
+		Item->NativeDetachFromInventory();
+		RebuildGuidIndex(Inventory);
+		Inventory->Inventory.MarkArrayDirty();
+	}
+	Inventory->NativeNotifyInventoryChanged();
+	UE_LOG(LogTemp, Display, TEXT("Inventory: removed %d of %s"), Removed, *ItemGuid.ToString());
+	return Removed;
+}
+
+void FortAthenaInventory::ExecuteInventoryItem(AFortPlayerController* Controller, const FGuid& ItemGuid)
+{
+	if (!IsEnabled())
+	{
+		return;
+	}
+	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
+	AFortPawn* Pawn = GetControllerPawn(Controller);
+	if (!Inventory || !Pawn)
+	{
+		UE_LOG(LogTemp, Display, TEXT("Inventory: execute %s ignored: inventory=%d pawn=%d"), *ItemGuid.ToString(), Inventory ? 1 : 0, Pawn ? 1 : 0);
+		return;
+	}
+	UFortWorldItem* Item = FindItemByGuid(Inventory, ItemGuid);
+	if (!Item)
+	{
+		UE_LOG(LogTemp, Display, TEXT("Inventory: execute %s ignored: unknown guid"), *ItemGuid.ToString());
+		return;
+	}
+	UE_LOG(LogTemp, Display, TEXT("Inventory: ServerExecuteInventoryItem %s (%s)"), *ItemGuid.ToString(),
+		Item->ItemEntry.ItemDefinition ? *Item->ItemEntry.ItemDefinition->GetName() : TEXT("null"));
+	EquipItem(Controller, Pawn, Item);
+}
+
+void FortAthenaInventory::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller)
+{
+	if (!IsEnabled() || !Controller)
+	{
+		return;
+	}
+	AFortInventory* Inventory = Controller->WorldInventory;
+	if (!Inventory)
+	{
+		// EnsureWorldInventory (FortniteAthenaGameplay.cpp) runs before the pawn spawns; it is never replaced here.
+		UE_LOG(LogTemp, Warning, TEXT("Inventory: %s has no WorldInventory; nothing granted"), *Controller->GetName());
+		return;
+	}
+
+	const bool bFirstSetup = Inventory->Inventory.ItemInstances.Num() == 0;
+	if (bFirstSetup)
+	{
+		FString Source;
+		if (UFortItemDefinition* Pickaxe = ResolvePickaxe(Controller, Source))
+		{
+			UE_LOG(LogTemp, Display, TEXT("Inventory: pickaxe %s from %s"), *Pickaxe->GetName(), *Source);
+			if (UFortWorldItem* Item = GiveItem(Controller, Pickaxe, 1))
+			{
+				PickaxeGuids().Add(Controller, Item->ItemEntry.ItemGuid);
+			}
+		}
+
+		int32 Starting = 0;
+		if (GameMode && GameMode->StartingItems.Num() > 0)
+		{
+			for (const FItemAndCount& Start : GameMode->StartingItems)
+			{
+				if (Start.Item && GiveItem(Controller, Start.Item, Start.Count))
+				{
+					++Starting;
+				}
+			}
+			UE_LOG(LogTemp, Display, TEXT("Inventory: %d starting items from the game mode (%s)"), Starting, *GameMode->GetClass()->GetName());
+		}
+		else
+		{
+			// stand-in: the native FortGameModeAthena has no Blueprint StartingItems; use the Athena_GameMode list (C card).
+			UE_LOG(LogTemp, Display, TEXT("Inventory: game mode %s has no StartingItems; using the 12.60 Athena_GameMode list"),
+				GameMode ? *GameMode->GetClass()->GetName() : TEXT("null"));
+			for (const FDefaultStartItem& Start : GDefaultStartingItems)
+			{
+				if (UFortItemDefinition* Definition = LoadDefinition(Start.Path))
+				{
+					if (GiveItem(Controller, Definition, Start.Count))
+					{
+						++Starting;
+					}
+				}
+			}
+		}
+		UE_LOG(LogTemp, Display, TEXT("Inventory: setup for %s: %d items in the world inventory (%d starting items)"),
+			*Controller->GetName(), Inventory->Inventory.ItemInstances.Num(), Starting);
+	}
+
+	// Equip the pickaxe (the original client then shows it as the held item; slot 0 of the primary quickbar).
+	AFortPawn* Pawn = GetControllerPawn(Controller);
+	const FGuid* PickaxeGuid = PickaxeGuids().Find(Controller);
+	if (!Pawn)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Inventory: %s has no pawn yet; pickaxe not equipped"), *Controller->GetName());
+	}
+	else if (!PickaxeGuid)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Inventory: %s has no pickaxe item; nothing to equip"), *Controller->GetName());
+	}
+	else if (!Pawn->CurrentWeapon)
+	{
+		ExecuteInventoryItem(Controller, *PickaxeGuid);
+	}
+}
+
+// Global-namespace entry points for behaviour snippets (.inc bodies cannot use a qualified block-scope declaration).
+UFortWorldItem* FortAthenaInventory_GiveItem(AFortPlayerController* Controller, UFortItemDefinition* Definition, int32 Count, int32 Level, int32 LoadedAmmo)
+{
+	return FortAthenaInventory::GiveItem(Controller, Definition, Count, Level, LoadedAmmo);
+}
+
+void FortAthenaInventory_ExecuteInventoryItem(AFortPlayerController* Controller, const FGuid& ItemGuid)
+{
+	FortAthenaInventory::ExecuteInventoryItem(Controller, ItemGuid);
+}
+
+namespace
+{
+	// Exec thunk for AFortPlayerController::ServerExecuteInventoryItem(FGuid). Same parameter layout as the generated
+	// execServerExecuteInventoryItem; the _Validate step is the shared "return true" stub (0x1406801d0), so skipping it
+	// changes nothing.
+	void ExecServerExecuteInventoryItemOverride(UObject* Context, FFrame& Stack, RESULT_DECL)
+	{
+		P_GET_STRUCT(FGuid, ItemGuid);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		FortAthenaInventory::ExecuteInventoryItem(Cast<AFortPlayerController>(Context), ItemGuid);
+		P_NATIVE_END;
+	}
+}
+
+void FortAthenaInventory::InstallRpcOverrides()
+{
+	if (!IsEnabled())
+		return;
+	static bool bInstalled = false;
+	if (bInstalled)
+		return;
+	if (UFunction* Function = AFortPlayerController::StaticClass()->FindFunctionByName(TEXT("ServerExecuteInventoryItem")))
+	{
+		Function->SetNativeFunc(&ExecServerExecuteInventoryItemOverride);
+		bInstalled = true;
+		UE_LOG(LogTemp, Display, TEXT("Inventory: ServerExecuteInventoryItem rebound to the re-created body"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Inventory: ServerExecuteInventoryItem UFunction not found; equip RPC stays empty"));
+	}
+}

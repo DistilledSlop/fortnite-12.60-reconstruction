@@ -1,5 +1,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "FortniteAthenaGameplay.h"
+#include "FortAthenaInventoryFlow.h"
+#include "FortAthenaMatchFlow.h"
 #include "AFortTeamInfoAthena.h"
 #include "AMegaStormManager.h"
 #include "AFortReplaySpectatorAthena.h"
@@ -193,6 +195,9 @@ static void DumpFortniteClassChecksums(UWorld* World)
 void AFortGameModeAthena::StartPlay()
 {
     Super::StartPlay();
+    FortAthenaInventory::InstallRpcOverrides();
+    FortAthenaMatchFlow::InstallRpcOverrides();
+    FortAthenaMatchFlow::Start(this);
     if (UWorld* World = GetWorld())
     {
         // Run evidence for gate G6: where each possessed pawn is, so a held input key can be shown to move it.
@@ -481,11 +486,22 @@ void AFortGameModeAthena::RestartPlayer(AController* NewPlayer)
     EnsureHero(NewPlayer);
     EnsureTimeOfDayManager(GetWorld());
     EnsureWorldManager(GetWorld());
-    EnsureWarmupPhase(GetWorld());
+    if (!FortAthenaMatchFlow::IsActive())
+        EnsureWarmupPhase(GetWorld());
     Super::RestartPlayer(NewPlayer);
     if (NewPlayer && NewPlayer->GetPawn())
         UE_LOG(LogTemp, Display, TEXT("Athena pawn spawned: class=%s authority=%d"),
             *NewPlayer->GetPawn()->GetClass()->GetName(), NewPlayer->GetPawn()->HasAuthority() ? 1 : 0);
+    FortAthenaInventory::SetupPlayer(this, Cast<AFortPlayerControllerAthena>(NewPlayer));
+    // The vanilla-client tests run on FortniteEmptyDedicated, which has no ground: PositionPawnOnTerrain's trace misses
+    // there and it places the pawn on the replicated test floor instead.
+    if (NewPlayer && NewPlayer->GetPawn() && GetWorld() && FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")) &&
+        !GetWorld()->GetMapName().EndsWith(TEXT("Apollo_Terrain")))
+    {
+        PositionPawnOnTerrain(NewPlayer);
+        FortAthenaMatchFlow::OnPlayerRestarted(this, NewPlayer);
+        return;
+    }
     if (!NewPlayer || !NewPlayer->GetPawn() || !GetWorld() ||
         !GetWorld()->GetMapName().EndsWith(TEXT("Apollo_Terrain")))
         return;
@@ -521,7 +537,45 @@ void AFortGameModeAthena::PositionPawnOnTerrain(AController* Player)
         const FVector Spawn = Hit.ImpactPoint + FVector(0.0f, 0.0f, 150.0f);
         Player->GetPawn()->SetActorLocation(Spawn, false, nullptr, ETeleportType::TeleportPhysics);
         UE_LOG(LogTemp, Display, TEXT("Apollo pawn positioned above terrain at %s"), *Spawn.ToString());
+        return;
     }
+    if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")))
+        return;
+    // FortniteEmptyDedicated has no ground, so a pawn falls forever. For the vanilla-client tests spawn one wood floor
+    // building piece scaled to about +-51200 units. stand-in: test ground, not original behaviour. A StaticMeshActor
+    // cannot be used: the client rejects our engine UStaticMeshComponent (NetChecksumMismatch, run 29). The building
+    // class is a Fortnite class with matching checksums, its mesh comes from the class defaults on both sides, and the
+    // spawn scale reaches the client through SerializeNewActor.
+    static TWeakObjectPtr<AActor> Floor;
+    UWorld* World = GetWorld();
+    if (!Floor.IsValid())
+    {
+        UClass* FloorClass = StaticLoadClass(AActor::StaticClass(), nullptr,
+            TEXT("/Game/Building/ActorBlueprints/Player/Wood/L1/PBWA_W1_Floor.PBWA_W1_Floor_C"));
+        FActorSpawnParameters Params;
+        Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+        const FTransform FloorTransform(FRotator::ZeroRotator, FVector(-51200.0f, -51200.0f, -1000.0f), FVector(200.0f, 200.0f, 1.0f));
+        AActor* Actor = FloorClass ? World->SpawnActor<AActor>(FloorClass, FloorTransform, Params) : nullptr;
+        if (!Actor)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("Test floor not created (floor class %s)"), FloorClass ? TEXT("found") : TEXT("missing"));
+            return;
+        }
+        Actor->SetActorScale3D(FVector(200.0f, 200.0f, 1.0f));
+        Actor->bAlwaysRelevant = true;
+        Actor->ForceNetUpdate();
+        Floor = Actor;
+        // The piece's pivot is not known here; move it so its bounds are centred on (0, 0) with the top at z=-950.
+        FBox Bounds = Actor->GetComponentsBoundingBox(true);
+        if (Bounds.IsValid)
+        {
+            const FVector Shift(-Bounds.GetCenter().X, -Bounds.GetCenter().Y, -950.0f - Bounds.Max.Z);
+            Actor->SetActorLocation(Actor->GetActorLocation() + Shift, false, nullptr, ETeleportType::TeleportPhysics);
+            Bounds = Actor->GetComponentsBoundingBox(true);
+        }
+        UE_LOG(LogTemp, Display, TEXT("Test floor %s created for the original client, bounds %s"), *Actor->GetName(), *Bounds.ToString());
+    }
+    Player->GetPawn()->SetActorLocation(FVector(0.0f, 0.0f, -800.0f), false, nullptr, ETeleportType::TeleportPhysics);
 }
 
 AApolloLandscapeTile::AApolloLandscapeTile()
