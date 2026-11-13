@@ -97,9 +97,9 @@ if [[ $registered_mode == 1 ]]; then
         server_extra=(-FortniteRegisteredMatchmaking ${server_extra[@]+"${server_extra[@]}"})
     fi
 fi
-printf -v FN_SERVER_CMD 'exec %q ' "$server" "$server_url" -FortniteOriginalClient -nullrhi -nosound -unattended "-port=$server_port" -log "-LogCmds=$FN_SERVER_LOG_CMDS" "${server_extra[@]}"
+printf -v FN_SERVER_CMD '%q ' "$server" "$server_url" -FortniteOriginalClient -nullrhi -nosound -unattended "-port=$server_port" -log "-LogCmds=$FN_SERVER_LOG_CMDS" "${server_extra[@]}"
 printf -v server_redirect '> %q 2>&1' "$out/server.log"
-FN_SERVER_CMD+="$server_redirect"
+FN_SERVER_CMD="exec $FN_SERVER_CMD$server_redirect"
 export FN_SERVER_CMD
 export FN_ACTION_LOG="$out/server.log"
 touch "$out/start.marker"
