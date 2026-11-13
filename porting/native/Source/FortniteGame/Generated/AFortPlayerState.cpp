@@ -335,4 +335,6 @@ AFortPlayerState::AFortPlayerState(const FObjectInitializer& ObjectInitializer)
 // Original AFortPlayerState ctor 0x1423fa52b sets original +0x222 high bit.
 bUseCustomPlayerNames = true;
 #endif
+    InitialExperienceLevel = -1; // Original store 0x1423fa6e2.
+    InitialExperienceAmount = -1; // Original store 0x1423fa6e2.
 }

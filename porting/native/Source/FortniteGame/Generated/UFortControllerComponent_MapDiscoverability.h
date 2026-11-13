@@ -24,6 +24,7 @@ class FORTNITEGAME_API UFortControllerComponent_MapDiscoverability : public UFor
 	GENERATED_BODY()
 
 public:
+    UFortControllerComponent_MapDiscoverability(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 	// table index 7, flags 0x20080000000001
 	UPROPERTY()
 	UMaterialParameterCollection* DiscoverabilityMPC;

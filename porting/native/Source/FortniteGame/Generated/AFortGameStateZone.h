@@ -59,6 +59,8 @@ class FORTNITEGAME_API AFortGameStateZone : public AFortGameState_InGame
 	GENERATED_BODY()
 
 public:
+	AFortGameStateZone(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 87, flags 0x10000000002000
 	UPROPERTY(Transient)
 	int32 PawnIDCount;

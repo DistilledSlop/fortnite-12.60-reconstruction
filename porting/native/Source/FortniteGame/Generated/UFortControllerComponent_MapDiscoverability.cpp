@@ -53,3 +53,10 @@ void UFortControllerComponent_MapDiscoverability::GetLifetimeReplicatedProps(TAr
 	DOREPLIFETIME(UFortControllerComponent_MapDiscoverability, DiscoveredData);
 }
 
+
+UFortControllerComponent_MapDiscoverability::UFortControllerComponent_MapDiscoverability(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    // Original constructor 0x1418b5f70 calls SetIsReplicated(true).
+    SetIsReplicatedByDefault(true);
+}

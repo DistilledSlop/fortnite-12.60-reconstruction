@@ -2121,4 +2121,5 @@ AFortPlayerPawn::AFortPlayerPawn(const FObjectInitializer& ObjectInitializer)
     PSC_PlayerInWater = NativeDefaultSubobject4;
     UParticleSystemComponent* NativeDefaultSubobject5 = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("PlayerInWaterSurfaceSwimmingFX"));
     PSC_PlayerInWaterSurfaceSwimming = NativeDefaultSubobject5;
+    BuildingState = EFortBuildingState::None; // Original store 0x1422ffb6b.
 }

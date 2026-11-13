@@ -555,3 +555,10 @@ void AFortGameStateZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(AFortGameStateZone, WaitingToLeaveZoneTimeLeft);
 }
 
+
+AFortGameStateZone::AFortGameStateZone(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    WaitingToLeaveZoneTimeLeft = -1; // Original store 0x141e8b15d.
+    bDBNODeathEnabled = true; // Original store 0x141e8b19f.
+}

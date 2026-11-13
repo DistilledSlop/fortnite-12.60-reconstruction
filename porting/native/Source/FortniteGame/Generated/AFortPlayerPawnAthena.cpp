@@ -258,4 +258,5 @@ AFortPlayerPawnAthena::AFortPlayerPawnAthena(const FObjectInitializer& ObjectIni
     (void)NativeDefaultSubobject9;
     UParticleSystemComponent* NativeDefaultSubobject10 = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("PlayerWalkLandFX"));
     (void)NativeDefaultSubobject10;
+    ServerWorldTimeRevivalTime = -1.0f; // Original store 0x141a08f7c.
 }

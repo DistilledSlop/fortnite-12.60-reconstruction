@@ -651,4 +651,5 @@ AFortWeapon::AFortWeapon(const FObjectInitializer& ObjectInitializer)
 {
     USkeletalMeshComponentBudgeted* NativeDefaultSubobject0 = CreateDefaultSubobject<USkeletalMeshComponentBudgeted>(TEXT("WeaponMesh0"));
     (void)NativeDefaultSubobject0;
+    WeaponLevel = -1; // Original store 0x14268de54.
 }

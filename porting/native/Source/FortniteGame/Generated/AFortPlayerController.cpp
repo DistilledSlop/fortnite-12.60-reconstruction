@@ -2149,3 +2149,9 @@ void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 	DOREPLIFETIME(AFortPlayerController, bFailedToRespawn);
 }
 
+
+AFortPlayerController::AFortPlayerController(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    OverriddenBackpackSize = -1; // Original store 0x1423661a8.
+}

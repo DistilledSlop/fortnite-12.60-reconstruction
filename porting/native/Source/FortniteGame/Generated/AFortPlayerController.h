@@ -153,6 +153,8 @@ class FORTNITEGAME_API AFortPlayerController : public APlayspacePlayerController
 	GENERATED_BODY()
 
 public:
+	AFortPlayerController(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 290, flags 0x10000010080000
 	UPROPERTY()
 	FOnPlayerPawnPossessed OnPlayerPawnPossessed;
