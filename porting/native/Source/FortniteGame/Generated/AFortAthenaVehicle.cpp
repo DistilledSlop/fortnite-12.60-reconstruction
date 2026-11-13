@@ -551,6 +551,13 @@ AFortPlayerStateZone* AFortAthenaVehicle::NativeGetPlayerStateForPawn163(APawn* 
 	return Pawn ? Cast<AFortPlayerStateZone>(Pawn->GetPlayerState()) : nullptr;
 }
 
+bool AFortAthenaVehicle::NativeSeatPredicate_00C8(uint8 SeatIndex)
+{
+	// CONFIDENCE: HIGH. Recovered original pawn/vehicle virtual family.
+	// Original IFortVehicleInterface byte +0xc8 -> 0x1406801e0; SeatIndex ignored.
+	return false;
+}
+
 void AFortAthenaVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

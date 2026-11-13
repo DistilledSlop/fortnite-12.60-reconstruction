@@ -2090,5 +2090,7 @@ public:
 	static const uint16* NativeFindSubstringNoCase142bb47d0(const uint16* Haystack, const uint16* Needle);
 	static void NativeIncrementCounter142ee77f0(UObject* Target);
 	static int32 NativeDecrementCounter142ee43c0(uint8* Self);
+	bool NativeVehicleSeatPredicate_14235ca20() const;
+	virtual FRotator GetBaseAimRotation() const override;
 };
 

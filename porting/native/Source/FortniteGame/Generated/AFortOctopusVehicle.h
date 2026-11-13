@@ -394,5 +394,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static bool NativeIsWeakObjectValid1406a7ed0(TWeakObjectPtr<UObject>* WeakObject, bool bEvenIfPendingKill);
+	virtual bool NativeSeatPredicate_00C8(uint8 SeatIndex) override;
 };
 

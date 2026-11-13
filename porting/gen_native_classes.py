@@ -2613,6 +2613,10 @@ _pickaxe_vfx_spec = _common_activation_import.spec_from_file_location(
     "pickaxe_vfx_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "pickaxe_vfx_runtime", "source_policy.py"))
 _pickaxe_vfx_policy = _common_activation_import.module_from_spec(_pickaxe_vfx_spec)
 _pickaxe_vfx_spec.loader.exec_module(_pickaxe_vfx_policy)
+_pawn_aim_rotation_spec = _common_activation_import.spec_from_file_location(
+    "pawn_aim_rotation_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "pawn_aim_rotation_runtime", "source_policy.py"))
+_pawn_aim_rotation_policy = _common_activation_import.module_from_spec(_pawn_aim_rotation_spec)
+_pawn_aim_rotation_spec.loader.exec_module(_pawn_aim_rotation_policy)
 _route_spec = _common_activation_import.spec_from_file_location(
     "common_action_route_connected_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_route_connected_runtime", "policy.py"))
 _route_policy = _common_activation_import.module_from_spec(_route_spec)
@@ -2825,6 +2829,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _playerstate68_policy.apply(model, block, owner_fns)
     model = _athena_mode_policy.apply(model, block, owner_fns)
     model = _pickaxe_vfx_policy.apply(model)
+    model = _pawn_aim_rotation_policy.apply(model)
     model = _mutator_owner_policy.apply(model, block, owner_fns)
     model = _replay_spectator216_policy.apply(model, block, owner_fns)
     model = _controller_analytics_policy.apply(model, block, owner_fns)
@@ -4031,7 +4036,8 @@ def render_interface_header(name, source_label, api, model=None):
     """UINTERFACE U<Name> (parent UInterface) and its native interface I<Name>, in one header as UHT expects."""
     custom = _fort_ability_interface_policy.render_header(name, source_label, api)
     if custom is None:
-        custom = _native_virtual_interfaces_policy.render_header(name, source_label, api)
+        custom = _native_virtual_interfaces_policy.render_header(
+            name, source_label, api, _pawn_aim_rotation_policy.interface_declarations(name))
     if custom is not None:
         return custom
     iname = "I" + name[1:]
@@ -4072,6 +4078,7 @@ def render_interface_header(name, source_label, api, model=None):
         *_volume_accessor_policy.interface_declarations(name),
         *_world_ready_policy.interface_declarations(name),
         *_pickaxe_vfx_policy.interface_declarations(name),
+        *_pawn_aim_rotation_policy.interface_declarations(name),
         *(["", "public:"] if functions else []),
         *[line for f in functions for line in (
             "\tUFUNCTION(%s)" % ", ".join(f["specifiers"]),

@@ -59,11 +59,12 @@ def apply(model):
     return model
 
 
-def render_header(name, source_label, api):
+def render_header(name, source_label, api, extra_declarations=()):
     d = INTERFACES.get(name)
     if d is None:
         return None
     decls = ''.join('    virtual %s %s(%s);\n' % (r, n, a) for r, n, a in d['methods'])
+    decls += ''.join(line + '\n' for line in extra_declarations)
     fwd = ''.join(f + '\n' for f in d['forwards'])
     return f'''// Generated from {source_label}; native_virtual_interfaces_runtime policy.
 #pragma once

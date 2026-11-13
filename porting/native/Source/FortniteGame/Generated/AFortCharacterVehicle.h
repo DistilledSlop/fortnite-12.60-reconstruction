@@ -340,5 +340,6 @@ public:
 	virtual TArray<APawn*> NativeGetAllPassengers163();
 	virtual AFortPlayerStateZone* NativeGetPlayerStateForPawn163(APawn* Pawn);
 	virtual IFortVehicleInterface* NativeGetVehicleInterface163();
+	virtual bool NativeSeatPredicate_00C8(uint8 SeatIndex) override;
 };
 

@@ -1007,5 +1007,6 @@ public:
 	virtual bool NativeContainsPlayers163();
 	virtual TArray<APawn*> NativeGetAllPassengers163();
 	virtual AFortPlayerStateZone* NativeGetPlayerStateForPawn163(APawn* Pawn);
+	virtual bool NativeSeatPredicate_00C8(uint8 SeatIndex) override;
 };
 

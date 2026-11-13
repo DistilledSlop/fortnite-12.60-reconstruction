@@ -144,6 +144,13 @@ IFortVehicleInterface* AFortCharacterVehicle::NativeGetVehicleInterface163()
 	return Cast<IFortVehicleInterface>(this);
 }
 
+bool AFortCharacterVehicle::NativeSeatPredicate_00C8(uint8 SeatIndex)
+{
+	// CONFIDENCE: HIGH. Recovered original pawn/vehicle virtual family.
+	// Original IFortVehicleInterface byte +0xc8 -> 0x1406801d0; SeatIndex ignored.
+	return true;
+}
+
 void AFortCharacterVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

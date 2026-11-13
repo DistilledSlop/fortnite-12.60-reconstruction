@@ -23,4 +23,6 @@ public:
     virtual bool NativeIsSeatFilterApplicable163(uint8 Seat);
     virtual TArray<APawn*> NativeGetAllPassengers163();
     virtual AFortPlayerStateZone* NativeGetPlayerStateForPawn163(APawn* Pawn);
+public:
+	virtual bool NativeSeatPredicate_00C8(uint8 SeatIndex) = 0;
 };
