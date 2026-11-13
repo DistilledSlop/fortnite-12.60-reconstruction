@@ -1031,3 +1031,15 @@ render stall (GetQueryData 34.8s, GameThread frame sync 35.18s), triggering the
 not faction-screen selection or reward presentation. The next room probe uses
 DXVK; the fixture manifest, result and hang timings are private artifacts in
 `porting/generated/chrono-faction-client-probe/`.
+
+The subsequent DXVK probe on the same frozen backend rendered the character,
+lobby, Battle Pass room, agent corridor and Brutus room. Brutus's native final
+Shadow mission detail showed the Battle Pass purchase complete and all 18
+weekly challenges complete (18/18). Its level-20 prerequisite remained unmet: the
+fixture had `book_level=100` but season `level=1`. No native selection command was
+issued, so selection is still backend-tested rather than client-verified. This
+exposes a fixture/progression binding to resolve before testing native selection,
+not a failed ToggleQuestActiveState response. The controlled 600-second probe
+finished normally; captures, renderer logs and result are retained in
+`porting/generated/chrono-faction-dxvk-probe/`. The ProjectChrono wiki now includes
+the rendered lobby and Battle Pass room screenshots.
