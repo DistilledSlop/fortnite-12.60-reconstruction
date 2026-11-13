@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "355ea459dac257dd7bb299157cffd2d7db8eadc6",
- "subject": "Server: Fortnite gameplay-effect context on the wire (fixes ActiveGameplayEffects overflow on the vanilla client)",
- "date": "2026-11-13T09:57:51-05:00",
+ "head": "e21e2b0833110d45bd5ea636ae8d7f5464a34966",
+ "subject": "Repo cleanup: remove the old paths of the notes moved to porting/notes/",
+ "date": "2026-11-13T10:21:48-05:00",
  "overall_pct": 31.054,
  "measured_pct": 28.707,
  "objective_pct": 28.706,

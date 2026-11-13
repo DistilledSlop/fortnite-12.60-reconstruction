@@ -7,7 +7,7 @@ It is written so that a worker with no prior context can pick up one work packag
 - **Current focus:** the *original, unmodified* `FortniteClient-Win64-Shipping.exe` (run under Wine) signs in to our backend, sits in the lobby, matchmakes, joins our UE dedicated server and plays a Battle Royale match. The client supplies its own UI, rendering, audio and content. We supply the backend services and the authoritative game server.
 - **Public status page:** wiki `Server-First-Scope-Mockup` (local checkout `/opt/fortnite/fortnite-12.60-wiki`). This file holds the tasks; the wiki holds the status. When a gate or WP changes state, update both (section 9).
 
-Read sections 1 to 4 before starting any WP. Latest orchestration state: `server_systems/SF-ORCH-HANDOFF.md`.
+Read sections 1 to 4 before starting any WP. Latest state, lessons and the G7–G10 work packages: **section 11** (it merges the former handoffs).
 
 ## 0. Upfront thinking already done (read the card before starting its WP)
 
@@ -520,3 +520,146 @@ These do not stop any WP above; defaults are stated.
 2. **In-memory patches.** Default: keep the TLS and AppES/timer diagnostics until G9; G11 removes them later.
 3. **Scope of "all gameplay".** Default: Battle Royale solo first, then squads; Creative, Save the World, tournaments stay out until G10.
 4. **Draft chunk campaign (chunks 39+).** Default: pause it until WP D0, D-triage and B3 show which functions matter; more LOW-confidence drafts do not move a gate.
+
+---
+
+## 11. State, lessons and plan as of 2026-11-13 (merged handoffs)
+
+This section merges `server_systems/SF-ORCH-HANDOFF.md` (2026-11-12 orchestration), `server_systems/R-HANDOFF.md`
+(R-card research) and the runs of 2026-11-13. Those two files now only point here. Where to put files and run output:
+`porting/LAYOUT.md`.
+
+### 11.1 Gate state (vanilla client, real map `Apollo_Terrain`)
+
+| Gate | State 2026-11-13 | Evidence (runs under `generated/runs/`) |
+|---|---|---|
+| G6 | **Passed.** | 20261113 runs 27–33 |
+| G7 | **Mostly passed.** Warmup → bus → forced skydive → landing on the island; storm circles from map data advance (phases 1→4 with `-FortniteSafeZoneTimeScale=0.1`); "STORM EYE SHRINKING" on the HUD; storm damage lowers health on the HUD (100 → 73 → 0). **Open:** client-driven jump/glide input from the bus (only the forced exit was run); death at 0 HP (wired through `FortAthenaHealth::ApplyDamage` 2026-11-13, not run yet). | play-run-33 |
+| G8 | **Partly implemented, partly run.** Pickaxe and building tool in the hand (weapons replicate), build preview appears, health/shield attribute sets on the HUD. **Open:** build preview is red (placement refused), harvest, shooting, damage, loot, elimination, victory. | play-run-30/31/33 |
+| G9 | Not run. Death → elimination → end-game code exists (`FortAthenaHealth.cpp`, `FortAthenaEndGame.cpp`); research card `server_systems/G9-match-end-plan.md` (in progress 2026-11-13). | — |
+| G10 | Tooling ready, not run: `tools/second_client.sh` starts a second original client in the same run (report `generated/agents/second-client/REPORT.md`); matchmaking already sends every ticket to 127.0.0.1:7777; the match waits for `?RequiredPlayers=2`. | — |
+
+### 11.2 Systemic causes found (check these first when something "just doesn't show" on the client)
+
+1. **Missing native constructor defaults (the biggest one).** Generated classes have constructors only for default
+   subobjects; every primitive the original constructor sets is 0 on our server. Replication compares against the class
+   default object, so a wrong default either replicates a wrong value or is never sent. Bugs it caused on 2026-11-13:
+   weapons and building pieces did not replicate (`bReplicates`), storm stopped after phase 0
+   (`UFortPlaylistAthena.LastSafeZoneIndex` = −1 in the original), build preview red (`AFortGameStateZone`
+   `MaxPlayerStructures` = −1, `bAllowBuilding*` = true), aircraft/end-game time sentinels (−1). **The original values are
+   now recovered mechanically:** `tools/ctor_defaults.py` → `generated/agents/ctor-defaults/ctor_defaults.json`
+   (4,378 constructors found, 1,657 classes, 6,440 non-zero values, each with the store address). WP K1 applies them.
+2. **Dynamic vs stably-named subobjects.** A component or attribute set the original creates as a default subobject
+   must be created on our server with the **same name** and `RF_DefaultSubObject`, otherwise the client spawns an extra
+   copy and its own stays empty (HUD health showed 1 = `AFortPawn::GetHealth` fallback at `0x14231c4c0`). Names are in
+   `generated/reflection/native_default_subobjects.json`. Fixed for the PlayerState ASC and attribute sets
+   (`FortAthenaHealth.cpp` `AddNamedSet`).
+3. **Spawn the Blueprint class the original spawns, not the native parent.** The client builds the actor from the
+   replicated class; a native `AFortPlayerPawnAthena` has no anim blueprint (the reference pose the user saw). The
+   original spawns `/Game/Athena/PlayerPawn_Athena.PlayerPawn_Athena_C` (its `CharacterMesh0` has
+   `AnimClass = Fortnite_M_Avg_Player_AnimBlueprint`). Server switch `-FortniteBlueprintPawn`; it needs
+   `-FortniteNoServerAnimDecode` (next item).
+4. **The server cannot decode 12.60 cooked animations.** Spawning the Blueprint pawn crashed in
+   `UAnimCompress::DecompressBone` (call through a garbage codec link). Stand-in engine patch
+   `patches/ue425-fortnite-server-anim-decode-skip.patch`: with `-FortniteNoServerAnimDecode` a dedicated server returns
+   the reference pose / identity root motion. Clients are unaffected. Real fix later: decode the 12.60 compressed format.
+5. **Engine-class net checksums.** The client's engine fork differs from stock 4.25 in many engine classes; the client
+   drops the connection when it resolves an object of such a class (`LandscapeHeightfieldCollisionComponent`, the pawn's
+   movement base). `-FortniteSkipEngineClassNetChecksum` now sends 0 for every native class outside `/Script/Fortnite*`.
+6. **Fortnite GAS wire format.** The client always reads `FFortGameplayEffectContext` (`0x141605cf0`) after the stock
+   context; the server allocates `FFortServerGameplayEffectContext` via `UFortServerAbilitySystemGlobals`
+   (DefaultGame.ini). Fixed the `ActiveGameplayEffects` overflow. **Still open:** one
+   `NetMulticast_InvokeGameplayCueExecuted_FromSpec` "Mismatch read" per run (a field of `FGameplayEffectSpecForRPC`
+   other than the context; report `generated/agents/gasnet/REPORT.md`).
+7. **Client-side equip.** Besides replicating `CurrentWeapon`, the server must call
+   `AFortPawn::ClientInternalEquipWeapon` (thunk `0x142a16c90`) once the pawn walks; done in
+   `FortAthenaInventory::Tick`.
+8. **Debugging a server crash:** run the staged server under gdb with the build's `.debug` linked next to it and
+   `handle SIGTRAP nostop noprint` (UE `ensure` traps into an attached debugger and is not the crash). The crash
+   handler's own stack in `server.log` is not symbolised correctly. `-FortniteSpawnTestPawn` spawns the pawn at start
+   so pawn problems reproduce without a client.
+
+### 11.3 Work packages, in order
+
+Each WP: owner files, how to test (see 11.4), done criteria. Workers write only their own files; the orchestrator
+integrates, builds, runs and commits.
+
+- **K1 — apply the original constructor defaults at server start.** New file `Private/FortOriginalDefaults.cpp` and a
+  data file shipped in the stage (`Config/OriginalDefaults.json`, produced from `ctor_defaults.json`). At
+  `FCoreDelegates::OnPostEngineInit` (before the map loads any Blueprint), for every class in the table that lives in a
+  Fortnite module: walk its parent chain root-first and, on the class default object, set each listed primitive
+  property (Int/Int8/16/64, UInt*, Float, Byte/Enum, Bool incl. bitfields via `FBoolProperty::SetPropertyValue`) **only if
+  the current value is zero**. Blueprint CDOs are built from the native CDO plus their cooked delta, so they inherit the
+  fix. Log `OriginalDefaults: applied N values on M classes, skipped K`. Before shipping: fix the tool's known flaw (an
+  immediate wider than the property, e.g. `AFortPlayerState.CharacterGender: 259`, spans two fields: split it by
+  property sizes) and drop values from stores inside rarely taken branches if they look wrong. Then delete the
+  hand-written stand-ins it supersedes (search `stand-in for the ... constructor`). Done: run shows the log line, and
+  G6/G7 still pass.
+- **K2 — Blueprint pawn by default (animation).** In test (run `20261113-bppawn-1`). Done when the client shows idle /
+  run / two-handed pickaxe animation; then make `-FortniteBlueprintPawn` the default for `-FortniteOriginalClient`.
+- **B1 — building placement.** After K1, if the preview is still red: the client's placement check is
+  `0x14236e470` (controller virtual `+0x1a20`): result 5 = structure cap (`0x141ea12b0`), 6 = class/controller
+  predicate `+0x1968` / flag `+0x1a48` / disallowed tag at the location, 4 = no `StructuralSupportSystem`
+  (`AFortGameStateZone+0xb60`, client-side), 3 = support/collision (`0x141c664b0` → `0x141c66f50` etc.), 7–10 = layout
+  requirements (`+0xe14..e16`). Report `generated/agents/buildred/REPORT.md`. Also: the user saw a double-wide wall
+  ghost — compare with one wall's width. Then `ServerCreateBuildingActor` must spawn the class the client's handle names
+  (`AllPlayerBuildableClasses`, built client-side by `0x141e92db0` / `0x141df9620`) instead of the held-tool stand-in.
+- **G7-J — jump from the bus.** Test: during Aircraft press Space (`key,space`), expect `ServerAttemptAircraftJump`
+  and a glide; then deploy the glider (Space again) and land.
+- **C — combat** (shoot, harvest, damage): `server_systems/G8-combat-plan.md` (research in progress).
+- **L — loot**: `server_systems/G8-loot-plan.md` (research in progress; partial pickup code in `FortAthenaLoot.cpp`,
+  row structs `FFortLootTierData` / `FFortLootPackageData` not generated yet, loot tables not staged).
+- **E — death, elimination, victory, match end, results**: `server_systems/G9-match-end-plan.md` (research in progress).
+- **T — two clients (G10)**: integrate `tools/second_client.sh` into `vanilla_play_run.sh` (`FN_SECOND_CLIENT=1`,
+  lines in its report), run with `?RequiredPlayers=2`, then eliminate one player with the other.
+- **W — GAS cue RPC mismatch** (11.2 item 6).
+
+### 11.4 How to test (one command per step)
+
+```
+porting/tools/build_server.sh --stage                         # log in generated/builds/
+FN_RUN_LABEL=<what> FN_RENDERER=dxvk FN_LP_NUM_THREADS=4 \
+FN_SERVER_MAP=/Game/Athena/Apollo/Maps/Apollo_Terrain FN_SERVER_URL_OPTS='?RequiredPlayers=1' \
+FN_SERVER_ARGS='-FortniteSkipUnconvertedLegacyShaderMaps -FortniteTolerateNeedLoadDependencies -FortniteSkipEngineClassNetChecksum -FortniteStartingWood=500 -FortniteWarmupSeconds=20 -FortniteSafeZoneTimeScale=0.1 -FortniteBlueprintPawn -FortniteNoServerAnimDecode' \
+FN_ACTIONS='0:wait,UI.State.Startup.SubgameSelect,900 20:click,640,592 0:wait,ShouldShowBeginningOfSeasonDialog,600 25:click,1144,473 0:wait,Join.succeeded,60 0:stopif,Join.succeeded 0:key,Escape 4:click,1144,473' \
+porting/tools/vanilla_play_run.sh 1800 &
+porting/tools/wait_run.sh porting/generated/runs/<run> 'landed, server movement' 900
+```
+
+- Client boot to the lobby takes 3–5 minutes under DXVK/lavapipe; the client joins ~1 minute after Play; landing is
+  ~1.5 minutes after the join with a 20 s warmup.
+- Drive and screenshot the client from outside while it runs:
+  `export DISPLAY=:99 XAUTHORITY=$(ps -eo args | grep -oE '/tmp/xvfb-run\.[A-Za-z0-9]+/Xauthority' | head -1)`;
+  `xdotool key q` (build mode; `z x c v` pieces, `F` pickaxe), `xdotool mousedown 1; sleep 0.3; xdotool mouseup 1`,
+  `ffmpeg -loglevel error -y -f x11grab -video_size 1280x720 -i :99 -frames:v 1 -vf scale=640:-1 shot.png`.
+- Server log lines to grep: `MatchFlow:`, `Inventory:`, `Building:`, `Health:`, `EndGame:`, `UNetConnection::Close`.
+  Client log: the DXVK prefix's `FortniteGame.log` (copied into the run folder at the end); grep `NetworkFailure`,
+  `Mismatch`, `SetOverflowed`.
+- The client crashes intermittently in lavapipe (exit 139); `FN_LP_NUM_THREADS=4` reduced it. `wait_run.sh` returns as
+  soon as the run ends.
+- Root disk is small: delete `server.log` and `udp.pcap` of finished runs once the findings are written down.
+
+### 11.5 Research leftovers (from R-HANDOFF section 4)
+
+1. Re-run the RPC sweep with a "real but only a guard" rule (R4 section 5) and the R4 2.3 rule (a body whose only
+   substantive call is the null stub `0x140680300` is not real).
+2. The rest of `0x1419b47b0` (playlist values copied into the GameState) if the playlist chain is ported.
+3. Small leftovers: `0x141a5a880` (place setter), `0x141962af0`, `0x1419fc560`, `0x141988940`, `0x1419a9580`,
+   `0x1419ae490`, `0x1419797b0`, plugin callbacks `0x1419a42b0` / `0x1419a4830`.
+
+Research tools beyond `tools/README.md`: `rd.py ADDR Class --exact` when the start is known (default start resolution
+can pick the previous chunk); `off.py Class 0xOFF` (offset → property over the parent chain); `learefs.py 0xADDR`
+(code that takes a function's address); objdump
+`-D -b binary -mi386:x86-64 -M intel --adjust-vma=0x140000000` on the runtime image; capstone in
+`generated/.venv/bin/python`; decompile cache `/opt/fortnite/local-model-package/captures/`.
+
+### 11.6 Working rules that mattered
+
+- One native writer: delegated workers write only their own new files; the orchestrator integrates, builds, runs,
+  commits (`git commit --only -- <paths>`, never a directory-wide `git checkout`, fast-forward pushes).
+- The post-commit hook refreshes `README.md` and `docs/`; include them in the next commit (`docs/history.html` is over
+  the 10 MiB pre-commit limit and is left out until the hook trims it).
+- Bind empty RPC bodies at run time with `UFunction::SetNativeFunc` (`InstallRpcOverrides` pattern), not generator
+  splices; remove the rebinding when real bodies are spliced.
+- Staging cooked content: never stage material/texture packages (MemoryImage `DerivedType` assert); boot the server
+  after each staged root.

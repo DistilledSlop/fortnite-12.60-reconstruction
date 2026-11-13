@@ -1,0 +1,35 @@
+diff --git a/Engine/Source/Runtime/Engine/Private/Animation/AnimSequence.cpp b/Engine/Source/Runtime/Engine/Private/Animation/AnimSequence.cpp
+index fcb7de969..a733ea3ec 100644
+--- a/Engine/Source/Runtime/Engine/Private/Animation/AnimSequence.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Animation/AnimSequence.cpp
+@@ -1356,6 +1356,12 @@ void UAnimSequence::HandleAssetPlayerTickedInternal(FAnimAssetTickContext &Conte
+ 
+ FTransform UAnimSequence::ExtractRootTrackTransform(float Pos, const FBoneContainer * RequiredBones) const
+ {
++	// Fortnite original client: see GetAnimationPose (-FortniteNoServerAnimDecode).
++	static const bool bFortniteNoServerAnimDecode = IsRunningDedicatedServer() && FParse::Param(FCommandLine::Get(), TEXT("FortniteNoServerAnimDecode"));
++	if (bFortniteNoServerAnimDecode)
++	{
++		return FTransform::Identity;
++	}
+ 	const TArray<FTrackToSkeletonMap> & TrackToSkeletonMap = bUseRawDataOnly ? TrackToSkeletonMapTable : CompressedData.CompressedTrackToSkeletonMapTable;
+ 
+ 	// we assume root is in first data if available = SkeletonIndex == 0 && BoneTreeIndex == 0)
+@@ -1493,6 +1499,17 @@ void UAnimSequence::GetAnimationPose(FCompactPose& OutPose, FBlendedCurve& OutCu
+ {
+ 	SCOPE_CYCLE_COUNTER(STAT_GetAnimationPose);
+ 
++	// Fortnite original client (-FortniteNoServerAnimDecode): this engine cannot decode the 12.60 cooked compressed
++	// tracks (garbage codec links; spawning PlayerPawn_Athena crashed in UAnimCompress::DecompressBone). A dedicated
++	// server then returns the reference pose. Only server-side poses are affected (root motion, server bone queries);
++	// clients animate from their own data.
++	static const bool bFortniteNoServerAnimDecode = IsRunningDedicatedServer() && FParse::Param(FCommandLine::Get(), TEXT("FortniteNoServerAnimDecode"));
++	if (bFortniteNoServerAnimDecode)
++	{
++		OutPose.ResetToRefPose();
++		return;
++	}
++
+ 	// @todo anim: if compressed and baked in the future, we don't have to do this 
+ 	if (UseRawDataForPoseExtraction(OutPose.GetBoneContainer()) && IsValidAdditive())
+ 	{
