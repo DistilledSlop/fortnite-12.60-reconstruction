@@ -45,6 +45,7 @@ from daily_quest_service import DailyService
 
 from api_common import ApiError, Err
 from profile_service import CommandContext, _invalid
+from banner_reward_service import convert_banner_tokens
 
 EVENTS = {'accolade_assault_specialist': 'quest_s12_styles1_q01_accolade_ar',
           'donut_w1_startquest': 'Quest_S12_Donut_W1_A',
@@ -663,5 +664,6 @@ class QuestService:
             self._award_completed(ctx, tx, item_id, item, name)
         receipts[event_id] = payload
         tx.set_stat('local_quest_event_receipts', receipts)
+        convert_banner_tokens(ctx)
         self.profiles._store(account_id, ctx.txs)
         return True

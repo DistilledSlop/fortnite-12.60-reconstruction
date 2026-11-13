@@ -11,6 +11,11 @@ TAG, START, DAY = deadpool.TAG, deadpool.START, deadpool.DAY
 
 
 class DeadpoolBundleRewardTests(deadpool.DeadpoolQuestTests):
+    def banner(self):
+        core = self.profiles.profile(LOCAL_ACCOUNT_ID, "common_core")
+        return next((v for v in core["items"].values()
+                     if v["templateId"].casefold() == "homebasebannericon:brs12_donut"), None)
+
     def grant_bundle(self, week):
         ctx = CommandContext(self.profiles, LOCAL_ACCOUNT_ID, 'athena', {})
         self.quests._bundle(ctx.tx('athena'), 'QuestBundle_S12_Donut_' + week)
@@ -18,10 +23,10 @@ class DeadpoolBundleRewardTests(deadpool.DeadpoolQuestTests):
 
     def test_threshold_retry_and_restart(self):
         self.progress('donut_w1_startquest')
-        self.assertIsNone(self.item('BannerToken', 'BannerToken_043_S12_Donut'))
+        self.assertIsNone(self.banner())
         self.assertIsNone(self.item('Token', 'AthenaBattlePass_Donut_Challenge_Token'))
         self.progress('dont_thank_bus_driver')
-        self.assertIsNotNone(self.item('BannerToken', 'BannerToken_043_S12_Donut'))
+        self.assertIsNotNone(self.banner())
         token = self.item('Token', 'AthenaBattlePass_Donut_Challenge_Token')
         self.assertEqual(token['quantity'], 1)
         self.restart()
@@ -33,10 +38,10 @@ class DeadpoolBundleRewardTests(deadpool.DeadpoolQuestTests):
         with patch.object(self.quests, '_award_donut_bundle'):
             self.progress('donut_w1_startquest')
             self.progress('dont_thank_bus_driver')
-        self.assertIsNone(self.item('BannerToken', 'BannerToken_043_S12_Donut'))
+        self.assertIsNone(self.banner())
         self.restart()
         self.login()
-        self.assertIsNotNone(self.item('BannerToken', 'BannerToken_043_S12_Donut'))
+        self.assertIsNotNone(self.banner())
         self.assertIsNone(self.item('Token', 'AthenaBattlePass_Donut_Challenge_Token'))
         self.restart()
         self.login()
@@ -47,9 +52,9 @@ class DeadpoolBundleRewardTests(deadpool.DeadpoolQuestTests):
             self.progress('donut_w1_startquest')
         self.restart()
         self.login()
-        self.assertIsNone(self.item('BannerToken', 'BannerToken_043_S12_Donut'))
+        self.assertIsNone(self.banner())
         self.progress('dont_thank_bus_driver')
-        self.assertIsNotNone(self.item('BannerToken', 'BannerToken_043_S12_Donut'))
+        self.assertIsNotNone(self.banner())
         self.assertEqual(self.item('Token', 'AthenaBattlePass_Donut_Challenge_Token')['quantity'], 1)
 
     def test_suppressed_w2_chain_waits_for_all_objectives(self):

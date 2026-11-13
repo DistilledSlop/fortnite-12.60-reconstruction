@@ -362,6 +362,13 @@ exist in the cooked pak index (`generated/assets.json`):
 `DefaultGlider`, `EID_Celebration`, `CosmeticLocker_Athena`. The `AthenaX:` prefix and
 the slot mapping are inferred.
 
+Nine cooked Season 12/Deadpool banner token mappings now produce selectable
+`HomebaseBannerIcon` items in `common_core`. Known tokens in `athena` are consumed
+atomically with the icon grant, including match XP rewards, purchases, quest
+rewards and legacy login repair. Existing icon instances and attributes are
+preserved; unknown tokens stay owned. Consumption timing and unseen defaults are
+local policies, and native earned-banner reward presentation remains unverified.
+
 ### Revision and envelope model
 
 Every command response has `profileRevision`, `profileId`,
@@ -541,9 +548,10 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   Completing a selected branch unlocks its cooked cosmetic variants. Skye's
   tokens auto-equip the unlocked style; the other four agents keep the prior style.
   Targets become unseen, and tokens for unowned targets wait for later login.
-  The combined backend baseline passed 350 tests. Original-client faction
-  selection/reward presentation and other seasonal mission families remain
-  unverified or incomplete. Location Domination now adds
+  The combined backend baseline passed 355 tests. The original client accepted
+  Brutus's Shadow mission and switched to Ghost, with both screens showing
+  IN PROGRESS. The other four native selections, reward presentation and other
+  seasonal mission families remain unverified or incomplete. Location Domination now adds
   60 stages across 20 three-stage chains, cooked XP and feat/token rewards, and
   the mission schedule offsets 73 and 87. Missing successors of claimed stages
   are repaired on login without re-awarding rewards. Its counter policy is

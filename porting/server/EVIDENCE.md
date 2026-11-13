@@ -1100,3 +1100,53 @@ These checks do not establish original-client reward popups or native gameplay
 event integration. Maya customization transport recovery now also identifies the
 actual graph-instance IDs, node/config callers and RichColor's 32-hex-digit
 encoding, but the customization commands remain unimplemented.
+
+
+### Original-client Brutus activation and switching
+
+With the fixture's season and book levels both 100, the original client reached
+Brutus's final Shadow mission and enabled ACCEPT. Clicking it sent the native
+one-ID `ToggleQuestActiveState` request and received HTTP 200; the rendered screen
+changed to IN PROGRESS. Opening Ghost and accepting sent its ID plus the active
+Shadow ID, again received 200, and displayed Ghost IN PROGRESS. Persisted branches
+ended Ghost/ego Active and Shadow/alter Inactive. This verifies initial selection
+and switching for Brutus through the real client, not just constructed requests.
+
+This run used frozen backend `240e8706` plus the exact faction prerequisite file
+from `80a12513`, and unchanged ProjectChrono/helper `97621817`. Later Deadpool and
+banner changes were not in the runtime snapshot. DXVK used the previously
+successful medium settings on llvmpipe. No JSON parse, fatal error or GetQueryData
+marker was found. The fixture is deliberately artificial; it does not prove
+native gameplay-earned eligibility or quest completion. The client was stopped
+under root control after both screenshots; session 63241 ended with exit 0 and
+the backend stopped. Captures, safe native request receipts, exact source hash and
+private logs are in `generated/chrono-faction-selection-medium-probe/`.
+
+### Earned banner token conversion
+
+All nine known Season 12/Deadpool `FortBannerTokenType.BannerIconTemplateName`
+values match usable BattleRoyale rows in the original BannerIcons table. The
+original picker probe already establishes ownership as `HomebaseBannerIcon` in
+`common_core`; leaving only the reward's BannerToken in athena did not populate
+that inventory. Exact mappings and source hashes are now in
+`banner_reward_service.py`, reviewed against each original property report.
+
+Known token batches now validate before mutation and grant missing icons while
+consuming the tokens atomically. Existing instances, seen state and other
+attributes are preserved; unknown tokens remain owned. This runs for purchases,
+quest rewards, trusted match XP and login repair. Cross-profile deltas are
+returned in `multiUpdate`. Removal timing and new unseen defaults are explicit
+local policies, not a claim about the original server. Catalog notifications
+still name their token reward; native popup presentation is unverified.
+
+The current source passed **355 backend tests** in 20.970 seconds with the full
+unittest discovery command above. New tests cover persisted conversion, duplicate
+avoidance, invalid batch rollback, level-purchase envelopes, a match crossing
+level 33 and durable exact replay, plus a real SQLite trigger failure on the
+common_core write that rolls back both profiles and succeeds on retry. Private
+log: `generated/chrono-faction-integration/earned-banner-tests.log`.
+
+Maya research now also covers all 58 graph reward VTIDs and their target options
+across ten channels. Ten default-option tokens explicitly disable auto-equip and
+set bNeverPersisted; the other 48 omit auto-equip. All omit mark-unseen/giftbox.
+This metadata is private evidence, not a completed customization endpoint.

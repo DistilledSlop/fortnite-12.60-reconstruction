@@ -98,6 +98,26 @@ class ProgressionTests(unittest.TestCase):
         self.assertEqual(after, self.snapshots())
         self.assertEqual(receipt, self.service.record_result("rewards", dict(self.payload, xp=110000)))
 
+    def test_match_crossing_banner_level_converts_and_replays(self):
+        athena, _ = self.snapshots()
+        tx = ProfileTx(self.ctx, athena)
+        tx.set_stat('book_level', 32)
+        tx.set_stat('book_xp', 0)
+        self.profiles._store(LOCAL_ACCOUNT_ID, {'athena': tx})
+        payload = dict(self.payload, xp=0, bookXp=XP_TO_NEXT[31])
+        receipt = self.service.record_result('banner', payload)
+        athena, core = self.snapshots()
+        self.assertFalse(any(v['templateId'].casefold() == 'bannertoken:bannertoken_029_s12_cowboy'
+                             for v in athena['items'].values()))
+        icon = 'homebasebannericon:brs12_cowboy'
+        self.assertEqual(sum(v['templateId'].casefold() == icon for v in core['items'].values()), 1)
+        update = next(u for u in receipt['profileUpdate']['multiUpdate'] if u['profileId'] == 'common_core')
+        self.assertTrue(any(c['changeType'] == 'itemAdded' and c['item']['templateId'].casefold() == icon
+                            for c in update['profileChanges']))
+        self.profiles, self.service = self.restart()
+        self.assertEqual(receipt, self.service.record_result('banner', payload))
+        self.assertEqual([athena, core], self.snapshots())
+
     def test_receipt_failure_rolls_back_all_profiles_and_cache(self):
         before = self.snapshots()
         with closing(sqlite3.connect(self.profiles._database)) as db, db:

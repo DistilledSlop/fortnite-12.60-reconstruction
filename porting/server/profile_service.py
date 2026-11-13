@@ -40,6 +40,7 @@ from typing import Callable
 
 from api_common import ApiError, Err
 from banner_inventory import repair_starter_items
+from banner_reward_service import convert_banner_tokens
 from catalog import LOCAL_CREDIT_OFFER, SEASON12_LEVEL_OFFER, SEASON12_PASS_OFFER, cosmetic_attributes, get_offer
 from season12_rewards import FREE as SEASON12_FREE, PAID as SEASON12_PAID
 from season12_grants import SUPPORTED_GRANTS_TO_EVERYONE, initial_grant_attributes
@@ -337,6 +338,7 @@ def _grant_season12_rewards(ctx, athena, rewards, price):
     if quests is not None:
         quests.consume_variants(athena)
         quests.login(ctx, include_daily=False)
+    convert_banner_tokens(ctx)
     if loot:
         ctx.notifications.append({"type": "CatalogPurchase", "primary": True, "lootResult": {"tierGroupName": "", "items": loot}})
 
@@ -833,8 +835,9 @@ class ProfileService:
         if any(t.casefold().startswith("currency:") for t, _ in rewards):
             raise _invalid("Unexpected currency in level-one repair.")
         _grant_season12_rewards(ctx, athena, rewards, 0)
-        if athena.changed:
-            self._store(account_id, {"athena": athena})
+        convert_banner_tokens(ctx)
+        if any(tx.changed for tx in ctx.txs.values()):
+            self._store(account_id, ctx.txs)
         return len(athena.changes)
 
     def grant_item(self, account_id, profile_id, template_id, attributes=None):
@@ -907,6 +910,8 @@ class ProfileService:
         ctx = CommandContext(self, account_id, profile_id, body)
         ctx.tx(profile_id)
         cmd.fn(ctx)
+        if "athena" in ctx.txs:
+            convert_banner_tokens(ctx)
         self._store(account_id, ctx.txs, command_profile=profile_id)
         primary = ctx.txs[profile_id]
         # Deltas only apply to the revision they were generated from. When the
