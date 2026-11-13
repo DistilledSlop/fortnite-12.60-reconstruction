@@ -1132,4 +1132,7 @@ AFortPawn::AFortPawn(const FObjectInitializer& ObjectInitializer)
 {
     UAudioComponent* NativeDefaultSubobject3 = CreateDefaultSubobject<UAudioComponent>(TEXT("FeedbackAudioComp0"));
     (void)NativeDefaultSubobject3;
+    // Original constructor 0x1422fce30: stores at 0x1422fd75a and 0x1422fcfd4.
+    WeaponHandSocketName = FName(TEXT("RightHand"));
+    LeftHandWeaponHandSocketName = NAME_None;
 }
