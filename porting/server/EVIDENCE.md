@@ -1421,3 +1421,49 @@ independent player quest or that these names exhaust all Season 12 grants.
 Source grant links and export properties must distinguish unused, alternative
 and migrated assets before automatic grants are implemented. These categories
 remain an explicit coverage gap; Oro is not the last quest family.
+
+
+### Season-level golden-style quest rewards
+
+`season12_superlevel_data.py` normalizes six cooked superlevel quests, their
+bundle, source schedule and twelve cosmetic tokens. AthenaSeason12's
+SeasonGrantsToEveryone contains Season12_ABChallenges_Schedule; that schedule
+unlocks MissionBundle_S12_Superlevel OnScheduleGranted. Each of its six
+QuestInfos uses RequiresBattlePass with value 1 and bStartActive=True. The
+schedule is already supported by free season entitlements. No guessed calendar
+start was added. Raw property reports, source hashes and extraction checks are
+in `generated/superlevel-contract/`.
+
+Objectives use ItemEvent HasLeveledUpAthenaSeason with no stat-table row or
+inline filter. Counts are Midas 100, Brutus 140, Meowscles 180, TNTina 220,
+Skye 260 and Peely 300. Local policy synchronizes those counters from current
+season level at login and after XP awards; it does not wait for that many
+additional level-ups after entitlement acquisition. Book level does not satisfy
+these objectives. The trusted stat-event bridge rejects both the item-event
+name and inline-style aliases for these quests. XP after the book cap still
+reconciles the level quests even when no new book rewards are crossed.
+
+The twelve tokens unlock Progressive channel stages on the corresponding
+outfit/backpack. Most use Stage4, TNTina uses Stage7, and Peely's backpack uses
+Stage2. Existing active choices and other channels remain unchanged; tokens
+wait until a missing cosmetic target is acquired. Stage1 as a missing-channel
+fallback and absent auto-equip flags treated as false follow the existing local
+variant policy. Token consumption, quest state, season XP and result receipts
+share one profile transaction. Continuous gold coverage/interpolation and native
+appearance have not been established and are not implemented by a guessed
+formula.
+
+Seven new integration tests cover free/paid source gates, mature profiles,
+season versus book levels, actual XP crossing at the book cap, twelve token
+mappings and missing targets, raw event rejection, legacy Completed state,
+malformed progress, atomic reward failure and restart. Three existing Midas
+faction assertions were updated to include the independently earned Stage4
+that a full login now grants at the fixture's manually set level 100; active
+faction selections remain unchanged. The combined backend suite passed
+**399 tests** in 21.854 seconds. Private log:
+`generated/superlevel-contract/backend-tests.log`.
+
+The registry now contains 283 individual definitions across nine broad groups.
+The earlier named-candidate inventory has 164 still unregistered after these
+six golden-style definitions; those candidates still require source-based
+classification and grant verification.

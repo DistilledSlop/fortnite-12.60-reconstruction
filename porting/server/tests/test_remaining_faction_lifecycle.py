@@ -116,6 +116,11 @@ class RemainingFactionLifecycleTests(unittest.TestCase):
                         self.assertNotIn(('CosmeticVariantToken:' + tokens[side == 'alter']).casefold(), templates)
                     variants_before_restart = [copy.deepcopy(self.snapshot()['items'][f'target-{i}']['attributes']['variants'])
                                                for i in range(len(targets))]
+                    # The first full login after this fixture's manual level
+                    # change also grants Midas's independently earned gold style.
+                    if faction == 'midas':
+                        for variants in variants_before_restart:
+                            variants[0]['owned'].append('Stage4')
                     self.restart(); self.login()
                     self.assertEqual([self.snapshot()['items'][f'target-{i}']['attributes']['variants']
                                       for i in range(len(targets))], variants_before_restart)
@@ -144,7 +149,10 @@ class RemainingFactionLifecycleTests(unittest.TestCase):
                 self.assertNotIn(missing, {v['templateId'].casefold() for v in self.snapshot()['items'].values()})
                 _, channel, prefix, _ = targets[-1]
                 variants = self.snapshot()['items'][f'target-{len(targets)-1}']['attributes']['variants'][0]
-                self.assertEqual(variants['owned'], [prefix + '1', prefix + '2'])
+                expected = [prefix + '1', prefix + '2']
+                if faction == 'midas':
+                    expected.append('Stage4')
+                self.assertEqual(variants['owned'], expected)
 
 
 class RemainingFactionHistoryTests(unittest.TestCase):

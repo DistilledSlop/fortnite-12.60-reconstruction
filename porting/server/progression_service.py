@@ -76,6 +76,12 @@ def award_profile_xp(command, xp, book_xp):
                for reward in schedule.get(n, ())]
     if rewards:
         _grant_season12_rewards(command, athena, rewards, 0)
+    # Season levels keep advancing after the book cap, without crossed rewards
+    # to trigger the usual purchase reconciliation path.
+    quests = getattr(command.service, "quests", None)
+    if quests is not None:
+        from superlevel_service import reconcile_level
+        reconcile_level(quests, command)
 
 
 class ProgressionService:

@@ -534,7 +534,7 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   Their exact 12.60 casing, defaults beyond `acceptInvites: public`, partial-update,
   permission and error semantics remain inferred. Local private and mutual-friend
   policies govern new requests; existing requests can still be accepted.
-- **Quest coverage.** The registry currently supports 277 unique quest definitions across eight groups: weekly missions (100), dailies (62), Location Domination (60), Deadpool (21), faction challenges (15), Maya (9), Storm the Agency (6) and Oro (4). This is not all quest-related content shipped in 12.60. All nine cooked Maya quests, their individual style-token rewards and the final bundle token are implemented, alongside Agent Peely style tokens. Login repairs older completed Maya bundles with a durable receipt so consuming the final token cannot trigger another grant.
+- **Quest coverage.** The registry currently supports 283 unique quest definitions across nine groups: weekly missions (100), dailies (62), Location Domination (60), Deadpool (21), faction challenges (15), Maya (9), Storm the Agency (6), Oro (4) and golden styles (6). This is not all quest-related content shipped in 12.60. All nine cooked Maya quests, their individual style-token rewards and the final bundle token are implemented, alongside Agent Peely style tokens. Login repairs older completed Maya bundles with a durable receipt so consuming the final token cannot trigger another grant.
   All 100 weekly missions (Brutus, TNTina, Meowscles, Skye and Midas, weeks 1–10) now use their cooked objectives,
   40,000 XP rewards and completion-token thresholds. The cooked `SeasonGrantsToEveryone` entitlement now grants their mission schedule
   through `ClientQuestLogin`, including for free accounts. The owned schedule grants week 1
@@ -609,7 +609,7 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   an empty inventory GUID and converted style targets are local representation
   policies. Nested purchase notifications are folded into the claim response.
   Claimed retries do not repeat the notification. The combined backend baseline
-  passed 392 tests; this does not establish native reward popup presentation.
+  passed 399 tests; this does not establish native reward popup presentation.
   Storm the Agency supports the five cooked bundle quests, their 120,000 total
   XP, pickaxe, wrap and five-quest glider reward. Chest and henchman objectives
   require three distinct locations; swimming requires all five hatches. Event
@@ -625,6 +625,14 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   the bundle's display metadata independently places the pickaxe at four.
   Its schedule also requires operator opt-in because the original grant source
   is unresolved. Original Oro UI and native gameplay delivery remain unverified.
+  The six golden-style quests follow the cooked free AB schedule entitlement
+  and Battle Pass quest gate. Local level snapshots unlock Midas at season level
+  100, Brutus 140, Meowscles 180, TNTina 220, Skye 260 and Peely 300, including
+  existing eligible profiles and XP earned after the book cap. Purchased book
+  levels do not count as season levels. Their twelve outfit/backpack tokens
+  unlock the recovered stages, preserve the active style and wait for missing
+  cosmetic targets. Native golden-style presentation and the continuous gold-fill
+  behavior remain unresolved; unlocking a stage does not prove its appearance.
   An authenticated server quest-event endpoint now
   supports durable retries; actual native gameplay event integration remains pending.
   Daily events must already satisfy their cooked tag/template/condition filters;

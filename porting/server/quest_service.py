@@ -42,6 +42,8 @@ from season12_remaining_faction_data import (QUESTS as REMAINING_FACTION_QUESTS,
                                             FACTIONS as REMAINING_FACTIONS)
 from season12_storm_agency_data import STORM_AGENCY_QUESTS, STORM_AGENCY_BUNDLES, STORM_AGENCY_SCHEDULE
 from season12_oro_data import ORO_QUESTS, ORO_BUNDLES, ORO_SCHEDULE
+from season12_superlevel_data import SUPERLEVEL_QUESTS, SUPERLEVEL_BUNDLES, SUPERLEVEL_SCHEDULE
+from superlevel_service import SUPERLEVEL_VARIANTS, reconcile_level
 from season12_faction_variant_data import FACTION_VARIANTS, AUTO_EQUIP_VARIANTS
 from daily_quest_service import DailyService
 from locker_variant_sync import sync_lockers
@@ -63,8 +65,8 @@ FACTION_GRANTS = {
 LIMITED_EVENT_BUNDLES = {**STORM_AGENCY_BUNDLES, **ORO_BUNDLES}
 LIMITED_EVENT_SCHEDULES = {("challengebundleschedule:" + schedule["name"]).casefold(): schedule
                            for schedule in (STORM_AGENCY_SCHEDULE, ORO_SCHEDULE)}
-EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS, **WEEKLY_QUESTS, **LOCATION_QUESTS, **BRUTUS_QUESTS, **TNTINA_QUESTS, **REMAINING_FACTION_QUESTS, **STORM_AGENCY_QUESTS, **ORO_QUESTS}
-EVENT_BUNDLES = {**DONUT_BUNDLES, **WEEKLY_BUNDLES, **LOCATION_BUNDLES, **FACTION_BUNDLES, **LIMITED_EVENT_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
+EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS, **WEEKLY_QUESTS, **LOCATION_QUESTS, **BRUTUS_QUESTS, **TNTINA_QUESTS, **REMAINING_FACTION_QUESTS, **STORM_AGENCY_QUESTS, **ORO_QUESTS, **SUPERLEVEL_QUESTS}
+EVENT_BUNDLES = {**DONUT_BUNDLES, **WEEKLY_BUNDLES, **LOCATION_BUNDLES, **FACTION_BUNDLES, **LIMITED_EVENT_BUNDLES, **SUPERLEVEL_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
 ACQUISITION_EVENTS = {'item_acquire_brutus_token', 'item_acquire_tntina_token'} | {
     f['acquisition_event'] for f in REMAINING_FACTIONS.values()}
 
@@ -74,7 +76,11 @@ def objective_event_key(objective, stat):
     return stat if stat is not None else 'objective:' + objective
 
 
-VALID_EVENTS = (set(EVENTS) | {objective_event_key(objective, stat) for quest in EVENT_QUESTS.values() for objective, stat, _ in quest['objectives']}) - ACQUISITION_EVENTS
+# Level-item events are derived from committed season progression, never accepted
+# as caller-supplied stat rows or inline-objective events.
+VALID_EVENTS = (set(EVENTS) | {objective_event_key(objective, stat)
+                             for name, quest in EVENT_QUESTS.items() if name not in SUPERLEVEL_QUESTS
+                             for objective, stat, _ in quest['objectives']}) - ACQUISITION_EVENTS
 TOKENS = {'cosmeticvarianttoken:vtid_560_bananaagent_styleb': 'Stage2',
           'cosmeticvarianttoken:vtid_561_bananaagent_stylec': 'Stage3'}
 
@@ -133,11 +139,10 @@ class QuestService:
                  'level': -1, 'item_seen': False, 'challenge_bundle_id': bundle}
         attrs.update({'completion_' + objective.lower(): 0 for objective, _, _ in objectives})
         quest_id = self._grant(tx, 'Quest:' + name, attrs)
-        # A manually linked frontend quest may have granted Land before the
-        # operator enables the schedule. Attach that existing quest once.
+        # Attach an existing unlinked root once its owning bundle is reconciled.
         if (bundle in tx.profile['items'] and
-                tx.item(bundle)['templateId'].casefold() in {('challengebundle:' + key).casefold() for key in STORM_AGENCY_BUNDLES} and
-                name.casefold() in {q.casefold() for definition in STORM_AGENCY_BUNDLES.values() for q, _, _, _ in definition['quest_infos']} and
+                tx.item(bundle)['templateId'].casefold() in {('challengebundle:' + key).casefold() for key in {**STORM_AGENCY_BUNDLES, **SUPERLEVEL_BUNDLES}} and
+                name.casefold() in {q.casefold() for definition in {**STORM_AGENCY_BUNDLES, **SUPERLEVEL_BUNDLES}.values() for q, _, _, _ in definition['quest_infos']} and
                 tx.item(quest_id)['attributes'].get('challenge_bundle_id') is None):
             tx.set_item_attr(quest_id, 'challenge_bundle_id', bundle)
         return quest_id
@@ -154,8 +159,12 @@ class QuestService:
     def _reconcile_bundle(self, tx, name, bundle_id):
         definition = EVENT_BUNDLES[name]
         for quest, grant_type, days, start_active in definition['quest_infos']:
-            if grant_type == 'GrantWithBundle' or (grant_type == 'DaysFromEventStart' and
-                    self._date_reached(definition['calendar_event_tag'], days)):
+            if (grant_type == 'GrantWithBundle' or
+                    (grant_type == 'RequiresBattlePass' and
+                     tx.profile['stats']['attributes'].get('book_purchased') is True and
+                     tx.profile['stats']['attributes'].get('book_level', 0) >= days) or
+                    (grant_type == 'DaysFromEventStart' and
+                     self._date_reached(definition['calendar_event_tag'], days))):
                 self._quest(tx, quest, bundle_id, start_active if name in FACTION_BUNDLES else True)
         if name in LOCATION_BUNDLES:
             # Repair a missing successor without replaying the claimed stage's
@@ -180,7 +189,7 @@ class QuestService:
         # Original GetAchievedCount/GetPercentageComplete read this separate
         # attribute, not num_quests_completed. Single-stage bundles count
         # claimed QuestInfos; Location Domination uses terminal stages below.
-        if name not in WEEKLY_BUNDLES and name not in LOCATION_BUNDLES and name not in LIMITED_EVENT_BUNDLES and name != 'QuestBundle_Styles_PaperDoll':
+        if name not in WEEKLY_BUNDLES and name not in LOCATION_BUNDLES and name not in LIMITED_EVENT_BUNDLES and name not in SUPERLEVEL_BUNDLES and name != 'QuestBundle_Styles_PaperDoll':
             return
         roots = {quest.casefold() for quest, _, _, _ in EVENT_BUNDLES[name]['quest_infos']}
         if name in LOCATION_BUNDLES:
@@ -223,6 +232,10 @@ class QuestService:
                 for bundle, grant_type, days in WEEKLY_SCHEDULE + LOCATION_SCHEDULE:
                     if grant_type == 'OnScheduleGranted' or self._date_reached(WEEKLY_SCHEDULE_CALENDAR_EVENT_TAG, days):
                         self._bundle(tx, bundle, schedule_id)
+            elif template == ('challengebundleschedule:' + SUPERLEVEL_SCHEDULE['name']).casefold():
+                for bundle, grant_type, _ in SUPERLEVEL_SCHEDULE['entries']:
+                    if grant_type == 'OnScheduleGranted':
+                        self._bundle(tx, bundle, schedule_id)
             elif template in LIMITED_EVENT_SCHEDULES:
                 for bundle, grant_type, _ in LIMITED_EVENT_SCHEDULES[template]['entries']:
                     if grant_type == 'OnScheduleGranted':
@@ -246,6 +259,7 @@ class QuestService:
         # current quest's token is awarded. Reconcile only on explicit login.
         if include_daily:
             self._reconcile_faction_entitlements(tx)
+        reconcile_level(self, ctx)
 
     def _reconcile_faction_entitlements(self, tx):
         # Weekly bundle completion rewards were awarded before faction grant
@@ -317,7 +331,8 @@ class QuestService:
         items = list(tx.profile['items'].items())
         for token_id, token in items:
             spec = (FACTION_VARIANTS.get(token['templateId'].casefold()) or
-                    DONUT_VARIANTS.get(token['templateId'].casefold()))
+                    DONUT_VARIANTS.get(token['templateId'].casefold()) or
+                    SUPERLEVEL_VARIANTS.get(token['templateId'].casefold()))
             if spec is None:
                 continue
             target, channel, unlocked, default = spec
@@ -445,7 +460,7 @@ class QuestService:
             # also drives completion reward thresholds, an inferred local policy.
             tx.set_item_attr(bundle_id, 'num_quests_completed', count + 1)
         if bundle_id in tx.profile['items']:
-            bundle_name = next((key for key in {**WEEKLY_BUNDLES, **LOCATION_BUNDLES, **LIMITED_EVENT_BUNDLES} if
+            bundle_name = next((key for key in {**WEEKLY_BUNDLES, **LOCATION_BUNDLES, **LIMITED_EVENT_BUNDLES, **SUPERLEVEL_BUNDLES} if
                                 tx.item(bundle_id)['templateId'].casefold() == ('ChallengeBundle:' + key).casefold()), None)
             if bundle_name:
                 self._sync_bundle_progress(tx, bundle_name, bundle_id)
@@ -647,7 +662,7 @@ class QuestService:
         names = {('quest:' + name).casefold(): name for name in EVENT_QUESTS}
         for item_id, item in active:
             name = names.get(item['templateId'].casefold())
-            if name is None or item['attributes'].get('quest_state') != 'Active':
+            if name is None or name in SUPERLEVEL_QUESTS or item['attributes'].get('quest_state') != 'Active':
                 continue
             definition = EVENT_QUESTS[name]
             objectives = definition['objectives']
