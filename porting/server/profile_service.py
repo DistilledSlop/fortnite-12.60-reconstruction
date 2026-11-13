@@ -828,7 +828,19 @@ class ProfileService:
                     row = db.execute("SELECT data FROM profiles WHERE account_id = ? AND profile_id = ?",
                                      key).fetchone()
                 if row is not None:
-                    self._profiles[key] = json.loads(row[0])
+                    profile = json.loads(row[0])
+                    if profile_id == "common_core":
+                        tx = ProfileTx(self.ctx, profile)
+                        for item_id, item in tx.profile["items"].items():
+                            if (item.get("templateId", "").casefold() == "currency:mtxgiveaway"
+                                    and item.get("attributes", {}).get("platform") is None):
+                                tx.set_item_attr(item_id, "platform", "EpicPC")
+                        if tx.changed:
+                            self._store(account_id, {profile_id: tx})
+                        else:
+                            self._profiles[key] = profile
+                    else:
+                        self._profiles[key] = profile
                     return copy.deepcopy(self._profiles[key])
             items, attributes = build(self.ctx, account_id, profile_id)
             now = self.ctx.iso()
