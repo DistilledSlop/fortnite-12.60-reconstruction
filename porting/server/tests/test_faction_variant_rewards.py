@@ -66,7 +66,11 @@ class FactionVariantRewardsTests(unittest.TestCase):
 
     def select(self, side, *, tntina=False):
         self.login()
-        self.edit(lambda tx: self.quests._award_token(tx, TNTINA_TOKEN if tntina else TOKEN, 18))
+        def earn(tx):
+            tx.set_stat('book_purchased', True)
+            tx.set_stat('level', 100)
+            self.quests._award_token(tx, TNTINA_TOKEN if tntina else TOKEN, 18)
+        self.edit(earn)
         prefix = 'quest:ab_tntina_' if tntina else 'quest:quest_ab_skulldude_'
         quest = next(i for i, item in self.snapshot()['items'].items()
                      if item['templateId'].casefold() == prefix + side)

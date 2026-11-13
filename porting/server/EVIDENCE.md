@@ -1043,3 +1043,60 @@ not a failed ToggleQuestActiveState response. The controlled 600-second probe
 finished normally; captures, renderer logs and result are retained in
 `porting/generated/chrono-faction-dxvk-probe/`. The ProjectChrono wiki now includes
 the rendered lobby and Battle Pass room screenshots.
+
+
+### Faction purchase and level prerequisites
+
+Native mission activation `0x144ec47d0` calls `0x142006980` to find the
+character in the season/free/book-paid reward schedules. The required level is
+the reward array index; the paid schedule also requires Battle Pass ownership.
+`SpatialHenchmenData` maps the five faction records to their characters, and the
+cooked `AthenaSeason12` paid reward indices are Brutus 20, TNTina 40, Meowscles 60,
+Skye 80 and Midas 100. The level reader `0x141997780` uses `level`, guarded by
+`season_num`; original string initializers `0x140272b39` and `0x140272c19` prove
+both stat names. Thus `book_level=100, level=1` is insufficient. This explains the
+earlier synthetic fixture, rather than proving a tier-purchase defect: purchases
+already advance `level` when it is below the purchased book level.
+
+Faction selection now enforces these independent prerequisites before mutating
+any branch. Focused faction coverage passed 28 tests, including all five exact
+level boundaries, purchase/season rejection, malformed stored values, no mutation
+on failure, native switch batches and reward transactions. Native captures and
+initializer proofs remain private in `generated/faction-native-level-getter/`.
+
+A second original-client fixture with both levels 100 reached the rendered lobby
+and Battle Pass room, then exited with game process code 1 after the Agents door
+was clicked. No fatal error, JSON parse failure, GetQueryData marker or kernel OOM
+was recorded. This does not verify faction selection. The terminal attempt is
+retained in `generated/chrono-faction-selection-probe/`; the next diagnostic
+attempt restores the previously successful medium DXVK settings.
+
+
+### Deadpool bundle completion rewards
+
+The cooked Donut bundle rewards now grant the W1 banner token, W2/W3 sprays,
+W4 backpack, W5 loading screen, W6 wrap, W7 outfit, W8/W9 style tokens and Yacht
+music pack. Full linked quest chains must be claimed with their actual objective
+values before rewards are granted; merely opening the computer does not award
+its follow-up challenge's reward. This chain counting is an explicit local
+policy. W2 suppresses both stages, so suppression alone cannot determine the
+reward trigger. Generic bundle counters retain their prior inferred behavior.
+
+New claims award hidden challenge tokens and cosmetics atomically with a durable
+per-bundle threshold receipt. Login repairs cosmetics for old verified complete
+chains without replaying hidden tokens whose prior external use is unknowable;
+old starter-only claims remain incomplete. The W8/W9 VTIDs explicitly disable
+auto-equip and mark-unseen. Their recovered Parts/Stage2 and Material/Mat2 unlocks
+preserve active styles and item_seen, consume atomically, and wait for the outfit
+when it is absent. Metadata includes the original token and character hashes.
+
+The combined current source passed **350 backend tests** in 20.511 seconds:
+`python3 -W ignore::ResourceWarning -m unittest discover -s porting/server/tests -p 'test_*.py'`.
+Coverage includes the faction prerequisites, Deadpool multiobjective follow-up
+completion, single-stage Yacht reward, incomplete historical claims, restart,
+deferred styles and rollback/retry. Log: private
+`generated/chrono-faction-integration/prerequisites-deadpool-tests.log`.
+These checks do not establish original-client reward popups or native gameplay
+event integration. Maya customization transport recovery now also identifies the
+actual graph-instance IDs, node/config callers and RichColor's 32-hex-digit
+encoding, but the customization commands remain unimplemented.

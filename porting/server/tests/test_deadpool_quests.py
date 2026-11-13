@@ -112,6 +112,8 @@ class DeadpoolQuestTests(unittest.TestCase):
         self.progress('donut_pistol_2')
         self.assertIsNotNone(self.quest('W7_B'))
         self.assertIsNone(self.item('AthenaCharacter', 'CID_705_Athena_Commando_M_Donut'))
+        self.progress('donut_enter_porta_or_phone')
+        self.assertIsNotNone(self.item('AthenaCharacter', 'CID_705_Athena_Commando_M_Donut'))
         ctx = CommandContext(self.profiles, LOCAL_ACCOUNT_ID, 'athena', {})
         self.quests._bundle(ctx.tx('athena'), 'QuestBundle_S12_Donut_W4')
         self.profiles._store(LOCAL_ACCOUNT_ID, ctx.txs)

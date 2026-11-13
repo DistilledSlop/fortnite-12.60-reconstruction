@@ -25,6 +25,7 @@ from datetime import datetime
 from season12_quest_data import (DONUT_BUNDLES, DONUT_QUESTS, DONUT_SCHEDULE,
                                  DONUT_SCHEDULE_CALENDAR_EVENT_TAG)
 
+from season12_deadpool_reward_data import DONUT_REWARD_TYPES, DONUT_VARIANTS
 from season12_maya_data import MAYA_BUNDLE, MAYA_QUESTS
 from season12_daily_quest_data import DAILY_QUESTS
 from season12_location_data import LOCATION_BUNDLES, LOCATION_QUESTS, LOCATION_SCHEDULE
@@ -204,6 +205,8 @@ class QuestService:
             name = names.get(item['templateId'].casefold())
             if name:
                 self._reconcile_bundle(tx, name, bundle_id)
+                if name in DONUT_BUNDLES:
+                    self._award_donut_bundle(tx, name, bundle_id, repair=True)
                 if name == 'QuestBundle_Styles_PaperDoll':
                     self._award_maya_bundle(tx, bundle_id)
         # Purchase/XP reward handling can call login recursively before the
@@ -280,7 +283,8 @@ class QuestService:
         # original backend token-consumption timing is not recovered.
         items = list(tx.profile['items'].items())
         for token_id, token in items:
-            spec = FACTION_VARIANTS.get(token['templateId'].casefold())
+            spec = (FACTION_VARIANTS.get(token['templateId'].casefold()) or
+                    DONUT_VARIANTS.get(token['templateId'].casefold()))
             if spec is None:
                 continue
             target, channel, unlocked, default = spec
@@ -302,7 +306,8 @@ class QuestService:
                 if token['templateId'].casefold() in AUTO_EQUIP_VARIANTS:
                     entry['active'] = unlocked
                 tx.set_item_attr(item_id, 'variants', variants)
-                tx.set_item_attr(item_id, 'item_seen', False)
+                if token['templateId'].casefold() not in DONUT_VARIANTS:
+                    tx.set_item_attr(item_id, 'item_seen', False)
             tx.remove_item(token_id)
 
     def _consume_peely_variants(self, tx, items, character):
@@ -430,10 +435,83 @@ class QuestService:
                 self._bundle(tx, reward, schedule_id)
             else:
                 self._grant(tx, kind + ':' + reward, {'item_seen': False})
+        if bundle_id in tx.profile['items']:
+            bundle_name = next((key for key in DONUT_BUNDLES if
+                tx.item(bundle_id)['templateId'].casefold() == ('ChallengeBundle:' + key).casefold()), None)
+            if bundle_name:
+                self._award_donut_bundle(tx, bundle_name, bundle_id, completed_now=name)
         self.consume_variants(tx)
         if bundle_id in tx.profile['items'] and tx.item(bundle_id)['templateId'].casefold() == 'challengebundle:questbundle_styles_paperdoll':
             self._sync_bundle_progress(tx, 'QuestBundle_Styles_PaperDoll', bundle_id)
             self._award_maya_bundle(tx, bundle_id)
+
+    def _award_donut_bundle(self, tx, name, bundle_id, *, repair=False, completed_now=None):
+        definition = DONUT_BUNDLES[name]
+        # Local policy: each QuestInfo and its linked Quest rewards form one
+        # challenge. Count it only when the complete chain is claimed. W2
+        # suppresses both stages, so suppression alone cannot select a terminal.
+        # Original server accounting remains unknown.
+        claimed = 0
+        completed_terminals = set()
+        for root, _, _, _ in definition['quest_infos']:
+            current = root
+            visited = set()
+            while True:
+                key = current.casefold()
+                if key in visited or current not in DONUT_QUESTS:
+                    raise _invalid('Invalid Donut quest chain.')
+                visited.add(key)
+                matches = [item for item in tx.profile['items'].values()
+                           if item['templateId'].casefold() == ('Quest:' + current).casefold()
+                           and item['attributes'].get('challenge_bundle_id') == bundle_id]
+                if len(matches) != 1 or matches[0]['attributes'].get('quest_state') != 'Claimed':
+                    break
+                attrs = matches[0]['attributes']
+                quest_def = DONUT_QUESTS[current]
+                values = [attrs.get('completion_' + objective.lower())
+                          for objective, _, _ in quest_def['objectives']]
+                targets = [target for _, _, target in quest_def['objectives']]
+                if (not all(type(value) is int and 0 <= value <= target for value, target in zip(values, targets))
+                        or sum(value == target for value, target in zip(values, targets)) <
+                        quest_def.get('ObjectiveCompletionCount', len(targets))):
+                    break
+                successors = [reward for kind, reward, _ in quest_def['rewards'] if kind == 'Quest']
+                if len(successors) > 1:
+                    raise _invalid('Unsupported Donut quest chain.')
+                if not successors:
+                    claimed += 1
+                    completed_terminals.add(key)
+                    break
+                current = successors[0]
+        # Only a terminal completed in this transaction can earn fresh stacked
+        # tokens. Older claims may already have received or spent them elsewhere.
+        repair = repair or not completed_now or completed_now.casefold() not in completed_terminals
+        for threshold, rewards in definition['completion_rewards']:
+            if claimed < threshold:
+                continue
+            receipt = 'local_donut_reward_' + name.lower() + '_' + str(threshold)
+            attrs = tx.profile['stats']['attributes']
+            if receipt in attrs:
+                if attrs[receipt] is not True:
+                    raise _invalid('Invalid Donut bundle reward receipt.')
+                continue
+            for path, quantity, _visibility in rewards:
+                spec = DONUT_REWARD_TYPES.get(path)
+                if spec is None:
+                    raise _invalid('Unsupported Donut bundle reward.')
+                kind, reward = spec
+                if kind == 'Token':
+                    # Older claims predate this implementation; consumed token
+                    # balances cannot establish whether an award occurred.
+                    if not repair:
+                        self._award_token(tx, reward, quantity)
+                elif quantity == 1:
+                    self._grant(tx, kind + ':' + reward, {'item_seen': False})
+                else:
+                    raise _invalid('Unsupported Donut bundle reward quantity.')
+            tx.set_stat(receipt, True)
+        if repair:
+            self.consume_variants(tx)
 
     def _award_maya_bundle(self, tx, bundle_id):
         # A durable receipt prevents a later consumer of the token from causing

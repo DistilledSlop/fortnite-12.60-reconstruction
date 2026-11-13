@@ -535,10 +535,13 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   repair eligibility for older profiles without replaying XP or token rewards;
   token balances alone do not establish eligibility. `ToggleQuestActiveState`
   selects or switches one agent's earned branches and locks completed choices.
+  Activation also requires the purchased Battle Pass and season `level` 20/40/60/80/100
+  for Brutus/TNTina/Meowscles/Skye/Midas respectively; a high `book_level` alone
+  does not satisfy the native screen's level gate.
   Completing a selected branch unlocks its cooked cosmetic variants. Skye's
   tokens auto-equip the unlocked style; the other four agents keep the prior style.
   Targets become unseen, and tokens for unowned targets wait for later login.
-  The combined backend baseline passed 336 tests. Original-client faction
+  The combined backend baseline passed 350 tests. Original-client faction
   selection/reward presentation and other seasonal mission families remain
   unverified or incomplete. Location Domination now adds
   60 stages across 20 three-stage chains, cooked XP and feat/token rewards, and
@@ -552,7 +555,13 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   Deadpool activation/progression now uses 21 cooked quest definitions, 12 bundles
   and 11 schedule entries, including multiple objectives and independent W7 timing.
   Dated grants require an explicit event start; the historical event epoch is
-  unproven. Other bundle completion rewards and cleanup remain incomplete. The 62 cooked daily definitions now support daily grants, rerolls,
+  unproven. Cooked Deadpool bundle cosmetics, hidden tokens and both outfit styles
+  are awarded after their complete linked quest chains; full-chain counting is an
+  explicit local policy. Durable receipts prevent duplicate awards. Login repairs
+  cosmetics for validated old full-chain claims without replaying hidden tokens;
+  starter-only claims receive no repair. Outfit styles preserve the active choice
+  and unseen state, and wait for ownership when their target is absent. Original
+  reward presentation, suppression/counting semantics and cleanup remain unverified. The 62 cooked daily definitions now support daily grants, rerolls,
   repeat instances, 31,000 XP rewards and stacked daily tokens. Rotation uses an
   explicit local policy: one grant per UTC day, three active quests, one reroll
   per day, no catch-up, and deterministic selection excluding explicit zero

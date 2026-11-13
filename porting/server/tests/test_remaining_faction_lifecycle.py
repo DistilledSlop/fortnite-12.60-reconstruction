@@ -55,7 +55,11 @@ class RemainingFactionLifecycleTests(unittest.TestCase):
         self.profiles.run(LOCAL_ACCOUNT_ID, 'athena', 'ClientQuestLogin', {})
 
     def earn(self, faction, quantity=18):
-        self.edit(lambda tx: self.quests._award_token(tx, FACTIONS[faction][0], quantity))
+        def earn(tx):
+            tx.set_stat('book_purchased', True)
+            tx.set_stat('level', 100)
+            self.quests._award_token(tx, FACTIONS[faction][0], quantity)
+        self.edit(earn)
 
     def ids(self, faction):
         stem = FACTIONS[faction][1]

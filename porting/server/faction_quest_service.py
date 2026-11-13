@@ -8,9 +8,28 @@ one selected branch, and never reopen a completed selection.
 """
 
 from api_common import ApiError, Err
+from season12_rewards import PAID
 import season12_brutus_faction_data as brutus
 import season12_tntina_faction_data as tntina
 import season12_remaining_faction_data as remaining
+
+
+# SpatialHenchmenData associates each mission pair with this character. Native
+# 0x142006980 derives its level and premium requirement from the season reward
+# schedule, and 0x144ec47d0 checks them before offering activation. All five
+# characters occur in the paid schedule; its keys are the cooked array indices.
+_CHARACTERS = {
+    'Brutus': 'AthenaCharacter:CID_692_Athena_Commando_M_HenchmanTough',
+    'TNTina': 'AthenaCharacter:CID_691_Athena_Commando_F_TNTina',
+    'meowscles': 'AthenaCharacter:CID_693_Athena_Commando_M_BuffCat',
+    'skye': 'AthenaCharacter:CID_690_Athena_Commando_F_Photographer',
+    'midas': 'AthenaCharacter:CID_694_Athena_Commando_M_CatBurglar',
+}
+_REQUIRED_LEVEL = {
+    name: next(level for level, rewards in PAID.items()
+               if (character, 1) in rewards)
+    for name, character in _CHARACTERS.items()
+}
 
 
 # The branch names come from each cooked bundle, not a naming convention.
@@ -46,6 +65,14 @@ def toggle_faction_selection(ctx, quest_ids):
     if len(matching) != 1 or any(item_id not in items for item_id in quest_ids):
         raise _invalid('questIds must refer to owned branch quests from one faction.')
     name, bundle, grant, branch_templates = matching[0]
+    stats = tx.profile['stats']['attributes']
+    level = stats.get('level')
+    # 0x141997780 reads "level", guarded by season_num, rather than book_level.
+    # Reject malformed stored values as well as callers bypassing the UI gates.
+    if (stats.get('season_num') != 12 or stats.get('book_purchased') is not True or
+            type(level) is not int or level < _REQUIRED_LEVEL[name]):
+        raise _invalid(f'The {name} faction challenges require the Battle Pass '
+                       f'and season level {_REQUIRED_LEVEL[name]}.')
     branches = {}
     bundles = []
     earned = False

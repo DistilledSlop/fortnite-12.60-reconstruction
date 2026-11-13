@@ -15,6 +15,8 @@ class TNTinaSelectionTests(brutus_tests.FactionSelectionTests):
     def earn(self):
         self.profiles.run(LOCAL_ACCOUNT_ID, 'athena', 'ClientQuestLogin', {})
         ctx = CommandContext(self.profiles, LOCAL_ACCOUNT_ID, 'athena', {})
+        ctx.tx('athena').set_stat('book_purchased', True)
+        ctx.tx('athena').set_stat('level', 100)
         self.quests._award_token(ctx.tx('athena'), TOKEN, 18)
         self.profiles._store(LOCAL_ACCOUNT_ID, ctx.txs)
         self.ids = {side: next(item_id for item_id, item in self.snapshot()['items'].items()
