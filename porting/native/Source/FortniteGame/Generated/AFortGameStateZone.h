@@ -158,7 +158,7 @@ public:
 
 	// table index 61, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_PlayerStructuresChanged)
-	int32 MaxPlayerStructures;
+	int32 MaxPlayerStructures = -1;
 
 	// table index 60, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_bGlobalCeaseFire)
@@ -314,15 +314,15 @@ public:
 
 	// table index 14, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	bool bAllowBuildingAtLayoutRequirements;
+	bool bAllowBuildingAtLayoutRequirements = true;
 
 	// table index 13, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	bool bAllowBuildingWithoutLayoutRequirements;
+	bool bAllowBuildingWithoutLayoutRequirements = true;
 
 	// table index 12, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	bool bAllowLayoutRequirementsFeature;
+	bool bAllowLayoutRequirementsFeature = true;
 
 	// table index 11, flags 0x20080000006000
 	UPROPERTY(Transient, Config)
