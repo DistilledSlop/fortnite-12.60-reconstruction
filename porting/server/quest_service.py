@@ -47,6 +47,7 @@ from season12_collectible_data import COIN_QUESTS, FISH_QUESTS, COIN_BUNDLES, CO
 from season12_peely_data import QUESTS as PEELY_QUESTS, BUNDLES as PEELY_BUNDLES, SCHEDULE as PEELY_SCHEDULE
 from season12_yacht_data import SCHEDULE as YACHT_SCHEDULE, BUNDLE as YACHT_BUNDLE
 from season12_client_objective_data import CLIENT_OBJECTIVES
+from season12_discovery_data import DISCOVERY_QUESTS
 from superlevel_service import SUPERLEVEL_VARIANTS, reconcile_level
 from season12_faction_variant_data import FACTION_VARIANTS, AUTO_EQUIP_VARIANTS
 from daily_quest_service import DailyService
@@ -69,7 +70,7 @@ FACTION_GRANTS = {
 LIMITED_EVENT_BUNDLES = {**STORM_AGENCY_BUNDLES, **ORO_BUNDLES}
 LIMITED_EVENT_SCHEDULES = {("challengebundleschedule:" + schedule["name"]).casefold(): schedule
                            for schedule in (STORM_AGENCY_SCHEDULE, ORO_SCHEDULE)}
-EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS, **WEEKLY_QUESTS, **LOCATION_QUESTS, **BRUTUS_QUESTS, **TNTINA_QUESTS, **REMAINING_FACTION_QUESTS, **STORM_AGENCY_QUESTS, **ORO_QUESTS, **SUPERLEVEL_QUESTS, **COIN_QUESTS, **FISH_QUESTS, **PEELY_QUESTS}
+EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS, **WEEKLY_QUESTS, **LOCATION_QUESTS, **BRUTUS_QUESTS, **TNTINA_QUESTS, **REMAINING_FACTION_QUESTS, **STORM_AGENCY_QUESTS, **ORO_QUESTS, **SUPERLEVEL_QUESTS, **COIN_QUESTS, **FISH_QUESTS, **PEELY_QUESTS, **DISCOVERY_QUESTS}
 EVENT_BUNDLES = {**DONUT_BUNDLES, **WEEKLY_BUNDLES, **LOCATION_BUNDLES, **FACTION_BUNDLES, **LIMITED_EVENT_BUNDLES, **SUPERLEVEL_BUNDLES, **COIN_BUNDLES, **PEELY_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
 ACQUISITION_EVENTS = {'item_acquire_brutus_token', 'item_acquire_tntina_token'} | {
     f['acquisition_event'] for f in REMAINING_FACTIONS.values()}
@@ -84,7 +85,8 @@ def objective_event_key(objective, stat):
 # as caller-supplied stat rows or inline-objective events.
 VALID_EVENTS = (set(EVENTS) | {objective_event_key(objective, stat)
                              for name, quest in EVENT_QUESTS.items() if name not in SUPERLEVEL_QUESTS and name not in PEELY_QUESTS
-                             for objective, stat, _ in quest['objectives']}) - ACQUISITION_EVENTS
+                             for objective, stat, _ in quest['objectives']
+                             if name not in DISCOVERY_QUESTS or stat is not None}) - ACQUISITION_EVENTS
 TOKENS = {'cosmeticvarianttoken:vtid_560_bananaagent_styleb': 'Stage2',
           'cosmeticvarianttoken:vtid_561_bananaagent_stylec': 'Stage3'}
 
@@ -255,7 +257,7 @@ class QuestService:
         if tx.profile['stats']['attributes'].get('season_num') == 12:
             # These standalone quests are explicit SeasonGrantsToEveryone, with
             # no bundle, paid-pass requirement or calendar gate in that source.
-            for name in FISH_QUESTS:
+            for name in (*FISH_QUESTS, *DISCOVERY_QUESTS):
                 self._quest(tx, name, None)
             # Explicit local opt-in: these limited events' original grant
             # sources and epochs are unknown.
