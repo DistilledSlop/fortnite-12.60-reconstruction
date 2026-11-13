@@ -60,9 +60,15 @@ public:
 	UPROPERTY()
 	FScalableFloat EntryVelocityAngleRequired;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x328): not a UPROPERTY, not replicated.
+	float NativeEntryVelocityThreshold_0328;
+
 	// table index 21, flags 0x10000000000005
 	UPROPERTY()
 	FScalableFloat ActiveForwardSteeringAngle;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x350): not a UPROPERTY, not replicated.
+	float NativeActiveForwardSteeringThreshold_0350;
 
 	// table index 20, flags 0x10000000000005
 	UPROPERTY()
@@ -124,6 +130,9 @@ public:
 	UPROPERTY()
 	FScalableFloat SteeringMagnetMaxSteerAngle;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x538): not a UPROPERTY, not replicated.
+	float NativeSteeringMagnetThreshold_0538;
+
 	// table index 5, flags 0x10000000000005
 	UPROPERTY()
 	FScalableFloat MagnetLowVelocityThreshold;
@@ -164,5 +173,9 @@ public:
 	void OnStartShuttingDown();
 public:
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual void PostInitializeComponents() override;
 };
 

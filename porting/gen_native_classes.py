@@ -2537,6 +2537,10 @@ _maps_wind_handle_spec = _common_activation_import.spec_from_file_location(
     "maps_wind_handle_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "maps_wind_handle_runtime", "source_policy.py"))
 _maps_wind_handle_policy = _common_activation_import.module_from_spec(_maps_wind_handle_spec)
 _maps_wind_handle_spec.loader.exec_module(_maps_wind_handle_policy)
+_air_control_params_spec = _common_activation_import.spec_from_file_location(
+    "air_control_params_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "air_control_params_runtime", "source_policy.py"))
+_air_control_params_policy = _common_activation_import.module_from_spec(_air_control_params_spec)
+_air_control_params_spec.loader.exec_module(_air_control_params_policy)
 _maps_wind_building_spec = _common_activation_import.spec_from_file_location(
     "maps_wind_building_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "maps_wind_building_runtime", "source_policy.py"))
 _maps_wind_building_policy = _common_activation_import.module_from_spec(_maps_wind_building_spec)
@@ -6128,6 +6132,7 @@ def render_struct_header(model, source_label):
     lines.extend(native_serializer_declarations(name))
     lines.extend(_maps_fog_policy.declarations(model))
     lines.extend(_maps_wind_handle_policy.declarations(model))
+    lines.extend(_air_control_params_policy.declarations(model))
     lines.extend(_maps_wind_make_policy.declarations(model))
     lines.extend(_common_activation_policy.struct_declarations(model))
     lines.extend(_quickbar_refresh_policy.declarations(model))

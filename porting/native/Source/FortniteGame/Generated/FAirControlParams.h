@@ -45,5 +45,7 @@ struct FAirControlParams
 	UPROPERTY()
 	FScalableFloat CustomGravityCeilingWidth;
 
+	FAirControlParams() : MaxAcceleration(0.0f), LateralFriction(0.0f), MaxLateralSpeed(0.0f), TerminalVelocity(0.0f), UpwardTerminalVelocity(0.0f), GravityScalar(0.0f), CustomGravityCeiling(0.0f), CustomGravityCeilingWidth(0.0f) {}
+
 };
 
