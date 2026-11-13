@@ -130,6 +130,7 @@ class QuestBridgeTests(unittest.TestCase):
             with self.subTest(starts=starts), self.assertRaises(ValueError):
                 self.start(quest_event_starts=starts)
         self.assertEqual(quest_event_start(TAG + '=1700000000'), (TAG, 1700000000))
+        self.assertEqual(quest_event_start('EventFlag.LTE_StormTheAgency=1700000000'), ('EventFlag.LTE_StormTheAgency', 1700000000))
         self.assertEqual(quest_event_start(TAG + '=2023-11-14T22:13:20Z'), (TAG, 1700000000))
         for value in (TAG + '=NaN', TAG + '=2020-01-01', 'unknown=0'):
             with self.assertRaises(argparse.ArgumentTypeError): quest_event_start(value)

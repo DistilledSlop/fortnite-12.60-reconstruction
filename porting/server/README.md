@@ -609,7 +609,16 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   an empty inventory GUID and converted style targets are local representation
   policies. Nested purchase notifications are folded into the claim response.
   Claimed retries do not repeat the notification. The combined backend baseline
-  passed 382 tests; this does not establish native reward popup presentation.
+  passed 388 tests; this does not establish native reward popup presentation.
+  Storm the Agency supports the five cooked bundle quests, their 120,000 total
+  XP, pickaxe, wrap and five-quest glider reward. Chest and henchman objectives
+  require three distinct locations; swimming requires all five hatches. Event
+  activation is an operator opt-in: a configured start grants its free schedule
+  to Season 12 profiles at login. The separate FindFrontend quest is supported
+  when already owned, but is not automatically granted: its original grant
+  source is unresolved. Calendar flags now share the quest date configuration
+  and expire their cache at the next configured start. Native Storm the Agency
+  UI and gameplay event delivery remain unverified.
   An authenticated server quest-event endpoint now
   supports durable retries; actual native gameplay event integration remains pending.
   Daily events must already satisfy their cooked tag/template/condition filters;
@@ -668,7 +677,8 @@ Clients may read authenticated `/statsproxy/api/statsv2/account/{account}` but
 cannot award XP. These `/local` contracts are ours, rather than recovered Epic APIs.
 
 `POST /local/gameserver/{session}/quest-event` accepts `accountId`, `eventId`,
-`event` (a recovered objective stat row) and optional `amount` (default 1).
+`event` (a prequalified objective stat row or supported inline-objective key)
+and optional `amount` (default 1).
 New events require a live registration and admitted player. Exact committed
 retries survive expiry/restart without awarding twice; changed retries fail.
 Events affect quests already active at submission, without retroactive progress.
@@ -678,8 +688,16 @@ quests reset for a new match; previously seen superseded matches are ignored.
 These event-ordering policies are local. Exact legacy receipt retries remain
 valid after upgrading to match-aware events.
 Configure date gates with `--quest-event-start EventFlag.LobbySeason12=ISO_OR_UNIX`
+and optionally `--quest-event-start EventFlag.LTE_StormTheAgency=ISO_OR_UNIX`
 (also `Backend(quest_event_starts={...})`). No historical event start is fabricated;
 without one, dated quest grants wait. `ClientQuestLogin` reconciles elapsed gates.
+The calendar emits these flags from their configured starts, uses the configured
+season start for `seasonBegin`, and refreshes at the next future activation.
+No event ends were recovered; enabled flags remain active under local policy.
+Storm the Agency's inline landing objective uses the explicit local bridge key
+`objective:quest_s12_sta_landagency`; its cooked definition has no stat-table row.
+The trusted caller must qualify the Agency location and other source filters
+before submitting it, as with the other prequalified events.
 
 `--content-dir DIR` loads `DIR/content.json`; `--content-file FILE` instead selects
 a snapshot directly. Images referenced as `local-asset:filename.png` or `.jpg`

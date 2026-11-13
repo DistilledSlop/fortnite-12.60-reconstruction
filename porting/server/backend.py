@@ -83,7 +83,8 @@ class Backend:
         self.gameplay = GameplayService(self.ctx, self.accounts, self.profiles, self.oauth,
                                         self.party, self.gameservers, self.progression)
         self.content = ContentService(self.ctx, content_dir=content_dir, content_file=content_file,
-                                      public_origin=content_public_origin)
+                                      public_origin=content_public_origin,
+                                      event_starts=self.profiles.quests.event_starts)
         self.cloud = CloudStorageService(self.ctx, self.oauth, cloudstorage_dir, state_dir=state_dir)
         self.frontend = FrontendStubs(self.ctx)
         self.chat = ChatService(self.ctx, self.oauth)

@@ -1298,3 +1298,71 @@ award failures, Skye outfit/backpack gameplay loadouts after restart and rollbac
 when a matching locker snapshot is malformed. Test log:
 `generated/chrono-completed-quest-probe/backend-tests.log`. This does not prove
 the original client's reward popup or automatic Athena claim lifecycle.
+
+### Original Athena entry with a completed daily quest
+
+Frozen backend **4f78aa89** ran an isolated original-client UI probe with an
+owned pistol daily in Completed state and its full 1000 counter, without awarding
+its XP or token. The fixture resolved LobbyG1Probe's account ID from the accounts
+database and verified every native MCP target against it. Earlier attempts
+seeded the other test account by mistake; their private receipts are explicitly
+invalid for testing completed-quest behavior and are not evidence for a parser
+or progress bug.
+
+The corrected run entered the lobby, opened the Battle Pass challenge table,
+used category navigation and selected View Reward. The completed daily was
+absent from the lobby daily list and active challenge list. The client sent
+MarkNewQuestNotificationSent for that exact quest and ClientQuestLogin, both
+200, but no ClaimQuestReward. Its persisted state remained Completed with 1000
+progress, and no daily token was awarded. This bounded flow supports retaining
+the current BR auto-award policy; it does not prove all Athena reward triggers
+or native presentation of the new explicit claim response.
+
+Private fixture, requests, screenshots, source hashes and result receipt are in
+`generated/chrono-quest-claim-native-probe/`. Wine builtin graphics were used
+for the UI check, with the expected black 3D background. No fatal or JSON parse
+marker occurred; two GetQueryData GPU stalls were logged. An earlier DXVK run
+had software-renderer faults, so no 3D credit is taken from this check. Root
+stopped the owned client after the captures; session 15337 ended exit 0 and
+backend 251821 stopped.
+
+
+### Storm the Agency definitions and calendar alignment
+
+The cooked StormTheAgency quest directory, its challenge bundle, schedule and
+referenced stat/reward tables supply six quests and 20 objectives. Normalized
+properties and per-source SHA256 hashes are in `season12_storm_agency_data.py`;
+private property reports and extraction receipts are in
+`generated/storm-agency-contract/`. The bundle grants five quests. Henchmen and
+faction chests each require three of five distinct locations; swimming requires
+all five hatches. The bundle quests award 120,000 XP in total, the BadEgg pickaxe
+and wrap, and the BadEgg glider at five completed roots. FindFrontend is separate
+from that bundle and links to LandAgency using differently cased template text.
+Case-insensitive quest resolution preserves that link. Landing uses an inline
+Land filter, not a stat-table row; the local trusted bridge identifies it as
+`objective:quest_s12_sta_landagency`. Its original inline filters are retained
+in the data, and are the caller's responsibility to qualify.
+
+The schedule's original entitlement grant source, event epoch and premium gate
+were not recovered. Local policy requires an explicit configured
+`EventFlag.LTE_StormTheAgency` start to grant its schedule to Season 12 profiles,
+without a Battle Pass requirement. An already owned schedule reconciles its
+bundle independently. FindFrontend is not automatically granted. Reward claims,
+replay receipts and progress remain transactional; no raw gameplay matcher or
+native Storm the Agency UI behavior is claimed.
+
+The reflected ScheduledEvents::EventRecord fields are ActiveSince, ActiveUntil
+and EventType (constructor 0x141144fa0). Calendar client-events now emits the
+corresponding camelCase records from the same normalized starts used by quest
+grants. Its cache expires at the earliest future activation and seasonBegin
+uses the configured LobbySeason12 anchor. No end dates were recovered; enabled
+flags retain the existing 2099 expiry under explicit local policy. The existing
+calendar envelope remains unchanged. Tests cover future and exact-boundary
+activation, date normalization and matching ClientQuestLogin grants.
+
+The combined backend suite passed **388 tests** in 20.979 seconds with
+`python3 -W ignore::ResourceWarning -m unittest discover -s porting/server/tests -p 'test_*.py'`.
+The six new tests cover Storm grant gating, distinct-objective thresholds,
+completion rewards, linked quest casing, failed-award rollback, restart replay
+and calendar alignment. Private log:
+`generated/storm-agency-contract/backend-tests.log`.

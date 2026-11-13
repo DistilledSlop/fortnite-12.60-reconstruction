@@ -25,8 +25,9 @@ KEYCHAIN_PLACEHOLDER = "00000000000000000000000000000000:AAAAAAAAAAAAAAAAAAAAAAA
 
 
 class ContentService:
-    def __init__(self, ctx, *, content_dir=None, content_file=None, public_origin=None):
+    def __init__(self, ctx, *, content_dir=None, content_file=None, public_origin=None, event_starts=None):
         self.ctx = ctx
+        self.event_starts = event_starts if event_starts is not None else {}
         self._status = {}
         self.lobby_content = LobbyContent(content_dir=content_dir, content_file=content_file,
                                           public_origin=public_origin)
@@ -74,19 +75,25 @@ class ContentService:
         timestamp = self.ctx.now()
         now = self.ctx.iso(timestamp)
         store_end = self._store_end(timestamp)
+        far = "2099-01-01T00:00:00.000Z"
+        # No event end dates were recovered; local policy keeps enabled flags active.
+        active_events = [{"eventType": tag, "activeSince": self.ctx.iso(start), "activeUntil": far}
+                         for tag, start in sorted(self.event_starts.items()) if start <= timestamp]
+        future_starts = [start for start in self.event_starts.values() if start > timestamp]
+        cache_expire = self.ctx.iso(min(future_starts)) if future_starts else far
+        season_start = self.event_starts.get("EventFlag.LobbySeason12")
         state = {
             "activeStorefronts": ["BRWeeklyStorefront", "BRDailyStorefront"], "eventNamedWeights": {}, "seasonNumber": 12,
             "seasonTemplateId": "AthenaSeason:athenaseason12", "matchXpBonusPoints": 0,
-            "seasonBegin": "2020-06-02T00:00:00Z", "seasonEnd": "2099-01-01T00:00:00.000Z",
+            "seasonBegin": self.ctx.iso(season_start) if season_start is not None else "2020-06-02T00:00:00Z", "seasonEnd": "2099-01-01T00:00:00.000Z",
             "seasonDisplayedEnd": "2099-01-01T00:00:00.000Z", "weeklyStoreEnd": store_end,
             "stwEventStoreEnd": "2099-01-01T00:00:00.000Z", "stwWeeklyStoreEnd": "2099-01-01T00:00:00.000Z",
             "dailyStoreEnd": store_end,
         }
-        far = "2099-01-01T00:00:00.000Z"
         return 200, {"channels": {
             "client-matchmaking": {"states": [], "cacheExpire": far},
             "client-events": {"states": [{"validFrom": "2020-01-01T00:00:00.000Z",
-                                          "activeEvents": [], "state": state}], "cacheExpire": far},
+                                          "activeEvents": active_events, "state": state}], "cacheExpire": cache_expire},
         }, "cacheIntervalMins": 10.0, "currentTime": now}  # CalendarDownload members (reflection)
 
     def catalog(self, req, match):

@@ -26,8 +26,8 @@ import local_ws  # noqa: E402
 def quest_event_start(value):
     """Parse a configured calendar tag and Unix or timezone-aware ISO start."""
     tag, separator, raw = value.partition('=')
-    if not separator or tag != 'EventFlag.LobbySeason12' or not raw:
-        raise argparse.ArgumentTypeError('expected EventFlag.LobbySeason12=ISO_OR_UNIX')
+    if not separator or tag not in {'EventFlag.LobbySeason12', 'EventFlag.LTE_StormTheAgency'} or not raw:
+        raise argparse.ArgumentTypeError('expected supported event tag=ISO_OR_UNIX')
     try:
         try:
             start = float(raw)
