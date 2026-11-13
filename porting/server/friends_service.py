@@ -25,6 +25,8 @@ class FriendsService:
         self.ctx, self.accounts, self.oauth, self.notify = ctx, accounts, oauth, notify
         self._lock = threading.RLock()
         self.progression = None
+        self.record_interaction = None
+        self.interaction_failures = 0
         self.notification_failures = 0
         if state_dir is None:
             path = ':memory:'
@@ -78,6 +80,13 @@ class FriendsService:
     def _emit_pair(self, account, other, fields):
         for recipient, peer in ((account, other), (other, account)):
             self._emit(recipient, dict(fields, accountId=peer))
+
+    def _record_interaction(self, account, other, kind):
+        if self.record_interaction and account != other:
+            try:
+                self.record_interaction(account, other, kind)
+            except Exception:
+                self.interaction_failures += 1  # The graph transition has already committed.
 
     def _remove_edge(self, account, other):
         """Remove the relationship in the caller's transaction and return its reason."""
@@ -227,6 +236,7 @@ class FriendsService:
                 event = ('PENDING', created)
         if event:
             status, created = event
+            self._record_interaction(account, other, 'FriendshipAccept' if status == 'ACCEPTED' else 'FriendshipCreate')
             # Accepted friendships use OUTBOUND as in legacy_list; the client ignores it.
             for recipient, peer, direction in ((account, other, 'OUTBOUND'),
                                                 (other, account, 'INBOUND' if status == 'PENDING' else 'OUTBOUND')):
@@ -240,6 +250,8 @@ class FriendsService:
         self._identity(req, account, other)
         with self._lock, self._db:
             reason = self._remove_edge(account, other)
+        if reason == 'DELETED':
+            self._record_interaction(account, other, 'FriendshipDelete')
         self._emit_removal(account, other, reason)
         return 204, None
 
@@ -249,6 +261,9 @@ class FriendsService:
         with self._lock, self._db:
             self._db.execute('INSERT OR IGNORE INTO blocks VALUES (?,?,?)', (account,other,self.ctx.iso()))
             reason = self._remove_edge(account, other)
+        # Local policy: blocking an accepted friend also deletes that friendship.
+        if reason == 'DELETED':
+            self._record_interaction(account, other, 'FriendshipDelete')
         self._emit_removal(account, other, reason)
         return 204, None
 

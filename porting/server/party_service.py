@@ -15,8 +15,7 @@ Evidence (see the 12.60 binary strings and DefaultEngine.ini):
             /presence/api/v1/_/{id}/subscriptions/{otherId}.
   inferred  the HTTP methods, the /party/api/v1/Fortnite prefix (ServiceName is
             observed, the namespace value is inferred), request body shapes,
-            the response shapes, the build-id check (urn:epic:cfg:build-id_s) and the
-            CLOSED joinability value.
+            the response shapes and the CLOSED joinability value.
   guess     the PATCH /parties/{partyId}/meta route, and the presence response shape.
 
 Original-client recovery establishes Party-<id> XMPP rooms and the flat
@@ -31,7 +30,7 @@ from api_common import ApiError, Err
 
 PARTY_PREFIX = "/party/api/v1/Fortnite"
 PRESENCE_PREFIX = "/presence/api/v1/_"
-# inferred: the build-id key that party join compares. Absent from the binary as a plain string.
+# Party creation supplies this build key; a native join can omit it from member meta.
 BUILD_KEY = "urn:epic:cfg:build-id_s"
 JOINABILITY = ("OPEN", "CLOSED", "INVITE_ONLY", "INVITE_AND_FORMER")
 MAX_PARTY_SIZE = 16  # guess: default maxSize
@@ -54,6 +53,8 @@ class PartyService:
         self.accounts = accounts
         self.oauth = oauth
         self.notify = notify
+        self.record_interaction = None
+        self.interaction_failures = 0
         self.notification_failures = 0
         self._parties = {}
         # Applicants are intentionally separate from the public party/member state.
@@ -63,6 +64,21 @@ class PartyService:
         self._pings = []
 
     # Helpers -----------------------------------------------------------
+
+    def _record_interaction(self, actor, peer, kind):
+        if self.record_interaction and actor != peer:
+            try:
+                self.record_interaction(actor, peer, kind)
+            except Exception:
+                self.interaction_failures += 1  # The party transition has already occurred.
+
+    @staticmethod
+    def _check_build_claim(party, member_meta):
+        # Local validation policy: reject an explicit conflicting claim. Native
+        # join DTOs can omit the member claim; Epic's enforcement is unknown.
+        expected = party["meta"].get(BUILD_KEY)
+        if expected is not None and BUILD_KEY in member_meta and member_meta[BUILD_KEY] != expected:
+            raise ApiError(403, Err.PARTY_JOIN_FORBIDDEN, "The build does not match this party.")
 
     def _emit(self, party, kind, actor, recipients=None, **fields):
         if not self.notify:
@@ -157,6 +173,8 @@ class PartyService:
         party["members"].append(member)
         self._touch(party)
         self._set_presence(account_id, "Online", party["id"])
+        for peer in party["members"]:
+            self._record_interaction(account_id, peer["account_id"], "PartyJoined")
         self._emit(party, "MEMBER_JOINED", account_id, member=member)
 
     @staticmethod
@@ -346,9 +364,7 @@ class PartyService:
                     raise ApiError(400, Err.INVALID_PAYLOAD, "connection.id must be a nonempty string.")
                 connection_meta = self._dict(connection.get("meta"), "connection.meta")
                 member_meta = self._dict(body["meta"], "meta") if "meta" in body else existing["meta"]
-                expected_build = party["meta"].get(BUILD_KEY)
-                if expected_build is not None and member_meta.get(BUILD_KEY) != expected_build:
-                    raise ApiError(403, Err.PARTY_JOIN_FORBIDDEN, "The build does not match this party.")
+                self._check_build_claim(party, member_meta)
                 if "yield_leadership" in connection and not isinstance(connection["yield_leadership"], bool):
                     raise ApiError(400, Err.INVALID_PAYLOAD, "connection.yield_leadership must be a boolean.")
                 if "offline_ttl" in connection and (isinstance(connection["offline_ttl"], bool) or
@@ -376,9 +392,7 @@ class PartyService:
         invite = self._find_invite(party, account_id)
         if len(party["members"]) >= party["config"]["maxSize"]:
             raise ApiError(409, Err.PARTY_IS_FULL, "The party is full.")
-        expected_build = party["meta"].get(BUILD_KEY)
-        if expected_build is not None and member["meta"].get(BUILD_KEY) != expected_build:
-            raise ApiError(403, Err.PARTY_JOIN_FORBIDDEN, "The build does not match this party.")
+        self._check_build_claim(party, member["meta"])
         if party["config"]["joinability"] != "OPEN" and invite is None:
             raise ApiError(403, Err.PARTY_JOIN_FORBIDDEN, "An invite is required to join this party.")
         if party["config"].get("join_confirmation", False):
@@ -410,6 +424,9 @@ class PartyService:
         departing_member = copy.deepcopy(self._member(party, account_id))
         was_captain = departing_member["role"] == "CAPTAIN"
         party["members"] = [member for member in party["members"] if member["account_id"] != account_id]
+        # Local policy: a kick is a departure by the removed member as well.
+        for peer in party["members"]:
+            self._record_interaction(account_id, peer["account_id"], "PartyLeft")
         presence = self._presence.get(account_id)
         if presence is not None:
             presence["partyId"] = None
@@ -473,8 +490,10 @@ class PartyService:
             "expires_at": expires_at,
         })
         self._touch(party)
+        self._record_interaction(caller, target, "PartyInviteSent")
         if send_ping:
             ping = self._add_ping(caller, target, party_id, meta)
+            self._record_interaction(caller, target, "PingSent")
             self._emit(party, "PING", caller, recipients=[target], ping=ping)
         self._emit(party, "INITIAL_INVITE", caller, recipients=[target], invite=party["invites"][-1])
         return 204, None
@@ -614,9 +633,7 @@ class PartyService:
         if len(party["members"]) >= party["config"]["maxSize"]:
             raise ApiError(409, Err.PARTY_IS_FULL, "The party is full.")
         member = applicant["member"]
-        expected_build = party["meta"].get(BUILD_KEY)
-        if expected_build is not None and member["meta"].get(BUILD_KEY) != expected_build:
-            raise ApiError(403, Err.PARTY_JOIN_FORBIDDEN, "The build does not match this party.")
+        self._check_build_claim(party, member["meta"])
         if party["config"]["joinability"] != "OPEN" and self._find_invite(party, account_id) is None:
             raise ApiError(403, Err.PARTY_JOIN_FORBIDDEN, "An invite is required to join this party.")
         now = self.ctx.iso()
@@ -699,6 +716,7 @@ class PartyService:
         # Native CreatePing (0x140a541c0) posts the metadata object directly.
         meta = self._dict(body["meta"], "meta") if set(body) == {"meta"} else body
         ping = self._add_ping(sender, target, party["id"], meta)
+        self._record_interaction(sender, target, "PingSent")
         self._emit(party, "PING", sender, recipients=[target], ping=ping)
         return 204, None
 

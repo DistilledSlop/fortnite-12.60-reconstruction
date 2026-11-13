@@ -113,12 +113,27 @@ class XmppService:
         if (str(event.get("type", "")).startswith("com.epicgames.social.party.")
                 and actor and actor != account_id and self.friends.is_blocked(actor, account_id)):
             return
+        accepted_peer = (event.get('accountId')
+                         if event.get('type') == 'com.epicgames.friends.core.apiobjects.Friend'
+                         and event.get('status') == 'ACCEPTED' else None)
         with self._lock:
             targets = [c for c in self._connections if c.account == account_id and c.jid]
+            sources = [c for c in self._connections if accepted_peer and c.account == accepted_peer]
         body = escape(json.dumps(event, separators=(',', ':'), ensure_ascii=False))
         for c in targets:
             self._send(c, '<message xmlns="jabber:client" from=%s to=%s><body>%s</body></message>' %
                        (quoteattr('xmpp-admin@' + c.domain), quoteattr(c.jid), body))
+            # A peer may already have announced availability before the friendship
+            # existed. Replay only that peer's current resources after the event.
+            for source in sources:
+                if (source is c or not source.jid or source.phase != 'ready'
+                        or not source.available or source.stop.is_set() or not self._live(source)
+                        or self.friends.is_blocked(account_id, accepted_peer)
+                        or not self.friends.are_friends(account_id, accepted_peer)):
+                    continue
+                status = '<status>%s</status>' % escape(source.status) if source.status else ''
+                self._send(c, '<presence xmlns="jabber:client" from=%s to=%s>%s</presence>' %
+                           (quoteattr(source.jid), quoteattr(c.jid), status))
 
     def _presence(self, c, unavailable=False):
         if not c.jid:

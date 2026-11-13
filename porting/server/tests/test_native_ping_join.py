@@ -77,7 +77,7 @@ class NativePingJoinTests(support.ServiceTestCase):
         self.assertEqual(self.call('POST', self.party_path + '/invites/' + self.target_id,
                                    self.sender, {})[0], 204)
         party['meta']['urn:epic:cfg:build-id_s'] = 'compatible'
-        self.assertEqual(self.join()[0], 403)
+        self.assertEqual(self.join({'meta': {'urn:epic:cfg:build-id_s': 'incompatible'}})[0], 403)
         body = {'meta': {'urn:epic:cfg:build-id_s': 'compatible'}}
         party['config']['maxSize'] = 1
         self.assertEqual(self.join(body)[0], 409)

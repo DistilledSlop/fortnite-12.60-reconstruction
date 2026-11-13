@@ -48,6 +48,7 @@ from oauth_service import OAuthService
 from party_service import PartyService
 from profile_service import ProfileService
 from progression_service import ProgressionService
+from interactions_service import InteractionsService
 from quest_service import QuestService
 from xmpp_service import XmppService
 
@@ -73,6 +74,10 @@ class Backend:
                                               notify=self.xmpp.notify)
         self.progression = ProgressionService(self.ctx, self.accounts, self.profiles, state_dir=state_dir)
         self.friends.progression = self.progression
+        self.interactions = InteractionsService(self.ctx, self.accounts, self.oauth, self.friends,
+                                                self.progression, state_dir=state_dir)
+        self.friends.record_interaction = self.interactions.record
+        self.party.record_interaction = self.interactions.record
         self.gameservers = GameServerService(self.ctx, self.accounts, self.profiles, self.party,
                                             shared_secret=gameserver_secret)
         self.gameplay = GameplayService(self.ctx, self.accounts, self.profiles, self.oauth,
@@ -92,7 +97,7 @@ class Backend:
         self.router = Router()
         for service in (self.oauth, self.accounts, self.profiles, self.profiles.gifting, self.party, self.friends, self.content,
                         self.cloud, self.frontend, self.chat, self.matchmaking, self.gameservers,
-                        self.gameplay):
+                        self.gameplay, self.interactions):
             service.register(self.router)
         self.request_log = deque(maxlen=log_size)
         self._sequence = itertools.count(1)
@@ -104,6 +109,7 @@ class Backend:
         self._closed = True
         self.xmpp.close()
         self.friends.close()
+        self.interactions.close()
 
     def respond(self, method, path, query=None, form=None, body=b"", headers=None, query_all=None):
         """Answer one request. Returns (status, payload). Payload is JSON-able, None, RawText or Raw."""

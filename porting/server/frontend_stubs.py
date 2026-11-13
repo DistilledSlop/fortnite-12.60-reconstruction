@@ -56,4 +56,3 @@ class FrontendStubs:
                    name="presence.settings", status=g)
         router.add("GET", r"/presence/api/v1/Fortnite/[^/]+/subscriptions/nudged", self.setting_nudged,
                    name="presence.nudged", status=g)
-        router.add("GET", r"/api/v1/Fortnite/get", self.empty_list, name="legacy.get", status=g)

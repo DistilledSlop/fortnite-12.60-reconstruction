@@ -729,7 +729,7 @@ GetPingerParties success callback `0x140a322b0` reaches `0x140a22b10`, which
 parses the complete response through `0x140a0d300`. Converter `0x140a0a510`
 accesses the root JSON array, iterates its values, and decodes each party with
 `0x140a41c00`. This is a direct array response, with no `parties` envelope.
-Client callback `0x140c00e70` selects a compatible party using `0x140c1be50`;
+Client callback `0x140c00e70` selects a party of the requested party type using `0x140c1be50`;
 no suitable party produces the client error `ping_sender_has_no_parties`.
 Source captures under `/opt/fortnite/local-model-package/captures/`:
 `4309bac993be44e493b0599f7e0eb729` (PING parser and lookup client callback),
@@ -899,3 +899,60 @@ The combined ping-join and Brutus baseline passed 292 unittest-discovery tests
 (/tmp/g1-ping-brutus-full.log). New eligibility coverage includes threshold
 completion, transaction rollback/retry, durable restart, and existing balances.
 Original two-client ping-join acceptance remains the next runtime check.
+
+## Native interactions query and social presence (2026-11-12)
+
+The original client issues GET `/api/v1/Fortnite/get` without query parameters.
+Query completion `0x140cbac70` calls response reader `0x140c9ab60`. The root
+must be an object with an `interactions` array; the old bare-array stub fails
+with `cant_parse`. An empty `{"interactions":[]}` is a valid empty response.
+Each usable entry has `fromAccountId`, `toAccountId`, `interactionType` and
+`happenedAt`. Exactly one endpoint must match the querying local user.
+Item decoder `0x140cd7820` reads happenedAt as an int64 Unix timestamp in
+milliseconds, not an ISO string. Enum parser `0x140ca1820` recognizes exactly
+FriendshipCreate, FriendshipAccept, FriendshipDelete, PingSent,
+PartyInviteSent, PartyJoined, PartyLeft and GamePlayed. The private read-only
+recovery is `/opt/fortnite/local-model-package/work/interactions-parser-20261112/`.
+
+`interactions_service.py` now authenticates the user, persists actual social
+transitions and merges co-play from committed results. Results are ordered by
+event time so the native counterpart cache sees the latest event last; blocked
+peers are filtered in both directions. Actor direction, recording a kick as a
+departure, recording friendship removal on block, and result-derived co-play
+are explicit local policies, not recovered Epic server behavior. Callback
+storage failures are counted separately after the social transition commits;
+the graph and interaction databases do not share an atomic transaction.
+
+A secure ProjectChrono two-client probe on backend `97621817` reached both
+logins and XMPP sessions. The recipient accepted the request through the native
+v1 friends route (204), but the new friend appeared offline. Both clients had
+announced availability before friendship existed; the server correctly withheld
+that presence but did not resend it after acceptance. Accepted-friend events now
+replay only the peer's currently available resources after the event, checking
+the current friendship and block state. Real-WebSocket tests cover reciprocal
+presence, multiple resources, unavailable resources, absent friendships and blocks.
+
+The original party join DTO can omit the party build key from member metadata.
+The former inferred requirement incorrectly rejected this shape with 403.
+Local admission now rejects an explicit conflicting claim while allowing an
+omitted claim; it never copies the target party's build into member metadata.
+Authentication, privacy, invitation, capacity, revision and confirmation checks
+remain in the same admission path. This policy applies to direct/ping joins,
+reconnect and confirmation. The corrected explicit-mismatch fixture and the
+combined social integration snapshot passed 313 backend discovery tests.
+
+The combined secure ProjectChrono probe then completed the native acceptance
+flow: friend accept 204, online lobby presence in the UI, CreatePing 204,
+ping join 200 and captain confirmation 204. Both clients held the same party
+with two members. Native promotion returned 204 and moved the leader crown;
+ready state propagated to the other client. A whisper and a party group
+message sent through the client UI both appeared on the receiving client.
+The promoted captain's native kick returned 204 and the removed client
+recreated its solo party. The native join body contains connection metadata,
+`urn:epic:member:dn_s` and `urn:epic:member:joinrequestusers_j`, with no member
+build claim. The party was OPEN with join confirmation enabled during admission.
+Neither client logged a required-field, parse or fatal error in this flow.
+Private source hashes, request summaries, screenshots and logs are retained in
+`porting/generated/chrono-social-probe/` (`result.json` and `social-tests.log`).
+Native Windows, reconnect/expiry edge cases, voice transport and full match
+integration remain outside this runtime result.

@@ -27,6 +27,7 @@ Evidence for each route is in `porting/server_surface.md`.
 | `probe_server.py` | HTTP server. `--stub` serves the backend. Without it, it only records requests and serves fixtures. |
 | `tests/` | HTTP regressions, including `SchemaTests` (reflection checks); additional `tests/test_*.py` modules cover persistence, transactions, social transport, quests and the game-server bridge. |
 | `friends_service.py`, `xmpp_service.py` | Durable friends/requests/blocks and authenticated WebSocket XMPP social transport. |
+| `interactions_service.py` | Authenticated native interactions response, durable social actions and co-play from committed match results. |
 | `gifting_service.py` | Atomic cross-account gifting and gift-box dismissal. |
 | `gameserver_service.py`, `gameplay_service.py` | Trusted local game-server registration, loadouts and results; StatsV2 reads. |
 | `progression_service.py`, `quest_service.py` | Durable match rewards, recovered XP tables and initial Season 12 quest/style activation. |
@@ -61,7 +62,11 @@ and cloud files. This is local identity selection, not identity verification.
 The original client's `OTHERS_ACCOUNT_CLIENT_SERVICE` session cleanup preserves its
 current token and revokes other sessions for that local account. A Wine probe with
 this behavior reached the `Completed` sign-in step without the previous invalid-token
-responses. The original client still needs its launcher/security path resolved.
+responses. [ProjectChrono](../local_client/README.txt) now provides the authorized
+patched local launch mode. Secure Wine probes have verified login, XMPP, native
+friend acceptance and presence, two-client party acceptance, promotion, ready-state
+updates, whisper/group chat and kicking. Native Windows and full match integration
+remain unverified; see `EVIDENCE.md` for the exact scope.
 
 For isolated investigation only, `FN_PATCH_APPES_DIAGNOSTIC=1` on
 `run_original_client.sh` changes the running 12.60 process after login begins,
