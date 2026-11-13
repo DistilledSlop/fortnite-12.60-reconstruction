@@ -1519,3 +1519,36 @@ expects the deleted successor's stale GUID to be replaced while retaining all
 counters and rewards. The combined suite passed **402 tests** in 23.100 seconds:
 `python3 -W ignore::ResourceWarning -m unittest discover -s porting/server/tests -p 'test_*.py'`.
 Private log: `generated/challenge-bundle-membership/backend-tests.log`.
+
+
+### Bundle-membership original-client follow-up
+
+The frozen e46dec8f backend ran against the original DXVK client and the same
+account 3 fixture. Native calendar, four QueryProfile calls, ClientQuestLogin
+and MarkNewQuestNotificationSent all returned 200. Before login, all 18 legacy
+bundles lacked GrantedQuestInstanceIds; afterward all 19 owned bundles had it,
+including the five expected active Storm the Agency quest GUIDs. Full
+1280x1024 captures still show an entirely empty Active Challenges list after
+both mouse-arrow and Right-key attempts. This verifies backend repair during
+native login, not client-side array hydration or UI acceptance. Bounded GDB
+attempts encountered Wine signals before the target breakpoint and provide
+no hydration evidence. There were zero fatal/calendar-error markers and two
+JSON null-object errors, whose relationship to the list remains unknown.
+
+Private receipt and captures: generated/chrono-challenge-bundle-membership-probe/
+(result.json and challenges-active.png). Original session 70515 is terminal;
+owned backend 300802 and client 300918 are gone, with no prefix processes
+remaining. No client run was restarted on an observation timeout.
+
+A separate bounded native trace ruled out a speculative schedule-array fix
+for the inspected consumers. Frontend bundle collector 0x141b31b30 enumerates
+profile-index items and filters FortChallengeBundleItem instances. Schedule
+GetAchievedCount (wrapper 0x142861560, implementation 0x141ca4880) iterates
+schedule-definition entries, resolves owned bundles through the profile index,
+and sums each bundle's num_progress_quests_completed. GetPercentageComplete
+(wrapper 0x142861870, implementation 0x141caa060) uses that count. None of these
+paths reads Granted_Bundles at schedule item +0xe8; this does not establish
+that the property has no other consumer. C output and findings are retained
+in generated/challenge-schedule-contract/. Its task-owned project clone was
+removed after all decompilers were terminal and no clone handles remained,
+freeing 1,549,681,768 bytes; shared projects were untouched.

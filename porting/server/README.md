@@ -636,8 +636,9 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   Challenge bundles now maintain the reflected `GrantedQuestInstanceIds` array
   from their actual linked Quest items, including newly granted successors.
   Login repairs missing or stale membership without replaying rewards. This
-  addresses a concrete native owned-quest lookup requirement; exact wire
-  conversion and challenge-list UI verification remain pending.
+  addresses a concrete native owned-quest lookup requirement. A frozen original-client
+  DXVK probe confirmed login repaired all 18 legacy bundles, but the challenge
+  list stayed blank; attribute hydration and the actual UI consumer remain open.
   An authenticated server quest-event endpoint now
   supports durable retries; actual native gameplay event integration remains pending.
   Daily events must already satisfy their cooked tag/template/condition filters;
