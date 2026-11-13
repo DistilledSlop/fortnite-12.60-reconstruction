@@ -1,10 +1,10 @@
-"""Recover the Athena game-state constructor's six phase-time sentinels."""
+"""Recover the Athena game-state constructor's phase-time sentinels."""
 import re
 
 CLASS = 'AFortGameStateAthena'
 FIELDS = ('WarmupCountdownStartTime', 'WarmupCountdownEndTime',
           'AircraftStartTime', 'SafeZonesStartTime', 'EndGameStartTime',
-          'EndGameKickPlayerTime')
+          'EndGameKickPlayerTime', 'PlaylistEndTime', 'SafeZonePauseTime')
 
 
 def finalize(model, header, cpp):
@@ -26,5 +26,6 @@ def finalize(model, header, cpp):
     cpp += ('\n%s::%s(const FObjectInitializer& ObjectInitializer)\n'
             '\t: Super(ObjectInitializer)\n{\n'
             '\t// Original ctor 0x14197f7b0, stores 0x141980d44..0x141980d76.\n'
+            '\t// PlaylistEndTime / SafeZonePauseTime: stores 0x14197fa6d / 0x14197fa78.\n'
             '%s\n}\n') % (CLASS, CLASS, body)
     return header, cpp

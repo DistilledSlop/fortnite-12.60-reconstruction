@@ -5,6 +5,13 @@ The original `AFortGameStateAthena` constructor at `0x14197f7b0` writes
 `0x12d4..0x12e8` (`0x141980d44..0x141980d76`). This policy restores those
 stores using reflected names; it does not recover the entire constructor.
 
+It also restores `PlaylistEndTime` and `SafeZonePauseTime` to `-1.0f`, from
+stores at `0x14197fa6d` and `0x14197fa78`. In the socket/wallet diagnostic,
+both live server values were zero while the class defaults were `-1.0f`.
+The match flow treats a nonnegative `SafeZonePauseTime` as paused, so the
+missing per-instance sentinel prevented storm progression after its initial
+countdown. These values require constructor initialization, not just CDO repair.
+
 `UpdateWarmupPhase` (`0x14197a400`) initializes a countdown only when its
 end time is negative. Zero therefore means an already-expired countdown,
 causing flight to start immediately when the second required player joins.

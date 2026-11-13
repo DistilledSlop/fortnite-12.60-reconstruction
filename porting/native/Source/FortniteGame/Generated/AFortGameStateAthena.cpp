@@ -1172,10 +1172,13 @@ AFortGameStateAthena::AFortGameStateAthena(const FObjectInitializer& ObjectIniti
 	: Super(ObjectInitializer)
 {
 	// Original ctor 0x14197f7b0, stores 0x141980d44..0x141980d76.
+	// PlaylistEndTime / SafeZonePauseTime: stores 0x14197fa6d / 0x14197fa78.
 	WarmupCountdownStartTime = -1.0f;
 	WarmupCountdownEndTime = -1.0f;
 	AircraftStartTime = -1.0f;
 	SafeZonesStartTime = -1.0f;
 	EndGameStartTime = -1.0f;
 	EndGameKickPlayerTime = -1.0f;
+	PlaylistEndTime = -1.0f;
+	SafeZonePauseTime = -1.0f;
 }
