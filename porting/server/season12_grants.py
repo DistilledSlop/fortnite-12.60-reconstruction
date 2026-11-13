@@ -17,6 +17,7 @@ SUPPORTED_GRANTS_TO_EVERYONE = (
     ('ChallengeBundleSchedule:Season12_Mission_Schedule', 1),
     (MAYA_GRAPH, 1),
     ('ChallengeBundleSchedule:Season12_Schedule_Event_PeelySpy', 1),
+    ('ChallengeBundleSchedule:Season12_DonutYachtChallenge_Schedule', 1),
     ('ChallengeBundleSchedule:Season12_ABChallenges_Schedule', 1),
     ('ChallengeBundleSchedule:Season12_Schedule_Event_CoinCollect', 1),
     ('Quest:quest_AB_skulldude_grant', 1),

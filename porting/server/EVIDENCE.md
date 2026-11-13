@@ -1713,3 +1713,46 @@ api-route-review.json). Native room interaction delivery against this expanded
 command remains unverified; the successful challenge-screen probe used the
 frozen earlier Peely-only command. No gameplay or strict unpatched G11
 completion is implied.
+
+### Free Yacht entitlement and competition download
+
+The cooked AthenaSeason12 `SeasonGrantsToEveryone` list includes
+Season12_DonutYachtChallenge_Schedule. This separate free schedule was missing
+from login grants although its Yacht quest was already among the 324 supported
+definitions. The source schedule grants QuestBundle_S12_Donut_YachtChallenge
+immediately; the bundle activates its quest at LobbySeason12 day 46. Trusted
+`visit_namedpoi_spybase_yacht` progress completes it and awards the existing
+Freestylin' Remix music pack reward. Client objective submission cannot spoof
+this Visit stat. Login now reconciles its schedule references and progress
+counter; reward receipts survive restart. The main Season12_Donut_Schedule
+remains the cooked paid Battle Pass level-one reward. Private source reports:
+generated/deadpool-schedule-grant/; normalized hashes: season12_yacht_data.py.
+
+The original client's competition request was also unanswered:
+GET /api/v1/events/Fortnite/download/{accountId}. Native method 0x140ac0fc0,
+completion 0x140ac1980 and custom reader 0x140b22a40 establish an object with
+optional player, events, templates and scores fields. Player reader 0x140b26710
+accepts gameId/accountId strings, tokens/pendingPayouts string arrays,
+persistentScores integer values and teams arrays of strings. The new owner-only
+route returns explicit owner identity and empty collections for the local
+server's unconfigured competition calendar. Query hints do not change it.
+This supplies the download contract, not tournament hosting or scoring.
+Findings/C: generated/events-download-contract/; private Ghidra clone removed.
+
+The combined suite passed **421 tests** in 23.910 seconds, including free/paid
+Yacht ownership, day-46 boundary, missing calendar, trusted progress, replay and
+restart, client spoof rejection, corrupt-counter rollback, and real HTTP event
+download authentication/routing. Log:
+generated/deadpool-schedule-grant/backend-tests.log.
+
+A separate original DXVK client probe against frozen backend 4c4180c1 reached
+the lobby and rendered Battle Pass room at 1280x1024. All five native MCP
+requests succeeded (four QueryProfile and one ClientQuestLogin). Of 69 total
+requests, 67 returned 2xx; the two 404s were content-controls and the events
+download fixed above. No UpdateQuestClientObjectives request occurred; all
+three Peely quests remained Active with zero progress. Agent-room controls
+appeared clipped at this viewport, so room-interaction delivery remains
+unverified. No quest progress was injected. Private screenshot/receipt:
+generated/chrono-native-frontend-objectives-probe/. Original session 96990 is
+terminal, backend 348544 is gone, and the owned Wine prefix is idle. No debugger
+was attached and shared native work was untouched.

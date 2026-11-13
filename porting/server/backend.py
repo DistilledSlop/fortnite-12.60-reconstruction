@@ -14,6 +14,7 @@ Services (each module registers its own routes and keeps its own state):
   profile_service    MCP profile store and command set
   party_service      party v1 and presence
   content_service    lightswitch, version check, storefront, calendar, datarouter
+  events_service     empty local competition calendar
   cloudstorage_service  system files and optional persistent user files
   friends_service    persistent requests, friends and blocks
   xmpp_service       authenticated social notification and presence transport
@@ -38,6 +39,7 @@ from api_common import DEFAULT_SEED, ApiError, Context, Err, Request, Router, er
 from chat_service import ChatService
 from cloudstorage_service import CloudStorageService
 from content_service import ContentService
+from events_service import EventsService
 from frontend_stubs import FrontendStubs
 from friends_service import FriendsService
 from gameserver_service import GameServerService
@@ -86,6 +88,7 @@ class Backend:
                                       public_origin=content_public_origin,
                                       event_starts=self.profiles.quests.event_starts)
         self.cloud = CloudStorageService(self.ctx, self.oauth, cloudstorage_dir, state_dir=state_dir)
+        self.events = EventsService(self.oauth)
         self.frontend = FrontendStubs(self.ctx)
         self.chat = ChatService(self.ctx, self.oauth)
         if registered_matchmaking is None:
@@ -97,7 +100,7 @@ class Backend:
         self.matchmaking = MatchmakingService(self.ctx, self.accounts, **matchmaking_options)
         self.router = Router()
         for service in (self.oauth, self.accounts, self.profiles, self.profiles.gifting, self.party, self.friends, self.content,
-                        self.cloud, self.frontend, self.chat, self.matchmaking, self.gameservers,
+                        self.cloud, self.events, self.frontend, self.chat, self.matchmaking, self.gameservers,
                         self.gameplay, self.interactions):
             service.register(self.router)
         self.request_log = deque(maxlen=log_size)

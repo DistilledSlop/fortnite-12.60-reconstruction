@@ -45,6 +45,7 @@ from season12_oro_data import ORO_QUESTS, ORO_BUNDLES, ORO_SCHEDULE
 from season12_superlevel_data import SUPERLEVEL_QUESTS, SUPERLEVEL_BUNDLES, SUPERLEVEL_SCHEDULE
 from season12_collectible_data import COIN_QUESTS, FISH_QUESTS, COIN_BUNDLES, COIN_SCHEDULE
 from season12_peely_data import QUESTS as PEELY_QUESTS, BUNDLES as PEELY_BUNDLES, SCHEDULE as PEELY_SCHEDULE
+from season12_yacht_data import SCHEDULE as YACHT_SCHEDULE, BUNDLE as YACHT_BUNDLE
 from season12_client_objective_data import CLIENT_OBJECTIVES
 from superlevel_service import SUPERLEVEL_VARIANTS, reconcile_level
 from season12_faction_variant_data import FACTION_VARIANTS, AUTO_EQUIP_VARIANTS
@@ -222,7 +223,7 @@ class QuestService:
         # Original GetAchievedCount/GetPercentageComplete read this separate
         # attribute, not num_quests_completed. Single-stage bundles count
         # claimed QuestInfos; Location Domination uses terminal stages below.
-        if name not in WEEKLY_BUNDLES and name not in LOCATION_BUNDLES and name not in LIMITED_EVENT_BUNDLES and name not in SUPERLEVEL_BUNDLES and name not in COIN_BUNDLES and name not in PEELY_BUNDLES and name != 'QuestBundle_Styles_PaperDoll':
+        if name not in WEEKLY_BUNDLES and name not in LOCATION_BUNDLES and name not in LIMITED_EVENT_BUNDLES and name not in SUPERLEVEL_BUNDLES and name not in COIN_BUNDLES and name not in PEELY_BUNDLES and name != YACHT_BUNDLE and name != 'QuestBundle_Styles_PaperDoll':
             return
         roots = {quest.casefold() for quest, _, _, _ in EVENT_BUNDLES[name]['quest_infos']}
         if name in LOCATION_BUNDLES:
@@ -269,6 +270,10 @@ class QuestService:
             elif template == 'challengebundleschedule:season12_mission_schedule':
                 for bundle, grant_type, days in WEEKLY_SCHEDULE + LOCATION_SCHEDULE:
                     if grant_type == 'OnScheduleGranted' or self._date_reached(WEEKLY_SCHEDULE_CALENDAR_EVENT_TAG, days):
+                        self._bundle(tx, bundle, schedule_id)
+            elif template == ('challengebundleschedule:' + YACHT_SCHEDULE['name']).casefold():
+                for bundle, grant_type, _ in YACHT_SCHEDULE['entries']:
+                    if grant_type == 'OnScheduleGranted':
                         self._bundle(tx, bundle, schedule_id)
             elif template == ('challengebundleschedule:' + PEELY_SCHEDULE['name']).casefold():
                 for bundle, grant_type, _ in PEELY_SCHEDULE['entries']:
@@ -598,6 +603,8 @@ class QuestService:
             else:
                 self._grant(tx, kind + ':' + reward, {'item_seen': False})
         if bundle_id in tx.profile['items']:
+            if tx.item(bundle_id)['templateId'].casefold() == ('challengebundle:' + YACHT_BUNDLE).casefold():
+                self._sync_bundle_progress(tx, YACHT_BUNDLE, bundle_id)
             bundle_name = next((key for key in DONUT_BUNDLES if
                 tx.item(bundle_id)['templateId'].casefold() == ('ChallengeBundle:' + key).casefold()), None)
             if bundle_name:
