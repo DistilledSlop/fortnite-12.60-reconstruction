@@ -23,9 +23,40 @@ dedicated server for the unmodified original client needs it. Read-only analysis
 
 P1 and P2 are weaker than N1-N4. Calls inlined by the compiler leave no reference, so absence of a reference is evidence, not proof. Events and delegate handlers (`BlueprintEvent`, names starting `On`, `Handle`, `Notify`, `Event`, `Callback`, `Trigger`, `Received`) are never judged unreferenced, because ProcessEvent reaches them by name.
 
-Undetermined means undetermined, not unneeded. Static analysis cannot close it: most dispatch in this binary is virtual
-or goes through `ProcessEvent`, so the direct-call graph adds only dozens of functions (R5). The definitive method is
-runtime coverage: log every UFunction the reconstructed server executes while the original client plays a match.
+Undetermined means undetermined, not unneeded. The current direct-call analysis cannot close it: much dispatch in this
+binary is virtual or goes through `ProcessEvent`, so that graph adds only dozens of functions (R5). Runtime coverage is
+also required: record the UFunctions the reconstructed server executes while the original client plays. Those traces
+cover exercised paths; they do not prove unexecuted branches or cover every non-reflected native helper.
+
+## Network contract coverage
+
+Generate the current recovered native declaration inventory with:
+
+```sh
+python3 -I porting/tools/network_contract_inventory.py
+```
+
+The default output is `porting/generated/agents/network-contract-inventory/`:
+`declarations.jsonl`, `summary.json`, and `issues.json`. It joins original class
+identities, RPC roles and parameters, replicated fields and conditions, RepNotifies,
+and available source/generation evidence. Source hashes and the Git commit identify
+the inputs. Unknown identities, conditions, and conflicting declarations are
+reported explicitly.
+
+This is a declaration inventory, **not a complete expected interaction list**.
+It includes the engine and other modules present in the recovered metadata;
+inherited declarations appear at their declaring owner. Its counts therefore
+differ from the older native-set authority inventory. Blueprint declarations,
+backend exchanges, native behavior missing from the metadata, and execution order
+are not completely covered. A manifest entry or matching class checksum is not
+runtime verification.
+
+Behavioral coverage must connect each action and state to the received request,
+authority checks and mutations, outgoing RPCs/replication, client consumers, and
+expected observations. Owner and remote observers, late joins, streaming readiness,
+equipment changes, and delayed or lost messages need separate scenario evidence.
+The runtime-required ledger planned in `SERVER_FIRST_PLAN.md` WP B1/B3 is still
+incomplete; the declaration inventory does not close that work.
 
 ## Verdict
 
