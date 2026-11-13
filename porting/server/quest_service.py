@@ -44,7 +44,8 @@ from season12_storm_agency_data import STORM_AGENCY_QUESTS, STORM_AGENCY_BUNDLES
 from season12_oro_data import ORO_QUESTS, ORO_BUNDLES, ORO_SCHEDULE
 from season12_superlevel_data import SUPERLEVEL_QUESTS, SUPERLEVEL_BUNDLES, SUPERLEVEL_SCHEDULE
 from season12_collectible_data import COIN_QUESTS, FISH_QUESTS, COIN_BUNDLES, COIN_SCHEDULE
-from season12_peely_data import QUESTS as PEELY_QUESTS, BUNDLES as PEELY_BUNDLES, SCHEDULE as PEELY_SCHEDULE, CLIENT_OBJECTIVES
+from season12_peely_data import QUESTS as PEELY_QUESTS, BUNDLES as PEELY_BUNDLES, SCHEDULE as PEELY_SCHEDULE
+from season12_client_objective_data import CLIENT_OBJECTIVES
 from superlevel_service import SUPERLEVEL_VARIANTS, reconcile_level
 from season12_faction_variant_data import FACTION_VARIANTS, AUTO_EQUIP_VARIANTS
 from daily_quest_service import DailyService
@@ -485,19 +486,31 @@ class QuestService:
                     type(offset) is not int or not -2147483648 <= offset <= 2147483647):
                 raise _invalid('Invalid client objective entry.')
         tx = ctx.tx('athena')
+        # Eligibility is fixed at batch start, even if a claim grants a successor.
+        eligible = {item_id for item_id, item in tx.profile['items'].items()
+                    if item['attributes'].get('quest_state') == 'Active'}
         for entry in advance:
             stat = entry['statName']
-            name = CLIENT_OBJECTIVES[stat]
+            name, _, target = CLIENT_OBJECTIVES[stat]
             for item_id, item in list(tx.profile['items'].items()):
-                if (item['templateId'].casefold() != ('Quest:' + name).casefold() or
+                if (item_id not in eligible or item['templateId'].casefold() != ('Quest:' + name).casefold() or
                         item['attributes'].get('quest_state') != 'Active'):
                     continue
                 key = 'completion_' + stat
                 old = item['attributes'].get(key)
-                if type(old) is not int or not 0 <= old <= 1:
+                if type(old) is not int or not 0 <= old <= target:
                     raise _invalid('Invalid quest progress.')
-                tx.set_item_attr(item_id, key, min(1, old + entry['count']))
-                self._award_completed(ctx, tx, item_id, item, name)
+                tx.set_item_attr(item_id, key, min(target, old + entry['count']))
+                definition = EVENT_QUESTS[name]
+                completed = 0
+                for objective, _, objective_target in definition['objectives']:
+                    value = item['attributes'].get('completion_' + objective.lower())
+                    if type(value) is not int or not 0 <= value <= objective_target:
+                        raise _invalid('Invalid quest progress.')
+                    completed += value == objective_target
+                # Local policy requires every objective unless the definition specifies otherwise.
+                if completed >= definition.get('ObjectiveCompletionCount', len(definition['objectives'])):
+                    self._award_completed(ctx, tx, item_id, item, name)
 
     def claim(self, ctx, quest_id, selected_index):
         """Local claim policy for supported fixed-reward quests; retries never award twice.

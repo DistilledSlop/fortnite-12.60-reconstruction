@@ -609,7 +609,7 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   an empty inventory GUID and converted style targets are local representation
   policies. Nested purchase notifications are folded into the claim response.
   Claimed retries do not repeat the notification. The combined backend baseline
-  passed 413 tests including the Peely and schedule-membership additions; this does not establish native reward popup presentation.
+  passed 416 tests including the frontend objective and schedule-membership additions; this does not establish native reward popup presentation.
   Storm the Agency supports the five cooked bundle quests, their 120,000 total
   XP, pickaxe, wrap and five-quest glider reward. Chest and henchman objectives
   require three distinct locations; swimming requires all five hatches. Event
@@ -765,8 +765,9 @@ They do not depend on the Python services.
 
 Peely’s three frontend room interactions use the recovered
 `UpdateQuestClientObjectives` command with `advance` entries containing
-`statName`, `count` and `timestampOffset`. Only their source-marked Client
-objectives are accepted; combat objectives remain on the trusted server bridge.
+`statName`, `count` and `timestampOffset`. The command accepts all 20 registered
+source-marked Client objectives, including Deadpool and Midas; combat objectives
+remain on the trusted server bridge.
 The free Season 12 schedule grants its bundle immediately, then unlocks the
 three quests at day 43 of configured `EventFlag.LobbySeason12`. Completing all
 three awards the cooked Banana Badge emoji. Additive, target-clamped counts,
@@ -777,4 +778,7 @@ Owned schedules now reconcile `Granted_Bundles` to the actual owned bundle
 instance IDs, alongside each bundle’s `GrantedQuestInstanceIds`. The original
 spatial challenge screen follows both reference arrays to bind owned entries.
 Missing legacy arrays are repaired at login; malformed arrays reject the
-transaction. Native UI acceptance of this schedule repair is pending.
+transaction. The original DXVK client now displays Storm the Agency and
+Location Domination quests, counters, rewards and map markers; live inspection
+confirmed 21 owned bindings, 89 native quest references and five categories.
+Actual gameplay event delivery and general reward popup presentation remain open.

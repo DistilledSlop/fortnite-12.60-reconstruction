@@ -1668,3 +1668,48 @@ reference repair/idempotence/restart. Log:
 generated/peely-client-quest-contract/backend-tests.log. There are now 324 quest
 definitions in twelve broad groups. Native UI acceptance of the schedule-array
 repair and original room-interaction delivery are not yet verified.
+
+### Original-client schedule repair acceptance and frontend coverage
+
+Frozen backend 65709cd4 was exercised with the original DXVK client at
+1280x1024 and the same account 3 fixture. Native QueryProfile and ClientQuestLogin
+returned 200. Live inspection of the actual spatial producer now shows 21 owned
+bundle bindings among 30 definition entries, 89 hydrated owned quest references
+and five visible categories. Previously all 29 observed bindings were null and
+there were zero visible categories. The original lobby displays an XP mission.
+The challenge table displays all five Storm the Agency quests with counters,
+rewards and map markers; category navigation displays Location Domination
+staged quests, twenty roots and page 1/4. This verifies native schedule-array
+hydration and challenge presentation for these observations, not gameplay
+progress delivery or reward popup presentation. The configured event end is
+still a distant placeholder and produces an unrealistic countdown.
+
+Private captures/receipt: generated/chrono-schedule-binding-probe-retry/
+(challenges-storm-agency.png, challenges-location-domination.png, result.json).
+The prior attempt in generated/chrono-schedule-binding-probe/ failed during
+launcher helper loading before native MCP login. Its original session 54207
+is terminal and both owned processes are gone; it supplies no backend failure
+evidence. Retry delayed debugger attachment until helper readiness; it was
+started after verified termination, not on an observation timeout. Successful
+original session 6747 is terminal; GDB detached, backend 342305 and client
+342418 are gone, and the prefix is idle. Shared native work was untouched.
+
+A source-table audit also identified fourteen registered Deadpool objectives
+and three Midas frontend objectives using the same Client event type. The
+command now covers all twenty registered Client objectives, including Peely.
+It advances only the named objective and checks each quest's completion count,
+so collecting one of several frontend objects cannot claim the whole quest.
+Eligibility is captured at batch start: a successor granted by a claim waits
+for a subsequent batch. Unknown, unowned and combat progress remain gated as
+previously documented; Midas receives no invented entitlement. Independent
+allowlist parity matched all twenty objective names, source rows and targets.
+Backend route review rejected an unauthenticated request (401), accepted the
+original payload (200) after login, and claimed the eligible Peely quest.
+
+The expanded combined suite passed **416 tests** in 23.501 seconds. Private
+log and reviews: generated/peely-client-quest-contract/
+(backend-tests-client-coverage.log, client-allowlist-review.json,
+api-route-review.json). Native room interaction delivery against this expanded
+command remains unverified; the successful challenge-screen probe used the
+frozen earlier Peely-only command. No gameplay or strict unpatched G11
+completion is implied.
