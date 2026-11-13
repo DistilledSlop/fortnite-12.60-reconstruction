@@ -11,8 +11,9 @@
 # Set FN_DISPLAY and, if required, FN_XAUTHORITY to use an existing X11 display.
 # Without FN_DISPLAY, the runner creates a private Xvfb display.
 # FN_STATE_DIR selects a separate local backend account/profile directory.
-# FN_LOCAL_QOS_PORT=22222 opts into a measured loopback region-probe candidate;
-# original-client hotfix acceptance still requires verification. Disabled by default.
+# FN_WALLET_TRACE writes opt-in redacted wallet request/response diagnostics.
+# Region QoS uses a measured loopback echo on UDP 22222 by default.
+# Set FN_LOCAL_QOS_PORT to an empty value to disable it, or another UDP port to override.
 # FN_SERVER_CMD starts a command (for example the dedicated server) in the same namespace.
 # FN_REGISTERED_MATCHMAKING=1 enables opt-in registered server matchmaking using a
 # loopback HTTP port inside the namespace and FORTNITE_GAMESERVER_SECRET_FILE (0600).
@@ -159,7 +160,7 @@ if text and not text.endswith("\n"): text+="\n"
 open(path,"w").write(text+block)
 PYEOF
     fi
-    exec sudo -n env FN_NETNS_INNER=1 FN_SESSION_TRACE="${FN_SESSION_TRACE:-0}" FN_REGISTERED_MATCHMAKING="${FN_REGISTERED_MATCHMAKING:-0}" FN_BACKEND_PORT="${FN_BACKEND_PORT:-443}" FN_LOCAL_QOS_PORT="${FN_LOCAL_QOS_PORT:-}" FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_LP_NUM_THREADS="${FN_LP_NUM_THREADS:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FN_ACTION_LOG="${FN_ACTION_LOG:-}" FN_SHOTS_DIR="${FN_SHOTS_DIR:-}" FORTNITE_NET_ENCRYPTION_KEY_FILE="${FORTNITE_NET_ENCRYPTION_KEY_FILE:-}" FORTNITE_GAMESERVER_SECRET_FILE="${FORTNITE_GAMESERVER_SECRET_FILE:-}" FORTNITE_GAMESERVER_ADDRESS="${FORTNITE_GAMESERVER_ADDRESS:-}" FORTNITE_GAMESERVER_PLAYLIST="${FORTNITE_GAMESERVER_PLAYLIST:-}" FORTNITE_GAMESERVER_BUILD="${FORTNITE_GAMESERVER_BUILD:-}" FORTNITE_GAMESERVER_PORT="${FORTNITE_GAMESERVER_PORT:-}" FORTNITE_GAMESERVER_BEACON_PORT="${FORTNITE_GAMESERVER_BEACON_PORT:-}" FORTNITE_GAMESERVER_CAPACITY="${FORTNITE_GAMESERVER_CAPACITY:-}" FN_STATE_DIR="${FN_STATE_DIR:-}" FN_SERVER_CMD="${FN_SERVER_CMD:-}" FN_WINEDEBUG="${FN_WINEDEBUG:--all}" FN_DISPLAY="${FN_DISPLAY:-}" FN_XAUTHORITY="${FN_XAUTHORITY:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
+    exec sudo -n env FN_NETNS_INNER=1 FN_SESSION_TRACE="${FN_SESSION_TRACE:-0}" FN_REGISTERED_MATCHMAKING="${FN_REGISTERED_MATCHMAKING:-0}" FN_BACKEND_PORT="${FN_BACKEND_PORT:-443}" FN_LOCAL_QOS_PORT="${FN_LOCAL_QOS_PORT-22222}" FN_WALLET_TRACE="${FN_WALLET_TRACE:-}" FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_LP_NUM_THREADS="${FN_LP_NUM_THREADS:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FN_ACTION_LOG="${FN_ACTION_LOG:-}" FN_SHOTS_DIR="${FN_SHOTS_DIR:-}" FORTNITE_NET_ENCRYPTION_KEY_FILE="${FORTNITE_NET_ENCRYPTION_KEY_FILE:-}" FORTNITE_GAMESERVER_SECRET_FILE="${FORTNITE_GAMESERVER_SECRET_FILE:-}" FORTNITE_GAMESERVER_ADDRESS="${FORTNITE_GAMESERVER_ADDRESS:-}" FORTNITE_GAMESERVER_PLAYLIST="${FORTNITE_GAMESERVER_PLAYLIST:-}" FORTNITE_GAMESERVER_BUILD="${FORTNITE_GAMESERVER_BUILD:-}" FORTNITE_GAMESERVER_PORT="${FORTNITE_GAMESERVER_PORT:-}" FORTNITE_GAMESERVER_BEACON_PORT="${FORTNITE_GAMESERVER_BEACON_PORT:-}" FORTNITE_GAMESERVER_CAPACITY="${FORTNITE_GAMESERVER_CAPACITY:-}" FN_STATE_DIR="${FN_STATE_DIR:-}" FN_SERVER_CMD="${FN_SERVER_CMD:-}" FN_WINEDEBUG="${FN_WINEDEBUG:--all}" FN_DISPLAY="${FN_DISPLAY:-}" FN_XAUTHORITY="${FN_XAUTHORITY:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
 fi
 
 ip link set lo up
@@ -180,7 +181,10 @@ state_args=()
 [[ -z "${FN_STATE_DIR:-}" ]] || state_args=(--state-dir "$FN_STATE_DIR")
 backend_port=${FN_BACKEND_PORT:-443}
 qos_args=()
-[[ -z "${FN_LOCAL_QOS_PORT:-}" ]] || qos_args=(--local-qos-port "$FN_LOCAL_QOS_PORT")
+qos_port=${FN_LOCAL_QOS_PORT-22222}
+[[ -z "$qos_port" ]] || qos_args=(--local-qos-port "$qos_port")
+wallet_trace_args=()
+[[ -z "${FN_WALLET_TRACE:-}" ]] || wallet_trace_args=(--wallet-trace "$FN_WALLET_TRACE")
 server=
 patcher=
 appes_patcher=
@@ -288,7 +292,7 @@ PYEOF
     fi
     IFS= read -r gs_secret < "$gameserver_secret_file" || [[ -n "${gs_secret:-}" ]]
     FORTNITE_GAMESERVER_SECRET="$gs_secret" python3 "$porting_dir/server/probe_server.py" \
-        --port "$backend_port" --stub "${state_args[@]}" "${qos_args[@]}" \
+        --port "$backend_port" --stub "${state_args[@]}" "${qos_args[@]}" "${wallet_trace_args[@]}" \
         --tls-cert "$generated/tls/cert.pem" --tls-key "$generated/tls/key.pem" \
         --registered-matchmaking --local-matchmaking-ws-port "$ws_port" \
         > "$generated/probe-server.out" 2>&1 &
@@ -329,7 +333,7 @@ PYEOF
     fi
     printf 'Registered matchmaking trace: FN_REGISTERED_MATCHMAKING=1 loopback_port=%s secret_file=%s\n' "$ws_port" "$gameserver_secret_file"
 else
-    python3 "$porting_dir/server/probe_server.py" --port "$backend_port" --stub "${state_args[@]}" "${qos_args[@]}" \
+    python3 "$porting_dir/server/probe_server.py" --port "$backend_port" --stub "${state_args[@]}" "${qos_args[@]}" "${wallet_trace_args[@]}" \
         --tls-cert "$generated/tls/cert.pem" --tls-key "$generated/tls/key.pem" \
         --local-matchmaking-ws-port 0 \
         > "$generated/probe-server.out" 2>&1 &

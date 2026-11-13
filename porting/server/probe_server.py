@@ -83,8 +83,95 @@ def load_fixtures(path):
     return routes
 
 
-def make_handler(routes, record_path, stub=None):
+_WALLET_ROUTE = re.compile(r"^/fortnite/api/game/v2/profile/[^/]+/client/(QueryProfile|PurchaseCatalogEntry)/?$", re.IGNORECASE)
+_WALLET_CHANGES = {"fullProfileUpdate", "itemAdded", "itemRemoved", "itemQuantityChanged", "itemAttrChanged", "statModified"}
+_WALLET_PLATFORMS = {"EpicPC", "PSN", "XboxLive", "Nintendo", "Android", "IOS", "Shared"}
+
+
+def wallet_trace_entry(method, url, status, response, wallet_ids):
+    """Extract only wallet diagnostics; never retain request bodies, paths or headers."""
+    match = _WALLET_ROUTE.fullmatch(url.path)
+    query = parse_qs(url.query)
+    if method != "POST" or not match or query.get("profileId") != ["common_core"]:
+        return None
+    command = {"queryprofile": "QueryProfile", "purchasecatalogentry": "PurchaseCatalogEntry"}[match.group(1).lower()]
+    entry = {"time": datetime.now(timezone.utc).isoformat(), "command": command, "status": status}
+    rvn = query.get("rvn", [])
+    if len(rvn) == 1 and re.fullmatch(r"-?[0-9]{1,18}", rvn[0]):
+        entry["requestRevision"] = int(rvn[0])
+    if not isinstance(response, dict):
+        return entry
+    for key in ("profileRevision", "profileCommandRevision", "profileChangesBaseRevision"):
+        value = response.get(key)
+        if type(value) is int:
+            entry[key] = value
+
+    def currency(item_id, item):
+        if not isinstance(item, dict) or str(item.get("templateId", "")).casefold() != "currency:mtxgiveaway":
+            return None
+        if not isinstance(item_id, str) or not re.fullmatch(r"[a-fA-F0-9-]{16,64}", item_id):
+            return None
+        wallet_ids.add(item_id)
+        result = {"itemId": item_id}
+        if type(item.get("quantity")) is int:
+            result["quantity"] = item["quantity"]
+        attrs = item.get("attributes")
+        if isinstance(attrs, dict) and isinstance(attrs.get("platform"), str) and attrs["platform"] in _WALLET_PLATFORMS:
+            result["platform"] = attrs["platform"]
+        return result
+
+    changes = response.get("profileChanges")
+    entries = []
+    if isinstance(changes, list):
+        for change in changes:
+            if not isinstance(change, dict):
+                continue
+            kind = change.get("changeType")
+            if not isinstance(kind, str) or kind not in _WALLET_CHANGES:
+                continue
+            summary = {"changeType": kind}
+            if kind == "fullProfileUpdate":
+                profile = change.get("profile")
+                items = profile.get("items") if isinstance(profile, dict) else None
+                if isinstance(items, dict):
+                    summary["currencyItems"] = [value for item_id, item in items.items()
+                                                if (value := currency(item_id, item)) is not None]
+            elif kind == "itemAdded":
+                value = currency(change.get("itemId"), change.get("item"))
+                if value is not None:
+                    summary["currencyItem"] = value
+            elif isinstance(change.get("itemId"), str) and change["itemId"] in wallet_ids and kind in {"itemQuantityChanged", "itemRemoved", "itemAttrChanged"}:
+                summary["itemId"] = change["itemId"]
+                if kind == "itemQuantityChanged" and type(change.get("quantity")) is int:
+                    summary["quantity"] = change["quantity"]
+                if kind == "itemAttrChanged" and change.get("attributeName") == "platform" and isinstance(change.get("attributeValue"), str) and change["attributeValue"] in _WALLET_PLATFORMS:
+                    summary["platform"] = change["attributeValue"]
+            entries.append(summary)
+    entry["profileChanges"] = entries
+    notifications = response.get("notifications")
+    if isinstance(notifications, list):
+        rewards = []
+        for notification in notifications:
+            if not isinstance(notification, dict) or notification.get("type") != "CatalogPurchase":
+                continue
+            loot = notification.get("lootResult")
+            items = loot.get("items") if isinstance(loot, dict) else None
+            if not isinstance(items, list):
+                continue
+            for item in items:
+                if not isinstance(item, dict) or str(item.get("itemType", "")).casefold() != "currency:mtxgiveaway":
+                    continue
+                value = currency(item.get("itemGuid"), {"templateId": item.get("itemType"), "quantity": item.get("quantity"), "attributes": item.get("attributes")})
+                if value is not None:
+                    rewards.append(value)
+        if rewards:
+            entry["purchaseRewards"] = rewards
+    return entry
+
+
+def make_handler(routes, record_path, stub=None, wallet_trace_path=None):
     lock = threading.Lock()
+    wallet_ids = set()
 
     class Handler(BaseHTTPRequestHandler):
         protocol_version = "HTTP/1.1"
@@ -136,6 +223,17 @@ def make_handler(routes, record_path, stub=None):
                         break
 
             self.record_request(url, body, form, status)
+            if wallet_trace_path is not None:
+                with lock:
+                    entry = wallet_trace_entry(self.command, url, status, response, wallet_ids)
+                    if entry is not None:
+                        try:
+                            fd = os.open(wallet_trace_path, os.O_WRONLY | os.O_CREAT | os.O_APPEND | os.O_NOFOLLOW, 0o600)
+                            with os.fdopen(fd, "a", encoding="utf-8") as stream:
+                                os.fchmod(stream.fileno(), 0o600)
+                                stream.write(json.dumps(entry, sort_keys=True) + "\n")
+                        except OSError:
+                            pass  # Diagnostic capture must not change the HTTP response.
             self.send_json(status, response)
 
         def serve_websocket(self, url, serve):
@@ -204,6 +302,7 @@ def main():
     parser.add_argument("--port", type=int, default=8080)
     parser.add_argument("--fixtures", type=Path)
     parser.add_argument("--record", type=Path, default=Path(__file__).resolve().parents[1] / "generated/server-requests.jsonl")
+    parser.add_argument("--wallet-trace", type=Path, help="opt in to redacted common_core wallet diagnostics (JSONL)")
     parser.add_argument("--stub", action="store_true", help="answer known Epic endpoints with minimal responses")
     parser.add_argument("--tls-cert", type=Path)
     parser.add_argument("--tls-key", type=Path)
@@ -270,7 +369,7 @@ def main():
         except (OSError, ValueError) as exc:
             qos_socket.close()
             parser.error(f"cannot enable local QoS: {exc}")
-    server = ThreadingHTTPServer((args.bind, args.port), make_handler(routes, args.record, stub))
+    server = ThreadingHTTPServer((args.bind, args.port), make_handler(routes, args.record, stub, args.wallet_trace))
     if stub is not None and not args.matchmaking_ws_origin and not args.tls_cert and args.bind == "127.0.0.1":
         # The default local HTTP server must advertise its own reachable socket,
         # including the actual port when the caller requested port zero.
@@ -278,7 +377,7 @@ def main():
     ws_server = None
     if args.local_matchmaking_ws_port is not None:
         ws_server = ThreadingHTTPServer(("127.0.0.1", args.local_matchmaking_ws_port),
-                                        make_handler(routes, args.record, stub))
+                                        make_handler(routes, args.record, stub, args.wallet_trace))
         stub.DEFAULT.matchmaking.websocket_origin = f"ws://127.0.0.1:{ws_server.server_port}"
         threading.Thread(target=ws_server.serve_forever, daemon=True).start()
         print(f"Local matchmaking WebSocket on 127.0.0.1:{ws_server.server_port}", flush=True)
