@@ -16,7 +16,7 @@ for one-off runs; use `runs/`, `builds/` or `agents/`.
 | `porting/*.py`, `porting/*.sh` | Older generation, extraction and run scripts. Many import each other by module name, so they stay at this level until they are regrouped with their imports updated. |
 | `porting/notes/` | Probe write-ups and analysis notes. Notes that scripts read or write (e.g. `binary_analysis.md`, `native_classes_status.md`) stay in `porting/`. |
 | `porting/patches/` | Patches to the engine checkout `/opt/fortnite/UnrealEngine` (regenerate a patch from `git diff` there after an engine edit). |
-| `porting/local_client/` | ProjectChrono, the launcher for the original client (Windows build, and a native Linux build that runs it in a Wine/Proton prefix). |
+| `porting/local_client/` | ProjectChrono, the launcher for the original client (runs on Windows and under Wine/Proton on Linux). |
 | `porting/frontend/`, `porting/asset_pipeline/`, `porting/material_pipeline/`, `porting/progress/` | Frontend reconstruction, asset conversion, progress dashboard. |
 | `docs/` | Published dashboard and screenshots. |
 

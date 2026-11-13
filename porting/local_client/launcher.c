@@ -18,42 +18,17 @@
 
 /* All paths in the configuration are relative to the launcher directory. */
 #define CAP 32768
-static wchar_t dir[CAP], ini[CAP], game[CAP], cert[CAP], dll[CAP], log_path[CAP], status_file[CAP];
+static wchar_t dir[CAP], ini[CAP], game[CAP], cert[CAP], dll[CAP], log_path[CAP];
 static wchar_t server[64], account[64], cmd[CAP];
 
 #define WM_STATUS (WM_APP + 1)
 #define WM_FINISHED (WM_APP + 2)
 static HWND window, fields[4], play_button, status_label;
-static int headless, tagged;
-static void write_utf8_handle(HANDLE h, const char *prefix, const char *text) {
-    DWORD written = 0;
-    if (prefix && *prefix) WriteFile(h, prefix, (DWORD)strlen(prefix), &written, NULL);
-    if (text && *text) WriteFile(h, text, (DWORD)strlen(text), &written, NULL);
-    WriteFile(h, "\n", 1, &written, NULL);
-}
+static int headless;
 static void status(const wchar_t *message) {
-    /* The native Linux build runs this one headless inside the prefix and picks its status lines from the status file or Wine's output. */
     if (headless) {
-        char utf8[1024];
-        int n = WideCharToMultiByte(CP_UTF8, 0, message, -1, utf8, (int)sizeof(utf8), NULL, NULL);
-        if (n > 1) {
-            HANDLE err = GetStdHandle(STD_ERROR_HANDLE);
-            if (err && err != INVALID_HANDLE_VALUE) {
-                write_utf8_handle(err, tagged ? "@chrono " : NULL, utf8);
-            } else {
-                fwprintf(stderr, tagged ? L"@chrono %ls\n" : L"%ls\n", message);
-                fflush(stderr);
-            }
-            if (status_file[0]) {
-                HANDLE sf = CreateFileW(status_file, FILE_APPEND_DATA,
-                    FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-                    NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-                if (sf != INVALID_HANDLE_VALUE) {
-                    write_utf8_handle(sf, NULL, utf8);
-                    CloseHandle(sf);
-                }
-            }
-        }
+        fwprintf(stderr, L"%ls\n", message);
+        fflush(stderr);
     } else if (window) {
         size_t bytes = (wcslen(message) + 1) * sizeof(wchar_t);
         wchar_t *copy = (wchar_t *)HeapAlloc(GetProcessHeap(), 0, bytes);
@@ -673,12 +648,7 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE previous, PWSTR command, int s
     WNDCLASSW wc; MSG message; RECT size = {0, 0, 980, 650};
     GdiplusStartupInput gdip_in = {1, NULL, FALSE, FALSE}; ULONG_PTR gdip_token = 0; (void)previous;
     if (!initialize_paths()) return 1;
-    if (command && !_wcsicmp(command, L"--headless")) {
-        headless = 1;
-        tagged = GetEnvironmentVariableW(L"PROJECTCHRONO_STATUS_TAG", NULL, 0) != 0;
-        if (GetEnvironmentVariableW(L"PROJECTCHRONO_STATUS_FILE", status_file, CAP) >= CAP) status_file[0] = 0;
-        return launch();
-    }
+    if (command && !_wcsicmp(command, L"--headless")) { headless = 1; return launch(); }
     GdiplusStartup(&gdip_token, &gdip_in, NULL);
     ZeroMemory(&wc, sizeof(wc)); wc.lpfnWndProc = window_proc; wc.hInstance = instance; wc.lpszClassName = L"ProjectChronoWindow"; wc.hCursor = LoadCursorW(NULL, IDC_ARROW);
     if (!RegisterClassW(&wc)) { GdiplusShutdown(gdip_token); return 1; }
