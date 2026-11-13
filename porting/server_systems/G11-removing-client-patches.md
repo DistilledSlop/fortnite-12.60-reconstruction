@@ -254,3 +254,55 @@ option. The diagnostic now validates initialization at the observed address
 and changes only that one byte, with write readback and a private-namespace
 requirement. This remains a verification bypass. It has not been established
 that the former extra write caused any client exit.
+
+## ProjectChrono local launcher (explicitly patched mode)
+
+The user authorized a launcher and helper for the original supplied client.
+Source is in `porting/local_client/`; build with its `build.sh`. ProjectChrono
+provides a native Windows GUI with game and public-CA file pickers, backend
+IPv4/account settings, background launch status, and a helper-log action.
+`--headless` selects the same launch path for automated probes. Generated
+executables belong in `porting/generated/local-client-tools/`, outside Git.
+
+This changes the local deployment approach, not the unchanged-client gate:
+the launcher starts its own shipping child and injects a helper. No game EXE
+on disk is modified. The helper performs the guarded AppES callback diagnostic;
+successful entitlement checks are not established. EAC/BattlEye wrappers are
+not started. Native Windows and end-to-end login remain unverified.
+
+The original X509 verifier recovery now isolates the manager rejection. Its
+74-block CFG calls the digest verifier at `0x1438bddb0`, then consumes AL at
+`0x14993089f`; there is no optional verification-delegate path in this body.
+The 111-block digest verifier matches a configured domain and compares 32-byte
+SHA-256 SubjectPublicKeyInfo digests. The compiled initializer at
+`0x1422ec980` installs six domains without a demonstrated configuration gate.
+Private evidence is retained under `local-model-package/out/g11-manager-20261112/`.
+
+ProjectChrono validates and enrolls the selected public CA in CurrentUser ROOT
+before creating the child. The helper retains chain, hostname and pin checks,
+but replaces one existing pin per domain with that CA's SPKI digest. Original
+additional pins remain intact. Exact image/version/layout guards and a frozen
+thread transaction protect the update. This is a local trust-policy patch,
+not a TLS verification bypass. The source-proven DNS hook currently covers
+only the main-module `WS2_32!getaddrinfo` import at preferred VA `0x1458fd910`.
+Other resolver APIs have not been established.
+
+Validation so far: both Windows artifacts compile with strict warnings; the
+redesigned GUI opens in Wine and its Play action saves settings, reports input
+and missing-file errors, and re-enables controls. An isolated toy child loads
+the actual helper; unsupported-image rejection now reaches the launcher through
+the explicit Ready/Failed event protocol and produces a nonzero launch result.
+A Linux sidecar equivalent has nine passing focused tests and updated all six
+pins in a live original process while its verification flag stayed enabled.
+
+The protected client's cold start exceeded the initial 30-second injection
+wait. Increasing that bounded wait to 120 seconds allowed the actual helper
+to load, install the guarded DNS redirect, apply AppES diagnostics and update
+all six pins. Subsequent isolated original-client probes made HTTPS telemetry
+POSTs with 204 responses and both Curl/WSS verification bypasses absent. No
+hosts-file redirect or Content certificate overlay was used in these probes.
+The launcher uses the selected game executable's directory as the child cwd.
+The client then exits with an execution access violation at `0x1812f1580`
+around PostEngineInit, before account login. Disabling audio and using DXVK
+did not resolve this crash. Root-cause debugging is still in progress.
+No G11 completion or successful lobby/WSS connection is claimed.
