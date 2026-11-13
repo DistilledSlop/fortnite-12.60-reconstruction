@@ -39,11 +39,25 @@ index dfad9b7b2..86c68bcc8 100644
  					return;
  				}
  			}
+@@ -3505,7 +3521,12 @@ EAsyncPackageState::Type FAsyncPackage::ProcessImportsAndExports_Event()
+ 				{
+ 					FObjectExport& Export = Linker->ExportMap[LocalExportIndex];
+ 					UObject* Object = Export.Object;
+-					check(!Object || !Object->HasAnyFlags(RF_NeedLoad));
++					// Shipping builds do not compile this check out as a crash: keep loading and report which export failed to serialize.
++					if (Object && Object->HasAnyFlags(RF_NeedLoad))
++					{
++						UE_LOG(LogStreaming, Error, TEXT("Export %s is still RF_NeedLoad after serialization (the reconstructed native class likely mismatches the cooked data)."), *Object->GetPathName());
++						Object->ClearFlags(RF_NeedLoad);
++					}
+ 				}
+ 			}
+ 			else
 diff --git a/Engine/Source/Runtime/Engine/Private/PackageMapClient.cpp b/Engine/Source/Runtime/Engine/Private/PackageMapClient.cpp
-index 8c6de912a..5fdc83d67 100644
+index 8c6de912a..e5324a773 100644
 --- a/Engine/Source/Runtime/Engine/Private/PackageMapClient.cpp
 +++ b/Engine/Source/Runtime/Engine/Private/PackageMapClient.cpp
-@@ -3426,8 +3426,18 @@ uint32 FNetGUIDCache::GetNetworkChecksum( UObject* Obj )
+@@ -3426,8 +3426,24 @@ uint32 FNetGUIDCache::GetNetworkChecksum( UObject* Obj )
  
  	// If Obj is already a class, we can use that directly
  	UClass* Class = Cast< UClass >( Obj );
@@ -52,11 +66,17 @@ index 8c6de912a..5fdc83d67 100644
 -	return ( Class != NULL ) ? GetClassNetworkChecksum( Class ) : GetClassNetworkChecksum( Obj->GetClass() );
 +	// Fortnite original client: the shipping client's fork of engine classes (UBrushComponent, UStaticMeshComponent...)
 +	// has a different layout checksum than stock 4.25, and the client breaks the connection on a mismatch. Send 0
-+	// ("not checked") for classes that live in /Script/Engine; Fortnite's own classes keep their real checksum.
++	// ("not checked") for native classes of engine modules and plugins (/Script/Engine, /Script/Landscape, ...); Fortnite's
++	// own classes (/Script/Fortnite*) keep their real checksum. /Script/Landscape was added after run 29: the client dropped
++	// on LandscapeHeightfieldCollisionComponent (the pawn's movement base).
 +	static const bool bFortniteSkipEngineClassChecksum = FParse::Param( FCommandLine::Get(), TEXT( "FortniteSkipEngineClassNetChecksum" ) );
-+	if ( bFortniteSkipEngineClassChecksum && ChecksumClass && ChecksumClass->GetOutermost()->GetFName() == FName( TEXT( "/Script/Engine" ) ) )
++	if ( bFortniteSkipEngineClassChecksum && ChecksumClass && ChecksumClass->HasAnyClassFlags( CLASS_Native ) )
 +	{
-+		return 0;
++		const FString PackageName = ChecksumClass->GetOutermost()->GetName();
++		if ( PackageName.StartsWith( TEXT( "/Script/" ) ) && !PackageName.StartsWith( TEXT( "/Script/Fortnite" ) ) )
++		{
++			return 0;
++		}
 +	}
 +
 +	return GetClassNetworkChecksum( ChecksumClass );

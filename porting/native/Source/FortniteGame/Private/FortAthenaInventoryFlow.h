@@ -43,6 +43,9 @@ namespace FortAthenaInventory
 	// (ServerExecuteInventoryItem) to the re-created bodies above, without editing generated code. Call once per world
 	// (StartPlay). Remove when the bodies are spliced through behavior/*.inc and the generator.
 	void InstallRpcOverrides();
+
+	// Sends ClientInternalEquipWeapon for a pawn's current weapon once the pawn walks (called by the match-flow driver).
+	void Tick(UWorld* World);
 }
 
 // Global-namespace entry points for behaviour snippets (.inc bodies cannot declare a qualified name at block scope).

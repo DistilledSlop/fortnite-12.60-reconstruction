@@ -140,6 +140,27 @@ int32 FortAthenaHealth::GetAlivePlayerCount()
 	return Alive.Num();
 }
 
+namespace
+{
+	// stand-in for AFortPlayerState's native constructor: the original creates the ability system component and its
+	// attribute sets as default subobjects of the PlayerState with fixed names (AbilitySystemComponent, HealthSet,
+	// DamageSet, ...; generated/reflection/native_default_subobjects.json, FortPlayerStateEndless). Our generated class has
+	// no constructor, so they are created here under the same names and flagged RF_DefaultSubObject. That makes them
+	// stably named for networking, so the client maps them onto its own default subobjects instead of spawning extra
+	// copies (run 27: the client pawn never got a HealthSet and AFortPawn::GetHealth 0x14231c4c0 fell back to 1).
+	template <class T>
+	T* AddNamedSet(UAbilitySystemComponent* ASC, AActor* Owner, const TCHAR* Name)
+	{
+		if (const T* Existing = ASC->GetSet<T>())
+		{
+			return const_cast<T*>(Existing);
+		}
+		T* Set = NewObject<T>(Owner, T::StaticClass(), FName(Name), RF_DefaultSubObject);
+		ASC->AddAttributeSetSubobject(Set);
+		return Set;
+	}
+}
+
 void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller)
 {
 	if (!IsEnabled() || !GameMode || !Controller)
@@ -158,7 +179,8 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 	UFortAbilitySystemComponent* ASC = PlayerState->AbilitySystemComponent;
 	if (!ASC)
 	{
-		ASC = NewObject<UFortAbilitySystemComponent>(PlayerState, TEXT("AbilitySystemComponent"));
+		ASC = NewObject<UFortAbilitySystemComponent>(PlayerState, TEXT("AbilitySystemComponent"), RF_DefaultSubObject);  // see AddNamedSet
+		ASC->SetNetAddressable();
 		ASC->SetIsReplicated(true);
 		ASC->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 		PlayerState->AbilitySystemComponent = ASC;
@@ -178,7 +200,7 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 
 	// 3. Ensure attribute sets exist on PlayerState/ASC and are mirrored on Pawn.
 	// UFortRegenHealthSet inherits from UFortHealthSet and matches FFortPlayerAttributeSets::HealthSet.
-	UFortRegenHealthSet* HealthSet = const_cast<UFortRegenHealthSet*>(ASC->AddSet<UFortRegenHealthSet>());
+	UFortRegenHealthSet* HealthSet = AddNamedSet<UFortRegenHealthSet>(ASC, PlayerState, TEXT("HealthSet"));
 	if (HealthSet)
 	{
 		PlayerState->AttributeSets.HealthSet = HealthSet;
@@ -213,26 +235,26 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 	}
 
 	// Ensure combat and movement attribute sets exist on PlayerState/ASC.
-	UFortDamageSet* DamageSet = const_cast<UFortDamageSet*>(ASC->AddSet<UFortDamageSet>());
+	UFortDamageSet* DamageSet = AddNamedSet<UFortDamageSet>(ASC, PlayerState, TEXT("DamageSet"));
 	if (DamageSet)
 	{
 		PlayerState->AttributeSets.DamageSet = DamageSet;
 		Pawn->DamageSet = DamageSet;
 	}
 
-	UFortControlResistanceSet* ControlSet = const_cast<UFortControlResistanceSet*>(ASC->AddSet<UFortControlResistanceSet>());
+	UFortControlResistanceSet* ControlSet = AddNamedSet<UFortControlResistanceSet>(ASC, PlayerState, TEXT("ControlResistanceSet"));
 	if (ControlSet)
 	{
 		PlayerState->AttributeSets.ControlResistanceSet = ControlSet;
 	}
 
-	UFortMovementSet* MovementSet = const_cast<UFortMovementSet*>(ASC->AddSet<UFortMovementSet>());
+	UFortMovementSet* MovementSet = AddNamedSet<UFortMovementSet>(ASC, PlayerState, TEXT("MovementSet"));
 	if (MovementSet)
 	{
 		PlayerState->AttributeSets.MovementSet = MovementSet;
 	}
 
-	UFortAdvancedMovementSet* AdvMovementSet = const_cast<UFortAdvancedMovementSet*>(ASC->AddSet<UFortAdvancedMovementSet>());
+	UFortAdvancedMovementSet* AdvMovementSet = AddNamedSet<UFortAdvancedMovementSet>(ASC, PlayerState, TEXT("AdvancedMovementSet"));
 	if (AdvMovementSet)
 	{
 		PlayerState->AttributeSets.AdvancedMovementSet = AdvMovementSet;

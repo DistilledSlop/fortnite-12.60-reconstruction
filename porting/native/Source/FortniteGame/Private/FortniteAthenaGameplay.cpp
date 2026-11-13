@@ -213,6 +213,7 @@ void AFortGameModeAthena::StartPlay()
     Super::StartPlay();
     FortAthenaInventory::InstallRpcOverrides();
     FortAthenaBuilding::InstallRpcOverrides();
+    FortAthenaBuilding::PrepareBuildableClasses(GetGameState<AFortGameStateAthena>());
     if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteNoHealth")))
         FortAthenaHealth::InstallRpcOverrides();
     FortAthenaMatchFlow::InstallRpcOverrides();

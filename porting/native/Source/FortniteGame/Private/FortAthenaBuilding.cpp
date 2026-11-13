@@ -85,6 +85,10 @@ namespace
 			UE_LOG(LogTemp, Warning, TEXT("Building: spawn of %s failed at %s"), *Class->GetName(), *FVector(Data.BuildLoc).ToString());
 			return;
 		}
+		// stand-in for the ABuildingActor constructor defaults (no generated constructor; see the weapon note in
+		// FortAthenaInventoryFlow.cpp): placed pieces must replicate to every client.
+		if (!Piece->GetIsReplicated())
+			Piece->SetReplicates(true);
 		Piece->bPlayerPlaced = 1;
 		Piece->bMirrored = Data.bMirrored ? 1 : 0;
 		if (const AFortPlayerStateAthena* PS = Cast<AFortPlayerStateAthena>(Controller->PlayerState))
@@ -127,6 +131,13 @@ void FortAthenaBuilding::PrepareBuildableClasses(AFortGameStateAthena* GameState
 {
 	if (!Enabled() || !GameState)
 		return;
+	// stand-in for the AFortGameStateZone constructor defaults (our generated class has none): Battle Royale builds
+	// anywhere, so building without layout requirements must be allowed. The flag replicates; with our default false the
+	// vanilla client showed every build preview red and never sent ServerCreateBuildingActor (run 30).
+	GameState->bAllowBuildingWithoutLayoutRequirements = true;
+	GameState->bAllowBuildingAtLayoutRequirements = true;
+	GameState->bAllowLayoutRequirementsFeature = false;
+	GameState->ForceNetUpdate();
 	// binary 0x141e92db0 / 0x141df9620: enumerate the object library's
 	// bIsPlayerBuildable entries, then sort them. A partial staged set cannot
 	// reproduce the client's handles; do not create a misleading table from it.

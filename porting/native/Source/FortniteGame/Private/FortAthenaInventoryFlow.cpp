@@ -15,6 +15,7 @@
 //   Wall, Floor, Stair_W, RoofS (1 each), EditTool (1), WoodItemData (0).
 
 #include "FortAthenaInventoryFlow.h"
+#include "EngineUtils.h"
 #include "UObject/ScriptMacros.h"
 
 #include "AFortGameModeAthena.h"
@@ -42,6 +43,8 @@
 #include "GameplayAbilitySpec.h"
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "UObject/UObjectGlobals.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFortInventoryFlow, Log, All);
@@ -168,6 +171,17 @@ namespace
 		Pawn->PreviousWeapon = Pawn->CurrentWeapon;
 		Pawn->CurrentWeapon = Weapon;
 		Pawn->ForceNetUpdate();
+		// binary 0x142a16c90 is the client-RPC thunk of AFortPawn::ClientInternalEquipWeapon: the original server tells the
+		// owning client to run the equip (animation set, build preview, input) in addition to replicating CurrentWeapon.
+		// Sent from FortAthenaInventory::Tick once the pawn walks: sending it during warmup/skydive coincided with the client
+		// leaving the match 2 s after landing (run 25; that run also had the landscape checksum drop, which may have been the cause).
+	}
+
+	// Last weapon each pawn's client was told to equip (see Tick).
+	TMap<TWeakObjectPtr<AFortPawn>, TWeakObjectPtr<AFortWeapon>>& ClientEquipped()
+	{
+		static TMap<TWeakObjectPtr<AFortPawn>, TWeakObjectPtr<AFortWeapon>> Map;
+		return Map;
 	}
 
 	AFortWeapon* EquipItem(AFortPlayerController* Controller, AFortPawn* Pawn, UFortWorldItem* Item)
@@ -210,6 +224,11 @@ namespace
 			return nullptr;
 		}
 		Weapon->SetOwner(Pawn);
+		// stand-in for the AFortWeapon constructor defaults: our generated class has no constructor, so a Blueprint weapon
+		// spawned here did not replicate at all (run 27: no actor channel for DefaultBuildingTool_C / the pickaxe, nothing
+		// in the client's hands, no build preview).
+		Weapon->SetReplicates(true);
+		Weapon->bNetUseOwnerRelevancy = true;
 		Weapon->WeaponData = Definition;
 		Weapon->ItemEntryGuid = Guid;
 		Weapon->WeaponLevel = Item->ItemEntry.Level;
@@ -487,6 +506,32 @@ void FortAthenaInventory::ExecuteInventoryItem(AFortPlayerController* Controller
 	EquipItem(Controller, Pawn, Item);
 }
 
+void FortAthenaInventory::Tick(UWorld* World)
+{
+	if (!IsEnabled() || !World)
+		return;
+	auto& Sent = ClientEquipped();
+	for (auto It = Sent.CreateIterator(); It; ++It)
+		if (!It.Key().IsValid())
+			It.RemoveCurrent();
+	for (TActorIterator<AFortPawn> It(World); It; ++It)
+	{
+		AFortPawn* Pawn = *It;
+		AFortWeapon* Weapon = Pawn->CurrentWeapon;
+		const ACharacter* Character = Cast<ACharacter>(Pawn);
+		const UCharacterMovementComponent* Movement = Character ? Character->GetCharacterMovement() : nullptr;
+		if (!Weapon || !Pawn->HasAuthority() || !Pawn->IsPlayerControlled() || !Movement
+			|| Movement->MovementMode != MOVE_Walking || !Movement->IsMovingOnGround())
+			continue;
+		TWeakObjectPtr<AFortWeapon>& Last = Sent.FindOrAdd(Pawn);
+		if (Last.Get() == Weapon)
+			continue;
+		Last = Weapon;
+		Pawn->ClientInternalEquipWeapon(Weapon);
+		UE_LOG(LogTemp, Display, TEXT("Inventory: ClientInternalEquipWeapon %s on %s"), *Weapon->GetName(), *Pawn->GetName());
+	}
+}
+
 void FortAthenaInventory::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller)
 {
 	if (!IsEnabled() || !Controller)
@@ -519,7 +564,12 @@ void FortAthenaInventory::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayer
 		{
 			for (const FItemAndCount& Start : GameMode->StartingItems)
 			{
-				if (Start.Item && GiveItem(Controller, Start.Item, Start.Count))
+				int32 StartCount = Start.Count;
+				int32 DebugWood = 0;
+				// stand-in: -FortniteStartingWood=N (see below) replaces the empty wood stack for building tests.
+				if (Start.Item && StartCount == 0 && Start.Item->GetName() == TEXT("WoodItemData") && FParse::Value(FCommandLine::Get(), TEXT("FortniteStartingWood="), DebugWood) && DebugWood > 0)
+					StartCount = DebugWood;
+				if (Start.Item && GiveItem(Controller, Start.Item, StartCount))
 				{
 					++Starting;
 				}
@@ -535,7 +585,15 @@ void FortAthenaInventory::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayer
 			{
 				if (UFortItemDefinition* Definition = LoadDefinition(Start.Path))
 				{
-					if (GiveItem(Controller, Definition, Start.Count))
+					// stand-in: -FortniteStartingWood=N gives that much wood at spawn so building can be tested before harvesting exists.
+					int32 StartCount = Start.Count;
+					int32 DebugWood = 0;
+					if (StartCount == 0 && FParse::Value(FCommandLine::Get(), TEXT("FortniteStartingWood="), DebugWood) && DebugWood > 0
+						&& FString(Start.Path).Contains(TEXT("WoodItemData")))
+					{
+						StartCount = DebugWood;
+					}
+					if (GiveItem(Controller, Definition, StartCount))
 					{
 						++Starting;
 					}

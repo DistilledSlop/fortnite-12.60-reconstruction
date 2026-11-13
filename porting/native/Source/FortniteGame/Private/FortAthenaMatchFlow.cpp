@@ -14,6 +14,7 @@
 
 #include "FortAthenaMatchFlow.h"
 #include "EngineUtils.h"
+#include "FortAthenaInventoryFlow.h"
 #include "Engine/LevelStreaming.h"
 #include "LandscapeProxy.h"
 
@@ -505,6 +506,14 @@ namespace FortAthenaMatchFlowPrivate
         CallUFunction(GameState, TEXT("OnRep_CurrentPlaylistInfo"));
         // 0x1419b47b0 (playlist values into the GameState), first statement only: CachedSafeZoneStartUp.
         GameState->CachedSafeZoneStartUp = Playlist->SafeZoneStartUp;
+        // stand-in for the class default: the client's UFortPlaylistAthena constructor stores -1 at +0x8cc
+        // (LastSafeZoneIndex, "no last phase"); our generated class has no constructor, so the default is 0 and the
+        // storm stopped after phase 0 (run 25). Playlist_DefaultSolo does not set the property, so the default applies.
+        if (Playlist->LastSafeZoneIndex == 0)
+        {
+            Playlist->LastSafeZoneIndex = -1;
+            GetMutableDefault<UFortPlaylistAthena>()->LastSafeZoneIndex = -1;
+        }
         LogOnce(TEXT("playlist-copy"), TEXT("0x1419b47b0 playlist-to-GameState copy ported only for CachedSafeZoneStartUp; loot preload 0x1419a0870 not ported"));
         // HandleMatchHasStarted (D2 3 step 3): playlist may skip warmup / aircraft.
         if (Playlist->bSkipWarmup) { S.bSkipWarmup = true; UE_LOG(LogTemp, Display, TEXT("MatchFlow: Skipping Warmup due to playlist settings")); }
@@ -1555,6 +1564,7 @@ namespace FortAthenaMatchFlowPrivate
         const float WorldTime = World->GetTimeSeconds();
         const float Delta = S.LastDriverTime < 0.0f ? 0.0f : WorldTime - S.LastDriverTime;
         S.LastDriverTime = WorldTime;
+        FortAthenaInventory::Tick(World);
 
         // HandleMatchHasStarted -> StartWarmupPhase. inferred: deferred until RequiredPlayers have joined (the original
         // waits for the match to start; with no player the countdown would end in the "all players disconnected" branch).

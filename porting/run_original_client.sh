@@ -5,7 +5,7 @@
 # Usage: run_original_client.sh [--username NAME] [seconds] [extra client args...]
 # FN_ACTIONS="60:shot 70:click,640,600 80:key,Return" runs X11 actions at those seconds after
 # launch; "wait,REGEX[,TIMEOUT]" waits for REGEX in the client or FN_ACTION_LOG and restarts the clock;
-# also move,X,Y / look,DX,DY / mhold,SECONDS. Screenshots go to generated/shots/ (debug aids, never committed).
+# also stopif,REGEX / move,X,Y / look,DX,DY / mhold,SECONDS. Screenshots go to generated/shots/ (debug aids, never committed).
 # FN_WINEPREFIX selects an alternate prefix; FN_WINEDLLOVERRIDES and
 # FN_VK_ICD_FILENAMES pass renderer settings into the isolated client.
 # Set FN_DISPLAY and, if required, FN_XAUTHORITY to use an existing X11 display.
@@ -147,6 +147,8 @@ if [[ -n "$FN_ACTIONS" ]]; then
                     deadline=$(( SECONDS + limit ))
                     until grep -aqE "$pattern" "$WINEPREFIX"/drive_c/users/*/AppData/Local/FortniteGame/Saved/Logs/FortniteGame.log ${FN_ACTION_LOG:+"$FN_ACTION_LOG"} 2>/dev/null || (( SECONDS >= deadline )); do sleep 1; done
                     base=$SECONDS ;;
+                stopif) # stopif,REGEX: end the action list when REGEX is already in the client or server log.
+                    grep -aqE "$args" "$WINEPREFIX"/drive_c/users/*/AppData/Local/FortniteGame/Saved/Logs/FortniteGame.log ${FN_ACTION_LOG:+"$FN_ACTION_LOG"} 2>/dev/null && break ;;
                 move) xdotool mousemove ${args%%,*} ${args#*,} ;;
                 mhold) xdotool mousedown 1; sleep "$args"; xdotool mouseup 1 ;;
                 look) xdotool mousemove_relative -- ${args%%,*} ${args#*,} ;;
