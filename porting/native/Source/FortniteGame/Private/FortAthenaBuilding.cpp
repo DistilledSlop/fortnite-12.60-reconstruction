@@ -137,6 +137,10 @@ void FortAthenaBuilding::PrepareBuildableClasses(AFortGameStateAthena* GameState
 	GameState->bAllowBuildingWithoutLayoutRequirements = true;
 	GameState->bAllowBuildingAtLayoutRequirements = true;
 	GameState->bAllowLayoutRequirementsFeature = false;
+	// Client 0x141ea12b0: -1 disables the structure cap; otherwise placement
+	// fails when TotalPlayerStructures >= MaxPlayerStructures. Generated
+	// constructors leave both replicated counters at zero.
+	GameState->MaxPlayerStructures = -1;
 	GameState->ForceNetUpdate();
 	// binary 0x141e92db0 / 0x141df9620: enumerate the object library's
 	// bIsPlayerBuildable entries, then sort them. A partial staged set cannot

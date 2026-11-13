@@ -136,32 +136,10 @@ sudo -n -u "$user" env "${wine_env[@]}" \
     "${display_cmd[@]}" timeout "${seconds}s" \
     bash -c '
 cd "$0"
-if [[ -n "$FN_ACTIONS" ]]; then
-    (
-        base=$SECONDS
-        for action in $FN_ACTIONS; do
-            at=${action%%:*}; what=${action#*:}; kind=${what%%,*}; args=${what#*,}
-            delay=$(( base + at - SECONDS )); (( delay <= 0 )) || sleep $delay
-            case $kind in
-                wait) # wait,REGEX[,TIMEOUT]: poll the client log and FN_ACTION_LOG (server log) for REGEX; later times count from the match.
-                    pattern=${args%%,*}; limit=600; [[ $args != *,* ]] || limit=${args##*,}
-                    deadline=$(( SECONDS + limit ))
-                    until grep -aqE "$pattern" "$WINEPREFIX"/drive_c/users/*/AppData/Local/FortniteGame/Saved/Logs/FortniteGame.log ${FN_ACTION_LOG:+"$FN_ACTION_LOG"} 2>/dev/null || (( SECONDS >= deadline )); do sleep 1; done
-                    base=$SECONDS ;;
-                stopif) # stopif,REGEX: end the action list when REGEX is already in the client or server log.
-                    grep -aqE "$args" "$WINEPREFIX"/drive_c/users/*/AppData/Local/FortniteGame/Saved/Logs/FortniteGame.log ${FN_ACTION_LOG:+"$FN_ACTION_LOG"} 2>/dev/null && break ;;
-                move) xdotool mousemove ${args%%,*} ${args#*,} ;;
-                mhold) xdotool mousedown 1; sleep "$args"; xdotool mouseup 1 ;;
-                look) xdotool mousemove_relative -- ${args%%,*} ${args#*,} ;;
-                shot) ffmpeg -loglevel error -y -f x11grab -video_size 1280x720 -i "$DISPLAY" -frames:v 1 "$SHOTS_DIR/t$at.png" ;;
-                click) xdotool mousemove ${args%%,*} ${args#*,} click 1 ;;
-                key) xdotool key "$args" ;;
-                hold) xdotool keydown "${args%%,*}"; sleep "${args#*,}"; xdotool keyup "${args%%,*}" ;;
-            esac
-        done
-    ) &
-fi
-exec wine FortniteClient-Win64-Shipping.exe "$@"' "$bin_dir" \
+source "$1"
+shift
+start_client_actions
+exec wine FortniteClient-Win64-Shipping.exe "$@"' "$bin_dir" "$porting_dir/tools/client_actions.sh" \
     "$FN_PORTAL_ARG" -nosound -NoSplash -log -epicapp=Fortnite -epicenv="$FN_EPICENV" \
     -epiclocale=en-us -skippatchcheck -nobe -noeac -fromfl=none \
     -AUTH_LOGIN=unused "-AUTH_PASSWORD=local-username:$username" -AUTH_TYPE=exchangecode "$@" \

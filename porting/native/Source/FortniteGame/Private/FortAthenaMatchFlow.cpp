@@ -15,6 +15,7 @@
 #include "FortAthenaMatchFlow.h"
 #include "EngineUtils.h"
 #include "FortAthenaInventoryFlow.h"
+#include "FortAthenaHealth.h"
 #include "Engine/LevelStreaming.h"
 #include "LandscapeProxy.h"
 
@@ -1518,11 +1519,14 @@ namespace FortAthenaMatchFlowPrivate
                     FScalableFloat DamageRow;
                     DamageRow.SetScalingValue(1.0f, FName(TEXT("Default.SafeZone.Damage")), S.GameData.Get());
                     const float Damage = DamageRow.GetValueAtLevel(static_cast<float>(Phase)) * Pawn->GetMaxHealth();
-                    const float NewHealth = FMath::Max(0.0f, Pawn->GetHealth() - Damage);
-                    Pawn->SetHealth(NewHealth);
-                    UE_LOG(LogTemp, Display, TEXT("MatchFlow: storm damage %.1f to %s, health %.1f (stand-in)"), Damage, *Pawn->GetName(), NewHealth);
-                    if (NewHealth <= 0.0f)
-                        LogOnce(TEXT("storm-death"), TEXT("pawn health reached 0 in the storm; death sequence is G8 (not ported)"));
+                    // Through the health module so a fatal tick runs the death sequence (storm damage ignores shields, D6 3).
+                    FGameplayTagContainer StormTags;
+                    StormTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TEXT("DeathCause.Storm")), false));
+                    if (FortAthenaHealth::IsEnabled())
+                        FortAthenaHealth::ApplyDamage(Pawn, Damage, StormTags, nullptr, nullptr, true);
+                    else
+                        Pawn->SetHealth(FMath::Max(0.0f, Pawn->GetHealth() - Damage));
+                    UE_LOG(LogTemp, Display, TEXT("MatchFlow: storm damage %.1f to %s, health %.1f (stand-in)"), Damage, *Pawn->GetName(), Pawn->GetHealth());
                 }
             }
         }

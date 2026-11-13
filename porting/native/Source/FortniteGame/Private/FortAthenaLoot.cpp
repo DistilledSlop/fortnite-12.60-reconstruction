@@ -1,6 +1,12 @@
 #include "FortAthenaLoot.h"
 
 #include "AFortPickupAthena.h"
+#include "AFortInventory.h"
+#include "AFortPlayerPawn.h"
+#include "AFortPlayerController.h"
+#include "FortAthenaInventoryFlow.h"
+#include "UFortWorldItem.h"
+#include "UObject/ScriptMacros.h"
 #include "UFortItemDefinition.h"
 #include "Engine/World.h"
 #include "Misc/CommandLine.h"
@@ -38,15 +44,65 @@ AFortPickupAthena* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVec
 	return Pickup;
 }
 
+namespace
+{
+	// stand-in: immediate collection; original pickup flight, sound, slot/swap and interaction
+	// validation are not recovered. Refuse multi-item and partially fitting pickups.
+	void ExecServerHandlePickup(UObject* Context, FFrame& Stack, RESULT_DECL)
+	{
+		P_GET_OBJECT(AFortPickup, Pickup);
+		P_GET_PROPERTY(FFloatProperty, FlyTime);
+		P_GET_STRUCT(FVector, StartDirection);
+		P_GET_UBOOL(bPlayPickupSound);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		AFortPlayerPawn* Pawn = Cast<AFortPlayerPawn>(Context);
+		AFortPlayerController* Controller = Pawn ? Cast<AFortPlayerController>(Pawn->GetController()) : nullptr;
+		AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
+		if (FortAthenaLoot::IsEnabled() && Pawn && Pawn->HasAuthority() && Inventory && IsValid(Pickup)
+			&& Pickup->GetWorld() == Pawn->GetWorld() && !Pickup->bPickedUp
+			&& Pickup->MultiItemPickupEntries.Num() == 0
+			// stand-in: conservative range until original server pickup validation is recovered.
+			&& FVector::DistSquared(Pawn->GetActorLocation(), Pickup->GetActorLocation()) <= FMath::Square(300.0f))
+		{
+			const FFortItemEntry& Entry = Pickup->PrimaryPickupItemEntry;
+			UFortItemDefinition* Definition = Entry.ItemDefinition;
+			bool bFits = Definition && Entry.Count > 0;
+			if (bFits && Definition->IsStackable())
+			{
+				const int32 MaxStack = Definition->NativeGetMaxStackSize(nullptr);
+				UFortWorldItem* Existing = Inventory->NativeFindWorldItemByDefinition(Definition, true);
+				// GiveItem returns success even when a single stack accepted only part of the count.
+				bFits = MaxStack > 0 && Entry.Count <= MaxStack;
+				if (Existing)
+					bFits = bFits && Entry.Count <= FMath::Max(0, MaxStack - Existing->ItemEntry.Count);
+			}
+			if (bFits)
+			{
+				Pickup->bPickedUp = true;
+				if (FortAthenaInventory::GiveItem(Controller, Definition, Entry.Count, Entry.Level, Entry.LoadedAmmo))
+					Pickup->Destroy();
+				else
+					Pickup->bPickedUp = false;
+			}
+		}
+		P_NATIVE_END;
+	}
+}
+
 void FortAthenaLoot::InstallRpcOverrides()
 {
 	if (!IsEnabled())
 		return;
-	// stand-in: no RPC override is installed until pickup and drop semantics are recovered.
-	static bool bReported = false;
-	if (!bReported)
+	static bool bInstalled = false;
+	if (bInstalled)
+		return;
+	if (UFunction* Function = AFortPlayerPawn::StaticClass()->FindFunctionByName(TEXT("ServerHandlePickup")))
 	{
-		bReported = true;
-		UE_LOG(LogTemp, Warning, TEXT("Loot: table rolling and pickup/drop RPCs are not implemented"));
+		Function->SetNativeFunc(&ExecServerHandlePickup);
+		bInstalled = true;
+		UE_LOG(LogTemp, Display, TEXT("Loot: ServerHandlePickup rebound (limited immediate collection)"));
 	}
+	else
+		UE_LOG(LogTemp, Warning, TEXT("Loot: ServerHandlePickup UFunction missing"));
 }

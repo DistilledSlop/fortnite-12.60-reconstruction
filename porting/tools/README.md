@@ -66,3 +66,78 @@ Copies the cooked package(s) and the transitive hard-import closure (`/Game/...`
 parsed with the stdlib) from `/mnt/vibrato/fortnite-extracted-full/FortniteGame/Content` into
 `generated/linux-stage/LinuxNoEditor/FortniteLinux/Content`. Never overwrites; prints visited/copied/missing, `/Script` modules and bytes.
 `--soft` also follows `/Game/` names in the name map (soft refs). Default `--max` is 3000 packages; large roots (e.g. `Athena_GameMode`) need more.
+
+## Second original client in a play run
+
+Prepare its prefix once, **before** starting the first DXVK client:
+
+```sh
+porting/tools/second_client.sh --prepare
+# Then, while vanilla_play_run.sh is active and its first client is in the frontend:
+porting/tools/second_client.sh porting/generated/runs/<run> --username LocalPlayer2 \
+  --renderer dxvk --actions '0:wait,UI.State.Startup.SubgameSelect,900 20:click,640,592 0:wait,ShouldShowBeginningOfSeasonDialog,600 25:click,1144,473 0:shot'
+```
+
+`FN_DXVK_PREFIX` selects the copy source (default `/tmp/fortnite-dxvk-experiment/prefix`).
+The destination is `porting/generated/wine-prefix-2-dxvk`; copying a busy source is refused.
+`--renderer builtin` selects Wine's D3D implementation. `--actions` defaults to `FN_ACTIONS`.
+Both clients use `client_actions.sh`, including `wait`, `stopif`, and `shot`.
+The helper uses the first client's namespaces/backend, a separate account and Xvfb,
+and PID-scoped Curl/AppES/Oodle patches. It stops when that first client exits.
+Logs are `<run>/client2/{runner.out,client.log}`; screenshots are `<run>/client2/shots/`.
+Run it as the desktop user with passwordless sudo, just like the first runner.
+
+To enable `FN_SECOND_CLIENT=1` automatically, make these additions to
+`vanilla_play_run.sh` (these integration changes are intentionally shown here for the live-test owner).
+Add `second_pid=` to the existing PID initialization; add this inside `cleanup()`:
+
+```sh
+    if [[ -n $second_pid ]]; then sudo -n kill -TERM "$second_pid" 2>/dev/null || true; wait "$second_pid" 2>/dev/null || true; fi
+```
+
+Insert immediately before `wait "$runner_pid"; status=$?; runner_pid=`:
+
+```sh
+if [[ ${FN_SECOND_CLIENT:-0} == 1 ]]; then
+    (
+        first_log="${FN_WINEPREFIX:-$porting/generated/wine-prefix}/drive_c/users/$USER/AppData/Local/FortniteGame/Saved/Logs/FortniteGame.log"
+        while kill -0 "$runner_pid" 2>/dev/null; do
+            if [[ $first_log -nt $out/start.marker ]] && grep -aq 'ShouldShowBeginningOfSeasonDialog' "$first_log"; then
+                exec "$porting/tools/second_client.sh" "$out" \
+                    --username "${FN_SECOND_USERNAME:-LocalPlayer2}" \
+                    --renderer "${FN_SECOND_RENDERER:-${FN_RENDERER:-builtin}}" \
+                    --actions "${FN_SECOND_ACTIONS:-$FN_ACTIONS}"
+            fi
+            sleep 1
+        done
+    ) > "$out/second-client-start.out" 2>&1 & second_pid=$!
+fi
+```
+
+Immediately after that existing `wait` line, add:
+
+```sh
+if [[ -n $second_pid ]]; then wait "$second_pid" || echo 'Second client failed; see client2/runner.out and second-client-start.out'; second_pid=; fi
+```
+
+Use `FN_SERVER_URL_OPTS='?RequiredPlayers=2'` so the match waits for both players;
+`FN_SERVER_ARGS='-RequiredPlayers=2'` also works and overrides the URL value.
+The existing fallback matchmaking gives each ticket its own synthetic session ID,
+but every session advertises `127.0.0.1:7777` and returns the runner's shared network
+key. Independently pressing Play therefore targets the same native server; no
+backend change is needed for that routing. A common backend session ID/roster
+requires registered-server matchmaking. The two-client live join remains unverified.
+
+## Live view of the running client (added 2026-11-13)
+
+    nohup python3 -I porting/tools/live_view.py [--host 0.0.0.0] [--port 8766] \
+        >> porting/generated/agents/live-view/server.log 2>&1 < /dev/null &
+    pkill -f porting/tools/live_view.py      # stop
+
+Open `http://<host>:8766/`. The page lists every running Xvfb display (found with `ps` on each request,
+using its `-auth` file), gallery views at 1 fps / 640 px, and the clicked display at 24 fps (10 fps button).
+Streams stop while the tab is hidden. `/stream/<N>?fps=&scale=` is a raw MJPEG stream of display `:N`;
+`/api/displays` and `/api/captures` show what was found and which ffmpeg captures run.
+One `ffmpeg -f x11grab` runs per (display, fps, scale) only while someone watches, shared by its viewers,
+and stops about 3 s after the last viewer leaves. No frames are written to disk.
+Port 8765 is the progress dashboard (`python3 -m http.server`), so the default here is 8766.

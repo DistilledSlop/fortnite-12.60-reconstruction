@@ -30,6 +30,6 @@ namespace FortAthenaMatchFlow
 }
 
 // Global (non-namespaced) entry points so behaviour .inc snippets can reach them with a block-scope declaration
-// (snippets cannot add #include lines). Drafts: porting/generated/sf-orch/g7-behavior/.
+// (snippets cannot add #include lines). Drafts: porting/generated/agents/g7-behavior/.
 void FortAthenaMatchFlow_ServerAttemptAircraftJump(UFortControllerComponent_Aircraft* Component, const FRotator& ClientRotation);
 void FortAthenaMatchFlow_OnReadyToStartMatch(AFortPlayerController* Controller);

@@ -22,6 +22,8 @@
 // - stand-in: marks behaviours that are stand-ins or re-creations of server logic compiled out of the client exe.
 
 #include "FortAthenaHealth.h"
+#include "UFortAssetManager.h"
+#include "Engine/Engine.h"
 #include "UObject/ScriptMacros.h"
 
 #include "AFortGameModeAthena.h"
@@ -498,7 +500,13 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 		Info.FinisherOrDowner = KillerState ? static_cast<AActor*>(KillerState) : (DamageCauser ? DamageCauser : static_cast<AActor*>(VictimPawn));
 		Info.Downer = nullptr;
 		Info.bDBNO = false;
-		Info.DeathCause = AFortPlayerStateAthena::ToDeathCause(const_cast<FGameplayTagContainer&>(DamageTags), false);
+		// ToDeathCause (0x141a5f1c0 port) reads UFortAssetManager's common game data; the server still runs the engine's
+		// default asset manager, so that call is fatal (run 20261113-bppawn-1). stand-in until the server uses
+		// UFortAssetManager (SERVER_FIRST_PLAN.md 11.3): storm damage -> OutsideSafeZone, anything else -> Unspecified.
+		if (GEngine && Cast<UFortAssetManager>(GEngine->AssetManager))
+			Info.DeathCause = AFortPlayerStateAthena::ToDeathCause(const_cast<FGameplayTagContainer&>(DamageTags), false);
+		else
+			Info.DeathCause = (DamageCauser == nullptr && InstigatedBy == nullptr) ? EDeathCause::OutsideSafeZone : EDeathCause::Unspecified;
 		Info.DeathClassSlot = 0;
 		Info.Distance = (KillerPawn && VictimPawn) ? FVector::Dist(KillerPawn->GetActorLocation(), VictimPawn->GetActorLocation()) : 0.0f;
 		Info.DeathLocation = VictimPawn->GetActorLocation();

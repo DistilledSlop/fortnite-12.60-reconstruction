@@ -15,6 +15,6 @@ namespace FortAthenaLoot
 	AFortPickupAthena* SpawnResolvedPickup(UWorld* World, const FVector& Location,
 		UFortItemDefinition* Definition, int32 Count, int32 Level, int32 LoadedAmmo);
 
-	// No loot RPC is rebound until its complete handling contract is implemented.
+	// Bind the limited immediate-collection pickup RPC; swap, drop and search remain unimplemented.
 	void InstallRpcOverrides();
 }

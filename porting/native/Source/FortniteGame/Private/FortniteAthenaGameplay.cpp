@@ -209,6 +209,24 @@ void AFortGameModeAthena::StartPlay()
         {
             UE_LOG(LogTemp, Warning, TEXT("OriginalClient: failed to load /Game/Athena/Athena_PlayerController.Athena_PlayerController_C"));
         }
+        // The original spawns the PlayerPawn_Athena Blueprint; its CharacterMesh0 carries AnimClass
+        // Fortnite_M_Avg_Player_AnimBlueprint. With the native class the vanilla client built a pawn without an anim
+        // blueprint and the character stood in its reference pose (runs 27-33).
+        // Opt-in (-FortniteBlueprintPawn): spawning it crashed the server in SpawnDefaultPawnFor (run 20261113-pawnbp-1,
+        // SIGSEGV, null read), most likely because the Blueprint expects native default subobjects our constructor-less
+        // generated class does not create. See porting/SERVER_FIRST_PLAN.md, WP K2.
+        if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteBlueprintPawn")))
+        {
+        }
+        else if (UClass* BpPawnClass = LoadClass<APawn>(nullptr, TEXT("/Game/Athena/PlayerPawn_Athena.PlayerPawn_Athena_C")))
+        {
+            DefaultPawnClass = BpPawnClass;
+            UE_LOG(LogTemp, Display, TEXT("OriginalClient: using DefaultPawnClass=%s"), *DefaultPawnClass->GetPathName());
+        }
+        else
+        {
+            UE_LOG(LogTemp, Error, TEXT("OriginalClient: failed to load /Game/Athena/PlayerPawn_Athena.PlayerPawn_Athena_C; the pawn will have no anim blueprint"));
+        }
     }
     Super::StartPlay();
     FortAthenaInventory::InstallRpcOverrides();
@@ -218,6 +236,19 @@ void AFortGameModeAthena::StartPlay()
         FortAthenaHealth::InstallRpcOverrides();
     FortAthenaMatchFlow::InstallRpcOverrides();
     FortAthenaMatchFlow::Start(this);
+    // Debug aid (-FortniteSpawnTestPawn): spawn the PlayerPawn_Athena Blueprint once at start, so its spawn crash can be
+    // reproduced under a debugger without a client.
+    if (FParse::Param(FCommandLine::Get(), TEXT("FortniteSpawnTestPawn")))
+    {
+        if (UClass* TestPawnClass = LoadClass<APawn>(nullptr, TEXT("/Game/Athena/PlayerPawn_Athena.PlayerPawn_Athena_C")))
+        {
+            FActorSpawnParameters Params;
+            Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+            UE_LOG(LogTemp, Display, TEXT("TestPawn: spawning %s"), *TestPawnClass->GetPathName());
+            APawn* TestPawn = GetWorld()->SpawnActor<APawn>(TestPawnClass, FTransform(FVector(0.f, 0.f, 100000.f)), Params);
+            UE_LOG(LogTemp, Display, TEXT("TestPawn: spawned %s"), TestPawn ? *TestPawn->GetName() : TEXT("null"));
+        }
+    }
     if (UWorld* World = GetWorld())
     {
         // Run evidence for gate G6: where each possessed pawn is, so a held input key can be shown to move it.
