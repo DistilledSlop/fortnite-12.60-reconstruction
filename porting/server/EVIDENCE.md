@@ -1552,3 +1552,52 @@ that the property has no other consumer. C output and findings are retained
 in generated/challenge-schedule-contract/. Its task-owned project clone was
 removed after all decompilers were terminal and no clone handles remained,
 freeing 1,549,681,768 bytes; shared projects were untouched.
+
+
+### Season-granted coin collections and hidden fishing quests
+
+AthenaSeason12.SeasonGrantsToEveryone explicitly grants
+Season12_Schedule_Event_CoinCollect and three standalone quests:
+quest_secret_catchflopper, quest_secret_catchfloppereffective and
+quest_secret_catchfloppersmall. They require neither a purchased pass nor a
+new inferred event entitlement. ClientQuestLogin repairs these source grants
+for existing Season 12 profiles. The coin schedule owns ten weekly bundles:
+blue, green and purple collections for weeks 1–10 and gold for odd weeks 1–9,
+35 definitions with 205 distinct cooked objectives. All bundle members are
+GrantWithBundle and start active. Week one is OnScheduleGranted with the raw
+UnlockValue 3 retained; it is not interpreted as a three-day delay. Weeks 2–10
+use DaysSinceEventStart values 18,18,24,31,38,45,52,59,66. The raw schedule has
+no calendar tag or epoch; using configured EventFlag.LobbySeason12 for those
+dated entries is an explicit local mapping. An owned schedule is required.
+
+The three fish objectives each require one qualified ComplexCustom row. They
+retain the original Flopper/FlopperEffective/FlopperSmall target tags and
+FlopperSpawn source tag. All 208 collectible stat rows preserve their cooked
+filters. The trusted gameplay caller must qualify the rows; no raw-event
+filter evaluator or actual native pickup/fishing bridge is claimed here.
+All inspected collectible quest definitions omit reward properties, and the
+coin bundles omit BundleCompletionRewards. Empty BundleLevelRewards references
+are retained as display metadata and do not create loot. This batch therefore
+adds no invented completion XP or cosmetic rewards; pickup-side XP needs
+separate evidence. Absent ObjectiveCompletionCount continues the existing
+local all-objectives policy.
+
+Four integration tests cover actual ClientQuestLogin grants for free and paid
+profiles, season and schedule ownership gates, the shared week-2/week-3 day
+boundary, distinct objective rows, complete-all state, bundle counters,
+malformed-counter rollback/retry, durable receipts after a real profile-service
+restart, standalone fishing completion and unchanged XP. The combined backend
+suite passed **406 tests** in 23.057 seconds. Private log:
+generated/collectible-quest-contract/backend-tests.log. An independent source
+review compared all 38 definitions, ten bundle memberships, schedule entries
+and 208 stat rows to raw property reports and checked 98 package component
+hashes against extracted inputs (source-review.json in the same directory).
+
+Raw reports and the wider candidate classification remain private in
+generated/remaining-season12-quest-inventory/. Peely's three frontend quests
+also have explicit schedule grants, but their Client-event delivery is not yet
+implemented. The filename inventory was not exhaustive: it omitted the three
+fish quests. After adding the 35 coin candidates, 129 of the earlier filename
+candidates remain unregistered; that count is not a final outstanding-quest
+count. The backend registry now contains 321 unique definitions in eleven broad
+groups. Native challenge-list presentation remains a separate open requirement.

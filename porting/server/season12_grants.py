@@ -3,6 +3,8 @@
 Other entries in that source are not implemented by this table.
 """
 
+from season12_collectible_data import FISH_QUESTS
+
 SOURCE_PACKAGE = 'FortniteGame/Content/Athena/Items/Seasons/AthenaSeason12'
 SOURCE_SHA256 = {
     'uasset': '29edbcf3d814c299651a2f79c65353d7656e32fb52603b6e7d179d21db004e47',
@@ -15,12 +17,13 @@ SUPPORTED_GRANTS_TO_EVERYONE = (
     ('ChallengeBundleSchedule:Season12_Mission_Schedule', 1),
     (MAYA_GRAPH, 1),
     ('ChallengeBundleSchedule:Season12_ABChallenges_Schedule', 1),
+    ('ChallengeBundleSchedule:Season12_Schedule_Event_CoinCollect', 1),
     ('Quest:quest_AB_skulldude_grant', 1),
     ('Quest:quest_AB_tntina_grant', 1),
     ('Quest:quest_AB_meowscles_grant', 1),
     ('Quest:quest_AB_adventuregirl_grant', 1),
     ('Quest:quest_AB_midas_grant', 1),
-)
+) + tuple(('Quest:' + name, 1) for name in FISH_QUESTS)
 
 
 def initial_grant_attributes(template):
@@ -33,6 +36,12 @@ def initial_grant_attributes(template):
     graph state and the separately granted Battle Pass purchase token.
     """
     attributes = {'item_seen': False}
+    fish = FISH_QUESTS.get(template.split(':', 1)[-1].casefold()) if template.casefold().startswith('quest:') else None
+    if fish is not None:
+        attributes.update({'quest_state': 'Active', 'level': -1,
+                           'challenge_bundle_id': None})
+        attributes.update({'completion_' + objective.casefold(): 0
+                           for objective, _, _ in fish['objectives']})
     faction_objectives = {
         'quest:quest_ab_skulldude_grant': 'season12_cumulative_skulldude_token',
         'quest:quest_ab_tntina_grant': 'season12_cumulative_tntina_token',

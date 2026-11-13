@@ -43,6 +43,7 @@ from season12_remaining_faction_data import (QUESTS as REMAINING_FACTION_QUESTS,
 from season12_storm_agency_data import STORM_AGENCY_QUESTS, STORM_AGENCY_BUNDLES, STORM_AGENCY_SCHEDULE
 from season12_oro_data import ORO_QUESTS, ORO_BUNDLES, ORO_SCHEDULE
 from season12_superlevel_data import SUPERLEVEL_QUESTS, SUPERLEVEL_BUNDLES, SUPERLEVEL_SCHEDULE
+from season12_collectible_data import COIN_QUESTS, FISH_QUESTS, COIN_BUNDLES, COIN_SCHEDULE
 from superlevel_service import SUPERLEVEL_VARIANTS, reconcile_level
 from season12_faction_variant_data import FACTION_VARIANTS, AUTO_EQUIP_VARIANTS
 from daily_quest_service import DailyService
@@ -65,8 +66,8 @@ FACTION_GRANTS = {
 LIMITED_EVENT_BUNDLES = {**STORM_AGENCY_BUNDLES, **ORO_BUNDLES}
 LIMITED_EVENT_SCHEDULES = {("challengebundleschedule:" + schedule["name"]).casefold(): schedule
                            for schedule in (STORM_AGENCY_SCHEDULE, ORO_SCHEDULE)}
-EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS, **WEEKLY_QUESTS, **LOCATION_QUESTS, **BRUTUS_QUESTS, **TNTINA_QUESTS, **REMAINING_FACTION_QUESTS, **STORM_AGENCY_QUESTS, **ORO_QUESTS, **SUPERLEVEL_QUESTS}
-EVENT_BUNDLES = {**DONUT_BUNDLES, **WEEKLY_BUNDLES, **LOCATION_BUNDLES, **FACTION_BUNDLES, **LIMITED_EVENT_BUNDLES, **SUPERLEVEL_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
+EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS, **WEEKLY_QUESTS, **LOCATION_QUESTS, **BRUTUS_QUESTS, **TNTINA_QUESTS, **REMAINING_FACTION_QUESTS, **STORM_AGENCY_QUESTS, **ORO_QUESTS, **SUPERLEVEL_QUESTS, **COIN_QUESTS, **FISH_QUESTS}
+EVENT_BUNDLES = {**DONUT_BUNDLES, **WEEKLY_BUNDLES, **LOCATION_BUNDLES, **FACTION_BUNDLES, **LIMITED_EVENT_BUNDLES, **SUPERLEVEL_BUNDLES, **COIN_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
 ACQUISITION_EVENTS = {'item_acquire_brutus_token', 'item_acquire_tntina_token'} | {
     f['acquisition_event'] for f in REMAINING_FACTIONS.values()}
 
@@ -203,7 +204,7 @@ class QuestService:
         # Original GetAchievedCount/GetPercentageComplete read this separate
         # attribute, not num_quests_completed. Single-stage bundles count
         # claimed QuestInfos; Location Domination uses terminal stages below.
-        if name not in WEEKLY_BUNDLES and name not in LOCATION_BUNDLES and name not in LIMITED_EVENT_BUNDLES and name not in SUPERLEVEL_BUNDLES and name != 'QuestBundle_Styles_PaperDoll':
+        if name not in WEEKLY_BUNDLES and name not in LOCATION_BUNDLES and name not in LIMITED_EVENT_BUNDLES and name not in SUPERLEVEL_BUNDLES and name not in COIN_BUNDLES and name != 'QuestBundle_Styles_PaperDoll':
             return
         roots = {quest.casefold() for quest, _, _, _ in EVENT_BUNDLES[name]['quest_infos']}
         if name in LOCATION_BUNDLES:
@@ -232,8 +233,13 @@ class QuestService:
         if include_daily:
             self.daily.login(ctx)
         self.consume_variants(tx)
-        # Explicit local opt-in: the original grant source and epoch are unknown.
         if tx.profile['stats']['attributes'].get('season_num') == 12:
+            # These standalone quests are explicit SeasonGrantsToEveryone, with
+            # no bundle, paid-pass requirement or calendar gate in that source.
+            for name in FISH_QUESTS:
+                self._quest(tx, name, None)
+            # Explicit local opt-in: these limited events' original grant
+            # sources and epochs are unknown.
             for schedule in LIMITED_EVENT_SCHEDULES.values():
                 if self._date_reached(schedule['calendar_event_tag'], 0):
                     self._grant(tx, 'ChallengeBundleSchedule:' + schedule['name'], {})
@@ -249,6 +255,12 @@ class QuestService:
             elif template == ('challengebundleschedule:' + SUPERLEVEL_SCHEDULE['name']).casefold():
                 for bundle, grant_type, _ in SUPERLEVEL_SCHEDULE['entries']:
                     if grant_type == 'OnScheduleGranted':
+                        self._bundle(tx, bundle, schedule_id)
+            elif template == ('challengebundleschedule:' + COIN_SCHEDULE['name']).casefold():
+                for bundle, grant_type, days in COIN_SCHEDULE['entries']:
+                    if (grant_type == 'OnScheduleGranted' or
+                            (grant_type == 'DaysSinceEventStart' and
+                             self._date_reached(COIN_SCHEDULE['calendar_event_tag'], days))):
                         self._bundle(tx, bundle, schedule_id)
             elif template in LIMITED_EVENT_SCHEDULES:
                 for bundle, grant_type, _ in LIMITED_EVENT_SCHEDULES[template]['entries']:
@@ -477,7 +489,7 @@ class QuestService:
             # also drives completion reward thresholds, an inferred local policy.
             tx.set_item_attr(bundle_id, 'num_quests_completed', count + 1)
         if bundle_id in tx.profile['items']:
-            bundle_name = next((key for key in {**WEEKLY_BUNDLES, **LOCATION_BUNDLES, **LIMITED_EVENT_BUNDLES, **SUPERLEVEL_BUNDLES} if
+            bundle_name = next((key for key in {**WEEKLY_BUNDLES, **LOCATION_BUNDLES, **LIMITED_EVENT_BUNDLES, **SUPERLEVEL_BUNDLES, **COIN_BUNDLES} if
                                 tx.item(bundle_id)['templateId'].casefold() == ('ChallengeBundle:' + key).casefold()), None)
             if bundle_name:
                 self._sync_bundle_progress(tx, bundle_name, bundle_id)
