@@ -1,0 +1,72 @@
+--- a/Engine/Source/Runtime/Engine/Private/RepLayout.cpp
++++ b/Engine/Source/Runtime/Engine/Private/RepLayout.cpp
+@@ -38,6 +38,15 @@
+ DEFINE_LOG_CATEGORY_STATIC(LogRepProperties, Warning, Warning);
+ #endif
+ 
++static int32 GFortASCRepTrace = 0;
++static FAutoConsoleVariableRef CVarFortASCRepTrace(TEXT("net.FortASCRepTrace"), GFortASCRepTrace, TEXT("Log ASC ordinary property replication bit ranges for wire diagnosis."));
++
++static bool FortASCRepTraceEnabled()
++{
++	static const bool bCommandLine = FParse::Param(FCommandLine::Get(), TEXT("FortniteTraceASCReplication"));
++	return GFortASCRepTrace != 0 || bCommandLine;
++}
++
+ int32 GDoPropertyChecksum = 0;
+ static FAutoConsoleVariableRef CVarDoPropertyChecksum(TEXT("net.DoPropertyChecksum"), GDoPropertyChecksum, TEXT(""));
+ 
+@@ -2371,6 +2374,8 @@
+ 	{
+ 		const FRepLayoutCmd& Cmd = Cmds[HandleIterator.CmdIndex];
+ 		const FRepParentCmd& ParentCmd = Parents[Cmd.ParentIndex];
++		const bool bTraceASC = FortASCRepTraceEnabled() && Owner->GetName().Contains(TEXT("FortAbilitySystemComponent"));
++		const int32 TraceStartBits = Writer.GetNumBits();
+ 
+ 		UE_LOG(LogRepProperties, VeryVerbose, TEXT("SendProperties_r: Parent=%d, Cmd=%d, ArrayIndex=%d"), Cmd.ParentIndex, HandleIterator.CmdIndex, HandleIterator.ArrayIndex);
+ 		
+@@ -2413,6 +2418,10 @@
+ 			HandleIterator.ChangelistIterator.ChangedIndex++;
+ 
+ 			WritePropertyHandle(Writer, 0, bDoChecksum);		// Signify end of dynamic array
++			if (bTraceASC)
++			{
++				UE_LOG(LogRep, Warning, TEXT("ASCRepTrace array Owner=%s Parent=%s Property=%s Handle=%u Cmd=%d Depth=%d Index=%d Start=%d End=%d"), *Owner->GetName(), *ParentCmd.Property->GetName(), *Cmd.Property->GetName(), HandleIterator.Handle, HandleIterator.CmdIndex, ArrayDepth, HandleIterator.ArrayIndex, TraceStartBits, Writer.GetNumBits());
++			}
+ 			continue;
+ 		}
+ 
+@@ -2506,6 +2515,10 @@
+ #endif
+ 		}
+ 
++		if (bTraceASC)
++		{
++			UE_LOG(LogRep, Warning, TEXT("ASCRepTrace item Owner=%s Parent=%s Property=%s Handle=%u Cmd=%d Depth=%d Index=%d Start=%d End=%d Shared=%d"), *Owner->GetName(), *ParentCmd.Property->GetName(), *Cmd.Property->GetName(), HandleIterator.Handle, HandleIterator.CmdIndex, ArrayDepth, HandleIterator.ArrayIndex, TraceStartBits, Writer.GetNumBits(), SharedPropInfo != nullptr);
++		}
+ #if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
+ 		if (GDoReplicationContextString> 0)
+ 		{
+@@ -2549,6 +2562,11 @@
+ 
+ 	UE_LOG(LogRepProperties, VeryVerbose, TEXT("SendProperties: Owner=%s, LastChangelistIndex=%d"), *Owner->GetPathName(), RepState->LastChangelistIndex);
+ 
++	const bool bTraceASC = FortASCRepTraceEnabled() && Owner->GetName().Contains(TEXT("FortAbilitySystemComponent"));
++	if (bTraceASC)
++	{
++		UE_LOG(LogRep, Warning, TEXT("ASCRepTrace begin Owner=%s PackageMap=%p Start=%d Commands=%d"), *Owner->GetName(), Writer.PackageMap, Writer.GetNumBits(), Cmds.Num());
++	}
+ 	FChangelistIterator ChangelistIterator(Changed, 0);
+ 	FRepHandleIterator HandleIterator(Owner, ChangelistIterator, Cmds, BaseHandleToCmdIndex, 0, 1, 0, Cmds.Num() - 1);
+ 
+@@ -2563,6 +2581,10 @@
+ 	{
+ 		Mark.Pop(Writer);
+ 	}
++	if (bTraceASC)
++	{
++		UE_LOG(LogRep, Warning, TEXT("ASCRepTrace end Owner=%s PackageMap=%p End=%d"), *Owner->GetName(), Writer.PackageMap, Writer.GetNumBits());
++	}
+ }
+ 
+ static FORCEINLINE void WritePropertyHandle_BackwardsCompatible(

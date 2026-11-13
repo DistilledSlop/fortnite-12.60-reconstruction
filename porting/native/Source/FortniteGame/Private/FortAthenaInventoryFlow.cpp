@@ -15,6 +15,7 @@
 //   Wall, Floor, Stair_W, RoofS (1 each), EditTool (1), WoodItemData (0).
 
 #include "FortAthenaInventoryFlow.h"
+#include "FortAthenaCombatEquip.h"
 #include "EngineUtils.h"
 #include "UObject/ScriptMacros.h"
 
@@ -30,6 +31,9 @@
 #include "FItemAndCount.h"
 #include "UAthenaPickaxeItemDefinition.h"
 #include "UFortAbilitySystemComponent.h"
+#include "UFortAbilitySet.h"
+#include "FortAssets.h"
+#include "FortDelayedObjectLoader.h"
 #include "UFortGameplayAbility.h"
 #include "UFortItemDefinition.h"
 #include "UFortWeaponItemDefinition.h"
@@ -129,35 +133,37 @@ namespace
 		return LoadDefinition(GDefaultPickaxePath);
 	}
 
-	// stand-in: weapon abilities. The original grants them from the weapon's virtual at +0x760 when it is equipped. Only
-	// attempted with -FortniteInventoryAbilities because it loads ability Blueprints on the spawn path and the ability
-	// system component must already have its actor info initialised (not verified).
-	void GrantWeaponAbilities(AFortPlayerController* Controller, AFortPawn* Pawn, AFortWeapon* Weapon, UFortWeaponItemDefinition* Definition, int32 Level)
+	void GrantWeaponAbilities(AFortPlayerController* Controller, AFortPawn* Pawn, AFortWeapon* Weapon, UFortWeaponItemDefinition* Definition, bool bAuditFromTick)
 	{
-		if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteInventoryAbilities")))
+		if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteInventoryAbilities"))) return;
+		AFortPlayerState* PlayerState = Controller ? Cast<AFortPlayerState>(Controller->PlayerState) : nullptr;
+		if (!PlayerState || !Pawn || !Weapon || !Definition) return;
+		UFortAbilitySet* EquippedSet = nullptr;
+		if (!Definition->EquippedAbilitySet.IsNull())
 		{
-			return;
+			EquippedSet = Definition->EquippedAbilitySet.Get();
+			if (!EquippedSet) EquippedSet = Cast<UFortAbilitySet>(FortLoadDelayedObject(Definition->EquippedAbilitySet.ToSoftObjectPath(), true));
+			FFortAssets::Get().TrackAsset(EquippedSet);
+			if (!EquippedSet) return; // retry after the soft asset becomes loadable
 		}
-		AFortPlayerState* PlayerState = Cast<AFortPlayerState>(Controller->PlayerState);
-		UAbilitySystemComponent* AbilitySystem = PlayerState ? PlayerState->AbilitySystemComponent : nullptr;
-		if (!AbilitySystem)
+		TArray<FortAthenaCombatEquip::FGrant> Grants;
+		auto Add = [&Grants](const TSubclassOf<UFortGameplayAbility>& Ability, int32 Slot, bool bConfigured) -> bool
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Inventory: no ability system component on the player state; weapon abilities for %s not granted"), *Definition->GetName());
-			return;
-		}
-		const TSubclassOf<UFortGameplayAbility> Abilities[] = {
-			Definition->GetPrimaryFireAbility(), Definition->GetSecondaryFireAbility(),
-			Definition->GetReloadAbility(), Definition->GetOnHitAbility() };
-		int32 Granted = 0;
-		for (const TSubclassOf<UFortGameplayAbility>& Ability : Abilities)
-		{
-			if (UClass* AbilityClass = Ability.Get())
-			{
-				AbilitySystem->GiveAbility(FGameplayAbilitySpec(TSubclassOf<UGameplayAbility>(AbilityClass), Level, INDEX_NONE, Weapon));
-				++Granted;
-			}
-		}
-		UE_LOG(LogTemp, Display, TEXT("Inventory: granted %d weapon abilities for %s"), Granted, *Definition->GetName());
+			if (!Ability) return !bConfigured;
+			FortAthenaCombatEquip::FGrant Grant;
+			Grant.Ability = Ability; Grant.Slot = Slot; Grants.Add(Grant); return true;
+		};
+		bool bResolved = true;
+		bResolved &= Add(Definition->GetPrimaryFireAbility(), 0, !Definition->PrimaryFireAbility.IsNull());
+		bResolved &= Add(Definition->GetSecondaryFireAbility(), 1, !Definition->SecondaryFireAbility.IsNull());
+		bResolved &= Add(Definition->GetReloadAbility(), 2, !Definition->ReloadAbility.IsNull());
+		bResolved &= Add(Definition->GetOnHitAbility(), 3, !Definition->OnHitAbility.IsNull());
+		const auto Equipped = Definition->GetEquippedAbilities();
+		int32 Expected = 0;
+		for (const auto& SoftClass : Definition->EquippedAbilities) if (!SoftClass.IsNull()) ++Expected;
+		bResolved &= Equipped.Num() == Expected;
+		for (int32 I = 0; I < Equipped.Num(); ++I) bResolved &= Add(Equipped[I], I + 4, true);
+		if (bResolved) FortAthenaCombatEquip::EnsureGrants(PlayerState, Pawn, Weapon, Grants, EquippedSet, bAuditFromTick);
 	}
 
 	void SetCurrentWeapon(AFortPawn* Pawn, AFortWeapon* Weapon)
@@ -166,6 +172,11 @@ namespace
 		{
 			return;
 		}
+		AFortWeapon* OldWeapon = Pawn->CurrentWeapon;
+		if (FParse::Param(FCommandLine::Get(), TEXT("FortniteInventoryAbilities")) &&
+			!FortAthenaCombatEquip::OnUnequip(OldWeapon)) return;
+		// ClearAbility can re-enter inventory code; do not overwrite its equip.
+		if (Pawn->CurrentWeapon != OldWeapon) return;
 		// stand-in: the original goes through pawn virtual +0xc58 / 0x142a16c90 (holster the old weapon, equip animation).
 		// Here only the replicated pointer changes; the client's OnRep_CurrentWeapon does the visible swap.
 		Pawn->PreviousWeapon = Pawn->CurrentWeapon;
@@ -201,6 +212,7 @@ namespace
 			if (Existing && !Existing->IsPendingKill() && Existing->ItemEntryGuid == Guid)
 			{
 				SetCurrentWeapon(Pawn, Existing);
+				if (Pawn->CurrentWeapon == Existing) GrantWeaponAbilities(Controller, Pawn, Existing, Definition, false);
 				UE_LOG(LogTemp, Display, TEXT("Inventory: re-equipped %s (%s) on %s"), *Definition->GetName(), *Guid.ToString(), *Pawn->GetName());
 				return Existing;
 			}
@@ -233,8 +245,8 @@ namespace
 		Weapon->ItemEntryGuid = Guid;
 		Weapon->WeaponLevel = Item->ItemEntry.Level;
 		Pawn->CurrentWeaponList.Insert(Weapon, 0);
-		GrantWeaponAbilities(Controller, Pawn, Weapon, Definition, Item->ItemEntry.Level);
 		SetCurrentWeapon(Pawn, Weapon);
+		if (Pawn->CurrentWeapon == Weapon) GrantWeaponAbilities(Controller, Pawn, Weapon, Definition, false);
 		UE_LOG(LogTemp, Display, TEXT("Inventory: equipped %s (%s) as %s on %s"), *Definition->GetName(), *Guid.ToString(), *WeaponClass->GetName(), *Pawn->GetName());
 		return Weapon;
 	}
@@ -463,6 +475,13 @@ int32 FortAthenaInventory::RemoveItem(AFortPlayerController* Controller, const F
 	}
 	else
 	{
+		if (AFortPawn* Pawn = GetControllerPawn(Controller))
+		{
+			const TArray<AFortWeapon*> Weapons = Pawn->CurrentWeaponList;
+			for (AFortWeapon* Weapon : Weapons)
+				if (Weapon && Weapon->ItemEntryGuid == ItemGuid)
+					FortAthenaCombatEquip::RemoveWeapon(Weapon);
+		}
 		Inventory->Inventory.NativeEntriesByGuid.Remove(ItemGuid);
 		for (int32 Index = 0; Index < Inventory->Inventory.ReplicatedEntries.Num(); ++Index)
 		{
@@ -510,6 +529,10 @@ void FortAthenaInventory::Tick(UWorld* World)
 {
 	if (!IsEnabled() || !World)
 		return;
+	FortAthenaCombatEquip::Prune();
+	// Resolution failures retry at most once per second per current weapon.
+	static TMap<TWeakObjectPtr<AFortWeapon>, double> NextAudit;
+	for (auto It = NextAudit.CreateIterator(); It; ++It) if (!It.Key().IsValid()) It.RemoveCurrent();
 	auto& Sent = ClientEquipped();
 	for (auto It = Sent.CreateIterator(); It; ++It)
 		if (!It.Key().IsValid())
@@ -518,6 +541,14 @@ void FortAthenaInventory::Tick(UWorld* World)
 	{
 		AFortPawn* Pawn = *It;
 		AFortWeapon* Weapon = Pawn->CurrentWeapon;
+		if (Weapon && Pawn->HasAuthority() && World->GetTimeSeconds() >= NextAudit.FindOrAdd(Weapon))
+		{
+			NextAudit.FindOrAdd(Weapon) = World->GetTimeSeconds() + 1.0;
+			AFortPlayerController* Controller = Cast<AFortPlayerController>(Pawn->GetController());
+			UFortWorldItem* Item = Controller && Controller->WorldInventory ? FindItemByGuid(Controller->WorldInventory, Weapon->ItemEntryGuid) : nullptr;
+			UFortWeaponItemDefinition* Definition = Item ? Cast<UFortWeaponItemDefinition>(Item->ItemEntry.ItemDefinition) : nullptr;
+			if (Definition) GrantWeaponAbilities(Controller, Pawn, Weapon, Definition, true);
+		}
 		const ACharacter* Character = Cast<ACharacter>(Pawn);
 		const UCharacterMovementComponent* Movement = Character ? Character->GetCharacterMovement() : nullptr;
 		if (!Weapon || !Pawn->HasAuthority() || !Pawn->IsPlayerControlled() || !Movement

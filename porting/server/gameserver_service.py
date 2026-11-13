@@ -3,7 +3,9 @@ import base64
 import hmac
 import os
 import secrets
+import sqlite3
 import threading
+from contextlib import closing
 
 from api_common import ApiError, Err
 
@@ -27,6 +29,13 @@ class GameServerService:
         self._secret = secret.encode('utf-8') if secret else None
         self._lock = threading.RLock()
         self._servers = {}
+        self._database = getattr(profiles, '_database', None)
+        self._participants = set()
+        if self._database is not None:
+            with closing(sqlite3.connect(self._database)) as db, db:
+                db.execute("CREATE TABLE IF NOT EXISTS match_participants ("
+                           "session_id TEXT NOT NULL, account_id TEXT NOT NULL, "
+                           "playlist TEXT NOT NULL, PRIMARY KEY (session_id, account_id, playlist))")
 
     def authorize(self, req):
         if self._secret is None:
@@ -123,9 +132,27 @@ class GameServerService:
                 newly_occupied = [p for p in added if p not in connected]
                 if self._occupied(server) + len(newly_occupied) > server['maxPlayers']:
                     continue
+                # Reservation is the existing trusted admission decision, not proof
+                # of a network connection. Persist before publishing the roster.
+                records = [(server['id'], p, playlist.casefold()) for p in dict.fromkeys(players)]
+                if self._database is None:
+                    self._participants.update(records)
+                else:
+                    with closing(sqlite3.connect(self._database)) as db, db:
+                        db.executemany("INSERT OR IGNORE INTO match_participants VALUES (?,?,?)", records)
                 server['players'].extend(added)
                 return server['id']
         return None
+
+    def result_participant(self, session_id, account_id, playlist):
+        """Check immutable reservation history; never grants live admission."""
+        record = (session_id, account_id, playlist.casefold())
+        if self._database is None:
+            with self._lock:
+                return record in self._participants
+        with closing(sqlite3.connect(self._database)) as db:
+            return db.execute("SELECT 1 FROM match_participants WHERE session_id=? "
+                              "AND account_id=? AND playlist=?", record).fetchone() is not None
 
     def session(self, session_id):
         s = self.get_session(session_id)
@@ -154,7 +181,22 @@ class GameServerService:
             key = base64.b64encode(s['key']).decode('ascii')
         return 200, {'accountId': account_id, 'sessionId': session_id, 'key': key}
 
+    def check_admission(self, req, session_id):
+        """Authenticated server lookup; membership is not authentication of a client."""
+        self.authorize(req)
+        account = req.json_object().get('accountId')
+        if not isinstance(account, str) or not account.strip() or len(account) > 255:
+            _invalid('Invalid account ID.')
+        with self._lock:
+            server = self._servers.get(session_id)
+            if server is None or not self._live(server) or account not in server['players']:
+                raise ApiError(404, Err.NOT_FOUND, 'Admission not found.')
+        return 204, None
+
     def register(self, router):
+        router.add('POST', r'/local/gameserver/([^/]+)/admission',
+                   lambda req, match: self.check_admission(req, match.group(1)),
+                   name='gameserver.admission', status='guess')
         router.add('POST', r'/local/gameserver/register', lambda req, match: self.register_server(req),
                    name='gameserver.register', status='guess')
         router.add('POST', r'/local/gameserver/([^/]+)/state',

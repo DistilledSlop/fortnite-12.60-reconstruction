@@ -39,6 +39,12 @@ namespace FortAthenaHealth
 	// Stand-in RPC overrides (e.g. ServerSuicide, ServerResetAbilitySystemComponent) rebound via UFunction::SetNativeFunc.
 	void InstallRpcOverrides();
 
+	// Freeze the starting roster and participation clock at the reconstructed aircraft boundary.
+	void BeginMatch(AFortGameModeAthena* GameMode);
+	AFortPlayerControllerAthena* GetSoleSurvivor(AFortGameModeAthena* GameMode);
+	void FinalizeSurvival(AFortGameModeAthena* GameMode, AFortPlayerStateAthena* PlayerState);
+	void SendPartialTeamStats(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller, int32 Place);
+
 	// Returns the current count of alive player controllers.
 	int32 GetAlivePlayerCount();
 }

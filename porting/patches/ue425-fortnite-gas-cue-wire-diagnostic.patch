@@ -1,0 +1,150 @@
+--- a/Engine/Source/Runtime/Engine/Private/RepLayout.cpp
++++ b/Engine/Source/Runtime/Engine/Private/RepLayout.cpp
+@@ -17,6 +17,8 @@
+ #include "HAL/LowLevelMemTracker.h"
+ #include "Misc/NetworkVersion.h"
+ #include "Misc/App.h"
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
+ #include "Algo/Sort.h"
+ #include "Net/NetworkGranularMemoryLogging.h"
+ #include "Serialization/ArchiveCountMem.h"
+@@ -5795,6 +5797,9 @@
+ 	}	
+ }
+ 
++// Bounded diagnostic scope; never changes RPC contents or serialization policy.
++static thread_local bool GFortTraceCueWire = false;
++
+ void FRepLayout::SerializeProperties_r(
+ 	FBitArchive& Ar, 
+ 	UPackageMap* Map,
+@@ -5810,6 +5815,7 @@
+ 	for (int32 CmdIndex = CmdStart; CmdIndex < CmdEnd && !Ar.IsError(); CmdIndex++)
+ 	{
+ 		const FRepLayoutCmd& Cmd = Cmds[CmdIndex];
++		const uint32 FortStartBit = GFortTraceCueWire ? GetBitStreamPositionForNetTrace(Ar) : 0;
+ 
+ 		check(Cmd.Type != ERepLayoutCmdType::Return);
+ 
+@@ -5818,6 +5824,12 @@
+ 			UE_NET_TRACE_DYNAMIC_NAME_SCOPE(Cmd.Property->GetFName(), Ar, Collector, ENetTraceVerbosity::Trace);
+ 
+ 			SerializeProperties_DynamicArray_r(Ar, Map, CmdIndex, Data + Cmd, bHasUnmapped, ArrayDepth + 1, SharedInfo, Collector);
++			if (GFortTraceCueWire)
++			{
++				const FScriptArray* FortArray = reinterpret_cast<const FScriptArray*>((Data + Cmd).Data);
++				UE_LOG(LogNet, Warning, TEXT("FortCueWire Array cmd=%d depth=%d index=%d field=%s count=%d bits=[%u,%u) error=%d"),
++					CmdIndex, ArrayDepth, ArrayIndex, *Cmd.Property->GetPathName(), FortArray->Num(), FortStartBit, GetBitStreamPositionForNetTrace(Ar), Ar.IsError());
++			}
+ 			CmdIndex = Cmd.EndCmd - 1;		// The -1 to handle the ++ in the for loop
+ 			continue;
+ 		}
+@@ -5884,6 +5896,14 @@
+ 			{
+ 				bHasUnmapped = true;
+ 			}
++		}
++
++		if (GFortTraceCueWire)
++		{
++			FString FortValue;
++			Cmd.Property->ExportTextItem(FortValue, (Data + Cmd).Data, nullptr, nullptr, 0);
++			UE_LOG(LogNet, Warning, TEXT("FortCueWire Field cmd=%d depth=%d index=%d field=%s bits=[%u,%u) shared=%d error=%d value=%s"),
++				CmdIndex, ArrayDepth, ArrayIndex, *Cmd.Property->GetPathName(), FortStartBit, GetBitStreamPositionForNetTrace(Ar), SharedPropInfo != nullptr, Ar.IsError(), *FortValue.Left(2048));
+ 		}
+ 
+ #if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
+@@ -6132,6 +6152,16 @@
+ 	const FConstRepObjectDataBuffer Data) const
+ {
+ 	check(Function == Owner);
++	static int32 FortCapturedRPCs = 0;
++	const bool bFortTrace = Function->GetFName() == FName(TEXT("NetMulticast_InvokeGameplayCueExecuted_FromSpec")) &&
++		FParse::Param(FCommandLine::Get(), TEXT("FortniteTraceGameplayCueWire")) && FortCapturedRPCs < 4;
++	TGuardValue<bool> FortTraceScope(GFortTraceCueWire, bFortTrace);
++	const int64 FortRPCStartBit = Writer.GetNumBits();
++	if (bFortTrace)
++	{
++		++FortCapturedRPCs;
++		UE_LOG(LogNet, Warning, TEXT("FortCueWire Begin rpc=%d function=%s start=%lld netarchive=%d parents=%d"), FortCapturedRPCs, *Function->GetPathName(), FortRPCStartBit, Writer.IsNetArchive(), Parents.Num());
++	}
+ 
+ 	if (!IsEmpty())
+ 	{
+@@ -6175,6 +6205,10 @@
+ 					Writer.WriteBit(Send ? 1 : 0);
+ 				}
+ 
++				if (bFortTrace)
++				{
++					UE_LOG(LogNet, Warning, TEXT("FortCueWire Parent field=%s send=%d payloadstart=%lld cmdstart=%d cmdend=%d"), *Parents[i].Property->GetPathName(), Send, Writer.GetNumBits(), Parents[i].CmdStart, Parents[i].CmdEnd);
++				}
+ 				if (Send)
+ 				{
+ 					bool bHasUnmapped = false;
+@@ -6183,6 +6217,18 @@
+ 			}
+ 		}	
+ 	}
++	if (bFortTrace)
++	{
++		const int64 FortEndBit = Writer.GetNumBits();
++		FString FortHex;
++		const int64 FortBytes = (FortEndBit + 7) / 8;
++		for (int64 Byte = 0; Byte < FMath::Min<int64>(FortBytes, 4096); ++Byte)
++		{
++			FortHex += FString::Printf(TEXT("%02x"), Writer.GetData()[Byte]);
++		}
++		UE_LOG(LogNet, Warning, TEXT("FortCueWire End rpc=%d bits=[%lld,%lld) error=%d writerhex=%s"), FortCapturedRPCs, FortRPCStartBit, FortEndBit, Writer.IsError(), *FortHex);
++	}
++
+ }
+ 
+ void FRepLayout::ReceivePropertiesForRPC(
+--- a/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPathProperty.cpp
++++ b/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPathProperty.cpp
+@@ -80,6 +80,15 @@
+ {
+ 	FFieldPath* FieldPtr = GetPropertyValuePtr(Value);
+ 	FArchive& Ar = Slot.GetUnderlyingArchive();
++	static int32 FortFieldPathLogs = 0;
++	if (FParse::Param(FCommandLine::Get(), TEXT("FortniteTraceGameplayCueWire")) &&
++		Ar.IsSaving() && GetFName() == FName(TEXT("Attribute")) && FortFieldPathLogs < 32)
++	{
++		++FortFieldPathLogs;
++		UE_LOG(LogClass, Warning, TEXT("FortCueWire FieldPath field=%s saving=%d netarchive=%d legacybranch=%d shortcount=%d owner=%s path=%s"),
++			*GetPathName(), Ar.IsSaving(), Ar.IsNetArchive(), Ar.IsNetArchive() && FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")),
++			FieldPtr->Path.Num(), *GetPathNameSafe(FieldPtr->ResolvedOwner.Get()), *FieldPtr->ToString());
++	}
+ 	if (Ar.IsNetArchive() && FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")))
+ 	{
+ 		// Client 0x142e70500 writes only the full innermost-to-package FName
+--- a/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Private/GameplayEffectTypes.cpp
++++ b/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Private/GameplayEffectTypes.cpp
+@@ -10,6 +10,9 @@
+ #include "AbilitySystemComponent.h"
+ #include "AbilitySystemInterface.h"
+ #include "Engine/PackageMapClient.h"
++#include "GameplayTagsManager.h"
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
+ 
+ 
+ #define LOCTEXT_NAMESPACE "GameplayEffectTypes"
+@@ -329,6 +332,15 @@
+ 
+ 		void* ContainerPtr = Data.Get();
+ 		UScriptStruct* ScriptStruct = Data->GetScriptStruct();
++		static int32 FortContextLogs = 0;
++		if (Ar.IsSaving() && FParse::Param(FCommandLine::Get(), TEXT("FortniteTraceGameplayCueWire")) && FortContextLogs < 64)
++		{
++			++FortContextLogs;
++			const UGameplayTagsManager& FortTags = UGameplayTagsManager::Get();
++			UE_LOG(LogTemp, Warning, TEXT("FortCueWire Context type=%s netarchive=%d instigator=%s causer=%s source=%s fasttags=%d tagcountbits=%d firstsegment=%d truebits=%d"),
++				*ScriptStruct->GetPathName(), Ar.IsNetArchive(), *GetPathNameSafe(Data->GetInstigator()), *GetPathNameSafe(Data->GetEffectCauser()), *GetPathNameSafe(Data->GetSourceObject()),
++				FortTags.ShouldUseFastReplication(), FortTags.NumBitsForContainerSize, FortTags.NetIndexFirstBitSegment, FortTags.NetIndexTrueBitNum);
++		}
+ 
+ 		if (ScriptStruct->StructFlags & STRUCT_NetSerializeNative)
+ 		{

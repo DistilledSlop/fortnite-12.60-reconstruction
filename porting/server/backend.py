@@ -24,6 +24,8 @@ Services (each module registers its own routes and keeps its own state):
 """
 
 import itertools
+import json
+import re
 import os
 import sys
 import threading
@@ -93,7 +95,7 @@ class Backend:
         self.chat = ChatService(self.ctx, self.oauth)
         if registered_matchmaking is None:
             registered_matchmaking = bool(gameserver_secret or os.environ.get("FORTNITE_GAMESERVER_SECRET"))
-        matchmaking_options = {"websocket_origin": matchmaking_ws_origin,
+        matchmaking_options = {"oauth": self.oauth, "websocket_origin": matchmaking_ws_origin,
                                "gameservers": self.gameservers if registered_matchmaking else None}
         if state_step_sec is not None:
             matchmaking_options["state_step_sec"] = state_step_sec
@@ -105,6 +107,7 @@ class Backend:
             service.register(self.router)
         self.request_log = deque(maxlen=log_size)
         self._sequence = itertools.count(1)
+        self._session_trace_last = {}
         self._lock = threading.RLock()
 
     def close(self):
@@ -136,7 +139,53 @@ class Backend:
                 traceback.print_exc(file=sys.stderr)
                 status, payload = 500, error_body(INTERNAL_ERROR, "The local service failed to answer this request.")
         self._record(req.method, path, route_name, status)
+        if os.environ.get("FN_SESSION_TRACE") == "1":
+            self._trace_session(req, status)
         return status, payload
+
+    def _trace_session(self, req, status):
+        """Log only allowlisted field names and types, never values, headers or queries."""
+        match = re.fullmatch(r"(?:/fortnite)?/api/matchmaking/session/([0-9a-f]{32})(/(?:join|players|heartbeat|start|stop))?", req.path, re.IGNORECASE)
+        if not match:
+            return
+        fields = frozenset(("id", "ownerId", "ownerName", "serverName", "serverAddress", "serverPort",
+                            "maxPublicPlayers", "openPublicPlayers", "maxPrivatePlayers", "openPrivatePlayers",
+                            "shouldAdvertise", "allowJoinInProgress", "isDedicated", "usesStats", "allowInvites",
+                            "usesPresence", "allowJoinViaPresence", "allowJoinViaPresenceFriendsOnly", "publicPlayers",
+                            "privatePlayers", "attributes", "buildUniqueId", "started", "players", "accountId"))
+        def shape(value):
+            if isinstance(value, dict):
+                result = {k: shape(v) for k, v in value.items() if k in fields}
+                result["<other-fields>"] = sum(k not in fields for k in value)
+                return result
+            if isinstance(value, list):
+                return {"type": "array", "length": len(value)}
+            if value is None:
+                return "null"
+            return type(value).__name__
+        try:
+            body_shape = shape(json.loads(req.body)) if req.body else "empty"
+        except (ValueError, UnicodeDecodeError, RecursionError):
+            body_shape = "invalid-json"
+        sid = match.group(1)
+        if self.matchmaking.gameservers is None:
+            with self.matchmaking._lock:
+                state = "present" if sid in self.matchmaking._sessions else "missing"
+            storage = "local"
+        else:
+            storage = "registered"
+            state = ("live" if self.gameservers.get_session(sid) else
+                     "expired" if self.gameservers.get_session(sid, include_expired=True) else "missing")
+        line = json.dumps({"method": req.method, "path": "/api/matchmaking/session/<id>" + (match.group(2) or ""),
+                           "status": status, "storage": storage, "session": state, "body": body_shape}, sort_keys=True)
+        trace_key = (sid, req.method, match.group(2))
+        with self._lock:
+            if self._session_trace_last.get(trace_key) == line:
+                return
+            if len(self._session_trace_last) >= 256:
+                self._session_trace_last.clear()
+            self._session_trace_last[trace_key] = line
+        print("FN_SESSION_TRACE " + line, file=sys.stderr, flush=True)
 
     def websocket_route(self, path, query):
         serve = self.matchmaking.websocket_route(path, query)

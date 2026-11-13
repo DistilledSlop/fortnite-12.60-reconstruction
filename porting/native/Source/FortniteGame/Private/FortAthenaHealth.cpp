@@ -22,6 +22,7 @@
 // - stand-in: marks behaviours that are stand-ins or re-creations of server logic compiled out of the client exe.
 
 #include "FortAthenaHealth.h"
+#include "FortAthenaEndGame.h"
 #include "UFortAssetManager.h"
 #include "Engine/Engine.h"
 #include "UObject/ScriptMacros.h"
@@ -65,17 +66,37 @@
 #include "GameplayEffectTypes.h"
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
+#include "TimerManager.h"
 #include "UObject/UObjectGlobals.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFortHealth, Log, All);
 
 namespace
 {
+	TWeakObjectPtr<AFortGameModeAthena> RosterMode;
+	int32 MatchParticipants = 0;
+	float ParticipationStart = -1.0f;
+	bool bRosterFrozen = false;
+	TSet<TWeakObjectPtr<AFortPlayerControllerAthena>> FinalizedPlayers;
+
 	// Tracks active, alive player controllers in the match.
 	TArray<TWeakObjectPtr<AFortPlayerControllerAthena>>& GetAlivePlayers()
 	{
 		static TArray<TWeakObjectPtr<AFortPlayerControllerAthena>> List;
 		return List;
+	}
+
+	void ResetRosterFor(AFortGameModeAthena* Mode)
+	{
+		if (RosterMode.Get() != Mode)
+		{
+			RosterMode = Mode;
+			GetAlivePlayers().Reset();
+			FinalizedPlayers.Reset();
+			MatchParticipants = 0;
+			ParticipationStart = -1.0f;
+			bRosterFrozen = false;
+		}
 	}
 
 	// Tracks PlayerStates that have already been granted the default player ability set.
@@ -140,6 +161,45 @@ int32 FortAthenaHealth::GetAlivePlayerCount()
 	TArray<TWeakObjectPtr<AFortPlayerControllerAthena>>& Alive = GetAlivePlayers();
 	Alive.RemoveAll([](const TWeakObjectPtr<AFortPlayerControllerAthena>& P) { return !P.IsValid(); });
 	return Alive.Num();
+}
+
+void FortAthenaHealth::BeginMatch(AFortGameModeAthena* GameMode)
+{
+	if (!IsEnabled() || !GameMode) return;
+	ResetRosterFor(GameMode);
+	if (bRosterFrozen) return;
+	AFortGameStateAthena* GS = GameMode->GetGameState<AFortGameStateAthena>();
+	if (!GS) return;
+	MatchParticipants = GetAlivePlayerCount();
+	ParticipationStart = GS->GetServerWorldTimeSeconds();
+	bRosterFrozen = true;
+}
+
+AFortPlayerControllerAthena* FortAthenaHealth::GetSoleSurvivor(AFortGameModeAthena* GameMode)
+{
+	if (!GameMode || RosterMode.Get() != GameMode || GetAlivePlayerCount() != 1) return nullptr;
+	return GetAlivePlayers()[0].Get();
+}
+
+void FortAthenaHealth::FinalizeSurvival(AFortGameModeAthena* GameMode, AFortPlayerStateAthena* PS)
+{
+	AFortGameStateAthena* GS = GameMode ? GameMode->GetGameState<AFortGameStateAthena>() : nullptr;
+	if (!PS || !GS || RosterMode.Get() != GameMode || ParticipationStart < 0.0f) return;
+	PS->SecondsAlive = FMath::Max(0, FMath::FloorToInt(GS->GetServerWorldTimeSeconds() - ParticipationStart));
+	PS->NumMinutesAlive = PS->SecondsAlive / 60;
+	PS->OnRep_NumMinutesAlive();
+}
+
+void FortAthenaHealth::SendPartialTeamStats(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller, int32 Place)
+{
+	if (!GameMode || RosterMode.Get() != GameMode || !Controller || !bRosterFrozen) return;
+	// Detailed stats and rewards require recovered semantics.
+	FAthenaMatchTeamStats TeamStats{};
+	TeamStats.Place = Place;
+	TeamStats.TotalPlayers = MatchParticipants;
+	Controller->ClientSendTeamStatsForPlayer(TeamStats);
+	UE_LOG(LogFortHealth, Display, TEXT("Health: Sent partial team stats to %s (Place #%d of %d)"),
+		*Controller->GetName(), Place, TeamStats.TotalPlayers);
 }
 
 namespace
@@ -274,47 +334,64 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 		AthenaPawn->OnRep_AttributeProxy();
 	}
 
-	// 4. Bind health change listener on ASC to automatically catch health depletion.
+	// 4. The ASC belongs to the PlayerState and survives avatar replacement.
+	// Prune dead component keys; the delegate and its shared serial die with the ASC.
+	for (auto It = GetBoundASCs().CreateIterator(); It; ++It)
+	{
+		if (!It->IsValid()) { It.RemoveCurrent(); }
+	}
 	if (!GetBoundASCs().Contains(ASC))
 	{
-		GetBoundASCs().Add(ASC);
 		static FProperty* HealthProperty = FindFProperty<FProperty>(UFortHealthSet::StaticClass(), FName(TEXT("Health")));
 		if (HealthProperty)
 		{
-			TWeakObjectPtr<AFortPawn> WeakPawn(Pawn);
-			TWeakObjectPtr<AFortPlayerControllerAthena> WeakPC(Controller);
+			GetBoundASCs().Add(ASC);
+			TWeakObjectPtr<UAbilitySystemComponent> WeakASC(ASC);
+			TSharedRef<uint64> ChangeSerial = MakeShared<uint64>(0);
 			ASC->GetGameplayAttributeValueChangeDelegate(FGameplayAttribute(HealthProperty)).AddLambda(
-				[WeakPawn, WeakPC](const FOnAttributeChangeData& Data)
+				[WeakASC, ChangeSerial](const FOnAttributeChangeData& Data)
 				{
-					if (Data.NewValue <= 0.0f)
+					const uint64 Serial = ++(*ChangeSerial);
+					UAbilitySystemComponent* Component = WeakASC.Get();
+					AFortPawn* PawnAtChange = Component ? Cast<AFortPawn>(Component->GetAvatarActor()) : nullptr;
+					UWorld* World = PawnAtChange ? PawnAtChange->GetWorld() : nullptr;
+					if (Data.NewValue > 0.0f || !World) { return; }
+
+					// GEModData is stack-owned by GAS. Copy attribution now; it is not
+					// necessarily present for changes made by PostGameplayEffectExecute.
+					FGameplayTagContainer DeathTags;
+					TWeakObjectPtr<AController> WeakInstigator;
+					TWeakObjectPtr<AActor> WeakCauser;
+					if (Data.GEModData)
 					{
-						AFortPawn* P = WeakPawn.Get();
-						if (P && !P->bIsDying)
+						const FGameplayEffectSpec& Spec = Data.GEModData->EffectSpec;
+						Spec.GetAllAssetTags(DeathTags);
+						DeathTags.AppendTags(*Spec.CapturedSourceTags.GetAggregatedTags());
+						if (Spec.GetContext().IsValid())
 						{
-							FGameplayTagContainer DeathTags;
-							AController* Instigator = nullptr;
-							AActor* Causer = nullptr;
-							if (Data.GEModData && Data.GEModData->EffectSpec.GetContext().IsValid())
+							AActor* Source = Spec.GetContext().GetOriginalInstigator();
+							AController* SourceController = Cast<AController>(Source);
+							if (!SourceController)
 							{
-								{
-									AActor* InstigatorActor = Data.GEModData->EffectSpec.GetContext().GetOriginalInstigator();
-									Instigator = Cast<AController>(InstigatorActor);
-									if (!Instigator)
-									{
-										if (APawn* InstigatorPawn = Cast<APawn>(InstigatorActor)) { Instigator = InstigatorPawn->GetController(); }
-									}
-								}
-								Causer = Data.GEModData->EffectSpec.GetContext().GetEffectCauser();
-								DeathTags = *Data.GEModData->EffectSpec.CapturedTargetTags.GetAggregatedTags();
+								if (APawn* SourcePawn = Cast<APawn>(Source)) { SourceController = SourcePawn->GetController(); }
 							}
-							else
-							{
-								// Storm or direct damage stand-in fallback tag:
-								DeathTags.AddTag(FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x360));
-							}
-							FortAthenaHealth::HandlePlayerEliminated(P, DeathTags, Instigator, Causer);
+							WeakInstigator = SourceController;
+							WeakCauser = Spec.GetContext().GetEffectCauser();
 						}
 					}
+					TWeakObjectPtr<AFortPawn> WeakPawn(PawnAtChange);
+					// The health delegate can fire inside GAS before the HealthSet's
+					// synchronous DBNO interception. Recheck after that stack returns.
+					World->GetTimerManager().SetTimerForNextTick(FTimerDelegate::CreateLambda(
+						[WeakASC, WeakPawn, WeakInstigator, WeakCauser, ChangeSerial, Serial, DeathTags]()
+						{
+							UAbilitySystemComponent* CurrentASC = WeakASC.Get();
+							AFortPawn* CurrentPawn = WeakPawn.Get();
+							if (*ChangeSerial != Serial || !CurrentASC || !CurrentPawn ||
+								CurrentASC->GetAvatarActor() != CurrentPawn || CurrentPawn->bIsDying ||
+								CurrentPawn->bIsDBNO || CurrentPawn->GetHealth() > 0.0f) { return; }
+							FortAthenaHealth::HandlePlayerEliminated(CurrentPawn, DeathTags, WeakInstigator.Get(), WeakCauser.Get());
+						}));
 				});
 		}
 	}
@@ -368,9 +445,10 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 	}
 
 	// 6. Track alive players list and synchronize GameState->PlayersLeft.
+	ResetRosterFor(GameMode);
 	TArray<TWeakObjectPtr<AFortPlayerControllerAthena>>& Alive = GetAlivePlayers();
 	Alive.RemoveAll([](const TWeakObjectPtr<AFortPlayerControllerAthena>& P) { return !P.IsValid(); });
-	if (!Alive.Contains(Controller))
+	if (!bRosterFrozen && !FinalizedPlayers.Contains(Controller) && !Alive.Contains(Controller))
 	{
 		Alive.Add(Controller);
 	}
@@ -451,8 +529,33 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 		return;
 	}
 
-	// Mark dying immediately to prevent re-entrant calls.
+	AFortPlayerControllerAthena* VictimPC = Cast<AFortPlayerControllerAthena>(VictimPawn->GetController());
+	AFortPlayerStateAthena* VictimState = Cast<AFortPlayerStateAthena>(VictimPawn->GetPlayerState());
+	if (!VictimState && VictimPC)
+		VictimState = Cast<AFortPlayerStateAthena>(VictimPC->PlayerState);
+	if (!VictimPC && VictimState)
+		VictimPC = Cast<AFortPlayerControllerAthena>(VictimState->GetOwner());
+	UWorld* World = VictimPawn->GetWorld();
+	AFortGameStateAthena* GameState = World ? Cast<AFortGameStateAthena>(World->GetGameState()) : nullptr;
+	AFortGameModeAthena* GameMode = World ? Cast<AFortGameModeAthena>(World->GetAuthGameMode()) : nullptr;
+	TArray<TWeakObjectPtr<AFortPlayerControllerAthena>>& Alive = GetAlivePlayers();
+	if (!GameMode || RosterMode.Get() != GameMode || !VictimPC || !Alive.Contains(VictimPC))
+	{
+		UE_LOG(LogFortHealth, Warning, TEXT("Health: eliminated player absent from roster; cannot finalize placement"));
+		return;
+	}
+	const int32 OldPlayersLeft = GetAlivePlayerCount();
+
+	// Reserve the removal before callbacks can re-enter the death flow.
 	VictimPawn->bIsDying = 1;
+	FinalizedPlayers.Add(VictimPC);
+	Alive.Remove(VictimPC);
+	const int32 NewPlayersLeft = Alive.Num();
+	if (GameState)
+	{
+		GameState->PlayersLeft = NewPlayersLeft;
+		GameState->OnRep_PlayersLeft();
+	}
 	VictimPawn->bWasDBNOOnDeath = VictimPawn->bIsDBNO;
 	if (UCharacterMovementComponent* MoveComp = VictimPawn->GetCharacterMovement())
 	{
@@ -460,17 +563,6 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 	}
 	VictimPawn->SetCanBeDamaged(false);
 	VictimPawn->OnDied.Broadcast(VictimPawn, 0.0f, InstigatedBy, DamageCauser, VictimPawn->GetActorLocation(), nullptr, NAME_None, FVector::ZeroVector);
-
-	AFortPlayerControllerAthena* VictimPC = Cast<AFortPlayerControllerAthena>(VictimPawn->GetController());
-	AFortPlayerStateAthena* VictimState = Cast<AFortPlayerStateAthena>(VictimPawn->GetPlayerState());
-	if (!VictimState && VictimPC)
-	{
-		VictimState = Cast<AFortPlayerStateAthena>(VictimPC->PlayerState);
-	}
-	if (!VictimPC && VictimState)
-	{
-		VictimPC = Cast<AFortPlayerControllerAthena>(VictimState->GetOwner());
-	}
 
 	AFortPlayerStateAthena* KillerState = InstigatedBy ? Cast<AFortPlayerStateAthena>(InstigatedBy->PlayerState) : nullptr;
 	AFortPawn* KillerPawn = InstigatedBy ? Cast<AFortPawn>(InstigatedBy->GetPawn()) : nullptr;
@@ -500,13 +592,16 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 		Info.FinisherOrDowner = KillerState ? static_cast<AActor*>(KillerState) : (DamageCauser ? DamageCauser : static_cast<AActor*>(VictimPawn));
 		Info.Downer = nullptr;
 		Info.bDBNO = false;
-		// ToDeathCause (0x141a5f1c0 port) reads UFortAssetManager's common game data; the server still runs the engine's
-		// default asset manager, so that call is fatal (run 20261113-bppawn-1). stand-in until the server uses
-		// UFortAssetManager (SERVER_FIRST_PLAN.md 11.3): storm damage -> OutsideSafeZone, anything else -> Unspecified.
-		if (GEngine && Cast<UFortAssetManager>(GEngine->AssetManager))
+		// The recovered getter is fatal without common game data. A failed startup load must remain diagnosable.
+		const UFortAssetManager* Manager = GEngine ? Cast<UFortAssetManager>(GEngine->AssetManager) : nullptr;
+		if (Manager && Manager->GameDataCommon)
 			Info.DeathCause = AFortPlayerStateAthena::ToDeathCause(const_cast<FGameplayTagContainer&>(DamageTags), false);
 		else
-			Info.DeathCause = (DamageCauser == nullptr && InstigatedBy == nullptr) ? EDeathCause::OutsideSafeZone : EDeathCause::Unspecified;
+		{
+			const FGameplayTag StormTag = FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x360);
+			Info.DeathCause = StormTag.IsValid() && DamageTags.HasTag(StormTag)
+				? EDeathCause::OutsideSafeZone : EDeathCause::Unspecified;
+		}
 		Info.DeathClassSlot = 0;
 		Info.Distance = (KillerPawn && VictimPawn) ? FVector::Dist(KillerPawn->GetActorLocation(), VictimPawn->GetActorLocation()) : 0.0f;
 		Info.DeathLocation = VictimPawn->GetActorLocation();
@@ -536,24 +631,7 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 		VictimPC->ClientSetDeathReport(Report);
 	}
 
-	// 5. Update alive players and GameState->PlayersLeft (R3 §2).
-	UWorld* World = VictimPawn->GetWorld();
-	AFortGameStateAthena* GameState = World ? Cast<AFortGameStateAthena>(World->GetGameState()) : nullptr;
-	const int32 OldPlayersLeft = GameState ? GameState->PlayersLeft : GetAlivePlayerCount();
-
-	TArray<TWeakObjectPtr<AFortPlayerControllerAthena>>& Alive = GetAlivePlayers();
-	if (VictimPC)
-	{
-		Alive.Remove(VictimPC);
-	}
-	Alive.RemoveAll([](const TWeakObjectPtr<AFortPlayerControllerAthena>& P) { return !P.IsValid(); });
-
-	const int32 NewPlayersLeft = Alive.Num();
-	if (GameState)
-	{
-		GameState->PlayersLeft = NewPlayersLeft;
-		GameState->OnRep_PlayersLeft();
-	}
+	// 5. The roster removal above is already visible to re-entrant callbacks.
 	UE_LOG(LogFortHealth, Display, TEXT("Health: Player %s removed from alive list. PlayersLeft is now %d (was %d)"),
 		VictimPC ? *VictimPC->GetName() : TEXT("Unknown"), NewPlayersLeft, OldPlayersLeft);
 
@@ -563,75 +641,15 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 	{
 		VictimState->Place = Place;
 		VictimState->OnRep_Place();
-		if (GameState)
-		{
-			VictimState->SecondsAlive = static_cast<int32>(GameState->GetServerWorldTimeSeconds());
-			VictimState->NumMinutesAlive = VictimState->SecondsAlive / 60;
-			VictimState->OnRep_NumMinutesAlive();
-		}
+		FinalizeSurvival(GameMode, VictimState);
 	}
 
-	if (VictimPC)
-	{
-		// stand-in: fill team and match stats to drive "You placed #N" client UI
-		FAthenaMatchTeamStats TeamStats{};
-		TeamStats.Place = Place;
-		TeamStats.TotalPlayers = FMath::Max(OldPlayersLeft, Place);
-		VictimPC->ClientSendTeamStatsForPlayer(TeamStats);
+	SendPartialTeamStats(GameMode, VictimPC, Place);
 
-		FAthenaMatchStats MatchStats{};
-		MatchStats.StatBucket = TEXT("Default");
-		VictimPC->ClientSendMatchStatsForPlayer(MatchStats);
-
-		FAthenaRewardResult RewardResult{};
-		VictimPC->ClientSendEndBattleRoyaleMatchForPlayer(true, RewardResult);
-		UE_LOG(LogFortHealth, Display, TEXT("Health: Sent end match stats to %s (Place #%d of %d)"),
-			*VictimPC->GetName(), Place, TeamStats.TotalPlayers);
-	}
-
-	// 7. Check Win Condition (R3 §3 step 4) and Victory Royale (R3 §4 StartEndGamePhase).
-	if (GameState && (GameState->GamePhase == EAthenaGamePhase::Aircraft || GameState->GamePhase == EAthenaGamePhase::SafeZones))
-	{
-		if (NewPlayersLeft == 1 && OldPlayersLeft >= 2 && Alive.Num() == 1)
-		{
-			AFortPlayerControllerAthena* WinnerPC = Alive[0].Get();
-			if (WinnerPC)
-			{
-				AFortPlayerStateAthena* WinnerState = Cast<AFortPlayerStateAthena>(WinnerPC->PlayerState);
-				AFortPawn* FinisherPawn = Cast<AFortPawn>(WinnerPC->GetPawn());
-				const EDeathCause WinCause = EDeathCause::WonMatch;
-
-				UE_LOG(LogFortHealth, Display, TEXT("Health: %s is the last player alive! Winner of the match (Victory Royale)!"), *WinnerPC->GetName());
-
-				if (WinnerState)
-				{
-					WinnerState->Place = 1;
-					WinnerState->OnRep_Place();
-				}
-				GameState->WinningPlayerState = WinnerState;
-				GameState->OnRep_WinningPlayerState();
-
-				WinnerPC->ClientNotifyWon(FinisherPawn, nullptr, WinCause);
-
-				FAthenaMatchTeamStats WinnerTeamStats{};
-				WinnerTeamStats.Place = 1;
-				WinnerTeamStats.TotalPlayers = FMath::Max(OldPlayersLeft, 1);
-				WinnerPC->ClientSendTeamStatsForPlayer(WinnerTeamStats);
-
-				FAthenaMatchStats WinnerMatchStats{};
-				WinnerMatchStats.StatBucket = TEXT("Default");
-				WinnerPC->ClientSendMatchStatsForPlayer(WinnerMatchStats);
-
-				FAthenaRewardResult WinnerRewardResult{};
-				WinnerPC->ClientSendEndBattleRoyaleMatchForPlayer(true, WinnerRewardResult);
-
-				const EAthenaGamePhase OldPhase = GameState->GamePhase;
-				GameState->GamePhase = EAthenaGamePhase::EndGame;
-				GameState->OnRep_GamePhase(OldPhase);
-				UE_LOG(LogFortHealth, Display, TEXT("Health: GamePhase transitioned to EndGame (5)"));
-			}
-		}
-	}
+	// Single winner boundary: pass the actual eliminating event and roster snapshot.
+	FortAthenaEndGame::OnPlayerEliminated(GameMode, OldPlayersLeft, NewPlayersLeft,
+		GetSoleSurvivor(GameMode), KillerPawn, KillerWeapon,
+		VictimState ? VictimState->DeathInfo.DeathCause : EDeathCause::Unspecified);
 }
 
 void FortAthenaHealth::InstallRpcOverrides()

@@ -3,3 +3,7 @@
 *.py text eol=lf
 *.md text eol=lf
 *.json text eol=lf
+# Original tag configuration is fingerprinted byte for byte by the staging manifest.
+porting/native/Config/DefaultGameplayTags.ini -text
+porting/native/Config/Tags/*.ini -text
+porting/native/Config/Tags/RecoveredPluginTags/*.ini -text

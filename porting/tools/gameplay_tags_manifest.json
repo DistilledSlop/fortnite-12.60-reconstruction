@@ -1,0 +1,784 @@
+{
+  "schema_version": 1,
+  "runtime_parity": "UNVERIFIED: server must emit final runtime hash 011ff934 before compatibility acceptance",
+  "expected_runtime": {
+    "hash": "011ff934",
+    "nodes": 17696,
+    "native_tags": 1136,
+    "tables": 39,
+    "table_rows": 5245,
+    "fast_replication": true,
+    "container_bits": 7,
+    "index_bits": 15
+  },
+  "native_constructor_events": {
+    "path": "generator_policies/native_gameplay_tags_runtime/constructor_events.json",
+    "sha256": "833f573636717591a39379de141741b516ce0604bf5b66c8620dc1d87ef375aa"
+  },
+  "files": [
+    {
+      "path": "Config/DefaultGameplayTags.ini",
+      "bytes": 542112,
+      "sha256": "90d58712e01b82679f4bc1a8609cb8287678a0900efd0099d2ab61a16bce0b0a",
+      "original_source_relative": "FortniteGame/Config/DefaultGameplayTags.ini"
+    },
+    {
+      "path": "Config/Tags/AthenaQuestTags.ini",
+      "bytes": 48395,
+      "sha256": "a5ae2efda374d3aa708b07e2e4bd6ea806bdba32b0fb4f777b0cf3e52c46d59c",
+      "original_source_relative": "FortniteGame/Config/Tags/AthenaQuestTags.ini"
+    },
+    {
+      "path": "Config/Tags/CreativeTags.ini",
+      "bytes": 12791,
+      "sha256": "547c863283184205cde1903f742451c79932278cf4a7e096f6550db96e321069",
+      "original_source_relative": "FortniteGame/Config/Tags/CreativeTags.ini"
+    },
+    {
+      "path": "Config/Tags/GamepadActionNameTags.ini",
+      "bytes": 16130,
+      "sha256": "73aa0dcea39b5ff4f6f713abb057f7c108935b8aa38c7b65497f428f37e43c88",
+      "original_source_relative": "FortniteGame/Config/Tags/GamepadActionNameTags.ini"
+    },
+    {
+      "path": "Config/Tags/LootTags.ini",
+      "bytes": 9879,
+      "sha256": "7523122f6c14002b8fa8ecb086c05c3ba047f0763e01b0541831f21cdd7ac59b",
+      "original_source_relative": "FortniteGame/Config/Tags/LootTags.ini"
+    },
+    {
+      "path": "Config/Tags/MessageChannelTags.ini",
+      "bytes": 6735,
+      "sha256": "39a4870596464bf29d5c73dbe37ece0f4287bc4078bec1bc097a25e2a0e1b6ef",
+      "original_source_relative": "FortniteGame/Config/Tags/MessageChannelTags.ini"
+    },
+    {
+      "path": "Config/Tags/TestTags.ini",
+      "bytes": 704,
+      "sha256": "9761c58b09915d08d70cc23f7e2bbdff6a48173ac77830dbe4a363bdfc78eddc",
+      "original_source_relative": "FortniteGame/Config/Tags/TestTags.ini"
+    },
+    {
+      "path": "Config/Tags/RecoveredPluginTags/PapayaTags.ini",
+      "bytes": 964,
+      "sha256": "0046f92cfb1c29b91226c0c7f6225a37b3e6d26b6dcc301a02fe6a1cebbf1e32",
+      "original_source_relative": "FortniteGame/Plugins/GameFeatures/PapayaGameplay/Config/Tags/PapayaTags.ini"
+    },
+    {
+      "path": "Config/Tags/RecoveredPluginTags/HoagieTags.ini",
+      "bytes": 104,
+      "sha256": "73bd18756d85812614d09212044ff6a9fbf94e2d30310b0dffbe193e3c803888",
+      "original_source_relative": "FortniteGame/Plugins/GameFeatures/Hoagie/Config/Tags/HoagieTags.ini"
+    },
+    {
+      "path": "Config/Tags/RecoveredPluginTags/AmbientAudioTags.ini",
+      "bytes": 748,
+      "sha256": "b20f4bd717b3330bbeece37c509164126c3e141788049375a834169f9a80151f",
+      "original_source_relative": "Engine/Plugins/AmbientAudio/Config/Tags/AmbientAudioTags.ini"
+    },
+    {
+      "path": "Content/Balance/DataTables/GameplayTagTable.uasset",
+      "bytes": 22943,
+      "sha256": "0e53f20c380cd60ac775fbe77e9986b75216e8a19a342a80a749936f8cc594c5",
+      "original_source_relative": "FortniteGame/Content/Balance/DataTables/GameplayTagTable.uasset"
+    },
+    {
+      "path": "Content/Balance/DataTables/GameplayTagTable.uexp",
+      "bytes": 43640,
+      "sha256": "c22543dc5e9d35204516ca9f0b0290b37b5f3b9b75a420c33ba836fbbb6abf32",
+      "original_source_relative": "FortniteGame/Content/Balance/DataTables/GameplayTagTable.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/ActionTags.uasset",
+      "bytes": 2500,
+      "sha256": "28ffbafad14698ca8eb1adeabb49f4f50c611ebe7db786c4ce511f051c7878c7",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/ActionTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/ActionTags.uexp",
+      "bytes": 4085,
+      "sha256": "13a0d83796be3d85ea55e41893b18936abee796d6b33560e1747b010dda7ad25",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/ActionTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/TrapTags.uasset",
+      "bytes": 2656,
+      "sha256": "8c2b06d2b92cf7b9bbd9912121ee20a6a594e679d48764a5f21d94984923e284",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/TrapTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/TrapTags.uexp",
+      "bytes": 3420,
+      "sha256": "a9b1f68a5bd9e240b5fc35f1dbecd93aca4d0e2f7211c759d6ef604e4c20dc46",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/TrapTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/NinjaTags.uasset",
+      "bytes": 12216,
+      "sha256": "928778e15a719f8f5b984f759e316d08845f3db308277d5ec868815f68bd4076",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/NinjaTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/NinjaTags.uexp",
+      "bytes": 18455,
+      "sha256": "c9662d30f37302118298aa0231f6cb076fc883ee540f3065af5a596b98ae7c23",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/NinjaTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/CommandoTags.uasset",
+      "bytes": 14569,
+      "sha256": "ae80c8987720477d42e8f8cbc7c7d973b992f3c8450a38ac87244c8f59279334",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/CommandoTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/CommandoTags.uexp",
+      "bytes": 20522,
+      "sha256": "949741ac6f9e555daa95ed0f2a96f8712f47ca5f8dbb0e3e14b083f783d42599",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/CommandoTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/ConstructorTags.uasset",
+      "bytes": 13098,
+      "sha256": "21a2e392dd6899e130c664a01bbfceb7ec43f9307f1c12fb13484dd6ebe95557",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/ConstructorTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/ConstructorTags.uexp",
+      "bytes": 17961,
+      "sha256": "b58499df0ba04e24a3362116e4eb5edfd6210c244af3ba201f56ba355460da70",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/ConstructorTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/HomeBaseTags.uasset",
+      "bytes": 10505,
+      "sha256": "c13750a32b4ae88949af28cb12cd25e8a73fd4a8bf6b642714954efc5d653e21",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/HomeBaseTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/HomeBaseTags.uexp",
+      "bytes": 15012,
+      "sha256": "79f3cb356290f064a01bb4d5f037031f534b544b24d4afb62cc89a5b80e27ccc",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/HomeBaseTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/OutlanderTags.uasset",
+      "bytes": 17213,
+      "sha256": "c74b214d885ea1820cbe14b0a7bb95ef44cd87501eac45ebab23b4cba8ef5b14",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/OutlanderTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/OutlanderTags.uexp",
+      "bytes": 22714,
+      "sha256": "ae6163b0ed5f9e6bf370ae8514eaf28d81021c36e188a850789cf4818c7338ef",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/OutlanderTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/StatusTags.uasset",
+      "bytes": 6959,
+      "sha256": "bb39e6f8f6654a8630620267a54e4c5d57fa9d2566a435467975704c5bf9ae75",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/StatusTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/StatusTags.uexp",
+      "bytes": 13672,
+      "sha256": "6f902cb8c53a439a43fda4c36aba1377ec7b3df34ec2628309a232230134cdbe",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/StatusTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/NPCTags.uasset",
+      "bytes": 21489,
+      "sha256": "e4000e1cedda44952d650a6f838e1e6847ff3274273229d99fca1543cb1d4df2",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/NPCTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/NPCTags.uexp",
+      "bytes": 57133,
+      "sha256": "45010c5a6d262c8ec3f0e8af5f426abb1998b1c77a82f6003e8d4fbecc48c5c9",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/NPCTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/SpecialEventTags.uasset",
+      "bytes": 6035,
+      "sha256": "9c5cd0746f3b9caafff812ad1d40a6effb48c4bf63ca5abf808ac21ed8e1ba0d",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/SpecialEventTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/SpecialEventTags.uexp",
+      "bytes": 9060,
+      "sha256": "3dbe119864f276a770b63f86a4ec7e2337d433a8c6f189c9875397def1c35a6a",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/SpecialEventTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/GameplayCueTags.uasset",
+      "bytes": 13225,
+      "sha256": "6416bf554d04f33ceba0d0d7a853719ddd2faf08ed77f3b144e0800ba55466e1",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/GameplayCueTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/GameplayCueTags.uexp",
+      "bytes": 22058,
+      "sha256": "d643f5e5c10f3971cb884ad3323ca726805709dbb34e4438d33be8657f16c9bb",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/GameplayCueTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/HardcodedTags.uasset",
+      "bytes": 4585,
+      "sha256": "8375eb7b385032f574cd20ae87c4678c5e11820b73dc23abd032783caef3d9b8",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/HardcodedTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/HardcodedTags.uexp",
+      "bytes": 8691,
+      "sha256": "d5d57386ebebd2b7eba59fdd0371862b234f2a5c8a4780fd51365fc445cba59b",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/HardcodedTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/PlayerCombatTags.uasset",
+      "bytes": 1837,
+      "sha256": "e175b88f1a749a851b0f6fbdf43e3bfa4d609af8b89d2e7109e4f2a9b9f1366f",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/PlayerCombatTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/PlayerCombatTags.uexp",
+      "bytes": 2268,
+      "sha256": "b874cab7d6e8253afcfeff500cebec3d8cf7b00fa3bf7add375ed04ad8818f0e",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/PlayerCombatTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/WeaponTags.uasset",
+      "bytes": 4667,
+      "sha256": "6b1d624fc36a27b33ac5005cdac8ac393745904b0fff08bec1403b85655f7b05",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/WeaponTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/WeaponTags.uexp",
+      "bytes": 8008,
+      "sha256": "32a8dbf08bf2e2ddd91938ac84b5461a892ccd54237647a6c1935d81fded658a",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/WeaponTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/GenericGadgetTags.uasset",
+      "bytes": 17772,
+      "sha256": "485a449d319576ce338fbb2aca9f130151deea1a861d7cde0dc108f7454175c9",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/GenericGadgetTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/GenericGadgetTags.uexp",
+      "bytes": 27780,
+      "sha256": "fba448c5f1bb1a04df35eb5773c253eeb18587390306272f6867ad3bf2338753",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/GenericGadgetTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/UnlockTags.uasset",
+      "bytes": 11949,
+      "sha256": "7928d8857d1677c8465883a844a54adb1439219cbdce4f591b463e89c5319a3d",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/UnlockTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/UnlockTags.uexp",
+      "bytes": 15019,
+      "sha256": "ab81e23827e01fd6961234689e06a52ea3853780849ecafe0f8f05c4b255a477",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/UnlockTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/ActivitiesTags.uasset",
+      "bytes": 12007,
+      "sha256": "2847c2c8deb15eebba87d190a21eca4d2062c3a39236cc5531a7baed217525db",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/ActivitiesTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/ActivitiesTags.uexp",
+      "bytes": 25429,
+      "sha256": "96ab65ad51055b0ccba5fd8711cfc0622d9d5deea2434b25ece7e83b0a59e2f5",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/ActivitiesTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/PvPStrategicBuildingTags.uasset",
+      "bytes": 1193,
+      "sha256": "58644b8c660fccea699116e3d46d53e5d655b0de06734f616e345373cf3a1704",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/PvPStrategicBuildingTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/PvPStrategicBuildingTags.uexp",
+      "bytes": 439,
+      "sha256": "0f2de647647b97ba647de78509070447a64f12616b8f882362ee487b2c891613",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/PvPStrategicBuildingTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/RewardTags.uasset",
+      "bytes": 5707,
+      "sha256": "d169c954ea86ae011ae8963cd523785d25ec2490d8741bcd26d1c0167559f502",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/RewardTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/RewardTags.uexp",
+      "bytes": 7941,
+      "sha256": "09f7e9fb2af71d2fc9858531de5826464c0982518726d178ec7bea54515d4f43",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/RewardTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/AlterationTags.uasset",
+      "bytes": 3607,
+      "sha256": "171f2140d8885e6a1ec194a5f1491ea2522573831b1120d7a857efec9e2a210a",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/AlterationTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/AlterationTags.uexp",
+      "bytes": 5979,
+      "sha256": "6bd30f34f07eaa8c8e8e19827c927b2c10337bf3d13014daa8f01a5d526e0fb5",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/AlterationTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/TooltipTags.uasset",
+      "bytes": 28930,
+      "sha256": "d3e07d0b88a8ef330fb8c3c9009673772c363398eb0f79657c0170844d9de1a3",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/TooltipTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/TooltipTags.uexp",
+      "bytes": 38816,
+      "sha256": "86207b5c56d7d63f46b89544598a579bf77b72a776031511a5689c3dc550d283",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/TooltipTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/StatTags.uasset",
+      "bytes": 14729,
+      "sha256": "88b298b9965e09aca977efa73597ce1abaa0474cbb7696b44c1987d82c47d42c",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/StatTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/StatTags.uexp",
+      "bytes": 30912,
+      "sha256": "c0ec77edf5e2ef7c86ac97683db028939aeb69f343bccb8fff186a101cb17339",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/StatTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/QuestTags.uasset",
+      "bytes": 10005,
+      "sha256": "00a55482d512640674565a0ecbd1f359905f556bafa7f7a7beef49c7272d074b",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/QuestTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/QuestTags.uexp",
+      "bytes": 20047,
+      "sha256": "0fcdc0c7ea72976dd98d276a59909ef07562e238f487cdb4dfcea2934128a5c5",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/QuestTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/PvPTags.uasset",
+      "bytes": 4599,
+      "sha256": "ad951626c3cd6cdc8e3ed98be60876c09cb08dadf53a1338cfa473600dda5da8",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/PvPTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/PvPTags.uexp",
+      "bytes": 6289,
+      "sha256": "4923729654a9623cbaa2f670b150539dd8d98106c99a2fe10dcdecdb740ff6e3",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/PvPTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/GameplayModifierTags.uasset",
+      "bytes": 5276,
+      "sha256": "8846e3a6510d87427ea453be2fa4316b5c22f1c60583830ae96c6bf9dd4fbdb9",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/GameplayModifierTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/GameplayModifierTags.uexp",
+      "bytes": 7262,
+      "sha256": "6b9f541121e894442c092d8a369988408bc23eff47c2ba430960f22f8e443ea7",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/GameplayModifierTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/EvolutionTags.uasset",
+      "bytes": 7551,
+      "sha256": "cbec4f4a6808bdfc384b86294c091e172b7583f99d725c9695fbbf83fbd000bf",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/EvolutionTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/EvolutionTags.uexp",
+      "bytes": 7927,
+      "sha256": "77e1c6f7ecb9e2a7fdf7d7292df86497a8acfb813afa0c25767e603dca1542bf",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/EvolutionTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/ExpeditionTags.uasset",
+      "bytes": 2580,
+      "sha256": "8ad0d9dcab1c2d2ab9f56d63ec6ac7a4d4e17cc2378dd0312ab198522c98bf7f",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/ExpeditionTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/ExpeditionTags.uexp",
+      "bytes": 3325,
+      "sha256": "2b20c6ad58eef922e81f75d403cb343cdf2c80313d3ea1318437fdf85429b5e7",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/ExpeditionTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/BuildingTags.uasset",
+      "bytes": 5613,
+      "sha256": "f72b832035fb90ee1681ba629357fb7b3bd9c2a2fe627a897565c90714f33aa2",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/BuildingTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/BuildingTags.uexp",
+      "bytes": 10005,
+      "sha256": "a4475ff6f7522fdd5cf5e52c0a034f4838be5d50a1f205bb1583efd7262eda00",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/BuildingTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/HUDTags.uasset",
+      "bytes": 3182,
+      "sha256": "8aa4c4eb2f0241b29f62dafeed84a433cd6f345810c7c1f022504085bcc69b96",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/HUDTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/HUDTags.uexp",
+      "bytes": 4375,
+      "sha256": "115e83a0918812f1289672dd82b504f3efe62c6adf57ac6ebd9c2966fee3879e",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/HUDTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/StWHUDTags.uasset",
+      "bytes": 933,
+      "sha256": "e08244730e8ffd6472162e88174c212831cffd7e6b1330c7203d88ef063d2ddf",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/StWHUDTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/StWHUDTags.uexp",
+      "bytes": 205,
+      "sha256": "6ae6a5a66b52aabeaba2e95177a54a1c5933f6427bf542c17e8187543f5ffbda",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/StWHUDTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/PlaygroundTags.uasset",
+      "bytes": 1032,
+      "sha256": "6c5b00d11dae34b9c6fa55000721bde0f28a22bdc97b1e2451aff17f769f0c34",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/PlaygroundTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/PlaygroundTags.uexp",
+      "bytes": 283,
+      "sha256": "d3b7bffb0817681df4ad71748472aacde19859d4362a356a85b8bfec10911a1b",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/PlaygroundTags.uexp"
+    },
+    {
+      "path": "Content/Athena/AthenaTags.uasset",
+      "bytes": 10417,
+      "sha256": "26a7cab56cbc4011a06d62593e3bd860e1163a210791eacf046fd5e7a3ccc4cd",
+      "original_source_relative": "FortniteGame/Content/Athena/AthenaTags.uasset"
+    },
+    {
+      "path": "Content/Athena/AthenaTags.uexp",
+      "bytes": 15136,
+      "sha256": "11d3299625b725cf62be57adc82d792d9a4eff9d5e37b2d8a99ee64d8ae384c8",
+      "original_source_relative": "FortniteGame/Content/Athena/AthenaTags.uexp"
+    },
+    {
+      "path": "Content/Athena/HUD/AthenaTagsHUD.uasset",
+      "bytes": 2417,
+      "sha256": "20ae6ff8e68f7abb5eac1ce2c058b386f1f0a77b86a9f2a5c60f5cce1a0ee238",
+      "original_source_relative": "FortniteGame/Content/Athena/HUD/AthenaTagsHUD.uasset"
+    },
+    {
+      "path": "Content/Athena/HUD/AthenaTagsHUD.uexp",
+      "bytes": 2352,
+      "sha256": "93af731c21f3ddc86a22e0eb9bbe415dcaa32824ea99f0c2205b7967e5e77f3d",
+      "original_source_relative": "FortniteGame/Content/Athena/HUD/AthenaTagsHUD.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/LeaderboardGameplayTags.uasset",
+      "bytes": 5410,
+      "sha256": "b09b3ca07a6503193fdcafe06eb135df9d2a0b29d98fb790678f26ea9c9881fa",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/LeaderboardGameplayTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/LeaderboardGameplayTags.uexp",
+      "bytes": 6601,
+      "sha256": "79e78aee707d1a560b6ae73362578237842cf5fe3725abc72b10f3982a90b09d",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/LeaderboardGameplayTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/MissionAlertVisualTags.uasset",
+      "bytes": 1257,
+      "sha256": "63e21603794c4015494dc37b1aa3ea93f2cdbac935a7796e951f3bd557b8577d",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/MissionAlertVisualTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/MissionAlertVisualTags.uexp",
+      "bytes": 911,
+      "sha256": "e5bfc3e2cad8af571c364d5627ec826c6b9198dd2b808f733427091624541d67",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/MissionAlertVisualTags.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/AthenaLocationTags.uasset",
+      "bytes": 17671,
+      "sha256": "05ad1b2d4b0830e9eb45259adac5c2286a01b798d8bd743132d6bcc58bb337be",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/AthenaLocationTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/AthenaLocationTags.uexp",
+      "bytes": 22897,
+      "sha256": "e23fe6344fbd966ffcbb25807853333dc92c05bdb8d13ca62ebc651528462304",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/AthenaLocationTags.uexp"
+    },
+    {
+      "path": "Content/Athena/Prototype/Blueprints/Underground/ElementalAfflictionTags_Underground.uasset",
+      "bytes": 1215,
+      "sha256": "0768d3111867f437514a0ab01bb35fcb96fe19be77015de27032d1f634cb0ae3",
+      "original_source_relative": "FortniteGame/Content/Athena/Prototype/Blueprints/Underground/ElementalAfflictionTags_Underground.uasset"
+    },
+    {
+      "path": "Content/Athena/Prototype/Blueprints/Underground/ElementalAfflictionTags_Underground.uexp",
+      "bytes": 635,
+      "sha256": "c6e97c82b9ea2973d6dea6978dac3e199477a834a7eca2f603282c8ff08a7945",
+      "original_source_relative": "FortniteGame/Content/Athena/Prototype/Blueprints/Underground/ElementalAfflictionTags_Underground.uexp"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/VFXTags.uasset",
+      "bytes": 1337,
+      "sha256": "9207dfc49f6fb354e7016b133860308ee72ff2638a34172b5fbc2eb703226344",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/VFXTags.uasset"
+    },
+    {
+      "path": "Content/Balance/GameplayTags/VFXTags.uexp",
+      "bytes": 1142,
+      "sha256": "840bbb6915938b54b09fc287064e910b2e3c36c730c778ff1a16ca7c5c13e71a",
+      "original_source_relative": "FortniteGame/Content/Balance/GameplayTags/VFXTags.uexp"
+    }
+  ],
+  "tables": [
+    {
+      "package": "/Game/Balance/DataTables/GameplayTagTable",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 433,
+      "tag_list_sha256": "cea677702a22db6f18614ed222bdd031f74c799885ae9ecf8a38e38a85ad977d"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/ActionTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 33,
+      "tag_list_sha256": "c065459ca8262f63e174d097f25b0eaf442b4bc7d43ea03bd5fd8f761dbe165e"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/TrapTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 35,
+      "tag_list_sha256": "bfee7d59a0bc723fc3508eeb6bd379e8ebe925b8916c6b90986900b259765efb"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/NinjaTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 200,
+      "tag_list_sha256": "093e019ff9687125f2d34bb2687264b2d68af429f3da2ec09093b088ee8e9ebb"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/CommandoTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 227,
+      "tag_list_sha256": "84a1d2c0baca12c1b63835a9e19b353a96887d779ace01c26b8a0541fe1b4fb6"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/ConstructorTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 199,
+      "tag_list_sha256": "423c2dbb25fc53146146cdede04baf1cdc5258c692e527a88956b5cd6517f966"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/HomeBaseTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 179,
+      "tag_list_sha256": "2cefa5a892b6745b34c378eb580b6c7022674d06003de9b8018ac9cae1e59760"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/OutlanderTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 256,
+      "tag_list_sha256": "4b23fca5c0c939589104888609ea53f6ad407dc979d59f701f810ff12696d37f"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/StatusTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 131,
+      "tag_list_sha256": "6969b03b7e534aa052cd380eed270ee7c48f614501ca84354ad49cf1f2752ef0"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/NPCTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 369,
+      "tag_list_sha256": "1e00bc1131f363838250e92a2b2b5d7ca77f836d674803f5688760e132569ba0"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/SpecialEventTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 79,
+      "tag_list_sha256": "42136cb93506ab7944510fe90cf74ada90f48f690736a6d61079f3920e24dc21"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/GameplayCueTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 200,
+      "tag_list_sha256": "e4d32e7a0d5dff0224a58c0746aff3859e13de9d2c02e382501be3abf36bfef2"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/HardcodedTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 78,
+      "tag_list_sha256": "98856728b81ecebb915aefa5de355636f689e13a6750cf4fc72ff9143803480c"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/PlayerCombatTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 23,
+      "tag_list_sha256": "88a1373fda917d6d7b1bc0d1a4399dbee5fc3cd9f53f370d2cd3538d480fe104"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/WeaponTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 82,
+      "tag_list_sha256": "2b52443a4da98fbbd08f69875104b44eea4a78b328c7764316df4190b768cbaf"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/GenericGadgetTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 290,
+      "tag_list_sha256": "3c21ee54f7b1d20ffe9e0709fdd1e54a12234aec185bc6f31bb9af6a92165411"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/UnlockTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 167,
+      "tag_list_sha256": "6f7ff328473e635630adf510b4c89997b343481db8391c3234483aed315af45e"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/ActivitiesTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 188,
+      "tag_list_sha256": "080ccaac30609d51f1c86c6f2127d63a70ca30f204dbc42e7b20e9170d2122d0"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/PvPStrategicBuildingTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 5,
+      "tag_list_sha256": "25e1d72ceacd583ca1936d6aa64c564320ca64bcf353d7c9b148e79080f40e85"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/RewardTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 100,
+      "tag_list_sha256": "eed0bd36ab598f094216052b1f2aa9aaaad2f3b29de0ae53026307ddcf602597"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/AlterationTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 50,
+      "tag_list_sha256": "4bc59c61cc1240c2c6be4a52bb608d731c9e54e88583fe6825493acbc61d5a8f"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/TooltipTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 479,
+      "tag_list_sha256": "69e43f3768f912fc41ddbd51d717e47453b276bf17c12e35e36dbfbc8f38723c"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/StatTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 263,
+      "tag_list_sha256": "af1c6f0721686c0df42ad6bc4e996a5ebd557457072e81ad66c32960c0bd5940"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/QuestTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 173,
+      "tag_list_sha256": "72a997def2bbf866bcfd09f6c9ebe85e9a4920c5552f4b43ea144e01c945c42e"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/PvPTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 80,
+      "tag_list_sha256": "db6a788d4e90f595884c4236237ac638ba3c2d216331a32a2b57cb4fe35c8f5e"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/GameplayModifierTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 69,
+      "tag_list_sha256": "b03c5f74cac440b5c48fd3dc919bb2384b584bd851ed0226907a74180933bce8"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/EvolutionTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 101,
+      "tag_list_sha256": "a7b22e83663411771dfbb836b0ba2abb816232f3b18fd2f13cb05c645280885d"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/ExpeditionTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 42,
+      "tag_list_sha256": "5330f6d372c59d9107eaec42f6a724de551c61b38b04d5a1464c53e052aec386"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/BuildingTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 88,
+      "tag_list_sha256": "d7f8d6dbe4bc3b1c6ea32a555b18ce72e297de33613a622eb2545e04f56a9084"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/HUDTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 55,
+      "tag_list_sha256": "ab7e605c773e4c72f729dcfe67f77acaa7c50e699e7471578a2b276b496e0a4f"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/StWHUDTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 2,
+      "tag_list_sha256": "32603e8257bb8476a071750d55f1376bf3448b1f220b46a8981329ea2599f825"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/PlaygroundTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 3,
+      "tag_list_sha256": "95d7c6f8c7628d28b4f8bdcad7683f1352ce463c043eba63e7555cfbccef3d51"
+    },
+    {
+      "package": "/Game/Athena/AthenaTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 136,
+      "tag_list_sha256": "75430540c743dc6c6ca9f5239e6073a486561dc4ab2150f16382ac1a3d543ba4"
+    },
+    {
+      "package": "/Game/Athena/HUD/AthenaTagsHUD",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 28,
+      "tag_list_sha256": "a5d97a0341c0c3778e70e7942bb33e2368db9ada2cf7170418ee0ddce53db8f9"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/LeaderboardGameplayTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 84,
+      "tag_list_sha256": "8286b8132eff6108449ff59252f975c2e1c5473cebde0a89a03cbb852598bdf3"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/MissionAlertVisualTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 7,
+      "tag_list_sha256": "832cbf9b815b61f1d13a134ef7272e99aa3a4eb35a6787453727026f41d9c4dc"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/AthenaLocationTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 292,
+      "tag_list_sha256": "3be6599ef795395cc5931f82183059c7c1c2247bb8033dc20a0b922ca9b98984"
+    },
+    {
+      "package": "/Game/Athena/Prototype/Blueprints/Underground/ElementalAfflictionTags_Underground",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 6,
+      "tag_list_sha256": "67b973cd0fb701af87b7e10f1fb9ede0757d8b7f9a74760342de6cfcf2638088"
+    },
+    {
+      "package": "/Game/Balance/GameplayTags/VFXTags",
+      "row_struct": "/Script/GameplayTags.GameplayTagTableRow",
+      "rows": 13,
+      "tag_list_sha256": "453f0432fe8fd1070c5d285bec84968839a68aef4b23e43a43f67ab53902cd7c"
+    }
+  ]
+}

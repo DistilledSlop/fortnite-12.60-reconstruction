@@ -529,6 +529,22 @@ This section merges `server_systems/SF-ORCH-HANDOFF.md` (2026-11-12 orchestratio
 (R-card research) and the runs of 2026-11-13. Those two files now only point here. Where to put files and run output:
 `porting/LAYOUT.md`.
 
+### Current checkpoint (2026-11-13, after Claude commit `8602bdac`)
+
+Observed dedicated startup now matches the original final gameplay tag dictionary: **`011ff934`, 17,696 nodes**, fast replication enabled, container bits 7, first/true index bits 15, 39 valid tables (5,245 rows). There are 1,136 native registration events and 1,132 unique native names. Evidence: `generated/runs/20261113-tag-parity-probe-2/findings.json`, build `20261113-120434-server.log`. Original tag/config bytes are pinned and staged by `tools/stage_gameplay_tags.py`. Loading the cooked game-state Blueprint from the native game-mode constructor recursively initialized tag tables during async loading; the load now runs after engine initialization, after original defaults.
+
+Observed two-client run `generated/runs/20261113-tag-parity-two-client-3/`: both joins succeeded, both clients accepted gameplay cues without the earlier FromSpec mismatch or remote ASC invalid-field error, and both **client Space inputs** reached the aircraft jump handler. The second connection closed after 22 seconds because `/Game/Athena/Apollo/Maps/Streaming/Apollo_Terrain_Sub_E4` was absent from the dedicated stage. **G10 remains unpassed.** All 65 streaming map roots and their hard-import closure have since been staged (831 additional files, 43.60 MB, zero missing packages); `FN_STAGE_APOLLO_STREAMING=1 tools/build_server.sh --stage` reproduces this. The corrected content has not yet passed another two-client run. The first client's skydive renders in `shots/t35.png`; deployment, landing and full animations still need direct verification.
+
+Observed build/runtime preparation: original constructor defaults are applied; `GAS_AthenaPlayer` grants 31 abilities and two effects; equipping the pickaxe grants its melee ability. All 331 candidate building classes load in the native cache probe. Hydrogen's registry reader/generator reproduces the pinned manifest exactly and passes seven tests; candidate order still needs comparison with an original client handle trace. The reconstructed loot roller's automation contract passes, but terminal item-level mapping and actual loot spawning remain unfinished.
+
+Registered matchmaking is now an **opt-in candidate** (`FN_REGISTERED_MATCHMAKING=1`): authenticated registration/state, reservation lookup, connection/account login binding, protected runner secret file and listener readiness are integrated. Build `20261113-121109-server.log` passes; `generated/runs/20261113-registered-startup-probe-1/findings.json` proves native registration and a joinable heartbeat, scoped proxy bypass, and no secret/session key in its log. Eight runner tests and six matchmaking tests pass. Durable reservation history now permits trusted first results after departure/restart; three ledger, eight progression and six registry tests pass. **Real registered client joins, result emission/awards and lobby return remain unverified.**
+
+User-observed appearance bug is confirmed in `EnsureHero`: every player receives hardcoded RebirthDefaultA parts instead of their selected locker character. Hydrogen owns a bounded draft for authenticated per-player profile character resolution and spawn/respawn application; do not call cosmetic parity complete before two distinct selected outfits render correctly.
+
+ProjectChrono supplies the authorized practical local launcher path, including selected-CA trust and a negative untrusted-certificate probe (`server_systems/G11-removing-client-patches.md`). The historical unchanged-binary, zero-patch wording of G11 is a separate open criterion; it is not the current gameplay critical path. Existing diagnostic play runs do not prove patch-free TLS.
+
+Current delegation preference: use `agy --model gemini-4-hydrogen-high --effort high --dangerously-skip-permissions` for bounded work, then independently review and validate. Older external Gemini instructions are superseded. Primary retains native/engine integration, builds, staging, runtime checks and commits.
+
 ### 11.1 Gate state (vanilla client, real map `Apollo_Terrain`)
 
 | Gate | State 2026-11-13 | Evidence (runs under `generated/runs/`) |
@@ -664,7 +680,7 @@ can pick the previous chunk); `off.py Class 0xOFF` (offset → property over the
 - Staging cooked content: never stage material/texture packages (MemoryImage `DerivedType` assert); boot the server
   after each staged root.
 
-### 11.7 Handoff (2026-11-13, 11:05, end of the orchestration session)
+### 11.7 Historical handoff (2026-11-13, 11:05; superseded by current checkpoint)
 
 Last commit of the session: see `git log` (`65fc8d1b` and the handoff commit after it). Server build
 `generated/builds/20261113-110054-server.log` is green and staged in `generated/linux-stage`.

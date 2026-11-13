@@ -92,9 +92,10 @@ def _configured_network_key():
 class MatchmakingService:
     """Ticket, websocket, session and key state for one backend instance."""
 
-    def __init__(self, ctx, accounts, state_step_sec=STATE_STEP_SEC, websocket_origin=None, gameservers=None):
+    def __init__(self, ctx, accounts, state_step_sec=STATE_STEP_SEC, websocket_origin=None, gameservers=None, oauth=None):
         self.ctx = ctx
         self.accounts = accounts
+        self.oauth = oauth
         self.gameservers = gameservers
         self.state_step_sec = state_step_sec
         origin = websocket_origin or f"wss://{MATCHMAKING_HOST}"
@@ -115,6 +116,9 @@ class MatchmakingService:
         self._tickets = {}
         self._sessions = {}
         self._session_keys = {}
+        # Local client associations and views do not control dedicated-server admission.
+        self._departed = set()
+        self._client_views = {}
 
     def _session_record(self, session_id, owner_id, owner_name, players):
         return {
@@ -269,12 +273,54 @@ class MatchmakingService:
         the accountId query parameter or prove the game-server connection succeeded.
         """
         if self.gameservers is not None:
-            return self.gameservers.join(session_id, account_id)
+            result = self.gameservers.join(session_id, account_id)
+        else:
+            with self._lock:
+                session = self._sessions.get(session_id)
+                result = ((204, None) if session and account_id in
+                          session["publicPlayers"] + session["privatePlayers"] else None)
+        if result is not None:
+            with self._lock:
+                self._departed.discard((session_id, account_id))
+        return result
+
+    def client_operation(self, req, session_id, operation):
+        """Local policy for client session views; never alter server-owned admission.
+
+        The observed client sends these requests on its joined game session. 204 is
+        a local response policy; the original backend's response is not recovered.
+        """
+        account_id = self.oauth.account_session(req).account_id
+        result = self.session(session_id)
+        if result is None:
+            return None
+        record = result[1]
+        roster = record["publicPlayers"] + record["privatePlayers"]
+        if account_id not in roster:
+            return None
+        key = (session_id, account_id)
         with self._lock:
-            session = self._sessions.get(session_id)
-            if session is None or account_id not in session["publicPlayers"] + session["privatePlayers"]:
+            if key in self._departed:
                 return None
-            return 204, None
+            if operation == "players":
+                body = req.json_object()
+                public, private = body.get("publicPlayers"), body.get("privatePlayers")
+                if (not isinstance(public, list) or not isinstance(private, list) or
+                        any(not isinstance(p, str) or p not in roster for p in public + private) or
+                        account_id not in public + private or len(public + private) != len(set(public + private))):
+                    raise ApiError(400, Err.INVALID_PAYLOAD, "Invalid session player registration.")
+                self._client_views[key] = {"publicPlayers": list(public), "privatePlayers": list(private)}
+            elif operation == "update":
+                body = req.json_object()
+                if body.get("id") != session_id:
+                    raise ApiError(400, Err.INVALID_PAYLOAD, "Session ID does not match the request.")
+                # Preserve only the submitting client's view; canonical server metadata
+                # and admission roster remain untouched.
+                self._client_views[key] = body
+            elif operation == "destroy":
+                self._client_views.pop(key, None)
+                self._departed.add(key)
+        return 204, None
 
     def session_key(self, account_id, session_id):
         """Answer GET .../matchmaking/account/{acct}/session/{sid}. None if the session is unknown.
@@ -302,6 +348,13 @@ class MatchmakingService:
         router.add("GET", r"(?:/fortnite)?/api/matchmaking/session/([^/]+)",
                    lambda req, match: _found(self.session(match.group(1)), match.group(0)),
                    name="matchmaking.session", status="observed")
+        for method, suffix, operation in (("POST", "", "update"), ("DELETE", "", "destroy"),
+                                           ("POST", "/players", "players"),
+                                           ("POST", "/heartbeat", "heartbeat")):
+            router.add(method, r"(?:/fortnite)?/api/matchmaking/session/([^/]+)" + suffix,
+                       lambda req, match, op=operation: _found(self.client_operation(req, match.group(1), op),
+                                                               match.group(0)),
+                       name="matchmaking.client_" + operation, status="inferred")
         router.add("POST", r"(?:/fortnite)?/api/matchmaking/session/([^/]+)/join",
                    lambda req, match: _found(self.join(match.group(1), req.query.get("accountId", "")),
                                              match.group(0)),

@@ -1,4 +1,5 @@
 #include "FortAthenaBuilding.h"
+#include "FortBuildingClassCache.h"
 
 #include "AFortGameStateAthena.h"
 #include "AFortInventory.h"
@@ -131,17 +132,9 @@ void FortAthenaBuilding::PrepareBuildableClasses(AFortGameStateAthena* GameState
 {
 	if (!Enabled() || !GameState)
 		return;
-	// stand-in for the AFortGameStateZone constructor defaults (our generated class has none): Battle Royale builds
-	// anywhere, so building without layout requirements must be allowed. The flag replicates; with our default false the
-	// vanilla client showed every build preview red and never sent ServerCreateBuildingActor (run 30).
-	GameState->bAllowBuildingWithoutLayoutRequirements = true;
-	GameState->bAllowBuildingAtLayoutRequirements = true;
-	GameState->bAllowLayoutRequirementsFeature = false;
-	// Client 0x141ea12b0: -1 disables the structure cap; otherwise placement
-	// fails when TotalPlayerStructures >= MaxPlayerStructures. Generated
-	// constructors leave both replicated counters at zero.
-	GameState->MaxPlayerStructures = -1;
-	GameState->ForceNetUpdate();
+	if (FParse::Param(FCommandLine::Get(), TEXT("FortniteBuildingClassCacheProbe")))
+		FortBuildingClassCache::Prepare(GameState);
+	// Native caps and layout flags now inherit recovered defaults; preserve cooked/playlist overrides.
 	// binary 0x141e92db0 / 0x141df9620: enumerate the object library's
 	// bIsPlayerBuildable entries, then sort them. A partial staged set cannot
 	// reproduce the client's handles; do not create a misleading table from it.

@@ -1,0 +1,89 @@
+diff --git a/Engine/Source/Runtime/Engine/Classes/Engine/NetworkDelegates.h b/Engine/Source/Runtime/Engine/Classes/Engine/NetworkDelegates.h
+index 3e5d741f8..5b7738d65 100644
+--- a/Engine/Source/Runtime/Engine/Classes/Engine/NetworkDelegates.h
++++ b/Engine/Source/Runtime/Engine/Classes/Engine/NetworkDelegates.h
+@@ -10,6 +10,7 @@
+ #include "UObject/CoreNet.h"
+ 
+ class UPendingNetGame;
++class UNetConnection;
+ 
+ /**
+ * Accepting connection response codes
+@@ -206,6 +207,11 @@ public:
+ 	DECLARE_DELEGATE_TwoParams(FReceivedNetworkEncryptionToken, const FString& /*EncryptionToken*/, const FOnEncryptionKeyResponse& /*Delegate*/);
+ 	static FReceivedNetworkEncryptionToken OnReceivedNetworkEncryptionToken;
+ 
++	// Optional server-side check after NMT_Login decoding and before PreLogin/WelcomePlayer.
++	// Split joins have no independently verified encryption handshake.
++	DECLARE_DELEGATE_RetVal_ThreeParams(bool, FValidateConnectionLogin, UNetConnection*, const FString&, bool);
++	static FValidateConnectionLogin OnValidateConnectionLogin;
++
+ 	/**
+ 	 * Delegate fired when encryption has been setup and acknowledged by the host.  The client should setup their connection to continue future communication via encryption
+ 	 *
+diff --git a/Engine/Source/Runtime/Engine/Private/NetworkDelegates.cpp b/Engine/Source/Runtime/Engine/Private/NetworkDelegates.cpp
+index ce945f613..c0571332e 100644
+--- a/Engine/Source/Runtime/Engine/Private/NetworkDelegates.cpp
++++ b/Engine/Source/Runtime/Engine/Private/NetworkDelegates.cpp
+@@ -3,6 +3,7 @@
+ #include "Engine/NetworkDelegates.h"
+ 
+ FNetDelegates::FReceivedNetworkEncryptionToken FNetDelegates::OnReceivedNetworkEncryptionToken;
++FNetDelegates::FValidateConnectionLogin FNetDelegates::OnValidateConnectionLogin;
+ FNetDelegates::FReceivedNetworkEncryptionAck FNetDelegates::OnReceivedNetworkEncryptionAck;
+ FNetDelegates::FOnPendingNetGameConnectionCreated FNetDelegates::OnPendingNetGameConnectionCreated;
+ FNetDelegates::FNetworkCheatDetected FNetDelegates::OnNetworkCheatDetected;
+diff --git a/Engine/Source/Runtime/Engine/Private/World.cpp b/Engine/Source/Runtime/Engine/Private/World.cpp
+index 41230cc3b..5aa543e8b 100644
+--- a/Engine/Source/Runtime/Engine/Private/World.cpp
++++ b/Engine/Source/Runtime/Engine/Private/World.cpp
+@@ -5119,7 +5119,12 @@ void UWorld::NotifyControlMessage(UNetConnection* Connection, uint8 MessageType,
+ 					FString ErrorMsg;
+ 					AGameModeBase* GameMode = GetAuthGameMode();
+ 
+-					if (GameMode)
++					if (FNetDelegates::OnValidateConnectionLogin.IsBound() &&
++						!FNetDelegates::OnValidateConnectionLogin.Execute(Connection, UniqueIdRepl.IsValid() ? UniqueIdRepl->ToString() : FString(), false))
++					{
++						ErrorMsg = TEXT("Login denied");
++					}
++					else if (GameMode)
+ 					{
+ 						GameMode->PreLogin(Tmp, Connection->LowLevelGetRemoteAddress(), Connection->PlayerId, ErrorMsg);
+ 					}
+@@ -5251,7 +5256,12 @@ void UWorld::NotifyControlMessage(UNetConnection* Connection, uint8 MessageType,
+ 					// go through the same full login process for the split player even though it's all in the same frame
+ 					FString ErrorMsg;
+ 					AGameModeBase* GameMode = GetAuthGameMode();
+-					if (GameMode)
++					if (FNetDelegates::OnValidateConnectionLogin.IsBound() &&
++						!FNetDelegates::OnValidateConnectionLogin.Execute(Connection, SplitRequestUniqueIdRepl.IsValid() ? SplitRequestUniqueIdRepl->ToString() : FString(), true))
++					{
++						ErrorMsg = TEXT("Login denied");
++					}
++					else if (GameMode)
+ 					{
+ 						GameMode->PreLogin(Tmp, Connection->LowLevelGetRemoteAddress(), SplitRequestUniqueIdRepl, ErrorMsg);
+ 					}
+diff --git a/Engine/Source/Runtime/Online/HTTP/Private/Curl/CurlHttp.cpp b/Engine/Source/Runtime/Online/HTTP/Private/Curl/CurlHttp.cpp
+index 6d78b21ef..a683d74a3 100644
+--- a/Engine/Source/Runtime/Online/HTTP/Private/Curl/CurlHttp.cpp
++++ b/Engine/Source/Runtime/Online/HTTP/Private/Curl/CurlHttp.cpp
+@@ -697,6 +697,16 @@ bool FCurlHttpRequest::SetupRequest()
+ 	QUICK_SCOPE_CYCLE_COUNTER(STAT_FCurlHttpRequest_SetupRequest);
+ 	check(EasyHandle);
+ 
++	// These loopback registry requests carry a server secret and return a session key.
++	// Do not forward their credentials across redirects or dump headers in curl debug output.
++	const bool bLocalGameServerRequest = URL.StartsWith(TEXT("http://127.0.0.1:")) && URL.Contains(TEXT("/local/gameserver/"));
++	if (bLocalGameServerRequest)
++	{
++		curl_easy_setopt(EasyHandle, CURLOPT_PROXY, "");
++	}
++	curl_easy_setopt(EasyHandle, CURLOPT_FOLLOWLOCATION, bLocalGameServerRequest ? 0L : 1L);
++	curl_easy_setopt(EasyHandle, CURLOPT_VERBOSE, bLocalGameServerRequest ? 0L : 1L);
++
+ 	if (!RequestPayload.IsValid())
+ 	{
+ 		RequestPayload = MakeUnique<FRequestPayloadInMemory>(TArray<uint8>());

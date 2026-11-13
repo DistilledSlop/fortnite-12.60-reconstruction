@@ -12,7 +12,7 @@ namespace FortAthenaEndGame
 {
     bool IsEnabled();
     // Called after Health has removed the victim from its alive list and reported victim placement.
-    void OnPlayerEliminated(AFortGameModeAthena* GameMode, int32 OldPlayersLeft,
+    void OnPlayerEliminated(AFortGameModeAthena* GameMode, int32 OldPlayersLeft, int32 NewPlayersLeft,
         AFortPlayerControllerAthena* Survivor, AFortPawn* FinisherPawn,
         UFortWeaponItemDefinition* FinishingWeapon, EDeathCause DeathCause);
     // Called by MatchFlow's existing driver. QuickEndGame is a solo-only test stand-in.

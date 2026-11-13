@@ -2481,6 +2481,14 @@ _native_checkpoint3058_spec = _common_activation_import.spec_from_file_location(
     "native_checkpoint3058_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "native_checkpoint3058_runtime", "source_policy.py"))
 _native_checkpoint3058_policy = _common_activation_import.module_from_spec(_native_checkpoint3058_spec)
 _native_checkpoint3058_spec.loader.exec_module(_native_checkpoint3058_policy)
+_athena_loot_spec = _common_activation_import.spec_from_file_location(
+    "athena_loot_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "athena_loot_runtime", "source_policy.py"))
+_athena_loot_policy = _common_activation_import.module_from_spec(_athena_loot_spec)
+_athena_loot_spec.loader.exec_module(_athena_loot_policy)
+_server_baseline_spec = _common_activation_import.spec_from_file_location(
+    "server_baseline_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "server_baseline_runtime", "source_policy.py"))
+_server_baseline_policy = _common_activation_import.module_from_spec(_server_baseline_spec)
+_server_baseline_spec.loader.exec_module(_server_baseline_policy)
 _dayphase_callback_spec = _common_activation_import.spec_from_file_location(
     "dayphase_callback60_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "dayphase_callback60_runtime", "source_policy.py"))
 _dayphase_callback_policy = _common_activation_import.module_from_spec(_dayphase_callback_spec)
@@ -4886,6 +4894,8 @@ def promote(args):
                         raise ValueError("native body type %s cannot be emitted: %s" % (token, reason))
                     seeds.setdefault(info.fn, set()).add("")
     _native_checkpoint3058_policy.add_roots(gate, seeds)
+    _athena_loot_policy.add_roots(gate, seeds)
+    _server_baseline_policy.add_roots(gate, seeds)
     _common_input_policy.add_roots(gate, seeds)
     # Native anim-node structs that only Animation Blueprint generated classes reference (so no promoted class
     # reaches them): every promoted-package struct whose parent chain reaches FAnimNode_Base. Without the real struct
@@ -4912,6 +4922,7 @@ def promote(args):
     if 'CommonUI' in module_deps:
         _action_commited_policy.add_roots(gate, seeds)
     models, texts, all_used = emit_types(gate, seeds, source_label, class_models + iface_models)
+    _server_baseline_policy.preserve_playlist(gate, models, texts)
     # struct_net (behaviour kind): each native NetSerialize is checked as text in its header, and every entry is reported
     # as spliced or rejected with its reason. Nothing is written before this check.
     native_structs = {}
@@ -5746,6 +5757,7 @@ class TypeGate:
                 model["blueprint_type"] = True
             model = _native_checkpoint2040_policy.apply_struct(info, model)
             model = _native_checkpoint3058_policy.apply_struct(info, model)
+            model = _athena_loot_policy.apply_struct(info, model)
             model = _maps_fog_policy.apply_struct(info, model)
             model = _maps_wind_handle_policy.apply_struct(info, model)
             model = _maps_wind_break_policy.apply_struct(info, model)
@@ -6104,6 +6116,7 @@ def render_struct_header(model, source_label):
     lines.extend(_confirmation_policy.declarations(model))
     lines.extend(_common_input_policy.declarations(model))
     lines.extend(_input_platform_policy.declarations(model))
+    lines.extend(_athena_loot_policy.declarations(model))
     if delta:
         item = net["item"]
         lines.append("\t// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable %s, traits %s): the"
@@ -6132,6 +6145,7 @@ def render_struct_header(model, source_label):
     if postlude:
         lines.append(postlude)
     lines.extend(_confirmation_policy.footer(model))
+    lines.extend(_athena_loot_policy.footer(model))
     lines.extend(_maps_wind_building_policy.postamble(model))
     lines.extend(_ui_root_layout_policy.postamble(model))
     lines.extend(native_serializer_traits(name))

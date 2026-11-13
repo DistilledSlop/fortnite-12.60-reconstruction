@@ -16,6 +16,7 @@
 #include "EngineUtils.h"
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaHealth.h"
+#include "FortAthenaEndGame.h"
 #include "Engine/LevelStreaming.h"
 #include "LandscapeProxy.h"
 
@@ -30,6 +31,7 @@
 #include "AFortPlayerPawn.h"
 #include "AFortPawn.h"
 #include "UFortPlaylistAthena.h"
+#include "FortAthenaLootData.h"
 #include "UFortControllerComponent_Aircraft.h"
 #include "FAircraftFlightInfo.h"
 #include "FFortSafeZoneDefinition.h"
@@ -499,6 +501,8 @@ namespace FortAthenaMatchFlowPrivate
             return false;
         }
         S.Playlist = Playlist;
+        if (FParse::Param(FCommandLine::Get(), TEXT("FortniteLootDataProbe")))
+            FortAthenaLootData::Initialize(GameMode, Playlist);
         GameState->CurrentPlaylistInfo.BasePlaylist = Playlist;
         GameState->CurrentPlaylistInfo.OverridePlaylist = nullptr;
         GameState->CurrentPlaylistInfo.PlaylistReplicationKey++;
@@ -507,14 +511,6 @@ namespace FortAthenaMatchFlowPrivate
         CallUFunction(GameState, TEXT("OnRep_CurrentPlaylistInfo"));
         // 0x1419b47b0 (playlist values into the GameState), first statement only: CachedSafeZoneStartUp.
         GameState->CachedSafeZoneStartUp = Playlist->SafeZoneStartUp;
-        // stand-in for the class default: the client's UFortPlaylistAthena constructor stores -1 at +0x8cc
-        // (LastSafeZoneIndex, "no last phase"); our generated class has no constructor, so the default is 0 and the
-        // storm stopped after phase 0 (run 25). Playlist_DefaultSolo does not set the property, so the default applies.
-        if (Playlist->LastSafeZoneIndex == 0)
-        {
-            Playlist->LastSafeZoneIndex = -1;
-            GetMutableDefault<UFortPlaylistAthena>()->LastSafeZoneIndex = -1;
-        }
         LogOnce(TEXT("playlist-copy"), TEXT("0x1419b47b0 playlist-to-GameState copy ported only for CachedSafeZoneStartUp; loot preload 0x1419a0870 not ported"));
         // HandleMatchHasStarted (D2 3 step 3): playlist may skip warmup / aircraft.
         if (Playlist->bSkipWarmup) { S.bSkipWarmup = true; UE_LOG(LogTemp, Display, TEXT("MatchFlow: Skipping Warmup due to playlist settings")); }
@@ -580,12 +576,7 @@ namespace FortAthenaMatchFlowPrivate
             GameMode->SafeZoneIndicatorClass ? *GameMode->SafeZoneIndicatorClass->GetName() : TEXT("none"),
             GameMode->GE_OutsideSafeZone ? *GameMode->GE_OutsideSafeZone->GetName() : TEXT("none"));
 
-        // Start values the code tests (R1 4 step 2, R2 4 step 2). Our generated constructors leave them at 0.
-        GameState->WarmupCountdownStartTime = -1.0f;
-        GameState->WarmupCountdownEndTime = -1.0f;
-        GameState->SafeZonePauseTime = -1.0f;
-        GameState->SafeZonesStartTime = -1.0f;  // stand-in: start value not established by the cards; -1 = "not armed"
-        GameState->AircraftStartTime = -1.0f;   // stand-in: start value not established by the cards
+        // Initial time sentinels and playlist defaults come from FortOriginalDefaults before Blueprint loading.
         return true;
     }
 
@@ -884,6 +875,8 @@ namespace FortAthenaMatchFlowPrivate
             // Analytics record and StartMatchAbandonProcess 0x14196d920 (924 lines, not read) left out.
             LogOnce(TEXT("abandon"), TEXT("StartAircraftPhase: analytics and StartMatchAbandonProcess 0x14196d920 not ported"));
         }
+
+        FortAthenaHealth::BeginMatch(GameMode);
 
         // Step 6: empty the warmup island.
         for (FConstPlayerControllerIterator It = World->GetPlayerControllerIterator(); It; ++It)
@@ -1569,6 +1562,7 @@ namespace FortAthenaMatchFlowPrivate
         const float Delta = S.LastDriverTime < 0.0f ? 0.0f : WorldTime - S.LastDriverTime;
         S.LastDriverTime = WorldTime;
         FortAthenaInventory::Tick(World);
+        FortAthenaEndGame::Tick(GameMode, Delta);
 
         // HandleMatchHasStarted -> StartWarmupPhase. inferred: deferred until RequiredPlayers have joined (the original
         // waits for the match to start; with no player the countdown would end in the "all players disconnected" branch).

@@ -1,4 +1,5 @@
 #include "FortniteAthenaGameplay.h"
+#include "FortAthenaRegisteredSession.h"
 #include "UObject/ConstructorHelpers.h"
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaHealth.h"
@@ -87,22 +88,24 @@ void AApolloSunLight::BeginPlay()
     UE_LOG(LogTemp, Display, TEXT("Apollo sun light ready: authority=%d"), HasAuthority() ? 1 : 0);
 }
 
+// Preserve the server class choice after engine initialization. Loading this
+// cooked Blueprint from the native CDO constructor can initialize gameplay tags
+// inside async export serialization and recursively flush the async loader.
+void InitializeFortAthenaGameStateClass()
+{
+    if (UClass* Class = LoadClass<AFortGameStateAthena>(nullptr,
+        TEXT("/Game/Athena/Athena_GameState.Athena_GameState_C")))
+    {
+        GetMutableDefault<AFortGameModeAthena>()->GameStateClass = Class;
+    }
+}
+
 AFortGameModeAthena::AFortGameModeAthena()
 {
     // Existing pawn default retained while original ancestor constructors are recovered.
     DefaultPawnClass = AFortPlayerPawnAthena::StaticClass();
     // Exact class-default stores recovered from original constructor 0x14192dab0.
     GameStateClass = AFortGameStateAthena::StaticClass(); // 0x14192e508, +0x230
-    {
-        // The client decides whether to keep its loading screen from class defaults that only the Blueprint
-        // subclass carries (bShowLoadingScreenUntilAllLevelAreLoaded, volume manager class), and those are not
-        // replicated. Spawn the original Athena_GameState_C so the client's own class defaults apply.
-        static ConstructorHelpers::FClassFinder<AFortGameStateAthena> BlueprintGameState(TEXT("/Game/Athena/Athena_GameState"));
-        if (BlueprintGameState.Succeeded())
-        {
-            GameStateClass = BlueprintGameState.Class;
-        }
-    }
     PlayerControllerClass = AFortPlayerControllerAthena::StaticClass(); // 0x14192e514, +0x238
     PlayerStateClass = AFortPlayerStateAthena::StaticClass(); // 0x14192e520, +0x240
     HUDClass = AFortUIPvP::StaticClass(); // 0x14192e52c, +0x248
@@ -229,6 +232,7 @@ void AFortGameModeAthena::StartPlay()
         }
     }
     Super::StartPlay();
+    FortAthenaRegisteredSession::Start(this);
     FortAthenaInventory::InstallRpcOverrides();
     FortAthenaBuilding::InstallRpcOverrides();
     FortAthenaBuilding::PrepareBuildableClasses(GetGameState<AFortGameStateAthena>());

@@ -60,7 +60,11 @@ class GameplayService:
         replay = self.progression.replay_result(session_id, payload)
         if replay is not None:
             return 200, replay
-        self._member(session_id, payload.get("accountId"), include_expired=True)
+        # replay_result validates and canonicalizes the same defaults and types
+        # that record_result uses. The ledger is immutable once published.
+        if not self.gameservers.result_participant(session_id, payload["accountId"],
+                                                   payload.get("playlist", "defaultsolo")):
+            raise ApiError(403, Err.MISSING_PERMISSION, "The player was not reserved for this session and playlist.")
         return 200, self.progression.record_result(session_id, payload)
 
     def quest_event(self, req, match):

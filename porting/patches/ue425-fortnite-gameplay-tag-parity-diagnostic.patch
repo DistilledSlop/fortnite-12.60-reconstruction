@@ -1,0 +1,32 @@
+--- a/Engine/Source/Runtime/GameplayTags/Private/GameplayTagsManager.cpp
++++ b/Engine/Source/Runtime/GameplayTags/Private/GameplayTagsManager.cpp
+@@ -5,6 +5,8 @@
+ #include "HAL/PlatformFilemanager.h"
+ #include "HAL/FileManager.h"
+ #include "Misc/Paths.h"
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
+ #include "Misc/ScopeLock.h"
+ #include "Stats/StatsMisc.h"
+ #include "Misc/ConfigCacheIni.h"
+@@ -524,6 +526,20 @@
+ 	}
+ 
+ 	UE_LOG(LogGameplayTags, Log, TEXT("NetworkGameplayTagNodeIndexHash is %x"), NetworkGameplayTagNodeIndexHash);
++	if (FParse::Param(FCommandLine::Get(), TEXT("FortniteTraceGameplayTagParity")))
++	{
++		UE_LOG(LogGameplayTags, Display, TEXT("FortGameplayTagParity hash=%08x nodes=%d native=%d done=%d fast=%d containerbits=%d firstbits=%d truebits=%d invalid=%d tables=%d common=%d"),
++			NetworkGameplayTagNodeIndexHash, NetworkGameplayTagNodeIndex.Num(), NativeTagsToAdd.Num(), bDoneAddingNativeTags ? 1 : 0,
++			ShouldUseFastReplication() ? 1 : 0, NumBitsForContainerSize, NetIndexFirstBitSegment, NetIndexTrueBitNum,
++			InvalidTagNetIndex, GameplayTagTables.Num(), CommonlyReplicatedTags.Num());
++		for (int32 TableIdx = 0; TableIdx < GameplayTagTables.Num(); ++TableIdx)
++		{
++			const UDataTable* Table = GameplayTagTables[TableIdx];
++			UE_LOG(LogGameplayTags, Display, TEXT("FortGameplayTagParity table=%d object=%s rowstruct=%s rows=%d"), TableIdx,
++				*GetPathNameSafe(Table), Table ? *GetPathNameSafe(Table->GetRowStruct()) : TEXT("None"), Table ? Table->GetRowMap().Num() : -1);
++		}
++	}
++
+ }
+ 
+ FName UGameplayTagsManager::GetTagNameFromNetIndex(FGameplayTagNetIndex Index) const

@@ -1,4 +1,5 @@
 #include "FortAthenaEndGame.h"
+#include "FortAthenaHealth.h"
 #include "AFortGameModeAthena.h"
 #include "AFortGameStateAthena.h"
 #include "AFortPlayerControllerAthena.h"
@@ -47,6 +48,7 @@ namespace
             return;
         }
         bStarted = true;
+        FortAthenaHealth::FinalizeSurvival(Mode, PS);
         PS->Place = 1;
         PS->OnRep_Place();
         GS->WinningTeam = PS->TeamIndex;
@@ -61,6 +63,7 @@ namespace
             GS->WinningPlayerList.Add(Entry);
         }
         Winner->ClientNotifyWon(Finisher, Weapon, Cause);
+        FortAthenaHealth::SendPartialTeamStats(Mode, Winner, 1);
         GS->OnRep_WinningTeam();
         GS->OnRep_WinningPlayerState();
         GS->OnRep_WinningPlayerList();
@@ -79,14 +82,14 @@ bool FortAthenaEndGame::IsEnabled()
     return FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient"));
 }
 
-void FortAthenaEndGame::OnPlayerEliminated(AFortGameModeAthena* GameMode, int32 OldPlayersLeft,
+void FortAthenaEndGame::OnPlayerEliminated(AFortGameModeAthena* GameMode, int32 OldPlayersLeft, int32 NewPlayersLeft,
     AFortPlayerControllerAthena* Survivor, AFortPawn* FinisherPawn,
     UFortWeaponItemDefinition* FinishingWeapon, EDeathCause DeathCause)
 {
     if (!IsEnabled() || !GameMode) return;
     ResetFor(GameMode);
     AFortGameStateAthena* GS = GameMode->GetGameState<AFortGameStateAthena>();
-    if (GS && OldPlayersLeft >= 2 && GS->PlayersLeft == 1 && Survivor)
+    if (GS && OldPlayersLeft >= 2 && NewPlayersLeft == 1 && GS->PlayersLeft == NewPlayersLeft && Survivor)
         BeginSolo(GameMode, Survivor, FinisherPawn, FinishingWeapon, DeathCause);
 }
 
@@ -100,15 +103,7 @@ void FortAthenaEndGame::Tick(AFortGameModeAthena* GameMode, float DeltaSeconds)
     if (!GS || GS->PlayersLeft != 1 ||
         (GS->GamePhase != EAthenaGamePhase::Aircraft && GS->GamePhase != EAthenaGamePhase::SafeZones)) return;
     // stand-in: the testing switch permits one player without a prior elimination. Reject ambiguous rosters.
-    AFortPlayerControllerAthena* Survivor = nullptr;
-    for (FConstPlayerControllerIterator It = GameMode->GetWorld()->GetPlayerControllerIterator(); It; ++It)
-    {
-        AFortPlayerControllerAthena* PC = Cast<AFortPlayerControllerAthena>(It->Get());
-        AFortPawn* Pawn = PC ? Cast<AFortPawn>(PC->GetPawn()) : nullptr;
-        if (!Pawn || Pawn->bIsDying) continue;
-        if (Survivor) return;
-        Survivor = PC;
-    }
+    AFortPlayerControllerAthena* Survivor = FortAthenaHealth::GetSoleSurvivor(GameMode);
     if (Survivor)
         BeginSolo(GameMode, Survivor, Cast<AFortPawn>(Survivor->GetPawn()), nullptr, EDeathCause::WonMatch);
 }

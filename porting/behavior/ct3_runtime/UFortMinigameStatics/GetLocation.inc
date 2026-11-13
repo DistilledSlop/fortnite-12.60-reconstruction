@@ -1,6 +1,6 @@
 // Original body 0x14246ceb0 (thunk 0x1429d7fa0).
 // Offset evidence: [Player+0x278] = player-state pointer (undeclared, own region of ASOLFortPlayer: member_field NativeRecoveredUint64_0x278).
-// GetCurrentPawn (0x1419b6d20) on that state; [pawn+0x130] = RootComponent (reflected); [root+0x1d0..0x1d8] = x,y,z floats (member_fields in USceneComponent).
+// GetCurrentPawn (0x1419b6d20) on that state; [pawn+0x130] = RootComponent (reflected); [root+0x1d0..0x1d8] = ComponentToWorld translation (GetComponentLocation).
 // Null Player or null root component returns the zero fallback (writable snapshot 0.0 values at 0x148218630/0x148218638).
 // CONFIDENCE: MEDIUM
 if (Player == nullptr)
@@ -16,4 +16,4 @@ if (Root == nullptr)
 {
 	return FVector::ZeroVector;
 }
-return FVector(Root->NativeRecoveredFloat_0x1d0, Root->NativeRecoveredFloat_0x1d4, Root->NativeRecoveredFloat_0x1d8);
+return Root->GetComponentLocation();

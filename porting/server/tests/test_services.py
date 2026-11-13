@@ -1302,6 +1302,79 @@ class MatchmakingTests(ServiceTestCase):
                                f"/api/game/v2/matchmaking/account/{'2' * 32}/session/{session_id}"),
                          404, Err.NOT_FOUND)
 
+    def test_client_session_lifecycle_does_not_mutate_shared_session(self):
+        other = self.new_account("SecondPlayer")
+        outsider = self.new_account("Outsider")
+        owner_token = self.sign_in()["access_token"]
+        other_token = self.sign_in_account(other)["access_token"]
+        outsider_token = self.sign_in_account(outsider)["access_token"]
+        self.backend.matchmaking.ticket(LOCAL, {"partyPlayerIds": other})
+        sid = next(iter(self.backend.matchmaking._sessions))
+        path = f"/fortnite/api/matchmaking/session/{sid}"
+        before = jcall(self.base, "GET", path)[1]
+        self.assertEqual(jcall(self.base, "POST", path + "/players", token=owner_token,
+                               body={"publicPlayers": [LOCAL], "privatePlayers": []})[0], 204)
+        self.assertEqual(jcall(self.base, "POST", path + "/heartbeat", token=owner_token)[0], 204)
+        self.assertEqual(jcall(self.base, "POST", path, token=owner_token,
+                               body={"id": sid, "serverAddress": "attacker", "publicPlayers": []})[0], 204)
+        self.assertEqual(jcall(self.base, "GET", path)[1], before)
+        self.assertEqual(jcall(self.base, "POST", path + "/heartbeat")[0], 401)
+        self.assertEqual(jcall(self.base, "POST", path + "/heartbeat", token=outsider_token)[0], 404)
+        self.assertEqual(jcall(self.base, "POST", path + "/players", token=owner_token,
+                               body={"publicPlayers": [LOCAL, outsider], "privatePlayers": []})[0], 400)
+        self.assertEqual(jcall(self.base, "DELETE", path, token=owner_token)[0], 204)
+        self.assertEqual(jcall(self.base, "POST", path + "/heartbeat", token=owner_token)[0], 404)
+        self.assertEqual(jcall(self.base, "POST", path + "/heartbeat", token=other_token)[0], 204)
+        self.assertEqual(jcall(self.base, "GET", path)[1], before)
+        self.assertEqual(jcall(self.base, "POST", path + "/join?accountId=" + LOCAL)[0], 204)
+        self.assertEqual(jcall(self.base, "POST", path + "/heartbeat", token=owner_token)[0], 204)
+
+    def test_client_departure_preserves_registered_server_and_reservations(self):
+        self.start_backend(Backend(clock=self.clock, registered_matchmaking=True, gameserver_secret="test"))
+        token = self.sign_in()["access_token"]
+        req = lambda body: api_common.Request("POST", "/", body=json.dumps(body).encode(),
+                                               headers={"Authorization": "Bearer test"})
+        registry = self.backend.gameservers
+        sid = registry.register_server(req({"address": "127.0.0.1", "port": 7777,
+            "playlists": ["solo"], "maxPlayers": 2, "buildUniqueId": "12896485"}))[1]["sessionId"]
+        registry.update_state(req({"phase": "warmup", "numPlayers": 0, "joinable": True}), sid)
+        self.assertEqual(registry.reserve("solo", [LOCAL]), sid)
+        path = f"/api/matchmaking/session/{sid}"
+        before = registry.get_session(sid)
+        self.assertEqual(jcall(self.base, "POST", path + "/heartbeat", token=token)[0], 204)
+        self.assertEqual(jcall(self.base, "DELETE", path, token=token)[0], 204)
+        self.assertEqual(registry.get_session(sid), before)
+        self.assertEqual(jcall(self.base, "GET", path)[0], 200)
+        self.clock.now += 30
+        self.assertEqual(jcall(self.base, "POST", path + "/heartbeat", token=token)[0], 404)
+
+    def test_registered_admission_requires_secret_live_reservation_and_exact_identity(self):
+        self.start_backend(Backend(clock=self.clock, registered_matchmaking=True, gameserver_secret="test"))
+        req = lambda body: api_common.Request("POST", "/", body=json.dumps(body).encode(),
+                                               headers={"Authorization": "Bearer test"})
+        registry = self.backend.gameservers
+        sid = registry.register_server(req({"address": "127.0.0.1", "port": 7777,
+            "playlists": ["solo"], "maxPlayers": 2, "buildUniqueId": "12896485"}))[1]["sessionId"]
+        registry.update_state(req({"phase": "warmup", "numPlayers": 0, "joinable": True}), sid)
+        account = "Ab" * 16
+        self.assertEqual(registry.reserve("solo", [account]), sid)
+        path = f"/local/gameserver/{sid}/admission"
+        admit = lambda body, token="test": jcall(self.base, "POST", path, token=token, body=body)[0]
+        self.assertEqual(admit({"accountId": account}, token="wrong"), 401)
+        self.assertEqual(admit({"accountId": account}), 204)
+        self.assertEqual(admit({"accountId": account}), 204)
+        self.assertEqual(admit({"accountId": account.lower()}), 404)
+        self.assertEqual(admit({"accountId": "other"}), 404)
+        self.assertEqual(admit({"accountId": []}), 400)
+        registry.update_state(req({"phase": "warmup", "numPlayers": 1, "joinable": True,
+                                   "connectedPlayerIds": [account]}), sid)
+        registry.update_state(req({"phase": "warmup", "numPlayers": 0, "joinable": True,
+                                   "connectedPlayerIds": []}), sid)
+        self.assertEqual(admit({"accountId": account}), 404)
+        self.assertEqual(registry.reserve("solo", [account]), sid)
+        self.clock.now += 30
+        self.assertEqual(admit({"accountId": account}), 404)
+
     def test_unknown_ticket_is_closed_with_1008(self):
         sock, stream, status_line, _ = ws.ws_open(self.server.port,
                                                   matchmaking.MATCHMAKING_WS_PATH + "/" + "0" * 32, None)

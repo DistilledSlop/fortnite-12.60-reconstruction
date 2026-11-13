@@ -1,0 +1,49 @@
+diff --git a/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPathProperty.cpp b/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPathProperty.cpp
+index 0c1721b83..4c5b80ba3 100644
+--- a/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPathProperty.cpp
++++ b/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPathProperty.cpp
+@@ -8,6 +8,7 @@
+ #include "UObject/ConstructorHelpers.h"
+ #include "Misc/Parse.h"
+ #include "UObject/PropertyHelper.h"
++#include "Misc/CommandLine.h"
+ 
+ // WARNING: This should always be the last include in any file that needs it (except .generated.h)
+ #include "UObject/UndefineUPropertyMacros.h"
+@@ -78,6 +79,36 @@ bool FFieldPathProperty::Identical( const void* A, const void* B, uint32 PortFla
+ void FFieldPathProperty::SerializeItem(FStructuredArchive::FSlot Slot, void* Value, void const* Defaults) const
+ {
+ 	FFieldPath* FieldPtr = GetPropertyValuePtr(Value);
++	FArchive& Ar = Slot.GetUnderlyingArchive();
++	if (Ar.IsNetArchive() && FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")))
++	{
++		// Client 0x142e70500 writes only the full innermost-to-package FName
++		// array; it has no separately serialized owner UObject.
++		if (Ar.IsSaving())
++		{
++			TArray<FName> FullPath = FieldPtr->Path;
++			if (FullPath.Num() != 0)
++			{
++				for (UObject* Outer = FieldPtr->ResolvedOwner.Get(); Outer; Outer = Outer->GetOuter())
++				{
++					FullPath.Add(Outer->GetFName());
++				}
++			}
++			Ar << FullPath;
++		}
++		else
++		{
++			FieldPtr->Reset();
++			Ar << FieldPtr->Path;
++			if (!Ar.IsError() && FieldPtr->Path.Num() != 0)
++			{
++				// Restore the local short-path representation without reading
++				// owner-reference bits absent from the legacy wire format.
++				FieldPtr->ResolvedOwner = FieldPtr->ConvertFromFullPath(nullptr);
++			}
++		}
++		return;
++	}
+ 	Slot << *FieldPtr;
+ }
+ 

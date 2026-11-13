@@ -1,0 +1,29 @@
+{
+  "FFortLootPackageData": {
+    "fn": "0x14298adf0",
+    "package": "/Script/FortniteGame",
+    "size": 200,
+    "align": 8,
+    "super_fn": "0x1446f29a0",
+    "ops_vtable": "0x14642d468",
+    "properties_sha256": "756dfda577de8abda36e99ffb150a9e6f396420a7b8d6dda1d210c0fe986823b"
+  },
+  "FFortLootTierData": {
+    "fn": "0x14298ae50",
+    "package": "/Script/FortniteGame",
+    "size": 224,
+    "align": 8,
+    "super_fn": "0x1446f29a0",
+    "ops_vtable": "0x14642da40",
+    "properties_sha256": "cc8ea9aa73c4f8a3b38e50b3a28d0be8f5287309dbd234c246056f74bce1171a"
+  },
+  "FFortLootLevelData": {
+    "fn": "0x14298adc0",
+    "package": "/Script/FortniteGame",
+    "size": 32,
+    "align": 8,
+    "super_fn": "0x1446f29a0",
+    "ops_vtable": "0x14642d338",
+    "properties_sha256": "574056d5424bd6888a98dcf1bfff9b6067a390e43b7ad46fe9977f85b6dc2b73"
+  }
+}

@@ -1,4 +1,9 @@
 #include "Engine/NetworkDelegates.h"
+#include "Engine/Engine.h"
+#include "FortNativeGameplayTagsRuntime.h"
+#include "Private/FortOriginalDefaults.h"
+#include "Private/FortAthenaRegisteredSession.h"
+#include "Private/FortAthenaGameData.h"
 #include "AFortPlayerPawn.h"
 #include "UFortRuntimeOptions.h"
 #include "Engine/StaticMesh.h"
@@ -138,6 +143,11 @@ static FEncryptionKeyResponse MakeConfiguredKeyResponse()
 // tokens to per-session keys belongs to the reconstructed backend, not this module.
 static void ReceivedNetworkEncryptionToken(const FString& EncryptionToken, const FOnEncryptionKeyResponse& Delegate)
 {
+    if (FortAthenaRegisteredSession::Enabled())
+    {
+        FortAthenaRegisteredSession::ReceiveToken(EncryptionToken, Delegate);
+        return;
+    }
     const FEncryptionKeyResponse Response = MakeConfiguredKeyResponse();
     if (Response.Response == EEncryptionResponse::Success)
     {
@@ -187,12 +197,19 @@ static void BindNetworkEncryptionDelegate()
     FNetDelegates::OnReceivedNetworkEncryptionAck.BindStatic(&ReceivedNetworkEncryptionAck);
 }
 
+extern void InitializeFortAthenaGameStateClass();
+
 class FFortniteGameModule : public FDefaultGameModuleImpl
 {
 public:
     virtual void StartupModule() override
     {
         FDefaultGameModuleImpl::StartupModule();
+        // Separate engine callback broadcasts before the core callback that finalizes tags.
+        // Loading table assets in module StartupModule can recurse through pending CDO loads.
+        PRAGMA_DISABLE_DEPRECATION_WARNINGS
+        UEngine::OnPostEngineInit.AddStatic(&FFortniteGameModule::InitializeOriginalNativeGameplayTags);
+        PRAGMA_ENABLE_DEPRECATION_WARNINGS
         RegisterContextRuntimeProbeDriver();
         RegisterQueueConnectedFlowDriver();
         RegisterActivationBaseProbeDriver();
@@ -221,6 +238,7 @@ public:
         FNetworkVersion::GetLocalNetworkVersionOverride.BindStatic(&GetFortniteNetworkVersion);
         FNetworkVersion::IsNetworkCompatibleOverride.BindStatic(&IsFortniteNetworkCompatible);
         BindNetworkEncryptionDelegate();
+        FortAthenaRegisteredSession::Initialize();
         if (FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")) && GConfig != nullptr)
         {
             // The original 12.60 client's packet handler chain is Oodle, AES, StatelessConnect and the Oodle
@@ -231,12 +249,9 @@ public:
             const TArray<FString> OriginalClientComponents = { TEXT("OodleHandlerComponent") };
             GConfig->SetArray(TEXT("PacketHandlerComponents"), TEXT("Components"), OriginalClientComponents, GEngineIni);
         }
-        FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::OnEngineInitForNetwork);
-        FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::ProbeAsset);
-        FCoreDelegates::OnPostEngineInit.AddStatic(&RunOriginalVulkanShaderProbe);
-        FCoreDelegates::OnPostEngineInit.AddStatic(&RunLegacyMaterialShaderMapProbe);
-        FCoreDelegates::OnPostEngineInit.AddStatic(&ProbeLegacyOriginalMaterial);
-        FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::ProbeGameVersion);
+        // Multicast delegates do not guarantee registration order. Keep CDO
+        // repair ahead of every cooked-data/probe load in one ordered callback.
+        FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::OnEngineInitialized);
         FWorldDelegates::OnPostWorldInitialization.AddStatic(&FFortniteGameModule::OnWorldInitialized);
         if (FParse::Param(FCommandLine::Get(), TEXT("NetSerializeSelfTest")))
         {
@@ -245,6 +260,24 @@ public:
     }
 
 private:
+    static void InitializeOriginalNativeGameplayTags()
+    {
+        FFortNativeGameplayTagsRuntime::Get();
+    }
+
+    static void OnEngineInitialized()
+    {
+        FortOriginalDefaults::Apply();
+        InitializeFortAthenaGameStateClass();
+        FortAthenaGameData::Initialize();
+        OnEngineInitForNetwork();
+        ProbeAsset();
+        RunOriginalVulkanShaderProbe();
+        RunLegacyMaterialShaderMapProbe();
+        ProbeLegacyOriginalMaterial();
+        ProbeGameVersion();
+    }
+
     static void ProbeGameVersion()
     {
         if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeGameVersion")))

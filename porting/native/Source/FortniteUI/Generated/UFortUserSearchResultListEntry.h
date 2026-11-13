@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	UCommonRichTextBlock* Text_NameMatchesAndMutuals;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetNamePlatformAndMutuals(FText& DisplayName, FText& Platform, int32 MutualCount);
+public:
+
 };
 
