@@ -26,6 +26,10 @@
 #include "AFortPlayerControllerAthena.h"
 #include "AFortPlayerState.h"
 #include "AFortWeapon.h"
+#include "AFortWeap_BuildingToolBase.h"
+#include "Animation/AnimInstance.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Components/StaticMeshComponent.h"
 #include "FFortAthenaLoadout.h"
 #include "FFortItemEntry.h"
 #include "FItemAndCount.h"
@@ -166,37 +170,98 @@ namespace
 		if (bResolved) FortAthenaCombatEquip::EnsureGrants(PlayerState, Pawn, Weapon, Grants, EquippedSet, bAuditFromTick);
 	}
 
-	void SetCurrentWeapon(AFortPawn* Pawn, AFortWeapon* Weapon)
+	void NotifyWeaponVisibility(AFortWeapon* Weapon, bool bVisible)
 	{
-		if (Pawn->CurrentWeapon == Weapon)
-		{
-			return;
-		}
-		AFortWeapon* OldWeapon = Pawn->CurrentWeapon;
-		if (FParse::Param(FCommandLine::Get(), TEXT("FortniteInventoryAbilities")) &&
-			!FortAthenaCombatEquip::OnUnequip(OldWeapon)) return;
-		// ClearAbility can re-enter inventory code; do not overwrite its equip.
-		if (Pawn->CurrentWeapon != OldWeapon) return;
-		// stand-in: the original goes through pawn virtual +0xc58 / 0x142a16c90 (holster the old weapon, equip animation).
-		// Here only the replicated pointer changes; the client's OnRep_CurrentWeapon does the visible swap.
-		Pawn->PreviousWeapon = Pawn->CurrentWeapon;
-		Pawn->CurrentWeapon = Weapon;
-		Pawn->ForceNetUpdate();
-		// binary 0x142a16c90 is the client-RPC thunk of AFortPawn::ClientInternalEquipWeapon: the original server tells the
-		// owning client to run the equip (animation set, build preview, input) in addition to replicating CurrentWeapon.
-		// Sent from FortAthenaInventory::Tick once the pawn walks: sending it during warmup/skydive coincided with the client
-		// leaving the match 2 s after landing (run 25; that run also had the landscape checksum drop, which may have been the cause).
+		// The original visibility helper calls this protected Blueprint event
+		// with two reflected bool parameters (offsets 0 and 1).
+		struct FVisibilityParams { bool bVisible; bool bSetForLocalControllerOnly; };
+		FVisibilityParams Params{bVisible, false};
+		Weapon->ProcessEvent(Weapon->FindFunctionChecked(TEXT("OnWeaponVisibilityChanged")), &Params);
 	}
 
-	// Last weapon each pawn's client was told to equip (see Tick).
-	TMap<TWeakObjectPtr<AFortPawn>, TWeakObjectPtr<AFortWeapon>>& ClientEquipped()
+	// Server subset of 0x14234f080 and attach 0x142690250/0x1426900d0.
+	// See server_scope/equip-attachment-lifecycle.md. Original OnEquip/OnUnEquip,
+	// targeting/montage state, cosmetic loads and charm callbacks remain incomplete.
+	void UpdateWeaponAttachment(AFortPawn* Pawn)
 	{
-		static TMap<TWeakObjectPtr<AFortPawn>, TWeakObjectPtr<AFortWeapon>> Map;
-		return Map;
+		AFortWeapon* Old = Pawn->CurrentlyAttachedWeapon;
+		Pawn->PreviousWeapon = Old;
+		AFortWeapon* Weapon = Pawn->CurrentWeapon;
+		if (Old && Old == Weapon) return;
+		if (Old)
+		{
+			Old->SetActorHiddenInGame(true);
+			NotifyWeaponVisibility(Old, false);
+			if (Pawn->CurrentWeapon != Weapon) return; // Blueprint callback re-entered equip.
+			if (AFortWeap_BuildingToolBase* Tool = Cast<AFortWeap_BuildingToolBase>(Old))
+				if (Tool->PencilMeshComponent) Tool->PencilMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+			Old->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
+			Old->OnWeaponDetached();
+			if (Pawn->CurrentWeapon != Weapon) return;
+			Pawn->CurrentlyAttachedWeapon = nullptr;
+		}
+		if (Weapon)
+		{
+			USkeletalMeshComponent* Mesh = Pawn->GetMesh();
+			if (Mesh)
+			{
+				if (Pawn->CurrentWeaponAnimLayerOverlayClass)
+					Mesh->UnlinkAnimClassLayers(Pawn->CurrentWeaponAnimLayerOverlayClass);
+				Pawn->CurrentWeaponAnimLayerOverlayClass = Weapon->WeaponPawnAnimLayerOverlayClass;
+				if (Pawn->CurrentWeaponAnimLayerOverlayClass)
+					Mesh->LinkAnimClassLayers(Pawn->CurrentWeaponAnimLayerOverlayClass);
+			}
+			AFortWeap_BuildingToolBase* Tool = Cast<AFortWeap_BuildingToolBase>(Weapon);
+			FName Socket = Tool ? Tool->BlueprintPaperSocket : Pawn->WeaponHandSocketName;
+			if (!Weapon->WeaponHandSocketNameOverride.IsNone()) Socket = Weapon->WeaponHandSocketNameOverride;
+			if (Mesh)
+				Weapon->AttachToComponent(Mesh, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false), Socket);
+			Weapon->OnWeaponAttached();
+			if (Pawn->CurrentWeapon != Weapon) return;
+			if (Mesh && Tool && Tool->PencilMeshComponent)
+			{
+				Tool->PencilMeshComponent->AttachToComponent(Mesh, FAttachmentTransformRules::KeepRelativeTransform, Tool->BlueprintPencilSocket);
+				Tool->PencilMeshComponent->SetRelativeTransform(FTransform::Identity);
+			}
+			Pawn->CurrentlyAttachedWeapon = Weapon;
+			const bool bVisible = !Pawn->IsHidden() && !Pawn->bWeaponHolstered;
+			Weapon->SetActorHiddenInGame(!bVisible);
+			NotifyWeaponVisibility(Weapon, bVisible);
+			if (Pawn->CurrentWeapon != Weapon) return;
+			Pawn->OnWeaponEquipped(Weapon, Old);
+			if (Pawn->CurrentWeapon != Weapon) return;
+			Pawn->OnWeaponEquippedDelegate.Broadcast(Weapon, Old);
+			if (Pawn->CurrentWeapon != Weapon) return;
+		}
+		Pawn->OnWeaponAttachmentChangedDelegate.Broadcast(Weapon, Old);
+	}
+
+	bool SetCurrentWeapon(AFortPawn* Pawn, AFortWeapon* Weapon)
+	{
+		if (!Pawn || !Pawn->HasAuthority() || (Weapon && Weapon->GetOwner() && Weapon->GetOwner() != Pawn)
+			|| Pawn->CurrentWeapon == Weapon) return false;
+		AFortWeapon* OldWeapon = Pawn->CurrentWeapon;
+		if (FParse::Param(FCommandLine::Get(), TEXT("FortniteInventoryAbilities")) &&
+			!FortAthenaCombatEquip::OnUnequip(OldWeapon)) return false;
+		// ClearAbility can re-enter inventory code; do not overwrite its equip.
+		if (Pawn->CurrentWeapon != OldWeapon) return false;
+		Pawn->CurrentWeapon = Weapon;
+		Pawn->ForceNetUpdate();
+		if (Weapon) Weapon->ForceNetUpdate();
+		UpdateWeaponAttachment(Pawn);
+		if (Pawn->CurrentWeapon != Weapon) return false;
+		if (Weapon && !Pawn->IsLocallyControlled())
+		{
+			Pawn->ClientInternalEquipWeapon(Weapon);
+			UE_LOG(LogTemp, Display, TEXT("Inventory: ClientInternalEquipWeapon %s on %s (server attached=%d)"),
+				*Weapon->GetName(), *Pawn->GetName(), Pawn->CurrentlyAttachedWeapon == Weapon);
+		}
+		return true;
 	}
 
 	AFortWeapon* EquipItem(AFortPlayerController* Controller, AFortPawn* Pawn, UFortWorldItem* Item)
 	{
+		if (!Pawn || !Pawn->HasAuthority() || !Item) return nullptr;
 		UFortWeaponItemDefinition* Definition = Cast<UFortWeaponItemDefinition>(Item->ItemEntry.ItemDefinition);
 		if (!Definition)
 		{
@@ -224,18 +289,14 @@ namespace
 			UE_LOG(LogTemp, Warning, TEXT("Inventory: %s has no weapon actor class; cannot equip"), *Definition->GetName());
 			return nullptr;
 		}
-		FActorSpawnParameters Params;
-		Params.Owner = Pawn;
-		Params.Instigator = Pawn;
-		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		AFortWeapon* Weapon = Pawn->GetWorld()->SpawnActor<AFortWeapon>(WeaponClass, Pawn->GetActorTransform(), Params);
+		const FTransform SpawnTransform = Pawn->GetActorTransform();
+		AFortWeapon* Weapon = Pawn->GetWorld()->SpawnActorDeferred<AFortWeapon>(WeaponClass, SpawnTransform, Pawn, Pawn, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 		if (!Weapon)
 		{
 			// binary 0x1423150b0 logs "EquipWeaponData - Couldn't spawn weapon %s" here.
 			UE_LOG(LogTemp, Warning, TEXT("Inventory: EquipWeaponData - couldn't spawn weapon %s (%s)"), *Definition->GetName(), *WeaponClass->GetName());
 			return nullptr;
 		}
-		Weapon->SetOwner(Pawn);
 		// stand-in for the AFortWeapon constructor defaults: our generated class has no constructor, so a Blueprint weapon
 		// spawned here did not replicate at all (run 27: no actor channel for DefaultBuildingTool_C / the pickaxe, nothing
 		// in the client's hands, no build preview).
@@ -244,7 +305,12 @@ namespace
 		Weapon->WeaponData = Definition;
 		Weapon->ItemEntryGuid = Guid;
 		Weapon->WeaponLevel = Item->ItemEntry.Level;
+		Weapon->FinishSpawning(SpawnTransform);
+		if (!IsValid(Weapon)) return nullptr;
 		Pawn->CurrentWeaponList.Insert(Weapon, 0);
+		Weapon->SetOwner(Pawn);
+		Weapon->SetInstigator(Pawn);
+		Weapon->ClientGivenTo(Pawn);
 		SetCurrentWeapon(Pawn, Weapon);
 		if (Pawn->CurrentWeapon == Weapon) GrantWeaponAbilities(Controller, Pawn, Weapon, Definition, false);
 		UE_LOG(LogTemp, Display, TEXT("Inventory: equipped %s (%s) as %s on %s"), *Definition->GetName(), *Guid.ToString(), *WeaponClass->GetName(), *Pawn->GetName());
@@ -533,10 +599,6 @@ void FortAthenaInventory::Tick(UWorld* World)
 	// Resolution failures retry at most once per second per current weapon.
 	static TMap<TWeakObjectPtr<AFortWeapon>, double> NextAudit;
 	for (auto It = NextAudit.CreateIterator(); It; ++It) if (!It.Key().IsValid()) It.RemoveCurrent();
-	auto& Sent = ClientEquipped();
-	for (auto It = Sent.CreateIterator(); It; ++It)
-		if (!It.Key().IsValid())
-			It.RemoveCurrent();
 	for (TActorIterator<AFortPawn> It(World); It; ++It)
 	{
 		AFortPawn* Pawn = *It;
@@ -549,17 +611,6 @@ void FortAthenaInventory::Tick(UWorld* World)
 			UFortWeaponItemDefinition* Definition = Item ? Cast<UFortWeaponItemDefinition>(Item->ItemEntry.ItemDefinition) : nullptr;
 			if (Definition) GrantWeaponAbilities(Controller, Pawn, Weapon, Definition, true);
 		}
-		const ACharacter* Character = Cast<ACharacter>(Pawn);
-		const UCharacterMovementComponent* Movement = Character ? Character->GetCharacterMovement() : nullptr;
-		if (!Weapon || !Pawn->HasAuthority() || !Pawn->IsPlayerControlled() || !Movement
-			|| Movement->MovementMode != MOVE_Walking || !Movement->IsMovingOnGround())
-			continue;
-		TWeakObjectPtr<AFortWeapon>& Last = Sent.FindOrAdd(Pawn);
-		if (Last.Get() == Weapon)
-			continue;
-		Last = Weapon;
-		Pawn->ClientInternalEquipWeapon(Weapon);
-		UE_LOG(LogTemp, Display, TEXT("Inventory: ClientInternalEquipWeapon %s on %s"), *Weapon->GetName(), *Pawn->GetName());
 	}
 }
 
