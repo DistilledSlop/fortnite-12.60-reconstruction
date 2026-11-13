@@ -90977,5 +90977,21 @@
     "notes": "Original complete remote view/acceleration producer lifecycle; exact bundle enforced by remote_view_replication_runtime policy.",
     "virtual": true,
     "override": true
+  },
+  {
+    "function": "NativeTickAuthorityFlight",
+    "kind": "helper",
+    "signature": "void NativeTickAuthorityFlight(AFortGameStateAthena* GameState)",
+    "access": "public",
+    "inc_path": "porting/generator_policies/aircraft_tick_runtime/NativeTickAuthorityFlight.inc",
+    "address": "0x1418d7fb0",
+    "includes": [
+      "FortAircraftTimingRuntime.h"
+    ],
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Complete selected authority subpath only, not complete Tick recovery. Call with an Athena GameState on authority; no lifecycle hook is installed. Retains analytic motion, timestamp cadence and all original authority delegates/state rechecks. Complete SetAircraftLocked dependency is existing 0x1419adfe0. Full Tick client cosmetic loader remains unresolved; this helper must replace custom authority motion/event ownership rather than run beside it. Match-flow driver selects authority and owns one call per driver tick (current compatibility timer: 0.05 seconds); reflected exit compatibility bridge preserves synchronous callback order.",
+    "class": "AFortAthenaAircraft"
   }
 ]

@@ -40,7 +40,6 @@
 #include "ESafeZoneStartUp.h"
 #include "EAirCraftBehavior.h"
 #include "EFortCustomMovement.h"
-#include "FortAircraftTimingRuntime.h"
 
 #include "AbilitySystemComponent.h"
 #include "GameplayEffect.h"
@@ -102,14 +101,6 @@ namespace FortAthenaMatchFlowPrivate
         TWeakObjectPtr<AFortAthenaAircraft> ExitAircraft;
     };
 
-    struct FAircraftRunState
-    {
-        bool bEnteredDropZone = false;
-        bool bExitedDropZone = false;
-        bool bFlightEnded = false;
-        float LastTimestampReplication = -1.0f;
-    };
-
     struct FSkydiverState
     {
         bool bLanded = false;
@@ -150,7 +141,7 @@ namespace FortAthenaMatchFlowPrivate
         TWeakObjectPtr<UCurveTable> GameData;
         FTimerHandle DriverHandle;
         TMap<TWeakObjectPtr<AController>, FBusPlayerState> Players;
-        TMap<TWeakObjectPtr<AFortAthenaAircraft>, FAircraftRunState> AircraftRuns;
+        TSet<TWeakObjectPtr<AFortAthenaAircraft>> AircraftRuns;
         TMap<TWeakObjectPtr<APawn>, FSkydiverState> Skydivers;
         TMap<TWeakObjectPtr<APawn>, FPawnStormState> PawnStorm;
         TSet<FString> LoggedOnce;
@@ -869,12 +860,13 @@ namespace FortAthenaMatchFlowPrivate
     // ---------------------------------------------------------------------------------------------------------------
     void BindAircraftDelegates(AFortGameModeAthena* GameMode, AFortAthenaAircraft* Aircraft)
     {
-        // +0x260 OnAircraftEnteredDropZone and +0x280 OnAircraftFlightEnded are UFUNCTIONs and are bound by name.
-        // OnAircraftExitedDropZone (+0x270) is not a reflected function in our game mode: the driver calls the free
-        // function below directly (see TickAircraft).
+        // Keep all three callbacks synchronous with the original aircraft delegate transitions.
         FScriptDelegate Entered;
         Entered.BindUFunction(GameMode, FName(TEXT("OnAircraftEnteredDropZone")));
         Aircraft->NativeAircraftEnteredDropZone.AddUnique(Entered);
+        FScriptDelegate Exited;
+        Exited.BindUFunction(GameMode, FName(TEXT("OnAircraftExitedDropZone")));
+        Aircraft->NativeAircraftExitedDropZone.AddUnique(Exited);
         FScriptDelegate Ended;
         Ended.BindUFunction(GameMode, FName(TEXT("OnAircraftFlightEnded")));
         Aircraft->NativeAircraftFlightEnded.AddUnique(Ended);
@@ -938,7 +930,7 @@ namespace FortAthenaMatchFlowPrivate
                 if (!S.bPauseAircraft)
                     StartFlight(Aircraft, NowTime);
                 BindAircraftDelegates(GameMode, Aircraft);
-                S.AircraftRuns.FindOrAdd(TWeakObjectPtr<AFortAthenaAircraft>(Aircraft));
+                S.AircraftRuns.Add(TWeakObjectPtr<AFortAthenaAircraft>(Aircraft));
             }
             GameState->AircraftStartTime = NowTime;
             // Analytics record and StartMatchAbandonProcess 0x14196d920 (924 lines, not read) left out.
@@ -1176,57 +1168,27 @@ namespace FortAthenaMatchFlowPrivate
         }
     }
 
-    // stand-in: AFortAthenaAircraft's tick (moving the bus and firing the drop-zone delegates) is not ported. The
-    // driver moves the server copy along FlightInfo and fires the events at the replicated times.
+    // Complete recovered authority subpath of aircraft Tick 0x1418d7fb0. The single match-flow driver
+    // owns scheduling on the existing 0.05-second timer until full native Tick ownership is recovered.
     void TickAircraft(AFortGameModeAthena* GameMode, AFortGameStateAthena* GameState)
     {
+        if (!GameMode || !GameMode->HasAuthority() || !GameState)
+            return;
         FMatchFlowState& S = State();
-        const float NowTime = Now(GameState);
         TArray<TWeakObjectPtr<AFortAthenaAircraft>> Done;
-        for (auto& Pair : S.AircraftRuns)
+        for (const TWeakObjectPtr<AFortAthenaAircraft>& Key : S.AircraftRuns)
         {
-            AFortAthenaAircraft* Aircraft = Pair.Key.Get();
-            FAircraftRunState& Run = Pair.Value;
+            AFortAthenaAircraft* Aircraft = Key.Get();
             if (!Aircraft)
             {
-                Done.Add(Pair.Key);
+                Done.Add(Key);
                 continue;
             }
-            if (Aircraft->FlightStartTime < 0.0f)
-                continue;
-            const FAircraftFlightInfo& Info = Aircraft->FlightInfo;
-            const float Elapsed = FMath::Clamp(NowTime - Aircraft->FlightStartTime, 0.0f, FMath::Max(0.0f, Info.TimeTillFlightEnd));
-            Aircraft->FlightElapsedTime = NowTime - Aircraft->FlightStartTime;
-            Aircraft->SetActorLocation(FVector(Info.FlightStartLocation) + Info.FlightStartRotation.Vector() * Info.FlightSpeed * Elapsed);
-            if (Run.LastTimestampReplication < 0.0f || NowTime - Run.LastTimestampReplication >= NativeAircraftTimestampReplicationInterval)
-            {
-                Run.LastTimestampReplication = NowTime;
-                Aircraft->ReplicatedFlightTimestamp = NowTime;
-            }
-            if (!Run.bEnteredDropZone && NowTime >= Aircraft->DropStartTime)
-            {
-                Run.bEnteredDropZone = true;
-                Aircraft->NativeInDropZone = 1;
-                UE_LOG(LogTemp, Display, TEXT("MatchFlow: aircraft %s entered the drop zone at %.2f"), *Aircraft->GetName(), NowTime);
-                struct { AFortAthenaAircraft* FortAthenaAircraft; } Params{ Aircraft };
-                Aircraft->NativeAircraftEnteredDropZone.ProcessMulticastDelegate<UObject>(&Params);
-                UE_LOG(LogTemp, Display, TEXT("MatchFlow: bAircraftIsLocked=%d after drop-zone entry"), GameState->bAircraftIsLocked ? 1 : 0);
-            }
-            if (!Run.bExitedDropZone && NowTime >= Aircraft->DropEndTime)
-            {
-                Run.bExitedDropZone = true;
-                Aircraft->NativeInDropZone = 0;  // inferred
-                OnAircraftExitedDropZone(GameMode, Aircraft);
-            }
-            if (!Run.bFlightEnded && NowTime >= Aircraft->FlightEndTime)
-            {
-                Run.bFlightEnded = true;
-                Aircraft->NativeFlightFinished = 1;
-                UE_LOG(LogTemp, Display, TEXT("MatchFlow: aircraft %s flight ended at %.2f; destroying"), *Aircraft->GetName(), NowTime);
-                struct { AFortAthenaAircraft* FortAthenaAircraft; } Params{ Aircraft };
-                Aircraft->NativeAircraftFlightEnded.ProcessMulticastDelegate<UObject>(&Params);
-                Done.Add(Pair.Key);
-            }
+            Aircraft->NativeTickAuthorityFlight(GameState);
+            // Flight-ended callbacks may destroy the actor. Revalidate the weak pointer before reading it.
+            Aircraft = Key.Get();
+            if (!Aircraft || Aircraft->NativeFlightFinished)
+                Done.Add(Key);
         }
         for (const TWeakObjectPtr<AFortAthenaAircraft>& Key : Done)
             S.AircraftRuns.Remove(Key);
@@ -1685,6 +1647,12 @@ namespace FortAthenaMatchFlowPrivate
 namespace FortAthenaMatchFlow
 {
     using namespace FortAthenaMatchFlowPrivate;
+
+    void OnAircraftExitedDropZone(AFortGameModeAthena* GameMode, AFortAthenaAircraft* Aircraft)
+    {
+        if (OriginalClientMode() && GameMode)
+            FortAthenaMatchFlowPrivate::OnAircraftExitedDropZone(GameMode, Aircraft);
+    }
 
     bool IsActive()
     {

@@ -2489,6 +2489,14 @@ _aircraft_events_spec = _common_activation_import.spec_from_file_location(
     "aircraft_events_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "aircraft_events_runtime", "source_policy.py"))
 _aircraft_events_policy = _common_activation_import.module_from_spec(_aircraft_events_spec)
 _aircraft_events_spec.loader.exec_module(_aircraft_events_policy)
+_aircraft_exit_bridge_spec = _common_activation_import.spec_from_file_location(
+    "aircraft_exit_bridge_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "aircraft_exit_bridge_runtime", "source_policy.py"))
+_aircraft_exit_bridge_policy = _common_activation_import.module_from_spec(_aircraft_exit_bridge_spec)
+_aircraft_exit_bridge_spec.loader.exec_module(_aircraft_exit_bridge_policy)
+_aircraft_tick_spec = _common_activation_import.spec_from_file_location(
+    "aircraft_tick_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "aircraft_tick_runtime", "source_policy.py"))
+_aircraft_tick_policy = _common_activation_import.module_from_spec(_aircraft_tick_spec)
+_aircraft_tick_spec.loader.exec_module(_aircraft_tick_policy)
 _item_tag_interface_spec = _common_activation_import.spec_from_file_location(
     "item_tag_interface_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "item_tag_interface_runtime", "source_policy.py"))
 _item_tag_interface_policy = _common_activation_import.module_from_spec(_item_tag_interface_spec)
@@ -4899,6 +4907,8 @@ def promote(args):
         header, cpp = _player_name_server_policy.finalize(model, header, cpp)
         header, cpp = _athena_phase_defaults_policy.finalize(model, header, cpp)
         header, cpp = _native_instance_sentinels_policy.finalize(model, header, cpp)
+        header, cpp = _aircraft_tick_policy.finalize(model, header, cpp)
+        header, cpp = _aircraft_exit_bridge_policy.finalize(model, header, cpp)
         _input_cache_policy.validate_rendered(model, header, cpp)
         _action_slate_policy.validate_rendered(model, header, cpp)
         if model.get('common_action_widget_icon_runtime'):

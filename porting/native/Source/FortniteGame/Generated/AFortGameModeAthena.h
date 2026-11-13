@@ -59,6 +59,11 @@ class FORTNITEGAME_API AFortGameModeAthena : public AFortGamePvPBase, public IGa
 	GENERATED_BODY()
 
 public:
+	// Compatibility bridge; the original callback body is not recovered.
+	UFUNCTION()
+	void OnAircraftExitedDropZone(AFortAthenaAircraft* FortAthenaAircraft);
+
+public:
 	// table index 195, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<AFortTeamPrivateInfo*> SortedStormCapPrivateTeams;

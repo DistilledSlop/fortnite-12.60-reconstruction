@@ -8,11 +8,15 @@
 
 class AController;
 class AFortGameModeAthena;
+class AFortAthenaAircraft;
 class AFortPlayerController;
 class UFortControllerComponent_Aircraft;
 
 namespace FortAthenaMatchFlow
 {
+    // Compatibility callback bound to the aircraft exit delegate; original body remains partly reconstructed.
+    void OnAircraftExitedDropZone(AFortGameModeAthena* GameMode, AFortAthenaAircraft* Aircraft);
+
     // True once Start() armed the driver (-FortniteOriginalClient set and a game mode/world exist).
     bool IsActive();
 

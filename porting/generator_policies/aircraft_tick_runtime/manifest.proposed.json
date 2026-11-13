@@ -1,0 +1,19 @@
+[
+  {
+    "function": "NativeTickAuthorityFlight",
+    "kind": "helper",
+    "signature": "void NativeTickAuthorityFlight(AFortGameStateAthena* GameState)",
+    "access": "public",
+    "inc_path": "porting/generator_policies/aircraft_tick_runtime/NativeTickAuthorityFlight.inc",
+    "address": "0x1418d7fb0",
+    "includes": [
+      "AFortGameStateAthena.h",
+      "FortAircraftTimingRuntime.h"
+    ],
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "proposed",
+    "notes": "Complete selected authority subpath only, not complete Tick recovery. Call with an Athena GameState on authority; no lifecycle hook is installed. Retains analytic motion, timestamp cadence and all original authority delegates/state rechecks. Complete SetAircraftLocked dependency is existing 0x1419adfe0. Full Tick client cosmetic loader remains unresolved; this helper must replace custom authority motion/event ownership rather than run beside it.",
+    "class": "AFortAthenaAircraft"
+  }
+]

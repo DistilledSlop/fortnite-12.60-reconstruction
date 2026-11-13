@@ -1,0 +1,24 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "ranges": [
+    {
+      "address": "0x1418d7fb0",
+      "size": 987,
+      "sha256": "e05c3abdb370c13a4bad1d4eb5acaf992061ada321bd84f595f6171e4389803e",
+      "label": "Complete original Tick"
+    },
+    {
+      "address": "0x1418b4050",
+      "size": 642,
+      "sha256": "0cf9f3dee753c73d169095c2d48684a94f2db2f53505731549f80065ce2b1fa6",
+      "label": "Complete aircraft constructor"
+    },
+    {
+      "address": "0x141760af0",
+      "size": 244,
+      "sha256": "3c6a9f321c6cd82020513e5fcba10430e81ff732d4d597491b0d67d427011eaa",
+      "label": "Complete AFortAircraft constructor"
+    }
+  ]
+}
