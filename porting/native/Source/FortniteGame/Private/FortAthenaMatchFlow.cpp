@@ -354,7 +354,7 @@ namespace FortAthenaMatchFlowPrivate
         const FVector2D Start2D = Center - Dir * SpawnBack;
 
         // 0x1418f8580 fill (R6 5): start location + height, yaw, speed, three times (distance / speed).
-        FAircraftFlightInfo Info;
+        FAircraftFlightInfo Info{};
         Info.FlightStartLocation = FVector(Start2D.X, Start2D.Y, Height);
         Info.FlightStartRotation = FRotator(0.0f, YawDegrees, 0.0f);
         Info.FlightSpeed = Speed;

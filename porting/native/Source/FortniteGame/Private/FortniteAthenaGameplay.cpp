@@ -1,6 +1,7 @@
 #include "FortniteAthenaGameplay.h"
 #include "UObject/ConstructorHelpers.h"
 #include "FortAthenaInventoryFlow.h"
+#include "FortAthenaHealth.h"
 #include "FortAthenaMatchFlow.h"
 #include "AFortTeamInfoAthena.h"
 #include "AMegaStormManager.h"
@@ -208,6 +209,8 @@ void AFortGameModeAthena::StartPlay()
     }
     Super::StartPlay();
     FortAthenaInventory::InstallRpcOverrides();
+    if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteNoHealth")))
+        FortAthenaHealth::InstallRpcOverrides();
     FortAthenaMatchFlow::InstallRpcOverrides();
     FortAthenaMatchFlow::Start(this);
     if (UWorld* World = GetWorld())
@@ -505,6 +508,8 @@ void AFortGameModeAthena::RestartPlayer(AController* NewPlayer)
         UE_LOG(LogTemp, Display, TEXT("Athena pawn spawned: class=%s authority=%d"),
             *NewPlayer->GetPawn()->GetClass()->GetName(), NewPlayer->GetPawn()->HasAuthority() ? 1 : 0);
     FortAthenaInventory::SetupPlayer(this, Cast<AFortPlayerControllerAthena>(NewPlayer));
+    if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteNoHealth")))
+        FortAthenaHealth::SetupPlayer(this, Cast<AFortPlayerControllerAthena>(NewPlayer));
     // The vanilla-client tests run on FortniteEmptyDedicated, which has no ground: PositionPawnOnTerrain's trace misses
     // there and it places the pawn on the replicated test floor instead.
     if (NewPlayer && NewPlayer->GetPawn() && GetWorld() && FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")) &&

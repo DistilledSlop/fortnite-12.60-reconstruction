@@ -63,7 +63,7 @@ if text and not text.endswith("\n"): text+="\n"
 open(path,"w").write(text+block)
 PYEOF
     fi
-    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FORTNITE_NET_ENCRYPTION_KEY_FILE="${FORTNITE_NET_ENCRYPTION_KEY_FILE:-}" FN_STATE_DIR="${FN_STATE_DIR:-}" FN_SERVER_CMD="${FN_SERVER_CMD:-}" FN_WINEDEBUG="${FN_WINEDEBUG:--all}" FN_DISPLAY="${FN_DISPLAY:-}" FN_XAUTHORITY="${FN_XAUTHORITY:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
+    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_LP_NUM_THREADS="${FN_LP_NUM_THREADS:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FORTNITE_NET_ENCRYPTION_KEY_FILE="${FORTNITE_NET_ENCRYPTION_KEY_FILE:-}" FN_STATE_DIR="${FN_STATE_DIR:-}" FN_SERVER_CMD="${FN_SERVER_CMD:-}" FN_WINEDEBUG="${FN_WINEDEBUG:--all}" FN_DISPLAY="${FN_DISPLAY:-}" FN_XAUTHORITY="${FN_XAUTHORITY:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
 fi
 
 ip link set lo up
@@ -112,6 +112,8 @@ set +e
 wine_env=(WINEPREFIX="$wineprefix" WINEDEBUG="${FN_WINEDEBUG:--all}" SHOTS_DIR="$generated/shots" FN_ACTIONS="$FN_ACTIONS")
 [[ -z "${FN_WINEDLLOVERRIDES:-}" ]] || wine_env+=(WINEDLLOVERRIDES="$FN_WINEDLLOVERRIDES")
 [[ -z "${FN_VK_ICD_FILENAMES:-}" ]] || wine_env+=(VK_ICD_FILENAMES="$FN_VK_ICD_FILENAMES")
+# lavapipe defaults to one rasteriser thread per core; on a 96-core host its llvmpipe threads segfault intermittently.
+[[ -z "${FN_LP_NUM_THREADS:-}" ]] || wine_env+=(LP_NUM_THREADS="$FN_LP_NUM_THREADS")
 if [[ -n "${FN_DISPLAY:-}" ]]; then
     wine_env+=(DISPLAY="$FN_DISPLAY")
     [[ -z "${FN_XAUTHORITY:-}" ]] || wine_env+=(XAUTHORITY="$FN_XAUTHORITY")

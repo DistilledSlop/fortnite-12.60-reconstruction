@@ -236,6 +236,47 @@ namespace
 {
 	// Diagnostic (-FortniteGcProbe): run a full garbage collection before and after every grant and log the stage, so a corrupt
 	// object reference (run 33: "Invalid object in GC ... FortInventory ... HeroType") is caught at the step that created it.
+	// Logs the 8 bytes at Inventory+128 (the slot GC reported) after a step, to find the write that corrupts it.
+	static void SnapInv(AFortInventory* Inv, const TCHAR* Step)
+	{
+		if (!Inv || !FParse::Param(FCommandLine::Get(), TEXT("FortniteGcProbe"))) { return; }
+		uint64 V = 0;
+		FMemory::Memcpy(&V, reinterpret_cast<const uint8*>(Inv) + 128, sizeof(V));
+		UE_LOG(LogTemp, Display, TEXT("Inventory: GcProbe snap %s [+128]=0x%016llx"), Step, V);
+	}
+
+	// Logs every aligned 8-byte slot in [Base, Base+Size) that holds a value shaped like a code pointer in this binary
+	// (upper half zero, 0x10000..0x20000000), which GC would read as an object reference ("Invalid object in GC").
+	static void ScanSlots(const void* Base, int32 Size, const TCHAR* Area, const TCHAR* Step)
+	{
+		if (!Base || !FParse::Param(FCommandLine::Get(), TEXT("FortniteGcProbe"))) { return; }
+		const uint8* B = reinterpret_cast<const uint8*>(Base);
+		for (int32 Off = 0; Off + 8 <= Size; Off += 8)
+		{
+			uint64 V = 0;
+			FMemory::Memcpy(&V, B + Off, sizeof(V));
+			if (V > 0x10000ull && V < 0x20000000ull)
+			{
+				UE_LOG(LogTemp, Display, TEXT("Inventory: GcProbe scan %s %s +%d = 0x%llx"), Step, Area, Off, V);
+			}
+		}
+	}
+
+	static void ScanInventory(AFortInventory* Inv, UFortWorldItem* Item, const TCHAR* Step)
+	{
+		if (!Inv) { return; }
+		ScanSlots(Inv, (int32)sizeof(AFortInventory), TEXT("actor"), Step);
+		if (Inv->Inventory.ReplicatedEntries.Num() > 0)
+		{
+			ScanSlots(Inv->Inventory.ReplicatedEntries.GetData(), Inv->Inventory.ReplicatedEntries.Num() * (int32)sizeof(FFortItemEntry), TEXT("entries"), Step);
+		}
+		if (Inv->Inventory.ItemInstances.Num() > 0)
+		{
+			ScanSlots(Inv->Inventory.ItemInstances.GetData(), Inv->Inventory.ItemInstances.Num() * 8, TEXT("instances"), Step);
+		}
+		if (Item) { ScanSlots(Item, (int32)sizeof(UFortWorldItem), TEXT("item"), Step); }
+	}
+
 	struct FGcProbeScope
 	{
 		FString Label;
@@ -244,10 +285,37 @@ namespace
 			static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("FortniteGcProbe"));
 			return bOn;
 		}
+		static void DumpLayoutOnce()
+		{
+			static bool bDone = false;
+			if (bDone) { return; }
+			bDone = true;
+			UE_LOG(LogTemp, Display, TEXT("Inventory: GcProbe layout sizeof AFortInventory=%d reflected=%d FFortItemList=%d/%d FFortItemEntry=%d/%d UFortWorldItem=%d/%d FFastArraySerializer=%d"),
+				(int32)sizeof(AFortInventory), AFortInventory::StaticClass()->GetStructureSize(),
+				(int32)sizeof(FFortItemList), FFortItemList::StaticStruct()->GetStructureSize(),
+				(int32)sizeof(FFortItemEntry), FFortItemEntry::StaticStruct()->GetStructureSize(),
+				(int32)sizeof(UFortWorldItem), UFortWorldItem::StaticClass()->GetStructureSize(),
+				(int32)sizeof(FFastArraySerializer));
+			UE_LOG(LogTemp, Display, TEXT("Inventory: GcProbe offsetof Inventory=%d ReplayPawn=%d PendingInstances=%d RecentlyAdded=%d"),
+				(int32)STRUCT_OFFSET(AFortInventory, Inventory), (int32)STRUCT_OFFSET(AFortInventory, ReplayPawn),
+				(int32)STRUCT_OFFSET(AFortInventory, PendingInstances), (int32)STRUCT_OFFSET(AFortInventory, RecentlyAdded));
+			for (TFieldIterator<FProperty> It(AFortInventory::StaticClass()); It; ++It)
+			{
+				if (It->GetOffset_ForGC() >= 96 && It->GetOffset_ForGC() <= 200)
+				{
+					UE_LOG(LogTemp, Display, TEXT("Inventory: GcProbe prop %s %s offset=%d size=%d"), *It->GetOwnerClass()->GetName(), *It->GetName(), It->GetOffset_ForGC(), It->GetSize());
+				}
+			}
+			for (TFieldIterator<FProperty> It(FFortItemEntry::StaticStruct()); It; ++It)
+			{
+				UE_LOG(LogTemp, Display, TEXT("Inventory: GcProbe entry prop %s offset=%d size=%d"), *It->GetName(), It->GetOffset_ForGC(), It->GetSize());
+			}
+		}
 		explicit FGcProbeScope(const FString& InLabel) : Label(InLabel)
 		{
 			if (Enabled())
 			{
+				DumpLayoutOnce();
 				UE_LOG(LogTemp, Display, TEXT("Inventory: GcProbe before %s"), *Label);
 				CollectGarbage(GARBAGE_COLLECTION_KEEPFLAGS);
 			}
@@ -279,6 +347,7 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 		return nullptr;
 	}
 
+	ScanInventory(Inventory, nullptr, TEXT("before"));
 	// Stack onto an existing entry of the same definition.
 	if (Count > 0 && Definition->IsStackable())
 	{
@@ -310,27 +379,40 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 		}
 	}
 
-	FFortItemEntry Entry;
+	// Value-initialise: the generated structs declare their pointer members without initialisers, so a plain
+	// `FFortItemEntry Entry;` leaves FFortGiftingInfo::HeroType as stack garbage and GC then fails with "Invalid object".
+	FFortItemEntry Entry{};
 	Entry.ItemDefinition = Definition;
 	Entry.Count = Count;
 	Entry.Level = Level;
 	Entry.LoadedAmmo = LoadedAmmo;
 	Entry.ItemGuid = FGuid::NewGuid();
 
+	SnapInv(Inventory, TEXT("before NewObject"));
 	UFortWorldItem* Item = NewObject<UFortWorldItem>(Inventory);
+	SnapInv(Inventory, TEXT("after NewObject"));
 	Item->OwnerInventory = Inventory;
 	Item->ItemEntry = Entry;
+	SnapInv(Inventory, TEXT("after ItemEntry copy"));
 	UFortWorldItem::NativeSetEntryParentInventory(Item->ItemEntry, Inventory, false);
+	SnapInv(Inventory, TEXT("after SetParent(item)"));
 	// stand-in: the original creates the item through UFortItemDefinition::CreateTemporaryItemInstanceBP, which picks the
 	// item class from the definition. A plain UFortWorldItem is used here (not verified against the original item classes).
 
 	const int32 Index = Inventory->Inventory.ReplicatedEntries.Add(Entry);
+	SnapInv(Inventory, TEXT("after ReplicatedEntries.Add"));
 	FFortItemEntry& Replicated = Inventory->Inventory.ReplicatedEntries[Index];
 	UFortWorldItem::NativeSetEntryParentInventory(Replicated, Inventory, true);
+	SnapInv(Inventory, TEXT("after SetParent(replicated)"));
 	Inventory->Inventory.ItemInstances.Add(Item);
+	SnapInv(Inventory, TEXT("after ItemInstances.Add"));
 	RebuildGuidIndex(Inventory);
+	SnapInv(Inventory, TEXT("after RebuildGuidIndex"));
 	Inventory->Inventory.MarkItemDirty(Inventory->Inventory.ReplicatedEntries[Index]);
+	SnapInv(Inventory, TEXT("after MarkItemDirty"));
 	Inventory->NativeNotifyInventoryChanged();
+	SnapInv(Inventory, TEXT("after NativeNotify"));
+	ScanInventory(Inventory, Item, TEXT("after"));
 
 	UE_LOG(LogTemp, Display, TEXT("Inventory: granted %d x %s guid=%s level=%d to %s"),
 		Count, *Definition->GetName(), *Entry.ItemGuid.ToString(), Level, *Controller->GetName());

@@ -392,7 +392,7 @@ void FortAthenaHealth::ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, co
 	}
 
 	// Multicast damage cues to client (hit numbers, hit markers, shield shatter).
-	FAthenaBatchedDamageGameplayCues_Shared SharedCues;
+	FAthenaBatchedDamageGameplayCues_Shared SharedCues{};
 	SharedCues.Location = FVector_NetQuantize10(VictimPawn->GetActorLocation());
 	SharedCues.Normal = FVector_NetQuantizeNormal(FVector::UpVector);
 	SharedCues.Magnitude = DamageAmount;
@@ -401,7 +401,7 @@ void FortAthenaHealth::ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, co
 	SharedCues.bIsFatal = (NewHealth <= 0.0f);
 	SharedCues.bIsValid = true;
 
-	FAthenaBatchedDamageGameplayCues_NonShared NonSharedCues;
+	FAthenaBatchedDamageGameplayCues_NonShared NonSharedCues{};
 	NonSharedCues.HitActor = VictimPawn;
 
 	VictimPawn->NetMulticast_Athena_BatchedDamageCues(SharedCues, NonSharedCues);
@@ -449,7 +449,7 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 	UFortWeaponItemDefinition* KillerWeapon = (KillerPawn && KillerPawn->CurrentWeapon) ? KillerPawn->CurrentWeapon->WeaponData : nullptr;
 
 	// 1. Build FFortPlayerDeathReport (D6 §2 step 1).
-	FFortPlayerDeathReport Report;
+	FFortPlayerDeathReport Report{};
 	Report.ServerTimeForRespawn = -1.0f;
 	Report.ServerTimeForResurrect = -1.0f;
 	Report.LethalDamage = 100.0f;
@@ -468,7 +468,7 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 	// 2. Populate and replicate victim DeathInfo (D6 §2 step 2).
 	if (VictimState)
 	{
-		FDeathInfo Info;
+		FDeathInfo Info{};
 		Info.FinisherOrDowner = KillerState ? static_cast<AActor*>(KillerState) : (DamageCauser ? DamageCauser : static_cast<AActor*>(VictimPawn));
 		Info.Downer = nullptr;
 		Info.bDBNO = false;
@@ -540,16 +540,16 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 	if (VictimPC)
 	{
 		// stand-in: fill team and match stats to drive "You placed #N" client UI
-		FAthenaMatchTeamStats TeamStats;
+		FAthenaMatchTeamStats TeamStats{};
 		TeamStats.Place = Place;
 		TeamStats.TotalPlayers = FMath::Max(OldPlayersLeft, Place);
 		VictimPC->ClientSendTeamStatsForPlayer(TeamStats);
 
-		FAthenaMatchStats MatchStats;
+		FAthenaMatchStats MatchStats{};
 		MatchStats.StatBucket = TEXT("Default");
 		VictimPC->ClientSendMatchStatsForPlayer(MatchStats);
 
-		FAthenaRewardResult RewardResult;
+		FAthenaRewardResult RewardResult{};
 		VictimPC->ClientSendEndBattleRoyaleMatchForPlayer(true, RewardResult);
 		UE_LOG(LogFortHealth, Display, TEXT("Health: Sent end match stats to %s (Place #%d of %d)"),
 			*VictimPC->GetName(), Place, TeamStats.TotalPlayers);
@@ -579,16 +579,16 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 
 				WinnerPC->ClientNotifyWon(FinisherPawn, nullptr, WinCause);
 
-				FAthenaMatchTeamStats WinnerTeamStats;
+				FAthenaMatchTeamStats WinnerTeamStats{};
 				WinnerTeamStats.Place = 1;
 				WinnerTeamStats.TotalPlayers = FMath::Max(OldPlayersLeft, 1);
 				WinnerPC->ClientSendTeamStatsForPlayer(WinnerTeamStats);
 
-				FAthenaMatchStats WinnerMatchStats;
+				FAthenaMatchStats WinnerMatchStats{};
 				WinnerMatchStats.StatBucket = TEXT("Default");
 				WinnerPC->ClientSendMatchStatsForPlayer(WinnerMatchStats);
 
-				FAthenaRewardResult WinnerRewardResult;
+				FAthenaRewardResult WinnerRewardResult{};
 				WinnerPC->ClientSendEndBattleRoyaleMatchForPlayer(true, WinnerRewardResult);
 
 				const EAthenaGamePhase OldPhase = GameState->GamePhase;
