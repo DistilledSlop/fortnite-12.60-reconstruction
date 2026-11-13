@@ -1467,3 +1467,55 @@ The registry now contains 283 individual definitions across nine broad groups.
 The earlier named-candidate inventory has 164 still unregistered after these
 six golden-style definitions; those candidates still require source-based
 classification and grant verification.
+
+
+### Original challenge-list probes and bundle membership
+
+Frozen backend 18c19af9 ran two isolated original-client probes against the same
+LobbyG1Probe account, resolved by name_key as account 3 and verified against all
+native MCP targets. Calendar requests returned 200. An independent request to
+the same builtin-probe backend returned the enabled Storm the Agency flag; its
+2020-05-26 start was an operator test configuration, not historical evidence.
+The actual profile contained 18 bundles and 36 Active quests, including the
+five linked Storm the Agency quests. The Active Challenges list was blank.
+The DXVK comparison rendered the lobby, Battle Pass room and challenge-table
+island, but that list remained blank after mouse and keyboard category attempts.
+This rules out the black builtin 3D background as the explanation for the empty
+list; it does not yet identify its sole cause. The DXVK wrapper's default virtual
+display was taller than the earlier builtin harness, so these were not identical
+viewport captures. DXVK v3.1.1 was confirmed by its DLL log.
+
+Both probes recorded zero fatal/calendar error markers and two startup JSON
+null-object errors whose cause is unproven. Receipts and screenshots are in
+`generated/chrono-storm-agency-native-probe/` and
+`generated/chrono-storm-agency-dxvk-probe/`. Sessions 67169 and 17664 are terminal;
+backend PIDs 276247 and 282528 are gone and the probe prefix has no remaining
+processes. The tracked ProjectChrono Wine wrapper was exercised by the DXVK run.
+
+Native reflection names UFortChallengeBundleItem.GrantedQuestInstanceIds as
+Array<FString> at +0xf0, with num_progress_quests_completed at +0xec and
+challenge_bundle_schedule_id at +0x108. Raw metadata at 0x1479d8850 references
+the GrantedQuestInstanceIds literal at 0x14634d040. GetQuests 0x141caa570 resolves
+owned quests only by iterating that GUID array through manager 0x142441c30; it
+does not scan child challenge_bundle_id attributes as a fallback. The copied
+profile omitted this array from all 18 bundles, including the five-quest Storm
+bundle. Private native proof is in
+`generated/challenge-list-native-contract/findings.json` and retained C/assembly.
+The task's disposable private Ghidra clone was removed after decompilers stopped,
+freeing about 1.44 GiB; shared projects and evidence were preserved.
+
+The backend now emits the exact reflected key GrantedQuestInstanceIds, with
+all actual owned Quest IDs associated with that bundle. Linked reward quests
+update membership in the awarding transaction. Login repairs missing, stale,
+duplicate and foreign IDs, includes inactive/claimed items, and preserves other
+attributes and rewards. Malformed array types/elements reject the transaction.
+This is a concrete native schema repair; exact MCP converter behavior and a
+populated original-client challenge list still need the next runtime probe.
+
+Three new integration tests cover legacy membership repair, stable restart,
+linked successors, no replayed rewards, and rollback of cache and disk on
+malformed membership. The existing Location Domination repair assertion now
+expects the deleted successor's stale GUID to be replaced while retaining all
+counters and rewards. The combined suite passed **402 tests** in 23.100 seconds:
+`python3 -W ignore::ResourceWarning -m unittest discover -s porting/server/tests -p 'test_*.py'`.
+Private log: `generated/challenge-bundle-membership/backend-tests.log`.

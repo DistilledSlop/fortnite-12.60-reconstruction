@@ -144,6 +144,12 @@ class LocationQuestTests(unittest.TestCase):
         self.assertIsNotNone(repaired)
         self.assertEqual(repaired['attributes']['quest_state'], 'Active')
         self.assertEqual(repaired['attributes']['completion_' + LOCATION_QUESTS[successor]['objectives'][0][0]], 0)
+        repaired_id = next(i for i, v in self.items().items()
+                           if v['templateId'].casefold() == ('Quest:' + successor).casefold())
+        # Replacing a deleted quest must replace its owned GUID in the bundle,
+        # while preserving all completion counters and rewards.
+        before_bundle['attributes']['GrantedQuestInstanceIds'] = [
+            i for i in before_bundle['attributes']['GrantedQuestInstanceIds'] if i != successor_id] + [repaired_id]
         self.assertIsNone(self.get('ChallengeBundle:' + future))
         after_first = copy.deepcopy(self.items())
         self.login()

@@ -609,7 +609,7 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   an empty inventory GUID and converted style targets are local representation
   policies. Nested purchase notifications are folded into the claim response.
   Claimed retries do not repeat the notification. The combined backend baseline
-  passed 399 tests; this does not establish native reward popup presentation.
+  passed 402 tests; this does not establish native reward popup presentation.
   Storm the Agency supports the five cooked bundle quests, their 120,000 total
   XP, pickaxe, wrap and five-quest glider reward. Chest and henchman objectives
   require three distinct locations; swimming requires all five hatches. Event
@@ -633,6 +633,11 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   unlock the recovered stages, preserve the active style and wait for missing
   cosmetic targets. Native golden-style presentation and the continuous gold-fill
   behavior remain unresolved; unlocking a stage does not prove its appearance.
+  Challenge bundles now maintain the reflected `GrantedQuestInstanceIds` array
+  from their actual linked Quest items, including newly granted successors.
+  Login repairs missing or stale membership without replaying rewards. This
+  addresses a concrete native owned-quest lookup requirement; exact wire
+  conversion and challenge-list UI verification remain pending.
   An authenticated server quest-event endpoint now
   supports durable retries; actual native gameplay event integration remains pending.
   Daily events must already satisfy their cooked tag/template/condition filters;

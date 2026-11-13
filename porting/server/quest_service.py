@@ -145,11 +145,24 @@ class QuestService:
                 name.casefold() in {q.casefold() for definition in {**STORM_AGENCY_BUNDLES, **SUPERLEVEL_BUNDLES}.values() for q, _, _, _ in definition['quest_infos']} and
                 tx.item(quest_id)['attributes'].get('challenge_bundle_id') is None):
             tx.set_item_attr(quest_id, 'challenge_bundle_id', bundle)
+        if (bundle in tx.profile['items'] and
+                tx.item(bundle)['templateId'].casefold().startswith('challengebundle:')):
+            self._sync_bundle_membership(tx, bundle)
         return quest_id
+
+    def _sync_bundle_membership(self, tx, bundle_id):
+        attrs = tx.item(bundle_id)['attributes']
+        current = attrs.get('GrantedQuestInstanceIds', [])
+        if not isinstance(current, list) or any(not isinstance(value, str) for value in current):
+            raise _invalid('Invalid bundle quest membership.')
+        members = [item_id for item_id, item in tx.profile['items'].items()
+                   if item['templateId'].casefold().startswith('quest:') and
+                   item['attributes'].get('challenge_bundle_id') == bundle_id]
+        tx.set_item_attr(bundle_id, 'GrantedQuestInstanceIds', members)
 
     def _bundle(self, tx, name, schedule_id=None):
         attrs = {'item_seen': False, 'num_quests_completed': 0,
-                 'num_progress_quests_completed': 0}
+                 'num_progress_quests_completed': 0, 'GrantedQuestInstanceIds': []}
         if schedule_id is not None:
             attrs['challenge_bundle_schedule_id'] = schedule_id
         bundle_id = self._grant(tx, 'ChallengeBundle:' + name, attrs)
@@ -183,6 +196,7 @@ class QuestService:
                     if claimed:
                         self._quest(tx, successors[0], bundle_id)
                     current = successors[0]
+        self._sync_bundle_membership(tx, bundle_id)
         self._sync_bundle_progress(tx, name, bundle_id)
 
     def _sync_bundle_progress(self, tx, name, bundle_id):
@@ -260,6 +274,9 @@ class QuestService:
         if include_daily:
             self._reconcile_faction_entitlements(tx)
         reconcile_level(self, ctx)
+        for bundle_id, item in list(tx.profile['items'].items()):
+            if item['templateId'].casefold().startswith('challengebundle:'):
+                self._sync_bundle_membership(tx, bundle_id)
 
     def _reconcile_faction_entitlements(self, tx):
         # Weekly bundle completion rewards were awarded before faction grant
