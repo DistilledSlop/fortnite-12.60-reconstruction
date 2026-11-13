@@ -14,9 +14,9 @@
 .leaf-label,.leaf-pct,.tm-head{fill:var(--tm-ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 .leaf-pct{font-weight:700}
 .grp-head{fill:var(--tm-group-label);font-weight:600;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
-.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 29.5% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit 9bc0a8b | Virtual-slot member helpers: pool resolves ported slot helpers, job builder, 3 helpers por | 2026-11-08T00:10:22-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
+.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 31.1% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit 355ea45 | Server: Fortnite gameplay-effect context on the wire (fixes ActiveGameplayEffects overflow | 2026-11-13T09:57:51-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Gameplay classes (/Script/FortniteGame)
-18.3% complete
+18.4% complete
 effort weight 673 | source: derived
 </title>
 <rect class="tile-frame tm-grp0" x="1.0" y="1.0" width="331.3" height="630.0" rx="4"/>
@@ -30,14 +30,14 @@ effort weight 273 | source: derived
 <text class="grp-head" x="340.3" y="17.0" font-size="12">Asset pipeline<tspan class="grp-pct"> · 66%</tspan></text>
 </g>
 <g><title>Backend services (reconstructed server)
-46.3% complete
+60.2% complete
 effort weight 215 | source: derived
 </title>
 <rect class="tile-frame tm-grp0" x="334.3" y="354.6" width="239.7" height="276.4" rx="4"/>
-<text class="grp-head" x="340.3" y="370.6" font-size="12">Backend services<tspan class="grp-pct"> · 46%</tspan></text>
+<text class="grp-head" x="340.3" y="370.6" font-size="12">Backend services<tspan class="grp-pct"> · 60%</tspan></text>
 </g>
 <g><title>Frontend and lobby UI
-23.1% complete
+23.2% complete
 effort weight 199 | source: derived
 </title>
 <rect class="tile-frame tm-grp0" x="576.0" y="1.0" width="213.2" height="287.5" rx="4"/>
@@ -87,17 +87,17 @@ effort weight 75 | source: derived
 <text class="grp-head" x="755.7" y="555.6" font-size="12">Audio<tspan class="grp-pct"> · 27%</tspan></text>
 </g>
 <g><title>Native function bodies ported (behaviour)
-30.4% complete (4371/14391)
+31.0% complete (4456/14391)
 effort weight 150 | source: git
-4371 committed function bodies of 14391 (total 14391 from totals.json native_functions_with_exec); counted against the in-scope reflected function list (543 manifest entries are helpers, _Validate halves or otherwise not a reflected function and are not counted; ported `&lt;fn&gt;_Implementation` bodies count for `&lt;fn&gt;`). Body-location table for the 11407 functions unported by reflected name when built (snapshot): 788 inline, 8242 direct single-callee, 527 direct multi-candidate (needs review), 1594 virtual, 4 no single body; 9794 distinct bodies; 474 already covered via _Implementation, 61 _Validate-only; source recovery only; build/runtime validation follows separate batch checkpoints</title>
+4456 committed function bodies of 14391 (total 14391 from totals.json native_functions_with_exec); counted against the in-scope reflected function list (658 manifest entries are helpers, _Validate halves or otherwise not a reflected function and are not counted; ported `&lt;fn&gt;_Implementation` bodies count for `&lt;fn&gt;`). Body-location table for the 11407 functions unported by reflected name when built (snapshot): 788 inline, 8242 direct single-callee, 527 direct multi-candidate (needs review), 1594 virtual, 4 no single body; 9794 distinct bodies; 474 already covered via _Implementation, 61 _Validate-only; source recovery only; build/runtime validation follows separate batch checkpoints</title>
 <rect class="tile-body" x="5.0" y="25.0" width="244.5" height="175.7" rx="4"/>
 <clipPath id="stm-c0"><rect x="5.00" y="25.00" width="244.46" height="175.70" rx="4"/></clipPath>
-<g clip-path="url(#stm-c0)"><rect class="tile-fill" x="5.00" y="147.33" width="244.46" height="53.37"/>
-<rect class="tile-edge" x="5.00" y="146.33" width="244.46" height="2"/>
+<g clip-path="url(#stm-c0)"><rect class="tile-fill" x="5.00" y="146.30" width="244.46" height="54.40"/>
+<rect class="tile-edge" x="5.00" y="145.30" width="244.46" height="2"/>
 </g>
 <text class="leaf-label" x="10.0" y="40.0" font-size="11">Native function bodies ported</text>
 <text class="leaf-label" x="10.0" y="53.0" font-size="11">(behaviour)</text>
-<text class="leaf-pct" x="10.0" y="66.0" font-size="12">30%</text>
+<text class="leaf-pct" x="10.0" y="66.0" font-size="12">31%</text>
 <rect class="tile-frame" x="5.0" y="25.0" width="244.5" height="175.7" rx="4"/>
 </g>
 <g><title>Athena framework — feature integration and parity
@@ -238,13 +238,13 @@ manual estimate (see rationale)</title>
 <rect class="tile-frame" x="95.4" y="563.6" width="64.9" height="63.4" rx="4"/>
 </g>
 <g><title>FortniteGame reflection declarations (not behavior)
-99.7% complete (2833/2842)
+99.8% complete (2836/2842)
 effort weight 15 | source: git
-2833 of 2842 tracked files (porting/native/Source/FortniteGame/Generated/[AU]*.h); total 2842 from totals.json uht_classes_named_by_package[/Script/FortniteGame]; also tracked, not counted: classes in other generated modules 100</title>
+2836 of 2842 tracked files (porting/native/Source/FortniteGame/Generated/[AU]*.h); total 2842 from totals.json uht_classes_named_by_package[/Script/FortniteGame]; also tracked, not counted: classes in other generated modules 100</title>
 <rect class="tile-body" x="162.3" y="406.6" width="62.6" height="65.8" rx="4"/>
 <clipPath id="stm-c14"><rect x="162.32" y="406.56" width="62.62" height="65.77" rx="4"/></clipPath>
-<g clip-path="url(#stm-c14)"><rect class="tile-fill" x="162.32" y="406.77" width="62.62" height="65.56"/>
-<rect class="tile-edge" x="162.32" y="405.77" width="62.62" height="2"/>
+<g clip-path="url(#stm-c14)"><rect class="tile-fill" x="162.32" y="406.70" width="62.62" height="65.63"/>
+<rect class="tile-edge" x="162.32" y="405.70" width="62.62" height="2"/>
 </g>
 <text class="leaf-pct" x="167.3" y="422.6" font-size="12">100%</text>
 <rect class="tile-frame" x="162.3" y="406.6" width="62.6" height="65.8" rx="4"/>
@@ -610,11 +610,15 @@ effort weight 20 | source: git
 <rect class="tile-frame" x="426.0" y="378.6" width="71.0" height="72.6" rx="4"/>
 </g>
 <g><title>Matchmaking ticket, websocket and session behavior
-0.0% complete
+55.0% complete
 effort weight 20 | source: manual
 manual estimate (see rationale)</title>
 <rect class="tile-body" x="499.0" y="378.6" width="71.0" height="72.6" rx="4"/>
-<text class="leaf-pct" x="504.0" y="394.6" font-size="12">0.0%</text>
+<clipPath id="stm-c48"><rect x="499.00" y="378.56" width="71.03" height="72.55" rx="4"/></clipPath>
+<g clip-path="url(#stm-c48)"><rect class="tile-fill" x="499.00" y="411.21" width="71.03" height="39.90"/>
+<rect class="tile-edge" x="499.00" y="410.21" width="71.03" height="2"/>
+</g>
+<text class="leaf-pct" x="504.0" y="394.6" font-size="12">55%</text>
 <rect class="tile-frame" x="499.0" y="378.6" width="71.0" height="72.6" rx="4"/>
 </g>
 <g><title>Game v2 profile, world and chat routes — source references
@@ -640,11 +644,15 @@ ok Party or XMPP referenced in committed server code</title>
 <rect class="tile-frame" x="338.3" y="511.7" width="67.6" height="56.6" rx="4"/>
 </g>
 <g><title>Party, presence, social and XMPP behavior
-0.0% complete
+10.0% complete
 effort weight 15 | source: manual
 manual estimate (see rationale)</title>
 <rect class="tile-body" x="338.3" y="570.4" width="67.6" height="56.6" rx="4"/>
-<text class="leaf-pct" x="343.3" y="586.4" font-size="12">0.0%</text>
+<clipPath id="stm-c51"><rect x="338.33" y="570.37" width="67.65" height="56.63" rx="4"/></clipPath>
+<g clip-path="url(#stm-c51)"><rect class="tile-fill" x="338.33" y="621.34" width="67.65" height="5.66"/>
+<rect class="tile-edge" x="338.33" y="620.34" width="67.65" height="2"/>
+</g>
+<text class="leaf-pct" x="343.3" y="586.4" font-size="12">10%</text>
 <rect class="tile-frame" x="338.3" y="570.4" width="67.6" height="56.6" rx="4"/>
 </g>
 <g><title>OAuth and account routes — source references
@@ -659,11 +667,15 @@ effort weight 12.5 | source: git+local
 <rect class="tile-frame" x="408.0" y="453.1" width="52.7" height="60.2" rx="4"/>
 </g>
 <g><title>Local username and account behavior
-0.0% complete
+50.0% complete
 effort weight 12.5 | source: manual
 manual estimate (see rationale)</title>
 <rect class="tile-body" x="462.7" y="453.1" width="52.7" height="60.2" rx="4"/>
-<text class="leaf-pct" x="467.7" y="469.1" font-size="12">0.0%</text>
+<clipPath id="stm-c53"><rect x="462.67" y="453.11" width="52.69" height="60.23" rx="4"/></clipPath>
+<g clip-path="url(#stm-c53)"><rect class="tile-fill" x="462.67" y="483.22" width="52.69" height="30.11"/>
+<rect class="tile-edge" x="462.67" y="482.22" width="52.69" height="2"/>
+</g>
+<text class="leaf-pct" x="467.7" y="469.1" font-size="12">50%</text>
 <rect class="tile-frame" x="462.7" y="453.1" width="52.7" height="60.2" rx="4"/>
 </g>
 <g><title>Public catalog, payment and asset routes — source references
@@ -678,11 +690,15 @@ effort weight 12.5 | source: git
 <rect class="tile-frame" x="517.4" y="453.1" width="52.7" height="60.2" rx="4"/>
 </g>
 <g><title>Catalog, payment and asset service behavior
-0.0% complete
+45.0% complete
 effort weight 12.5 | source: manual
 manual estimate (see rationale)</title>
 <rect class="tile-body" x="408.0" y="515.3" width="51.9" height="61.1" rx="4"/>
-<text class="leaf-pct" x="413.0" y="531.3" font-size="12">0.0%</text>
+<clipPath id="stm-c55"><rect x="407.98" y="515.33" width="51.89" height="61.15" rx="4"/></clipPath>
+<g clip-path="url(#stm-c55)"><rect class="tile-fill" x="407.98" y="548.97" width="51.89" height="27.52"/>
+<rect class="tile-edge" x="407.98" y="547.97" width="51.89" height="2"/>
+</g>
+<text class="leaf-pct" x="413.0" y="531.3" font-size="12">45%</text>
 <rect class="tile-frame" x="408.0" y="515.3" width="51.9" height="61.1" rx="4"/>
 </g>
 <g><title>Stats, events, cloud storage and datarouter — source references
@@ -723,11 +739,15 @@ manual estimate (see rationale)</title>
 <rect class="tile-frame" x="461.9" y="558.6" width="54.1" height="34.4" rx="4"/>
 </g>
 <g><title>Profile, persistence, social and service behavior
-0.0% complete
+55.0% complete
 effort weight 7 | source: manual
 manual estimate (see rationale)</title>
 <rect class="tile-body" x="461.9" y="595.0" width="54.1" height="32.0" rx="4"/>
-<text class="leaf-pct" x="466.9" y="611.0" font-size="12">0.0%</text>
+<clipPath id="stm-c60"><rect x="461.87" y="595.00" width="54.05" height="32.00" rx="4"/></clipPath>
+<g clip-path="url(#stm-c60)"><rect class="tile-fill" x="461.87" y="609.40" width="54.05" height="17.60"/>
+<rect class="tile-edge" x="461.87" y="608.40" width="54.05" height="2"/>
+</g>
+<text class="leaf-pct" x="466.9" y="611.0" font-size="12">55%</text>
 <rect class="tile-frame" x="461.9" y="595.0" width="54.1" height="32.0" rx="4"/>
 </g>
 <g><title>Session discovery references
@@ -743,10 +763,14 @@ ok Session discovery route (matchmaking session record) referenced; ok Session k
 <rect class="tile-frame" x="517.9" y="558.6" width="52.1" height="28.2" rx="4"/>
 </g>
 <g><title>Account progression and persistence parity
-0.0% complete
+40.0% complete
 effort weight 4 | source: manual
 manual estimate (see rationale)</title>
 <rect class="tile-body" x="517.9" y="588.8" width="25.1" height="38.2" rx="4"/>
+<clipPath id="stm-c62"><rect x="517.92" y="588.76" width="25.06" height="38.24" rx="4"/></clipPath>
+<g clip-path="url(#stm-c62)"><rect class="tile-fill" x="517.92" y="611.70" width="25.06" height="15.30"/>
+<rect class="tile-edge" x="517.92" y="610.70" width="25.06" height="2"/>
+</g>
 <rect class="tile-frame" x="517.9" y="588.8" width="25.1" height="38.2" rx="4"/>
 </g>
 <g><title>Local backend implementation test suite
@@ -848,15 +872,13 @@ effort weight 1 | source: git
 <rect class="tile-frame" x="774.2" y="165.8" width="7.0" height="9.7" rx="4"/>
 </g>
 <g><title>FortniteUI reflection declarations (not behavior)
-98.8% complete (1660/1681)
+100.0% complete (1681/1681)
 effort weight 10 | source: git
-1660 of 1681 tracked files (porting/native/Source/FortniteUI/Generated/[AU]*.h); total 1681 from totals.json uht_classes_named_by_package[/Script/FortniteUI]</title>
+1681 of 1681 tracked files (porting/native/Source/FortniteUI/Generated/[AU]*.h); total 1681 from totals.json uht_classes_named_by_package[/Script/FortniteUI]</title>
 <rect class="tile-body" x="675.8" y="181.4" width="39.5" height="63.7" rx="4"/>
 <clipPath id="stm-c73"><rect x="675.79" y="181.43" width="39.46" height="63.66" rx="4"/></clipPath>
-<g clip-path="url(#stm-c73)"><rect class="tile-fill" x="675.79" y="182.22" width="39.46" height="62.87"/>
-<rect class="tile-edge" x="675.79" y="181.22" width="39.46" height="2"/>
+<g clip-path="url(#stm-c73)"><rect class="tile-fill" x="675.79" y="181.43" width="39.46" height="63.66"/>
 </g>
-<text class="leaf-pct" x="680.8" y="196.4" font-size="11">99%</text>
 <rect class="tile-frame" x="675.8" y="181.4" width="39.5" height="63.7" rx="4"/>
 </g>
 <g><title>CommonUI and UMG reflection headers

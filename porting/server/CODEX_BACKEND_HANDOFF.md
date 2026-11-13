@@ -97,7 +97,7 @@ Private recovery: `porting/generated/events-download-contract/`.
 - Shop/local currency, locker slots/styles/presets, Battle Pass rewards,
   durable accounts/profiles and many progression paths have existing tests and
   original-client probe evidence. See server docs plus `porting/LOCKER_*_PROBE.md`
-  and `porting/PURCHASE_PROBE.md`; avoid reopening already accepted flows blindly.
+  and `porting/notes/PURCHASE_PROBE.md`; avoid reopening already accepted flows blindly.
 - Maya hairstyle and custom scarf finalization, and banner selection, were
   accepted through the original UI and survived backend/client restart. Maya
   tests used artificial earned keys; gameplay-earned keys and other choices remain

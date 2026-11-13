@@ -5,7 +5,7 @@
 # Usage: run_original_client.sh [--username NAME] [seconds] [extra client args...]
 # FN_ACTIONS="60:shot 70:click,640,600 80:key,Return" runs X11 actions at those seconds after
 # launch; "wait,REGEX[,TIMEOUT]" waits for REGEX in the client or FN_ACTION_LOG and restarts the clock;
-# also stopif,REGEX / move,X,Y / look,DX,DY / mhold,SECONDS. Screenshots go to generated/shots/ (debug aids, never committed).
+# also stopif,REGEX / move,X,Y / look,DX,DY / mhold,SECONDS. Screenshots go to $FN_SHOTS_DIR (vanilla_play_run.sh: the run folder's shots/), else generated/runs/_unsorted-shots/.
 # FN_WINEPREFIX selects an alternate prefix; FN_WINEDLLOVERRIDES and
 # FN_VK_ICD_FILENAMES pass renderer settings into the isolated client.
 # Set FN_DISPLAY and, if required, FN_XAUTHORITY to use an existing X11 display.
@@ -64,7 +64,7 @@ if text and not text.endswith("\n"): text+="\n"
 open(path,"w").write(text+block)
 PYEOF
     fi
-    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_LP_NUM_THREADS="${FN_LP_NUM_THREADS:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FN_ACTION_LOG="${FN_ACTION_LOG:-}" FORTNITE_NET_ENCRYPTION_KEY_FILE="${FORTNITE_NET_ENCRYPTION_KEY_FILE:-}" FN_STATE_DIR="${FN_STATE_DIR:-}" FN_SERVER_CMD="${FN_SERVER_CMD:-}" FN_WINEDEBUG="${FN_WINEDEBUG:--all}" FN_DISPLAY="${FN_DISPLAY:-}" FN_XAUTHORITY="${FN_XAUTHORITY:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
+    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_LP_NUM_THREADS="${FN_LP_NUM_THREADS:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FN_ACTION_LOG="${FN_ACTION_LOG:-}" FN_SHOTS_DIR="${FN_SHOTS_DIR:-}" FORTNITE_NET_ENCRYPTION_KEY_FILE="${FORTNITE_NET_ENCRYPTION_KEY_FILE:-}" FN_STATE_DIR="${FN_STATE_DIR:-}" FN_SERVER_CMD="${FN_SERVER_CMD:-}" FN_WINEDEBUG="${FN_WINEDEBUG:--all}" FN_DISPLAY="${FN_DISPLAY:-}" FN_XAUTHORITY="${FN_XAUTHORITY:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
 fi
 
 ip link set lo up
@@ -107,10 +107,11 @@ if [[ "${FN_PATCH_OODLE:-1}" == 1 ]]; then
 fi
 trap 'kill $server $patcher $appes_patcher $oodle_patcher 2>/dev/null || true' EXIT
 
-mkdir -p "$generated/shots"
-chown "$FN_USER" "$generated/shots"
+shots_dir=${FN_SHOTS_DIR:-$generated/runs/_unsorted-shots}
+mkdir -p "$shots_dir"
+chown "$FN_USER" "$shots_dir"
 set +e
-wine_env=(WINEPREFIX="$wineprefix" WINEDEBUG="${FN_WINEDEBUG:--all}" SHOTS_DIR="$generated/shots" FN_ACTIONS="$FN_ACTIONS" FN_ACTION_LOG="${FN_ACTION_LOG:-}")
+wine_env=(WINEPREFIX="$wineprefix" WINEDEBUG="${FN_WINEDEBUG:--all}" SHOTS_DIR="$shots_dir" FN_ACTIONS="$FN_ACTIONS" FN_ACTION_LOG="${FN_ACTION_LOG:-}")
 [[ -z "${FN_WINEDLLOVERRIDES:-}" ]] || wine_env+=(WINEDLLOVERRIDES="$FN_WINEDLLOVERRIDES")
 [[ -z "${FN_VK_ICD_FILENAMES:-}" ]] || wine_env+=(VK_ICD_FILENAMES="$FN_VK_ICD_FILENAMES")
 # lavapipe defaults to one rasteriser thread per core; on a 96-core host its llvmpipe threads segfault intermittently.

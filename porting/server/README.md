@@ -475,7 +475,7 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
 
 - **Original-client G1 verification.** Login, locker edits, favorites, wraps, seeded
   styles, shop purchases, Battle Pass rewards and local V-Bucks have probe evidence
-  in `porting/LOCKER_*_PROBE.md` and `porting/PURCHASE_PROBE.md`. The newly added
+  in `porting/LOCKER_*_PROBE.md` and `porting/notes/PURCHASE_PROBE.md`. The newly added
   friends, XMPP, content, quests and progression paths have backend tests;
   their remaining original-client UI checks are listed below. Gifting is deferred.
   A November 12 diagnostic populated the banner icon and color pickers, saved

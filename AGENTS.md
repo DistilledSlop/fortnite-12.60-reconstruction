@@ -4,7 +4,7 @@ The main reconstruction is `/opt/fortnite/FortniteClient-12.60-CL-13477524`.
 `/opt/fortnite/Fortnite14Research` is a separate 14.30 research checkout
 (upstream FNGameProj), not the project to build or implement.
 
-Read `porting/README.md` for the goal, then inspect current Git state and the relevant existing manifests/evidence before resuming work. Historical handoff and plan Markdown are reference material when needed, not routine batch status. The four dashboard milestones are the acceptance gates; the weighted progress percentage is an effort estimate.
+Read `porting/LAYOUT.md` for where code lives and where every run, log, screenshot, build log and agent report must go (`porting/generated/runs|builds|agents/`); do not invent new output locations. Read `porting/README.md` for the goal, then inspect current Git state and the relevant existing manifests/evidence before resuming work. Historical handoff and plan Markdown are reference material when needed, not routine batch status. The four dashboard milestones are the acceptance gates; the weighted progress percentage is an effort estimate.
 
 Dashboard task weights estimate total implementation and verification effort, completed plus remaining. Importance, urgency, milestone criticality, and a desired progress percentage must not affect weights. Define accounting boundaries and avoid allocating the same effort to multiple leaves; report uncertain estimates explicitly.
 

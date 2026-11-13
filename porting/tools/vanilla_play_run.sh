@@ -3,7 +3,8 @@ set -uo pipefail
 porting=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 seconds=${1:-420}
 [[ $seconds =~ ^[1-9][0-9]*$ ]] || { echo 'Usage: vanilla_play_run.sh [positive seconds]' >&2; exit 2; }
-base="$porting/generated/wine-investigation/$(date +%Y%m%d)-play-run"
+# Standard run folder: generated/runs/<YYYYMMDD>-<label>-<n>/ (label from FN_RUN_LABEL, default play-run).
+base="$porting/generated/runs/$(date +%Y%m%d)-${FN_RUN_LABEL:-play-run}"
 mkdir -p "$(dirname "$base")"
 n=1
 while ! mkdir "$base-$n" 2>/dev/null; do
@@ -11,6 +12,17 @@ while ! mkdir "$base-$n" 2>/dev/null; do
     ((n++))
 done
 out="$base-$n"
+mkdir -p "$out/shots"
+export FN_SHOTS_DIR="$out/shots"
+# This script's own output is kept in the run folder too (callers need not redirect it anywhere else).
+exec > >(tee -a "$out/play_run.out") 2>&1
+python3 - "$out/meta.json" "$seconds" <<'PYEOF'
+import json, os, subprocess, sys, time
+rev = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], capture_output=True, text=True).stdout.strip()
+keys = ['FN_RUN_LABEL', 'FN_RENDERER', 'FN_SERVER_MAP', 'FN_SERVER_URL_OPTS', 'FN_SERVER_ARGS', 'FN_ACTIONS', 'FN_LP_NUM_THREADS']
+json.dump({'started': time.strftime('%Y-%m-%dT%H:%M:%S%z'), 'seconds': int(sys.argv[2]), 'git_head': rev,
+           'env': {k: os.environ[k] for k in keys if k in os.environ}}, open(sys.argv[1], 'w'), indent=1)
+PYEOF
 runner_pid= capture_pid= server_pid=
 cleanup() {
     if [[ -n $capture_pid ]]; then sudo -n kill -INT "$capture_pid" 2>/dev/null || true; wait "$capture_pid" 2>/dev/null || true; fi
@@ -80,13 +92,10 @@ if [[ -n $capture_pid ]]; then sudo -n kill -INT "$capture_pid" 2>/dev/null || t
 [[ ! -e $out/udp.pcap ]] || sudo -n chown "$(id -u):$(id -g)" "$out/udp.pcap"
 client="${FN_WINEPREFIX:-$porting/generated/wine-prefix}/drive_c/users/${USER}/AppData/Local/FortniteGame/Saved/Logs/FortniteGame.log"
 [[ ! -f $client ]] || cp "$client" "$out/client.log"
-for shot in "$porting/generated/shots"/t*.png; do
-    [[ -f $shot && $shot -nt $out/start.marker ]] && cp "$shot" "$out/" || true
-done
 printf '\nOutput directory: %s\nRunner exit status: %s\n' "$out" "$status"
 # The runner translates its normal timeout into exit 0; preserve its reported status too.
 grep -a 'Original client runner exit status:' "$out/runner.out" | tail -1 || true
-printf 'Screenshots:'; for shot in "$out"/t*.png; do [[ ! -f $shot ]] || printf ' %s' "${shot##*/}"; done; printf '\n'
+printf 'Screenshots:'; for shot in "$out"/shots/t*.png; do [[ ! -f $shot ]] || printf ' %s' "${shot##*/}"; done; printf '\n'
 for pattern in 'Server accepting post-challenge connection' 'SendRestartHandshakeRequest' 'Malformed_Packet' 'NMT_' 'Welcomed' 'UNetConnection::Close'; do
     count=$(grep -ac "$pattern" "$out/server.log" 2>/dev/null || true); printf '%s: %s\n' "$pattern" "${count:-0}"
 done

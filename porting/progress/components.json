@@ -12,13 +12,13 @@
       "id": "m2",
       "text": "The client joins a lobby on the reconstructed server",
       "done": false,
-      "evidence": "The original client with local TLS and AppES diagnostic patches signs in and reaches the lobby against the local backend. Native rebuilt client/server direct joins also pass, including an Athena pawn and network checksum 683914758; this does not establish a rebuilt-client lobby or runtime wire parity (porting/ORIGINAL_CLIENT.md; native_classes_status.md)."
+      "evidence": "The original client with local TLS and AppES diagnostic patches signs in and reaches the lobby against the local backend. Native rebuilt client/server direct joins also pass, including an Athena pawn and network checksum 683914758; this does not establish a rebuilt-client lobby or runtime wire parity (porting/notes/ORIGINAL_CLIENT.md; native_classes_status.md)."
     },
     {
       "id": "m3",
       "text": "The client matchmakes to the reconstructed UE dedicated server",
       "done": false,
-      "evidence": "The diagnostic original client obtained a ticket, connected over a loopback plaintext websocket, processed queue and ready-check messages, and received a session assignment. The diagnostic client now accepts the session, retrieves its key, and completes the backend join request. With an experimental server patch, the dedicated server sends a challenge and acknowledges the client response, but the connection then loops on restart-handshake requests; an encrypted game-world join remains unverified. Native empty-map joining has only been demonstrated with the rebuilt client; no end-to-end rebuilt-client matchmaking is recorded (porting/MATCHMAKING_PROBE.md)."
+      "evidence": "The diagnostic original client obtained a ticket, connected over a loopback plaintext websocket, processed queue and ready-check messages, and received a session assignment. The diagnostic client now accepts the session, retrieves its key, and completes the backend join request. With an experimental server patch, the dedicated server sends a challenge and acknowledges the client response, but the connection then loops on restart-handshake requests; an encrypted game-world join remains unverified. Native empty-map joining has only been demonstrated with the rebuilt client; no end-to-end rebuilt-client matchmaking is recorded (porting/notes/MATCHMAKING_PROBE.md)."
     },
     {
       "id": "m4",
@@ -1118,7 +1118,7 @@
             "kind": "manual",
             "pct": 55
           },
-          "rationale": "Manual estimate set to 55% on 2026-11-10 from the recorded original-client probes (porting/MATCHMAKING_PROBE.md); it is not a measured value. The diagnostic original client processed queue and ready-check messages and received a session assignment via loopback plaintext websocket. The subsequent session lookup failed to parse; the fix in commit 685bf19d awaits original-client verification. Encrypted original-client match joining remains unverified (porting/MATCHMAKING_PROBE.md). Local matchmaking advertises its loopback websocket by default and can return the configured native server encryption key. HTTP/WebSocket tests pass; an encrypted matchmaking-to-game join and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md."
+          "rationale": "Manual estimate set to 55% on 2026-11-10 from the recorded original-client probes (porting/notes/MATCHMAKING_PROBE.md); it is not a measured value. The diagnostic original client processed queue and ready-check messages and received a session assignment via loopback plaintext websocket. The subsequent session lookup failed to parse; the fix in commit 685bf19d awaits original-client verification. Encrypted original-client match joining remains unverified (porting/notes/MATCHMAKING_PROBE.md). Local matchmaking advertises its loopback websocket by default and can return the configured native server encryption key. HTTP/WebSocket tests pass; an encrypted matchmaking-to-game join and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md."
         },
         {
           "id": "backend.game_profile",
@@ -1145,7 +1145,7 @@
             "kind": "manual",
             "pct": 55
           },
-          "rationale": "Manual estimate set to 55% on 2026-11-10 from the recorded original-client probes (porting/LOCKER_WRAP_PROBE.md); it is not a measured value. The diagnostic original client used local account, profile and locker flows; local shop purchases persisted items and balance. The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation, locker changes and active-loadout consistency after copying; the original copy semantics remain unverified. Profile snapshots and committed transactions now detach mutable caller data so locker state cannot silently diverge from saved revisions; focused ownership and restart tests pass. A mismatched MCP client revision receives a full profile snapshot under a local recovery policy; exact server behavior is unobserved. Cosmetic variant changes remain unimplemented and are rejected. Rebuilt-client login and profile integration and full protocol behavior remain unverified."
+          "rationale": "Manual estimate set to 55% on 2026-11-10 from the recorded original-client probes (porting/notes/LOCKER_WRAP_PROBE.md); it is not a measured value. The diagnostic original client used local account, profile and locker flows; local shop purchases persisted items and balance. The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation, locker changes and active-loadout consistency after copying; the original copy semantics remain unverified. Profile snapshots and committed transactions now detach mutable caller data so locker state cannot silently diverge from saved revisions; focused ownership and restart tests pass. A mismatched MCP client revision receives a full profile snapshot under a local recovery policy; exact server behavior is unobserved. Cosmetic variant changes remain unimplemented and are rejected. Rebuilt-client login and profile integration and full protocol behavior remain unverified."
         },
         {
           "id": "backend.progression",
@@ -1155,7 +1155,7 @@
             "kind": "manual",
             "pct": 40
           },
-          "rationale": "Manual estimate set to 40% on 2026-11-10 from the recorded original-client probes (porting/PURCHASE_PROBE.md); it is not a measured value. The diagnostic original client purchased the local Battle Pass and level 2, with rewards and balance changes persisted. Gameplay integration and full progression parity remain unverified. Do not allocate native reconstruction effort twice (porting/PURCHASE_PROBE.md)."
+          "rationale": "Manual estimate set to 40% on 2026-11-10 from the recorded original-client probes (porting/notes/PURCHASE_PROBE.md); it is not a measured value. The diagnostic original client purchased the local Battle Pass and level 2, with rewards and balance changes persisted. Gameplay integration and full progression parity remain unverified. Do not allocate native reconstruction effort twice (porting/notes/PURCHASE_PROBE.md)."
         },
         {
           "id": "backend.local_tests",
@@ -1183,7 +1183,7 @@
             ],
             "stub_credit": 1.0
           },
-          "rationale": "Route literals count references only; they do not establish served routes or protocol parity. Local shop and virtual-currency purchases were exercised in the diagnostic original client (porting/PURCHASE_PROBE.md)."
+          "rationale": "Route literals count references only; they do not establish served routes or protocol parity. Local shop and virtual-currency purchases were exercised in the diagnostic original client (porting/notes/PURCHASE_PROBE.md)."
         },
         {
           "id": "backend.public_catalog.behavior",
@@ -1193,7 +1193,7 @@
             "kind": "manual",
             "pct": 45
           },
-          "rationale": "Manual estimate set to 45% on 2026-11-10 from the recorded original-client probes (porting/PURCHASE_PROBE.md); it is not a measured value. The diagnostic original client purchased local shop items, the Battle Pass, a level and a free repeatable local-currency pack; purchases and selected rewards persisted. These are local test transactions, with no payment provider or real money. Full catalog and service parity remain unverified (porting/PURCHASE_PROBE.md)."
+          "rationale": "Manual estimate set to 45% on 2026-11-10 from the recorded original-client probes (porting/notes/PURCHASE_PROBE.md); it is not a measured value. The diagnostic original client purchased local shop items, the Battle Pass, a level and a free repeatable local-currency pack; purchases and selected rewards persisted. These are local test transactions, with no payment provider or real money. Full catalog and service parity remain unverified (porting/notes/PURCHASE_PROBE.md)."
         },
         {
           "id": "backend.party_xmpp",

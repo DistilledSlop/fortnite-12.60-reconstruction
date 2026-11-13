@@ -6,7 +6,7 @@ Written when the orchestrating session (Opus 5.5, Sonnet/Opus subagents) stopped
 ## 1. What landed (compiled, not yet verified with the vanilla client)
 
 All new code is active only with `-FortniteOriginalClient`. The server build of these sources is green (build log
-`generated/sf-orch/build-3.log`, binary built 2026-11-12 19:11 local, staged in `generated/linux-stage/...`).
+`generated/builds/build-3.log`, binary built 2026-11-12 19:11 local, staged in `generated/linux-stage/...`).
 
 | File | What | Origin |
 |---|---|---|
@@ -19,9 +19,9 @@ All new code is active only with `-FortniteOriginalClient`. The server build of 
 **Empty RPC bodies are bound at run time**, not spliced: `InstallRpcOverrides()` in both new files calls
 `UFunction::SetNativeFunc` for `ServerExecuteInventoryItem`, `ServerAttemptAircraftJump` and
 `ServerReadyToStartMatch`. No generator or promotion work was needed. When the bodies are later spliced through
-`behavior/*.inc`, remove the rebinding (drafts are in `generated/sf-orch/g7-behavior/`, `g8-behavior/`, which are ignored).
+`behavior/*.inc`, remove the rebinding (drafts are in `generated/agents/g7-behavior/`, `g8-behavior/`, which are ignored).
 
-## 2. Runs this session (`generated/wine-investigation/20261112-play-run-N`)
+## 2. Runs this session (`generated/runs/20261112-play-run-N`)
 
 - **28** (baseline, old floor code): same state as run 27; the floor was never created, because `RestartPlayer`
   returned before `PositionPawnOnTerrain` on non-Apollo maps (observed: no `Test floor` line, pawn Z -536000).
@@ -34,7 +34,7 @@ All new code is active only with `-FortniteOriginalClient`. The server build of 
   (`/Game/Packages/Fortnite_UniqueMaterials_1/Builder_2`). The match-flow hard-import closure (3,515 packages,
   562 MB, through DefaultMapInfo, Athena_GameMode and SafeZoneIndicator) pulls in materials whose cooked shader-map
   memory images our 4.25 server cannot read. All 8,659 files staged this session were **moved** to
-  `generated/sf-orch/unstaged-20261112/Content/`. The stage is back to its pre-session state (848 MB).
+  `generated/agents/unstaged-20261112/Content/`. The stage is back to its pre-session state (848 MB).
   Run 30 says nothing about the G7 code.
 
 ## 3. Next steps, in order
@@ -63,7 +63,7 @@ All new code is active only with `-FortniteOriginalClient`. The server build of 
    death hook into the D6 death sequence; new files `FortAthenaHealth.cpp/.h`. (b) G8 building (Sonnet):
    re-create `ServerCreateBuildingActor` (R4 §2, D5 §3), edit/repair/destroy; new files `FortAthenaBuilding.cpp/.h`.
    The building agent's last lead was `CachePlayerBuildableClasses` at `0x141e92db0` (decompile it for the
-   build-class mapping). Brief template: `generated/sf-orch/WORKER_RULES.md` (ignored, so copy it into the brief).
+   build-class mapping). Brief template: `generated/agents/WORKER_RULES.md` (ignored, so copy it into the brief).
 5. Then G8 pickup/drop/loot (D10), G9 end of match (R3, D6, E), G10 two clients.
 
 ## 4. Working rules that mattered
