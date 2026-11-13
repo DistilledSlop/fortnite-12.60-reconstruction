@@ -592,8 +592,12 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   database failures preserve ownership and spending. Equipped and saved locker
   snapshots receive the resulting variants. Color words encode raw finite RGBA
   floats; strict hexadecimal/finite validation is local policy. The original
-  client has confirmed both request shapes against the old missing handlers;
-  successful native customization and reward presentation remain unverified.
+  client finalized hairstyle Tier01.1 and a custom scarf color through both
+  commands, displayed UPGRADE FINALIZED and returned to the lobby with that
+  appearance. A full backend/client restart retained it without another unlock
+  request. These DXVK tests used artificial earned-key fixtures; the other
+  56 choices, native gameplay-earned keys and general quest reward presentation
+  still need original-client validation.
   An authenticated server quest-event endpoint now
   supports durable retries; actual native gameplay event integration remains pending.
   Daily events must already satisfy their cooked tag/template/condition filters;

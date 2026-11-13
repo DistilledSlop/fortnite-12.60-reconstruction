@@ -1205,3 +1205,63 @@ and SQLite-trigger rollback with cache/disk parity. The Battle Pass repair test
 also verifies the consumed purchase entitlement and idempotent repeat. Log:
 `generated/chrono-maya-implementation-probe/backend-tests.log`. Successful native
 customization and reward presentation are not established by these tests.
+
+### Original-client Maya finalization, lobby appearance and restart
+
+Frozen backend **9e04cda4** with ProjectChrono/helper **97621817** passed the actual
+Maya flow under DXVK medium settings on llvmpipe. The fixture owned Maya and ten
+challenge keys, had premium level/book 100, and began with the old unpurchased
+graph and its purchase token. ClientQuestLogin reconciled that entitlement.
+
+The client finalized hairstyle Tier01.1, sending the captured empty rewardCfg
+request and receiving HTTP 200. It changed the model and displayed UPGRADE
+FINALIZED / MAYA UPGRADED. The custom scarf picker then sent Tier10.1 with
+`rewardCfg: 3EA4B3D53E7AE6E23F60643500000000`, also received 200, and displayed the
+finalized state. Leaving customization sent the full ten-node configuration
+and `Cosmetics.Variant.Channel.RichColor:` with those same words; it received
+200. The room and lobby rendered the chosen hairstyle and scarf.
+
+The persisted outfit has Hair/Color.015, Pattern/Color.002 and RichColor active
+`RichColor.3EA4B3D53E7AE6E23F60643500000000`, with owned RichColor tag. Its equipped
+locker snapshot matches. Both earned key quantities remain one; their respective
+spent counts are one and total spent is two. All eight observed MCP requests
+returned 200. No JSON parse, fatal or GetQueryData marker was found. Captures,
+source hashes, safe request records and private logs are in
+`generated/chrono-maya-implementation-probe/`. The client was stopped under root
+control after the lobby screenshot; session 12686 ended exit 0 and backend
+180083 stopped.
+
+A second run copied the persisted databases without editing profiles and
+restarted both backend and client. The original lobby rendered the same
+hairstyle and custom scarf. Graph attributes and outfit variants exactly match
+the prior persisted state; no new UnlockRewardNode request occurred. No JSON
+parse, fatal or GetQueryData marker was found. The screenshot and safe result
+receipt are in `generated/chrono-maya-restart-probe/`. The client was stopped
+under root control after that capture. This proves persisted native appearance
+for these two choices; the other 56 native choices, gameplay-earned keys and
+native Windows remain unverified. The ProjectChrono wiki now includes the two
+actual finalized-upgrade screenshots.
+
+### Quest reward notification consumer recovered; Athena trigger still open
+
+Read-only native recovery identifies the explicit claim callback chain:
+`0x142438be0` binds `0x142449560`, whose primary response JSON is decoded directly
+as FortQuestRewardNotification and broadcast through OnQuestRewardClaimed.
+`0x1410fa350` selects `primary: true` from the notifications array; there is no
+payload/data wrapper or quest Type comparison in this claim decoder. The
+recovered typed fields are questId and loot, whose items have itemType, itemGuid,
+quantity, attributes and itemProfile. Original JSON-to-struct lookup accepts
+lowercase keys through case-insensitive native comparison. This is a recovered
+consumer contract, not a captured historical server response. In particular,
+`quest_reward_grant` is a localization key and must not be used as an invented
+wire discriminator.
+
+Generic ClaimNextCompletedQuestReward selects Completed(2), excludes Claimed(3),
+and invokes fixed claims with selectedRewardIndex -1. That does not prove
+Athena frontend automatic claiming. The concrete UI asset references found are
+campaign-oriented, and executable Blueprint subscriptions remain undecoded.
+There is no evidence to replace BR's current auto-award/Claimed policy solely
+from this generic helper. No reward-response or quest-lifecycle source was
+changed. Private native captures and precise remaining checks are recorded in
+`generated/quest-reward-wire-v2/findings.json`; an isolated Completed-quest
+fixture with actual original Athena request observation is the next check.
