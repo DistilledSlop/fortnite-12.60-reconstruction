@@ -529,9 +529,34 @@ static void EnsureWorldManager(UWorld* World)
     AFortGameStateAthena* GameState = World ? World->GetGameState<AFortGameStateAthena>() : nullptr;
     if (!GameState || GameState->WorldManager)
         return;
-    FActorSpawnParameters Params;
-    Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-    AFortWorldManager* Manager = World->SpawnActor<AFortWorldManager>(AFortWorldManager::StaticClass(), FTransform::Identity, Params);
+    // A loaded network startup actor has a stable map identity on the client and retains its authored grid settings.
+    AFortWorldManager* Manager = nullptr;
+    for (TActorIterator<AFortWorldManager> It(World); It; ++It)
+    {
+        AFortWorldManager* Candidate = *It;
+        if (!IsValid(Candidate) || !Candidate->HasAnyFlags(RF_WasLoaded))
+            continue;
+        if (Manager)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("Multiple loaded WorldManagers (%s, %s); cannot choose the GameState manager"),
+                *Manager->GetPathName(), *Candidate->GetPathName());
+            return;
+        }
+        Manager = Candidate;
+    }
+    if (Manager && !Manager->IsNetStartupActor())
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Loaded WorldManager %s is not a network startup actor; cannot safely assign it"),
+            *Manager->GetPathName());
+        return;
+    }
+    const bool bLoadedManager = Manager != nullptr;
+    if (!Manager)
+    {
+        FActorSpawnParameters Params;
+        Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+        Manager = World->SpawnActor<AFortWorldManager>(AFortWorldManager::StaticClass(), FTransform::Identity, Params);
+    }
     if (!Manager)
     {
         UE_LOG(LogTemp, Warning, TEXT("WorldManager spawn failed"));
@@ -541,7 +566,10 @@ static void EnsureWorldManager(UWorld* World)
     Manager->bAlwaysRelevant = true;
     GameState->WorldManager = Manager;
     GameState->ForceNetUpdate();
-    UE_LOG(LogTemp, Display, TEXT("Spawned %s as the GameState world manager"), *Manager->GetName());
+    UE_LOG(LogTemp, Display, TEXT("GameState WorldManager %s: %s grid=(%d,%d,%d) vertical=%d tile=%d"),
+        bLoadedManager ? TEXT("loaded") : TEXT("spawned"), *Manager->GetPathName(),
+        Manager->X_Size, Manager->Y_Size, Manager->Z_StructuralGrid_Size,
+        Manager->VerticalCellNumOffsetFromOrigin, Manager->TileEdgeSize);
 }
 
 static void EnsureTimeOfDayManager(UWorld* World)

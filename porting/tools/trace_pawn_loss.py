@@ -23,6 +23,9 @@ except OSError as exc:
     gdb.execute('quit 1')
 gdb.execute('set pagination off')
 gdb.execute('set confirm off')
+gdb.execute('set print static-members off')
+gdb.execute('set print max-depth 4')
+gdb.execute('set print elements 16')
 gdb.execute('set breakpoint pending off')
 gdb.execute('handle SIGTRAP nostop noprint nopass')
 
