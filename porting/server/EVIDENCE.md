@@ -892,8 +892,9 @@ ClientQuestLogin now issues the missing free schedule and eligibility quest
 idempotently. Supported quest token awards advance its acquisition counter and
 grant the bundle within the same durable transaction. This does not infer past
 acquisitions from an existing balance or expose a synthetic acquisition event
-through the trusted gameplay-event API. Both faction quests remain inactive;
-selection, exclusivity, and original-client eligibility display remain unverified.
+through the trusted gameplay-event API. At this initial baseline both faction quests remained inactive. Selection and
+exclusivity are implemented in the five-agent update below; original-client
+eligibility display remains unverified.
 
 The combined ping-join and Brutus baseline passed 292 unittest-discovery tests
 (/tmp/g1-ping-brutus-full.log). New eligibility coverage includes threshold
@@ -1018,3 +1019,15 @@ completions, switching and completed-choice rejection, deferred target rewards,
 restart persistence, historical eligibility, ambiguous history rejection,
 threshold rollback/retry and real weekly completion after partial history.
 The log is `porting/generated/chrono-faction-integration/final-tests.log`.
+
+A secure ProjectChrono original-client probe of `240e8706` then issued native
+`ClientQuestLogin` successfully. Its test profile contained 90 validated retained
+weekly claims, owned agent cosmetics, and an explicitly seeded purchased book
+for UI access. Login reconciled all five faction grant quests to Claimed without
+required-field, parse or fatal log errors. The normal lobby displayed its daily
+challenge. Opening the Battle Pass room under Wine builtin D3D11 hit a measured
+render stall (GetQueryData 34.8s, GameThread frame sync 35.18s), triggering the
+30-second heartbeat detector. This proves populated profile/login handling,
+not faction-screen selection or reward presentation. The next room probe uses
+DXVK; the fixture manifest, result and hang timings are private artifacts in
+`porting/generated/chrono-faction-client-probe/`.
