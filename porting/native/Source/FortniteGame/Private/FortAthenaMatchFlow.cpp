@@ -1744,6 +1744,23 @@ namespace FortAthenaMatchFlow
         UE_LOG(LogTemp, Display, TEXT("MatchFlow: driver armed (%.2f s); waiting for %d player(s)"), DriverInterval, S.RequiredPlayers);
     }
 
+    void PositionPlayerForAircraftExit(AFortGameModeAthena* GameMode, AController* Controller)
+    {
+        FMatchFlowState& S = State();
+        if (!S.bActive || !GameMode || !Controller || !GetGameState(GameMode))
+            return;
+        AFortPlayerPawn* Pawn = Cast<AFortPlayerPawn>(Controller->GetPawn());
+        FBusPlayerState* Player = S.Players.Find(TWeakObjectPtr<AController>(Controller));
+        if (!Pawn || !Player || !Player->bPendingExit)
+            return;
+        AFortAthenaAircraft* Aircraft = Player->ExitAircraft.Get();
+        const FVector BusLocation = Aircraft ? Aircraft->GetActorLocation() : FVector(0.0f, 0.0f, 80000.0f);
+        // Set the spawn transform before any pawn RPC opens the actor channel. Keep bPendingExit until the post-health
+        // restart hook: applying the storm effect needs the initialized ASC, and skydiving initialization follows it.
+        const FVector DropLocation = BusLocation - FVector(0.0f, 0.0f, 500.0f);
+        Pawn->SetActorLocationAndRotation(DropLocation, FRotator(0.0f, Player->ExitRotation.Yaw, 0.0f), false, nullptr, ETeleportType::TeleportPhysics);
+    }
+
     void OnPlayerRestarted(AFortGameModeAthena* GameMode, AController* Controller)
     {
         FMatchFlowState& S = State();
@@ -1754,8 +1771,8 @@ namespace FortAthenaMatchFlow
         if (!GameState || !Pawn)
             return;
 
-        // FinishRestartPlayer applies GE_OutsideSafeZone once per pawn (D2 10, R6 3). The ability system of our server
-        // pawns is not set up yet, so this usually logs once and stops.
+        // FinishRestartPlayer applies GE_OutsideSafeZone once per pawn (D2 10, R6 3). Health setup initializes the ASC
+        // before this hook runs.
         UAbilitySystemComponent* ASC = Pawn->GetAbilitySystemComponent();
         if (ASC && GameMode->GE_OutsideSafeZone)
         {
@@ -1778,12 +1795,8 @@ namespace FortAthenaMatchFlow
         if (!Player || !Player->bPendingExit)
             return;
         Player->bPendingExit = false;
-        AFortAthenaAircraft* Aircraft = Player->ExitAircraft.Get();
-        const FVector BusLocation = Aircraft ? Aircraft->GetActorLocation() : FVector(0.0f, 0.0f, 80000.0f);
         // stand-in: TeleportToSkyDive 0x141a267c0 and BeginSkydiving are real client code but not ported to our pawn.
-        // Place the pawn below the bus, face the jump rotation and mark it skydiving from the bus.
-        const FVector DropLocation = BusLocation - FVector(0.0f, 0.0f, 500.0f);
-        Pawn->SetActorLocationAndRotation(DropLocation, FRotator(0.0f, Player->ExitRotation.Yaw, 0.0f), false, nullptr, ETeleportType::TeleportPhysics);
+        // PositionPlayerForAircraftExit already placed the pawn below the bus before initial actor replication.
         Pawn->bIsSkydiving = true;
         Pawn->bIsSkydivingFromBus = 1;
         Pawn->bIsParachuteOpen = false;
@@ -1806,7 +1819,7 @@ namespace FortAthenaMatchFlow
         }
         Pawn->ForceNetUpdate();
         S.Skydivers.FindOrAdd(TWeakObjectPtr<APawn>(Pawn));
-        UE_LOG(LogTemp, Display, TEXT("MatchFlow: %s skydiving from the bus at %s (%s)"), *Pawn->GetName(), *DropLocation.ToString(),
+        UE_LOG(LogTemp, Display, TEXT("MatchFlow: %s skydiving from the bus at %s (%s)"), *Pawn->GetName(), *Pawn->GetActorLocation().ToString(),
             Player->bJump ? TEXT("jump") : TEXT("forced exit"));
     }
 }

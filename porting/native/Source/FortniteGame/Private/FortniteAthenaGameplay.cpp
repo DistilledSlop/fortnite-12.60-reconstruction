@@ -590,15 +590,23 @@ void AFortGameModeAthena::RestartPlayer(AController* NewPlayer)
     if (NewPlayer && NewPlayer->GetPawn())
         UE_LOG(LogTemp, Display, TEXT("Athena pawn spawned: class=%s authority=%d"),
             *NewPlayer->GetPawn()->GetClass()->GetName(), NewPlayer->GetPawn()->HasAuthority() ? 1 : 0);
+    // Vanilla-client tests. FortniteEmptyDedicated has no ground: PositionPawnOnTerrain places the pawn on the replicated
+    // test floor. On Apollo_Terrain it places the pawn on the lobby island (no PlayerStart actors load). In both cases the
+    // aircraft placement runs afterwards for a pending bus exit; skydiving initialization follows health setup.
+    // Finish placement before SetupPlayer sends ClientInternalEquipWeapon on the pawn: that RPC synchronously opens its
+    // actor channel and serializes the initial transform. Later ReplicatedMovement does not reach the autonomous owner.
+    const bool bOriginalClientPawn = NewPlayer && NewPlayer->GetPawn() && GetWorld() &&
+        FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient"));
+    if (bOriginalClientPawn)
+    {
+        PositionPawnOnTerrain(NewPlayer);
+        FortAthenaMatchFlow::PositionPlayerForAircraftExit(this, NewPlayer);
+    }
     FortAthenaInventory::SetupPlayer(this, Cast<AFortPlayerControllerAthena>(NewPlayer));
     if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteNoHealth")))
         FortAthenaHealth::SetupPlayer(this, Cast<AFortPlayerControllerAthena>(NewPlayer));
-    // Vanilla-client tests. FortniteEmptyDedicated has no ground: PositionPawnOnTerrain places the pawn on the replicated
-    // test floor. On Apollo_Terrain it places the pawn on the lobby island (no PlayerStart actors load). In both cases the
-    // match flow runs afterwards: for a pending bus exit it moves the pawn out of the aircraft and starts the skydive.
-    if (NewPlayer && NewPlayer->GetPawn() && GetWorld() && FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")))
+    if (bOriginalClientPawn)
     {
-        PositionPawnOnTerrain(NewPlayer);
         FortAthenaMatchFlow::OnPlayerRestarted(this, NewPlayer);
         return;
     }

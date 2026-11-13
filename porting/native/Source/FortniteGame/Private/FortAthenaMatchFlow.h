@@ -21,8 +21,12 @@ namespace FortAthenaMatchFlow
     // stands in for the unported game mode Tick 0x141975090.
     void Start(AFortGameModeAthena* GameMode);
 
-    // Call at the very end of AFortGameModeAthena::RestartPlayer (after any floor/terrain teleport). Places a pawn
-    // that was restarted by a bus exit under the aircraft and puts it in skydive; applies the storm effect.
+    // Call after floor/terrain placement and before inventory/health setup can send pawn RPCs and open its actor
+    // channel. Places a pending bus-exit pawn below the aircraft without consuming its pending initialization.
+    void PositionPlayerForAircraftExit(AFortGameModeAthena* GameMode, AController* Controller);
+
+    // Call at the end of AFortGameModeAthena::RestartPlayer after health initializes the ASC. Applies the storm effect
+    // and finishes skydiving initialization for the pawn positioned by PositionPlayerForAircraftExit.
     void OnPlayerRestarted(AFortGameModeAthena* GameMode, AController* Controller);
 
     // stand-in: binds the re-created jump and ready RPC bodies (see the end of the .cpp). Call once from StartPlay.
