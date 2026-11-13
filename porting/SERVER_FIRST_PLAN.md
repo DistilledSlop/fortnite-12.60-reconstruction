@@ -663,3 +663,47 @@ can pick the previous chunk); `off.py Class 0xOFF` (offset → property over the
   splices; remove the rebinding when real bodies are spliced.
 - Staging cooked content: never stage material/texture packages (MemoryImage `DerivedType` assert); boot the server
   after each staged root.
+
+### 11.7 Handoff (2026-11-13, 11:05, end of the orchestration session)
+
+Last commit of the session: see `git log` (`65fc8d1b` and the handoff commit after it). Server build
+`generated/builds/20261113-110054-server.log` is green and staged in `generated/linux-stage`.
+
+**Verified on the vanilla client today:** G6; G7 up to storm phases and storm damage on the HUD; weapons in hand; build
+preview shown (red); HUD health 100; client log free of the `ActiveGameplayEffects` overflow. Runs: `generated/runs/`
+(20261113 play-run-27..33, pawnbp-1, bppawn-1, testpawn-1).
+
+**Built but not yet seen working on the client:**
+- Storm death: `bppawn-1` reached 0 HP, and the server died in `ToDeathCause` (needs `UFortAssetManager`). Guarded since
+  then (death cause falls back to OutsideSafeZone); rerun needed.
+- Blueprint pawn (`-FortniteBlueprintPawn -FortniteNoServerAnimDecode`): it spawns on the server (gdb `testpawn-1`).
+  `bppawn-1` joined but crashed at storm death before anyone looked at the animation. Rerun and look (live viewer below).
+- K1: `Private/FortOriginalDefaults.cpp/.h` is committed but **not called**. Data: `generated/agents/k1-defaults/OriginalDefaults.json`
+  (987 classes, 4,251 values, 10/10 sanity checks); the report there has the exact integration lines (module startup /
+  `OnPostEngineInit`). Copy the JSON to `native/Config/` and the stage `Config/`.
+
+**Next, in order:**
+1. Integrate K1 (above), build, run once. Expect the `OriginalDefaults: applied ...` line and no regression of G6/G7. Then
+   check whether the build preview turns blue (B1), and remove the hand-written stand-ins that K1 supersedes.
+2. Rerun with storm and the Blueprint pawn: check the animation (idle, run, two-handed pickaxe) and that storm death
+   runs `HandlePlayerEliminated` without a crash. Then follow `server_systems/G9-match-end-plan.md` (it notes that
+   `FortAthenaHealth` and `FortAthenaEndGame` both declare a winner, and that this must become one path).
+3. Make the server use `UFortAssetManager` with its common game data (`DefaultEngine.ini` `AssetManagerClassName` plus the
+   game data asset), so that `ToDeathCause` and other `UFortAssetManager::Get` users work. Do it carefully: asset scanning
+   at server start.
+4. G10: add the `FN_SECOND_CLIENT=1` lines from `generated/agents/second-client/REPORT.md` to `vanilla_play_run.sh`
+   (`tools/second_client.sh --prepare` once while no client runs), and run with `?RequiredPlayers=2`.
+5. G8 by the cards: `G8-combat-plan.md` (C1–C8, plus section 9 for the harvest rule) and `G8-loot-plan.md` (L1–L7).
+6. GAS cue RPC mismatch (11.2 item 6), and the user's note that the wall ghost looks double wide.
+
+**Running and other state:**
+- Live viewer: `porting/tools/live_view.py` on port 8766 (http://192.168.4.186:8766/). It keeps running in the
+  background; restart with `nohup python3 -I porting/tools/live_view.py --port 8766 &`. The client renders at about
+  4–10 fps on CPU (lavapipe), so the viewer shows that rate.
+- Delegation: the user wants Codex workers (`codex exec -m gpt-6.1-sol -c model_reasoning_effort='"high"'`), several
+  bounded ones in parallel, each owning its own new files; shared context file `generated/agents/RESEARCH_COMMON.md`.
+  Claude subagents only when the user asks.
+- Disk: about 10 GB free on `/`. Old generated output is archived in `/mnt/vibrato/fortnite-archive/`. Delete the
+  `server.log` and `udp.pcap` of finished runs.
+- `docs/history.html` is over the 10 MiB pre-commit limit; the post-commit hook keeps regenerating it. Needs a trim in
+  `progress/publish.py`.
