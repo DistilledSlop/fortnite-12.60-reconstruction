@@ -22,8 +22,10 @@ Revision model:
     profile. A no-op command leaves it alone.
   * profileCommandRevision rises by 1 for every executed command, changed or not.
   * For deltas, profileChangesBaseRevision is the revision before the command.
-    A mismatched client rvn gets a full snapshot instead, based at its revision;
-    this recovery is a local policy, not captured server behavior.
+    HTTP rvn is a client command revision, not a profile revision. The handler
+    conservatively maps it to a profile revision using responses issued to that
+    session; an unknown or ambiguous mapping gets a full snapshot. This recovery
+    policy is local, not captured server behavior.
   * A command is atomic. Any ApiError means the stored profile is unchanged.
   * multiUpdate lists the other profiles that a command changed.
 """
@@ -71,6 +73,10 @@ def command(name, profiles, name_status, body):
         COMMANDS[name] = Command(name, frozenset(profiles), name_status, body, fn)
         return fn
     return register
+
+
+from hardcore_modifier_service import register as register_hardcore_modifier
+register_hardcore_modifier(command)
 
 
 class ProfileTx:
@@ -988,15 +994,38 @@ class ProfileService:
 
     def mcp_command(self, req, match):
         account_id, command_name = match.group(1), match.group(3)
-        self.oauth.authenticate(req, account_id=account_id)
+        session = self.oauth.authenticate(req, account_id=account_id)
         if self.accounts.get(account_id) is None:
             raise ApiError(404, Err.PROFILE_ACCOUNT_NOT_FOUND, "The account was not found.")
         profile_id = req.query.get("profileId", "common_core")
         if profile_id not in PROFILE_IDS:
             raise ApiError(400, Err.PROFILE_ID_INVALID, f"{profile_id} is not a known profile id.")
+        # The original client sends its command revision as rvn. Profile
+        # revisions can diverge after no-op commands or independent changes.
+        # Track what this authenticated session was sent; if the same command
+        # revision was paired with two profile revisions, its state is ambiguous.
+        history = getattr(session, "_profile_revision_history", None)
+        if history is None:
+            history = session._profile_revision_history = {}
+        key = (account_id, profile_id)
         if command_name == "QueryProfile":
-            return 200, self.query(account_id, profile_id)
-        return 200, self.run(account_id, profile_id, command_name, req.json_object(), req.query.get("rvn"))
+            result = self.query(account_id, profile_id)
+        else:
+            client_command_rvn = req.query.get("rvn")
+            known = history.get(key)
+            if client_command_rvn is None:
+                client_profile_rvn = None
+            elif known is not None and client_command_rvn == str(known[0]) and known[1] is not None:
+                client_profile_rvn = str(known[1])
+            else:
+                client_profile_rvn = "-1"
+            result = self.run(account_id, profile_id, command_name, req.json_object(), client_profile_rvn)
+        issued = (result["profileCommandRevision"], result["profileRevision"])
+        previous = history.get(key)
+        if previous is not None and previous[0] == issued[0] and previous[1] != issued[1]:
+            issued = (issued[0], None)
+        history[key] = issued
+        return 200, result
 
     def register(self, router):
         router.add("POST", r"/fortnite/api/game/v2/profile/([^/]+)/(client|dedicated_server|public)/([A-Za-z]+)",
