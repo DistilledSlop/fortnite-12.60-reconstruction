@@ -128,6 +128,8 @@ class FORTNITEGAME_API AFortGameStateAthena : public AFortGameStateZone, public 
 	GENERATED_BODY()
 
 public:
+	AFortGameStateAthena(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 221, flags 0x20080000004000
 	UPROPERTY(Config)
 	TArray<FString> BattleRoyalePlayspacePlugins;

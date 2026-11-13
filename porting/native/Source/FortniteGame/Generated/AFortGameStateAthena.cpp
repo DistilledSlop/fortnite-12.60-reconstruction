@@ -1167,3 +1167,15 @@ void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortGameStateAthena, PlaylistEndTime);
 }
 
+
+AFortGameStateAthena::AFortGameStateAthena(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+	// Original ctor 0x14197f7b0, stores 0x141980d44..0x141980d76.
+	WarmupCountdownStartTime = -1.0f;
+	WarmupCountdownEndTime = -1.0f;
+	AircraftStartTime = -1.0f;
+	SafeZonesStartTime = -1.0f;
+	EndGameStartTime = -1.0f;
+	EndGameKickPlayerTime = -1.0f;
+}

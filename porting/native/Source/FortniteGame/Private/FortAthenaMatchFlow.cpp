@@ -510,6 +510,50 @@ namespace FortAthenaMatchFlowPrivate
         // SafeZoneVolumeDefinitions, AircraftDropVolume and SafeZoneStorm stay empty (R6 2.2 items 2-4).
     }
 
+    // Original 0x1419653d0: replicated defaults come from AthenaGameData curves,
+    // including the bus auto-deployment distance consumed by the original client.
+    void InitializeGameStateGameData(AFortGameModeAthena* GameMode, AFortGameStateAthena* GameState, UCurveTable* GameData)
+    {
+        GameMode->AthenaGameDataTable = GameData;
+        if (!GameData)
+            return;
+        struct FDefaultRow
+        {
+            const TCHAR* Name;
+            float AFortGameStateAthena::* Destination;
+            float Time;
+        };
+        const FDefaultRow Rows[] = {
+            { TEXT("Default.GliderRedeploy.CanRedeploy"), &AFortGameStateAthena::DefaultGliderRedeployCanRedeploy, 0.0f },
+            { TEXT("Default.RedeployGlider.LateralVelocityMult"), &AFortGameStateAthena::DefaultRedeployGliderLateralVelocityMult, 0.0f },
+            { TEXT("Default.RedeployGlider.HeightLimit"), &AFortGameStateAthena::DefaultRedeployGliderHeightLimit, 0.0f },
+            { TEXT("Default.Parachute.DeployTraceForGroundDistance"), &AFortGameStateAthena::DefaultParachuteDeployTraceForGroundDistance, 0.0f },
+            { TEXT("AllowNeutralEditing"), &AFortGameStateAthena::DefaultAllowNeutralWallEditing, 0.0f },
+            { TEXT("Default.SCMachine.HotfixOn"), &AFortGameStateAthena::DefaultRebootMachineHotfix, 0.0f },
+            { TEXT("SignalInStormRegenSpeedCN"), &AFortGameStateAthena::SignalInStormRegenSpeed, 0.0f },
+            { TEXT("SignalInStormLostSpeedCN"), &AFortGameStateAthena::SignalInStormLostSpeed, 0.0f },
+            { TEXT("DamageVulnerabilityInStormCN"), &AFortGameStateAthena::StormCNDamageVulnerabilityLevel0, 0.0f },
+            { TEXT("DamageVulnerabilityInStormCN"), &AFortGameStateAthena::StormCNDamageVulnerabilityLevel1, 1.0f },
+            { TEXT("DamageVulnerabilityInStormCN"), &AFortGameStateAthena::StormCNDamageVulnerabilityLevel2, 2.0f },
+            { TEXT("DamageVulnerabilityInStormCN"), &AFortGameStateAthena::StormCNDamageVulnerabilityLevel3, 3.0f },
+        };
+        int32 Applied = 0;
+        for (const FDefaultRow& Row : Rows)
+        {
+            // The original preserves the prior field value when a row is absent.
+            const FRealCurve* Curve = GameData->FindCurve(FName(Row.Name), TEXT("Athena game-state defaults"), true);
+            if (Curve)
+            {
+                GameState->*(Row.Destination) = Curve->Eval(Row.Time);
+                ++Applied;
+            }
+        }
+        GameState->ForceNetUpdate();
+        UE_LOG(LogTemp, Display, TEXT("MatchFlow: game-data defaults applied %d/%d: deployGroundDistance=%.1f redeployLateral=%.2f redeployHeight=%.1f"),
+            Applied, UE_ARRAY_COUNT(Rows), GameState->DefaultParachuteDeployTraceForGroundDistance,
+            GameState->DefaultRedeployGliderLateralVelocityMult, GameState->DefaultRedeployGliderHeightLimit);
+    }
+
     bool SetupPlaylistAndMap(AFortGameModeAthena* GameMode, AFortGameStateAthena* GameState)
     {
         FMatchFlowState& S = State();
@@ -548,6 +592,7 @@ namespace FortAthenaMatchFlowPrivate
             UE_LOG(LogTemp, Warning, TEXT("MatchFlow: %s did not load; scalable floats fall back to their plain values"), GameDataPath);
         }
         S.GameData = GameData;
+        InitializeGameStateGameData(GameMode, GameState, GameData);
 
         // MapInfo: spawn DefaultMapInfo_C and fill the instance data the map would carry (R6 2.2).
         UClass* MapInfoClass = LoadClass<AFortAthenaMapInfo>(nullptr, MapInfoClassPath);

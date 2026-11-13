@@ -2457,6 +2457,10 @@ _player_name_server_spec = _common_activation_import.spec_from_file_location(
     "player_name_server_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "player_name_server_runtime", "source_policy.py"))
 _player_name_server_policy = _common_activation_import.module_from_spec(_player_name_server_spec)
 _player_name_server_spec.loader.exec_module(_player_name_server_policy)
+_athena_phase_defaults_spec = _common_activation_import.spec_from_file_location(
+    "athena_phase_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "athena_phase_defaults_runtime", "source_policy.py"))
+_athena_phase_defaults_policy = _common_activation_import.module_from_spec(_athena_phase_defaults_spec)
+_athena_phase_defaults_spec.loader.exec_module(_athena_phase_defaults_policy)
 _aircraft_events_spec = _common_activation_import.spec_from_file_location(
     "aircraft_events_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "aircraft_events_runtime", "source_policy.py"))
 _aircraft_events_policy = _common_activation_import.module_from_spec(_aircraft_events_spec)
@@ -4844,6 +4848,7 @@ def promote(args):
         cpp = render_promoted_cpp(model, source_label)
         header, cpp = _default_subobjects_policy.finalize(model, header, cpp)
         header, cpp = _player_name_server_policy.finalize(model, header, cpp)
+        header, cpp = _athena_phase_defaults_policy.finalize(model, header, cpp)
         _input_cache_policy.validate_rendered(model, header, cpp)
         _action_slate_policy.validate_rendered(model, header, cpp)
         if model.get('common_action_widget_icon_runtime'):
