@@ -1601,3 +1601,23 @@ fish quests. After adding the 35 coin candidates, 129 of the earlier filename
 candidates remain unregistered; that count is not a final outstanding-quest
 count. The backend registry now contains 321 unique definitions in eleven broad
 groups. Native challenge-list presentation remains a separate open requirement.
+
+### Live spatial challenge ownership inspection
+
+The original DXVK client ran against frozen backend 5b2555df using the repaired
+account 3 fixture. Hardware GDB breakpoints reached the actual spatial category
+producer at 0x144c00280 four times during native login. Once population settled,
+its manager map contained 20 groups, 29 bundle entries and 176 child entries.
+Every bundle entry's ownership pointer at +0x58 was null. The rotator retained
+four and seven entries in its intermediate category arrays but zero entries in
+the visible category array at +0xc28. This is direct runtime evidence of missing
+owned bundle bindings in this consumer; it does not establish which profile
+field or binding callback is responsible. The bundle GetQuests breakpoint was
+not reached during this observation, so GrantedQuestInstanceIds hydration
+remains unverified. No speculative backend field was added.
+
+Private numeric captures, scripts and receipt:
+generated/chrono-spatial-binding-probe/ (native-binding.jsonl and result.json).
+GDB detached normally; original launch session 50880 is terminal, and owned
+backend 322824 and client 322916 are gone. No unrelated client or native build
+was changed, and no observation timeout triggered a replacement run.
