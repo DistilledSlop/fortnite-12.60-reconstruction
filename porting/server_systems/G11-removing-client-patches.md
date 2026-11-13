@@ -1,7 +1,9 @@
 # G11: running the vanilla client with no in-memory patches
 
 Updated: 2026-11-12. **G11 remains OPEN:** secure local TLS trust and removal
-of the client memory diagnostics have not been achieved. Sections 2–3 retain
+of the client memory diagnostics have not been achieved. The user subsequently
+authorized the explicitly patched ProjectChrono deployment path; its current
+runtime evidence is recorded at the end of this page. Sections 2–3 retain
 the November 11 hypotheses; section 4 records the actual November 12 probes.
 
 The original diagnostic setup applies two patches to the running client
@@ -268,7 +270,8 @@ This changes the local deployment approach, not the unchanged-client gate:
 the launcher starts its own shipping child and injects a helper. No game EXE
 on disk is modified. The helper performs the guarded AppES callback diagnostic;
 successful entitlement checks are not established. EAC/BattlEye wrappers are
-not started. Native Windows and end-to-end login remain unverified.
+not started. Native Windows remains unverified; subsequent isolated login/XMPP
+validation is recorded below.
 
 The original X509 verifier recovery now isolates the manager rejection. Its
 74-block CFG calls the digest verifier at `0x1438bddb0`, then consumes AL at
@@ -302,7 +305,44 @@ all six pins. Subsequent isolated original-client probes made HTTPS telemetry
 POSTs with 204 responses and both Curl/WSS verification bypasses absent. No
 hosts-file redirect or Content certificate overlay was used in these probes.
 The launcher uses the selected game executable's directory as the child cwd.
-The client then exits with an execution access violation at `0x1812f1580`
+In these initial probes the client exited with an execution access violation at `0x1812f1580`
 around PostEngineInit, before account login. Disabling audio and using DXVK
-did not resolve this crash. Root-cause debugging is still in progress.
-No G11 completion or successful lobby/WSS connection is claimed.
+did not resolve this crash. The startup timing correction and subsequent
+login/WSS results are recorded below; the unchanged-client G11 gate remains open.
+
+## ProjectChrono startup timing correction
+
+The protected startup fault above is avoided by keeping AppES code intact until
+`LogLoad: LoadMap: /Game/Maps/Frontend`. This matches the older Python probe's
+phase boundary. Changing only this timing let the original client pass
+PostEngineInit, authenticate its local account, establish its TLS WebSocket/XMPP
+session, create a party and exchange party/member metadata notifications.
+The successful isolated probes used the frozen backend at `3c26b5b4`, no hosts
+mount, no Content CA overlay, and neither Curl nor WSS verification bypass.
+The helper checks the original verification flag and WSS branch signatures
+before updating the six pins. This remains user-authorized patched local mode.
+
+ProjectChrono now supplies a fresh GUID session token on the child command line.
+The helper requires that token in the normal client log before accepting the
+subsequent frontend marker. It also rechecks the token at its observed offset
+before accepting readiness, so a truncated and rewritten log cannot reuse an
+old token. This avoids stale-log readiness without moving the user's log files.
+The original received both LOG and ABSLOG overrides during controlled probes
+but continued writing its default log. The native resolver supports those
+switches and caches its first result; the exact early cache timing is unproven.
+The launcher uses the normal current-user LocalAppData log location instead.
+
+Strict Windows builds and focused Windows-file reader tests pass. The tests
+exercise stale/preceding markers, marker splits, replacement before the token,
+and truncation/regrowth with a different launch token. Native Windows testing,
+two-client secure social interactions, and actual match/server gameplay remain
+separate acceptance work. Successful startup and XMPP do not establish those
+flows or the historical unchanged-client gate.
+
+An isolated negative trust probe used a different self-signed CA/server
+certificate with the same hostnames while keeping ProjectChrono's selected
+public CA unchanged. After the helper reached its frontend boundary/readiness,
+the client reported six `SSL certificate problem: self signed certificate`
+errors and never logged in. This demonstrates rejection of that untrusted
+server; it does not establish every certificate-failure case. The test's private
+server key and runtime logs remain in ignored generated storage.

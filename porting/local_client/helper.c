@@ -394,18 +394,93 @@ static int appes_diagnostic(void) {
     resume_threads(threads,number);return ok;
 }
 
+/* AppES code must stay intact through protected startup callbacks. Require
+ * this launch's unique command-line token before accepting a frontend marker.
+ * Original probes kept the default log path despite LOG/ABSLOG switches.
+ */
+typedef struct {
+    HANDLE file; DWORD carry; int session_seen; LARGE_INTEGER session_offset;
+    char buffer[65536+128];
+} FrontendLog;
+static int session_still_in_log(FrontendLog *reader,const char *marker) {
+    LARGE_INTEGER position,zero={0};DWORD got=0;char token[80];SIZE_T length=strlen(marker);
+    if(!GetFileSizeEx(reader->file,&position))return -1;
+    if(position.QuadPart<reader->session_offset.QuadPart+(LONGLONG)length)return 0;
+    if(!SetFilePointerEx(reader->file,zero,&position,FILE_CURRENT) ||
+       !SetFilePointerEx(reader->file,reader->session_offset,NULL,FILE_BEGIN))return -1;
+    BOOL read_ok=ReadFile(reader->file,token,(DWORD)length,&got,NULL);
+    if(!SetFilePointerEx(reader->file,position,NULL,FILE_BEGIN))return -1;
+    if(!read_ok)return -1;
+    return got==length && !memcmp(token,marker,length);
+}
+static int frontend_in_log(FrontendLog *reader,const WCHAR *path,const char *session_marker) {
+    static const char marker[]="LogLoad: LoadMap: /Game/Maps/Frontend";
+    if(reader->file==INVALID_HANDLE_VALUE)
+        reader->file=CreateFileW(path,GENERIC_READ,FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,
+                                NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
+    if(reader->file==INVALID_HANDLE_VALUE)return 0;
+    if(reader->session_seen) {
+        int current=session_still_in_log(reader,session_marker);
+        if(current<0)return -1;
+        if(!current) {
+            CloseHandle(reader->file);reader->file=INVALID_HANDLE_VALUE;
+            reader->session_seen=0;reader->carry=0;return 0;
+        }
+    }
+    for(int chunk=0;chunk<4;chunk++) {
+        DWORD got=0,total,eligible;char *search;
+        if(!ReadFile(reader->file,reader->buffer+reader->carry,65536,&got,NULL))return -1;
+        if(!got) {
+            /* Before the token, reopen from the beginning next poll. This also
+             * handles an old log being truncated/replaced during startup. */
+            if(!reader->session_seen) {
+                CloseHandle(reader->file);reader->file=INVALID_HANDLE_VALUE;reader->carry=0;
+            }
+            return 0;
+        }
+        total=reader->carry+got;reader->buffer[total]=0;search=reader->buffer;
+        if(!reader->session_seen) {
+            search=strstr(reader->buffer,session_marker);
+            if(search) {
+                LARGE_INTEGER zero={0},position;
+                if(!SetFilePointerEx(reader->file,zero,&position,FILE_CURRENT))return -1;
+                reader->session_offset.QuadPart=position.QuadPart-total+(search-reader->buffer);
+                reader->session_seen=1;search+=strlen(session_marker);
+            }
+        }
+        if(search && strstr(search,marker))return session_still_in_log(reader,session_marker);
+        eligible=search?total-(DWORD)(search-reader->buffer):total;
+        reader->carry=eligible<127?eligible:127;
+        memmove(reader->buffer,reader->buffer+total-reader->carry,reader->carry);
+    }
+    return 0;
+}
+
 static DWORD WINAPI helper_run(LPVOID ignored) {
     WCHAR ca_path[32768]={0},server[64]={0},account[256]={0};IN_ADDR ip;ULONGLONG deadline;
-    int dns=0,appes=0,pins=0,changed=0;(void)ignored;
+    WCHAR client_log[32768]={0},session[33]={0};char session_marker[80];
+    static FrontendLog reader={.file=INVALID_HANDLE_VALUE};
+    int dns=0,appes=0,pins=0,changed=0,frontend=0;(void)ignored;
+
     if(GetEnvironmentVariableW(L"FN_LOCAL_HELPER_LOG",log_path,32768)>=32768)log_path[0]=0;
+    DWORD client_log_length=GetEnvironmentVariableW(L"FN_LOCAL_CLIENT_LOG",client_log,32768);
+    DWORD session_length=GetEnvironmentVariableW(L"FN_LOCAL_SESSION_ID",session,33);
     DWORD ca_length=GetEnvironmentVariableW(L"FN_LOCAL_CA_CERT",ca_path,32768);
     DWORD server_length=GetEnvironmentVariableW(L"FN_LOCAL_SERVER",server,64);
     DWORD account_length=GetEnvironmentVariableW(L"FN_LOCAL_ACCOUNT",account,256);
-    if(!ca_length||ca_length>=32768||!server_length||server_length>=64||!account_length||account_length>=256||
+    if(session_length!=32||!client_log_length||client_log_length>=32768||!ca_length||ca_length>=32768||!server_length||server_length>=64||!account_length||account_length>=256||
        InetPtonW(AF_INET,server,&ip)!=1 || !(ip.S_un.S_addr) ||
        !((ca_path[0]&&ca_path[1]==L':')||(ca_path[0]==L'\\'&&ca_path[1]==L'\\'))) {
         status(L"local helper rejected: explicit local configuration required");return 1;
     }
+    for(unsigned i=0;i<32;i++)if(!((session[i]>=L'0'&&session[i]<=L'9') ||
+                                 (session[i]>=L'A'&&session[i]<=L'F'))) {
+        status(L"local helper rejected: invalid launch session token");return 1;
+    }
+    strcpy(session_marker,"-ProjectChronoSession=");
+    size_t prefix_length=strlen(session_marker);
+    for(unsigned i=0;i<32;i++)session_marker[prefix_length+i]=(char)session[i];
+    session_marker[prefix_length+32]=0;
     if(!WideCharToMultiByte(CP_UTF8,0,server,-1,local_server,sizeof(local_server),NULL,NULL))return 1;
     image_base=(uintptr_t)GetModuleHandleW(NULL);
     if(!image_version()){status(L"local helper rejected: unsupported shipping image");return 1;}
@@ -414,7 +489,19 @@ static DWORD WINAPI helper_run(LPVOID ignored) {
     deadline=GetTickCount64()+180000;
     do {
         if(!dns) {dns=install_dns();if(dns)status(L"local DNS: guarded main-module getaddrinfo redirect installed");}
-        if(!appes) {appes=appes_diagnostic();if(appes)status(L"local AppES callback diagnostic applied; entitlement checks not established");}
+        if(!frontend) {
+            frontend=frontend_in_log(&reader,client_log,session_marker);
+            if(frontend<0) {
+                status(L"local helper rejected: could not read client startup log");
+                if(reader.file!=INVALID_HANDLE_VALUE)CloseHandle(reader.file);
+                return 1;
+            }
+            if(frontend) {
+                CloseHandle(reader.file);reader.file=INVALID_HANDLE_VALUE;
+                status(L"local AppES: current launch frontend boundary reached");
+            }
+        }
+        if(!appes && frontend) {appes=appes_diagnostic();if(appes)status(L"local AppES callback diagnostic applied; entitlement checks not established");}
         if(!pins&&tls_signatures()) {
             uintptr_t manager=find_manager();
             if(manager&&update_pins(manager,&changed)>0) {
@@ -424,6 +511,8 @@ static DWORD WINAPI helper_run(LPVOID ignored) {
         if(dns&&appes&&pins){status(L"patched local helper ready");return 0;}
         Sleep(250);
     }while(GetTickCount64()<deadline);
+    if(reader.file!=INVALID_HANDLE_VALUE)CloseHandle(reader.file);
+    if(!frontend)status(L"local AppES pending: current launch token and frontend not observed");
     if(!pins)status(L"local TLS pins pending: manager or original signatures unavailable");
     if(!dns)status(L"local DNS pending: original getaddrinfo import binding not proven");
     if(!appes)status(L"local AppES diagnostic pending: original signatures unavailable");

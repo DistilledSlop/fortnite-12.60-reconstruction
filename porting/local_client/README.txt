@@ -32,6 +32,14 @@ EAC/BattlEye wrapper, and loads its helper into that child. The helper changes
 only process memory; the game executable on disk is unchanged. It includes the
 guarded local AppES exit-callback diagnostic. That diagnostic suppresses an
 environment exit; it does not establish successful entitlement verification.
+The AppES patch waits until this launch reaches the frontend: changing those
+bytes during protected engine startup causes an execution fault. ProjectChrono
+adds a unique session token to the command line and requires that token before
+the frontend marker in the normal client log. Old logs cannot satisfy setup;
+missing or disabled logging fails setup. The normal log location is the current
+user's LocalAppData\FortniteGame\Saved\Logs\FortniteGame.log. Custom saved/log
+locations are not currently supported. Concurrent clients sharing one Windows
+user log are unverified; use separate machines or user profiles for social tests.
 Unsupported executable layouts are rejected. Service redirection currently
 covers the proven main-module getaddrinfo import and six compiled domain
 suffixes; other resolver APIs have not been established.
@@ -43,3 +51,11 @@ ProjectChrono-helper.log contains fixed setup diagnostics; use Open log to read
 it. Play saves the four settings before launch; closing the launcher leaves
 an already running game process open.
 The original client files and generated binaries are not committed to Git.
+
+Focused log-reader checks (MinGW-w64 and Wine):
+    x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Werror -municode \
+        porting/local_client/tests/frontend_log_test.c \
+        -o porting/generated/local-client-tools/frontend_log_test.exe -lcrypt32 -lws2_32
+    wine porting/generated/local-client-tools/frontend_log_test.exe
+These checks use temporary files and cover stale, split, replaced and truncated
+logs. The full original-client launch remains a separate runtime check.

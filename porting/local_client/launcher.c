@@ -9,6 +9,8 @@
 #include <tlhelp32.h>
 #include <commdlg.h>
 #include <shellapi.h>
+#include <shlobj.h>
+#include <objbase.h>
 #include <wchar.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -181,7 +183,7 @@ done:
 }
 static int launch(void) {
     DWORD n, type, exitcode, wait, create_error; wchar_t *slash; wchar_t password[128], game_directory[CAP];
-    wchar_t ready_name[128], failed_name[128]; HANDLE ready = NULL, failed = NULL, waits[3]; BOOL created;
+    wchar_t ready_name[128], failed_name[128], client_log[CAP], session_id[33], session_arg[64]; GUID session_guid; HANDLE ready = NULL, failed = NULL, waits[3]; BOOL created;
     STARTUPINFOW si; PROCESS_INFORMATION pi;
     static const wchar_t *args[] = { L"-nobe", L"-noeac", L"-NOEPICPORTAL", L"-epicapp=Fortnite", L"-epicenv=Prod", L"-epiclocale=en-us", L"-skippatchcheck", L"-fromfl=none", L"-AUTH_LOGIN=unused", L"-AUTH_TYPE=exchangecode" };
     size_t i;
@@ -220,10 +222,29 @@ static int launch(void) {
         if (!SetEnvironmentVariableW(L"FN_LOCAL_PREPARE_ONLY", NULL)) { error(L"Clearing certificate preparation mode"); return 1; }
         if (!prepared) { SetLastError(failure); error(L"Preparing certificate"); return 1; }
     }
+    if (FAILED(SHGetFolderPathW(NULL, CSIDL_LOCAL_APPDATA, NULL, SHGFP_TYPE_CURRENT, client_log))) {
+        status(L"Could not locate the client log directory."); return 1;
+    }
+    if (wcslen(client_log) + wcslen(L"\\FortniteGame\\Saved\\Logs\\FortniteGame.log") >= CAP) {
+        status(L"Client log path is too long."); return 1;
+    }
+    wcscat(client_log, L"\\FortniteGame\\Saved\\Logs\\FortniteGame.log");
+    if (FAILED(CoCreateGuid(&session_guid))) { status(L"Could not create a unique session ID."); return 1; }
+    swprintf(session_id, 33, L"%08lX%04X%04X%02X%02X%02X%02X%02X%02X%02X%02X",
+        (unsigned long)session_guid.Data1, (unsigned)session_guid.Data2, (unsigned)session_guid.Data3,
+        (unsigned)session_guid.Data4[0], (unsigned)session_guid.Data4[1],
+        (unsigned)session_guid.Data4[2], (unsigned)session_guid.Data4[3],
+        (unsigned)session_guid.Data4[4], (unsigned)session_guid.Data4[5],
+        (unsigned)session_guid.Data4[6], (unsigned)session_guid.Data4[7]);
+    swprintf(session_arg, 64, L"-ProjectChronoSession=%ls", session_id);
     cmd[0] = 0;
-    if (!append_arg(cmd, CAP, game)) return 1;
-    for (i = 0; i < sizeof(args)/sizeof(args[0]); ++i) if (!append_arg(cmd, CAP, args[i])) return 1;
-    if (swprintf(password, 128, L"-AUTH_PASSWORD=local-username:%ls", account) < 0 || !append_arg(cmd, CAP, password)) return 1;
+    if (!append_arg(cmd, CAP, game)) goto command_failure;
+    for (i = 0; i < sizeof(args)/sizeof(args[0]); ++i) if (!append_arg(cmd, CAP, args[i])) goto command_failure;
+    /* Keep this switch unquoted so the client's command-line log includes it verbatim. */
+    if (wcslen(cmd) + 1 + wcslen(session_arg) >= CAP) goto command_failure;
+    wcscat(cmd, L" "); wcscat(cmd, session_arg);
+    if (swprintf(password, 128, L"-AUTH_PASSWORD=local-username:%ls", account) < 0 ||
+        !append_arg(cmd, CAP, password)) goto command_failure;
     ZeroMemory(&si, sizeof(si)); si.cb = sizeof(si); ZeroMemory(&pi, sizeof(pi));
     swprintf(ready_name, 128, L"Local\\ProjectChrono.%lu.%llu.Ready", GetCurrentProcessId(), (unsigned long long)GetTickCount64());
     /* Use the same launch identifier for both events. */
@@ -233,7 +254,9 @@ static int launch(void) {
     if (!ready || GetLastError() == ERROR_ALREADY_EXISTS) { status(L"Could not create unique helper ready event."); goto event_failure; }
     failed = CreateEventW(NULL, TRUE, FALSE, failed_name);
     if (!failed || GetLastError() == ERROR_ALREADY_EXISTS) { status(L"Could not create unique helper failure event."); goto event_failure; }
-    if (!SetEnvironmentVariableW(L"FN_LOCAL_READY_EVENT", ready_name) || !SetEnvironmentVariableW(L"FN_LOCAL_FAILED_EVENT", failed_name)) {
+    if (!SetEnvironmentVariableW(L"FN_LOCAL_READY_EVENT", ready_name) || !SetEnvironmentVariableW(L"FN_LOCAL_FAILED_EVENT", failed_name) ||
+        !SetEnvironmentVariableW(L"FN_LOCAL_CLIENT_LOG", client_log) ||
+        !SetEnvironmentVariableW(L"FN_LOCAL_SESSION_ID", session_id)) {
         error(L"Setting helper event environment"); goto event_failure;
     }
     status(L"Starting game process…");
@@ -241,6 +264,8 @@ static int launch(void) {
     create_error = GetLastError();
     SetEnvironmentVariableW(L"FN_LOCAL_READY_EVENT", NULL);
     SetEnvironmentVariableW(L"FN_LOCAL_FAILED_EVENT", NULL);
+    SetEnvironmentVariableW(L"FN_LOCAL_CLIENT_LOG", NULL);
+    SetEnvironmentVariableW(L"FN_LOCAL_SESSION_ID", NULL);
     if (!created) { SetLastError(create_error); error(L"Starting game"); goto event_failure; }
     if (ResumeThread(pi.hThread) == (DWORD)-1) { error(L"Starting game thread"); goto child_failure; }
     status(L"Loading local helper…");
@@ -272,9 +297,14 @@ child_done:
     CloseHandle(pi.hThread); CloseHandle(pi.hProcess);
     CloseHandle(failed); CloseHandle(ready);
     return (int)exitcode;
+command_failure:
+    status(L"Game command line is too long.");
+    return 1;
 event_failure:
     SetEnvironmentVariableW(L"FN_LOCAL_READY_EVENT", NULL);
     SetEnvironmentVariableW(L"FN_LOCAL_FAILED_EVENT", NULL);
+    SetEnvironmentVariableW(L"FN_LOCAL_CLIENT_LOG", NULL);
+    SetEnvironmentVariableW(L"FN_LOCAL_SESSION_ID", NULL);
     if (failed) CloseHandle(failed);
     if (ready) CloseHandle(ready);
     return 1;
