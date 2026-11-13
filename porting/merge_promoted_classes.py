@@ -45,7 +45,13 @@ def merge(staged_source, source, staged_reports, reports):
         behavior = json.load(fh)
     rejected = behavior.get('rejected')
     if type(rejected) is not int or rejected != 0:
-        raise ValueError(f'behavior splices rejected or invalid: {rejected!r}')
+        # The wrapper deletes its temporary reports on failure. Keep a bounded
+        # diagnostic here so callers can fix rejected inputs without regenerating
+        # solely to recover the error details.
+        details = behavior.get('rejections')
+        sample = details[:10] if isinstance(details, list) else details
+        raise ValueError(f'behavior splices rejected or invalid: {rejected!r}; '
+                         f'first rejections: {sample!r}')
     # Reject unexpected output before touching the destination.
     for rel in source_files:
         p = rel.parts

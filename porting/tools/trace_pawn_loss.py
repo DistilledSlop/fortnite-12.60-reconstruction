@@ -1,7 +1,9 @@
 # Attach ONCE to the matching running server, with matching debug symbols:
 #   PAWN_LOSS_LOG=/absolute/writable/path/pawn-loss.log \
 #     gdb -q -nx -batch -p "$SERVER_PID" \
+#       -ex 'symbol-file /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/Binaries/Linux/FortniteLinuxServer.debug' \
 #       -x porting/tools/trace_pawn_loss.py -ex continue
+# The debug file must match the running staged server binary; rebuilds change it.
 # The log is created exclusively; choose a new path for each run. GDB stays
 # attached until the server exits. Stop GDB with SIGINT and detach if needed.
 # Breakpoints briefly suspend the inferior; no inferior functions are called.
@@ -12,8 +14,13 @@ import gdb
 
 path = os.environ.get('PAWN_LOSS_LOG')
 if not path or not os.path.isabs(path):
-    raise RuntimeError('PAWN_LOSS_LOG must be an absolute, new writable file path')
-log = open(path, 'x', buffering=1, encoding='utf-8')
+    gdb.write('PAWN_LOSS_LOG must be an absolute, new writable file path\n', gdb.STDERR)
+    gdb.execute('quit 1')
+try:
+    log = open(path, 'x', buffering=1, encoding='utf-8')
+except OSError as exc:
+    gdb.write('Cannot create PAWN_LOSS_LOG: {}\n'.format(exc), gdb.STDERR)
+    gdb.execute('quit 1')
 gdb.execute('set pagination off')
 gdb.execute('set confirm off')
 gdb.execute('set breakpoint pending off')
@@ -130,7 +137,11 @@ class Trace(gdb.Breakpoint):
         self.kind = kind
         self.count = 0
         self.unknown = 0
-        write('installed {} locations={}'.format(spec, len(self.locations)))
+        locations = len(self.locations)
+        if not locations:
+            self.delete()
+            raise RuntimeError('no resolved breakpoint locations; load matching server debug symbols')
+        write('installed {} locations={}'.format(spec, locations))
 
     def stop(self):
         try:
@@ -197,6 +208,7 @@ class Trace(gdb.Breakpoint):
 
 write('pawn-loss trace started UTC={} pid={} (limit five events per hook)'.format(
     datetime.datetime.now(datetime.timezone.utc).isoformat(), gdb.selected_inferior().pid))
+failed = False
 for spec, kind in (
     ('AController::PawnPendingDestroy(APawn*)', 'pending'),
     ('APawn::Destroyed()', 'destroyed'),
@@ -206,5 +218,11 @@ for spec, kind in (
     try:
         Trace(spec, kind)
     except Exception as exc:
+        failed = True
         write('FAILED to install {}: {}'.format(spec, exc))
+if failed:
+    write('SETUP FAILED: detaching; no trace is active')
+    gdb.write('Pawn-loss trace setup failed; see {}. Detaching.\n'.format(path), gdb.STDERR)
+    log.close()
+    gdb.execute('quit 1')
 write('setup complete; continue inferior')
