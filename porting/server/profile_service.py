@@ -512,6 +512,14 @@ def _client_quest_login(ctx):
     tx.set_stat("daily_rewards", rewards)
 
 
+@command("UpdateQuestClientObjectives", ("athena",), "observed", "advance: client objective event amounts.")
+def _update_quest_client_objectives(ctx):
+    quests = getattr(ctx.service, "quests", None)
+    if quests is None:
+        raise _invalid("Quest service is unavailable.")
+    quests.update_client_objectives(ctx)
+
+
 @command("ClaimQuestReward", ("athena",), "observed",
          "questId and explicit selectedRewardIndex -1 for supported fixed rewards; casing inferred.")
 def _claim_quest_reward(ctx):

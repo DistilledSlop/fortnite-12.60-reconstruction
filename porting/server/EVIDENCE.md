@@ -1621,3 +1621,50 @@ generated/chrono-spatial-binding-probe/ (native-binding.jsonl and result.json).
 GDB detached normally; original launch session 50880 is terminal, and owned
 backend 322824 and client 322916 are gone. No unrelated client or native build
 was changed, and no observation timeout triggered a replacement run.
+
+### Peely frontend command and schedule ownership references
+
+The actual `UpdateQuestClientObjectives` reporter is 0x14244ec00
+(UFortQuestManager::SendClientStatEvent), calling wrapper 0x1429acd50. It
+matches Client events, emits lowercase objective BackendName rather than a
+stat row, forwards the supplied event count and sets TimestampOffset to zero.
+Generic reflected serialization produces exactly `advance` entries with
+`statName`, `count` and `timestampOffset`; the URL context and native trailing
+record data are excluded. Findings and C/ASM are retained privately under
+generated/client-objective-operation-refs/. Additive, capped backend counts
+remain an explicit reconstruction policy, not an original-server capture.
+
+The authenticated command now accepts only the three source-marked Client
+objectives for Agent Peely's room interactions. It validates the whole batch
+before applying owned Active quests in one profile transaction. Unknown names,
+stat row names and combat objectives are rejected. A count cannot grant quests
+or bypass the calendar; timestamp offsets are metadata. The free season grant
+adds Season12_Schedule_Event_PeelySpy, which grants its bundle immediately and
+its three quests at day 43 of configured EventFlag.LobbySeason12. Its cooked
+completion count of three awards Banana Badge (Emoji_S12_BananaAgent). The
+reward export is AthenaEmojiItemDefinition, derived from AthenaDanceItemDefinition;
+original DefaultGame.ini's AthenaDance scan includes its Dances/Emoji path.
+Independent review checked eight source packages/sixteen component hashes, all
+three objective records, stat conditions and bundle unlock records. Receipt and
+reward report: generated/peely-client-quest-contract/source-review.json.
+
+The live binding trace's supposed manager was corrected using reflection:
+AFortPlayerController+0x1b00 is AthenaProfile (UFortMcpProfileAthena). Its actual
+rebuild 0x1419ab310 constructs the spatial data. In 0x141cb6ad0, each owned
+schedule's Granted_Bundles array (+0xe8/count+0xf0) supplies bundle instance IDs;
+profile lookup resolves the item, verifies FortChallengeBundleItem and matches
+its definition to bundleData+0x50. Writer 0x141cb6900 then sets the ownership
+pointer at +0x58 (store at 0x141cb690d) and binds children through the bundle's
+GrantedQuestInstanceIds. This establishes a consumer of Granted_Bundles that
+the earlier limited GetAchievedCount trace did not inspect. The backend now
+reconciles both reference arrays from actual owned items, including legacy
+schedules. Malformed arrays reject the transaction. Findings/C are retained in
+generated/athena-profile-bundle-binding/; the private Ghidra clone was deleted.
+
+The combined backend suite passed **413 tests** in 23.208 seconds, including
+calendar/pass gates, malformed batch rollback, combat spoof rejection, corrupt
+counter rollback, one-time reward persistence, duplicate entries, and schedule
+reference repair/idempotence/restart. Log:
+generated/peely-client-quest-contract/backend-tests.log. There are now 324 quest
+definitions in twelve broad groups. Native UI acceptance of the schedule-array
+repair and original room-interaction delivery are not yet verified.

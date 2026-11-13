@@ -44,6 +44,7 @@ from season12_storm_agency_data import STORM_AGENCY_QUESTS, STORM_AGENCY_BUNDLES
 from season12_oro_data import ORO_QUESTS, ORO_BUNDLES, ORO_SCHEDULE
 from season12_superlevel_data import SUPERLEVEL_QUESTS, SUPERLEVEL_BUNDLES, SUPERLEVEL_SCHEDULE
 from season12_collectible_data import COIN_QUESTS, FISH_QUESTS, COIN_BUNDLES, COIN_SCHEDULE
+from season12_peely_data import QUESTS as PEELY_QUESTS, BUNDLES as PEELY_BUNDLES, SCHEDULE as PEELY_SCHEDULE, CLIENT_OBJECTIVES
 from superlevel_service import SUPERLEVEL_VARIANTS, reconcile_level
 from season12_faction_variant_data import FACTION_VARIANTS, AUTO_EQUIP_VARIANTS
 from daily_quest_service import DailyService
@@ -66,8 +67,8 @@ FACTION_GRANTS = {
 LIMITED_EVENT_BUNDLES = {**STORM_AGENCY_BUNDLES, **ORO_BUNDLES}
 LIMITED_EVENT_SCHEDULES = {("challengebundleschedule:" + schedule["name"]).casefold(): schedule
                            for schedule in (STORM_AGENCY_SCHEDULE, ORO_SCHEDULE)}
-EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS, **WEEKLY_QUESTS, **LOCATION_QUESTS, **BRUTUS_QUESTS, **TNTINA_QUESTS, **REMAINING_FACTION_QUESTS, **STORM_AGENCY_QUESTS, **ORO_QUESTS, **SUPERLEVEL_QUESTS, **COIN_QUESTS, **FISH_QUESTS}
-EVENT_BUNDLES = {**DONUT_BUNDLES, **WEEKLY_BUNDLES, **LOCATION_BUNDLES, **FACTION_BUNDLES, **LIMITED_EVENT_BUNDLES, **SUPERLEVEL_BUNDLES, **COIN_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
+EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS, **WEEKLY_QUESTS, **LOCATION_QUESTS, **BRUTUS_QUESTS, **TNTINA_QUESTS, **REMAINING_FACTION_QUESTS, **STORM_AGENCY_QUESTS, **ORO_QUESTS, **SUPERLEVEL_QUESTS, **COIN_QUESTS, **FISH_QUESTS, **PEELY_QUESTS}
+EVENT_BUNDLES = {**DONUT_BUNDLES, **WEEKLY_BUNDLES, **LOCATION_BUNDLES, **FACTION_BUNDLES, **LIMITED_EVENT_BUNDLES, **SUPERLEVEL_BUNDLES, **COIN_BUNDLES, **PEELY_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
 ACQUISITION_EVENTS = {'item_acquire_brutus_token', 'item_acquire_tntina_token'} | {
     f['acquisition_event'] for f in REMAINING_FACTIONS.values()}
 
@@ -80,7 +81,7 @@ def objective_event_key(objective, stat):
 # Level-item events are derived from committed season progression, never accepted
 # as caller-supplied stat rows or inline-objective events.
 VALID_EVENTS = (set(EVENTS) | {objective_event_key(objective, stat)
-                             for name, quest in EVENT_QUESTS.items() if name not in SUPERLEVEL_QUESTS
+                             for name, quest in EVENT_QUESTS.items() if name not in SUPERLEVEL_QUESTS and name not in PEELY_QUESTS
                              for objective, stat, _ in quest['objectives']}) - ACQUISITION_EVENTS
 TOKENS = {'cosmeticvarianttoken:vtid_560_bananaagent_styleb': 'Stage2',
           'cosmeticvarianttoken:vtid_561_bananaagent_stylec': 'Stage3'}
@@ -129,6 +130,8 @@ class QuestService:
         for item_id, item in tx.profile['items'].items():
             if item['templateId'].casefold() == template.casefold():
                 return item_id
+        if template.casefold().startswith('challengebundleschedule:'):
+            attrs = {**attrs, 'Granted_Bundles': []}
         item_id = self.profiles._new_item_id('item', tx.profile)
         tx.add_item(item_id, template, attrs)
         return item_id
@@ -161,6 +164,16 @@ class QuestService:
                    item['attributes'].get('challenge_bundle_id') == bundle_id]
         tx.set_item_attr(bundle_id, 'GrantedQuestInstanceIds', members)
 
+    def _sync_schedule_membership(self, tx, schedule_id):
+        attrs = tx.item(schedule_id)['attributes']
+        current = attrs.get('Granted_Bundles', [])
+        if not isinstance(current, list) or any(not isinstance(value, str) for value in current):
+            raise _invalid('Invalid schedule bundle membership.')
+        members = [item_id for item_id, item in tx.profile['items'].items()
+                   if item['templateId'].casefold().startswith('challengebundle:') and
+                   item['attributes'].get('challenge_bundle_schedule_id') == schedule_id]
+        tx.set_item_attr(schedule_id, 'Granted_Bundles', members)
+
     def _bundle(self, tx, name, schedule_id=None):
         attrs = {'item_seen': False, 'num_quests_completed': 0,
                  'num_progress_quests_completed': 0, 'GrantedQuestInstanceIds': []}
@@ -168,6 +181,10 @@ class QuestService:
             attrs['challenge_bundle_schedule_id'] = schedule_id
         bundle_id = self._grant(tx, 'ChallengeBundle:' + name, attrs)
         self._reconcile_bundle(tx, name, bundle_id)
+        owner = tx.item(bundle_id)['attributes'].get('challenge_bundle_schedule_id')
+        if (owner in tx.profile['items'] and
+                tx.item(owner)['templateId'].casefold().startswith('challengebundleschedule:')):
+            self._sync_schedule_membership(tx, owner)
         return bundle_id
 
     def _reconcile_bundle(self, tx, name, bundle_id):
@@ -204,7 +221,7 @@ class QuestService:
         # Original GetAchievedCount/GetPercentageComplete read this separate
         # attribute, not num_quests_completed. Single-stage bundles count
         # claimed QuestInfos; Location Domination uses terminal stages below.
-        if name not in WEEKLY_BUNDLES and name not in LOCATION_BUNDLES and name not in LIMITED_EVENT_BUNDLES and name not in SUPERLEVEL_BUNDLES and name not in COIN_BUNDLES and name != 'QuestBundle_Styles_PaperDoll':
+        if name not in WEEKLY_BUNDLES and name not in LOCATION_BUNDLES and name not in LIMITED_EVENT_BUNDLES and name not in SUPERLEVEL_BUNDLES and name not in COIN_BUNDLES and name not in PEELY_BUNDLES and name != 'QuestBundle_Styles_PaperDoll':
             return
         roots = {quest.casefold() for quest, _, _, _ in EVENT_BUNDLES[name]['quest_infos']}
         if name in LOCATION_BUNDLES:
@@ -252,6 +269,10 @@ class QuestService:
                 for bundle, grant_type, days in WEEKLY_SCHEDULE + LOCATION_SCHEDULE:
                     if grant_type == 'OnScheduleGranted' or self._date_reached(WEEKLY_SCHEDULE_CALENDAR_EVENT_TAG, days):
                         self._bundle(tx, bundle, schedule_id)
+            elif template == ('challengebundleschedule:' + PEELY_SCHEDULE['name']).casefold():
+                for bundle, grant_type, _ in PEELY_SCHEDULE['entries']:
+                    if grant_type == 'OnScheduleGranted':
+                        self._bundle(tx, bundle, schedule_id)
             elif template == ('challengebundleschedule:' + SUPERLEVEL_SCHEDULE['name']).casefold():
                 for bundle, grant_type, _ in SUPERLEVEL_SCHEDULE['entries']:
                     if grant_type == 'OnScheduleGranted':
@@ -289,6 +310,9 @@ class QuestService:
         for bundle_id, item in list(tx.profile['items'].items()):
             if item['templateId'].casefold().startswith('challengebundle:'):
                 self._sync_bundle_membership(tx, bundle_id)
+        for schedule_id, item in list(tx.profile['items'].items()):
+            if item['templateId'].casefold().startswith('challengebundleschedule:'):
+                self._sync_schedule_membership(tx, schedule_id)
 
     def _reconcile_faction_entitlements(self, tx):
         # Weekly bundle completion rewards were awarded before faction grant
@@ -442,6 +466,39 @@ class QuestService:
             raise _invalid('Invalid trusted match ID.')
         return [event, amount] if match_id is None else [event, amount, match_id]
 
+    def update_client_objectives(self, ctx):
+        """Accept only proven Client objectives, with an atomic batch of at most 100.
+
+        Local policy rejects unknown names and malformed batches; eligible owned
+        Active quests receive additive, target-clamped progress. Missing/inactive
+        quests are ignored. Timestamp offsets are metadata and never gate grants.
+        """
+        advance = ctx.body.get('advance')
+        if not isinstance(advance, list) or len(advance) > 100:
+            raise _invalid('Invalid client objective batch.')
+        for entry in advance:
+            if not isinstance(entry, dict) or set(entry) != {'statName', 'count', 'timestampOffset'}:
+                raise _invalid('Invalid client objective entry.')
+            stat, count, offset = entry['statName'], entry['count'], entry['timestampOffset']
+            if (not isinstance(stat, str) or stat not in CLIENT_OBJECTIVES or
+                    type(count) is not int or not 1 <= count <= 2147483647 or
+                    type(offset) is not int or not -2147483648 <= offset <= 2147483647):
+                raise _invalid('Invalid client objective entry.')
+        tx = ctx.tx('athena')
+        for entry in advance:
+            stat = entry['statName']
+            name = CLIENT_OBJECTIVES[stat]
+            for item_id, item in list(tx.profile['items'].items()):
+                if (item['templateId'].casefold() != ('Quest:' + name).casefold() or
+                        item['attributes'].get('quest_state') != 'Active'):
+                    continue
+                key = 'completion_' + stat
+                old = item['attributes'].get(key)
+                if type(old) is not int or not 0 <= old <= 1:
+                    raise _invalid('Invalid quest progress.')
+                tx.set_item_attr(item_id, key, min(1, old + entry['count']))
+                self._award_completed(ctx, tx, item_id, item, name)
+
     def claim(self, ctx, quest_id, selected_index):
         """Local claim policy for supported fixed-reward quests; retries never award twice.
 
@@ -489,13 +546,13 @@ class QuestService:
             # also drives completion reward thresholds, an inferred local policy.
             tx.set_item_attr(bundle_id, 'num_quests_completed', count + 1)
         if bundle_id in tx.profile['items']:
-            bundle_name = next((key for key in {**WEEKLY_BUNDLES, **LOCATION_BUNDLES, **LIMITED_EVENT_BUNDLES, **SUPERLEVEL_BUNDLES, **COIN_BUNDLES} if
+            bundle_name = next((key for key in {**WEEKLY_BUNDLES, **LOCATION_BUNDLES, **LIMITED_EVENT_BUNDLES, **SUPERLEVEL_BUNDLES, **COIN_BUNDLES, **PEELY_BUNDLES} if
                                 tx.item(bundle_id)['templateId'].casefold() == ('ChallengeBundle:' + key).casefold()), None)
             if bundle_name:
                 self._sync_bundle_progress(tx, bundle_name, bundle_id)
                 definition = EVENT_BUNDLES[bundle_name]
                 roots = {q.casefold() for q, _, _, _ in definition['quest_infos']}
-                limited_event = bundle_name in LIMITED_EVENT_BUNDLES
+                limited_event = bundle_name in LIMITED_EVENT_BUNDLES or bundle_name in PEELY_BUNDLES
                 reward_count = (tx.item(bundle_id)['attributes']['num_progress_quests_completed']
                                 if limited_event else count + 1)
                 # An unrelated quest linked to the bundle cannot trigger its reward.
