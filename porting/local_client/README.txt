@@ -59,3 +59,26 @@ Focused log-reader checks (MinGW-w64 and Wine):
     wine porting/generated/local-client-tools/frontend_log_test.exe
 These checks use temporary files and cover stale, split, replaced and truncated
 logs. The full original-client launch remains a separate runtime check.
+
+Wine launcher (Linux)
+---------------------
+Build the tools as above, configure local-server.ini and provide the backend's
+public server-ca.pem alongside ProjectChrono.exe, and start the HTTPS backend
+before launching. Select the original game executable in the launcher if it is
+not at the configured path. ProjectChrono performs the CA validation and trust
+store update described above. Install 64-bit DXVK into the selected Wine
+prefix separately; this script does not install it. The script checks for the
+expected DLL paths, but their presence does not prove they contain DXVK.
+
+For the normal rendered client on the current desktop:
+    bash porting/local_client/run_wine.sh --prefix /path/to/wine-prefix
+
+The prefix defaults to FN_WINEPREFIX, then WINEPREFIX, then ~/.wine. The tools
+folder defaults to porting/generated/local-client-tools; use --tools-dir DIR
+for another built and configured copy. The script sets Wine's d3d11 and dxgi
+overrides to native for DXVK. WINEDEBUG defaults to -all and may be set in the
+environment. For a quick UI check, use --ui-only to select Wine's builtin
+renderer; its 3D background may appear black under Wine. For automated runs, --xvfb
+uses a virtual display and arguments after the wrapper options are forwarded
+to ProjectChrono, for example:
+    bash porting/local_client/run_wine.sh --prefix /path/to/wine-prefix --xvfb -- --headless
