@@ -2,7 +2,7 @@
 
 ## Current focus: vanilla client on our server (2026-11-11, read first)
 
-The working target is the original 12.60 client joining and playing on our backend and dedicated server. The plan, file map, gates and work packages are in `SERVER_FIRST_PLAN.md`. The critical path is the UDP handshake (gate G3), then control channel, map join and a stable session (G4 to G6). Function counts below are a lookup aid, not the measure of progress; see section 3 of the plan.
+The maintained target, plan, file map, gates and work packages are on the [server roadmap wiki](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Server-First-Scope-Mockup). The dated material below is historical context, not current task status. Function counts are a lookup aid, not the measure of progress.
 
 ## Native server port goal (2026-11-10, read first)
 

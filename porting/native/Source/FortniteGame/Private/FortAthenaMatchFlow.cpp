@@ -1,4 +1,4 @@
-// G7 match flow, hand port of the original server code for the 12.60 client (gate G7 in porting/SERVER_FIRST_PLAN.md).
+// G7 match flow, hand port of the original server code for the 12.60 client (gate G7 in https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Server-First-Scope-Mockup).
 //
 // Sources (line-by-line reads of the client image, addresses in the shipping exe):
 //   R1 = porting/server_systems/R1-warmup-and-aircraft-code.md     (tick driver, warmup, aircraft phase, bus delegates)

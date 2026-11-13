@@ -1,3 +1,3 @@
 # Merged
 
-This handoff was merged into `porting/SERVER_FIRST_PLAN.md` section 11 on 2026-11-13. Its previous text is in Git history (`git log -p -- porting/server_systems/SF-ORCH-HANDOFF.md`).
+This handoff is consolidated into the [server roadmap wiki](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Server-First-Scope-Mockup). Its previous text remains in Git history (`git log -p -- porting/server_systems/SF-ORCH-HANDOFF.md`).

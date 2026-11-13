@@ -55,10 +55,10 @@ Behavioral coverage must connect each action and state to the received request,
 authority checks and mutations, outgoing RPCs/replication, client consumers, and
 expected observations. Owner and remote observers, late joins, streaming readiness,
 equipment changes, and delayed or lost messages need separate scenario evidence.
-The runtime-required ledger planned in `SERVER_FIRST_PLAN.md` WP B1/B3 is still
+The runtime-required ledger in the [wiki work packages](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Server-First-Scope-Mockup#work-packages), WP B1/B3, is still
 incomplete; the declaration inventory does not close that work.
 
-The current [interaction checklist](interaction_contracts.md) records behavioral
+The wiki [interaction checklist](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Server-First-Scope-Mockup#runtime-evidence-and-interaction-coverage) records behavioral
 coverage separately from declaration coverage, including the outstanding observer,
 movement, name, streaming and discovery issues.
 

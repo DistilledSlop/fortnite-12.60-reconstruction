@@ -218,7 +218,7 @@ void AFortGameModeAthena::StartPlay()
         // blueprint and the character stood in its reference pose (runs 27-33).
         // Opt-in (-FortniteBlueprintPawn): spawning it crashed the server in SpawnDefaultPawnFor (run 20261113-pawnbp-1,
         // SIGSEGV, null read), most likely because the Blueprint expects native default subobjects our constructor-less
-        // generated class does not create. See porting/SERVER_FIRST_PLAN.md, WP K2.
+        // generated class does not create. See https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Server-First-Scope-Mockup, WP K2.
         if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteBlueprintPawn")))
         {
         }

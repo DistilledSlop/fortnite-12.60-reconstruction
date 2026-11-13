@@ -11,7 +11,7 @@ for one-off runs; use `runs/`, `builds/` or `agents/`.
 | `porting/native/` | The Unreal Engine project (`FortniteLinux.uproject`) for both the reconstructed client and the Linux dedicated server. `Source/FortniteGame/Generated/` is generator output (do not hand-edit; change the generator inputs). `Source/FortniteGame/Private/` holds hand-written code, including the server gameplay files `FortAthena*.cpp` (match flow, inventory, health, building, loot, end game) and `FortniteAthenaGameplay.cpp` (game mode hooks). |
 | `porting/behavior/`, `porting/generator_policies/`, `porting/server_scope/` | Generator inputs: recovered function bodies (`*.inc`), policies, scope lists. |
 | `porting/server/` | Python backend (accounts, MCP profiles, matchmaking, XMPP, content). |
-| `porting/server_systems/` | Server-first design cards (D*, R*, E*) and handoffs. The plan and gate table is `porting/SERVER_FIRST_PLAN.md`. |
+| `porting/server_systems/` | Server-first design cards (D*, R*, E*) and handoffs. The maintained plan and gate table are on the [server roadmap wiki](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Server-First-Scope-Mockup). |
 | `porting/tools/` | Current analysis and run tools (see `tools/README.md`): `vanilla_play_run.sh`, `wait_run.sh`, `build_server.sh`, `rd.py`, `strx.py`, `client_log_scan.py`, `stage_server_content.py`, ... |
 | `porting/*.py`, `porting/*.sh` | Older generation, extraction and run scripts. Many import each other by module name, so they stay at this level until they are regrouped with their imports updated. |
 | `porting/notes/` | Probe write-ups and analysis notes. Notes that scripts read or write (e.g. `binary_analysis.md`, `native_classes_status.md`) stay in `porting/`. |

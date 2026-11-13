@@ -1,5 +1,5 @@
 // Server-side health, GAS (Ability System Component), attribute sets, damage, and death sequence
-// for the original 12.60 vanilla client (WP G8-Health, SERVER_FIRST_PLAN.md).
+// for the original 12.60 vanilla client (WP G8-Health, https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Server-First-Scope-Mockup).
 //
 // Active only when -FortniteOriginalClient is set (IsEnabled()).
 #pragma once
