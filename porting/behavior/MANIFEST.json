@@ -90869,5 +90869,113 @@
     "status": "ported",
     "confidence": "high",
     "notes": "Recovered pawn aim-rotation family; native vehicle interface slot 0xc8, two exact constant targets across 23 implementers. See pawn_aim_rotation_runtime/README.md."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeUpdateAccelerationPack1423442e0",
+    "kind": "helper",
+    "signature": "void NativeUpdateAccelerationPack1423442e0()",
+    "signature_status": "proposed",
+    "access": "protected",
+    "inc_path": "porting/generator_policies/remote_view_replication_runtime/NativeUpdateAccelerationPack1423442e0.inc",
+    "address": "0x1423442e0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ],
+    "notes": "Original complete remote view/acceleration producer lifecycle; exact bundle enforced by remote_view_replication_runtime policy.",
+    "virtual": false,
+    "override": false
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeUpdateRemoteViewData142344420",
+    "signature": "void NativeUpdateRemoteViewData142344420()",
+    "kind": "helper",
+    "address": "0x142344420",
+    "access": "protected",
+    "includes": [
+      "GameFramework/Controller.h"
+    ],
+    "signature_status": "proposed",
+    "inc_path": "porting/generator_policies/remote_view_replication_runtime/NativeUpdateRemoteViewData142344420.inc",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Original complete remote view/acceleration producer lifecycle; exact bundle enforced by remote_view_replication_runtime policy.",
+    "virtual": false,
+    "override": false
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeHasSlipperyTags14232caf0",
+    "signature": "bool NativeHasSlipperyTags14232caf0() const",
+    "kind": "helper",
+    "address": "0x14232caf0",
+    "access": "protected",
+    "includes": [
+      "FortNativeGameplayTagsRuntime.h"
+    ],
+    "signature_status": "proposed",
+    "inc_path": "porting/generator_policies/remote_view_replication_runtime/NativeHasSlipperyTags14232caf0.inc",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Original complete remote view/acceleration producer lifecycle; exact bundle enforced by remote_view_replication_runtime policy.",
+    "virtual": false,
+    "override": false
+  },
+  {
+    "class": "UFortAbilitySystemComponent",
+    "function": "NativeRepAnimMontageInfo1406ccd10",
+    "signature": "const FGameplayAbilityRepAnimMontage& NativeRepAnimMontageInfo1406ccd10() const",
+    "kind": "helper",
+    "address": "0x1406ccd10",
+    "access": "public",
+    "includes": [],
+    "signature_status": "proposed",
+    "inc_path": "porting/generator_policies/remote_view_replication_runtime/NativeRepAnimMontageInfo1406ccd10.inc",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Original complete remote view/acceleration producer lifecycle; exact bundle enforced by remote_view_replication_runtime policy.",
+    "virtual": false,
+    "override": false
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "PreReplication",
+    "signature": "void PreReplication(IRepChangedPropertyTracker& ChangedPropertyTracker)",
+    "kind": "helper",
+    "address": "0x142344490",
+    "access": "public",
+    "includes": [
+      "Net/UnrealNetwork.h",
+      "GameFramework/CharacterMovementComponent.h",
+      "Interfaces/NetworkPredictionInterface.h"
+    ],
+    "signature_status": "proposed",
+    "inc_path": "porting/generator_policies/remote_view_replication_runtime/PreReplication.inc",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Original complete remote view/acceleration producer lifecycle; exact bundle enforced by remote_view_replication_runtime policy.",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "PreReplicationForReplay",
+    "signature": "void PreReplicationForReplay(IRepChangedPropertyTracker& ChangedPropertyTracker)",
+    "kind": "helper",
+    "address": "0x142344770",
+    "access": "public",
+    "includes": [
+      "Net/UnrealNetwork.h"
+    ],
+    "signature_status": "proposed",
+    "inc_path": "porting/generator_policies/remote_view_replication_runtime/PreReplicationForReplay.inc",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Original complete remote view/acceleration producer lifecycle; exact bundle enforced by remote_view_replication_runtime policy.",
+    "virtual": true,
+    "override": true
   }
 ]

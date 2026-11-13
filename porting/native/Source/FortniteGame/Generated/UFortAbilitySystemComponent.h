@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
 
+#include "Abilities/GameplayAbilityTypes.h"
 #include "EFortSharedAnimationState.h"
 #include "FGameplayAbilityRepSharedAnim.h"
 #include "FPersonalVehicleBlockingChanged.h"
@@ -81,5 +82,6 @@ public:
 	bool HasNativeAction(const FGameplayTag& ActionTag);
 	static UObject* NativeGetOutermostObject142ec9ca0(UObject* Context);
 	static uint32 NativeDecodeUtf8Codepoint140c08400(const uint8** Cursor, uint32 Remaining);
+	const FGameplayAbilityRepAnimMontage& NativeRepAnimMontageInfo1406ccd10() const;
 };
 

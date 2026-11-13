@@ -2457,6 +2457,10 @@ _replicated_building_defaults_spec = _common_activation_import.spec_from_file_lo
     "replicated_building_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "replicated_building_defaults_runtime", "source_policy.py"))
 _replicated_building_defaults_policy = _common_activation_import.module_from_spec(_replicated_building_defaults_spec)
 _replicated_building_defaults_spec.loader.exec_module(_replicated_building_defaults_policy)
+_remote_view_replication_spec = _common_activation_import.spec_from_file_location(
+    "remote_view_replication_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "remote_view_replication_runtime", "source_policy.py"))
+_remote_view_replication_policy = _common_activation_import.module_from_spec(_remote_view_replication_spec)
+_remote_view_replication_spec.loader.exec_module(_remote_view_replication_policy)
 _pawn_hand_socket_spec = _common_activation_import.spec_from_file_location(
     "pawn_hand_socket_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "pawn_hand_socket_defaults_runtime", "source_policy.py"))
 _pawn_hand_socket_policy = _common_activation_import.module_from_spec(_pawn_hand_socket_spec)
@@ -4425,6 +4429,7 @@ def promote(args):
     if len(set(class_list)) != len(class_list):
         raise SystemExit("duplicate entries in %s" % args.class_list)
     listed = set(class_list)
+    _remote_view_replication_policy.validate_required_classes(listed)
     name_to_block = {v: k for k, v in names.items()}
     registry = ModuleRegistry(args.engine_root, PROJECT_NATIVE_DIR, UPROJECT_DEFAULT)
     blocklist = load_blocklist(args.blocklist)
@@ -4812,6 +4817,7 @@ def promote(args):
         _client_event_policy.configure_model(model)
         _local_signin_policy.configure_model(model)
         default_subobjects.configure(model)
+        _remote_view_replication_policy.validate_model(model)
         if name == 'UCommonInputControllerData':
             _controller_brush_policy.validate_model(model)
         if model.get('common_input_settings_cache_runtime'):
@@ -4875,6 +4881,7 @@ def promote(args):
         header, cpp = _default_subobjects_policy.finalize(model, header, cpp)
         header, cpp = _pawn_hand_socket_policy.finalize(model, header, cpp)
         header, cpp = _replicated_building_defaults_policy.finalize(model, header, cpp)
+        header, cpp = _remote_view_replication_policy.finalize(model, header, cpp)
         header, cpp = _player_name_server_policy.finalize(model, header, cpp)
         header, cpp = _athena_phase_defaults_policy.finalize(model, header, cpp)
         _input_cache_policy.validate_rendered(model, header, cpp)

@@ -58,12 +58,17 @@
 #include "FVortexParams.h"
 #include "FZiplinePawnState.h"
 #include "FZiplineStateChanged.h"
+#include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/Controller.h"
 #include "GameplayTagContainer.h"
+#include "Interfaces/NetworkPredictionInterface.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
+#include "Net/UnrealNetwork.h"
 #include "Styling/SlateBrush.h"
 #include "UFortArmoredInterface.h"
 #include "UFortVehicleInterface.h"
@@ -2092,5 +2097,11 @@ public:
 	static int32 NativeDecrementCounter142ee43c0(uint8* Self);
 	bool NativeVehicleSeatPredicate_14235ca20() const;
 	virtual FRotator GetBaseAimRotation() const override;
+	virtual void PreReplication(IRepChangedPropertyTracker& ChangedPropertyTracker) override;
+	virtual void PreReplicationForReplay(IRepChangedPropertyTracker& ChangedPropertyTracker) override;
+protected:
+	void NativeUpdateAccelerationPack1423442e0();
+	void NativeUpdateRemoteViewData142344420();
+	bool NativeHasSlipperyTags14232caf0() const;
 };
 
