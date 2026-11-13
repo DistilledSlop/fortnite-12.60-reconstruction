@@ -66,6 +66,13 @@ def snapshot(pid):
         gs_info = obj(mem, gs) if gs else None
         zone = bool(gs and is_a(mem, req(mem, gs + 0x10, '<Q', 'game state class'), bases['zone']))
         state = {'object': gs_info, 'is_fort_game_state_zone': zone}
+        if gs:
+            manager = req(mem, gs + 0x3d0, '<Q', 'world manager')
+            state['world_manager'] = ({'object': obj(mem, manager),
+                'grid_dimensions': req(mem, manager + 0x2d8, '<3i', 'manager grid dimensions'),
+                'vertical_offset': req(mem, manager + 0x2e4, '<i', 'manager vertical offset'),
+                'tile_edge_size': req(mem, manager + 0x2e8, '<i', 'manager tile edge')}
+                if manager else None)
         grid = 0
         if zone:
             if gs not in actors or one(mem, gs + 0x20, '<Q') != level:
@@ -85,6 +92,7 @@ def snapshot(pid):
                           'layout_feature_enabled': bool(req(mem, gs + 0xe16, '<B', 'layout feature') & 1)})
             if grid:
                 # 0x141c78270: origin and bounds, not a result-4 condition.
+                state['grid_flags'] = req(mem, grid + 0x3a0, '<B', 'grid flags')
                 state['grid_origin'] = req(mem, grid + 0x378, '<3f', 'grid origin')
                 state['grid_min'] = req(mem, grid + 0x384, '<3f', 'grid minimum')
                 state['grid_max'] = req(mem, grid + 0x390, '<3f', 'grid maximum')
