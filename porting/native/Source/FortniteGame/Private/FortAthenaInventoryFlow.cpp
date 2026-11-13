@@ -429,8 +429,10 @@ namespace
 	};
 }
 
-UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller, UFortItemDefinition* Definition, int32 Count, int32 Level, int32 LoadedAmmo)
+UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller, UFortItemDefinition* Definition, int32 Count, int32 Level, int32 LoadedAmmo, int32* OutAcceptedCount)
 {
+	if (OutAcceptedCount)
+		*OutAcceptedCount = 0;
 	if (!IsEnabled())
 	{
 		return nullptr;
@@ -456,6 +458,8 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 			if (Added > 0)
 			{
 				Existing->ItemEntry.Count += Added;
+				if (OutAcceptedCount)
+					*OutAcceptedCount += Added;
 				if (FFortItemEntry* Replicated = FindReplicatedEntry(Inventory, Existing->ItemEntry.ItemGuid))
 				{
 					Replicated->Count = Existing->ItemEntry.Count;
@@ -510,6 +514,8 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 	Inventory->NativeNotifyInventoryChanged();
 	SnapInv(Inventory, TEXT("after NativeNotify"));
 	ScanInventory(Inventory, Item, TEXT("after"));
+	if (OutAcceptedCount)
+		*OutAcceptedCount += Count;
 
 	UE_LOG(LogTemp, Display, TEXT("Inventory: granted %d x %s guid=%s level=%d to %s"),
 		Count, *Definition->GetName(), *Entry.ItemGuid.ToString(), Level, *Controller->GetName());

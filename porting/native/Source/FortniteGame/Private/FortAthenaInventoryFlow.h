@@ -29,7 +29,8 @@ namespace FortAthenaInventory
 
 	// Adds Count of Definition to the controller's WorldInventory (stacks onto an existing entry when the
 	// definition is stackable, otherwise creates a new entry with a new FGuid). Returns the world item, or nullptr.
-	UFortWorldItem* GiveItem(AFortPlayerController* Controller, UFortItemDefinition* Definition, int32 Count, int32 Level = 1, int32 LoadedAmmo = 0);
+	// A returned existing item may have accepted only part of Count; OutAcceptedCount reports the actual grant.
+	UFortWorldItem* GiveItem(AFortPlayerController* Controller, UFortItemDefinition* Definition, int32 Count, int32 Level = 1, int32 LoadedAmmo = 0, int32* OutAcceptedCount = nullptr);
 
 	// Removes Count (<= 0 means the whole entry) of the item with this guid. Returns the number removed.
 	// Used by the drop/pickup slice; no RPC calls it yet.

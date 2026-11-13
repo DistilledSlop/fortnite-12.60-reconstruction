@@ -47,7 +47,7 @@ AFortPickupAthena* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVec
 namespace
 {
 	// stand-in: immediate collection; original pickup flight, sound, slot/swap and interaction
-	// validation are not recovered. Refuse multi-item and partially fitting pickups.
+	// validation are not recovered. Multi-item pickups remain unsupported; partial grants preserve the world remainder.
 	void ExecServerHandlePickup(UObject* Context, FFrame& Stack, RESULT_DECL)
 	{
 		P_GET_OBJECT(AFortPickup, Pickup);
@@ -65,26 +65,40 @@ namespace
 			// stand-in: conservative range until original server pickup validation is recovered.
 			&& FVector::DistSquared(Pawn->GetActorLocation(), Pickup->GetActorLocation()) <= FMath::Square(300.0f))
 		{
-			const FFortItemEntry& Entry = Pickup->PrimaryPickupItemEntry;
+			FFortItemEntry& Entry = Pickup->PrimaryPickupItemEntry;
 			UFortItemDefinition* Definition = Entry.ItemDefinition;
-			bool bFits = Definition && Entry.Count > 0;
-			if (bFits && Definition->IsStackable())
+			int32 GrantCount = Definition ? FMath::Max(0, Entry.Count) : 0;
+			if (GrantCount > 0 && Definition->IsStackable())
 			{
 				const int32 MaxStack = Definition->NativeGetMaxStackSize(nullptr);
-				UFortWorldItem* Existing = Inventory->NativeFindWorldItemByDefinition(Definition, true);
-				// GiveItem returns success even when a single stack accepted only part of the count.
-				bFits = MaxStack > 0 && Entry.Count <= MaxStack;
-				if (Existing)
-					bFits = bFits && Entry.Count <= FMath::Max(0, MaxStack - Existing->ItemEntry.Count);
+				// Bound a new entry to one stack. GiveItem can first fill an existing stack;
+				// the remaining request still cannot create an oversized new entry.
+				GrantCount = FMath::Min(GrantCount, FMath::Max(0, MaxStack));
+				if (!Definition->bAllowMultipleStacks)
+				{
+					if (UFortWorldItem* Existing = Inventory->NativeFindWorldItemByDefinition(Definition, true))
+						GrantCount = FMath::Min(GrantCount, FMath::Max(0, MaxStack - Existing->ItemEntry.Count));
+				}
 			}
-			if (bFits)
+			if (GrantCount > 0)
 			{
 				Pickup->bPickedUp = true;
-				if (FortAthenaInventory::GiveItem(Controller, Definition, Entry.Count, Entry.Level, Entry.LoadedAmmo))
+				int32 AcceptedCount = 0;
+				FortAthenaInventory::GiveItem(Controller, Definition, GrantCount, Entry.Level, Entry.LoadedAmmo, &AcceptedCount);
+				// Consume exactly the amount committed to inventory; a returned item alone
+				// does not establish that its existing stack accepted the entire request.
+				check(AcceptedCount >= 0 && AcceptedCount <= GrantCount);
+				Entry.Count -= AcceptedCount;
+				if (Entry.Count == 0)
 					Pickup->Destroy();
 				else
+				{
 					Pickup->bPickedUp = false;
+					if (AcceptedCount > 0)
+						Pickup->ForceNetUpdate();
+				}
 			}
+
 		}
 		P_NATIVE_END;
 	}
