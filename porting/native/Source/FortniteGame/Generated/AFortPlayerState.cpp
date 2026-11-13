@@ -7,6 +7,32 @@
 #include "UFortAbilitySystemComponent.h"
 #include "Net/UnrealNetwork.h"
 
+// Recovered dedicated-server path only. Generator policy must inject these
+// definitions and corresponding declarations; do not edit generated native files.
+// Original decode 0x142118d30; encode 0x142119770. See REPORT.md.
+namespace FortRecoveredPlayerName
+{
+static FString Transform(const FString& Input, int8 Salt, bool bEncode)
+{
+#if UE_SERVER
+    static_assert(sizeof(TCHAR) == sizeof(uint16), "Player name codec requires original UTF-16 TCHAR units");
+    FString Result(Input);
+    const int32 Count = Result.Len();
+    uint32 State = (uint32(Count) + uint32(int32(Salt))) & 3u;
+    for (int32 Index = 0; Index < Count; ++Index)
+    {
+        State += 3u;
+        const uint16 Unit = uint16(Result[Index]);
+        const uint16 Shift = uint16(State & 7u);
+        Result[Index] = TCHAR(bEncode ? uint16(Unit - Shift) : uint16(Unit + Shift));
+    }
+    return Result;
+#else
+    return Input;
+#endif
+}
+}
+
 void AFortPlayerState::ClientNotifyAwardGranted_Implementation(UFortAwardItemDefinition* AwardDefinition)
 {
 	// Body not recovered: reflection-derived stub.
@@ -197,6 +223,67 @@ uint8 AFortPlayerState::NativeGetTeam163()
 	return PlayerTeam ? PlayerTeam->NativeGetTeam163() : 0;
 }
 
+void AFortPlayerState::SetPlayerName(const FString& S)
+{
+	// CONFIDENCE: HIGH. Recovered dedicated-server branch; client lifecycle remains unresolved.
+	if (!UE_SERVER || GetNetMode() != NM_DedicatedServer)
+	{
+	    APlayerState::SetPlayerName(S);
+	    return;
+	}
+	// Original 0x142121070: +0x89c processing mask 2, NOT client-OnRep mask 4.
+	bNativePlayerNameSetterActive = true;
+	APlayerState::SetPlayerName(S);
+	bNativePlayerNameSetterActive = false;
+}
+
+void AFortPlayerState::SetPlayerNameInternal(const FString& S)
+{
+	// CONFIDENCE: HIGH. Recovered dedicated-server branch; client lifecycle remains unresolved.
+	if (!UE_SERVER || GetNetMode() != NM_DedicatedServer)
+	{
+	    APlayerState::SetPlayerNameInternal(S);
+	    return;
+	}
+	// Dedicated-server branch of original 0x1421210a0.
+	// Preserve base assignment/dirty tracking and normal SetPlayerName virtual flow.
+	const FString WireName = IsOnlyASpectator() ? S : FortRecoveredPlayerName::Transform(S, 0, true);
+	APlayerState::SetPlayerNameInternal(WireName);
+}
+
+FString AFortPlayerState::GetPlayerNameCustom() const
+{
+	// CONFIDENCE: HIGH. Recovered dedicated-server branch; client lifecycle remains unresolved.
+	if (!UE_SERVER || GetNetMode() != NM_DedicatedServer)
+	{
+	    return APlayerState::GetPlayerNameCustom();
+	}
+	// Original 0x14211a390; proven dedicated-server branch.
+	const FString WireName = APlayerState::GetPlayerNameCustom();
+	if (bNativePlayerNameOnRepActive || IsOnlyASpectator())
+	{
+	    return WireName;
+	}
+	const FString PlainName = FortRecoveredPlayerName::Transform(WireName, 0, false);
+	// Base SetPlayerName caches this return value in OldNamePrivate. The original
+	// processing-bit2 branch stores that cache using independent salt 1.
+	return bNativePlayerNameSetterActive
+	    ? FortRecoveredPlayerName::Transform(PlainName, 1, true)
+	    : PlainName;
+}
+
+FString AFortPlayerState::GetOldPlayerName() const
+{
+	// CONFIDENCE: HIGH. Recovered dedicated-server branch; client lifecycle remains unresolved.
+	if (!UE_SERVER || GetNetMode() != NM_DedicatedServer)
+	{
+	    return APlayerState::GetOldPlayerName();
+	}
+	// Original 0x14211a290. The original inherited SetOldPlayerName is raw assignment.
+	const FString WireOldName = APlayerState::GetOldPlayerName();
+	return IsOnlyASpectator() ? WireOldName : FortRecoveredPlayerName::Transform(WireOldName, 1, false);
+}
+
 void AFortPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
@@ -240,3 +327,12 @@ void AFortPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME(AFortPlayerState, bIsWorldDataOwner);
 }
 
+
+AFortPlayerState::AFortPlayerState(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+#if UE_SERVER
+// Original AFortPlayerState ctor 0x1423fa52b sets original +0x222 high bit.
+bUseCustomPlayerNames = true;
+#endif
+}

@@ -531,6 +531,20 @@ This section merges `server_systems/SF-ORCH-HANDOFF.md` (2026-11-12 orchestratio
 
 ### Current checkpoint (2026-11-13, after Claude commit `8602bdac`)
 
+Network-coverage checkpoint (19:10 UTC): the recovered declaration inventory has
+908 RPCs and 1,961 replicated fields; it is not a complete interaction contract.
+`server_scope/interaction_contracts.md` records the behavioral checklist and gaps.
+The opt-in Engine RPC trace (`-FortniteNetworkTrace=<absolute file>`, or
+`FN_NETWORK_TRACE=1` in play runs) and strict inventory-join report are built;
+they record selected server handoffs only, not property receipts or client behavior.
+WP B1/B3 remain incomplete. Parser checks cover five scenarios, including Blueprint
+class paths and ambiguous identities. Dedicated player-name encoding and current/
+old-cache lifecycle are integrated through a generator policy, with 19 real
+PlayerState/FString archive checks passing (`generated/runs/20261113-player-name-selftest-1/`).
+Build/stage: `20261113-140804-server.log`, 99.22 s. Original-client remote-label and
+live recorder verification are pending in `20261113-rpc-trace-name-two-profile-1`;
+these checks do not close G8/G9/G10 or establish full shared/client name recovery.
+
 Observed dedicated startup now matches the original final gameplay tag dictionary: **`011ff934`, 17,696 nodes**, fast replication enabled, container bits 7, first/true index bits 15, 39 valid tables (5,245 rows). There are 1,136 native registration events and 1,132 unique native names. Evidence: `generated/runs/20261113-tag-parity-probe-2/findings.json`, build `20261113-120434-server.log`. Original tag/config bytes are pinned and staged by `tools/stage_gameplay_tags.py`. Loading the cooked game-state Blueprint from the native game-mode constructor recursively initialized tag tables during async loading; the load now runs after engine initialization, after original defaults.
 
 Observed two-client run `generated/runs/20261113-tag-parity-two-client-3/`: both joins succeeded, both clients accepted gameplay cues without the earlier FromSpec mismatch or remote ASC invalid-field error, and both **client Space inputs** reached the aircraft jump handler. The second connection closed after 22 seconds because `/Game/Athena/Apollo/Maps/Streaming/Apollo_Terrain_Sub_E4` was absent from the dedicated stage. **G10 remains unpassed.** Staging only the 65 streaming roots fixed that tile but missed dynamically loaded POIs: the registered retry `generated/runs/20261113-locker-streaming-two-client-2/` closed client 2 on the absent Risky Reels POI at 18:00:26 UTC. Staging now includes all 649 Apollo map roots and their hard-import closure by default (14,250 additional files, 560.99 MB, zero missing packages or parse errors; every map and sidecar exists at the source size). `tools/build_server.sh --stage` uses strict closure validation and refuses incomplete staging. The full-map retry is `generated/runs/20261113-apollo-complete-two-profile-1/`; both registered clients stayed connected beyond the earlier failure, skydived and landed. This validates the exercised route, not all gameplay or teams. The first client's skydive renders in `shots/t35.png`; deployment, landing and full animations still need direct verification.

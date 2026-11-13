@@ -34,6 +34,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogFortniteNet, Log, All);
 // Private/NetSerializeSelfTest.cpp: round-trip checks of the recovered struct_net bodies. Runs only with -NetSerializeSelfTest
 // and exits the process (0 when every case passes, 1 otherwise).
 void RunNetSerializeSelfTest();
+void RegisterFortPlayerNameSelfTest();
 void RegisterContextRuntimeProbeDriver();
 void RegisterQueueConnectedFlowDriver();
 void RegisterActivationBaseProbeDriver();
@@ -253,6 +254,7 @@ public:
         // repair ahead of every cooked-data/probe load in one ordered callback.
         FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::OnEngineInitialized);
         FWorldDelegates::OnPostWorldInitialization.AddStatic(&FFortniteGameModule::OnWorldInitialized);
+        RegisterFortPlayerNameSelfTest();
         if (FParse::Param(FCommandLine::Get(), TEXT("NetSerializeSelfTest")))
         {
             RunNetSerializeSelfTest();

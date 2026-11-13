@@ -1,0 +1,353 @@
+diff --git a/Engine/Source/Runtime/Engine/Private/DataReplication.cpp b/Engine/Source/Runtime/Engine/Private/DataReplication.cpp
+index 657663fcb..51b6a9f93 100644
+--- a/Engine/Source/Runtime/Engine/Private/DataReplication.cpp
++++ b/Engine/Source/Runtime/Engine/Private/DataReplication.cpp
+@@ -5,6 +5,7 @@
+ =============================================================================*/
+ 
+ #include "Net/DataReplication.h"
++#include "FortNetworkTrace.h"
+ #include "Misc/MemStack.h"
+ #include "HAL/IConsoleManager.h"
+ #include "EngineStats.h"
+@@ -1122,6 +1123,13 @@ bool FObjectReplicator::ReceivedRPC(FNetBitReader& Reader, const FReplicationFla
+ 	UObject* Object = GetObject();
+ 	FName FunctionName = FieldCache->Field.GetFName();
+ 	UFunction* Function = Object->FindFunction(FunctionName);
++	const bool bFortTrace = bIsServer && FortNetworkTrace::IsEnabled();
++	const int32 FortPayloadBits = bFortTrace ? int32(Reader.GetBitsLeft()) : -1;
++	auto FortTrace = [&](const TCHAR* Outcome)
++	{
++		if (bFortTrace) FortNetworkTrace::Record(TEXT("rpc_receive"), Outcome, Connection,
++			Object, Function, FunctionName, OwningChannel->Actor, OwningChannel->ChIndex, FortPayloadBits);
++	};
+ 
+ 	FScopedRPCTimingTracker ScopedTracker(Function, Connection);
+ 	SCOPE_CYCLE_COUNTER(STAT_NetReceiveRPC);
+@@ -1129,18 +1137,21 @@ bool FObjectReplicator::ReceivedRPC(FNetBitReader& Reader, const FReplicationFla
+ 
+ 	if (Function == nullptr)
+ 	{
++		FortTrace(TEXT("invalid_function"));
+ 		UE_LOG(LogNet, Error, TEXT("ReceivedRPC: Function not found. Object: %s, Function: %s"), *Object->GetFullName(), *FunctionName.ToString());
+ 		HANDLE_INCOMPATIBLE_RPC
+ 	}
+ 
+ 	if ((Function->FunctionFlags & FUNC_Net) == 0)
+ 	{
++		FortTrace(TEXT("invalid_function"));
+ 		UE_LOG(LogRep, Error, TEXT("Rejected non RPC function. Object: %s, Function: %s"), *Object->GetFullName(), *FunctionName.ToString());
+ 		HANDLE_INCOMPATIBLE_RPC
+ 	}
+ 
+ 	if ((Function->FunctionFlags & (bIsServer ? FUNC_NetServer : (FUNC_NetClient | FUNC_NetMulticast))) == 0)
+ 	{
++		FortTrace(TEXT("rejected_access"));
+ 		UE_LOG(LogRep, Error, TEXT("Rejected RPC function due to access rights. Object: %s, Function: %s"), *Object->GetFullName(), *FunctionName.ToString());
+ 		HANDLE_INCOMPATIBLE_RPC
+ 	}
+@@ -1167,12 +1178,14 @@ bool FObjectReplicator::ReceivedRPC(FNetBitReader& Reader, const FReplicationFla
+ 
+ 		if (Reader.IsError())
+ 		{
++			FortTrace(TEXT("decode_error"));
+ 			UE_LOG(LogRep, Error, TEXT("ReceivedRPC: ReceivePropertiesForRPC - Reader.IsError() == true: Function: %s, Object: %s"), *FunctionName.ToString(), *Object->GetFullName());
+ 			HANDLE_INCOMPATIBLE_RPC
+ 		}
+ 
+ 		if (Reader.GetBitsLeft() != 0)
+ 		{
++			FortTrace(TEXT("decode_error"));
+ 			UE_LOG(LogNet, Error, TEXT("ReceivedRPC: ReceivePropertiesForRPC - Mismatch read. Function: %s, Object: %s"), *FunctionName.ToString(), *Object->GetFullName());
+ 			HANDLE_INCOMPATIBLE_RPC
+ 		}
+@@ -1182,6 +1195,7 @@ bool FObjectReplicator::ReceivedRPC(FNetBitReader& Reader, const FReplicationFla
+ 		if (bCanDelayUnmapped && (UnmappedGuids.Num() > 0 || PendingLocalRPCs.Num() > 0))
+ 		{
+ 			// If this has unmapped guids or there are already some queued, add to queue
++			FortTrace(TEXT("delayed_unmapped"));
+ 			bOutDelayRPC = true;	
+ 		}
+ 		else
+@@ -1209,6 +1223,7 @@ bool FObjectReplicator::ReceivedRPC(FNetBitReader& Reader, const FReplicationFla
+ 			RPC_ResetLastFailedReason();
+ 
+ 			// Call the function.
++			FortTrace(TEXT("invoked"));
+ 			Object->ProcessEvent(Function, Parms);
+ 		}
+ 
+@@ -1223,12 +1238,14 @@ bool FObjectReplicator::ReceivedRPC(FNetBitReader& Reader, const FReplicationFla
+ 
+ 		if (RPC_GetLastFailedReason() != nullptr)
+ 		{
++			FortTrace(TEXT("validation_failed"));
+ 			UE_LOG(LogRep, Error, TEXT("ReceivedRPC: RPC_GetLastFailedReason: %s"), RPC_GetLastFailedReason());
+ 			return false;
+ 		}
+ 	}
+ 	else
+ 	{
++		FortTrace(TEXT("rejected_unwanted"));
+ 		UE_LOG(LogRep, Verbose, TEXT("Rejected unwanted function %s in %s"), *FunctionName.ToString(), *Object->GetFullName());
+ 	}
+ 
+diff --git a/Engine/Source/Runtime/Engine/Private/NetworkDriver.cpp b/Engine/Source/Runtime/Engine/Private/NetworkDriver.cpp
+index 0c51c2ae9..90ffbd657 100644
+--- a/Engine/Source/Runtime/Engine/Private/NetworkDriver.cpp
++++ b/Engine/Source/Runtime/Engine/Private/NetworkDriver.cpp
+@@ -5,6 +5,7 @@
+ =============================================================================*/
+ 
+ #include "CoreMinimal.h"
++#include "FortNetworkTrace.h"
+ #include "Misc/CoreMisc.h"
+ #include "Misc/CommandLine.h"
+ #include "Misc/NetworkGuid.h"
+@@ -1980,8 +1981,15 @@ void UNetDriver::ProcessRemoteFunctionForChannel(UActorChannel* Ch, const FClass
+ 	// This function should be kept fast! Assume this is getting called multiple times at once. Don't look things up/recalc them if they do not change per connection/actor.
+ 	// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
++	const bool bFortTrace = IsServer && FortNetworkTrace::IsEnabled();
++	auto FortTrace = [&](const TCHAR* Outcome, int32 PayloadBits)
++	{
++		if (bFortTrace) FortNetworkTrace::Record(TEXT("rpc_send"), Outcome, Connection,
++			TargetObj, Function, Function->GetFName(), Ch->Actor, Ch->ChIndex, PayloadBits);
++	};
+ 	if (Ch->Closing)
+ 	{
++		FortTrace(TEXT("channel_closing"), -1);
+ 		return;
+ 	}
+ 
+@@ -2031,6 +2039,7 @@ void UNetDriver::ProcessRemoteFunctionForChannel(UActorChannel* Ch, const FClass
+ 	//@warning: needs to be after parameter evaluation for script stack integrity
+ 	if ( Bunch.IsError() )
+ 	{
++		FortTrace(TEXT("bunch_error"), -1);
+ 		if ( !Bunch.bReliable )
+ 		{
+ 			// Not reliable, so not fatal. This can happen a lot in debug builds at startup if client is slow to get in game
+@@ -2127,6 +2136,7 @@ void UNetDriver::ProcessRemoteFunctionForChannel(UActorChannel* Ch, const FClass
+ 
+ 	if (TempWriter.IsError())
+ 	{
++		FortTrace(TEXT("bunch_error"), -1);
+ 		if (LogAsWarning)
+ 		{
+ 			UE_LOG(LogNet, Warning, TEXT("Error: Can't send function '%s' on '%s': Failed to serialize properties"), *Function->GetName(), *TargetObj->GetFullName());
+@@ -2194,11 +2204,13 @@ void UNetDriver::ProcessRemoteFunctionForChannel(UActorChannel* Ch, const FClass
+ 		// Send the bunch.
+ 		if( Bunch.IsError() )
+ 		{
++			FortTrace(TEXT("bunch_error"), int32(TempWriter.GetNumBits()));
+ 			UE_LOG(LogNet, Log, TEXT("Error: Can't send function '%s' on '%s': RPC bunch overflowed (too much data in parameters?)"), *Function->GetName(), *TargetObj->GetFullName());
+ 			ensureMsgf(false,TEXT("Error: Can't send function '%s' on '%s': RPC bunch overflowed (too much data in parameters?)"), *Function->GetName(), *TargetObj->GetFullName());
+ 		}
+ 		else if (Ch->Closing)
+ 		{
++			FortTrace(TEXT("channel_closing"), int32(TempWriter.GetNumBits()));
+ 			UE_LOG(LogNetTraffic, Log, TEXT("RPC bunch on closing channel") );
+ 		}
+ 		else
+@@ -2219,6 +2231,7 @@ void UNetDriver::ProcessRemoteFunctionForChannel(UActorChannel* Ch, const FClass
+ 				}
+ 
+ 				NETWORK_PROFILER(GNetworkProfiler.TrackQueuedRPC(Connection, TargetObj, Ch->Actor, Function, HeaderBits, ParameterBits, 0));
++				FortTrace(TEXT("queued"), int32(TempWriter.GetNumBits()));
+ 				Ch->QueueRemoteFunctionBunch(TargetObj, Function, Bunch);
+ 			}
+ 			else
+@@ -2233,6 +2246,7 @@ void UNetDriver::ProcessRemoteFunctionForChannel(UActorChannel* Ch, const FClass
+ 				}
+ 
+ 				NETWORK_PROFILER(GNetworkProfiler.TrackSendRPC(Ch->Actor, Function, HeaderBits, ParameterBits, 0, Connection));
++				FortTrace(TEXT("submitted"), int32(TempWriter.GetNumBits()));
+ 				Ch->SendBunch( &Bunch, 1 );
+ 			}
+ 		}
+diff --git a/Engine/Source/Runtime/Engine/Private/FortNetworkTrace.h b/Engine/Source/Runtime/Engine/Private/FortNetworkTrace.h
+new file mode 100644
+--- /dev/null
++++ b/Engine/Source/Runtime/Engine/Private/FortNetworkTrace.h
+@@ -0,0 +1,17 @@
++#pragma once
++
++#include "CoreMinimal.h"
++
++class AActor;
++class UNetConnection;
++class UObject;
++class UFunction;
++
++// Called only from the server's existing RPC paths. No UObject is retained.
++namespace FortNetworkTrace
++{
++	bool IsEnabled();
++	void Record(const TCHAR* Event, const TCHAR* Outcome, const UNetConnection* Connection,
++		const UObject* Object, const UFunction* Function, const FName& FunctionName,
++		const AActor* Actor, int32 Channel, int32 PayloadBits);
++}
+diff --git a/Engine/Source/Runtime/Engine/Private/FortNetworkTrace.cpp b/Engine/Source/Runtime/Engine/Private/FortNetworkTrace.cpp
+new file mode 100644
+--- /dev/null
++++ b/Engine/Source/Runtime/Engine/Private/FortNetworkTrace.cpp
+@@ -0,0 +1,158 @@
++#include "FortNetworkTrace.h"
++#include "Engine/NetConnection.h"
++#include "Engine/World.h"
++#include "GameFramework/Actor.h"
++#include "HAL/FileManager.h"
++#include "HAL/Event.h"
++#include "HAL/PlatformProcess.h"
++#include "HAL/Runnable.h"
++#include "HAL/RunnableThread.h"
++#include "Misc/CommandLine.h"
++#include "Misc/CoreDelegates.h"
++#include "Misc/DateTime.h"
++#include "Misc/Parse.h"
++#include "Misc/Paths.h"
++#include "Misc/ScopeLock.h"
++#include "Serialization/JsonWriter.h"
++#include "Policies/CondensedJsonPrintPolicy.h"
++#include "Serialization/Archive.h"
++#include "UObject/Class.h"
++
++DEFINE_LOG_CATEGORY_STATIC(LogFortNetworkTrace, Log, All);
++
++namespace FortNetworkTrace
++{
++namespace
++{
++// Deliberately process-lifetime storage: the OnPreExit callback may run after
++// other static destructors. The worker and archive are closed at OnPreExit.
++class FRecorder final : public FRunnable
++{
++public:
++	FRecorder()
++	{
++		FString Path;
++		if (!FParse::Value(FCommandLine::Get(), TEXT("FortniteNetworkTrace="), Path)) return;
++		if (Path.IsEmpty() || FPaths::IsRelative(Path)) { Warn(TEXT("Network trace unavailable; tracing disabled.")); return; }
++		Archive = IFileManager::Get().CreateFileWriter(*Path);
++		if (!Archive) { Warn(TEXT("Network trace unavailable; tracing disabled.")); return; }
++		Wake = FPlatformProcess::GetSynchEventFromPool(false);
++		if (!Wake) { delete Archive; Archive = nullptr; Warn(TEXT("Network trace unavailable; tracing disabled.")); return; }
++		Thread = FRunnableThread::Create(this, TEXT("FortNetworkTrace"));
++		if (!Thread) { FPlatformProcess::ReturnSynchEventToPool(Wake); Wake = nullptr; delete Archive; Archive = nullptr; Warn(TEXT("Network trace unavailable; tracing disabled.")); return; }
++		bEnabled = true;
++		FCoreDelegates::OnPreExit.AddStatic(&FRecorder::OnPreExit);
++	}
++	bool Enabled() const { return bEnabled.Load(); }
++	void Append(const FString& Line)
++	{
++		FTCHARToUTF8 Utf8(*Line);
++		bool bOverflow = false;
++		{
++			FScopeLock Guard(&Lock);
++			if (!bEnabled.Load()) return;
++			if (int64(Buffer.Num()) + Utf8.Length() + 1 > MaxBufferBytes)
++			{
++				bEnabled.Store(false);
++				bOverflow = !bWarned.Exchange(true);
++				Wake->Trigger(); // Drain accepted records; do not accept this one.
++			}
++			else
++			{
++				Buffer.Append(reinterpret_cast<const uint8*>(Utf8.Get()), Utf8.Length());
++				Buffer.Add('\n');
++				if (++Count >= 128) Wake->Trigger();
++			}
++		}
++		if (bOverflow) UE_LOG(LogFortNetworkTrace, Warning, TEXT("Network trace buffer overflow; tracing disabled."));
++	}
++	virtual uint32 Run() override
++	{
++		for (;;)
++		{
++			Wake->Wait(1000);
++			TArray<uint8> Batch;
++			bool bShouldStop;
++			{
++				FScopeLock Guard(&Lock);
++				Swap(Batch, Buffer);
++				Count = 0;
++				bShouldStop = bStop;
++			}
++			if (Batch.Num() && Archive)
++			{
++				Archive->Serialize(Batch.GetData(), Batch.Num());
++				Archive->Flush();
++				if (Archive->IsError())
++				{
++					{
++						FScopeLock Guard(&Lock);
++						bEnabled.Store(false);
++						Buffer.Reset(); Count = 0;
++					}
++					Warn(TEXT("Network trace write failed; tracing disabled."));
++				}
++			}
++			if (bShouldStop) break;
++		}
++		return 0;
++	}
++	void Shutdown()
++	{
++		{
++			FScopeLock Guard(&Lock);
++			bEnabled.Store(false); bStop = true;
++			if (Wake) Wake->Trigger();
++		}
++		if (Thread) { Thread->WaitForCompletion(); delete Thread; Thread = nullptr; }
++		if (Archive) { Archive->Close(); if (Archive->IsError()) Warn(TEXT("Network trace close failed; tracing disabled.")); delete Archive; Archive = nullptr; }
++		if (Wake) { FPlatformProcess::ReturnSynchEventToPool(Wake); Wake = nullptr; }
++	}
++	static FRecorder& Get() { static FRecorder* Instance = new FRecorder(); return *Instance; }
++	static void OnPreExit() { Get().Shutdown(); }
++private:
++	void Warn(const TCHAR* Message) { if (!bWarned.Exchange(true)) UE_LOG(LogFortNetworkTrace, Warning, TEXT("%s"), Message); }
++	static constexpr int32 MaxBufferBytes = 1024 * 1024;
++	FCriticalSection Lock;
++	TArray<uint8> Buffer;
++	FArchive* Archive = nullptr;
++	FEvent* Wake = nullptr;
++	FRunnableThread* Thread = nullptr;
++	TAtomic<bool> bEnabled { false };
++	bool bStop = false;
++	TAtomic<bool> bWarned { false };
++	int32 Count = 0;
++};
++}
++
++bool IsEnabled() { return FRecorder::Get().Enabled(); }
++
++void Record(const TCHAR* Event, const TCHAR* Outcome, const UNetConnection* Connection,
++	const UObject* Object, const UFunction* Function, const FName& FunctionName,
++	const AActor* Actor, int32 Channel, int32 PayloadBits)
++{
++	FRecorder& Recorder = FRecorder::Get();
++	if (!Recorder.Enabled()) return;
++	const FDateTime Now = FDateTime::UtcNow();
++	const UWorld* World = Connection ? Connection->GetWorld() : nullptr;
++	FString Json;
++	auto Writer = TJsonWriterFactory<TCHAR, TCondensedJsonPrintPolicy<TCHAR>>::Create(&Json);
++	Writer->WriteObjectStart();
++	Writer->WriteValue(TEXT("schema_version"), 1);
++	Writer->WriteValue(TEXT("event"), Event);
++	Writer->WriteValue(TEXT("outcome"), Outcome);
++	Writer->WriteValue(TEXT("utc_unix_ms"), Now.ToUnixTimestamp() * 1000 + Now.GetMillisecond());
++	if (World) Writer->WriteValue(TEXT("world_time"), double(World->GetTimeSeconds())); else Writer->WriteNull(TEXT("world_time"));
++	Writer->WriteValue(TEXT("connection"), int64(Connection ? Connection->GetUniqueID() : 0));
++	Writer->WriteValue(TEXT("object_id"), int64(Object ? Object->GetUniqueID() : 0));
++	if (Object) Writer->WriteValue(TEXT("object_class"), Object->GetClass()->GetPathName()); else Writer->WriteNull(TEXT("object_class"));
++	if (Function && Function->GetOwnerClass()) Writer->WriteValue(TEXT("declaring_class"), Function->GetOwnerClass()->GetPathName()); else Writer->WriteNull(TEXT("declaring_class"));
++	Writer->WriteValue(TEXT("function"), FunctionName.ToString());
++	if (Actor) Writer->WriteValue(TEXT("actor_id"), int64(Actor->GetUniqueID())); else Writer->WriteNull(TEXT("actor_id"));
++	if (Channel >= 0) Writer->WriteValue(TEXT("channel"), Channel); else Writer->WriteNull(TEXT("channel"));
++	if (PayloadBits >= 0) Writer->WriteValue(TEXT("payload_bits"), PayloadBits); else Writer->WriteNull(TEXT("payload_bits"));
++	if (Function) Writer->WriteValue(TEXT("reliable"), bool(Function->FunctionFlags & FUNC_NetReliable)); else Writer->WriteNull(TEXT("reliable"));
++	Writer->WriteObjectEnd(); Writer->Close();
++	Recorder.Append(Json);
++}
++}

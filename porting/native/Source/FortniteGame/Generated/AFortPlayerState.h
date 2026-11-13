@@ -44,6 +44,8 @@ class FORTNITEGAME_API AFortPlayerState : public APlayerState, public IFortAbili
 	GENERATED_BODY()
 
 public:
+    AFortPlayerState(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 60, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
 	uint8 bIsWorldDataOwner : 1;
@@ -370,5 +372,14 @@ public:
 	virtual bool NativeMatchesSpectatedUniqueId216(const FUniqueNetIdRepl& Id) const;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 	virtual uint8 NativeGetTeam163();
+	virtual void SetPlayerName(const FString& S) override;
+	virtual void SetPlayerNameInternal(const FString& S) override;
+	virtual FString GetPlayerNameCustom() const override;
+	virtual FString GetOldPlayerName() const override;
+
+private:
+    // Original +0x89c masks 2 (setter) and 4 (client OnRep), respectively.
+    bool bNativePlayerNameSetterActive = false;
+    bool bNativePlayerNameOnRepActive = false;
 };
 

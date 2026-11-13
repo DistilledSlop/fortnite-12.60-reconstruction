@@ -2453,6 +2453,10 @@ _default_subobjects_spec = _common_activation_import.spec_from_file_location(
     "native_default_subobjects_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "native_default_subobjects", "source_policy.py"))
 _default_subobjects_policy = _common_activation_import.module_from_spec(_default_subobjects_spec)
 _default_subobjects_spec.loader.exec_module(_default_subobjects_policy)
+_player_name_server_spec = _common_activation_import.spec_from_file_location(
+    "player_name_server_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "player_name_server_runtime", "source_policy.py"))
+_player_name_server_policy = _common_activation_import.module_from_spec(_player_name_server_spec)
+_player_name_server_spec.loader.exec_module(_player_name_server_policy)
 _aircraft_events_spec = _common_activation_import.spec_from_file_location(
     "aircraft_events_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "aircraft_events_runtime", "source_policy.py"))
 _aircraft_events_policy = _common_activation_import.module_from_spec(_aircraft_events_spec)
@@ -3744,6 +3748,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(_action_widget_policy.icon_declarations(model).splitlines())
     lines.extend(_action_slate_policy.declarations(model).splitlines())
     lines.extend(_athena_mode_policy.declarations(model).splitlines())
+    lines.extend(_player_name_server_policy.declarations(model))
     lines.append("};")
     lines.append("")
     return "\n".join(lines) + "\n"
@@ -4838,6 +4843,7 @@ def promote(args):
                 raise SystemExit("%s: generated event %s collides with another declaration in the final header" % (name, ev["name"]))
         cpp = render_promoted_cpp(model, source_label)
         header, cpp = _default_subobjects_policy.finalize(model, header, cpp)
+        header, cpp = _player_name_server_policy.finalize(model, header, cpp)
         _input_cache_policy.validate_rendered(model, header, cpp)
         _action_slate_policy.validate_rendered(model, header, cpp)
         if model.get('common_action_widget_icon_runtime'):

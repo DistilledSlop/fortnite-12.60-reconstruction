@@ -58,6 +58,47 @@ equipment changes, and delayed or lost messages need separate scenario evidence.
 The runtime-required ledger planned in `SERVER_FIRST_PLAN.md` WP B1/B3 is still
 incomplete; the declaration inventory does not close that work.
 
+The current [interaction checklist](interaction_contracts.md) records behavioral
+coverage separately from declaration coverage, including the outstanding observer,
+movement, name, streaming and discovery issues.
+
+### Opt-in RPC observations
+
+Apply `patches/ue425-fortnite-network-rpc-trace.patch` to the matching Engine tree
+and rebuild. `FN_NETWORK_TRACE=1 porting/tools/vanilla_play_run.sh <seconds>` stores
+`network-rpc.jsonl` in the run directory and records its path in `meta.json`.
+For direct server launches, use `-FortniteNetworkTrace=/absolute/path/file.jsonl`;
+the destination is created/truncated and its parent must exist. Without the flag,
+the hooks do not serialize records or start a writer thread.
+
+```sh
+python3 -I porting/server_scope/runtime_report.py \
+    porting/generated/runs/<run>/network-rpc.jsonl \
+    --output porting/generated/runs/<run>/network-report
+```
+
+Schema 1 records receive/send stage, outcome, UTC/world time, per-process object,
+actor and connection IDs, full object/declaring class paths, function, channel,
+parameter bit count and reliability. Parameter values and connection addresses
+are omitted. Incoming bits are reader bits remaining at entry; outgoing bits are
+serialized parameter bits, excluding headers. These are not packet sizes.
+
+`invoked` precedes `ProcessEvent`; a later `validation_failed` may describe that
+same invocation. `queued` and `submitted` record local queue/SendBunch handoffs,
+not delivery or client application. Reports preserve these distinctions, reject
+malformed schema records, and join declarations by qualified declaring class and
+function. Blueprint class paths are accepted but Blueprint declarations outside
+the native inventory remain unmatched. Unobserved declarations retain an explicit
+unobserved status; property replication is not covered by this trace.
+
+The writer flushes at about one second or 128 records. Its queue is capped at
+1 MiB, with at most another batch in flight; overflow/open/write failures disable
+recording with a warning. Check `LogFortNetworkTrace` before treating a run as
+continuous evidence. Normal shutdown drains accepted records; abrupt termination
+can lose a tail. File I/O runs on a worker, but blocked I/O can delay shutdown.
+These hooks omit earlier send/receive rejection paths, generic native calls,
+property replication and client-side events. They do not complete WP B1 or B3.
+
 ## Verdict
 
 `functions.jsonl` gives every function a verdict (`v`) and a confidence (`conf`):

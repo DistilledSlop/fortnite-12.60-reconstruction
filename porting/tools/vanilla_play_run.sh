@@ -5,6 +5,8 @@ seconds=${1:-420}
 [[ $seconds =~ ^[1-9][0-9]*$ ]] || { echo 'Usage: vanilla_play_run.sh [positive seconds]' >&2; exit 2; }
 registered_mode=${FN_REGISTERED_MATCHMAKING:-0}
 [[ $registered_mode == 0 || $registered_mode == 1 ]] || { printf 'Invalid FN_REGISTERED_MATCHMAKING=%s (expected 0 or 1).\n' "$registered_mode" >&2; exit 2; }
+network_trace=${FN_NETWORK_TRACE:-0}
+[[ $network_trace == 0 || $network_trace == 1 ]] || { echo 'FN_NETWORK_TRACE must be 0 or 1.' >&2; exit 2; }
 if [[ $registered_mode == 1 ]]; then
     export FN_REGISTERED_MATCHMAKING=1
     export FORTNITE_GAMESERVER_ADDRESS="${FORTNITE_GAMESERVER_ADDRESS:-127.0.0.1}"
@@ -25,6 +27,11 @@ while ! mkdir "$base-$n" 2>/dev/null; do
 done
 out="$base-$n"
 mkdir -p "$out/shots"
+if [[ $network_trace == 1 ]]; then
+    export FN_NETWORK_TRACE_PATH="$out/network-rpc.jsonl"
+else
+    unset FN_NETWORK_TRACE_PATH
+fi
 export FN_SHOTS_DIR="$out/shots"
 # Override for targeted diagnostics, e.g. LogNetTraffic Verbose.
 export FN_SERVER_LOG_CMDS="${FN_SERVER_LOG_CMDS:-LogHandshake Log, LogNet Log, LogNetTraffic Warning, PacketHandlerLog Log}"
@@ -33,7 +40,7 @@ exec > >(tee -a "$out/play_run.out") 2>&1
 python3 - "$out/meta.json" "$seconds" <<'PYEOF'
 import json, os, subprocess, sys, time
 rev = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], capture_output=True, text=True).stdout.strip()
-keys = ['FN_RUN_LABEL', 'FN_RENDERER', 'FN_SERVER_MAP', 'FN_SERVER_URL_OPTS', 'FN_SERVER_ARGS', 'FN_SERVER_LOG_CMDS', 'FN_STATE_DIR', 'FN_ACTIONS', 'FN_LP_NUM_THREADS', 'FN_SECOND_CLIENT', 'FN_SECOND_USERNAME', 'FN_SECOND_RENDERER', 'FN_SECOND_ACTIONS', 'FN_SESSION_TRACE', 'FN_REGISTERED_MATCHMAKING', 'FORTNITE_GAMESERVER_SECRET_FILE', 'FORTNITE_GAMESERVER_ADDRESS', 'FORTNITE_GAMESERVER_PLAYLIST', 'FORTNITE_GAMESERVER_BUILD', 'FORTNITE_GAMESERVER_PORT', 'FORTNITE_GAMESERVER_BEACON_PORT', 'FORTNITE_GAMESERVER_CAPACITY']
+keys = ['FN_RUN_LABEL', 'FN_RENDERER', 'FN_SERVER_MAP', 'FN_SERVER_URL_OPTS', 'FN_SERVER_ARGS', 'FN_SERVER_LOG_CMDS', 'FN_STATE_DIR', 'FN_ACTIONS', 'FN_LP_NUM_THREADS', 'FN_SECOND_CLIENT', 'FN_SECOND_USERNAME', 'FN_SECOND_RENDERER', 'FN_SECOND_ACTIONS', 'FN_SESSION_TRACE', 'FN_NETWORK_TRACE', 'FN_NETWORK_TRACE_PATH', 'FN_REGISTERED_MATCHMAKING', 'FORTNITE_GAMESERVER_SECRET_FILE', 'FORTNITE_GAMESERVER_ADDRESS', 'FORTNITE_GAMESERVER_PLAYLIST', 'FORTNITE_GAMESERVER_BUILD', 'FORTNITE_GAMESERVER_PORT', 'FORTNITE_GAMESERVER_BEACON_PORT', 'FORTNITE_GAMESERVER_CAPACITY']
 json.dump({'started': time.strftime('%Y-%m-%dT%H:%M:%S%z'), 'seconds': int(sys.argv[2]), 'git_head': rev,
            'env': {k: os.environ[k] for k in keys if k in os.environ}}, open(sys.argv[1], 'w'), indent=1)
 PYEOF
@@ -80,6 +87,9 @@ export FN_ACTIONS="${FN_ACTIONS:-125:click,640,592 235:click,1144,473 300:shot 4
 # Extra server URL options (e.g. '?RequiredPlayers=1') and switches (e.g. '-FortniteWarmupSeconds=20').
 server_url="${FN_SERVER_MAP:-/Game/Maps/FortniteEmptyDedicated}${FN_SERVER_URL_OPTS:-}"
 read -r -a server_extra <<< "${FN_SERVER_ARGS:-}"
+if [[ $network_trace == 1 ]]; then
+    server_extra+=("-FortniteNetworkTrace=$FN_NETWORK_TRACE_PATH")
+fi
 server_port=7777
 if [[ $registered_mode == 1 ]]; then
     server_port="$FORTNITE_GAMESERVER_PORT"
@@ -87,7 +97,9 @@ if [[ $registered_mode == 1 ]]; then
         server_extra=(-FortniteRegisteredMatchmaking ${server_extra[@]+"${server_extra[@]}"})
     fi
 fi
-printf -v FN_SERVER_CMD 'exec %q %q -FortniteOriginalClient -nullrhi -nosound -unattended -port=%q -log -LogCmds=%q '"${server_extra[*]/#/}"' > %q 2>&1' "$server" "$server_url" "$server_port" "$FN_SERVER_LOG_CMDS" "$out/server.log"
+printf -v FN_SERVER_CMD 'exec %q ' "$server" "$server_url" -FortniteOriginalClient -nullrhi -nosound -unattended "-port=$server_port" -log "-LogCmds=$FN_SERVER_LOG_CMDS" "${server_extra[@]}"
+printf -v server_redirect '> %q 2>&1' "$out/server.log"
+FN_SERVER_CMD+="$server_redirect"
 export FN_SERVER_CMD
 export FN_ACTION_LOG="$out/server.log"
 touch "$out/start.marker"
