@@ -4,7 +4,8 @@
 # loopback via the prefix hosts file, so nothing reaches the real Epic services.
 # Usage: run_original_client.sh [--username NAME] [seconds] [extra client args...]
 # FN_ACTIONS="60:shot 70:click,640,600 80:key,Return" runs X11 actions at those seconds after
-# launch; screenshots go to generated/shots/ (debug aids, never committed).
+# launch; "wait,REGEX[,TIMEOUT]" waits for REGEX in the client or FN_ACTION_LOG and restarts the clock;
+# also move,X,Y / look,DX,DY / mhold,SECONDS. Screenshots go to generated/shots/ (debug aids, never committed).
 # FN_WINEPREFIX selects an alternate prefix; FN_WINEDLLOVERRIDES and
 # FN_VK_ICD_FILENAMES pass renderer settings into the isolated client.
 # Set FN_DISPLAY and, if required, FN_XAUTHORITY to use an existing X11 display.
@@ -63,7 +64,7 @@ if text and not text.endswith("\n"): text+="\n"
 open(path,"w").write(text+block)
 PYEOF
     fi
-    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_LP_NUM_THREADS="${FN_LP_NUM_THREADS:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FORTNITE_NET_ENCRYPTION_KEY_FILE="${FORTNITE_NET_ENCRYPTION_KEY_FILE:-}" FN_STATE_DIR="${FN_STATE_DIR:-}" FN_SERVER_CMD="${FN_SERVER_CMD:-}" FN_WINEDEBUG="${FN_WINEDEBUG:--all}" FN_DISPLAY="${FN_DISPLAY:-}" FN_XAUTHORITY="${FN_XAUTHORITY:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
+    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_LP_NUM_THREADS="${FN_LP_NUM_THREADS:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FN_ACTION_LOG="${FN_ACTION_LOG:-}" FORTNITE_NET_ENCRYPTION_KEY_FILE="${FORTNITE_NET_ENCRYPTION_KEY_FILE:-}" FN_STATE_DIR="${FN_STATE_DIR:-}" FN_SERVER_CMD="${FN_SERVER_CMD:-}" FN_WINEDEBUG="${FN_WINEDEBUG:--all}" FN_DISPLAY="${FN_DISPLAY:-}" FN_XAUTHORITY="${FN_XAUTHORITY:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
 fi
 
 ip link set lo up
@@ -109,7 +110,7 @@ trap 'kill $server $patcher $appes_patcher $oodle_patcher 2>/dev/null || true' E
 mkdir -p "$generated/shots"
 chown "$FN_USER" "$generated/shots"
 set +e
-wine_env=(WINEPREFIX="$wineprefix" WINEDEBUG="${FN_WINEDEBUG:--all}" SHOTS_DIR="$generated/shots" FN_ACTIONS="$FN_ACTIONS")
+wine_env=(WINEPREFIX="$wineprefix" WINEDEBUG="${FN_WINEDEBUG:--all}" SHOTS_DIR="$generated/shots" FN_ACTIONS="$FN_ACTIONS" FN_ACTION_LOG="${FN_ACTION_LOG:-}")
 [[ -z "${FN_WINEDLLOVERRIDES:-}" ]] || wine_env+=(WINEDLLOVERRIDES="$FN_WINEDLLOVERRIDES")
 [[ -z "${FN_VK_ICD_FILENAMES:-}" ]] || wine_env+=(VK_ICD_FILENAMES="$FN_VK_ICD_FILENAMES")
 # lavapipe defaults to one rasteriser thread per core; on a 96-core host its llvmpipe threads segfault intermittently.
@@ -136,11 +137,19 @@ sudo -n -u "$user" env "${wine_env[@]}" \
 cd "$0"
 if [[ -n "$FN_ACTIONS" ]]; then
     (
-        prev=0
+        base=$SECONDS
         for action in $FN_ACTIONS; do
             at=${action%%:*}; what=${action#*:}; kind=${what%%,*}; args=${what#*,}
-            sleep $(( at > prev ? at - prev : 0 )); prev=$at
+            delay=$(( base + at - SECONDS )); (( delay <= 0 )) || sleep $delay
             case $kind in
+                wait) # wait,REGEX[,TIMEOUT]: poll the client log and FN_ACTION_LOG (server log) for REGEX; later times count from the match.
+                    pattern=${args%%,*}; limit=600; [[ $args != *,* ]] || limit=${args##*,}
+                    deadline=$(( SECONDS + limit ))
+                    until grep -aqE "$pattern" "$WINEPREFIX"/drive_c/users/*/AppData/Local/FortniteGame/Saved/Logs/FortniteGame.log ${FN_ACTION_LOG:+"$FN_ACTION_LOG"} 2>/dev/null || (( SECONDS >= deadline )); do sleep 1; done
+                    base=$SECONDS ;;
+                move) xdotool mousemove ${args%%,*} ${args#*,} ;;
+                mhold) xdotool mousedown 1; sleep "$args"; xdotool mouseup 1 ;;
+                look) xdotool mousemove_relative -- ${args%%,*} ${args#*,} ;;
                 shot) ffmpeg -loglevel error -y -f x11grab -video_size 1280x720 -i "$DISPLAY" -frames:v 1 "$SHOTS_DIR/t$at.png" ;;
                 click) xdotool mousemove ${args%%,*} ${args#*,} click 1 ;;
                 key) xdotool key "$args" ;;

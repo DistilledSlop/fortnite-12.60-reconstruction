@@ -51,6 +51,7 @@ server_url="${FN_SERVER_MAP:-/Game/Maps/FortniteEmptyDedicated}${FN_SERVER_URL_O
 read -r -a server_extra <<< "${FN_SERVER_ARGS:-}"
 printf -v FN_SERVER_CMD 'exec %q %q -FortniteOriginalClient -nullrhi -nosound -unattended -port=7777 -log -LogCmds=%q '"${server_extra[*]/#/}"' > %q 2>&1' "$server" "$server_url" 'LogHandshake VeryVerbose, LogNet VeryVerbose, LogNetTraffic Verbose, PacketHandlerLog VeryVerbose' "$out/server.log"
 export FN_SERVER_CMD
+export FN_ACTION_LOG="$out/server.log"
 touch "$out/start.marker"
 "$porting/run_original_client.sh" "$seconds" "${@:2}" > "$out/runner.out" 2>&1 & runner_pid=$!
 is_runner_child() {
@@ -77,7 +78,7 @@ fi
 wait "$runner_pid"; status=$?; runner_pid=
 if [[ -n $capture_pid ]]; then sudo -n kill -INT "$capture_pid" 2>/dev/null || true; wait "$capture_pid" 2>/dev/null || true; capture_pid=; fi
 [[ ! -e $out/udp.pcap ]] || sudo -n chown "$(id -u):$(id -g)" "$out/udp.pcap"
-client="$porting/generated/wine-prefix/drive_c/users/${USER}/AppData/Local/FortniteGame/Saved/Logs/FortniteGame.log"
+client="${FN_WINEPREFIX:-$porting/generated/wine-prefix}/drive_c/users/${USER}/AppData/Local/FortniteGame/Saved/Logs/FortniteGame.log"
 [[ ! -f $client ]] || cp "$client" "$out/client.log"
 for shot in "$porting/generated/shots"/t*.png; do
     [[ -f $shot && $shot -nt $out/start.marker ]] && cp "$shot" "$out/" || true
