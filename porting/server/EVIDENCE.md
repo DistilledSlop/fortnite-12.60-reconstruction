@@ -1366,3 +1366,58 @@ The six new tests cover Storm grant gating, distinct-objective thresholds,
 completion rewards, linked quest casing, failed-award rollback, restart replay
 and calendar alignment. Private log:
 `generated/storm-agency-contract/backend-tests.log`.
+
+
+### Oro quest lifecycle
+
+The four cooked Quest_BR_Styles_Oro definitions, QuestBundle_S12_Oro,
+Season12_Schedule_Event_Oro, AthenaChallengeRewardORO and referenced objective
+stat tables supply the data in `season12_oro_data.py`. Original stat conditions
+and per-source SHA256 hashes are retained; private property reports and builder
+are in `generated/oro-quest-contract/`. Objectives require ten assisted kills,
+ten friend matches, 1,000 damage and 40 medals. Every quest awards 100,000
+seasonal XP. The original misspelling `athena_oro_play_w_frient` is preserved.
+All four QuestInfos specify GrantWithBundle and bStartActive=True.
+
+The bundle awards Wrap_191_GoldenSkeleton at two completed roots and records
+Pickaxe_ID_350_TheGoldenSkeleton with CompletionCount=-1. Local policy treats
+that sentinel as all four roots, as with Maya's all-nine reward. The separate
+BundleLevelRewards display entry associates the pickaxe with four objectives;
+this supports the policy but does not recover original server reward logic.
+Only bundle roots count toward these rewards: a different quest attached to
+that bundle cannot trigger thresholds. Each new completion is transactional
+with XP, cosmetics, Battle Pass rewards and its durable event receipt.
+
+Both schedule and bundle name EventFlag.LTE_Oro / CalendarEvent_Season12_Oro.
+Neither the inspected Oro outfit nor AthenaSeason12 supplies its original
+schedule entitlement source. The local operator may configure LTE_Oro to grant
+its schedule to Season 12 profiles after the configured time, without imposing
+an invented outfit or premium requirement. Already owned schedules reconcile
+independently. The calendar and quest service share that same normalized start.
+This is a local activation policy, not proof of historical availability.
+
+Four new Oro integration tests cover season/free/date/owned-schedule activation,
+the recovered targets and 400,000 total XP, two/four-root cosmetic thresholds,
+repeated occurrences versus durable retries, rollback during bundle reward,
+restart, unrelated linked quests and matching calendar/login activation. The
+combined suite passed **392 tests** in 21.386 seconds with
+`python3 -W ignore::ResourceWarning -m unittest discover -s porting/server/tests -p 'test_*.py'`.
+Private log: `generated/oro-quest-contract/backend-tests.log`.
+
+### Broader Season 12 quest inventory
+
+After Oro, the registry contains 277 unique definitions: weekly 100, daily 62,
+Location Domination 60, Deadpool 21, faction 15, Maya 9, Storm the Agency 6 and
+Oro 4. This counts individual definitions, not objectives or quest families.
+A bounded filename inventory of extracted Athena/Items/Quests excluded
+QuestAbilities and Rewards, selected S12/Season12/Oro names, and compared them
+case-insensitively to EVENT_QUESTS. It found another 170 named candidates:
+109 feats (including 46 Migrated), 35 XP-coin quests, six golden styles, six
+hidden quests, three operation/Spy Games, three Peely frontend, three Jerky and
+five not yet classified (including two alternate Maya Q07 definitions).
+
+This is an inventory of candidates, not proof that every asset is an active,
+independent player quest or that these names exhaust all Season 12 grants.
+Source grant links and export properties must distinguish unused, alternative
+and migrated assets before automatic grants are implemented. These categories
+remain an explicit coverage gap; Oro is not the last quest family.

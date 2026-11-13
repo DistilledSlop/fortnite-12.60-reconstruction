@@ -534,7 +534,7 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   Their exact 12.60 casing, defaults beyond `acceptInvites: public`, partial-update,
   permission and error semantics remain inferred. Local private and mutual-friend
   policies govern new requests; existing requests can still be accepted.
-- **Quest coverage.** All nine cooked Maya quests, their individual style-token rewards and the final bundle token are implemented, alongside Agent Peely style tokens. Login repairs older completed Maya bundles with a durable receipt so consuming the final token cannot trigger another grant.
+- **Quest coverage.** The registry currently supports 277 unique quest definitions across eight groups: weekly missions (100), dailies (62), Location Domination (60), Deadpool (21), faction challenges (15), Maya (9), Storm the Agency (6) and Oro (4). This is not all quest-related content shipped in 12.60. All nine cooked Maya quests, their individual style-token rewards and the final bundle token are implemented, alongside Agent Peely style tokens. Login repairs older completed Maya bundles with a durable receipt so consuming the final token cannot trigger another grant.
   All 100 weekly missions (Brutus, TNTina, Meowscles, Skye and Midas, weeks 1–10) now use their cooked objectives,
   40,000 XP rewards and completion-token thresholds. The cooked `SeasonGrantsToEveryone` entitlement now grants their mission schedule
   through `ClientQuestLogin`, including for free accounts. The owned schedule grants week 1
@@ -556,7 +556,7 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   Unrelated channels and non-auto-equipped selections are preserved. Updating
   saved snapshots this way is a local policy; native preset behavior is unverified.
   Targets become unseen, and tokens for unowned targets wait for later login.
-  The combined backend baseline passed 355 tests. The original client accepted
+  The earlier faction integration batch passed 355 tests. The original client accepted
   Brutus's Shadow mission and switched to Ghost, with both screens showing
   IN PROGRESS. The other four native selections, reward presentation and other
   seasonal mission families remain unverified or incomplete. Location Domination now adds
@@ -609,7 +609,7 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   an empty inventory GUID and converted style targets are local representation
   policies. Nested purchase notifications are folded into the claim response.
   Claimed retries do not repeat the notification. The combined backend baseline
-  passed 388 tests; this does not establish native reward popup presentation.
+  passed 392 tests; this does not establish native reward popup presentation.
   Storm the Agency supports the five cooked bundle quests, their 120,000 total
   XP, pickaxe, wrap and five-quest glider reward. Chest and henchman objectives
   require three distinct locations; swimming requires all five hatches. Event
@@ -619,6 +619,12 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   source is unresolved. Calendar flags now share the quest date configuration
   and expire their cache at the next configured start. Native Storm the Agency
   UI and gameplay event delivery remain unverified.
+  Oro adds four cooked quests with 100,000 XP each, its wrap at two completed
+  roots, and its pickaxe after all four. Interpreting the cooked completion
+  sentinel `-1` as all roots is an explicit local policy, consistent with Maya;
+  the bundle's display metadata independently places the pickaxe at four.
+  Its schedule also requires operator opt-in because the original grant source
+  is unresolved. Original Oro UI and native gameplay delivery remain unverified.
   An authenticated server quest-event endpoint now
   supports durable retries; actual native gameplay event integration remains pending.
   Daily events must already satisfy their cooked tag/template/condition filters;
@@ -689,6 +695,7 @@ These event-ordering policies are local. Exact legacy receipt retries remain
 valid after upgrading to match-aware events.
 Configure date gates with `--quest-event-start EventFlag.LobbySeason12=ISO_OR_UNIX`
 and optionally `--quest-event-start EventFlag.LTE_StormTheAgency=ISO_OR_UNIX`
+or `--quest-event-start EventFlag.LTE_Oro=ISO_OR_UNIX`
 (also `Backend(quest_event_starts={...})`). No historical event start is fabricated;
 without one, dated quest grants wait. `ClientQuestLogin` reconciles elapsed gates.
 The calendar emits these flags from their configured starts, uses the configured
