@@ -2,12 +2,14 @@
 """Stage cooked /Game packages (plus their hard-import closure) for the Linux dedicated server.
 
     python3 -I tools/stage_server_content.py /Game/X/Y [/Game/...] [--dry-run] [--max N] [--soft]
-        [--src DIR] [--dst DIR] [-v]
+        [--include-materials] [--exclude-class C] [--exclude-prefix P] [--src DIR] [--dst DIR] [-v]
 
-Parses the cooked .uasset summary (legacy header, custom versions, name map, import map) with the stdlib only.
-Follows /Game/ packages named in the import table (outer==0, class "Package"). /Script/ and /Engine/ packages are not
-copied; /Script modules are listed at the end. --soft also follows /Game/ package names found in the name map
-(soft object paths, string-asset references). Existing files in the stage are never overwritten.
+Parses the cooked .uasset summary (legacy header, custom versions, name map, import map, export classes) with the
+stdlib only. Follows /Game/ packages named in the import table (outer==0, class "Package"). /Script/ and /Engine/
+packages are not copied; /Script modules are listed at the end. By default, packages exporting shader-bearing or
+client-only visual/audio assets (materials, textures, particles, Niagara, audio, fonts, widgets) are skipped and
+their imports are not traversed (pass --include-materials to disable). --soft also follows /Game/ package names
+found in the name map (soft object paths, string-asset references). Existing files in the stage are never overwritten.
 """
 import argparse, os, shutil, struct, sys
 
@@ -16,6 +18,16 @@ DST = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'generated'
                    'LinuxNoEditor', 'FortniteLinux', 'Content')
 EXTS = ('.uasset', '.uexp', '.ubulk', '.umap', '.uptnl', '.upipelinecache')
 PKG_FILTER_EDITOR_ONLY = 0x80000000
+DEFAULT_EXCLUDE_CLASSES = frozenset({
+    'Material', 'MaterialInstanceConstant', 'MaterialInstanceDynamic', 'MaterialFunction',
+    'MaterialFunctionInstance', 'MaterialParameterCollection', 'SubsurfaceProfile',
+    'Texture2D', 'TextureCube', 'TextureRenderTarget2D', 'Texture2DArray', 'VolumeTexture',
+    'CurveLinearColorAtlas', 'MediaTexture',
+    'ParticleSystem', 'NiagaraSystem', 'NiagaraEmitter', 'NiagaraScript',
+    'SoundWave', 'SoundCue', 'DialogueWave', 'SoundAttenuation', 'SoundConcurrency',
+    'SoundClass', 'SoundMix', 'SoundSubmix', 'ReverbEffect',
+    'Font', 'FontFace', 'WidgetBlueprintGeneratedClass',
+})
 
 
 class R:
@@ -33,7 +45,7 @@ class R:
 
 
 def parse_summary(path):
-    """Return (names, import_list) where import_list = [(class_pkg, class, outer, objname)]."""
+    """Return (names, import_list, export_classes) where import_list = [(class_pkg, class, outer, objname)]."""
     with open(path, 'rb') as f:
         b = f.read(0x20000)
     r = R(b)
@@ -54,8 +66,9 @@ def parse_summary(path):
     if not (flags & PKG_FILTER_EDITOR_ONLY) and ue4 >= 516:
         r.fstr()                                  # localization id
     if ue4 >= 459: r.skip(8)                      # gatherable text count/offset
-    r.skip(8)                                     # export count/offset
+    exp_count, exp_off = r.i32(), r.i32()
     imp_count, imp_off = r.i32(), r.i32()
+    depends_off = r.i32()
     if total_hdr > len(b) or name_off + 1 > len(b):
         with open(path, 'rb') as f: b = f.read(total_hdr)
     r = R(b); r.p = name_off
@@ -78,7 +91,18 @@ def parse_summary(path):
         on = fname()
         imports.append((cp, cn, outer, on))
         r.p = st + imp_size
-    return names, imports
+    export_classes = set()
+    if exp_count > 0 and exp_off > 0:
+        exp_stride = (depends_off - exp_off) // exp_count if depends_off > exp_off else 104
+        for k in range(exp_count):
+            ci = struct.unpack_from('<i', b, exp_off + k * exp_stride)[0]
+            if ci < 0:
+                idx = -ci - 1
+                if 0 <= idx < len(imports):
+                    export_classes.add(imports[idx][3])
+            elif ci == 0:
+                export_classes.add('Class')
+    return names, imports, export_classes
 
 
 def pkg_file(src, pkg, ext):
@@ -91,17 +115,24 @@ def main():
     ap.add_argument('--dry-run', action='store_true')
     ap.add_argument('--max', type=int, default=3000, help='max packages visited (default 3000)')
     ap.add_argument('--soft', action='store_true', help='also follow /Game/ package names in the name map')
+    ap.add_argument('--include-materials', action='store_true', help='do not skip materials/textures/shaders/audio/UI')
+    ap.add_argument('--exclude-class', action='append', default=[], help='extra export class name to skip')
+    ap.add_argument('--exclude-prefix', action='append', default=[], help='extra /Game/... prefix to skip')
     ap.add_argument('--src', default=SRC)
     ap.add_argument('--dst', default=os.path.normpath(DST))
     ap.add_argument('-v', '--verbose', action='store_true')
     a = ap.parse_args()
 
-    seen, order, missing, scripts, engine = set(), [], [], set(), set()
+    exclude_classes = set(a.exclude_class) if a.include_materials else (set(DEFAULT_EXCLUDE_CLASSES) | set(a.exclude_class))
+    exclude_prefixes = tuple(p.rstrip('/') for p in a.exclude_prefix)
+    seen, order, missing, skipped, scripts, engine = set(), [], [], [], set(), set()
     parse_err = []
+    roots = set()
     queue = []
     for p in a.packages:
         p = p.split('.')[0].rstrip('/')
         if not p.startswith('/Game/'): print('skip non-/Game/ root', p); continue
+        roots.add(p)
         queue.append(p)
     copied_files = 0; copied_bytes = 0; existing = 0; would_files = 0; would_bytes = 0
     truncated = False
@@ -111,16 +142,25 @@ def main():
         if len(seen) >= a.max:
             truncated = True; break
         seen.add(pkg)
+        if pkg not in roots and exclude_prefixes and pkg.startswith(exclude_prefixes):
+            skipped.append((pkg, 'prefix'))
+            if a.verbose: print('skipped (prefix) ' + pkg)
+            continue
         ua = pkg_file(a.src, pkg, '.uasset')
         um = pkg_file(a.src, pkg, '.umap')
         main_f = ua if os.path.exists(ua) else um if os.path.exists(um) else None
         if not main_f:
             missing.append(pkg); continue
-        order.append(pkg)
         try:
-            names, imports = parse_summary(main_f)
+            names, imports, export_classes = parse_summary(main_f)
         except Exception as e:
-            parse_err.append((pkg, repr(e))); imports, names = [], []
+            parse_err.append((pkg, repr(e))); imports, names, export_classes = [], [], set()
+        hit = export_classes & exclude_classes
+        if hit and pkg not in roots:
+            skipped.append((pkg, ','.join(sorted(hit))))
+            if a.verbose: print('skipped (%s) %s' % (','.join(sorted(hit)), pkg))
+            continue
+        order.append(pkg)
         deps = []
         for cp, cn, outer, on in imports:
             if outer == 0 and cn == 'Package':
@@ -145,7 +185,8 @@ def main():
                 shutil.copyfile(sf, df)
                 copied_files += 1; copied_bytes += sz
             if a.verbose: print(('would copy ' if a.dry_run else 'copied ') + pkg + ext, sz)
-    print('roots: %d  packages visited: %d  found: %d  missing: %d' % (len(a.packages), len(seen), len(order), len(missing)))
+    print('roots: %d  packages visited: %d  staged: %d  skipped: %d  missing: %d' % (
+        len(a.packages), len(seen), len(order), len(skipped), len(missing)))
     if a.dry_run:
         print('DRY RUN: would copy %d files, %.2f MB (%d bytes); %d files already staged' % (would_files, would_bytes / 1e6, would_bytes, existing))
     else:

@@ -1,5 +1,5 @@
-#include "UObject/ConstructorHelpers.h"
 #include "FortniteAthenaGameplay.h"
+#include "UObject/ConstructorHelpers.h"
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaMatchFlow.h"
 #include "AFortTeamInfoAthena.h"
@@ -194,6 +194,18 @@ static void DumpFortniteClassChecksums(UWorld* World)
 
 void AFortGameModeAthena::StartPlay()
 {
+    if (FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")))
+    {
+        if (UClass* BpControllerClass = LoadClass<APlayerController>(nullptr, TEXT("/Game/Athena/Athena_PlayerController.Athena_PlayerController_C")))
+        {
+            PlayerControllerClass = BpControllerClass;
+            UE_LOG(LogTemp, Display, TEXT("OriginalClient: using PlayerControllerClass=%s"), *PlayerControllerClass->GetPathName());
+        }
+        else
+        {
+            UE_LOG(LogTemp, Warning, TEXT("OriginalClient: failed to load /Game/Athena/Athena_PlayerController.Athena_PlayerController_C"));
+        }
+    }
     Super::StartPlay();
     FortAthenaInventory::InstallRpcOverrides();
     FortAthenaMatchFlow::InstallRpcOverrides();

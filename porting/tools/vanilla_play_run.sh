@@ -21,7 +21,8 @@ cleanup() {
 trap cleanup EXIT INT TERM
 printf 'Output directory: %s\nWaiting for Wine to become idle (up to 300 seconds)...\n' "$out"
 for ((i=0; i<300; i++)); do
-    if ! pgrep -x FortniteClient-Win64-Shipping.exe >/dev/null 2>&1 && ! pgrep -x wineserver >/dev/null 2>&1 && ! ps -eo args= | grep -q '[F]ortniteClient-Win64-Shipping.exe'; then break; fi
+    # Only this run's prefix has to be idle; other agents' probes use their own prefixes (FN_WINEPREFIX unset = default prefix).
+    if ! pgrep -f "[W]INEPREFIX=${FN_WINEPREFIX:-$porting/generated/wine-prefix} .*FortniteClient-Win64-Shipping" >/dev/null 2>&1 && WINEPREFIX="${FN_WINEPREFIX:-$porting/generated/wine-prefix}" timeout 5 /usr/lib/x86_64-linux-gnu/wine/wineserver -w 2>/dev/null; then break; fi
     sleep 1
 done
 if ((i == 300)); then echo 'Wine prefix still busy after 300 seconds.' >&2; exit 1; fi

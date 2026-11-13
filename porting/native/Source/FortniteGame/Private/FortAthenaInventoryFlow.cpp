@@ -232,12 +232,45 @@ bool FortAthenaInventory::IsEnabled()
 	return bEnabled;
 }
 
+namespace
+{
+	// Diagnostic (-FortniteGcProbe): run a full garbage collection before and after every grant and log the stage, so a corrupt
+	// object reference (run 33: "Invalid object in GC ... FortInventory ... HeroType") is caught at the step that created it.
+	struct FGcProbeScope
+	{
+		FString Label;
+		static bool Enabled()
+		{
+			static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("FortniteGcProbe"));
+			return bOn;
+		}
+		explicit FGcProbeScope(const FString& InLabel) : Label(InLabel)
+		{
+			if (Enabled())
+			{
+				UE_LOG(LogTemp, Display, TEXT("Inventory: GcProbe before %s"), *Label);
+				CollectGarbage(GARBAGE_COLLECTION_KEEPFLAGS);
+			}
+		}
+		~FGcProbeScope()
+		{
+			if (Enabled())
+			{
+				UE_LOG(LogTemp, Display, TEXT("Inventory: GcProbe after %s"), *Label);
+				CollectGarbage(GARBAGE_COLLECTION_KEEPFLAGS);
+				UE_LOG(LogTemp, Display, TEXT("Inventory: GcProbe clean after %s"), *Label);
+			}
+		}
+	};
+}
+
 UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller, UFortItemDefinition* Definition, int32 Count, int32 Level, int32 LoadedAmmo)
 {
 	if (!IsEnabled())
 	{
 		return nullptr;
 	}
+	FGcProbeScope GcProbe(Definition ? Definition->GetName() : FString(TEXT("null")));
 	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
 	if (!Inventory || !Definition || Count < 0)
 	{

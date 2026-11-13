@@ -267,9 +267,17 @@ private:
                 UE_LOG(LogFortniteNet, Warning, TEXT("%s is not registered"), Name);
             }
         };
+        if (FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")))
+        {
+            if (IConsoleVariable* AsyncLoadVar = IConsoleManager::Get().FindConsoleVariable(TEXT("net.AllowAsyncLoading")))
+            {
+                AsyncLoadVar->Set(1, ECVF_SetByCode);
+            }
+        }
         LogCVar(TEXT("net.MagicHeader"));
         LogCVar(TEXT("net.MaxChannelSize"));
         LogCVar(TEXT("net.AllowEncryption"));
+        LogCVar(TEXT("net.AllowAsyncLoading"));
         TArray<uint8> Key;
         UE_LOG(LogFortniteNet, Log, TEXT("Network encryption key %s."), LoadNetworkEncryptionKey(Key) ? TEXT("configured") : TEXT("not configured"));
         LogNativeClassLoads();
