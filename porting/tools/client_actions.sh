@@ -11,6 +11,14 @@ start_client_actions() {
         for action in "${actions[@]}"; do
             at=${action%%:*}; what=${action#*:}; kind=${what%%,*}; args=${what#*,}
             delay=$(( base + at - SECONDS )); (( delay <= 0 )) || sleep $delay
+            case $kind in move|mhold|look|click|key|hold)
+                # Manual override (live_view.py checkbox): the marker holds this display's Xvfb pid; a person
+                # is driving the client, so scripted input is skipped while waits and screenshots continue.
+                disp=${DISPLAY#*:}; marker=${FN_OVERRIDE_DIR:-/tmp/fn-manual-override}/${disp%%.*}
+                if [[ -s $marker ]] && kill -0 "$(<"$marker")" 2>/dev/null; then
+                    echo "client_actions: skipped $action (manual override on $DISPLAY)" >&2; continue
+                fi ;;
+            esac
             case $kind in
                 wait) # wait,REGEX[,TIMEOUT]: poll the client log and FN_ACTION_LOG (server log) for REGEX; later times count from the match.
                     pattern=${args%%,*}; limit=600; [[ $args != *,* ]] || limit=${args##*,}

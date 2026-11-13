@@ -141,3 +141,18 @@ Streams stop while the tab is hidden. `/stream/<N>?fps=&scale=` is a raw MJPEG s
 One `ffmpeg -f x11grab` runs per (display, fps, scale) only while someone watches, shared by its viewers,
 and stops about 3 s after the last viewer leaves. No frames are written to disk.
 Port 8765 is the progress dashboard (`python3 -m http.server`), so the default here is 8766.
+
+Manual override (drive a client by hand): open a display and tick **Manual override**. That writes the marker
+`/tmp/fn-manual-override/<N>` (`FN_OVERRIDE_DIR`; content is the Xvfb pid, so a reused display number does not
+inherit it), shown as a red tag on the gallery card, and it stays set until unticked or the display ends.
+While it is set, `client_actions.sh` skips the scripted `move/look/click/mhold/key/hold` steps of `FN_ACTIONS`
+(`wait`, `stopif` and `shot` still run) and the opened view forwards the browser's keyboard and mouse to the
+display through XTEST (`/input/<N>` WebSocket, one injector child per display):
+- mouse over the picture is absolute (menus); with "Capture mouse on click" a click takes pointer lock and
+  movement becomes relative for 3D look. Esc releases the mouse, so the game's Esc is the "Send Esc" button
+  (plain Esc is forwarded when the mouse is not captured);
+- keys are sent by physical position (`KeyboardEvent.code`); held keys and buttons are released when the tab
+  loses focus, the view closes or the override is cleared;
+- browser shortcuts such as Ctrl+W cannot be intercepted on plain http, so the page asks before closing.
+The run's own time limit still applies, and a client started before this change keeps its old action worker.
+The page has no login: anyone who can reach the port can drive an overridden client.
