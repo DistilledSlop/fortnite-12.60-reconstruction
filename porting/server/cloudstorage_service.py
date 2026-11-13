@@ -30,6 +30,7 @@ class CloudStorageService:
         self.ctx = ctx
         self.oauth = oauth
         self.system_dir = Path(system_dir) if system_dir else None
+        self._system_overrides = {}
         self._user = {}
         self._user_db = None
         if state_dir is not None:
@@ -92,18 +93,37 @@ class CloudStorageService:
             "doNotCache": False,
         }
 
+    def set_system_override(self, name, data):
+        """Install an explicit in-memory system file, refusing directory collisions."""
+        if any(existing.lower() == name.lower() for existing in self._system_files()):
+            raise ValueError(f"cloud storage file conflicts with built-in {name}")
+        self._system_overrides[name] = (bytes(data), self.ctx.now())
+
+    def _check_override_conflicts(self, files):
+        for name in files:
+            if any(name.lower() == override.lower() for override in self._system_overrides):
+                raise RuntimeError(f"cloud storage file conflicts with built-in {name}")
+
     # Handlers ----------------------------------------------------------
 
     def system_list(self, req, match):
         listing = []
-        for name, path in self._system_files().items():
+        files = self._system_files()
+        self._check_override_conflicts(files)
+        for name, path in files.items():
             stat = path.stat()
             listing.append(self._describe(name, path.read_bytes(), stat.st_mtime, self.ctx))
-        return 200, listing
+        for name, (data, uploaded) in self._system_overrides.items():
+            listing.append(self._describe(name, data, uploaded, self.ctx))
+        return 200, sorted(listing, key=lambda item: item["filename"])
 
     def system_file(self, req, match):
         name = match.group(1)
-        path = self._system_files().get(name)
+        files = self._system_files()
+        self._check_override_conflicts(files)
+        if name in self._system_overrides:
+            return 200, Raw(self._system_overrides[name][0], mimetypes.guess_type(name)[0] or "application/octet-stream")
+        path = files.get(name)
         if path is None:
             raise ApiError(404, Err.CLOUD_FILE_NOT_FOUND, "The system file was not found.")
         return 200, Raw(path.read_bytes(), mimetypes.guess_type(name)[0] or "application/octet-stream")

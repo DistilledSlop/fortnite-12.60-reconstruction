@@ -8,6 +8,7 @@ import json
 import math
 import os
 import re
+import socket
 import sys
 import threading
 from datetime import datetime, timezone
@@ -21,6 +22,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import api_common  # noqa: E402
 import local_ws  # noqa: E402
+import qos_echo  # noqa: E402
 
 
 def quest_event_start(value):
@@ -224,6 +226,8 @@ def main():
                         help="with --stub: HTTP(S) origin for local lobby image URLs")
     parser.add_argument("--local-matchmaking-ws-port", type=int,
                         help="with --stub: serve an additional plaintext WebSocket listener on loopback (0 chooses a port)")
+    parser.add_argument("--local-qos-port", type=int, metavar="PORT",
+                        help="with --stub: serve a candidate loopback QoS hotfix and UDP echo (0 chooses a port)")
     parser.add_argument("--quest-event-start", action="append", type=quest_event_start, default=[],
                         metavar="TAG=ISO_OR_UNIX", help="configure a quest calendar event start; repeatable")
     args = parser.parse_args()
@@ -231,6 +235,8 @@ def main():
         parser.error("duplicate quest event start tag")
     if args.local_matchmaking_ws_port is not None and (not args.stub or args.matchmaking_ws_origin):
         parser.error("--local-matchmaking-ws-port requires --stub and no --matchmaking-ws-origin")
+    if args.local_qos_port is not None and (not args.stub or not 0 <= args.local_qos_port <= 65535):
+        parser.error("--local-qos-port requires --stub and a port between 0 and 65535")
     args.record.parent.mkdir(parents=True, exist_ok=True)
     routes = load_fixtures(args.fixtures)
     stub = None
@@ -252,6 +258,18 @@ def main():
                        content_dir=args.content_dir, content_file=args.content_file,
                        content_public_origin=args.content_public_origin,
                        quest_event_starts=dict(args.quest_event_start))
+    qos_socket = None
+    qos_stop = None
+    qos_thread = None
+    if args.local_qos_port is not None:
+        qos_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        try:
+            qos_socket.bind(("127.0.0.1", args.local_qos_port))
+            qos_port = qos_socket.getsockname()[1]
+            stub.DEFAULT.cloud.set_system_override("DefaultEngine.ini", qos_echo.hotfix(qos_port))
+        except (OSError, ValueError) as exc:
+            qos_socket.close()
+            parser.error(f"cannot enable local QoS: {exc}")
     server = ThreadingHTTPServer((args.bind, args.port), make_handler(routes, args.record, stub))
     if stub is not None and not args.matchmaking_ws_origin and not args.tls_cert and args.bind == "127.0.0.1":
         # The default local HTTP server must advertise its own reachable socket,
@@ -269,6 +287,11 @@ def main():
         context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
         context.load_cert_chain(args.tls_cert, args.tls_key)
         server.socket = context.wrap_socket(server.socket, server_side=True)
+    if qos_socket is not None:
+        qos_stop = threading.Event()
+        qos_thread = threading.Thread(target=qos_echo.serve, args=(qos_socket, qos_stop), daemon=True)
+        qos_thread.start()
+        print(f"Local QoS echo on 127.0.0.1:{qos_port}", flush=True)
     print(f"Listening on {args.bind}:{server.server_port} with {len(routes)} fixture(s)", flush=True)
     try:
         server.serve_forever()
@@ -276,6 +299,10 @@ def main():
         pass
     finally:
         server.server_close()
+        if qos_thread is not None:
+            qos_stop.set()
+            qos_thread.join()
+            qos_socket.close()
         if ws_server is not None:
             ws_server.shutdown()
             ws_server.server_close()
