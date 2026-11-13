@@ -147,6 +147,10 @@ class CommandContext:
     def tx(self, profile_id):
         if profile_id not in self.txs:
             self.txs[profile_id] = ProfileTx(self.ctx, self.service.profile(self.account_id, profile_id))
+            pending = getattr(self, '_quest_claim_notification', None)
+            if pending is not None:
+                pending[1][profile_id] = copy.deepcopy(self.txs[profile_id].profile)
+                pending[2][profile_id] = 0
         return self.txs[profile_id]
 
     def str_field(self, key, *, required=True, choices=None, pattern=None, max_len=None, allow_empty=False):
@@ -956,6 +960,8 @@ class ProfileService:
             from maya_reward_service import reconcile_purchase
             reconcile_purchase(ctx)
             convert_banner_tokens(ctx)
+        from quest_reward_notification import finish_claim_notification
+        finish_claim_notification(ctx)
         self._store(account_id, ctx.txs, command_profile=profile_id)
         primary = ctx.txs[profile_id]
         # Deltas only apply to the revision they were generated from. When the

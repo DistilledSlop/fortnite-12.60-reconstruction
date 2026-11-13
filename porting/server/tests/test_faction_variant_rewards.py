@@ -6,12 +6,15 @@ else:
 
 import copy
 import tempfile
+from types import SimpleNamespace
+from unittest.mock import Mock
 import unittest
 
 from account_service import AccountService
 from api_common import ApiError, Context, LOCAL_ACCOUNT_ID
 from profile_service import CommandContext, ProfileService
 from quest_service import QuestService
+from gameplay_service import GameplayService
 from season12_brutus_faction_data import TOKEN
 from season12_tntina_faction_data import TOKEN as TNTINA_TOKEN
 
@@ -157,6 +160,82 @@ class FactionVariantRewardsTests(unittest.TestCase):
         self.add_targets()
         self.login()
         self.assert_variants(side)
+
+    def test_skye_auto_equip_updates_matching_lockers_and_persisted_loadout(self):
+        self.login()
+        target = 'AthenaCharacter:CID_690_Athena_Commando_F_Photographer'
+        other = {'channel': 'Material', 'active': 'Gold', 'owned': ['Gold']}
+        old = {'channel': 'Progressive', 'active': 'Stage1', 'owned': ['Stage1']}
+        profile = self.snapshot()
+        locker_id = profile['stats']['attributes']['last_applied_loadout']
+        def setup(tx):
+            tx.add_item('skye', target, {'variants': [old, other]})
+            tx.add_item('skye-backpack', 'AthenaBackpack:BID_473_Photographer', {'variants': [old]})
+            data = copy.deepcopy(tx.profile['items'][locker_id]['attributes']['locker_slots_data'])
+            data['slots']['Character'] = {'items': ['skye', 'unrelated'], 'activeVariants': [
+                {'variants': [old, other]}, {'variants': [{'channel': 'Other', 'active': 'Keep'}]}]}
+            data['slots']['Backpack'] = {'items': ['skye-backpack'], 'activeVariants': [{'variants': [old]}]}
+            tx.set_item_attr(locker_id, 'locker_slots_data', data)
+            saved = copy.deepcopy(tx.profile['items'][locker_id]['attributes'])
+            saved['locker_slots_data']['slots']['Character']['items'][0] = target.lower()
+            tx.add_item('saved-preset', 'CosmeticLocker:athenalocker', saved)
+            tx.add_item('skye-token', 'CosmeticVariantToken:VTID_502_Photographer_StyleB', {})
+            tx.add_item('backpack-token', 'CosmeticVariantToken:VTID_504_Photographer_Backbling_StyleB', {})
+            self.quests.consume_variants(tx)
+        self.edit(setup)
+        self.restart()
+        profile = self.snapshot()
+        for name in (locker_id, 'saved-preset'):
+            slot = profile['items'][name]['attributes']['locker_slots_data']['slots']['Character']
+            self.assertEqual(slot['activeVariants'][0]['variants'], [
+                {'channel': 'Progressive', 'active': 'Stage2', 'owned': ['Stage1', 'Stage2']}, other])
+            self.assertEqual(slot['activeVariants'][1], {'variants': [{'channel': 'Other', 'active': 'Keep'}]})
+            backpack = profile['items'][name]['attributes']['locker_slots_data']['slots']['Backpack']
+            self.assertEqual(backpack['activeVariants'][0]['variants'], [
+                {'channel': 'Progressive', 'active': 'Stage2', 'owned': ['Stage1', 'Stage2']}])
+        servers = SimpleNamespace(authorize=lambda req: None,
+                                  get_session=lambda session_id, **kw: {'players': [LOCAL_ACCOUNT_ID]})
+        party = SimpleNamespace(_party_of=lambda account_id: None)
+        gameplay = GameplayService(self.ctx, self.accounts, self.profiles, None, party, servers, None)
+        _, response = gameplay.player(None, Mock(group=lambda *args: ('session', LOCAL_ACCOUNT_ID)))
+        self.assertEqual(response['variants']['Character'],
+                         profile['items'][locker_id]['attributes']['locker_slots_data']['slots']['Character']['activeVariants'])
+        self.assertEqual(response['variants']['Backpack'],
+                         profile['items'][locker_id]['attributes']['locker_slots_data']['slots']['Backpack']['activeVariants'])
+
+    def test_invalid_matching_locker_snapshot_rolls_back_auto_equip(self):
+        self.login()
+        locker_id = self.snapshot()['stats']['attributes']['last_applied_loadout']
+        def setup(tx):
+            tx.add_item('skye', 'AthenaCharacter:CID_690_Athena_Commando_F_Photographer',
+                        {'variants': [{'channel': 'Progressive', 'active': 'Stage1', 'owned': ['Stage1']}]})
+            data = copy.deepcopy(tx.profile['items'][locker_id]['attributes']['locker_slots_data'])
+            data['slots']['Character'] = {'items': ['skye'], 'activeVariants': [{'variants': 'invalid'}]}
+            tx.set_item_attr(locker_id, 'locker_slots_data', data)
+            tx.add_item('skye-token', 'CosmeticVariantToken:VTID_502_Photographer_StyleB', {})
+        self.edit(setup)
+        before = copy.deepcopy(self.snapshot())
+        with self.assertRaises(ApiError):
+            self.login()
+        self.assertEqual(self.snapshot(), before)
+        self.restart()
+        self.assertEqual(self.snapshot(), before)
+
+    def test_non_auto_equip_does_not_change_locker_snapshot(self):
+        self.login()
+        self.add_targets()
+        locker_id = self.snapshot()['stats']['attributes']['last_applied_loadout']
+        def setup(tx):
+            data = copy.deepcopy(tx.profile['items'][locker_id]['attributes']['locker_slots_data'])
+            data['slots']['Character'] = {'items': ['character'], 'activeVariants': [
+                {'variants': [{'channel': 'Progressive', 'active': 'Stage1', 'owned': ['Stage1']}]}]}
+            tx.set_item_attr(locker_id, 'locker_slots_data', data)
+            tx.add_item('brutus-token', 'CosmeticVariantToken:VTID_506_HenchmanTough_StyleB', {})
+        self.edit(setup)
+        before = copy.deepcopy(self.snapshot()['items'][locker_id]['attributes']['locker_slots_data'])
+        self.edit(self.quests.consume_variants)
+        self.assertEqual(self.snapshot()['items'][locker_id]['attributes']['locker_slots_data'], before)
+        self.assertEqual(self.snapshot()['items']['character']['attributes']['variants'][0]['owned'], ['Stage1', 'Stage2'])
 
     def test_invalid_target_rolls_back_completion_and_retry(self):
         side = 'ego'

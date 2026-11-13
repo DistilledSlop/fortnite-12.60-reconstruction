@@ -13,6 +13,7 @@ import re
 import struct
 
 from api_common import ApiError, Err
+from locker_variant_sync import sync_lockers
 from season12_maya_graph_data import (CHANNELS, GRAPH_TEMPLATE, NODES,
                                       PURCHASE_TOKEN, TARGET_ITEM, TIER_KEYS)
 
@@ -198,37 +199,9 @@ def _grant_variant(tx, node, config):
                 variants.append({'channel': 'RichColor', 'active': 'RichColor.' + config,
                                  'owned': ['RichColor']})
         tx.set_item_attr(item_id, 'variants', variants)
-        _sync_lockers(tx, item_id, item['templateId'], variants)
+        sync_lockers(tx, item_id, item['templateId'], variants)
         if node.mark_unseen is not False:
             tx.set_item_attr(item_id, 'item_seen', False)
-
-
-def _sync_lockers(tx, item_id, template, variants):
-    # Local gameplay loadouts read the locker's activeVariants snapshot. Maya's
-    # permanent choices also apply to saved presets containing the same outfit.
-    for locker_id, locker in list(tx.profile['items'].items()):
-        if not locker.get('templateId', '').casefold().startswith('cosmeticlocker:'):
-            continue
-        data = locker['attributes'].get('locker_slots_data', {})
-        slot = data.get('slots', {}).get('Character', {})
-        items = slot.get('items', [])
-        indices = [i for i, value in enumerate(items)
-                   if isinstance(value, str) and value.casefold() in
-                   (item_id.casefold(), template.casefold())]
-        if not indices:
-            continue
-        data = copy.deepcopy(data)
-        slot = data['slots']['Character']
-        active = slot.get('activeVariants', [])
-        if not isinstance(active, list):
-            raise _invalid('Invalid equipped Maya variants.')
-        active = active[:len(items)]
-        while len(active) < len(items):
-            active.append({'variants': []})
-        for index in indices:
-            active[index] = {'variants': copy.deepcopy(variants)}
-        slot['activeVariants'] = active
-        tx.set_item_attr(locker_id, 'locker_slots_data', data)
 
 
 def unlock_reward_node(ctx):

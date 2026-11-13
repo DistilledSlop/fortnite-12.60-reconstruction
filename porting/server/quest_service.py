@@ -42,6 +42,7 @@ from season12_remaining_faction_data import (QUESTS as REMAINING_FACTION_QUESTS,
                                             FACTIONS as REMAINING_FACTIONS)
 from season12_faction_variant_data import FACTION_VARIANTS, AUTO_EQUIP_VARIANTS
 from daily_quest_service import DailyService
+from locker_variant_sync import sync_lockers
 
 from api_common import ApiError, Err
 from profile_service import CommandContext, _invalid
@@ -307,6 +308,8 @@ class QuestService:
                 if token['templateId'].casefold() in AUTO_EQUIP_VARIANTS:
                     entry['active'] = unlocked
                 tx.set_item_attr(item_id, 'variants', variants)
+                if token['templateId'].casefold() in AUTO_EQUIP_VARIANTS:
+                    sync_lockers(tx, item_id, item['templateId'], variants, channel=channel)
                 if token['templateId'].casefold() not in DONUT_VARIANTS:
                     tx.set_item_attr(item_id, 'item_seen', False)
             tx.remove_item(token_id)
@@ -392,6 +395,8 @@ class QuestService:
             completed += value == target
         if completed < definition.get('ObjectiveCompletionCount', len(definition['objectives'])):
             raise _invalid('Quest objectives are incomplete.')
+        from quest_reward_notification import begin_claim_notification
+        begin_claim_notification(ctx, quest_id)
         self._award_completed(ctx, tx, item_id=quest_id, item=item, name=name)
 
     def _award_completed(self, ctx, tx, item_id, item, name):

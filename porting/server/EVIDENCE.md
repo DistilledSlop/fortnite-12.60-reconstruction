@@ -1265,3 +1265,36 @@ from this generic helper. No reward-response or quest-lifecycle source was
 changed. Private native captures and precise remaining checks are recorded in
 `generated/quest-reward-wire-v2/findings.json`; an isolated Completed-quest
 fixture with actual original Athena request observation is the next check.
+
+### Explicit claim loot and auto-equipped quest styles
+
+The backend now supplies the recovered explicit ClaimQuestReward consumer shape:
+one primary notification with questId and loot, without an invented Type value.
+The response is constructed after reward conversions from the transaction's
+actual inventory increments, including stacked quantities, crossed Battle Pass
+rewards and common-core banner icons. Newly unlocked variants are represented
+by their owned cosmetic target and final attributes; stat XP has an empty GUID
+and attributes. Those two representations are local policies, not captured Epic
+response values. Only the specific freshly awarded variant option can attribute
+an existing target to this claim; an older pending token cannot substitute its
+unlock. Older pending banner conversions are also excluded. Nested catalog
+notifications are folded into the one claim notification. Ordinary purchase
+notifications are unaffected. Already-claimed retries emit no repeated loot.
+
+Skye's cooked auto-equip rewards previously updated the owned cosmetic but left
+the equipped locker snapshot stale. The local game-server loadout reads that
+snapshot, so it could receive the prior style. Shared locker synchronization now
+updates the rewarded channel in matching equipped and saved outfit/backpack
+slots, preserving other channels and unrelated slots. Non-auto-equipped rewards
+preserve existing selections. Updating saved snapshots is a local policy; native
+preset behavior remains unverified. Maya continues using its full permanent
+variant snapshot, including the prior array-length normalization.
+
+The combined backend suite passed **382 tests** in 20.964 seconds:
+`python3 -W ignore::ResourceWarning -m unittest discover -s porting/server/tests -p 'test_*.py'`.
+New coverage includes XP, stack increments, converted banners and variants,
+cross-profile Battle Pass rewards, sole-primary responses, restart retries,
+award failures, Skye outfit/backpack gameplay loadouts after restart and rollback
+when a matching locker snapshot is malformed. Test log:
+`generated/chrono-completed-quest-probe/backend-tests.log`. This does not prove
+the original client's reward popup or automatic Athena claim lifecycle.
