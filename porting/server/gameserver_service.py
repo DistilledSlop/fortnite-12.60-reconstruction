@@ -158,7 +158,9 @@ class GameServerService:
         s = self.get_session(session_id)
         if s is None:
             return None
-        return 200, {'id': s['id'], 'ownerId': '', 'ownerName': '', 'serverName': 'local-dedicated',
+        # MCP requires a valid owning identifier even for a dedicated session.
+        # Use the registered server instance's public GUID, independent of its roster.
+        return 200, {'id': s['id'], 'ownerId': s['id'], 'ownerName': 'local-dedicated', 'serverName': 'local-dedicated',
                      'serverAddress': s['address'], 'serverPort': s['port'],
                      'maxPublicPlayers': s['maxPlayers'],
                      'openPublicPlayers': max(0, s['maxPlayers'] - self._occupied(s)),

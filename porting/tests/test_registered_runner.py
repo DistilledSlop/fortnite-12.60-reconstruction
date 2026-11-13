@@ -5,6 +5,7 @@ import json
 import os
 import pwd
 import re
+import shlex
 import shutil
 import socket
 import stat
@@ -502,6 +503,7 @@ PYEOF
                 "FN_REGISTERED_MATCHMAKING": "1",
                 "FORTNITE_GAMESERVER_PORT": "7785",
                 "FN_SERVER_ARGS": "-FortniteWarmupSeconds=10",
+                "FN_STATE_DIR": str(work / "state"),
             }
             res = subprocess.run(
                 [str(porting / "tools/vanilla_play_run.sh"), "30"],
@@ -517,6 +519,8 @@ PYEOF
             self.assertIn("-FortniteRegisteredMatchmaking", cap["FN_SERVER_CMD"])
             self.assertIn("-port=7785", cap["FN_SERVER_CMD"])
             self.assertIn("-FortniteWarmupSeconds=10", cap["FN_SERVER_CMD"])
+            default_logs = "LogHandshake Log, LogNet Log, LogNetTraffic Warning, PacketHandlerLog Log"
+            self.assertIn("-LogCmds=" + default_logs, shlex.split(cap["FN_SERVER_CMD"]))
             self.assertNotIn("FORTNITE_NET_ENCRYPTION_KEY_FILE", cap)
             self.assertNotIn("FORTNITE_GAMESERVER_SECRET", cap)
 
@@ -524,6 +528,8 @@ PYEOF
             self.assertEqual(len(run_dirs), 1)
             meta = json.loads((run_dirs[0] / "meta.json").read_text())
             self.assertEqual(meta["env"].get("FN_REGISTERED_MATCHMAKING"), "1")
+            self.assertEqual(meta["env"]["FN_STATE_DIR"], str(work / "state"))
+            self.assertEqual(meta["env"]["FN_SERVER_LOG_CMDS"], default_logs)
             self.assertNotIn("FORTNITE_GAMESERVER_SECRET", meta["env"])
 
             # Flag OFF in vanilla_play_run.sh
@@ -533,6 +539,7 @@ PYEOF
                 "HOME": os.environ.get("HOME", str(work)),
                 "USER": pwd.getpwuid(os.getuid()).pw_name,
                 "FN_RUN_LABEL": "local-test",
+                "FN_SERVER_LOG_CMDS": "LogNetTraffic Verbose, LogNet VeryVerbose",
             }
             subprocess.run(
                 [str(porting / "tools/vanilla_play_run.sh"), "30"],
@@ -543,6 +550,10 @@ PYEOF
             cap_off = json.loads(captured.read_text())
             self.assertNotIn("-FortniteRegisteredMatchmaking", cap_off["FN_SERVER_CMD"])
             self.assertIn("-port=7777", cap_off["FN_SERVER_CMD"])
+            self.assertIn("-LogCmds=" + env_off["FN_SERVER_LOG_CMDS"], shlex.split(cap_off["FN_SERVER_CMD"]))
+            local_run = next((porting / "generated/runs").glob("*-local-test-*"))
+            local_meta = json.loads((local_run / "meta.json").read_text())
+            self.assertEqual(local_meta["env"]["FN_SERVER_LOG_CMDS"], env_off["FN_SERVER_LOG_CMDS"])
             self.assertEqual(
                 cap_off.get("FORTNITE_NET_ENCRYPTION_KEY_FILE"),
                 str(porting / "generated/g3/netkey"),
@@ -631,7 +642,12 @@ PYEOF
             bin_dir, _, _ = self.make_shims(work)
             wine_pid = work / "wine.pid"
             native_pid = work / "native.pid"
-            write_exec(bin_dir / "wine", f'#!/usr/bin/env bash\necho $$ > "{wine_pid}"\nexec sleep 30\n')
+            nested_pid = work / "nested.pid"
+            graceful_marker = work / "graceful"
+            # A wrapper that does not forward TERM models sudo/xvfb/timeout
+            # chains whose child would otherwise outlive the runner.
+            write_exec(bin_dir / "wine", f'#!/usr/bin/env bash\necho $$ > "{wine_pid}"\ntrap \'echo graceful > "{graceful_marker}"\' TERM\nbash -c \'trap "" TERM; exec sleep 30\' &\necho $! > "{nested_pid}"\nwait\n')
+            unrelated = subprocess.Popen(["sleep", "30"])
             env = self.base_env(bin_dir, work)
             env.update(FN_NETNS_INNER="1", FN_USER=env["USER"], FN_USERNAME="LocalPlayer",
                        FN_BACKEND_PORT=str(free_port()), FN_REGISTERED_MATCHMAKING="1",
@@ -643,7 +659,7 @@ PYEOF
                 try:
                     deadline = time.monotonic() + 10
                     while time.monotonic() < deadline and proc.poll() is None:
-                        if wine_pid.exists() and native_pid.exists():
+                        if wine_pid.exists() and native_pid.exists() and nested_pid.exists():
                             break
                         time.sleep(0.05)
                     self.assertTrue(wine_pid.exists(), output.read_text())
@@ -655,6 +671,7 @@ PYEOF
                     proc.terminate()
                     self.assertEqual(proc.wait(timeout=3), 143)
                     self.assertFalse(secret_path.exists())
+                    self.assertTrue(graceful_marker.exists(), "Client wrapper had no grace period")
                     for port in (int(trace.group(1)), int(env["FN_BACKEND_PORT"])):
                         deadline = time.monotonic() + 3
                         while time.monotonic() < deadline:
@@ -664,7 +681,7 @@ PYEOF
                             time.sleep(0.05)
                         else:
                             self.fail("Owned backend listener survived TERM")
-                    for pid_file in (wine_pid, native_pid):
+                    for pid_file in (wine_pid, native_pid, nested_pid):
                         pid = int(pid_file.read_text())
                         deadline = time.monotonic() + 3
                         while time.monotonic() < deadline:
@@ -677,10 +694,40 @@ PYEOF
                             time.sleep(0.05)
                         else:
                             self.fail("Owned client/server child survived TERM")
+                    self.assertIsNone(unrelated.poll(), "Unrelated process was terminated")
                 finally:
+                    unrelated.terminate()
+                    unrelated.wait(timeout=3)
                     if proc.poll() is None:
                         proc.kill()
                         proc.wait()
+
+
+    def test_09_timeout_cleans_nested_client_child(self):
+        with tempfile.TemporaryDirectory(dir=self.sandbox) as td:
+            work = Path(td)
+            bin_dir, _, _ = self.make_shims(work)
+            nested_pid = work / "nested.pid"
+            write_exec(bin_dir / "wine", f'#!/usr/bin/env bash\nsleep 30 &\necho $! > "{nested_pid}"\nwait\n')
+            env = self.base_env(bin_dir, work)
+            env.update(FN_NETNS_INNER="1", FN_USER=env["USER"], FN_USERNAME="LocalPlayer",
+                       FN_BACKEND_PORT=str(free_port()))
+            result = subprocess.run([str(self.porting / "run_original_client.sh"), "1"],
+                                    env=env, capture_output=True, text=True, timeout=8)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertTrue(nested_pid.exists())
+            pid = int(nested_pid.read_text())
+            deadline = time.monotonic() + 3
+            while time.monotonic() < deadline:
+                try:
+                    state = Path(f"/proc/{pid}/stat").read_text().rsplit(")", 1)[1].split()[0]
+                except FileNotFoundError:
+                    break
+                if state == "Z":
+                    break
+                time.sleep(0.05)
+            else:
+                self.fail("Nested client child survived timeout")
 
 
 if __name__ == "__main__":

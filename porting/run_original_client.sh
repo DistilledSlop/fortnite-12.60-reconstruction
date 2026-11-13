@@ -186,7 +186,45 @@ client_pid=
 ephemeral_secret_file=
 cleanup() {
     local pid
-    for pid in ${client_pid:-} ${server_cmd_pid:-} ${server:-} ${patcher:-} ${appes_patcher:-} ${oodle_patcher:-}; do
+    # Capture group members before signalling, then verify a surviving member's
+    # start time before escalating, so a recycled group ID is not targeted.
+    python3 - ${client_pid:-} ${server_cmd_pid:-} <<'PYEOF'
+import os, signal, sys, time
+
+def members(groups):
+    found = {}
+    for name in os.listdir("/proc"):
+        if not name.isdigit():
+            continue
+        try:
+            with open(f"/proc/{name}/stat") as stat:
+                fields = stat.read().rsplit(")", 1)[1].split()
+            state, group, start = fields[0], int(fields[2]), fields[19]
+            if group in groups and state != "Z":
+                found[int(name)] = (group, start)
+        except (OSError, ValueError, IndexError):
+            pass
+    return found
+
+groups = {int(arg) for arg in sys.argv[1:]}
+original = members(groups)
+for group in groups & {item[0] for item in original.values()}:
+    try:
+        os.killpg(group, signal.SIGTERM)
+    except ProcessLookupError:
+        pass
+if original:
+    time.sleep(0.3)
+    current = members(groups)
+    surviving_groups = {group for pid, (group, start) in current.items()
+                        if original.get(pid) == (group, start)}
+    for group in surviving_groups:
+        try:
+            os.killpg(group, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+PYEOF
+    for pid in ${server:-} ${patcher:-} ${appes_patcher:-} ${oodle_patcher:-}; do
         kill "$pid" 2>/dev/null || true
     done
     if [[ -n "${ephemeral_secret_file:-}" ]]; then
@@ -329,7 +367,7 @@ fi
 # client, e.g. the dedicated server. Stopped when the client run ends.
 if [[ -n "${FN_SERVER_CMD:-}" ]]; then
     if [[ "${FN_REGISTERED_MATCHMAKING:-0}" == 1 ]]; then
-        sudo -n -u "$user" env \
+        setsid sudo -n -u "$user" env \
             FORTNITE_GAMESERVER_URL="$gameserver_url" \
             FORTNITE_GAMESERVER_SECRET_FILE="$gameserver_secret_file" \
             FORTNITE_GAMESERVER_ADDRESS="$gameserver_address" \
@@ -338,7 +376,7 @@ if [[ -n "${FN_SERVER_CMD:-}" ]]; then
             FORTNITE_GAMESERVER_PORT="$gameserver_port" \
             FORTNITE_GAMESERVER_BEACON_PORT="$gameserver_beacon_port" \
             FORTNITE_GAMESERVER_CAPACITY="$gameserver_capacity" \
-            timeout --kill-after=5s "${seconds}s" bash -c '
+            timeout --foreground --kill-after=5s "${seconds}s" bash -c '
                 set -euo pipefail
                 IFS= read -r FORTNITE_GAMESERVER_SECRET < "$1" || [[ -n "${FORTNITE_GAMESERVER_SECRET:-}" ]]
                 printf -v cr '\''\r'\''
@@ -350,14 +388,14 @@ if [[ -n "${FN_SERVER_CMD:-}" ]]; then
                 exec bash -c "$2"
             ' _ "$gameserver_secret_file" "$FN_SERVER_CMD" &
     else
-        sudo -n -u "$user" env FORTNITE_NET_ENCRYPTION_KEY_FILE="${FORTNITE_NET_ENCRYPTION_KEY_FILE:-}" \
-            timeout --kill-after=5s "${seconds}s" bash -c "$FN_SERVER_CMD" &
+        setsid sudo -n -u "$user" env FORTNITE_NET_ENCRYPTION_KEY_FILE="${FORTNITE_NET_ENCRYPTION_KEY_FILE:-}" \
+            timeout --foreground --kill-after=5s "${seconds}s" bash -c "$FN_SERVER_CMD" &
     fi
     server_cmd_pid=$!
     sleep "${FN_SERVER_START_WAIT:-5}"
 fi
-sudo -n -u "$user" env "${wine_env[@]}" \
-    "${display_cmd[@]}" timeout "${seconds}s" \
+setsid sudo -n -u "$user" env "${wine_env[@]}" \
+    "${display_cmd[@]}" timeout --foreground --kill-after=5s "${seconds}s" \
     bash -c '
 cd "$0"
 source "$1"
@@ -371,9 +409,7 @@ exec wine FortniteClient-Win64-Shipping.exe "$@"' "$bin_dir" "$porting_dir/tools
 client_pid=$!
 wait "$client_pid"
 status=$?
-client_pid=
 set -e
-[[ -z "$server_cmd_pid" ]] || { kill "$server_cmd_pid" 2>/dev/null || true; }
 printf 'Original client runner exit status: %s\n' "$status"
 if [[ "$status" == 124 ]]; then
     exit 0 # A client still running at the observation deadline is expected.

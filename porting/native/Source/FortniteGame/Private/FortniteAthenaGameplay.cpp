@@ -1,4 +1,5 @@
 #include "FortniteAthenaGameplay.h"
+#include "FortAthenaCharacterCache.h"
 #include "FortAthenaRegisteredSession.h"
 #include "UObject/ConstructorHelpers.h"
 #include "FortAthenaInventoryFlow.h"
@@ -546,13 +547,18 @@ static void EnsureTimeOfDayManager(UWorld* World)
 
 void AFortGameModeAthena::RestartPlayer(AController* NewPlayer)
 {
+    if (FortAthenaRegisteredSession::Enabled() && !FortAthenaCharacterCache::ApplyForController(NewPlayer, false))
+        return; // The profile completion retries the initial spawn once ready.
     EnsureWorldInventory(NewPlayer);
-    EnsureHero(NewPlayer);
+    if (!FortAthenaRegisteredSession::Enabled())
+        EnsureHero(NewPlayer);
     EnsureTimeOfDayManager(GetWorld());
     EnsureWorldManager(GetWorld());
     if (!FortAthenaMatchFlow::IsActive())
         EnsureWarmupPhase(GetWorld());
     Super::RestartPlayer(NewPlayer);
+    if (FortAthenaRegisteredSession::Enabled())
+        FortAthenaCharacterCache::ApplyForController(NewPlayer, true);
     if (NewPlayer && NewPlayer->GetPawn())
         UE_LOG(LogTemp, Display, TEXT("Athena pawn spawned: class=%s authority=%d"),
             *NewPlayer->GetPawn()->GetClass()->GetName(), NewPlayer->GetPawn()->HasAuthority() ? 1 : 0);

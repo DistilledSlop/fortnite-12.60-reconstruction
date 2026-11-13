@@ -8,6 +8,46 @@
 #include "Misc/Char.h"
 #include "HAL/PlatformTime.h"
 
+namespace
+{
+    bool SafeAccountPathSegment(const FString& AccountId)
+    {
+        if (AccountId.IsEmpty() || AccountId.Len() > 128)
+            return false;
+        for (TCHAR C : AccountId)
+        {
+            const bool bOk = (C >= TEXT('0') && C <= TEXT('9')) ||
+                             (C >= TEXT('a') && C <= TEXT('z')) ||
+                             (C >= TEXT('A') && C <= TEXT('Z')) ||
+                             C == TEXT('_') || C == TEXT('-');
+            if (!bOk)
+                return false;
+        }
+        return true;
+    }
+
+    template <typename TMapType, typename TInvokeTimeout>
+    void ExpirePendingRequests(TMapType& Map, double Now, const bool& bStopped, TInvokeTimeout&& OnTimeout)
+    {
+        TArray<uint64> Expired;
+        for (const auto& Pair : Map)
+            if (Now >= Pair.Value->Deadline)
+                Expired.Add(Pair.Key);
+        for (uint64 Id : Expired)
+        {
+            auto Item = Map.FindRef(Id);
+            if (!Item)
+                continue;
+            Map.Remove(Id);
+            Item->Request->OnProcessRequestComplete().Unbind();
+            Item->Request->CancelRequest();
+            OnTimeout(Item);
+            if (bStopped)
+                return;
+        }
+    }
+}
+
 TSharedPtr<FFortAthenaRegistry> FFortAthenaRegistry::Create(const FConfig& C, FRegistered Callback)
 {
     // Loopback only. Do not accept DNS aliases, redirects, userinfo or remote HTTP.
@@ -40,14 +80,16 @@ void FFortAthenaRegistry::Tick(double Now)
 {
     check(IsInGameThread());
     if (bStopped || bDead) return;
-    TArray<uint64> Expired;
-    for (const auto& Pair : Admissions) if (Now >= Pair.Value->Deadline) Expired.Add(Pair.Key);
-    for (uint64 Id : Expired) {
-        TSharedPtr<FAdmission> Item; if (!Admissions.RemoveAndCopyValue(Id, Item)) continue;
-        Item->Request->OnProcessRequestComplete().Unbind(); Item->Request->CancelRequest();
-        auto Done = MoveTemp(Item->Completion); if (Done) Done(false);
-        if (bStopped) return;
-    }
+    ExpirePendingRequests(Admissions, Now, bStopped, [](const TSharedPtr<FAdmission>& Item) {
+        auto Done = MoveTemp(Item->Completion);
+        if (Done) Done(false);
+    });
+    if (bStopped) return;
+    ExpirePendingRequests(PlayerRequests, Now, bStopped, [](const TSharedPtr<FPendingPlayerRequest>& Item) {
+        auto Done = MoveTemp(Item->Completion);
+        if (Done) Done(false, 0, FString());
+    });
+    if (bStopped) return;
     if (Request.IsValid() && Now >= Deadline) {
         ++Generation; FHttpRequestPtr Old = MoveTemp(Request); Old->OnProcessRequestComplete().Unbind(); Old->CancelRequest(); NextAttempt = Now + 1;
     }
@@ -124,10 +166,46 @@ bool FFortAthenaRegistry::CheckAdmission(const FString& AccountId, double Now, T
     }
     return true;
 }
+bool FFortAthenaRegistry::FetchPlayerLoadout(const FString& AccountId, double Now, FPlayerLoadoutResponse Completion)
+{
+    check(IsInGameThread());
+    if (!IsHealthy(Now) || !SafeAccountPathSegment(AccountId) || !Completion) return false;
+    const uint64 Id = ++NextPlayerRequest;
+    TSharedPtr<FPendingPlayerRequest> Item = MakeShared<FPendingPlayerRequest>();
+    Item->Deadline = Now + 5;
+    Item->Completion = MoveTemp(Completion);
+    Item->Request = FHttpModule::Get().CreateRequest();
+    Item->Request->SetURL(Config.BaseUrl + TEXT("/local/gameserver/") + Session + TEXT("/player/") + AccountId);
+    Item->Request->SetVerb(TEXT("GET"));
+    Item->Request->SetHeader(TEXT("Authorization"), TEXT("Bearer ") + Config.Secret);
+    TWeakPtr<FFortAthenaRegistry> Weak = AsShared();
+    Item->Request->OnProcessRequestComplete().BindLambda([Weak, Id](FHttpRequestPtr Req, FHttpResponsePtr Resp, bool Ok) {
+        TSharedPtr<FFortAthenaRegistry> Self = Weak.Pin();
+        if (!Self || Self->bStopped) return;
+        TSharedPtr<FPendingPlayerRequest> Pending;
+        if (!Self->PlayerRequests.RemoveAndCopyValue(Id, Pending) || Pending->Request != Req) return;
+        auto Done = MoveTemp(Pending->Completion);
+        if (!Done) return;
+        const bool bValidResp = Ok && Resp.IsValid();
+        Done(bValidResp, bValidResp ? Resp->GetResponseCode() : 0, bValidResp ? Resp->GetContentAsString() : FString());
+    });
+    PlayerRequests.Add(Id, Item);
+    if (!Item->Request->ProcessRequest()) {
+        TSharedPtr<FPendingPlayerRequest> Pending;
+        if (PlayerRequests.RemoveAndCopyValue(Id, Pending)) {
+            auto Done = MoveTemp(Pending->Completion);
+            if (Done) Done(false, 0, FString());
+        }
+    }
+    return true;
+}
 void FFortAthenaRegistry::Shutdown()
 {
     check(IsInGameThread()); if (bStopped) return; bStopped = true; ++Generation;
     FHttpRequestPtr Old = MoveTemp(Request); if (Old.IsValid()) { Old->OnProcessRequestComplete().Unbind(); Old->CancelRequest(); }
     for (auto& Pair : Admissions) { Pair.Value->Request->OnProcessRequestComplete().Unbind(); Pair.Value->Request->CancelRequest(); }
-    Admissions.Empty(); OnRegistered = nullptr; Config.Secret.Empty(); Session.Empty(); Connected.Empty();
+    Admissions.Empty();
+    for (auto& Pair : PlayerRequests) { Pair.Value->Request->OnProcessRequestComplete().Unbind(); Pair.Value->Request->CancelRequest(); }
+    PlayerRequests.Empty();
+    OnRegistered = nullptr; Config.Secret.Empty(); Session.Empty(); Connected.Empty();
 }

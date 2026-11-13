@@ -26,12 +26,14 @@ done
 out="$base-$n"
 mkdir -p "$out/shots"
 export FN_SHOTS_DIR="$out/shots"
+# Override for targeted diagnostics, e.g. LogNetTraffic Verbose.
+export FN_SERVER_LOG_CMDS="${FN_SERVER_LOG_CMDS:-LogHandshake Log, LogNet Log, LogNetTraffic Warning, PacketHandlerLog Log}"
 # This script's own output is kept in the run folder too (callers need not redirect it anywhere else).
 exec > >(tee -a "$out/play_run.out") 2>&1
 python3 - "$out/meta.json" "$seconds" <<'PYEOF'
 import json, os, subprocess, sys, time
 rev = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], capture_output=True, text=True).stdout.strip()
-keys = ['FN_RUN_LABEL', 'FN_RENDERER', 'FN_SERVER_MAP', 'FN_SERVER_URL_OPTS', 'FN_SERVER_ARGS', 'FN_ACTIONS', 'FN_LP_NUM_THREADS', 'FN_SECOND_CLIENT', 'FN_SECOND_USERNAME', 'FN_SECOND_RENDERER', 'FN_SECOND_ACTIONS', 'FN_SESSION_TRACE', 'FN_REGISTERED_MATCHMAKING', 'FORTNITE_GAMESERVER_SECRET_FILE', 'FORTNITE_GAMESERVER_ADDRESS', 'FORTNITE_GAMESERVER_PLAYLIST', 'FORTNITE_GAMESERVER_BUILD', 'FORTNITE_GAMESERVER_PORT', 'FORTNITE_GAMESERVER_BEACON_PORT', 'FORTNITE_GAMESERVER_CAPACITY']
+keys = ['FN_RUN_LABEL', 'FN_RENDERER', 'FN_SERVER_MAP', 'FN_SERVER_URL_OPTS', 'FN_SERVER_ARGS', 'FN_SERVER_LOG_CMDS', 'FN_STATE_DIR', 'FN_ACTIONS', 'FN_LP_NUM_THREADS', 'FN_SECOND_CLIENT', 'FN_SECOND_USERNAME', 'FN_SECOND_RENDERER', 'FN_SECOND_ACTIONS', 'FN_SESSION_TRACE', 'FN_REGISTERED_MATCHMAKING', 'FORTNITE_GAMESERVER_SECRET_FILE', 'FORTNITE_GAMESERVER_ADDRESS', 'FORTNITE_GAMESERVER_PLAYLIST', 'FORTNITE_GAMESERVER_BUILD', 'FORTNITE_GAMESERVER_PORT', 'FORTNITE_GAMESERVER_BEACON_PORT', 'FORTNITE_GAMESERVER_CAPACITY']
 json.dump({'started': time.strftime('%Y-%m-%dT%H:%M:%S%z'), 'seconds': int(sys.argv[2]), 'git_head': rev,
            'env': {k: os.environ[k] for k in keys if k in os.environ}}, open(sys.argv[1], 'w'), indent=1)
 PYEOF
@@ -85,7 +87,7 @@ if [[ $registered_mode == 1 ]]; then
         server_extra=(-FortniteRegisteredMatchmaking ${server_extra[@]+"${server_extra[@]}"})
     fi
 fi
-printf -v FN_SERVER_CMD 'exec %q %q -FortniteOriginalClient -nullrhi -nosound -unattended -port=%q -log -LogCmds=%q '"${server_extra[*]/#/}"' > %q 2>&1' "$server" "$server_url" "$server_port" 'LogHandshake VeryVerbose, LogNet VeryVerbose, LogNetTraffic Verbose, PacketHandlerLog VeryVerbose' "$out/server.log"
+printf -v FN_SERVER_CMD 'exec %q %q -FortniteOriginalClient -nullrhi -nosound -unattended -port=%q -log -LogCmds=%q '"${server_extra[*]/#/}"' > %q 2>&1' "$server" "$server_url" "$server_port" "$FN_SERVER_LOG_CMDS" "$out/server.log"
 export FN_SERVER_CMD
 export FN_ACTION_LOG="$out/server.log"
 touch "$out/start.marker"

@@ -61,6 +61,20 @@ class RegistryTests(unittest.TestCase):
         for args in (dict(port=True), dict(playlists=[]), dict(maxPlayers=0), dict(buildUniqueId='')):
             with self.assertRaises(ApiError) as error: self.register(**args)
             self.assertEqual(error.exception.status, 400)
+    def test_session_owner_is_valid_and_stable_without_player_roster(self):
+        sid = self.register()['sessionId']
+        self.state(sid)
+        status, before = self.mm.session(sid)
+        self.assertEqual(status, 200)
+        self.assertRegex(before['ownerId'], r'^[0-9a-f]{32}$')
+        self.assertEqual(before['ownerId'], sid)
+        self.assertTrue(before['ownerName'])
+        self.assertEqual(before['publicPlayers'], [])
+        self.assertEqual(self.registry.reserve('Playlist_DefaultSolo', ['a']), sid)
+        _, after = self.mm.session(sid)
+        self.assertEqual(after['publicPlayers'], ['a'])
+        self.assertEqual((before['ownerId'], before['ownerName']),
+                         (after['ownerId'], after['ownerName']))
     def test_capacity_expiry_and_keys(self):
         first, second = self.register(), self.register(port=7779)
         self.assertNotEqual(first['sessionId'], second['sessionId'])

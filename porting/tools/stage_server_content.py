@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Stage cooked /Game packages (plus their hard-import closure) for the Linux dedicated server.
 
-    python3 -I tools/stage_server_content.py /Game/X/Y [/Game/...] [--dry-run] [--max N] [--soft]
+    python3 -I tools/stage_server_content.py /Game/X/Y [/Game/...] [--dry-run] [--strict] [--max N] [--soft]
         [--include-materials] [--exclude-class C] [--exclude-prefix P] [--src DIR] [--dst DIR] [-v]
 
 Parses the cooked .uasset summary (legacy header, custom versions, name map, import map, export classes) with the
@@ -113,6 +113,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('packages', nargs='+')
     ap.add_argument('--dry-run', action='store_true')
+    ap.add_argument('--strict', action='store_true', help='fail if the closure is incomplete or a package cannot be parsed')
     ap.add_argument('--max', type=int, default=3000, help='max packages visited (default 3000)')
     ap.add_argument('--soft', action='store_true', help='also follow /Game/ package names in the name map')
     ap.add_argument('--include-materials', action='store_true', help='do not skip materials/textures/shaders/audio/UI')
@@ -201,6 +202,8 @@ def main():
         for m in parse_err[:10]: print('  %s %s' % m)
     print('/Script modules referenced (%d): %s' % (len(scripts), ' '.join(sorted(scripts))))
     print('/Engine packages referenced (not copied): %d' % len(engine))
+    if a.strict and (truncated or missing or parse_err):
+        raise SystemExit('Incomplete package closure; refusing successful stage')
 
 
 if __name__ == '__main__':

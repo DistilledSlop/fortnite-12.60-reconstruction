@@ -53,6 +53,7 @@
 #include "GameFramework/Volume.h"
 #include "Kismet/GameplayStatics.h"
 #include "Misc/CommandLine.h"
+#include "HAL/PlatformMisc.h"
 #include "Misc/Parse.h"
 #include "TimerManager.h"
 #include "UObject/UObjectGlobals.h"
@@ -61,7 +62,29 @@
 namespace FortAthenaMatchFlowPrivate
 {
     // Asset paths (data: /mnt/vibrato/fortnite-extracted-full/FortniteGame/Content).
-    const TCHAR* const PlaylistPath = TEXT("/Game/Athena/Playlists/Playlist_DefaultSolo.Playlist_DefaultSolo");
+    FString PlaylistObjectPath()
+    {
+        FString Name = TEXT("Playlist_DefaultSolo");
+        if (FParse::Param(FCommandLine::Get(), TEXT("FortniteRegisteredMatchmaking")))
+        {
+            const FString Configured = FPlatformMisc::GetEnvironmentVariable(TEXT("FORTNITE_GAMESERVER_PLAYLIST"));
+            // These three object paths are present in the original 12.60 content.
+            // Never advertise one playlist while replicating a different one.
+            const TCHAR* const Supported[] = { TEXT("Playlist_DefaultSolo"), TEXT("Playlist_DefaultDuo"), TEXT("Playlist_DefaultSquad") };
+            bool bFound = false;
+            for (const TCHAR* Candidate : Supported)
+            {
+                if (Configured.Equals(Candidate, ESearchCase::IgnoreCase))
+                { Name = Candidate; bFound = true; break; }
+            }
+            if (!bFound)
+            {
+                UE_LOG(LogTemp, Error, TEXT("MatchFlow: registered playlist is unavailable or unsupported"));
+                return FString();
+            }
+        }
+        return FString::Printf(TEXT("/Game/Athena/Playlists/%s.%s"), *Name, *Name);
+    }
     const TCHAR* const GameDataPath = TEXT("/Game/Athena/Balance/DataTables/AthenaGameData.AthenaGameData");
     const TCHAR* const MapInfoClassPath = TEXT("/Game/Athena/Balance/MapInfos/DefaultMapInfo.DefaultMapInfo_C");
     // Athena_GameMode Blueprint defaults (data: Athena/Athena_GameMode, SafeZoneIndicatorClass / GE_OutsideSafeZone).
@@ -494,10 +517,11 @@ namespace FortAthenaMatchFlowPrivate
 
         // Playlist: write CurrentPlaylistInfo (BasePlaylist, replication key, dirty) and run OnRep_CurrentPlaylistInfo on
         // the server (R6 1.3). The chain below OnRep is not ported, so its game mode step is done directly here.
-        UFortPlaylistAthena* Playlist = LoadObject<UFortPlaylistAthena>(nullptr, PlaylistPath);
+        const FString PlaylistPath = PlaylistObjectPath();
+        UFortPlaylistAthena* Playlist = PlaylistPath.IsEmpty() ? nullptr : LoadObject<UFortPlaylistAthena>(nullptr, *PlaylistPath);
         if (!Playlist)
         {
-            UE_LOG(LogTemp, Warning, TEXT("MatchFlow: playlist %s did not load; match flow not started"), PlaylistPath);
+            UE_LOG(LogTemp, Warning, TEXT("MatchFlow: playlist %s did not load; match flow not started"), *PlaylistPath);
             return false;
         }
         S.Playlist = Playlist;

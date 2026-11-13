@@ -10,6 +10,7 @@ using CUE4Parse.UE4.Assets.Objects.Properties;
 using CUE4Parse.UE4.Assets.Readers;
 using CUE4Parse.UE4.Assets.Exports;
 using CUE4Parse.UE4.AssetRegistry;
+using CUE4Parse.UE4.AssetRegistry.Objects;
 using CUE4Parse.UE4.Assets.Exports.StaticMesh;
 using CUE4Parse.UE4.Assets.Exports.SkeletalMesh;
 using CUE4Parse.UE4.Assets.Exports.Animation;
@@ -53,6 +54,7 @@ bool scanNative = args.Contains("--scan-native");
 bool scanExportClasses = args.Contains("--scan-export-classes");
 string? classesOutArgument = args.SingleOrDefault(arg => arg.StartsWith("--classes-out=", StringComparison.Ordinal));
 bool exportBuildableTags = args.Contains("--export-buildable-tags");
+bool exportCharacterTags = args.Contains("--export-character-tags");
 string? tagsOutArgument = args.SingleOrDefault(arg => arg.StartsWith("--tags-out=", StringComparison.Ordinal));
 bool allKeys = args.Contains("--all-keys");
 bool savePackage = args.Contains("--save-package");
@@ -102,9 +104,9 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg != textureOutputArgument && arg != classesOutArgument && arg != tagsOutArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--export-map-json" or "--property-report" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--scan-export-classes" or "--export-buildable-tags" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-anim" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--legacy-material-start" or "--texture-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--streaming-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
-bool packageLess = registryMode || pakSources || registryPaths || scanMaps || scanNative || scanExportClasses || exportBuildableTags || exportLandscapeGrid || exportLandscapeWeightmapGrid || extractAll;
-if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, scanExportClasses, exportBuildableTags, exportLandscapeGrid, exportLandscapeWeightmapGrid, extractAll }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
+string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg != textureOutputArgument && arg != classesOutArgument && arg != tagsOutArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--export-map-json" or "--property-report" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--scan-export-classes" or "--export-buildable-tags" or "--export-character-tags" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-anim" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--legacy-material-start" or "--texture-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--streaming-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
+bool packageLess = registryMode || pakSources || registryPaths || scanMaps || scanNative || scanExportClasses || exportBuildableTags || exportCharacterTags || exportLandscapeGrid || exportLandscapeWeightmapGrid || extractAll;
+if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, scanExportClasses, exportBuildableTags, exportCharacterTags, exportLandscapeGrid, exportLandscapeWeightmapGrid, extractAll }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
     Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--imports] [--save-package] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <package-path> [source-directory] --imports-json [--loose]");
@@ -133,11 +135,12 @@ if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, scanE
     Console.Error.WriteLine("   or: Cue4Inspect --scan-native [pak-directory] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --scan-export-classes <extracted-root> --classes-out=<tsv> [--workers=N]");
     Console.Error.WriteLine("   or: Cue4Inspect --export-buildable-tags <AssetRegistry.bin> --tags-out=<json>");
+    Console.Error.WriteLine("   or: Cue4Inspect --export-character-tags <AssetRegistry.bin> --tags-out=<json>");
     return 2;
 }
-if (exportBuildableTags && (tagsOutArgument is null || tagsOutArgument.Length == "--tags-out=".Length || positional.Length != 1))
+if ((exportBuildableTags || exportCharacterTags) && (tagsOutArgument is null || tagsOutArgument.Length == "--tags-out=".Length || positional.Length != 1))
 {
-    Console.Error.WriteLine("Usage: Cue4Inspect --export-buildable-tags <AssetRegistry.bin> --tags-out=<json>");
+    Console.Error.WriteLine($"Usage: Cue4Inspect {(exportCharacterTags ? "--export-character-tags" : "--export-buildable-tags")} <AssetRegistry.bin> --tags-out=<json>");
     return 2;
 }
 if (scanExportClasses && (classesOutArgument is null || classesOutArgument.Length == "--classes-out=".Length || positional.Length != 1 ||
@@ -169,6 +172,8 @@ string sourceDirectory = positional.Length == (packageLess ? 1 : 2)
 
 if (exportBuildableTags)
     return ExportBuildableTags(sourceDirectory, Path.GetFullPath(tagsOutArgument!["--tags-out=".Length..]));
+if (exportCharacterTags)
+    return ExportCharacterTags(sourceDirectory, Path.GetFullPath(tagsOutArgument!["--tags-out=".Length..]));
 
 if (!Directory.Exists(sourceDirectory))
 {
@@ -1538,7 +1543,7 @@ static object[] ImportChain(Package package, int index)
     return chain.ToArray();
 }
 
-static int ExportBuildableTags(string registryPath, string outputPath)
+static int ExportRegistryTags(string registryPath, string outputPath, Func<FAssetData, bool> predicate)
 {
     if (!File.Exists(registryPath))
     {
@@ -1550,7 +1555,7 @@ static int ExportBuildableTags(string registryPath, string outputPath)
     var versions = new VersionContainer(EGame.GAME_UE4_25_Plus);
     var state = new FAssetRegistryState(new FByteArchive("AssetRegistry.bin", bytes, versions));
     var rows = state.PreallocatedAssetDataBuffers
-        .Where(a => a.TagsAndValues.Keys.Any(k => k.Text.Equals("bIsPlayerBuildable", StringComparison.OrdinalIgnoreCase)))
+        .Where(predicate)
         .Select(a => new
         {
             package = a.PackageName.Text,
@@ -1567,6 +1572,17 @@ static int ExportBuildableTags(string registryPath, string outputPath)
     Console.WriteLine($"Registry {state.PreallocatedAssetDataBuffers.Length}, tagged {rows.Length}, sha256 {registrySha256}");
     return 0;
 }
+
+static int ExportBuildableTags(string registryPath, string outputPath) =>
+    ExportRegistryTags(registryPath, outputPath, a =>
+        a.TagsAndValues.Keys.Any(k => k.Text.Equals("bIsPlayerBuildable", StringComparison.OrdinalIgnoreCase)));
+
+static int ExportCharacterTags(string registryPath, string outputPath) =>
+    ExportRegistryTags(registryPath, outputPath, a =>
+        a.AssetClass.Text.Equals("AthenaCharacterItemDefinition", StringComparison.Ordinal) ||
+        a.TagsAndValues.Any(kv =>
+            kv.Key.Text.Equals("PrimaryAssetType", StringComparison.OrdinalIgnoreCase) &&
+            kv.Value.Equals("AthenaCharacter", StringComparison.OrdinalIgnoreCase)));
 
 // Reads only each loose package header (summary, name, import and export maps);
 // exports stay lazy and are never deserialized, and .uexp/.ubulk are not opened.
