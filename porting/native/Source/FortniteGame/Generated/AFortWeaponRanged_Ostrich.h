@@ -10,6 +10,7 @@
 #include "Engine/EngineTypes.h"
 #include "FWeaponHudData.h"
 #include "GameplayTagContainer.h"
+#include "TimerManager.h"
 
 class AFortProjectileBase;
 class UAnimMontage;
@@ -155,6 +156,9 @@ public:
 	UPROPERTY(Transient)
 	FTimerHandle ReloadShotgunTimer;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1108): not a UPROPERTY, not replicated.
+	FTimerHandle NativeReloadTimer1108;
+
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FTimerHandle ServerSideRocketCooldownTimer;
@@ -215,5 +219,9 @@ protected:
 public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual bool NativeIsReloadAbilityActive830() const override;
 };
 

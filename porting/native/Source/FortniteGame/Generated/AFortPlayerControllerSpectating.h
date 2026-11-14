@@ -25,6 +25,7 @@
 #include "FSpectatorDelegate.h"
 #include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "GameFramework/Pawn.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Vector.h"
@@ -321,5 +322,6 @@ public:
 	virtual uint8 NativeGetTeam163();
 	virtual bool NativeCanPerformAction15f0(const FGameplayTag& ActionTag) override;
 	virtual bool NativeCanFollowPlayer1423d97f0(AFortPlayerState* State) const;
+	APawn* NativeGetSpectatedPawn1423d4240(bool bIgnoreVehicle) const;
 };
 

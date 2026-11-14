@@ -35,6 +35,9 @@
 #include "FOnWeaponHudKeyActionUpdated.h"
 #include "FWeaponEventDelegate.h"
 #include "FWeaponHudData.h"
+#include "FortNativeGameplayTagsRuntime.h"
+#include "FortWeaponTargetingNative.h"
+#include "GameFramework/Controller.h"
 #include "GameplayAbilitySpec.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectAggregator.h"
@@ -1097,5 +1100,7 @@ public:
 	void NativeConfigureAudio1426a2720(UAudioComponent* Audio);
 	virtual bool NativeIsReloadAbilityActive830() const;
 	virtual bool NativeAllowsADSInAirA80() const;
+	AController* NativeResolveController1426a07c0();
+	virtual void NativeSetTargeting1426b3730(bool bNewTargeting);
 };
 

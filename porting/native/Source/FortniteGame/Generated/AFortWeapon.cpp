@@ -2,6 +2,10 @@
 #include "AFortWeapon.h"
 #include "AFortGameStateAthena.h"
 #include "AFortPawn.h"
+#include "AFortPlayerController.h"
+#include "AFortPlayerControllerSpectating.h"
+#include "AFortPlayerPawn.h"
+#include "AFortRemoteControlledPawnAthena.h"
 #include "AbilitySystemComponent.h"
 #include "AttributeSet.h"
 #include "Components/AudioComponent.h"
@@ -14,6 +18,9 @@
 #include "Engine/World.h"
 #include "FFortBaseWeaponStats.h"
 #include "FWeaponHudData.h"
+#include "FortNativeGameplayTagsRuntime.h"
+#include "FortWeaponTargetingNative.h"
+#include "GameFramework/Controller.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectAggregator.h"
 #include "GameplayEffectTypes.h"
@@ -680,6 +687,114 @@ bool AFortWeapon::NativeAllowsADSInAirA80() const
 	// CONFIDENCE: HIGH. Complete original body; class lifecycle acceptance remains separate.
 	// Native AFortWeapon virtual +0xa80, original 0x1406801e0.
 	return false;
+}
+
+AController* AFortWeapon::NativeResolveController1426a07c0()
+{
+	// CONFIDENCE: HIGH. Original1426a07c0; the instigator read precedes even the successful-controller return.
+	AController* Result = GetInstigatorController();
+	APawn* InstigatingPawn = GetInstigator();
+	if (!Result)
+	{
+	    if (AFortPlayerPawn* PlayerPawn = Cast<AFortPlayerPawn>(InstigatingPawn))
+	    {
+	        if (PlayerPawn->ControlledRCPawn.IsValid())
+	        {
+	            AFortRemoteControlledPawnAthena* RemotePawn = PlayerPawn->ControlledRCPawn.Get();
+	            Result = RemotePawn->GetController();
+	            if (Result)
+	            {
+	                return Result;
+	            }
+	        }
+	    }
+	    if (AController* OwnerController = Cast<AController>(GetOwner()))
+	    {
+	        return OwnerController;
+	    }
+	    if (GetWorld())
+	    {
+	        for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
+	        {
+	            if (AFortPlayerControllerSpectating* Spectator = Cast<AFortPlayerControllerSpectating>(It->Get()))
+	            {
+	                if (Spectator->NativeGetSpectatedPawn1423d4240(true) == InstigatingPawn)
+	                {
+	                    return Spectator;
+	                }
+	            }
+	        }
+	    }
+	}
+	return Result;
+}
+
+void AFortWeapon::NativeSetTargeting1426b3730(bool bNewTargeting)
+{
+	// CONFIDENCE: HIGH. Original1426b3730; gates run even for a false request.
+	AFortPlayerController* TargetController = Cast<AFortPlayerController>(NativeResolveController1426a07c0());
+	bool bEffectiveTargeting = bNewTargeting;
+	if (!NativeCanTarget14268efc0())
+	{
+	    bEffectiveTargeting = false;
+	}
+	else
+	{
+	    bool bAllowed = true;
+	    if (TargetController)
+	    {
+	        bAllowed = TargetController->NativeCanPerformAction15f0(
+	            FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x768));
+	    }
+	    if (bAllowed && NativeIsReloadAbilityActive830())
+	    {
+	        bAllowed = WeaponData && WeaponData->NativeAllowTargetingDuringReload142684ac0();
+	    }
+	    if (bAllowed && !IsEquipped() && !bIsEquippingWeapon
+	        && NativeBlockTargetingWhileUnequipped1478df2c4() != 0)
+	    {
+	        bAllowed = false;
+	    }
+	    if (!bAllowed)
+	    {
+	        bEffectiveTargeting = false;
+	    }
+	}
+	if (bIsTargeting != bEffectiveTargeting)
+	{
+	    bIsTargeting = bEffectiveTargeting;
+	    LastTargetingTransitionTime = GetWorld()->GetTimeSeconds();
+	    OnSetTargeting(bIsTargeting);
+	    OnLocalTargetingChanged.Broadcast(bIsTargeting);
+	    if (GetLocalRole() < ROLE_Authority && TargetController)
+	    {
+	        if (bIsTargeting && TargetingStartSound)
+	        {
+	            if (!TargetingAudioChannels[0])
+	            {
+	                TargetingAudioChannels[0] = NewObject<UAudioComponent>(this, FName(TEXT("TargetingStart")), RF_Transient);
+	                NativeConfigureAudio1426a2720(TargetingAudioChannels[0]);
+	            }
+	            TargetingAudioChannels[0]->SetSound(TargetingStartSound);
+	            TargetingAudioChannels[0]->Play(0.0f);
+	        }
+	        else if (TargetingEndSound)
+	        {
+	            if (!TargetingAudioChannels[1])
+	            {
+	                TargetingAudioChannels[1] = NewObject<UAudioComponent>(this, FName(TEXT("TargetingEnd")), RF_Transient);
+	                NativeConfigureAudio1426a2720(TargetingAudioChannels[1]);
+	            }
+	            TargetingAudioChannels[1]->SetSound(TargetingEndSound);
+	            TargetingAudioChannels[1]->Play(0.0f);
+	        }
+	    }
+	}
+	// This callback always receives the effective argument, including after reentrant notifications.
+	if (AFortPlayerPawn* InstigatingPawn = Cast<AFortPlayerPawn>(GetInstigator()))
+	{
+	    InstigatingPawn->NativeOnWeaponTargeting1423336c0(bEffectiveTargeting);
+	}
 }
 
 void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

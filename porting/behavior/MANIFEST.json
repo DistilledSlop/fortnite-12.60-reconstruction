@@ -93793,5 +93793,108 @@
     "includes": [
       "FortMovementStyleNative.h"
     ]
+  },
+  {
+    "class": "AFortPlayerControllerSpectating",
+    "function": "NativeGetSpectatedPawn1423d4240",
+    "kind": "helper",
+    "signature": "APawn* NativeGetSpectatedPawn1423d4240(bool bIgnoreVehicle) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x1423d4240",
+    "confidence": "HIGH",
+    "status": "ported",
+    "inc_path": "porting/behavior/AFortPlayerControllerSpectating/NativeGetSpectatedPawn1423d4240.inc",
+    "notes": "Complete original body. Broader class/derived dispatch, replay notification, ranged targeting/reload and ability lifecycle remain unaccepted; UE build/runtime pending.",
+    "includes": [
+      "GameFramework/Pawn.h"
+    ]
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeResolveController1426a07c0",
+    "kind": "helper",
+    "signature": "AController* NativeResolveController1426a07c0()",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x1426a07c0",
+    "confidence": "HIGH",
+    "status": "ported",
+    "inc_path": "porting/behavior/AFortWeapon/NativeResolveController1426a07c0.inc",
+    "notes": "Complete original body. Broader class/derived dispatch, replay notification, ranged targeting/reload and ability lifecycle remain unaccepted; UE build/runtime pending.",
+    "includes": [
+      "Engine/World.h",
+      "GameFramework/Controller.h"
+    ]
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeSetTargeting1426b3730",
+    "kind": "helper",
+    "signature": "void NativeSetTargeting1426b3730(bool bNewTargeting)",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x1426b3730",
+    "confidence": "HIGH",
+    "status": "ported",
+    "inc_path": "porting/behavior/AFortWeapon/NativeSetTargeting1426b3730.inc",
+    "notes": "Complete original body. Broader class/derived dispatch, replay notification, ranged targeting/reload and ability lifecycle remain unaccepted; UE build/runtime pending.",
+    "includes": [
+      "FortNativeGameplayTagsRuntime.h",
+      "FortWeaponTargetingNative.h",
+      "Engine/World.h",
+      "Components/AudioComponent.h"
+    ],
+    "virtual": true
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "NativeUsesFirstShotAccuracy1426cfa80",
+    "kind": "helper",
+    "signature": "bool NativeUsesFirstShotAccuracy1426cfa80()",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x1426cfa80",
+    "confidence": "HIGH",
+    "status": "ported",
+    "inc_path": "porting/behavior/AFortWeaponRanged/NativeUsesFirstShotAccuracy1426cfa80.inc",
+    "notes": "Complete original body. Broader class/derived dispatch, replay notification, ranged targeting/reload and ability lifecycle remain unaccepted; UE build/runtime pending.",
+    "includes": [
+      "FortWeaponTargetingNative.h"
+    ]
+  },
+  {
+    "class": "AFortWeaponRanged_Ostrich",
+    "function": "NativeIsReloadAbilityActive830",
+    "kind": "helper",
+    "signature": "bool NativeIsReloadAbilityActive830() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x1426d2620",
+    "confidence": "HIGH",
+    "status": "ported",
+    "inc_path": "porting/behavior/AFortWeaponRanged_Ostrich/NativeIsReloadAbilityActive830.inc",
+    "notes": "Complete original body. Broader class/derived dispatch, replay notification, ranged targeting/reload and ability lifecycle remain unaccepted; UE build/runtime pending.",
+    "includes": [
+      "TimerManager.h"
+    ],
+    "virtual": true,
+    "override": true
+  },
+  {
+    "class": "AFortWeaponRanged_Ostrich",
+    "function": "NativeReloadTimer1108",
+    "kind": "member_field",
+    "signature": "FTimerHandle NativeReloadTimer1108",
+    "offset": "0x1108",
+    "access": "public",
+    "signature_status": "proposed",
+    "confidence": "HIGH",
+    "status": "ported",
+    "address": "0x1426be080",
+    "includes": [
+      "TimerManager.h"
+    ],
+    "notes": "Original constructor1426be080 explicitly zeroes handle at1108; typed FTimerHandle default construction is invalid. Shared producer PlayReloadAnim1426d9a70, callback1426d2aa0 to virtual840 and remaining-time reader1426cfa00 identified but not integrated; full timer lifecycle remains open."
   }
 ]

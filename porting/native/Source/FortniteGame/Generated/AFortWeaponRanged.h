@@ -14,6 +14,7 @@
 #include "FFortEffectDistanceQuality.h"
 #include "FOnOverheatValueChanged.h"
 #include "FOnProjectileSpawned.h"
+#include "FortWeaponTargetingNative.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Pawn.h"
 #include "Math/Color.h"
@@ -491,5 +492,6 @@ public:
 	bool NativeHasAthenaInstigator1426d2410() const;
 	void NativeClearFirstShotAccuracy1426ddc90();
 	void NativeMarkFirstShotAccuracy1426dd430();
+	bool NativeUsesFirstShotAccuracy1426cfa80();
 };
 

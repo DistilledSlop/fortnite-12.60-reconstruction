@@ -2730,6 +2730,10 @@ _fort_do_jump_spec = _common_activation_import.spec_from_file_location(
     "fort_do_jump_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "fort_do_jump_runtime", "support.py"))
 _fort_do_jump_policy = _common_activation_import.module_from_spec(_fort_do_jump_spec)
 _fort_do_jump_spec.loader.exec_module(_fort_do_jump_policy)
+_weapon_targeting_spec = _common_activation_import.spec_from_file_location(
+    "weapon_targeting_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "weapon_targeting_runtime", "support.py"))
+_weapon_targeting_policy = _common_activation_import.module_from_spec(_weapon_targeting_spec)
+_weapon_targeting_spec.loader.exec_module(_weapon_targeting_policy)
 _structural_grid_spec = _common_activation_import.spec_from_file_location(
     "structural_grid_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "structural_grid_runtime", "support.py"))
 _structural_grid_policy = _common_activation_import.module_from_spec(_structural_grid_spec)
@@ -4688,6 +4692,9 @@ def promote(args):
     _kismet_geometry_policy.validate()
     _pawn_cues_policy.validate()
     asset_diagnostic_sources = _asset_diagnostic_policy.sources() if 'UFortAssetManager' in listed else None
+    if 'AFortWeapon' in listed:
+        asset_diagnostic_sources = asset_diagnostic_sources or {}
+        asset_diagnostic_sources.update(_weapon_targeting_policy.sources())
     if 'UFortAssetManager' in listed:
         asset_diagnostic_sources = asset_diagnostic_sources or {}
         asset_diagnostic_sources.update(_quickbar_refresh_policy.sources())
