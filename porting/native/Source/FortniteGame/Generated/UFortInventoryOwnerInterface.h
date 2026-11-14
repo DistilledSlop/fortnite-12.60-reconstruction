@@ -18,6 +18,7 @@ class FORTNITEGAME_API IFortInventoryOwnerInterface
 	GENERATED_IINTERFACE_BODY()
 public:
     virtual bool NativeHasInfiniteAmmo(class UFortWeaponItemDefinition* WeaponDefinition) = 0;
+    virtual void NativeNotifyReload78(class AFortWeapon* Weapon) = 0;
     virtual class AFortInventory* NativeQuickBarInventory() = 0;
     virtual class AFortWeapon* NativeQuickBarHeldWeapon() = 0;
     virtual bool NativeInventoryOwnerHasInventory() = 0;

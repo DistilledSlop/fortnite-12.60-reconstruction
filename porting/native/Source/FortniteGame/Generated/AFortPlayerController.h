@@ -2050,6 +2050,7 @@ public:
 	virtual int32 NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems) override;
 	virtual bool NativeInventoryOwnerHasInventory() override;
 	virtual void NativeControllerVirtual1d10();
+	virtual void NativeNotifyReload78(AFortWeapon* Weapon);
 public:
     TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
 	int32 GetNativeStatValue(FName Name, EStatRecordingPeriod Period) const;

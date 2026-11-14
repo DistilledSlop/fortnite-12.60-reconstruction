@@ -2352,6 +2352,13 @@ void AFortPlayerController::NativeControllerVirtual1d10()
 	// 0x1406801c0: RET. Deliberately empty base virtual.
 }
 
+void AFortPlayerController::NativeNotifyReload78(AFortWeapon* Weapon)
+{
+	// CONFIDENCE: HIGH
+	// Original interface slot +0x78 = 0x1406801c0: exact empty void body.
+	(void)Weapon;
+}
+
 void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

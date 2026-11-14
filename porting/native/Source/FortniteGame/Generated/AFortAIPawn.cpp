@@ -614,6 +614,13 @@ IFortInventoryOwnerInterface* AFortAIPawn::NativeGetInventoryOwnerInterfaceBD8()
 	return static_cast<IFortInventoryOwnerInterface*>(this);
 }
 
+void AFortAIPawn::NativeNotifyReload78(AFortWeapon* Weapon)
+{
+	// CONFIDENCE: HIGH
+	// Original interface slot +0x78 = 0x1406801c0: exact empty void body.
+	(void)Weapon;
+}
+
 void AFortAIPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

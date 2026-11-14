@@ -1060,5 +1060,6 @@ public:
 	virtual int32 NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems) override;
 	virtual bool NativeInventoryOwnerHasInventory() override;
 	virtual IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterfaceBD8() override;
+	virtual void NativeNotifyReload78(AFortWeapon* Weapon);
 };
 

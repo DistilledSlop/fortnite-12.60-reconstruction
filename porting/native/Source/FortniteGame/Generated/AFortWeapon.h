@@ -1150,5 +1150,7 @@ public:
 	IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterface14269c8f0();
 	virtual int32 NativeGetReserveAmmo7D8();
 	virtual bool NativeCanReload828(bool bCheckExtra, FGameplayTagContainer* FailureTags);
+	bool NativeSupportsCharge1426a5af0();
+	bool NativeIsAutomatic1426a5ab0();
 };
 

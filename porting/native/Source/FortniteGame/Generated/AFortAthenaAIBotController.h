@@ -388,5 +388,6 @@ public:
 	virtual AFortWeapon* NativeQuickBarHeldWeapon() override;
 	static bool NativeReadPhoebeInfiniteAmmo141a49680();
 	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition) override;
+	virtual void NativeNotifyReload78(AFortWeapon* Weapon);
 };
 

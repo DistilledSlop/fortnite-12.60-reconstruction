@@ -213,5 +213,6 @@ public:
 	virtual bool NativeInventoryOwnerHasInventory() override;
 	virtual UFortItem* NativeFindItemA0(UFortItemDefinition* Definition, bool bInStorageVault) override;
 	virtual int32 NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems) override;
+	virtual void NativeNotifyReload78(AFortWeapon* Weapon);
 };
 

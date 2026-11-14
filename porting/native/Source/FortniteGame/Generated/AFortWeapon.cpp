@@ -1086,6 +1086,22 @@ bool AFortWeapon::NativeCanReload828(bool bCheckExtra, FGameplayTagContainer* Fa
 	return true;
 }
 
+bool AFortWeapon::NativeSupportsCharge1426a5af0()
+{
+	// CONFIDENCE: HIGH
+	// Original 0x1426a5af0; complete ordered leaf.
+	const FFortBaseWeaponStats* Stats = NativeGetWeaponStats();
+	UWorld* World = GetWorld();
+	return World && Stats && UFortWeaponItemDefinition::NativeSupportsCharge(*Stats);
+}
+
+bool AFortWeapon::NativeIsAutomatic1426a5ab0()
+{
+	// CONFIDENCE: HIGH
+	// Original 0x1426a5ab0; complete ordered leaf.
+	return WeaponData && WeaponData->NativeGetTriggerType() == EFortWeaponTriggerType::Automatic;
+}
+
 void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -34,7 +34,7 @@ def interface_declarations(name):
     if name == 'UFortMutatorContext':
         return ['public:', '    virtual void NativeAppendContextOwners(TArray<UObject*>& OutOwners) = 0;']
     if name == 'UFortInventoryOwnerInterface':
-        return ['public:', '    virtual bool NativeHasInfiniteAmmo(class UFortWeaponItemDefinition* WeaponDefinition) = 0;', '    virtual class AFortInventory* NativeQuickBarInventory() = 0;', '    virtual class AFortWeapon* NativeQuickBarHeldWeapon() = 0;', '    virtual bool NativeInventoryOwnerHasInventory() = 0;', '    virtual class UFortItem* NativeFindItemA0(class UFortItemDefinition* Definition, bool bInStorageVault) = 0;', '    virtual int32 NativeFindAllItemsA8(class UFortItemDefinition* Definition, TArray<class UFortItem*>& OutItems) = 0;']
+        return ['public:', '    virtual bool NativeHasInfiniteAmmo(class UFortWeaponItemDefinition* WeaponDefinition) = 0;', '    virtual void NativeNotifyReload78(class AFortWeapon* Weapon) = 0;', '    virtual class AFortInventory* NativeQuickBarInventory() = 0;', '    virtual class AFortWeapon* NativeQuickBarHeldWeapon() = 0;', '    virtual bool NativeInventoryOwnerHasInventory() = 0;', '    virtual class UFortItem* NativeFindItemA0(class UFortItemDefinition* Definition, bool bInStorageVault) = 0;', '    virtual int32 NativeFindAllItemsA8(class UFortItemDefinition* Definition, TArray<class UFortItem*>& OutItems) = 0;']
     if name == 'UMcpItemAware':
         return ['public:', '    TWeakPtr<FMcpProfileItem, ESPMode::NotThreadSafe> NativeMcpItem;', '    virtual bool NativePopulateFromMcpItem(FMcpProfileItem* Item) = 0;']
     return []

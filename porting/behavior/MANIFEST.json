@@ -95003,5 +95003,97 @@
       "NativeEncodedReticleMinimumState.h"
     ],
     "notes": "Actual shared encoded ring e08..e0d. Type default constructor reproduces index/key seed and true transition. Reset/copy/shot producers must use this same object when lifted; class lifecycle remains incomplete."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeNotifyReload78",
+    "kind": "helper",
+    "address": "0x1406801c0",
+    "signature": "void NativeNotifyReload78(AFortWeapon* Weapon)",
+    "access": "public",
+    "virtual": true,
+    "status": "ported",
+    "confidence": "high",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortPlayerController/NativeNotifyReload78.inc",
+    "includes": [],
+    "notes": "Complete original body; dispatch/call evidence in porting/generator_policies/bot_inventory_queries_runtime/RELOAD_EVIDENCE.md. Build/runtime pending. Reused empty original address; no new distinct-body credit."
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "NativeNotifyReload78",
+    "kind": "helper",
+    "address": "0x1406801c0",
+    "signature": "void NativeNotifyReload78(AFortWeapon* Weapon)",
+    "access": "public",
+    "virtual": true,
+    "status": "ported",
+    "confidence": "high",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortAIPawn/NativeNotifyReload78.inc",
+    "includes": [],
+    "notes": "Complete original body; dispatch/call evidence in porting/generator_policies/bot_inventory_queries_runtime/RELOAD_EVIDENCE.md. Build/runtime pending. Reused empty original address; no new distinct-body credit."
+  },
+  {
+    "class": "ADeployableBasePlot",
+    "function": "NativeNotifyReload78",
+    "kind": "helper",
+    "address": "0x1406801c0",
+    "signature": "void NativeNotifyReload78(AFortWeapon* Weapon)",
+    "access": "public",
+    "virtual": true,
+    "status": "ported",
+    "confidence": "high",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/ADeployableBasePlot/NativeNotifyReload78.inc",
+    "includes": [],
+    "notes": "Complete original body; dispatch/call evidence in porting/generator_policies/bot_inventory_queries_runtime/RELOAD_EVIDENCE.md. Build/runtime pending. Reused empty original address; no new distinct-body credit."
+  },
+  {
+    "class": "AFortAthenaAIBotController",
+    "function": "NativeNotifyReload78",
+    "kind": "helper",
+    "address": "0x1416a6100",
+    "signature": "void NativeNotifyReload78(AFortWeapon* Weapon)",
+    "access": "public",
+    "virtual": true,
+    "status": "ported",
+    "confidence": "high",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortAthenaAIBotController/NativeNotifyReload78.inc",
+    "includes": [],
+    "notes": "Complete original body; dispatch/call evidence in porting/generator_policies/bot_inventory_queries_runtime/RELOAD_EVIDENCE.md. Build/runtime pending. "
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeSupportsCharge1426a5af0",
+    "kind": "helper",
+    "address": "0x1426a5af0",
+    "signature": "bool NativeSupportsCharge1426a5af0()",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortWeapon/NativeSupportsCharge1426a5af0.inc",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "Complete original body; dispatch/call evidence in porting/generator_policies/bot_inventory_queries_runtime/RELOAD_EVIDENCE.md. Build/runtime pending. "
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeIsAutomatic1426a5ab0",
+    "kind": "helper",
+    "address": "0x1426a5ab0",
+    "signature": "bool NativeIsAutomatic1426a5ab0()",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortWeapon/NativeIsAutomatic1426a5ab0.inc",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "Complete original body; dispatch/call evidence in porting/generator_policies/bot_inventory_queries_runtime/RELOAD_EVIDENCE.md. Build/runtime pending. "
   }
 ]
