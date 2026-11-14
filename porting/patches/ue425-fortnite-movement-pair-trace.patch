@@ -1,0 +1,55 @@
+diff --git a/Engine/Source/Runtime/Engine/Private/Components/CharacterMovementComponent.cpp b/Engine/Source/Runtime/Engine/Private/Components/CharacterMovementComponent.cpp
+index bf9a06052..bae5e932a 100644
+--- a/Engine/Source/Runtime/Engine/Private/Components/CharacterMovementComponent.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Components/CharacterMovementComponent.cpp
+@@ -25,6 +25,9 @@
+ #include "AI/Navigation/AvoidanceManager.h"
+ #include "Components/BrushComponent.h"
+ #include "Misc/App.h"
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
++#include "GameFramework/WorldSettings.h"
+ 
+ #include "Engine/DemoNetDriver.h"
+ #include "Engine/NetworkObjectList.h"
+@@ -8798,6 +8801,40 @@ void UCharacterMovementComponent::ServerMoveHandleClientError(float ClientTimeSt
+ 
+ 	// Compute the client error from the server's position
+ 	// If client has accumulated a noticeable positional error, correct them.
++	// Opt-in comparison trace for both accepted and corrected moves, after base resolution.
++	static const bool bFortMovementDiagnostic =
++	    FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeMovementDefaults"));
++	if (bFortMovementDiagnostic && CharacterOwner && UpdatedComponent)
++	{
++	    const UWorld* DiagnosticWorld = GetWorld();
++	    const AGameNetworkManager* DiagnosticNetworkManager = GetDefault<AGameNetworkManager>();
++	    // ClientLoc is the exact client location used by stock error checks,
++	    // after base resolution. Rebase BOTH sides only for reporting.
++	    const FVector DiagnosticClientZero = FRepMovement::RebaseOntoZeroOrigin(ClientLoc, this);
++	    const FVector DiagnosticServerZero = FRepMovement::RebaseOntoZeroOrigin(UpdatedComponent->GetComponentLocation(), this);
++	    const FVector DiagnosticError = DiagnosticServerZero - DiagnosticClientZero;
++	    UE_LOG(LogNetPlayerMovement, Log,
++	        TEXT("FortMovementPair pawn=%s time=%.6f physicsDt=%.6f actorDilation=%.6f worldDilation=%.6f clientRaw=%s clientZero=%s serverZero=%s error=%s velocity=%s accel=%s clientMode=%u serverMode=%u clientBase=%s serverBase=%s clientBone=%s serverBone=%s floorBlocking=%d floorWalkable=%d floorDist=%.6f floorLineDist=%.6f floorImpactLocal=%s floorNormal=%s floorComponent=%s ignoreError=%d componentClientAuthority=%d managerClientAuthority=%d forceUpdate=%d"),
++	        *GetNameSafe(CharacterOwner), ClientTimeStamp, DeltaTime,
++	        CharacterOwner->GetActorTimeDilation(*DiagnosticWorld),
++	        DiagnosticWorld->GetWorldSettings()->GetEffectiveTimeDilation(),
++	        *RelativeClientLoc.ToString(), *DiagnosticClientZero.ToString(),
++	        *DiagnosticServerZero.ToString(), *DiagnosticError.ToString(),
++	        *Velocity.ToString(), *Accel.ToString(), ClientMovementMode,
++	        PackNetworkMovementMode(), *GetPathNameSafe(ClientMovementBase),
++	        *GetPathNameSafe(GetMovementBase()), *ClientBaseBoneName.ToString(),
++	        *CharacterOwner->GetBasedMovement().BoneName.ToString(),
++	        CurrentFloor.bBlockingHit, CurrentFloor.IsWalkableFloor(),
++	        CurrentFloor.FloorDist, CurrentFloor.LineDist,
++	        *CurrentFloor.HitResult.ImpactPoint.ToString(),
++	        *CurrentFloor.HitResult.ImpactNormal.ToString(),
++	        *GetPathNameSafe(CurrentFloor.HitResult.GetComponent()),
++	        bIgnoreClientMovementErrorChecksAndCorrection,
++	        bServerAcceptClientAuthoritativePosition,
++	        DiagnosticNetworkManager->ClientAuthorativePosition,
++	        ServerData->bForceClientUpdate);
++	}
++
+ 	bNetworkLargeClientCorrection = ServerData->bForceClientUpdate;
+ 	if (ServerData->bForceClientUpdate || ServerCheckClientError(ClientTimeStamp, DeltaTime, Accel, ClientLoc, RelativeClientLoc, ClientMovementBase, ClientBaseBoneName, ClientMovementMode))
+ 	{
