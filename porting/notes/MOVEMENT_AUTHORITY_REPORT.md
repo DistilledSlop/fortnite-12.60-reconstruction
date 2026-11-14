@@ -475,6 +475,36 @@ The fix, to do before anything else in Step 3:
    handling: the engine clears the remaining force time when the jump flag in the client's moves goes false.
 3. Check with the stationary-jump rig case from section 2.4: both sides must gain 78.75 cm in the first 0.125 s step.
 
+## 10. The "cannot move after hitting a building" freeze (found 2026-11-14)
+
+Observed in a live session (server `gameserver.log`, `network-rpc.jsonl`, client `FortniteGame.log`): after the pawn
+touched a building piece the client stopped moving for the rest of the session.
+
+- Client log, 86 times from the first correction: `ClientAdjustPosition_Implementation could not resolve the new
+  relative movement base actor, ignoring server correction!`, then `CreateSavedMove: Hit limit of 96 saved moves`.
+  Unreal drops a whole correction when it names a movement base the client cannot look up and the base is dynamic
+  (relative position). The client never converged, never acked, and its input stopped reaching the server (server
+  `ServerMove` acceleration 0 for the last 7 s; 28 full and 60 short corrections sent, no `ClientAckGoodMove`).
+  The "absolute base unresolved" variant is Verbose-only, so static-base corrections fail silently.
+- Cause: the server loaded foundation levels with `ULevelStreamingDynamic::LoadLevelInstance`, which names the package
+  `<package>_LevelInstance_<process-local counter>` (the number differs between runs: 486, 277, 354). The original does
+  not do that. Original `ABuildingFoundation` streaming `0x141bed450` (called from `OnRep_LevelToStream` `0x141be5bc0`)
+  makes a `ULevelStreamingDynamic` with `NewObject` and calls `SetWorldAssetByPackageName(LevelToStream)`
+  (`0x1442e5a10`, plain `"%s.%s"`). Only the pocket-level loader (`0x141bafd20`) uses `LoadLevelInstance`
+  (`0x1442dd9b0`, whose original has a 4.26-style name override and the `_LevelInstance_` counter fallback at
+  `0x1442ddac0`). The unmodified client therefore holds the building at the plain path and cannot resolve the server's
+  suffixed one. Evidence for this is the client warning plus the original code; the client's actual object paths were not
+  read.
+- Fix in `MatchFlow.cpp` `StreamFoundation`: create the streaming level the way the original does (plain package name).
+  A headless run shows 457 of 517 foundations plain-named, with the BusPort wall and floor still hit by the capsule
+  sweep and no crash. 60 foundations request a package another foundation already uses (for example
+  `Apollo_1x1_BusStation_a` at several POIs). One level object cannot hold two placements, and the original routine has
+  no step that makes them unique, so those still use the unique name (counted as `uniqueNamedFallback` in the probe
+  census and logged once per foundation, first five). Their bases remain unresolvable on the client; how the original
+  handles repeated packages is open.
+- Not yet checked from the client side: whether the freeze is gone. A separate divergence started it: at the wall the
+  client stopped while the server pawn stood on `BrickSimple_AAA_SolidWall75` and kept walking about 250 cm.
+
 ## Appendix: original movement overrides
 
 Slot = index in the original client's vtable. "Name" is the UE 4.25 name after the verified three-slot shift

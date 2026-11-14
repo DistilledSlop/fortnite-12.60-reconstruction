@@ -179,6 +179,10 @@ namespace FortAthenaMatchFlowPrivate
         int32 FoundationBlockingMeshes = 0;
         int32 FoundationNoCollisionMeshes = 0;
         bool bFoundationSweepProbeDone = false;
+        // Foundation level naming: plain package name (matches the original client) versus the unique fallback.
+        TSet<FName> PlainStreamedFoundationPackages;
+        int32 FoundationPlainNamedStreams = 0;
+        int32 FoundationUniqueNamedStreams = 0;
     };
 
     FMatchFlowState& State()
@@ -1285,10 +1289,42 @@ namespace FortAthenaMatchFlowPrivate
             ? (Foundation->GetActorRotation() + Foundation->NativeGetBuildingRotation())
             : Foundation->NativeGetBuildingRotation();
 
-        bool bAccepted = false;
-        ULevelStreamingDynamic* Streaming = ULevelStreamingDynamic::LoadLevelInstance(
-            World, Package, Foundation->GetActorLocation(), Rotation, bAccepted);
-        if (!bAccepted || !Streaming)
+        // Original ABuildingFoundation stream routine (0x141bed450, called from OnRep_LevelToStream at 0x141be5bc0) does
+        // NOT use ULevelStreamingDynamic::LoadLevelInstance. It creates a ULevelStreamingDynamic with NewObject and
+        // calls SetWorldAssetByPackageName(LevelToStream) (0x1442e5a10: plain "%s.%s", no suffix). The stock helper
+        // would name the package "<package>_LevelInstance_<process-local counter>", so every object in the level gets
+        // a path the original client cannot resolve: its ClientAdjustPosition then drops server corrections whose
+        // movement base is such a component ("could not resolve the new relative movement base actor"). Use the plain
+        // package name like the original. If the same package is requested again, one level object cannot hold two
+        // placements, so fall back to a uniquely named instance for that foundation and count it.
+        ULevelStreamingDynamic* Streaming = nullptr;
+        if (!State().PlainStreamedFoundationPackages.Contains(PackageName))
+        {
+            State().PlainStreamedFoundationPackages.Add(PackageName);
+            Streaming = NewObject<ULevelStreamingDynamic>(World, ULevelStreamingDynamic::StaticClass(), NAME_None, RF_NoFlags);
+            Streaming->SetWorldAssetByPackageName(PackageName);
+            Streaming->LevelTransform = FTransform(Rotation, Foundation->GetActorLocation());
+            Streaming->bShouldBlockOnLoad = false;
+            Streaming->bInitiallyLoaded = true;
+            Streaming->bInitiallyVisible = true;
+            World->AddStreamingLevel(Streaming);
+            ++State().FoundationPlainNamedStreams;
+        }
+        else
+        {
+            bool bAccepted = false;
+            Streaming = ULevelStreamingDynamic::LoadLevelInstance(
+                World, Package, Foundation->GetActorLocation(), Rotation, bAccepted);
+            if (!bAccepted)
+                Streaming = nullptr;
+            ++State().FoundationUniqueNamedStreams;
+            if (State().FoundationUniqueNamedStreams <= 5)
+            {
+                UE_LOG(LogTemp, Warning, TEXT("MatchFlow: foundation package requested again, using a unique level instance name (client cannot resolve its components) actor=%s package=%s"),
+                    *Foundation->GetPathName(), *Package);
+            }
+        }
+        if (!Streaming)
         {
             UE_LOG(LogTemp, Warning, TEXT("MatchFlow: foundation stream rejected actor=%s package=%s"),
                 *Foundation->GetPathName(), *Package);
@@ -1449,8 +1485,9 @@ namespace FortAthenaMatchFlowPrivate
             UE_LOG(LogTemp, Warning, TEXT("FoundationSweepProbe: invalid point '%s' (expected X=..,Y=..,Z=..)"), *Requested);
             return;
         }
-        UE_LOG(LogTemp, Display, TEXT("FoundationSweepProbe: census pawnBlockingMeshes=%d withoutCollision=%d streamedFoundations=%d"),
-            S.FoundationBlockingMeshes, S.FoundationNoCollisionMeshes, S.StreamedFoundationIds.Num());
+        UE_LOG(LogTemp, Display, TEXT("FoundationSweepProbe: census pawnBlockingMeshes=%d withoutCollision=%d streamedFoundations=%d plainNamed=%d uniqueNamedFallback=%d"),
+            S.FoundationBlockingMeshes, S.FoundationNoCollisionMeshes, S.StreamedFoundationIds.Num(),
+            S.FoundationPlainNamedStreams, S.FoundationUniqueNamedStreams);
         struct FSweep { const TCHAR* Name; FVector From; FVector To; };
         const FSweep Sweeps[] = {
             { TEXT("+X"), Start, Start + FVector(600.0f, 0.0f, 0.0f) },
