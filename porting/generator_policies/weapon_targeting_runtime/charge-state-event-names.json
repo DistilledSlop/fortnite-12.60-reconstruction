@@ -1,0 +1,128 @@
+[
+  {
+    "init": "0x140453190",
+    "global_address": "0x1481c3f00",
+    "literal_address": "0x14656bd48",
+    "name": "OnChargeDown"
+  },
+  {
+    "init": "0x1404531b0",
+    "global_address": "0x1481c3f08",
+    "literal_address": "0x14656bd98",
+    "name": "OnChargeUp"
+  },
+  {
+    "init": "0x1404531d0",
+    "global_address": "0x1481c3f10",
+    "literal_address": "0x14656bdc8",
+    "name": "OnEndCharge"
+  },
+  {
+    "init": "0x1404531f0",
+    "global_address": "0x1481c3f18",
+    "literal_address": "0x14656bde0",
+    "name": "OnEquippedWeaponDestory"
+  },
+  {
+    "init": "0x140453210",
+    "global_address": "0x1481c3f20",
+    "literal_address": "0x146275d00",
+    "name": "OnInitAlteration"
+  },
+  {
+    "init": "0x140453230",
+    "global_address": "0x1481c3f28",
+    "literal_address": "0x146275d28",
+    "name": "OnInitCosmeticAlterations"
+  },
+  {
+    "init": "0x140453250",
+    "global_address": "0x1481c3f30",
+    "literal_address": "0x14656bfd8",
+    "name": "OnInitWeaponCosmetics"
+  },
+  {
+    "init": "0x140453270",
+    "global_address": "0x1481c3f38",
+    "literal_address": "0x14656c020",
+    "name": "OnInstigatorSet"
+  },
+  {
+    "init": "0x140453290",
+    "global_address": "0x1481c3f40",
+    "literal_address": "0x14656c040",
+    "name": "OnOutOfAmmoFire"
+  },
+  {
+    "init": "0x1404532b0",
+    "global_address": "0x1481c3f48",
+    "literal_address": "0x14656c060",
+    "name": "OnPlayImpactFX"
+  },
+  {
+    "init": "0x1404532d0",
+    "global_address": "0x1481c3f50",
+    "literal_address": "0x14656c080",
+    "name": "OnPlayReloadFX"
+  },
+  {
+    "init": "0x1404532f0",
+    "global_address": "0x1481c3f58",
+    "literal_address": "0x14656c0a0",
+    "name": "OnPlayWeaponFireFX"
+  },
+  {
+    "init": "0x140453310",
+    "global_address": "0x1481c3f60",
+    "literal_address": "0x14656c0c8",
+    "name": "OnReachedMaxCharge"
+  },
+  {
+    "init": "0x140453330",
+    "global_address": "0x1481c3f68",
+    "literal_address": "0x14656c0f0",
+    "name": "OnReachedMaxChargeForCurAmmo"
+  },
+  {
+    "init": "0x140453350",
+    "global_address": "0x1481c3f70",
+    "literal_address": "0x14656c130",
+    "name": "OnReachedMinCharge"
+  },
+  {
+    "init": "0x140453370",
+    "global_address": "0x1481c3f78",
+    "literal_address": "0x14656c158",
+    "name": "OnRemoteClientReachedMaxCharge"
+  },
+  {
+    "init": "0x140453390",
+    "global_address": "0x1481c3f80",
+    "literal_address": "0x14656c1a8",
+    "name": "OnRemoteClientReachedMinCharge"
+  },
+  {
+    "init": "0x1404533b0",
+    "global_address": "0x1481c3f88",
+    "literal_address": "0x14656c208",
+    "name": "OnSetTargeting"
+  },
+  {
+    "init": "0x1404533d0",
+    "global_address": "0x1481c3f90",
+    "literal_address": "0x14656c248",
+    "name": "OnStartCharge"
+  },
+  {
+    "init": "0x1404533f0",
+    "global_address": "0x1481c3f98",
+    "literal_address": "0x14656c268",
+    "name": "OnStopWeaponFireFX"
+  },
+  {
+    "init": "0x1404534b0",
+    "global_address": "0x1481c3fc8",
+    "literal_address": "0x14656c3e0",
+    "name": "ServerSetChargeState"
+  }
+]

@@ -95131,5 +95131,89 @@
     "notes": "Original virtual +0x6b0, distinct from +0x6a8. Complete typed FortRangedWeaponStats row query; borrowed override must contain actual ranged row under original precondition. Evidence: generator_policies/weapon_targeting_runtime/RANGED_STATS_EVIDENCE.md. Build/runtime pending.",
     "class": "AFortWeaponRanged",
     "override": true
+  },
+  {
+    "function": "NativeStartCharge142698da0",
+    "kind": "helper",
+    "signature": "void NativeStartCharge142698da0()",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": false,
+    "address": "0x142698da0",
+    "inc_path": "porting/behavior/charge_state237_runtime/NativeStartCharge142698da0.inc",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h",
+      "GameplayPrediction.h",
+      "FortNativeGameplayTagsRuntime.h"
+    ],
+    "notes": "Complete recovered source; build/runtime pending. See charge-state237 evidence. Evidence and source limits: generator_policies/weapon_targeting_runtime/CHARGE_STATE_EVIDENCE.md.",
+    "class": "AFortWeapon"
+  },
+  {
+    "function": "NativeSetChargeState1426b21a0",
+    "kind": "helper",
+    "signature": "void NativeSetChargeState1426b21a0(uint8 NewState)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": false,
+    "address": "0x1426b21a0",
+    "inc_path": "porting/behavior/charge_state237_runtime/NativeSetChargeState1426b21a0.inc",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h",
+      "GameplayPrediction.h",
+      "FortNativeGameplayTagsRuntime.h"
+    ],
+    "notes": "Complete recovered source; build/runtime pending. See charge-state237 evidence. Evidence and source limits: generator_policies/weapon_targeting_runtime/CHARGE_STATE_EVIDENCE.md.",
+    "class": "AFortWeapon"
+  },
+  {
+    "function": "NativeNotifyChargeState1426933f0",
+    "kind": "helper",
+    "signature": "void NativeNotifyChargeState1426933f0(uint8 OldState, uint8 NewState)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": false,
+    "address": "0x1426933f0",
+    "inc_path": "porting/behavior/charge_state237_runtime/NativeNotifyChargeState1426933f0.inc",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h",
+      "GameplayPrediction.h",
+      "FortNativeGameplayTagsRuntime.h"
+    ],
+    "notes": "Complete recovered source; build/runtime pending. See charge-state237 evidence. Evidence and source limits: generator_policies/weapon_targeting_runtime/CHARGE_STATE_EVIDENCE.md.",
+    "class": "AFortWeapon"
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeLocalChargeStatusPack906",
+    "kind": "member_field",
+    "signature": "uint16 NativeLocalChargeStatusPack906",
+    "access": "public",
+    "offset": "0x906",
+    "inc_path": null,
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Original local state+sequence pack, distinct from reflected int16 ChargeStatusPack at904. UObject allocation zeroes native storage; no new runtime gate or custom initializer. Evidence and source limits: generator_policies/weapon_targeting_runtime/CHARGE_STATE_EVIDENCE.md.",
+    "includes": []
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeChargeState900Bit6",
+    "kind": "member_field",
+    "signature": "bool NativeChargeState900Bit6",
+    "access": "public",
+    "offset": "0x900",
+    "mask": "0x40",
+    "inc_path": null,
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Original142698e98 OR dword[900],40. Unreflected bit separate from initialized bit0 and pending destroy bit5; use shared member in all future recovered consumers. Evidence and source limits: generator_policies/weapon_targeting_runtime/CHARGE_STATE_EVIDENCE.md.",
+    "includes": []
   }
 ]

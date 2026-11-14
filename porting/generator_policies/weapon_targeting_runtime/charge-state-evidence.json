@@ -1,0 +1,81 @@
+{
+  "scope": "Ready proposal only, no canonical edits, generation, builds or runtime. Three complete bodies plus shared native fields.",
+  "captures": [
+    {
+      "path": "/opt/fortnite/local-model-package/captures/2f45a58d05894c02b550f8834796803e/0x142698da0.c",
+      "sha256": "e535da5b1e35acc20bdca2275da415c260905c7589e649d1018bd77424df08eb"
+    },
+    {
+      "path": "/opt/fortnite/local-model-package/captures/2f45a58d05894c02b550f8834796803e/0x142698da0.asm",
+      "sha256": "ab62db7d923dadae1c4971f3bf06bfaf029eb1dbee056f696fb079df0e66679f"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-helpers20/0x1426b21a0.c",
+      "sha256": "2fa5932e53ee8f5a47a22c64cdbaff85d1919098194f94b05754ba0723be95fa"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-helpers20/0x1426b21a0.asm",
+      "sha256": "fad9d23858531e4e628c9bfe67fba51d1aa031dfae07b6add2f697cd3720e9f6"
+    },
+    {
+      "path": "/opt/fortnite/local-model-package/captures/b6acb229fe7b457ea1d3ddcc4dd0b782/0x1426933f0.c",
+      "sha256": "2bf98cb7256987353fc1d7f6a904bdd575b78f5988547977ba3a2ad6a41271ad"
+    },
+    {
+      "path": "/opt/fortnite/local-model-package/captures/b6acb229fe7b457ea1d3ddcc4dd0b782/0x1426933f0.asm",
+      "sha256": "f7d45044ba376660b8e4b69953beb76a8c71d34855a3168557d5c166c6781edc"
+    },
+    {
+      "path": "/opt/fortnite/local-model-package/captures/d22121830372478fa3c646e0640320a6/0x142b44090.c",
+      "sha256": "e6d7d48fa5913f3d0542a9f31df747c25f48d9b239fc73b5fb00d3a0bfac4330"
+    },
+    {
+      "path": "/opt/fortnite/local-model-package/captures/d22121830372478fa3c646e0640320a6/0x140738470.c",
+      "sha256": "e06d76f7cdc55382fcc2dbc5353ceb253e77340539efdd761347fa553f7634cc"
+    },
+    {
+      "path": "/opt/fortnite/local-model-package/captures/d22121830372478fa3c646e0640320a6/0x142b43a90.c",
+      "sha256": "500b8dff6e025c1aecd85625bfd448b0af01870c10e202f9be3a7481177e4840"
+    },
+    {
+      "path": "/opt/fortnite/local-model-package/captures/d22121830372478fa3c646e0640320a6/0x142b43f70.c",
+      "sha256": "5020eeda5f64f8f0def3abaee2bd0d2cea0fb245dbceb9fa62175b2e2b7fba12"
+    },
+    {
+      "path": "/opt/fortnite/local-model-package/captures/d22121830372478fa3c646e0640320a6/0x142b43a10.c",
+      "sha256": "8657fcca416be9a813c4d4caab68f871c83108276398afb7e7bbaff98a6ce29d"
+    },
+    {
+      "path": "/opt/fortnite/local-model-package/captures/d22121830372478fa3c646e0640320a6/0x142b44150.c",
+      "sha256": "c03bae00dbc18a53cf46ddd06a7f5cef6331660bc58bfb04b4c98c80386a2b3b"
+    },
+    {
+      "path": "/opt/fortnite/local-model-package/captures/d22121830372478fa3c646e0640320a6/0x142b43a50.c",
+      "sha256": "2a250ca60a1a30e5067e6f25371d97692e32713746c0ef76f04982a4f35c2faa"
+    },
+    {
+      "path": "/opt/fortnite/local-model-package/captures/d22121830372478fa3c646e0640320a6/0x142b44310.c",
+      "sha256": "eb4c8274083ccee17e6731ca098fd70f10faf8431996e8774e9d3210da0c1b42"
+    },
+    {
+      "path": "/opt/fortnite/local-model-package/captures/d22121830372478fa3c646e0640320a6/0x140738eb0.c",
+      "sha256": "d66c2c8dee432064a55f0e66cc54097211a44be0a487a9973b0f96e53d4f4444"
+    }
+  ],
+  "proofs": {
+    "instigator": "141125940 is AActor +118 Instigator; Cast<AFortPawn> uses142a174f0 then IAbilitySystemInterface at pawn4c8 +10. Existing NativeGetChargeRange uses same typed access.",
+    "local_control": "vtable_slots.json retained direct target1447afd30 APawn::IsLocallyControlled anchor corrects generated slot model: actual original +6b0.",
+    "scope": "140738470 captured initializes weak ASC owner, clear/set flags, restore FPredictionKey, tests replicated+owner role !=3, generates dependent prediction key.140738eb0 uses weak owner, optional map replication and restores key. Exact engine FScopedPredictionWindow(ASC,true) constructor/destructor in GameplayPrediction.cpp:260/286.",
+    "cue": "1406d88f0 asm tail dispatches ASC virtual808(tag,this+cb8); engine RemoveGameplayCue is exactly RemoveGameplayCue_Internal(tag,ActiveGameplayCues). Native tag registry270 is GameplayCue.Weapons.ChargeUp; preserve virtual internal dispatch through engine public method.",
+    "pending_kill": "Original GUObjectArray internal flags bit29 test is EInternalObjectFlags::PendingKill in ObjectMacros.h. Keep this precise precondition only around authority cue removal; do not add IsValid/unreachable checks.",
+    "float": "142698ea7 COMISS zero,ChargeTime and JC includes unordered. Guard uses ChargeTime>0||IsNaN.142669cf0 reads stat+12c, proven ChargeDownTime (NOT MaxChargeTime+128); COMISS value,zero and JBE rejects NaN for state4 decision.",
+    "state": "906 low byte is local state,907 high byte wraps+1.904 is replicated ChargeStatusPack. Do not merge packs. Preserve callback before pawn query/RPC, then reread local pack and bit-copy to reflected int16, then dynamic ForceNetUpdate(+5e8).",
+    "events": "event-names.json maps static initializer LEA RCX global/LEA RDX UTF16. Callback event wrapper addresses and globals are captured. State2 calls OnRemoteClientReachedMaxCharge when pawn absent/non-FortPawn or neither local nor authority; state3 OnReachedMaxChargeForCurAmmo.",
+    "storage": "NativeChargeState900Bit6 is mask40 of existing original native flags group900. Two existing reflected masks are1 and20; no invented runtime state or initialization. NativeLocalChargeStatusPack906 is original unreflected uint16. UObject zero initialization supports initial state."
+  },
+  "unresolved_effects": [],
+  "validation": [
+    "Ready JSON parsed; three statements-only bodies reviewed against original C+assembly; static event-name map asserted including ServerSetChargeState.",
+    "No generator/build/runtime claims."
+  ]
+}

@@ -27,6 +27,7 @@
 #include "GameplayEffect.h"
 #include "GameplayEffectAggregator.h"
 #include "GameplayEffectTypes.h"
+#include "GameplayPrediction.h"
 #include "GameplayTagContainer.h"
 #include "Math/UnrealMathSSE.h"
 #include "Math/Vector.h"
@@ -1108,6 +1109,80 @@ FFortRangedWeaponStats* AFortWeapon::NativeGetRangedWeaponStats6B0() const
 	// CONFIDENCE: HIGH
 	// Original 0x140680300, primary weapon vtable +0x6b0.
 	return nullptr;
+}
+
+void AFortWeapon::NativeStartCharge142698da0()
+{
+	// CONFIDENCE: HIGH. Original 0x142698da0; C and assembly preserve unordered comparison.
+	AFortPawn* Pawn = Cast<AFortPawn>(GetInstigator());
+	if (!Pawn) return;
+	UAbilitySystemComponent* ASC = Pawn->GetAbilitySystemComponent();
+	if (!ASC) return;
+	if (GetLocalRole() == ROLE_Authority && !ASC->IsPendingKill())
+	{
+	    FScopedPredictionWindow PredictionWindow(ASC, true);
+	    ASC->RemoveGameplayCue(FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x270));
+	}
+	if (Pawn->IsLocallyControlled() || GetLocalRole() == ROLE_Authority)
+	{
+	    NativeChargeState900Bit6 = true;
+	    bIsChargingWeapon = false;
+	    // COMISS zero,ChargeTime + JC takes both greater-than and unordered.
+	    if (ChargeTime > 0.0f || FMath::IsNaN(ChargeTime) || static_cast<uint8>(NativeLocalChargeStatusPack906) != 0)
+	    {
+	        const FFortBaseWeaponStats* Stats = NativeGetWeaponStats();
+	        NativeSetChargeState1426b21a0(Stats && Stats->ChargeDownTime > 0.0f ? 4 : 0);
+	    }
+	}
+}
+
+void AFortWeapon::NativeSetChargeState1426b21a0(uint8 NewState)
+{
+	// CONFIDENCE: HIGH. Original 0x1426b21a0, including callback/RPC/copy/update ordering.
+	const uint8 OldState = static_cast<uint8>(NativeLocalChargeStatusPack906);
+	if (OldState != NewState)
+	{
+	    const uint8 Sequence = static_cast<uint8>((NativeLocalChargeStatusPack906 >> 8) + 1u);
+	    NativeLocalChargeStatusPack906 = static_cast<uint16>((static_cast<uint16>(Sequence) << 8) | NewState);
+	    NativeNotifyChargeState1426933f0(OldState, NewState);
+	    if (AFortPawn* Pawn = Cast<AFortPawn>(GetInstigator()))
+	    {
+	        if (Pawn->IsLocallyControlled() && GetLocalRole() != ROLE_Authority)
+	        {
+	            ServerSetChargeState(NewState);
+	        }
+	    }
+	    // The event/RPC may reenter; original copies the CURRENT local pack here.
+	    FMemory::Memcpy(&ChargeStatusPack, &NativeLocalChargeStatusPack906, sizeof(ChargeStatusPack));
+	    ForceNetUpdate();
+	}
+}
+
+void AFortWeapon::NativeNotifyChargeState1426933f0(uint8 OldState, uint8 NewState)
+{
+	// CONFIDENCE: HIGH. Original 0x1426933f0; names proven by static FName initializers.
+	if (NewState == 1)
+	{
+	    if (OldState == 0) OnStartCharge();
+	    OnChargeUp();
+	}
+	else if (NewState == 4)
+	{
+	    OnChargeDown();
+	}
+	else if (NewState == 2)
+	{
+	    AFortPawn* Pawn = Cast<AFortPawn>(GetInstigator());
+	    if (!Pawn || (!Pawn->IsLocallyControlled() && GetLocalRole() != ROLE_Authority))
+	    {
+	        OnRemoteClientReachedMaxCharge();
+	    }
+	}
+	else if (NewState == 3)
+	{
+	    OnReachedMaxChargeForCurAmmo();
+	}
+	if (OldState != 0 && NewState == 0) OnEndCharge();
 }
 
 void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

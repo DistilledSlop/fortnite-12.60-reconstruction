@@ -43,6 +43,7 @@
 #include "GameplayAbilitySpec.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectAggregator.h"
+#include "GameplayPrediction.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/TransformNonVectorized.h"
@@ -602,9 +603,15 @@ public:
 	UPROPERTY()
 	uint8 bShouldFullyApplyVariantsOnEquip : 1;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x900): not a UPROPERTY, not replicated.
+	bool NativeChargeState900Bit6;
+
 	// table index 48, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ChargeStatusPack)
 	int16 ChargeStatusPack;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x906): not a UPROPERTY, not replicated.
+	uint16 NativeLocalChargeStatusPack906;
 
 	// table index 47, flags 0x24080000002000
 	UPROPERTY(Transient)
@@ -1154,5 +1161,8 @@ public:
 	bool NativeSupportsCharge1426a5af0();
 	bool NativeIsAutomatic1426a5ab0();
 	virtual FFortRangedWeaponStats* NativeGetRangedWeaponStats6B0() const;
+	void NativeStartCharge142698da0();
+	void NativeSetChargeState1426b21a0(uint8 NewState);
+	void NativeNotifyChargeState1426933f0(uint8 OldState, uint8 NewState);
 };
 
