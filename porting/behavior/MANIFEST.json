@@ -91182,5 +91182,31 @@
     "inc_path": "porting/generator_policies/world_profile_gate_runtime/NativeGetTheaterSlot.proposed.inc",
     "includes": [],
     "notes": "Original +0x978 shared by base and Athena. Athena inherits this target."
+  },
+  {
+    "function": "NetSerialize",
+    "kind": "struct_net",
+    "signature": "bool NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess)",
+    "signature_status": "verified",
+    "inc_path": "porting/behavior/harvest_targetdata47_runtime/FFortGameplayAbilityTargetData_SingleTargetHit.NetSerialize.inc",
+    "confidence": "high",
+    "address": "0x142788290",
+    "status": "ported",
+    "decompile_source": "porting/generated/agents/harvest-targetdata-disconnect47/decomp/TargetData",
+    "notes": "Original native struct ops and reflected field offsets recovered; GetScriptStruct override and WithCopy required.",
+    "class": "FFortGameplayAbilityTargetData_SingleTargetHit"
+  },
+  {
+    "function": "NetSerialize",
+    "kind": "struct_net",
+    "signature": "bool NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess)",
+    "signature_status": "verified",
+    "inc_path": "porting/behavior/harvest_targetdata47_runtime/FFortMantisTargetData.NetSerialize.inc",
+    "confidence": "high",
+    "address": "0x1409dc180",
+    "status": "ported",
+    "decompile_source": "porting/generated/agents/harvest-targetdata-disconnect47/decomp/TargetData",
+    "notes": "Original native struct ops and reflected field offsets recovered; GetScriptStruct override and WithCopy required.",
+    "class": "FFortMantisTargetData"
   }
 ]

@@ -1,3 +1,4 @@
+#include "AbilitySystemGlobals.h"
 #include "Engine/NetworkDelegates.h"
 #include "Engine/Engine.h"
 #include "FortNativeGameplayTagsRuntime.h"
@@ -34,6 +35,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogFortniteNet, Log, All);
 // Private/NetSerializeSelfTest.cpp: round-trip checks of the recovered struct_net bodies. Runs only with -NetSerializeSelfTest
 // and exits the process (0 when every case passes, 1 otherwise).
 void RunNetSerializeSelfTest();
+bool RunHarvestTargetDataWireProbe();
 void RegisterFortPlayerNameSelfTest();
 void RegisterContextRuntimeProbeDriver();
 void RegisterQueueConnectedFlowDriver();
@@ -318,6 +320,18 @@ private:
     static void OnEngineInitialized()
     {
         FortOriginalDefaults::Apply();
+        // UE4.26 requires the game to initialize global GAS data explicitly.
+        UAbilitySystemGlobals::Get().InitGlobalData();
+        UE_LOG(LogFortniteNet, Display, TEXT("GAS target-data cache initialized: %d script structs"),
+            UAbilitySystemGlobals::Get().TargetDataStructCache.ScriptStructs.Num());
+        if (FParse::Param(FCommandLine::Get(), TEXT("FortniteTargetDataWireProbe")))
+        {
+            if (!RunHarvestTargetDataWireProbe())
+            {
+                UE_LOG(LogFortniteNet, Fatal, TEXT("Target-data cache/framing/typed payload probe failed"));
+            }
+            UE_LOG(LogFortniteNet, Display, TEXT("Target-data cache/framing/typed payload probe passed (indices 0, 4, 5)"));
+        }
         InitializeFortAthenaGameStateClass();
         FortAthenaGameData::Initialize();
         OnEngineInitForNetwork();

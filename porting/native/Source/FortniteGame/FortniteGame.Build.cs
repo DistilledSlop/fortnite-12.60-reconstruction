@@ -18,7 +18,7 @@ public class FortniteGame : ModuleRules
             // WebBrowser: the JS bridge net-service types (FWebJSFunction, FWebJSResponse) of UFortGameInstance.
             "WebBrowser", "TimeSynth",
             // Runtime modules generated from packages outside the engine tree (porting/native_classes_status.md).
-            "Account", "AmbientAudio", "BlueprintContext", "CommonInput", "CommonUI", "SubtitlesWidgets", "EpicCMSUIFramework", "MeshNetwork", "ModularGameplay", "McpProfileSys" });
+            "Account", "AmbientAudio", "BlueprintContext", "CommonInput", "CommonUI", "SubtitlesWidgets", "EpicCMSUIFramework", "MeshNetwork", "ModularGameplay", "McpProfileSys", "MantisRuntime" });
         if (Target.IsInPlatformGroup(UnrealPlatformGroup.Linux) && Target.Type != TargetType.Server)
         {
             PrivateDependencyModuleNames.Add("Renderer");

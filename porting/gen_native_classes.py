@@ -1543,6 +1543,7 @@ def self_test():
 # module named after the package, so the class path /Script/<Name>.<Class> is the original one. The module's Build.cs
 # and IMPLEMENT_MODULE file are written by --promote (porting/native_classes_status.md, "Runtime modules").
 RUNTIME_MODULE_PACKAGES = (
+    "/Script/MantisRuntime",  # Original target-data cache family; must retain original package.
     "/Script/BlueprintContext", "/Script/MeshNetwork", "/Script/CommonUI", "/Script/AmbientAudio", "/Script/Account",
     "/Script/ModularGameplay", "/Script/McpProfileSys", "/Script/CommonInput", "/Script/FortniteUI",
     "/Script/SubtitlesWidgets",  # Reflected subtitle display enums used by client settings.
@@ -5077,6 +5078,24 @@ def promote(args):
         seeds.setdefault(info.fn, set()).add("")
     if 'CommonUI' in module_deps:
         _action_commited_policy.add_roots(gate, seeds)
+    # GAS target data are referenced through polymorphic handles, so reflected properties do not seed them.
+    target_data_roots = {
+        "FFortGameplayAbilityTargetData_SingleTargetHit": ("/Script/FortniteGame", "0x140773660"),
+        "FFortMantisTargetData": ("/Script/MantisRuntime", "0x14076fb80"),
+    }
+    found_target_data = set()
+    for info in gate.tables.by_fn.values():
+        if info.kind != "struct" or info.cpp_name not in target_data_roots:
+            continue
+        expected_package, expected_super = target_data_roots[info.cpp_name]
+        if info.cpp_name in found_target_data or info.package != expected_package or info.rec.get("super_fn") != expected_super:
+            raise ValueError("target-data reflection identity differs: " + info.cpp_name)
+        if gate.reason(info) is not None:
+            raise ValueError("target-data struct cannot be emitted: " + info.cpp_name + ": " + str(gate.reason(info)))
+        seeds.setdefault(info.fn, set()).add("")
+        found_target_data.add(info.cpp_name)
+    if found_target_data != set(target_data_roots):
+        raise ValueError("missing original target-data roots: " + str(set(target_data_roots) - found_target_data))
     models, texts, all_used = emit_types(gate, seeds, source_label, class_models + iface_models)
     _server_baseline_policy.preserve_playlist(gate, models, texts)
     # struct_net (behaviour kind): each native NetSerialize is checked as text in its header, and every entry is reported
@@ -6251,7 +6270,10 @@ def render_struct_header(model, source_label):
     lines.extend(_maps_wind_handle_policy.preamble(model))
     lines.extend(_confirmation_policy.preamble(model))
     lines.append("USTRUCT(BlueprintType)" if model.get("blueprint_type") else "USTRUCT()")
-    lines.append("struct %s%s%s" % (model.get("api", ""), name, " : public %s" % model["parent"] if model["parent"] else ""))
+    target_data_api = {"FFortMantisTargetData": "MANTISRUNTIME_API ",
+                       "FFortGameplayAbilityTargetData_SingleTargetHit": "FORTNITEGAME_API "}
+    lines.append("struct %s%s%s" % (target_data_api.get(name, model.get("api", "")), name,
+                                  " : public %s" % model["parent"] if model["parent"] else ""))
     lines.append("{")
     lines.append("\tGENERATED_BODY()")
     lines.append("")
@@ -6270,6 +6292,9 @@ def render_struct_header(model, source_label):
         lines.extend(_maps_fog_policy.fields_after(model, m))
         lines.extend(_maps_wind_building_policy.fields_after(model, m))
         lines.extend(_ui_root_layout_policy.fields_after(model, m))
+    if name in ("FFortGameplayAbilityTargetData_SingleTargetHit", "FFortMantisTargetData"):
+        lines.append("\tvirtual UScriptStruct* GetScriptStruct() const override { return StaticStruct(); }")
+        lines.append("")
     lines.extend(native_serializer_declarations(name))
     lines.extend(_maps_fog_policy.declarations(model))
     lines.extend(_maps_wind_handle_policy.declarations(model))
@@ -6335,6 +6360,8 @@ def render_struct_header(model, source_label):
         lines.append("")
     if native:
         flags = ["WithNetSerializer = true"]
+        if name in ("FFortGameplayAbilityTargetData_SingleTargetHit", "FFortMantisTargetData"):
+            flags.append("WithCopy = true")
         if NATIVE_NET_HAS_SHARED in net.get("traits", []):
             flags.append("WithNetSharedSerialization = true")
         lines.append("template<>")

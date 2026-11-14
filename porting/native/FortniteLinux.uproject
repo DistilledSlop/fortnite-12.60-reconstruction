@@ -78,6 +78,11 @@
       "Name": "EpicCMSUIFramework",
       "Type": "Runtime",
       "LoadingPhase": "Default"
+    },
+    {
+      "Name": "MantisRuntime",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
     }
   ],
   "Plugins": [
