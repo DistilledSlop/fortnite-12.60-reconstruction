@@ -13,10 +13,23 @@ echo "Build log: $log"
 "$engine/Engine/Build/BatchFiles/Linux/Build.sh" FortniteLinuxServer Linux Development \
     -project="$porting/native/FortniteLinux.uproject" -NoHotReload > "$log" 2>&1
 status=$?
-errors=$(grep -c ' error:\|^error:' "$log")
+diagnostics=$(python3 - "$log" <<'PYDIAGNOSTICS'
+import re, sys
+ansi = re.compile(r'\x1b\[[0-?]*[ -/]*[@-~]')
+errors = []
+with open(sys.argv[1], errors='replace') as stream:
+    for line in stream:
+        clean = ansi.sub('', line)
+        if re.search(r'(^|\s)error:', clean):
+            errors.append(clean.rstrip())
+print(len(errors))
+print('\n'.join(errors[:10]))
+PYDIAGNOSTICS
+)
+errors=${diagnostics%%$'\n'*}
 if ((status != 0 || errors > 0)); then
     echo "Build FAILED (exit $status, $errors error lines):"
-    grep -m 10 ' error:\|^error:' "$log"
+    [[ $errors == 0 ]] || printf '%s\n' "${diagnostics#*$'\n'}"
     exit 1
 fi
 echo "Build OK ($(tail -1 "$log"))"
