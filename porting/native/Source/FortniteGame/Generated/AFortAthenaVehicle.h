@@ -7,6 +7,7 @@
 #include "AFortPhysicsPawn.h"
 
 #include "AbilitySystemComponent.h"
+#include "Components/PrimitiveComponent.h"
 #include "EFortBaseWeaponDamage.h"
 #include "Engine/EngineTypes.h"
 #include "FAthenaCarPlayerSlot.h"
@@ -35,6 +36,7 @@
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Vector.h"
+#include "PhysicsEngine/BodyInstance.h"
 #include "UFortAbilitySystemInterface.h"
 #include "UFortVehicleInterface.h"
 
@@ -1012,5 +1014,7 @@ public:
 	virtual bool NativeSeatPredicate_0568(uint8 SeatIndex) override;
 	virtual void NativeOnTargetingChanged_d70(AFortPlayerPawn* Pawn, uint8 SeatIndex, bool bTargeting);
 	virtual bool NativeVehiclePredicate_0558();
+	virtual FVector NativeVehicleVelocity1419193b0();
+	virtual float NativeForwardSpeed141916010();
 };
 

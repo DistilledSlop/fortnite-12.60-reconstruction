@@ -30,6 +30,7 @@
 #include "FAbilitySystemInitializedDelegate.h"
 #include "FCharacterPartChanged.h"
 #include "FFortAthenaLoadout.h"
+#include "FFortAthenaVehicleInputState.h"
 #include "FFortAthenaVehicleInputStateReliable.h"
 #include "FFortAthenaVehicleInputStateUnreliable.h"
 #include "FFortCharacterPartsRepMontageInfo.h"
@@ -64,6 +65,7 @@
 #include "FortMovementStyleNative.h"
 #include "FortNativeGameplayTagsRuntime.h"
 #include "FortParachuteInputNative.h"
+#include "FortSwimSprintCVar.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
@@ -500,6 +502,9 @@ public:
 	// table index 239, flags 0x10000000000005
 	UPROPERTY()
 	float CrouchMeshOffset;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1194): not a UPROPERTY, not replicated.
+	FFortAthenaVehicleInputState NativeVehicleInputState1194;
 
 	// table index 238, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_VehicleInputStateUnreliable)
@@ -2159,6 +2164,7 @@ public:
 	void NativeOnWeaponTargeting1423336c0(bool bNewTargeting);
 	virtual IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterfaceBD8() override;
 	void NativeCancelCrouch142336830();
+	bool NativeSwimSprintByDefault1423508d0();
 protected:
 	void NativeUpdateAccelerationPack1423442e0();
 	void NativeUpdateRemoteViewData142344420();

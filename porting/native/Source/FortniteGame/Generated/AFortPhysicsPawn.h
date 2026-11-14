@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 
+#include "Components/PrimitiveComponent.h"
 #include "FReplicatedPhysicsPawnState.h"
 #include "FVehicleSafeTeleportInfo.h"
 #include "Math/Vector.h"
@@ -49,5 +50,9 @@ public:
 	void ServerUpdateStateSync_Implementation(const TArray<uint8>& StateSyncData);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual UPrimitiveComponent* NativeRootPrimitive142323920();
 };
 

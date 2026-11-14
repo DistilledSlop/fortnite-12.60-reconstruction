@@ -42,6 +42,7 @@
 #include "FortMovementStyleNative.h"
 #include "FortNativeGameplayTagsRuntime.h"
 #include "FortParachuteInputNative.h"
+#include "FortSwimSprintCVar.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
@@ -2514,6 +2515,15 @@ void AFortPlayerPawn::NativeCancelCrouch142336830()
 	        RangedWeapon->NativeClearFirstShotAccuracy1426ddc90();
 	    }
 	}
+}
+
+bool AFortPlayerPawn::NativeSwimSprintByDefault1423508d0()
+{
+	// CONFIDENCE: HIGH
+	// Original 0x1423508d0: CharacterMovement is deliberately unchecked.
+	return NativeSwimSprintByDefaultCVar148157d00() != 0 &&
+	    GetCharacterMovement()->MovementMode == MOVE_Custom &&
+	    GetCharacterMovement()->CustomMovementMode == 10;
 }
 
 void AFortPlayerPawn::NativeUpdateAccelerationPack1423442e0()

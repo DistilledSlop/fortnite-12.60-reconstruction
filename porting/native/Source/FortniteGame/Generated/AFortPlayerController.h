@@ -8,6 +8,8 @@
 
 #include "AnalyticsEventAttribute.h"
 #include "AttributeSet.h"
+#include "Components/InputComponent.h"
+#include "Components/SceneComponent.h"
 #include "ControllerTick225b.h"
 #include "CoreGlobals.h"
 #include "EAthenaCustomizationCategory.h"
@@ -31,6 +33,7 @@
 #include "EStatMod.h"
 #include "EVolumeState.h"
 #include "Engine/EngineTypes.h"
+#include "Engine/LocalPlayer.h"
 #include "Engine/NetSerialization.h"
 #include "Engine/World.h"
 #include "FAIDirectorDebugInfo.h"
@@ -71,6 +74,7 @@
 #include "FRecentlyRemovedQuickbarInfo.h"
 #include "FortNativeAnalyticsProvider.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "GameFramework/PawnMovementComponent.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
@@ -2051,6 +2055,11 @@ public:
 	virtual bool NativeInventoryOwnerHasInventory() override;
 	virtual void NativeControllerVirtual1d10();
 	virtual void NativeNotifyReload78(AFortWeapon* Weapon);
+	bool NativeSprintInputGate14238e8e0();
+	bool NativeForwardInput14238f110();
+	void NativeCancelSprint1423b8500();
+	bool NativeSprintByDefault1423b65b0();
+	bool NativeUsesTouchInput1423909c0();
 public:
     TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
 	int32 GetNativeStatValue(FName Name, EStatRecordingPeriod Period) const;

@@ -16,7 +16,7 @@ def sources():
                 if hashlib.sha256(data).hexdigest() != window['sha256']:
                     raise ValueError('weapon targeting evidence changed: ' + window['address'])
     result = {filename: (HERE / filename).read_text() for filename in
-              ('FortWeaponTargetingNative.h', 'FortWeaponTargetingNative.cpp', 'FortWeaponStopSoundNative.h')}
+              ('FortWeaponTargetingNative.h', 'FortWeaponTargetingNative.cpp', 'FortWeaponStopSoundNative.h', 'FortSwimSprintCVar.h', 'FortSwimSprintCVar.cpp')}
     accuracy = HERE.parent / 'accuracy_consumers_runtime'
     with Path(evidence['image']).open('rb') as stream:
         for item in json.loads((accuracy / 'native-evidence.json').read_text())['windows']:

@@ -5,7 +5,10 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
 #include "AttributeSet.h"
+#include "Components/PrimitiveComponent.h"
 #include "GameFramework/Pawn.h"
+#include "Math/Vector.h"
+#include "PhysicsEngine/BodyInstance.h"
 #include "UFortAbilitySystemComponent.h"
 #include "UFortHealthSet.h"
 #include "UFortSkyTubePhysicsComponent.h"
@@ -573,6 +576,32 @@ bool AFortAthenaVehicle::NativeVehiclePredicate_0558()
 	// 0x141f821f0 via interface thunk 0x14084b700. Original assumes the seat component exists.
 	AActor* SeatOwner = NativeGetSeatComponent163()->GetOwner();
 	return SeatOwner && SeatOwner->GetLocalRole() != ROLE_Authority && SeatOwner->GetOwner();
+}
+
+FVector AFortAthenaVehicle::NativeVehicleVelocity1419193b0()
+{
+	// CONFIDENCE: HIGH
+	// Original 0x1419193b0; full recovered body. CONFIDENCE: HIGH.
+	UPrimitiveComponent* Component = NativeRootPrimitive142323920();
+	if (Component)
+	{
+	    FBodyInstance* Body = Component->GetBodyInstance(NAME_None, true);
+	    if (Body && Body->bSimulatePhysics)
+	    {
+	        return Component->GetComponentVelocity();
+	    }
+	}
+	return NativeRecoveredFVector_0xc40;
+}
+
+float AFortAthenaVehicle::NativeForwardSpeed141916010()
+{
+	// CONFIDENCE: HIGH
+	// Original 0x141916010; full recovered body. CONFIDENCE: HIGH.
+	UPrimitiveComponent* Component = NativeRootPrimitive142323920();
+	const FVector Velocity = NativeVehicleVelocity1419193b0();
+	const FVector Forward = Component->GetForwardVector();
+	return (Forward.X * Velocity.X + Forward.Y * Velocity.Y + Forward.Z * Velocity.Z) * 0.036f;
 }
 
 void AFortAthenaVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

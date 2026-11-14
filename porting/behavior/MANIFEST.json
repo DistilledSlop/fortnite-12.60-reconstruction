@@ -95286,5 +95286,168 @@
     "signature_status": "proposed",
     "status": "ported",
     "confidence": "high"
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeVehicleInputState1194",
+    "kind": "member_field",
+    "signature": "FFortAthenaVehicleInputState NativeVehicleInputState1194",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x1194",
+    "inc_path": null,
+    "address": "0x1422fe830",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Original constructor zeroes the complete state; UObject zero allocation supplies this for this trivially initialized native member. Original local and replication writers are separate body recovery. Complete original algorithm under native preconditions; evidence: generator_policies/weapon_targeting_runtime/SPRINT_INPUT_EVIDENCE.md. Build/runtime pending.",
+    "includes": []
+  },
+  {
+    "class": "AFortPhysicsPawn",
+    "function": "NativeRootPrimitive142323920",
+    "kind": "helper",
+    "signature": "UPrimitiveComponent* NativeRootPrimitive142323920()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/sprint_input238_runtime/AFortPhysicsPawn.NativeRootPrimitive142323920.inc",
+    "address": "0x142323920",
+    "status": "ported",
+    "confidence": "high",
+    "includes": [
+      "Components/PrimitiveComponent.h"
+    ],
+    "virtual": true,
+    "notes": " Complete original algorithm under native preconditions; evidence: generator_policies/weapon_targeting_runtime/SPRINT_INPUT_EVIDENCE.md. Build/runtime pending."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "NativeVehicleVelocity1419193b0",
+    "kind": "helper",
+    "signature": "FVector NativeVehicleVelocity1419193b0()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/sprint_input238_runtime/AFortAthenaVehicle.NativeVehicleVelocity1419193b0.inc",
+    "address": "0x1419193b0",
+    "status": "ported",
+    "confidence": "high",
+    "includes": [
+      "Components/PrimitiveComponent.h",
+      "PhysicsEngine/BodyInstance.h"
+    ],
+    "virtual": true,
+    "notes": " Complete original algorithm under native preconditions; evidence: generator_policies/weapon_targeting_runtime/SPRINT_INPUT_EVIDENCE.md. Build/runtime pending."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "NativeForwardSpeed141916010",
+    "kind": "helper",
+    "signature": "float NativeForwardSpeed141916010()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/sprint_input238_runtime/AFortAthenaVehicle.NativeForwardSpeed141916010.inc",
+    "address": "0x141916010",
+    "status": "ported",
+    "confidence": "high",
+    "includes": [
+      "Components/PrimitiveComponent.h"
+    ],
+    "virtual": true,
+    "notes": " Complete original algorithm under native preconditions; evidence: generator_policies/weapon_targeting_runtime/SPRINT_INPUT_EVIDENCE.md. Build/runtime pending."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeSprintInputGate14238e8e0",
+    "kind": "helper",
+    "signature": "bool NativeSprintInputGate14238e8e0()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/sprint_input238_runtime/AFortPlayerController.NativeSprintInputGate14238e8e0.inc",
+    "address": "0x14238e8e0",
+    "status": "ported",
+    "confidence": "high",
+    "includes": [
+      "Components/InputComponent.h",
+      "GameFramework/PawnMovementComponent.h"
+    ],
+    "notes": " Complete original algorithm under native preconditions; evidence: generator_policies/weapon_targeting_runtime/SPRINT_INPUT_EVIDENCE.md. Build/runtime pending."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeForwardInput14238f110",
+    "kind": "helper",
+    "signature": "bool NativeForwardInput14238f110()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/sprint_input238_runtime/AFortPlayerController.NativeForwardInput14238f110.inc",
+    "address": "0x14238f110",
+    "status": "ported",
+    "confidence": "high",
+    "includes": [
+      "Components/SceneComponent.h",
+      "GameFramework/PawnMovementComponent.h"
+    ],
+    "notes": " Complete original algorithm under native preconditions; evidence: generator_policies/weapon_targeting_runtime/SPRINT_INPUT_EVIDENCE.md. Build/runtime pending."
+  },
+  {
+    "function": "NativeCancelSprint1423b8500",
+    "kind": "helper",
+    "address": "0x1423b8500",
+    "signature": "void NativeCancelSprint1423b8500()",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortPlayerController/NativeCancelSprint1423b8500.inc",
+    "includes": [],
+    "notes": "Original body captured; see cancel-sprint243 proposal evidence. Source only; build/runtime pending. Complete original algorithm under native preconditions; evidence: generator_policies/weapon_targeting_runtime/SPRINT_INPUT_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortPlayerController"
+  },
+  {
+    "function": "NativeSprintByDefault1423b65b0",
+    "kind": "helper",
+    "address": "0x1423b65b0",
+    "signature": "bool NativeSprintByDefault1423b65b0()",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortPlayerController/NativeSprintByDefault1423b65b0.inc",
+    "includes": [],
+    "notes": "Original body captured; see cancel-sprint243 proposal evidence. Source only; build/runtime pending. Complete original algorithm under native preconditions; evidence: generator_policies/weapon_targeting_runtime/SPRINT_INPUT_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortPlayerController"
+  },
+  {
+    "function": "NativeUsesTouchInput1423909c0",
+    "kind": "helper",
+    "address": "0x1423909c0",
+    "signature": "bool NativeUsesTouchInput1423909c0()",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortPlayerController/NativeUsesTouchInput1423909c0.inc",
+    "includes": [
+      "Engine/World.h",
+      "Engine/LocalPlayer.h"
+    ],
+    "notes": "Original body captured; see cancel-sprint243 proposal evidence. Source only; build/runtime pending. Complete original algorithm under native preconditions; evidence: generator_policies/weapon_targeting_runtime/SPRINT_INPUT_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortPlayerController"
+  },
+  {
+    "function": "NativeSwimSprintByDefault1423508d0",
+    "kind": "helper",
+    "address": "0x1423508d0",
+    "signature": "bool NativeSwimSprintByDefault1423508d0()",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortPlayerPawn/NativeSwimSprintByDefault1423508d0.inc",
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h",
+      "FortSwimSprintCVar.h"
+    ],
+    "notes": "Original body captured; see cancel-sprint243 proposal evidence. Source only; build/runtime pending. Complete original algorithm under native preconditions; evidence: generator_policies/weapon_targeting_runtime/SPRINT_INPUT_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortPlayerPawn"
   }
 ]

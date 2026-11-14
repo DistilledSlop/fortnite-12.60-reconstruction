@@ -1,0 +1,128 @@
+[
+  {
+    "class": "AFortHoagieVehicle",
+    "table": "0x145a1da80",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortAthenaAntelopeVehicle",
+    "table": "0x145dd0510",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortAthenaExitCraft",
+    "table": "0x145dd9920",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortAthenaFerretVehicle",
+    "table": "0x145ddb968",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortAthenaDoghouseVehicle",
+    "table": "0x145dd6db0",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortAthenaGoatVehicle",
+    "table": "0x145ddd6d8",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortAthenaJackalVehicle",
+    "table": "0x146226df8",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortAthenaSimpleCar",
+    "table": "0x145de4298",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortAthenaSKMotorVehicle",
+    "table": "0x145ddd6d8",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortAthenaSKPushCannon",
+    "table": "0x145de7600",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortAthenaSKPushVehicle",
+    "table": "0x145de5d18",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortAthenaSKVehicle",
+    "table": "0x145dd54d8",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortAthenaSMVehicle",
+    "table": "0x145debe20",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "table": "0x145debe20",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortAthenaWaterJackal",
+    "table": "0x145df1418",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortCampaignJackalVehicle",
+    "table": "0x1461f6b78",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortMeatballVehicle",
+    "table": "0x145e170b8",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortMountedCannon",
+    "table": "0x146071728",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortMountedTurret",
+    "table": "0x14606fe28",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortOctopusVehicle",
+    "table": "0x145e189a0",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  },
+  {
+    "class": "AFortSpaghettiVehicle",
+    "table": "0x145e43100",
+    "slot878": "0x141916010",
+    "slot7a0": "0x142323920"
+  }
+]

@@ -3115,7 +3115,8 @@ def body_refs(body, name, package, ctx):
             allowed_edges = {('/Script/FortniteUI', '/Script/FortniteGame'),
                              ('/Script/FortniteUI', '/Script/CommonInput'),
                              ('/Script/HoagieRuntime', '/Script/FortniteGame'),
-                             ('/Script/FortniteGame', '/Script/McpProfileSys')}
+                             ('/Script/FortniteGame', '/Script/McpProfileSys'),
+                             ('/Script/FortniteGame', '/Script/CommonInput')}
             if ctx["class_pkg"][tok] != package and (package, ctx["class_pkg"][tok]) not in allowed_edges:
                 problems.append("body uses %s, a class of another module" % tok)
             else:
