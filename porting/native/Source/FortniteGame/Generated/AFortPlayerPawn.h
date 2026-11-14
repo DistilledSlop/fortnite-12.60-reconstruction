@@ -24,6 +24,7 @@
 #include "Engine/CurveTable.h"
 #include "Engine/EngineTypes.h"
 #include "Engine/SpringInterpolator.h"
+#include "Engine/World.h"
 #include "FAbilitySystemInitializedDelegate.h"
 #include "FCharacterPartChanged.h"
 #include "FFortAthenaLoadout.h"
@@ -60,6 +61,7 @@
 #include "FZiplineStateChanged.h"
 #include "FortMovementStyleNative.h"
 #include "FortNativeGameplayTagsRuntime.h"
+#include "FortParachuteInputNative.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
@@ -954,6 +956,9 @@ public:
 	UPROPERTY()
 	FAbilitySystemInitializedDelegate OnAbilitySystemComponentInitialized;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1fc0): not a UPROPERTY, not replicated.
+	int32 NativeParachuteRequest1fc0;
+
 	// table index 120, flags 0x10000010080000
 	UPROPERTY()
 	FOnFinishedCharacterCustomization OnFinishedCharacterCustomization;
@@ -1268,6 +1273,9 @@ public:
 	// table index 37, flags 0x20080000010001
 	UPROPERTY()
 	USoundBase* SoundOnSwimmingLoop;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x264c): not a UPROPERTY, not replicated.
+	float NativeParachuteLastTime264c = 0.0f;
 
 	// table index 36, flags 0x40000000000020
 	UPROPERTY(Replicated)
@@ -2117,6 +2125,8 @@ public:
 	virtual void NativeSetMovementStyle14234bf20(uint8 Style) override;
 	void NativeUpdateMovementStyle14235bbf0();
 	bool NativeSprintTagGate14232cb50() const;
+	bool NativeCanCloseParachute142331a80();
+	void NativeSetParachuteRequest14234bc70(int32 Request);
 protected:
 	void NativeUpdateAccelerationPack1423442e0();
 	void NativeUpdateRemoteViewData142344420();

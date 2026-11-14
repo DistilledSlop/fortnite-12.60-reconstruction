@@ -29,10 +29,12 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Curves/CurveFloat.h"
 #include "EFortCustomMovement.h"
+#include "Engine/World.h"
 #include "FFortPawnStats.h"
 #include "FWaterControlParams.h"
 #include "FortMovementStyleNative.h"
 #include "FortNativeGameplayTagsRuntime.h"
+#include "FortParachuteInputNative.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
@@ -2136,6 +2138,43 @@ bool AFortPlayerPawn::NativeSprintTagGate14232cb50() const
 	UFortAbilitySystemComponent* Component = Cast<UFortAbilitySystemComponent>(GetAbilitySystemComponent());
 	return Component && Component->HasMatchingGameplayTag(
 	    FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x690));
+}
+
+bool AFortPlayerPawn::NativeCanCloseParachute142331a80()
+{
+	// CONFIDENCE: HIGH. Complete original body; shared producer lifecycle remains separate.
+	// Full body of 0x142331a80. Uses reflected flags, shared native last-change time,
+	// and the exact Athena.LimitParachuteDeployRate CVar contract.
+	if (!bIsParachuteOpen || bLocalParachuteLockedOpen || bIsParachuteForcedOpen)
+	{
+	    return false;
+	}
+	if (GetLocalRole() == ROLE_Authority)
+	{
+	    if (bInGliderRedeploy) return false;
+	}
+	else if (GetLocalRole() == ROLE_AutonomousProxy)
+	{
+	    if (bLocalInGliderRedeploy) return false;
+	}
+	if (NativeLimitParachuteDeployRate148157cfc() != 0)
+	{
+	    UWorld* World = GetWorld();
+	    if (World && !(World->GetTimeSeconds() - NativeParachuteLastTime264c >= ParachuteCooldownToClose))
+	    {
+	        return false;
+	    }
+	}
+	return true;
+}
+
+void AFortPlayerPawn::NativeSetParachuteRequest14234bc70(int32 Request)
+{
+	// CONFIDENCE: HIGH. Original0x14234bc70. Request2 alone is blocked by the lock.
+	if (Request != 2 || !bLocalParachuteLockedOpen)
+	{
+	    NativeParachuteRequest1fc0 = Request;
+	}
 }
 
 void AFortPlayerPawn::NativeUpdateAccelerationPack1423442e0()

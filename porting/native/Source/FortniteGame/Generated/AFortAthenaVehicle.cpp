@@ -565,6 +565,21 @@ bool AFortAthenaVehicle::NativeSeatPredicate_0568(uint8 SeatIndex)
 	return SeatIndex == 0;
 }
 
+void AFortAthenaVehicle::NativeOnTargetingChanged_d70(AFortPlayerPawn* Pawn, uint8 SeatIndex, bool bTargeting)
+{
+	// CONFIDENCE: HIGH. Complete original body; native descendant dispatch inventoried.
+	// Original primary vtable target 0x1406801c0 is a single ret instruction.
+	return;
+}
+
+bool AFortAthenaVehicle::NativeVehiclePredicate_0558()
+{
+	// CONFIDENCE: HIGH. Complete original body; native descendant dispatch inventoried.
+	// 0x141f821f0 via interface thunk 0x14084b700. Original assumes the seat component exists.
+	AActor* SeatOwner = NativeGetSeatComponent163()->GetOwner();
+	return SeatOwner && SeatOwner->GetLocalRole() != ROLE_Authority && SeatOwner->GetOwner();
+}
+
 void AFortAthenaVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

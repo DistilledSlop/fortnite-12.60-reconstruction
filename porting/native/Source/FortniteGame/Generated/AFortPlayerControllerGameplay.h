@@ -7,6 +7,7 @@
 #include "AFortPlayerController.h"
 
 #include "Engine/EngineTypes.h"
+#include "Engine/World.h"
 #include "FCreativeOptionVariableBase.h"
 #include "FGhostModeRepData.h"
 #include "FOnBalloonMovementChanged.h"
@@ -31,6 +32,7 @@
 #include "FVehicleFuelEnable.h"
 #include "FVehicleFuelSetVehicle.h"
 #include "FVehicleTrickInfo.h"
+#include "TimerManager.h"
 #include "UObject/Object.h"
 
 class UCameraModifier;
@@ -192,6 +194,9 @@ public:
 	// table index 25, flags 0x40000000002000
 	UPROPERTY(Transient)
 	bool bHasSetInitialPoiTags;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2568): not a UPROPERTY, not replicated.
+	FTimerHandle NativeInputBlockTimer2568;
 
 	// table index 24, flags 0x40000000080008
 	UPROPERTY()
@@ -439,5 +444,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static UObject* NativeGetClientSettingsRecord14237e580(AFortPlayerControllerGameplay* PlayerControllerObject);
+	bool NativeHasActiveTimer1423d9510();
 };
 

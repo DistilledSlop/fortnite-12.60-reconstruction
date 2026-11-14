@@ -92452,5 +92452,137 @@
       "FortJumpMathNative.h"
     ],
     "notes": "Complete Athena DoJump body. Constructor fields are shared; timer aging, saved-move restore, floor-cache invalidation and structural weak-controller writers remain separate class/gameplay acceptance dependencies. Build/runtime pending."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeParachuteRequest1fc0",
+    "kind": "member_field",
+    "signature": "int32 NativeParachuteRequest1fc0",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "HIGH",
+    "offset": "0x1fc0",
+    "address": "0x14234bc70",
+    "notes": "Shared full request slot. No invented explicit constructor store; UObject zero allocation and full request producer lifecycle are separate class scope."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeParachuteLastTime264c",
+    "kind": "member_field",
+    "signature": "float NativeParachuteLastTime264c",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "HIGH",
+    "offset": "0x264c",
+    "default": "0.0f",
+    "address": "0x1422fe830",
+    "notes": "Original explicit constructor zero; shared cooldown state for input/open/close consumers."
+  },
+  {
+    "class": "AFortPlayerControllerGameplay",
+    "function": "NativeInputBlockTimer2568",
+    "kind": "member_field",
+    "signature": "FTimerHandle NativeInputBlockTimer2568",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "HIGH",
+    "offset": "0x2568",
+    "address": "0x1423c3af0",
+    "includes": [
+      "Engine/EngineTypes.h"
+    ],
+    "notes": "Default invalid FTimerHandle matches original explicit zero. Original set/clear timer producer bodies remain separate class recovery."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeCanCloseParachute142331a80",
+    "kind": "helper",
+    "signature": "bool NativeCanCloseParachute142331a80()",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "HIGH",
+    "address": "0x142331a80",
+    "inc_path": "porting/behavior/parachute_input_runtime/NativeCanCloseParachute142331a80.inc",
+    "includes": [
+      "Engine/World.h",
+      "FortParachuteInputNative.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerControllerGameplay",
+    "function": "NativeHasActiveTimer1423d9510",
+    "kind": "helper",
+    "signature": "bool NativeHasActiveTimer1423d9510()",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "HIGH",
+    "address": "0x1423d9510",
+    "inc_path": "porting/behavior/parachute_input_runtime/NativeHasActiveTimer1423d9510.inc",
+    "includes": [
+      "Engine/World.h",
+      "TimerManager.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeSetParachuteRequest14234bc70",
+    "kind": "helper",
+    "signature": "void NativeSetParachuteRequest14234bc70(int32 Request)",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "HIGH",
+    "address": "0x14234bc70",
+    "inc_path": "porting/behavior/parachute_input_runtime/NativeSetParachuteRequest14234bc70.inc"
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "NativeOnTargetingChanged_d70",
+    "kind": "helper",
+    "signature": "void NativeOnTargetingChanged_d70(AFortPlayerPawn* Pawn, uint8 SeatIndex, bool bTargeting)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/vehicle_target_runtime/AFortAthenaVehicle.NativeOnTargetingChanged_d70.inc",
+    "address": "0x1406801c0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": []
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "NativeVehiclePredicate_0558",
+    "kind": "helper",
+    "signature": "bool NativeVehiclePredicate_0558()",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/vehicle_target_runtime/AFortAthenaVehicle.NativeVehiclePredicate_0558.inc",
+    "address": "0x141f821f0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": []
+  },
+  {
+    "class": "AFortAthenaSKPushCannon",
+    "function": "NativeOnTargetingChanged_d70",
+    "kind": "helper",
+    "signature": "void NativeOnTargetingChanged_d70(AFortPlayerPawn* Pawn, uint8 SeatIndex, bool bTargeting)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/vehicle_target_runtime/AFortAthenaSKPushCannon.NativeOnTargetingChanged_d70.inc",
+    "address": "0x1418f3550",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "override": true
   }
 ]

@@ -12,7 +12,8 @@ def sources():
             stream.seek(int(window['address'], 0) - 0x140000000)
             if hashlib.sha256(stream.read(window['length'])).hexdigest() != window['sha256']:
                 raise ValueError('base jump evidence changed: ' + window['address'])
-    return {'FortJumpMathNative.h': (HERE / 'FortJumpMathNative.h').read_text()}
+    return {filename: (HERE / filename).read_text() for filename in
+            ('FortJumpMathNative.h', 'FortParachuteInputNative.h', 'FortParachuteInputNative.cpp')}
 
 
 def validate(ctx, snippets_by_class):
@@ -34,6 +35,12 @@ def validate(ctx, snippets_by_class):
          'float NativeMeleeSlowRemaining1e5c', 0x1e5c, '0.0f'),
         ('ABuildingSMActor', 'NativeFloorAttributionWeak718',
          'TWeakObjectPtr<AController> NativeFloorAttributionWeak718', 0x718, None),
+        ('AFortPlayerPawn', 'NativeParachuteRequest1fc0',
+         'int32 NativeParachuteRequest1fc0', 0x1fc0, None),
+        ('AFortPlayerPawn', 'NativeParachuteLastTime264c',
+         'float NativeParachuteLastTime264c', 0x264c, '0.0f'),
+        ('AFortPlayerControllerGameplay', 'NativeInputBlockTimer2568',
+         'FTimerHandle NativeInputBlockTimer2568', 0x2568, None),
     ]:
         matches = [e for e in snippets_by_class.get(cls, [])
                    if e.get('function') == name]

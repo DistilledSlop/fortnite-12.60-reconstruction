@@ -1009,5 +1009,7 @@ public:
 	virtual AFortPlayerStateZone* NativeGetPlayerStateForPawn163(APawn* Pawn);
 	virtual bool NativeSeatPredicate_00C8(uint8 SeatIndex) override;
 	virtual bool NativeSeatPredicate_0568(uint8 SeatIndex) override;
+	virtual void NativeOnTargetingChanged_d70(AFortPlayerPawn* Pawn, uint8 SeatIndex, bool bTargeting);
+	virtual bool NativeVehiclePredicate_0558();
 };
 
