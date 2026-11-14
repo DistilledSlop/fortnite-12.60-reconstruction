@@ -2,6 +2,7 @@
 #include "AFortWeaponRanged.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Pawn.h"
+#include "UFortWeaponRangedItemDefinition.h"
 #include "Net/UnrealNetwork.h"
 
 void AFortWeaponRanged::ClientFixupOverheatValue_Implementation(float InOverheatValue)
@@ -195,6 +196,14 @@ bool AFortWeaponRanged::NativeHelper1423cb760(AFortWeaponRanged* WeaponObj)
 	// CONFIDENCE: MEDIUM
 
 	return *reinterpret_cast<const uint8*>(reinterpret_cast<const uint8*>(WeaponObj) + 0x2670) == 2;
+}
+
+bool AFortWeaponRanged::NativeAllowsADSInAirA80() const
+{
+	// CONFIDENCE: HIGH. Complete original body; class lifecycle acceptance remains separate.
+	// Native AFortWeaponRanged virtual +0xa80, original 0x1426c07c0.
+	const UFortWeaponRangedItemDefinition* RangedData = Cast<UFortWeaponRangedItemDefinition>(WeaponData);
+	return RangedData != nullptr && RangedData->bAllowADSInAir;
 }
 
 void AFortWeaponRanged::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

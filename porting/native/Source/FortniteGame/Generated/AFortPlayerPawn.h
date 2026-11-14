@@ -2144,6 +2144,7 @@ public:
 	UFortControllerComponent_SkydiveFeedback* NativeControllerFeedback1423240e0();
 	void NativeCloseParachute14230e850();
 	void NativeSetPendingSkydiveLaunch14234e8b0(bool bPending);
+	virtual bool NativeAllowsADSWhileNotOnGround10B0() const;
 protected:
 	void NativeUpdateAccelerationPack1423442e0();
 	void NativeUpdateRemoteViewData142344420();

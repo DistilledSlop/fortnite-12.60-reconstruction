@@ -4,6 +4,7 @@
 #include "FortDelayedObjectLoader.h"
 #include "GameplayTagContainer.h"
 #include "UFortAbilityTagRelationshipMapping.h"
+#include "UFortGameplayTagData.h"
 
 UFortAbilityTagRelationshipMapping* UFortGameData::NativeResolveAbilityRelationships141e410c0(bool bLogLoad)
 {
@@ -32,5 +33,19 @@ bool UFortGameData::NativeAbilityRelationshipReferences141e6c4f0(const FGameplay
 	// CONFIDENCE: HIGH. Original141e6c4f0. Original calls mapping without a null guard.
 	return NativeResolveAbilityRelationships141e410c0(true)->NativeRelationshipReferences141602e60(
 	    AbilityTags, TargetTag);
+}
+
+UFortGameplayTagData* UFortGameData::NativeResolveGameplayTagData1415e2820(bool bLogLoad)
+{
+	// CONFIDENCE: HIGH. Original1415e2820 specialized to GameData soft field dc0.
+	if (GameplayTagData.IsNull()) return nullptr;
+	UFortGameplayTagData* Data = GameplayTagData.Get();
+	if (!Data)
+	{
+	    Data = Cast<UFortGameplayTagData>(FortLoadDelayedObject(
+	        GameplayTagData.ToSoftObjectPath(), bLogLoad));
+	}
+	FFortAssets::Get().TrackAsset(Data);
+	return Data;
 }
 

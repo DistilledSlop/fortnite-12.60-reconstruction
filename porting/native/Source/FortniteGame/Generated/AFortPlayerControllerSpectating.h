@@ -23,7 +23,9 @@
 #include "FSavedPlayerSpectatorCameraData.h"
 #include "FSavedSpectatorCameras.h"
 #include "FSpectatorDelegate.h"
+#include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Vector.h"
 
@@ -317,5 +319,6 @@ public:
 	AFortPlayerState* NativeResolveSpectatedPlayerState216(const FUniqueNetIdRepl& Id);
 	virtual AFortPlayerState* NativeGetSpectatingPlayerState163();
 	virtual uint8 NativeGetTeam163();
+	virtual bool NativeCanPerformAction15f0(const FGameplayTag& ActionTag) override;
 };
 

@@ -2373,6 +2373,13 @@ void AFortPlayerPawn::NativeSetPendingSkydiveLaunch14234e8b0(bool bPending)
 	}
 }
 
+bool AFortPlayerPawn::NativeAllowsADSWhileNotOnGround10B0() const
+{
+	// CONFIDENCE: HIGH. Complete original body; class lifecycle acceptance remains separate.
+	// Native AFortPlayerPawn virtual +0x10b0, original 0x1406801e0.
+	return false;
+}
+
 void AFortPlayerPawn::NativeUpdateAccelerationPack1423442e0()
 {
 	// CONFIDENCE: high

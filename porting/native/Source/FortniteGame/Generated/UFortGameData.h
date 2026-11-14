@@ -662,5 +662,6 @@ public:
 	UFortAbilityTagRelationshipMapping* NativeResolveAbilityRelationships141e410c0(bool bLogLoad);
 	void NativeExpandAbilityRelationships141e5b330(const FGameplayTagContainer& AbilityTags, FGameplayTagContainer* BlockTags, FGameplayTagContainer* CancelTags);
 	bool NativeAbilityRelationshipReferences141e6c4f0(const FGameplayTagContainer& AbilityTags, const FGameplayTag& TargetTag);
+	UFortGameplayTagData* NativeResolveGameplayTagData1415e2820(bool bLogLoad);
 };
 

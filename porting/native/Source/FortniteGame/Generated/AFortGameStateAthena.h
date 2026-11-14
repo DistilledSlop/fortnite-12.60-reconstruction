@@ -1190,5 +1190,6 @@ public:
 	bool NativeQueryGliderRedeploy14198b790(ACharacter* Pawn);
 	bool NativeQueryWeaponTargeting1419b08a0(AFortWeapon* Weapon);
 	bool NativeConsumeParachuteOpen14199ce60(AFortPlayerPawn* Pawn, bool bFromInput);
+	bool NativeEvaluateADSMutators141989680(AFortPlayerState* PlayerState);
 };
 

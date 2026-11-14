@@ -1095,5 +1095,7 @@ public:
 	static void NativeDecodeDamageStartVectors142119f50(AFortWeapon* WeaponObj, FVector& OutFirst, FVector& OutSecond);
 	bool NativeCanTarget14268efc0();
 	void NativeConfigureAudio1426a2720(UAudioComponent* Audio);
+	virtual bool NativeIsReloadAbilityActive830() const;
+	virtual bool NativeAllowsADSInAirA80() const;
 };
 

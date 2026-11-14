@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortControllerComponent.h"
 
+#include "AbilitySystemComponent.h"
 #include "FFortAbilitySetHandle.h"
 #include "FPerkAccoladeInfo.h"
 #include "FPerkItemSet.h"
@@ -95,5 +96,9 @@ public:
 	void OnRep_SpyTechArray();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	UAbilitySystemComponent* NativeGetAbilitySystemComponent141b462b0() const;
 };
 

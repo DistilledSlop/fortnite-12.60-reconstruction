@@ -2044,6 +2044,7 @@ public:
 	void NativeSetAutoRun1423ae530(bool bEnable);
 	virtual void NativeStartMovementCancellableAction1423b8b70();
 	virtual void NativeEndMovementCancellableAction142378db0();
+	virtual bool NativeCanPerformAction15f0(const FGameplayTag& ActionTag);
 public:
     TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
 	int32 GetNativeStatValue(FName Name, EStatRecordingPeriod Period) const;

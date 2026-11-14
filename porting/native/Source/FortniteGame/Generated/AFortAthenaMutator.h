@@ -50,5 +50,6 @@ public:
 	virtual uint8 NativeQueryGliderRedeployB48(bool& bAllowed);
 	virtual uint8 NativeQueryWeaponTargeting960(AFortWeapon* Weapon, bool& bAllowed);
 	virtual uint8 NativeConsumeParachuteOpenBA0(bool bFromInput, AFortPlayerPawn* Pawn);
+	virtual uint8 NativeQueryADSWhileNotOnGroundAE8(bool& bAllow);
 };
 

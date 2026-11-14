@@ -21,6 +21,7 @@
 #include "Math/Vector.h"
 #include "SharedFortGameLog.h"
 #include "SkeletalMeshComponentBudgeted.h"
+#include "UFortGameplayAbility.h"
 #include "UFortWeaponAttrSet.h"
 #include "UFortWeaponItemDefinition.h"
 #include "UObject/UnrealType.h"
@@ -664,6 +665,21 @@ void AFortWeapon::NativeConfigureAudio1426a2720(UAudioComponent* Audio)
 	        ItemWrapModifier->NotifyAudioComponentAdded(Audio); // 0x14277bcf0 ProcessEvent
 	    }
 	}
+}
+
+bool AFortWeapon::NativeIsReloadAbilityActive830() const
+{
+	// CONFIDENCE: HIGH. Original1426a5d60; current spec handle is read after IsActive.
+	UFortGameplayAbility* Ability = ActiveAbility;
+	return Ability && Ability->IsActive()
+	    && ActiveAbility->GetCurrentAbilitySpecHandle() == ReloadAbilitySpecHandle;
+}
+
+bool AFortWeapon::NativeAllowsADSInAirA80() const
+{
+	// CONFIDENCE: HIGH. Complete original body; class lifecycle acceptance remains separate.
+	// Native AFortWeapon virtual +0xa80, original 0x1406801e0.
+	return false;
 }
 
 void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

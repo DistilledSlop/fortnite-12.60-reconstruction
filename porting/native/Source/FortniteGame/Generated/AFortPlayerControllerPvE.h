@@ -7,7 +7,10 @@
 #include "AFortPlayerControllerZone.h"
 
 #include "Engine/EngineTypes.h"
+#include "Engine/World.h"
 #include "FQuickBar.h"
+#include "FortNativeGameplayTagsRuntime.h"
+#include "GameplayTagContainer.h"
 
 class AFortClientAnnouncement_Basic;
 class UFortGadgetItemDefinition;
@@ -79,5 +82,9 @@ public:
 	void ServerUpdateQuickBarRecordsCache_Implementation(const FQuickBar& PrimaryQuickBarRecord, const FQuickBar& SecondaryQuickBarRecord);
 	bool ServerUpdateQuickBarRecordsCache_Validate(const FQuickBar& PrimaryQuickBarRecord, const FQuickBar& SecondaryQuickBarRecord);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual bool NativeCanPerformAction15f0(const FGameplayTag& ActionTag) override;
 };
 

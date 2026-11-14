@@ -60,7 +60,9 @@
 #include "FProfileGoScenario.h"
 #include "FQuickBarData.h"
 #include "FTimeStampedPhysicsPawnState.h"
+#include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "GameFramework/PawnMovementComponent.h"
 #include "GameFramework/PlayerState.h"
 #include "GameplayTagContainer.h"
 #include "HAL/UnrealMemory.h"
@@ -1449,5 +1451,6 @@ public:
 	static void NativeSetControllerFlagBit0141a5b620(UObject* Context, uint8 Value);
 	static FString* NativeGetPlayerName1444ac7a0(APlayerState* PlayerStateObject, FString* OutName);
 	virtual bool NativeHasSkydiveLeader_1419dd2d0() const;
+	virtual bool NativeCanPerformAction15f0(const FGameplayTag& ActionTag) override;
 };
 

@@ -3,6 +3,7 @@
 #include "AFortGameStateAthena.h"
 #include "AFortPawn.h"
 #include "AFortPlayerPawn.h"
+#include "AFortPlayerState.h"
 #include "Components/AudioComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Engine/World.h"
@@ -300,6 +301,29 @@ bool AFortPlayerPawnAthena::CanCrouch() const
 	    return false;
 	}
 	return !IsInVehicle() && !bLocalIsSkydiving;
+}
+
+bool AFortPlayerPawnAthena::NativeAllowsADSWhileNotOnGround10B0() const
+{
+	// CONFIDENCE: HIGH. Complete original body; class lifecycle acceptance remains separate.
+	// Original 0x141a127f0; cache the byte before any world or mutator callbacks.
+	const bool bOriginalAllow = bADSWhileNotOnGround;
+	UWorld* World = GetWorld();
+	if (!World)
+	{
+	    return bOriginalAllow;
+	}
+	AFortGameStateAthena* State = Cast<AFortGameStateAthena>(World->GetGameState());
+	if (!State)
+	{
+	    return bOriginalAllow;
+	}
+	AFortPlayerState* StateForQuery = Cast<AFortPlayerState>(PlayerState);
+	if (State->NativeEvaluateADSMutators141989680(StateForQuery))
+	{
+	    return true;
+	}
+	return bOriginalAllow;
 }
 
 void AFortPlayerPawnAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

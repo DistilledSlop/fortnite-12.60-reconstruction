@@ -59,6 +59,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x338): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt32_0x338;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x35a): not a UPROPERTY, not replicated.
+	uint8 NativeADSOverrideByte035a = 0;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x364): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x364;
 
@@ -189,5 +192,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static FString NativeBoolToString140ae9a90(bool bFlag);
 	virtual uint8 NativeConsumeParachuteOpenBA0(bool bFromInput, AFortPlayerPawn* Pawn) override;
+	virtual uint8 NativeQueryADSWhileNotOnGroundAE8(bool& bAllow) override;
 };
 

@@ -2,15 +2,21 @@
 #include "AFortPlayerControllerAthena.h"
 #include "AFortGameStateAthena.h"
 #include "AFortGameStateZone.h"
+#include "AFortPlayerController.h"
+#include "AFortPlayerPawnAthena.h"
 #include "AFortPlayerStateAthena.h"
 #include "AFortVolume.h"
 #include "AFortVolumeManager.h"
+#include "AFortWeapon.h"
 #include "Components/SceneComponent.h"
 #include "Containers/UnrealString.h"
 #include "Delegates/Delegate.h"
 #include "EVolumeState.h"
 #include "Engine/World.h"
+#include "FortNativeGameplayTagsRuntime.h"
+#include "GameFramework/PawnMovementComponent.h"
 #include "GameFramework/PlayerState.h"
+#include "GameplayTagContainer.h"
 #include "HAL/UnrealMemory.h"
 #include "SharedFortGameLog.h"
 #include "UAthenaMarkerComponent.h"
@@ -2065,6 +2071,33 @@ bool AFortPlayerControllerAthena::NativeHasSkydiveLeader_1419dd2d0() const
 	// CONFIDENCE: high
 	// Original AFortPlayerControllerAthena virtual +0x2190 -> 0x1419dd2d0.
 	return SkydiveLeader != nullptr && SkydiveLeader != PlayerState;
+}
+
+bool AFortPlayerControllerAthena::NativeCanPerformAction15f0(const FGameplayTag& ActionTag)
+{
+	// CONFIDENCE: HIGH. Original1419c3470; cached weapon and repeated movement query retained.
+	if (ActionTag.MatchesTag(FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x768)))
+	{
+	    AFortPlayerPawnAthena* Pawn = Cast<AFortPlayerPawnAthena>(GetPlayerPawn());
+	    if (Pawn)
+	    {
+	        AFortWeapon* Weapon = Pawn->CurrentWeapon;
+	        if (Pawn->GetMovementComponent())
+	        {
+	            if (!Pawn->GetMovementComponent()->IsSwimming() &&
+	                !Pawn->IsInVehicle() &&
+	                !Pawn->NativeAllowsADSWhileNotOnGround10B0() &&
+	                !Pawn->bBalloonMovementActivated &&
+	                !Pawn->IsZiplining() &&
+	                (!Pawn->IsSurfaceSwimming() || Pawn->bIsWaterJump) &&
+	                (!Weapon || !Weapon->NativeAllowsADSInAirA80()))
+	            {
+	                return false;
+	            }
+	        }
+	    }
+	}
+	return AFortPlayerController::NativeCanPerformAction15f0(ActionTag);
 }
 
 void AFortPlayerControllerAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

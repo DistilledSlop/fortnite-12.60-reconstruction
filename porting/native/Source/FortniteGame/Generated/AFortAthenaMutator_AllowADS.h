@@ -14,5 +14,9 @@ class FORTNITEGAME_API AFortAthenaMutator_AllowADS : public AFortAthenaMutator
 	GENERATED_BODY()
 
 public:
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual uint8 NativeQueryADSWhileNotOnGroundAE8(bool& bAllow) override;
 };
 
