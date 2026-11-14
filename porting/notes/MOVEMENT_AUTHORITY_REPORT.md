@@ -316,6 +316,59 @@ Not established: the exact client code behind the gravity-free jump step; how la
 mismatches are at high frame rate; whether corrections fully explain slow walking on your machine. Step 1 answers the
 last two directly.
 
+## 6. Is proper server-authoritative movement realistic?
+
+Yes. It is a bounded recovery job, and smaller than most of what the port has already done.
+
+Why it is tractable:
+
+- Unreal runs the same movement component on client and server, so the logic the real servers ran is in the client
+  binary that is already dumped. This is recovery, not invention.
+- The scope is finite: about 85 functions at known addresses (appendix). Six are done, `IsFalling` is written but
+  not wired in. The bodies decompiled so far range from 18 to about 400 lines, and several are thin wrappers around
+  the stock engine function with a few Fortnite branches.
+- It is objectively testable. With `-FortniteServerMovementAuthority`, every disagreement is a correction with an
+  exact error vector. Port a group, run, count corrections. The goal is zero.
+- The pipeline for adding overrides already works (section 4, Step 3).
+
+What makes it harder than it sounds:
+
+- Building collision (Step 2) is a separate job, comes first, and is probably the larger piece. Perfect movement code
+  still fails on a server with no floors or walls. Why the earlier probe loaded 679 meshes and got no contact is not
+  yet known, so this part cannot be estimated well.
+- The engines are not identical. The server is stock UE 4.25; the client's engine is a Fortnite branch between 4.25
+  and 4.26. The 75 constructor defaults compared here match, but the gravity-free jump step (section 2.4) proves at
+  least one behavioural difference has not been located. Expect a few more to surface once the obvious gaps close.
+- Special modes are the long tail: skydiving, gliding, swimming, ziplines, balloons and vehicles each have their own
+  physics handler with unresolved callees (Step 3, row 4).
+- Validation needs a real client. The automated one is too slow (section 2.1).
+
+Expected shape of the effort:
+
+- Walking, sprinting, jumping and falling on open terrain to zero corrections: a few focused sessions.
+- Building collision: unknown until the missing contact is diagnosed.
+- Every movement mode: open-ended, but it never has to land at once. Authority can be returned per mode, keeping
+  client authority (Step 0) for the modes that are not yet ported.
+
+## 7. Client-side logging
+
+None is required. Each move the client sends contains its position, movement mode and timestamp, so the server-side
+pair trace (Step 1) already records both sides of every comparison.
+
+Useful but optional, from the player's machine:
+
+- The normal client log, `FortniteGame.log` under `LocalAppData\FortniteGame\Saved\Logs` inside the Proton prefix.
+  At default verbosity it shows hitches, disconnects and load problems around the time of a movement fault.
+- The frame rate during the session (the client also reports it to the server through `ServerReportClientFPS`).
+- A screen recording when a specific glitch needs to be matched to a timestamp in the server trace.
+
+Verbose movement logging on the client would need `-LogCmds="LogNetPlayerMovement VeryVerbose"` on the game command
+line. The category exists in the client binary; whether its verbose lines are compiled into the shipping build is
+untested. ProjectChrono cannot pass it today: `launch()` in `porting/local_client/launcher.c` builds the command
+line from a fixed argument list plus account, server and session values read from `local-server.ini`, and has no
+setting for extra arguments. Adding one (an `ExtraArguments` key under `[LocalServer]`, split and appended with the
+existing `append_arg`) is a small change, to be made only if the server-side trace turns out not to be enough.
+
 ## Appendix: original movement overrides
 
 Slot = index in the original client's vtable. "Name" is the UE 4.25 name after the verified three-slot shift
