@@ -108,6 +108,7 @@ this is the low frame rate of the rig, but it shows the acceleration path is not
 Verified from the traces above and from the existing collision probes:
 
 - The server's floor under the pawn was `Landscape_SpawnIsland` in every sample of the run. It never stood on a mesh.
+- This is a loading gap, not a collision defect: the same meshes collide correctly on the client.
 - Buildings live in "foundation" sub-levels. The blocking wall is in `Apollo_7x12_BusPort_b`, which is a child of
   `LF_7x12_Parent2_2`, itself inside `Apollo_POI_LobbyIsland_b`. The server does not load these levels in normal
   operation. An opt-in probe loads only the outer level, not the nested children.
@@ -245,11 +246,13 @@ What to build:
    - Keep one instance per foundation; key by `NativeComputeFoundationInstanceId`.
 2. Replace the pass with the original lifecycle as it is recovered (the functions that call the selector and write
    `LevelToStream`); the pass above is a stand-in and must be marked as one.
-3. Collision bodies. Loading is not enough: the earlier probe loaded 679 meshes with 672 physics states and still
-   had no usable contact. For each loaded `UStaticMeshComponent` check `GetBodySetup()->AggGeom` element counts and
-   that the cooked convex data was accepted (engine patch `ue425-fortnite-legacy-chaos-collision.patch`; five
-   payload shapes are still rejected as malformed). The reference mesh is `S_Cave_Inner_Middle`: three convex
-   elements with 13, 13 and 12 vertices.
+3. Collision bodies are expected to work once a level is loaded. The same meshes collide on the client, and in the
+   earlier probe 672 of 679 loaded meshes had physics state and 664 blocked pawns. That probe found no contact at
+   the wall only because it loaded the outer level and the wall is in the nested `Apollo_7x12_BusPort_b`, which it
+   never loaded. One residual check: the server's loader still rejects five collision payload shapes as malformed
+   (engine patch `ue425-fortnite-legacy-chaos-collision.patch`), so list any loaded mesh whose
+   `GetBodySetup()->AggGeom` is empty. The reference mesh is `S_Cave_Inner_Middle`: three convex elements with 13,
+   13 and 12 vertices.
 4. Acceptance, using the existing `-FortniteProbeFoundationColumn=X=182250,Y=-174016,Z=-2950`: a capsule sweep in
    +X must hit `S_Athena_Foundation_Straight66.StaticMeshComponent0` at about `(182272, -174016, -2944)` with normal
    `(-1, 0, 0)`. Then repeat sections 2.2 and 2.3 with the authority flag on.
@@ -333,9 +336,9 @@ Why it is tractable:
 
 What makes it harder than it sounds:
 
-- Building collision (Step 2) is a separate job, comes first, and is probably the larger piece. Perfect movement code
-  still fails on a server with no floors or walls. Why the earlier probe loaded 679 meshes and got no contact is not
-  yet known, so this part cannot be estimated well.
+- Building collision (Step 2) is a separate job and comes first. Perfect movement code still fails on a server with
+  no floors or walls. The work is loading the building levels on the server, including nested ones; there is no
+  evidence that collision fails once a level is loaded.
 - The engines are not identical. The server is stock UE 4.25; the client's engine is a Fortnite branch between 4.25
   and 4.26. The 75 constructor defaults compared here match, but the gravity-free jump step (section 2.4) proves at
   least one behavioural difference has not been located. Expect a few more to surface once the obvious gaps close.
@@ -346,7 +349,7 @@ What makes it harder than it sounds:
 Expected shape of the effort:
 
 - Walking, sprinting, jumping and falling on open terrain to zero corrections: a few focused sessions.
-- Building collision: unknown until the missing contact is diagnosed.
+- Building collision: a level-streaming job (Step 2), plus a check for the few meshes with rejected collision data.
 - Every movement mode: open-ended, but it never has to land at once. Authority can be returned per mode, keeping
   client authority (Step 0) for the modes that are not yet ported.
 
@@ -384,8 +387,9 @@ work; none of them is written down here because none of them is known yet:
 4. **Native state.** Several bodies read unreflected members (for example the cached velocity at original `+0x1e0c`
    and the replicated-acceleration flag at `+0x1e38` bit 3). Their writers and initial values have to be recovered
    so they can be declared as typed members.
-5. **Why loaded building meshes gave no contact.** Step 2 describes what to build and how to accept it, not the
-   cause of the earlier failure.
+5. **Which meshes, if any, load without collision.** The server never had building levels loaded, so this has not
+   been observed either way. Five collision payload shapes are rejected by the loader; whether any building mesh
+   uses them is unknown until the levels are streamed in.
 6. **The source of the gravity-free first jump step.** Step 3 gives the debugger procedure; the answer is unknown.
 7. **The trace summariser.** Step 1 specifies it; the script used for this report was throwaway and is not in the
    repository.
