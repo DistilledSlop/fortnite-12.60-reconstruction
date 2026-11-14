@@ -91026,5 +91026,18 @@
     "includes": [
       "UObject/Object.h"
     ]
+  },
+  {
+    "class": "ABuildingFoundation",
+    "function": "NativeCanSelectBuildingLevel",
+    "kind": "helper",
+    "signature": "bool NativeCanSelectBuildingLevel() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141bebba0",
+    "inc_path": "porting/behavior/ABuildingFoundation/NativeCanSelectBuildingLevel.inc",
+    "notes": "Complete original client selection gate. Resolve the world manager before the world-tile class test; otherwise require its bStreamInBuildings flag. Direct callee 0x1406801e0 is a constant-false stub in this client, so its downstream string branch is unreachable. Source integration only; caller, build and runtime validation pending."
   }
 ]

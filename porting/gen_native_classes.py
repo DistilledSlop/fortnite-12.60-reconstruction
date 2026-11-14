@@ -2453,6 +2453,10 @@ _default_subobjects_spec = _common_activation_import.spec_from_file_location(
     "native_default_subobjects_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "native_default_subobjects", "source_policy.py"))
 _default_subobjects_policy = _common_activation_import.module_from_spec(_default_subobjects_spec)
 _default_subobjects_spec.loader.exec_module(_default_subobjects_policy)
+_world_manager_defaults_spec = _common_activation_import.spec_from_file_location(
+    "world_manager_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "world_manager_defaults_runtime", "source_policy.py"))
+_world_manager_defaults_policy = _common_activation_import.module_from_spec(_world_manager_defaults_spec)
+_world_manager_defaults_spec.loader.exec_module(_world_manager_defaults_policy)
 _replicated_building_defaults_spec = _common_activation_import.spec_from_file_location(
     "replicated_building_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "replicated_building_defaults_runtime", "source_policy.py"))
 _replicated_building_defaults_policy = _common_activation_import.module_from_spec(_replicated_building_defaults_spec)
@@ -4899,6 +4903,7 @@ def promote(args):
                 raise SystemExit("%s: generated event %s collides with another declaration in the final header" % (name, ev["name"]))
         cpp = render_promoted_cpp(model, source_label)
         header, cpp = _default_subobjects_policy.finalize(model, header, cpp)
+        header, cpp = _world_manager_defaults_policy.finalize(model, header, cpp)
         header, cpp = _pawn_hand_socket_policy.finalize(model, header, cpp)
         header, cpp = _replicated_building_defaults_policy.finalize(model, header, cpp)
         header, cpp = _playlist_storm_defaults_policy.finalize(model, header, cpp)

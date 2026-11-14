@@ -1,0 +1,13 @@
+{
+  "class": "AFortWorldManager",
+  "constructor": "0x141f7c920",
+  "fields": {
+    "bSavingEnabled": {"type": "bit", "value": true, "offset": "0x298", "mask": "0x1", "store": "0x141f7cc3f"},
+    "bStreamInBuildings": {"type": "bit", "value": true, "offset": "0x2a0", "mask": "0x1", "store": "0x141f7cc5c"},
+    "bConstructTileWorld": {"type": "bit", "value": false, "offset": "0x2a0", "mask": "0x2", "store": "0x141f7cc5c"},
+    "bUseSimMaps": {"type": "bit", "value": false, "offset": "0x2a0", "mask": "0x4", "store": "0x141f7cc5c"},
+    "InitialGlobalWind": {"type": "wind", "bits": ["0xb8d1b717", "0x42340000"], "stores": ["0x141f7cd7e", "0x141f7cd88"]},
+    "FriendlyPlayerSpawnExtent": {"type": "vector", "bits": ["0x44fa0000", "0x44fa0000", "0x447a0000"], "stores": ["0x141f7ccc5", "0x141f7ccf1"]},
+    "PadPlayerSpawnExtent": {"type": "vector", "bits": ["0x447a0000", "0x447a0000", "0x43fa0000"], "stores": ["0x141f7ccfb", "0x141f7cd03"]}
+  }
+}

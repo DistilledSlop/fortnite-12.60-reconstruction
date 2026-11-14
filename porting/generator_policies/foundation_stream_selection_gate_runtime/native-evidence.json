@@ -1,0 +1,29 @@
+{
+  "status": "Complete bounded selection gate helper; lifecycle integration, build and runtime validation pending; no gameplay acceptance",
+  "gate": {
+    "address": "0x141bebba0",
+    "evaluation_order": [
+      "Call GetWorld and resolve manager via 0x141f88460 before the class test",
+      "Return true for AWorldTileFoundation; otherwise require a non-null manager with bStreamInBuildings set"
+    ],
+    "field": "AFortWorldManager bStreamInBuildings at 0x2a0 mask 1",
+    "constant_callee": {
+      "address": "0x1406801e0",
+      "bytes": "32 c0 c3",
+      "effect": "Returns false (xor al, al; ret), making the subsequent class-name and AdditionalWorlds string search unreachable in this client."
+    }
+  },
+  "resolver": {
+    "address": "0x141f88460",
+    "helper": "AFortWorldManager::NativeResolveWorldManager",
+    "effect": "Resolve context world, cast its game state to AFortGameState, and return WorldManager or null."
+  },
+  "lifecycle_boundary": "This source helper is not wired into selection or streaming lifecycle. It does not initialize a manager or records, select or stream a level, or establish a runtime streaming fix. Constant stub behavior is specific to the recovered client.",
+  "research_artifacts": [
+    "porting/generated/agents/foundation-selection-gate/recovery.json",
+    "porting/generated/agents/foundation-selection-gate/gate.asm",
+    "porting/generated/agents/foundation-selection-gate/false-stub.asm",
+    "porting/generated/agents/foundation-selection-gate/world-manager-resolver.asm",
+    "porting/generated/agents/foundation-selection-gate/typed-fields.json"
+  ]
+}
