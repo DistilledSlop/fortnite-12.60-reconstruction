@@ -1,5 +1,5 @@
 diff --git a/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp b/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp
-index fc917c46c..f55b22452 100644
+index fc917c46c..1f45f802c 100644
 --- a/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp
 +++ b/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp
 @@ -3,6 +3,10 @@
@@ -13,7 +13,7 @@ index fc917c46c..f55b22452 100644
  #include "Stats/Stats.h"
  #include "Serialization/BufferArchive.h"
  #include "Misc/FeedbackContext.h"
-@@ -569,6 +573,264 @@ void ULandscapeHeightfieldCollisionComponent::ApplyWorldOffset(const FVector& In
+@@ -569,6 +573,280 @@ void ULandscapeHeightfieldCollisionComponent::ApplyWorldOffset(const FVector& In
  	}
  }
  
@@ -23,13 +23,14 @@ index fc917c46c..f55b22452 100644
 +// Capture a bounded sample of the original cooked stream for offline layout analysis.
 +// CookedCollisionData is an opaque byte array here; it carries no FArchive version context.
 +static void FortniteDumpLandscapeHeightfield(const TArray<uint8>& Blob, const FString& ComponentPath,
-+	int32 FullQuads, int32 SimpleQuads, int32 MaterialCount)
++	int32 FullQuads, int32 SimpleQuads, int32 MaterialCount, const TCHAR* RejectionReason = nullptr)
 +{
 +	FString Directory;
 +	if (!FParse::Value(FCommandLine::Get(), TEXT("FortniteDumpLandscapeHeightfield="), Directory))
 +		return;
 +	static FCriticalSection Lock;
 +	static TSet<FIntPoint> SavedLayouts;
++	static TSet<FString> SavedRejections;
 +	static bool bDumpDisabled = false;
 +	FScopeLock Guard(&Lock);
 +	if (bDumpDisabled)
@@ -41,7 +42,9 @@ index fc917c46c..f55b22452 100644
 +		return;
 +	}
 +	const FIntPoint Layout(FullQuads, SimpleQuads);
-+	if (SavedLayouts.Num() >= 4 || SavedLayouts.Contains(Layout))
++	const FString RejectionKey = RejectionReason ? FString::Printf(TEXT("%d:%d:%s"), FullQuads, SimpleQuads, RejectionReason) : FString();
++	if (RejectionReason ? (SavedRejections.Num() >= 2 || SavedRejections.Contains(RejectionKey)) :
++		(SavedLayouts.Num() >= 4 || SavedLayouts.Contains(Layout)))
 +		return;
 +	if (!IFileManager::Get().MakeDirectory(*Directory, true))
 +	{
@@ -49,13 +52,13 @@ index fc917c46c..f55b22452 100644
 +		bDumpDisabled = true;
 +		return;
 +	}
-+	const FString Stem = FString::Printf(TEXT("landscape_%d_%d_%s"), FullQuads, SimpleQuads,
++	const FString Stem = FString::Printf(TEXT("%s_%d_%d_%s"), RejectionReason ? TEXT("landscape_rejected") : TEXT("landscape"), FullQuads, SimpleQuads,
 +		*FGuid::NewGuid().ToString(EGuidFormats::Digits));
 +	const FString BlobPath = FPaths::Combine(Directory, Stem + TEXT(".bin"));
 +	const FString MetaPath = FPaths::Combine(Directory, Stem + TEXT(".txt"));
 +	const FString Metadata = FString::Printf(
-+		TEXT("component=%s\nfull_quads=%d\nsimple_quads=%d\nbytes=%d\nphysical_material_count=%d\narchive_custom_versions=unavailable_at_opaque_cooked_byte_array\n"),
-+		*ComponentPath, FullQuads, SimpleQuads, Blob.Num(), MaterialCount);
++		TEXT("component=%s\nfull_quads=%d\nsimple_quads=%d\nbytes=%d\nphysical_material_count=%d\ndecode_rejection=%s\narchive_custom_versions=unavailable_at_opaque_cooked_byte_array\n"),
++		*ComponentPath, FullQuads, SimpleQuads, Blob.Num(), MaterialCount, RejectionReason ? RejectionReason : TEXT("none"));
 +	if (!FFileHelper::SaveArrayToFile(Blob, *BlobPath))
 +	{
 +		UE_LOG(LogLandscape, Warning, TEXT("Could not save landscape blob %s"), *BlobPath);
@@ -69,7 +72,8 @@ index fc917c46c..f55b22452 100644
 +		bDumpDisabled = true;
 +		return;
 +	}
-+	SavedLayouts.Add(Layout);
++	if (RejectionReason) SavedRejections.Add(RejectionKey);
++	else SavedLayouts.Add(Layout);
 +	UE_LOG(LogLandscape, Display, TEXT("Saved landscape heightfield sample %s (%d bytes)"), *BlobPath, Blob.Num());
 +}
 +// Exact original 12.60 profile observed in full127/simple0 and full63/simple0 dumps.
@@ -120,6 +124,7 @@ index fc917c46c..f55b22452 100644
 +	const uint8* Heights = nullptr;
 +	float Scale[3];
 +	float MinValue, MaxValue, Range, HeightPerUnit;
++	float DecodedMinValue = 0.f, DecodedMaxValue = 0.f;
 +	int32 NumMaterials = 0;
 +	const uint8* Materials = nullptr;
 +	float GridMin[2], GridMax[2], GridDx[2];
@@ -170,6 +175,12 @@ index fc917c46c..f55b22452 100644
 +		// Check before RoundToInt and reject unrepresentable heights instead of clamping.
 +		if (!Cursor.Check(FMath::IsFinite(Value) && Value <= Out.MaxValue + Tolerance &&
 +			Value >= -32768.5f && Value < 32767.5f, TEXT("unrepresentable height"))) return false;
++		if (Index == 0) Out.DecodedMinValue = Out.DecodedMaxValue = Value;
++		else
++		{
++			Out.DecodedMinValue = FMath::Min(Out.DecodedMinValue, Value);
++			Out.DecodedMaxValue = FMath::Max(Out.DecodedMaxValue, Value);
++		}
 +		const int32 Rounded = FMath::RoundToInt(Value);
 +		if (!Cursor.Check(Rounded >= -32768 && Rounded <= 32767, TEXT("unrepresentable rounded height"))) return false;
 +	}
@@ -195,9 +206,12 @@ index fc917c46c..f55b22452 100644
 +		if (!Cursor.Check(FMath::IsFinite(Out.BoundsMin[Axis]) && FMath::IsFinite(Out.BoundsMax[Axis]) &&
 +			Out.BoundsMin[Axis] <= Out.BoundsMax[Axis], TEXT("invalid local AABB"))) return false;
 +	}
++	// BuildGeomData bounds the reconstructed uint16 vertices, not the nominal
++	// MinValue/MaxValue interval. Original maximums can truncate one storage unit
++	// below MaxValue; validate these retained bounds against actual decoded extrema.
 +	return Cursor.Check(Out.BoundsMin[0] <= 0.f && Out.BoundsMin[1] <= 0.f &&
 +		Out.BoundsMax[0] >= Quads && Out.BoundsMax[1] >= Quads &&
-+		Out.BoundsMin[2] <= Out.MinValue + Tolerance && Out.BoundsMax[2] >= Out.MaxValue - Tolerance,
++		Out.BoundsMin[2] <= Out.DecodedMinValue + Tolerance && Out.BoundsMax[2] >= Out.DecodedMaxValue - Tolerance,
 +		TEXT("local AABB does not enclose geometry"));
 +}
 +
@@ -246,7 +260,8 @@ index fc917c46c..f55b22452 100644
 +}
 +
 +static bool FortniteBuildPhysXHeightfieldsFromChaosBlob(const TArray<uint8>& Blob, int32 FullQuads,
-+	int32 SimpleQuads, int32 PhysicalMaterialCount, bool bIsMirrored, PxHeightField*& OutFull, PxHeightField*& OutSimple)
++	int32 SimpleQuads, int32 PhysicalMaterialCount, bool bIsMirrored, const FString& ComponentPath,
++	PxHeightField*& OutFull, PxHeightField*& OutSimple)
 +{
 +	FFortniteHeightfieldCursor Cursor(Blob);
 +	FFortniteChaosHeightfield Full, Simple;
@@ -258,6 +273,7 @@ index fc917c46c..f55b22452 100644
 +		!Cursor.Check(Cursor.Position == Blob.Num(), TEXT("trailing data/unsupported archive profile")))
 +	{
 +		UE_LOG(LogLandscape, Warning, TEXT("Rejected original Chaos landscape at byte %lld/%d: %s"), Cursor.Position, Blob.Num(), Cursor.Error);
++		FortniteDumpLandscapeHeightfield(Blob, ComponentPath, FullQuads, SimpleQuads, PhysicalMaterialCount, Cursor.Error);
 +		return false;
 +	}
 +	// Validate the entire stream before cooking; publish neither object on failure.
@@ -278,7 +294,7 @@ index fc917c46c..f55b22452 100644
  void ULandscapeHeightfieldCollisionComponent::CreateCollisionObject()
  {
  #if WITH_CHAOS
-@@ -625,12 +887,31 @@ void ULandscapeHeightfieldCollisionComponent::CreateCollisionObject()
+@@ -625,12 +903,31 @@ void ULandscapeHeightfieldCollisionComponent::CreateCollisionObject()
  #if WITH_PHYSX && PHYSICS_INTERFACE_PHYSX
  				// Create heightfield shape
  				{
@@ -292,7 +308,7 @@ index fc917c46c..f55b22452 100644
 +						// Fortnite server: the Windows cook stores Chaos THeightField data; rebuild a PhysX heightfield from it.
 +						FortniteBuildPhysXHeightfieldsFromChaosBlob(CookedCollisionData, CollisionSizeQuads,
 +							SimpleCollisionSizeQuads, CookedPhysicalMaterials.Num(),
-+							(GetComponentTransform().GetScale3D().X * GetComponentTransform().GetScale3D().Y * GetComponentTransform().GetScale3D().Z) < 0.f,
++							(GetComponentTransform().GetScale3D().X * GetComponentTransform().GetScale3D().Y * GetComponentTransform().GetScale3D().Z) < 0.f, GetPathName(),
 +							HeightfieldRef->RBHeightfield, HeightfieldRef->RBHeightfieldSimple);
 +					}
 +					else if (SimpleCollisionSizeQuads > 0)

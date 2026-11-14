@@ -1739,6 +1739,33 @@ namespace FortAthenaMatchFlow
         Pawn->SetActorLocationAndRotation(DropLocation, FRotator(0.0f, Player->ExitRotation.Yaw, 0.0f), false, nullptr, ETeleportType::TeleportPhysics);
     }
 
+    void LogGroundContactLevels(UWorld* World)
+    {
+        int32 Loaded = 0, Visible = 0, StaticMeshCount = 0, Matches = 0;
+        for (TObjectIterator<UStaticMeshComponent> It; It; ++It)
+        {
+            if (It->GetWorld() == World && !It->HasAnyFlags(RF_ClassDefaultObject | RF_ArchetypeObject))
+                ++StaticMeshCount;
+        }
+        for (const ULevelStreaming* Streaming : World->GetStreamingLevels())
+        {
+            if (!Streaming)
+                continue;
+            Loaded += Streaming->GetLoadedLevel() != nullptr;
+            Visible += Streaming->IsLevelVisible();
+            const FString Package = Streaming->GetWorldAssetPackageName();
+            if (Package.Contains(TEXT("Lobby")) || Package.Contains(TEXT("Spawn")))
+            {
+                if (Matches < 10)
+                    UE_LOG(LogTemp, Display, TEXT("GroundContactLevel: package=%s loaded=%d visible=%d"),
+                        *Package, Streaming->GetLoadedLevel() != nullptr, Streaming->IsLevelVisible());
+                ++Matches;
+            }
+        }
+        UE_LOG(LogTemp, Display, TEXT("GroundContactLevel: streaming=%d loaded=%d visible=%d worldLevels=%d staticMeshComponents=%d lobbySpawnMatches=%d (first 10 shown)"),
+            World->GetStreamingLevels().Num(), Loaded, Visible, World->GetLevels().Num(), StaticMeshCount, Matches);
+    }
+
     // Inspect nearby mesh bounds including components that do not participate in collision queries.
     void LogNearbyGroundMeshes(UWorld* World, const UCapsuleComponent* Capsule, int32 Sample)
     {
@@ -1746,15 +1773,19 @@ namespace FortAthenaMatchFlow
         {
             UStaticMeshComponent* Component;
             float DistanceSquared;
+            FBoxSphereBounds CalculatedBounds;
         };
         TArray<FNearbyMesh> Nearest;
-        const FBox CapsuleBox = Capsule->Bounds.GetBox();
+        const FVector CapsuleLocation = Capsule->GetComponentLocation();
+        const FVector CapsuleExtent(Capsule->GetScaledCapsuleRadius(), Capsule->GetScaledCapsuleRadius(), Capsule->GetScaledCapsuleHalfHeight());
+        const FBox CapsuleBox(CapsuleLocation - CapsuleExtent, CapsuleLocation + CapsuleExtent);
         for (TObjectIterator<UStaticMeshComponent> It; It; ++It)
         {
             UStaticMeshComponent* Component = *It;
             if (Component->GetWorld() != World || Component->HasAnyFlags(RF_ClassDefaultObject | RF_ArchetypeObject))
                 continue;
-            const FBox MeshBox = Component->Bounds.GetBox();
+            const FBoxSphereBounds CalculatedBounds = Component->CalcBounds(Component->GetComponentTransform());
+            const FBox MeshBox = CalculatedBounds.GetBox();
             const FVector Gap(
                 FMath::Max(0.0f, FMath::Max(CapsuleBox.Min.X - MeshBox.Max.X, MeshBox.Min.X - CapsuleBox.Max.X)),
                 FMath::Max(0.0f, FMath::Max(CapsuleBox.Min.Y - MeshBox.Max.Y, MeshBox.Min.Y - CapsuleBox.Max.Y)),
@@ -1767,12 +1798,14 @@ namespace FortAthenaMatchFlow
                 ++Index;
             if (Index < 6)
             {
-                Nearest.Insert(FNearbyMesh{Component, DistanceSquared}, Index);
+                Nearest.Insert(FNearbyMesh{Component, DistanceSquared, CalculatedBounds}, Index);
                 if (Nearest.Num() > 6)
                     Nearest.RemoveAt(6);
             }
         }
-        UE_LOG(LogTemp, Display, TEXT("GroundContactMesh: sample=%d count=%d (nearest six within 150cm)"), Sample, Nearest.Num());
+        UE_LOG(LogTemp, Display, TEXT("GroundContactMesh: sample=%d count=%d capsuleLocation=%s capsuleCachedOrigin=%s capsuleCachedExtent=%s queryExtent=%s (nearest six within 150cm)"),
+            Sample, Nearest.Num(), *CapsuleLocation.ToString(), *Capsule->Bounds.Origin.ToString(),
+            *Capsule->Bounds.BoxExtent.ToString(), *CapsuleExtent.ToString());
         for (const FNearbyMesh& Entry : Nearest)
         {
             UStaticMeshComponent* Component = Entry.Component;
@@ -1786,9 +1819,11 @@ namespace FortAthenaMatchFlow
 #if WITH_CHAOS
             if (Body) ChaosTriangleMeshes = Body->ChaosTriMeshes.Num();
 #endif
-            UE_LOG(LogTemp, Display, TEXT("GroundContactMesh: sample=%d distance=%.3f owner=%s component=%s registered=%d actorCollision=%d actorHidden=%d componentVisible=%d physicsState=%d collisionEnabled=%d profile=%s pawnResponse=%d mesh=%s body=%s traceFlag=%d convex=%d spheres=%d boxes=%d capsules=%d physxTriMeshes=%d chaosTriMeshes=%d"),
+            UE_LOG(LogTemp, Display, TEXT("GroundContactMesh: sample=%d distance=%.3f owner=%s component=%s componentLocation=%s boundsOrigin=%s boundsExtent=%s cachedOrigin=%s cachedExtent=%s registered=%d actorCollision=%d actorHidden=%d componentVisible=%d physicsState=%d collisionEnabled=%d profile=%s pawnResponse=%d mesh=%s body=%s traceFlag=%d convex=%d spheres=%d boxes=%d capsules=%d physxTriMeshes=%d chaosTriMeshes=%d"),
                 Sample, FMath::Sqrt(Entry.DistanceSquared), *GetPathNameSafe(Owner), *GetPathNameSafe(Component),
-                Component->IsRegistered(), Owner ? Owner->GetActorEnableCollision() : false, Owner ? Owner->IsHidden() : false,
+                *Component->GetComponentLocation().ToString(), *Entry.CalculatedBounds.Origin.ToString(),
+                *Entry.CalculatedBounds.BoxExtent.ToString(), *Component->Bounds.Origin.ToString(),
+                *Component->Bounds.BoxExtent.ToString(), Component->IsRegistered(), Owner ? Owner->GetActorEnableCollision() : false, Owner ? Owner->IsHidden() : false,
                 Component->IsVisible(), Component->IsPhysicsStateCreated(), static_cast<int32>(Component->GetCollisionEnabled()),
                 *Component->GetCollisionProfileName().ToString(), static_cast<int32>(Component->GetCollisionResponseToChannel(ECC_Pawn)),
                 *GetPathNameSafe(Component->GetStaticMesh()), *GetPathNameSafe(Body), Body ? static_cast<int32>(Body->GetCollisionTraceFlag()) : -1,
@@ -1874,6 +1909,8 @@ namespace FortAthenaMatchFlow
                 *GetNameSafe(WallComponent), *GetNameSafe(WallComponent ? WallComponent->GetClass() : nullptr), *Direction.ToString(),
                 bComplexWall, ComplexWall.bStartPenetrating, ComplexWall.Distance, *ComplexWall.ImpactPoint.ToString(),
                 *GetNameSafe(ComplexWall.GetActor()), *GetNameSafe(ComplexWall.GetComponent()));
+            if (Probe->Samples == 1)
+                LogGroundContactLevels(SampleWorld);
             if (Probe->Samples % 10 == 0)
                 LogNearbyGroundMeshes(SampleWorld, Capsule, Probe->Samples);
             if (Probe->Samples == 180)
