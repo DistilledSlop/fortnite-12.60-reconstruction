@@ -26,7 +26,7 @@ It explains the bus desync measured in `porting/generated/runs/20261113-movement
 The reconstructed server's authority path matches the reviewed original function for clock domain, timestamp cadence,
 thresholds and end-of-flight handling (section 3). The reviewed clock path revealed no missing server behavior.
 
-What is *not* established is in section 8. The main open items are a real mid-flight late join, which was
+What is *not* established is in section 9. The main open items are a real mid-flight late join, which was
 reasoned from code but not measured, and whether the original server did anything outside the aircraft class.
 
 ## 2. Evidence classes and sources
@@ -64,7 +64,7 @@ Earlier reports this document builds on and partly supersedes, all under `portin
 ### 3.2 Every writer of the clock fields
 
 A scan of the image for stores to these offsets, restricted to float stores and to the aircraft code range,
-finds only the following **[B]**. The scan method and its limits are in section 8.
+finds only the following **[B]**. The scan method and its limits are in section 9.
 
 | Field | Writers |
 |---|---|
@@ -219,7 +219,7 @@ Known gaps that are real but do not enter the bus clock:
 | A client that stops losing time converges | may not | converges at 0.33 s/s | client 1 converged at 38.5 s |
 
 Both clients ran on `llvmpipe` through DXVK with four rasterizer threads **[M]**. The measured lost game time
-and bounded correction explain the gap; the cause of the long frames was not isolated (section 8). With frames
+and bounded correction explain the gap; the cause of the long frames was not isolated (section 9). With frames
 under 0.4 s and no other source of clock error, the model predicts much smaller gaps, subject to latency and
 individual hitches **[I]**.
 
@@ -264,27 +264,73 @@ and repeat if needed rather than treating the nominal numbers as exact.
 **Risks.** A 5 s stop is far below the connection timeout **[E]** but this was not tried under Wine. If the
 client drops, repeat with 3 s (nominally 2.6 s discarded, 195 m, 7.9 s to repay under the same assumptions).
 
-## 8. Remaining uncertainty
+## 8. Is there any original protection against low-frame desync
 
-- **Mid-flight late join** is derived from the constructor, `OnRep` and Tick only. The `3 * N` catch-up and the
-  claim that `OnRep` runs on the initial bunch were not measured.
-- **Writer scan limits.** The scan matched float and integer stores by displacement in `0x141000000..0x143000000`
-  and reported hits near the aircraft code; image-wide it matched unprefixed `movss` stores only. A store through
-  a computed pointer, a `memcpy`, or code in the packed region near `0x1495a0000` would not be seen.
-- **Original server outside the aircraft class.** Nothing found says the retail server compensated for slow
-  clients, but only the aircraft, the game-mode flight-ended handler and the warmup path were read. The 60 s
-  timer and `0x141975490` in `StartAircraftPhase` are unread.
-- **Replay predicate** `0x144693a30` disables correction when true. It is assumed false on a live client; the
-  observed 1.33 slope supports that.
-- **Source of the frame cost.** The samples prove frames over 0.4 s, not why. Software rasterization is the
-  obvious reason but level streaming, shader compilation at the phase change and missing server behavior at
-  `EnterAircraft` were not separated.
+Follow-up of 2026-11-13, same image. Short answer: **not for the bus. Fortnite does have one for a different
+clock, and the bus does not use it.** This is a strong negative, not a proof; the limits are in section 9.
+
+### 8.1 What was checked and found absent
+
+| Candidate | Result |
+|---|---|
+| Other virtual overrides on the aircraft | The aircraft vtable `0x145dcfd50` differs from its parent `AFortAircraft` `0x145d7cc20` in 8 of 200 slots **[B]**: destructor (+0x0), destroy cleanup `0x1418ba980` (+0x80), replicated-property registration `0x1418c5640` (+0x1b0), a reflection slot (+0x248), `BeginPlay` `0x1418bb020` (+0x328, creates two cosmetic components on non-dedicated machines), `EndPlay` `0x1418bf860` (+0x330), Tick (+0x450) and a one-call forwarder (+0x638). There is no post-net-receive, post-net-init or movement-replication override. |
+| Other writers of the clock fields | A second scan over the whole image for float stores to +0x2e8 or +0x2ec that sit near references to at least two sibling fields finds only the Tick and `OnRep` stores plus constructors of unrelated classes **[B]**. |
+| Smoothing strength | The value at `0x1478c2360` is the console variable `Athena.Aircraft.ClientTimeSmoothing`, help text "Amount to smooth aircraft time discrepency to correct for variable latency. 0 disables." **[B]**. Its stated purpose is latency jitter, not hitches. Tick clamps it to `[0, 1]`, so even the maximum cannot snap: the bus could then advance at most 2x local game time. |
+| Other aircraft console variables | Image strings give `Athena.Aircraft.ClientTimeDebugVis`, `AircraftEnableMidpointSelectionCircle`, `AircraftEnableSpawnOnOuterCircle`, `AircraftEnableUniformDoorOpenTime`, `AircraftOffsetFromMidLineOverride`, and `Athena.bForceAircraftPhaseGC`, `Athena.DumpInventoryWhenStartingAircraft` **[B]**. None names a snap, tolerance or resync. |
+| The unreflected fourth time-dilation factor (world settings +0x3e4) | Set to 1.0 by the constructor (`0x141fa4817`) and written by `0x141f05190`, whose only caller is the exec thunk of `SetEndGameTimeDilation` **[B]**. It is end-of-match slow motion, not a catch-up device. It was 1.0 in every sample of the run **[M]**. |
+| `0x141975490` at phase start | Already read in `porting/server_systems/R1-warmup-and-aircraft-code.md` section 6.3: resets supply-drop spawn data. Unrelated. |
+| The 60 s timer at phase start | Created at `0x14196c2b7` in `StartAircraftPhase` on handle +0x14e0. The bound member function is `0x1406801c0`, which is a bare `ret` **[B]**. It does nothing in this build. |
+| Replay predicate `0x144693a30` | Returns true only when the world's demo driver (+0xf0) exists and reports playback **[B]**. False on a live client. |
+| Frame clamp | Unchanged from `flight-frame-clamp`: 0.4 s, no carry. |
+
+### 8.2 The protection that does exist, on another clock
+
+The Athena game state keeps its own smoothed server clock, `SmoothedWorldTimeSeconds` (+0x2870) with
+`SmoothedWorldTimeSecondsDrift` (+0x2874). Its update at `0x1419b15e6..0x1419b1666` is the same code shape as the
+aircraft's: add `DeltaSeconds`, then remove at most `clamp(rate, 0, 1) * DeltaSeconds` of drift **[B]**. The rate
+is `Athena.SmoothedWorldTimeSmoothingRate` at `0x1478c26ac`, value 0.33.
+
+The difference is in the receive path. `OnRep_ReplicatedWorldTimeSeconds` (`0x1419a7060`) compares the drift with
+`Athena.SmoothedWorldTimeDeltaTolerance` at `0x1478c26b0`, value 1.0, help text "If difference in smoothed world
+time and server replicated time is >= than this, just accept server time." **[B]**. At or above 1 s it writes the
+replicated time straight into the smoothed clock and clears the drift.
+
+So the original authors wrote the same bounded smoother twice and gave only the game-state copy a hard resync.
+The aircraft `OnRep` (five instructions, section 3.3) has no tolerance test and no such variable exists for it.
+That is the best available evidence that the missing snap on the bus is how 12.60 shipped, and not something the
+reconstruction lost.
+
+Two consequences:
+
+- A client-side resync of the bus is not original behavior in this build and should not be added on that claim.
+- `Athena.Aircraft.ClientTimeSmoothing` is an original, client-side console variable. Raising it is a
+  configuration change the original supports, but nothing found says retail did so, and it cannot exceed 1.
+  It is recorded here as a fact about the binary, not as a proposal.
+
+## 9. Remaining uncertainty
+
+- **Mid-flight late join** is still derived from code only. The mechanism is firmer than before: the engine runs
+  an on-change notify when the received value differs from the shadow state (`RepLayout.cpp` line 2964 **[E]**),
+  and the timestamp's default is not a live flight time. The `3 * N` catch-up itself was not measured. Closing it
+  needs one run in which a client connects after flight start.
+- **Writer scans are pattern scans.** A store through a computed pointer, a block copy, or code that was still
+  packed in the capture would not be seen. A live data breakpoint on +0x2e8 and +0x2ec during a flight would
+  close this.
+- **Original server outside the code read.** Read so far: the aircraft class, `StartAircraftPhase` and its timer,
+  the flight-ended handler and the warmup path. Nothing compensates for slow clients. Server code that reaches the
+  bus only through Blueprint or through the controller's aircraft component was not traced.
+- **Blueprint.** `AthenaAircraft_C` could move or re-time the bus in script. Tick overwrites the location every
+  frame, so a script snap would not survive one frame, but the Blueprint graph was not read.
+- **Hotfix configuration.** Console variables can be set by backend-delivered configuration. Whether retail
+  changed `Athena.Aircraft.ClientTimeSmoothing` for this build is unknown; the image default is 0.33 and the
+  measured slope matches it.
 - **Sampling.** Reads are sequential and 0.5 s apart, so per-frame deltas are inferred from totals. The table's
   server elapsed is wall time since the server log line, good to a few tens of milliseconds.
 - **One run.** The earlier runs `plugin-manager-acceptance-1` and `clock-threads16-1` show the same 1.33 slope
   and discard pattern, but the closed accounting in section 4 was computed for this run only.
+- **Why frames exceed 0.4 s** is out of scope by decision; the client's frame rate is taken as given.
 
-## 9. Remote-player position drift
+## 10. Remote-player position drift
 
 **This diagnosis does not explain it. It needs its own investigation.**
 
