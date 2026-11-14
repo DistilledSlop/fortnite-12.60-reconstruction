@@ -1,10 +1,11 @@
-"""Original pawn aim rotation and its native vehicle interface dependency."""
+"""Original pawn aim rotation and driving predicates on the vehicle interface."""
 
 
 def interface_declarations(name):
     if name != 'UFortVehicleInterface':
         return []
-    return ['public:', '\tvirtual bool NativeSeatPredicate_00C8(uint8 SeatIndex) = 0;']
+    return ['public:', '\tvirtual bool NativeSeatPredicate_00C8(uint8 SeatIndex) = 0;',
+            '\tvirtual bool NativeSeatPredicate_0568(uint8 SeatIndex) = 0;']
 
 
 def apply(model):

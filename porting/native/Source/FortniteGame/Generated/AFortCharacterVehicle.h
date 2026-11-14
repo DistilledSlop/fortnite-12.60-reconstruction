@@ -342,5 +342,6 @@ public:
 	virtual IFortVehicleInterface* NativeGetVehicleInterface163();
 	virtual bool NativeSeatPredicate_00C8(uint8 SeatIndex) override;
 	virtual float NativeGetMovementSpeed14231ab10(uint8 Style) const override;
+	virtual bool NativeSeatPredicate_0568(uint8 SeatIndex) override;
 };
 

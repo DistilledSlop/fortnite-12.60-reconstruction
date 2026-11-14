@@ -2035,6 +2035,7 @@ public:
 	static int32 NativeGetSlotIndexByKind142059ed0(AFortPlayerController* Controller, uint8 Kind);
 	static void* NativeGetQuickBarSlotStorage14205b290(UObject* Owner, uint8 SlotKind);
 	static bool NativeCanToggleFullscreenMap142607f40(UObject* Controller);
+	bool NativeSprintTagGate142390740() const;
 public:
     TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
 	int32 GetNativeStatValue(FName Name, EStatRecordingPeriod Period) const;

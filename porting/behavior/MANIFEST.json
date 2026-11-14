@@ -92216,5 +92216,73 @@
     ],
     "notes": "Complete base Fort override only; Athena override1419cd830 and saved-move lifecycle remain independently incomplete. No full Athena jump/parity claim.",
     "class": "UFortMovementComp_Character"
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeSprintTagGate142390740",
+    "kind": "helper",
+    "signature": "bool NativeSprintTagGate142390740() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/sprint_feasibility_runtime/AFortPlayerController.NativeSprintTagGate142390740.inc",
+    "address": "0x142390740",
+    "status": "ported",
+    "confidence": "HIGH"
+  },
+  {
+    "function": "IsDrivingVehicle",
+    "kind": "exec",
+    "signature": "bool IsDrivingVehicle() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/sprint_feasibility_runtime/AFortPlayerPawn.IsDrivingVehicle.inc",
+    "address": "0x142a7d110",
+    "native_body_address": "0x142331180",
+    "status": "ported",
+    "confidence": "HIGH",
+    "notes": "Calls the existing virtual pawn vehicle getter and interface slot +0x568. The const_cast preserves the existing non-const virtual getter signature.",
+    "class": "AFortPlayerPawn"
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "NativeSeatPredicate_0568",
+    "kind": "helper",
+    "signature": "bool NativeSeatPredicate_0568(uint8 SeatIndex)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "override": true,
+    "inc_path": "porting/behavior/sprint_feasibility_runtime/AFortAthenaVehicle.NativeSeatPredicate_0568.inc",
+    "address": "0x140850630",
+    "status": "ported",
+    "confidence": "HIGH"
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "NativeSeatPredicate_0568",
+    "kind": "helper",
+    "signature": "bool NativeSeatPredicate_0568(uint8 SeatIndex)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "override": true,
+    "inc_path": "porting/behavior/sprint_feasibility_runtime/AFortCharacterVehicle.NativeSeatPredicate_0568.inc",
+    "address": "0x140850630",
+    "status": "ported",
+    "confidence": "HIGH"
+  },
+  {
+    "class": "AFortAthenaExitCraft",
+    "function": "NativeSeatPredicate_0568",
+    "kind": "helper",
+    "signature": "bool NativeSeatPredicate_0568(uint8 SeatIndex)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "override": true,
+    "inc_path": "porting/behavior/sprint_feasibility_runtime/AFortAthenaExitCraft.NativeSeatPredicate_0568.inc",
+    "address": "0x1406801e0",
+    "status": "ported",
+    "confidence": "HIGH"
   }
 ]

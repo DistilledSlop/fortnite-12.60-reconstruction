@@ -2112,6 +2112,13 @@ bool AFortPlayerController::NativeCanToggleFullscreenMap142607f40(UObject* Contr
 	return *(RawController_hq10 + 0x570) != 0 || *reinterpret_cast<void* const*>(RawController_hq10 + 0x578) != nullptr;
 }
 
+bool AFortPlayerController::NativeSprintTagGate142390740() const
+{
+	// CONFIDENCE: HIGH. Full original body.
+	// Original 0x142390740. MyFortPawn is the original controller field at +0x6e0.
+	return MyFortPawn && MyFortPawn->NativeSprintTagGate14232cb50();
+}
+
 void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

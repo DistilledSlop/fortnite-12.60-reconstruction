@@ -47,6 +47,13 @@ void AFortAthenaExitCraft::OnRep_VehicleSkinIndex()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortAthenaExitCraft::NativeSeatPredicate_0568(uint8 SeatIndex)
+{
+	// CONFIDENCE: HIGH. Full original body.
+	// Original interface target 0x1406801e0: xor AL, AL; ret.
+	return false;
+}
+
 void AFortAthenaExitCraft::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

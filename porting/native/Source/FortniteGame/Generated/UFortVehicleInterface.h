@@ -25,4 +25,5 @@ public:
     virtual AFortPlayerStateZone* NativeGetPlayerStateForPawn163(APawn* Pawn);
 public:
 	virtual bool NativeSeatPredicate_00C8(uint8 SeatIndex) = 0;
+	virtual bool NativeSeatPredicate_0568(uint8 SeatIndex) = 0;
 };
