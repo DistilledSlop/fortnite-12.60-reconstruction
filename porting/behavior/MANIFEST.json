@@ -93896,5 +93896,138 @@
       "TimerManager.h"
     ],
     "notes": "Original constructor1426be080 explicitly zeroes handle at1108; typed FTimerHandle default construction is invalid. Shared producer PlayReloadAnim1426d9a70, callback1426d2aa0 to virtual840 and remaining-time reader1426cfa00 identified but not integrated; full timer lifecycle remains open."
+  },
+  {
+    "function": "NativeFindBaseProfileItem",
+    "kind": "helper",
+    "signature": "FMcpProfileItemPtr NativeFindBaseProfileItem(const FMcpProfileItemMap& ItemsById, const FString& ItemId)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/UMcpProfile/NativeFindBaseProfileItem.inc",
+    "address": "0x1410fdd30",
+    "confidence": "HIGH",
+    "status": "ported",
+    "includes": [
+      "McpProfileBaseTypes.h"
+    ],
+    "notes": "Complete lookup algorithm as a static source binding over the actual backend indexes, retaining shared record references. A present null override suppresses base fallback. Backend installation, larger overlay records, population, virtual dispatch and GC integration remain open; this does not install a live resolver.",
+    "class": "UMcpProfile"
+  },
+  {
+    "function": "NativeFindOverlayProfileItem",
+    "kind": "helper",
+    "signature": "FMcpProfileItemPtr NativeFindOverlayProfileItem(const FMcpProfileItemMap& ItemsById, const FMcpProfileOverlayState& Overlay, const FString& ItemId)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/UMcpProfile/NativeFindOverlayProfileItem.inc",
+    "address": "0x1410fde50",
+    "confidence": "HIGH",
+    "status": "ported",
+    "includes": [
+      "ProfileOverlayState.h"
+    ],
+    "notes": "Complete lookup algorithm as a static source binding over the actual backend indexes, retaining shared record references. A present null override suppresses base fallback. Backend installation, larger overlay records, population, virtual dispatch and GC integration remain open; this does not install a live resolver.",
+    "class": "UMcpProfile"
+  },
+  {
+    "function": "NativeGetReloadTimerRemaining1426cfa00",
+    "kind": "helper",
+    "signature": "float NativeGetReloadTimerRemaining1426cfa00() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortWeaponRanged_Ostrich/NativeGetReloadTimerRemaining1426cfa00.inc",
+    "address": "0x1426cfa00",
+    "confidence": "HIGH",
+    "status": "ported",
+    "includes": [
+      "Engine/World.h",
+      "TimerManager.h"
+    ],
+    "notes": "Complete original remaining-time reader; retains repeated virtual world read and shared reload timer. Full PlayReloadAnim producer, LoadShotgunAmmo callback and weapon lifecycle remain unaccepted.",
+    "class": "AFortWeaponRanged_Ostrich"
+  },
+  {
+    "function": "NativeNeedsToBeCocked",
+    "kind": "member_field",
+    "signature": "bool NativeNeedsToBeCocked",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "offset": "0xb48",
+    "default": "false",
+    "address": "0x14268d9b0",
+    "notes": "Original byte mask 1 initialized false in base weapon constructor; independent native field, not Linux offset overlay.",
+    "class": "AFortWeapon"
+  },
+  {
+    "function": "NativeCockingTimerB30",
+    "kind": "member_field",
+    "signature": "FTimerHandle NativeCockingTimerB30",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "offset": "0xb30",
+    "address": "0x14268d9b0",
+    "includes": [
+      "TimerManager.h"
+    ],
+    "notes": "Original constructor initializes handle to zero; FTimerHandle default is invalid.",
+    "class": "AFortWeapon"
+  },
+  {
+    "function": "NativeCockingTimerB38",
+    "kind": "member_field",
+    "signature": "FTimerHandle NativeCockingTimerB38",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "offset": "0xb38",
+    "address": "0x14268d9b0",
+    "includes": [
+      "TimerManager.h"
+    ],
+    "notes": "Original constructor initializes handle to zero; FTimerHandle default is invalid.",
+    "class": "AFortWeapon"
+  },
+  {
+    "function": "NativeClearNeedsToBeCocked1426afaa0",
+    "kind": "helper",
+    "signature": "void NativeClearNeedsToBeCocked1426afaa0()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortWeapon/NativeClearNeedsToBeCocked1426afaa0.inc",
+    "address": "0x1426afaa0",
+    "confidence": "HIGH",
+    "status": "ported",
+    "includes": [
+      "TimerManager.h",
+      "Engine/World.h",
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Full leaf: clear flag, if world clear B30 then B38 (each invalidates handle even if timer missing), log at LogFort Log; lifecycle and callers remain open.",
+    "class": "AFortWeapon"
+  },
+  {
+    "class": "UFortMovementComp_Character",
+    "function": "ApplyVelocityBraking",
+    "kind": "helper",
+    "signature": "void ApplyVelocityBraking(float DeltaTime, float Friction, float BrakingDeceleration)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "override": true,
+    "address": "0x1420d8430",
+    "inc_path": "porting/behavior/UFortMovementComp_Character/ApplyVelocityBraking.inc",
+    "confidence": "HIGH",
+    "status": "ported",
+    "includes": [
+      "GameFramework/PhysicsVolume.h"
+    ],
+    "notes": "Complete original override at primary slot890 for both constructor-proven Fort movement tables. Raises braking only for slippery walking inside deep/shallow water; ordinary dry walking forwards unchanged. Preserves comparison NaN behavior. Source generation/combined UE build/runtime and wider movement lifecycle remain unaccepted."
   }
 ]

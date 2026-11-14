@@ -8,6 +8,7 @@
 
 #include "AttributeSet.h"
 #include "Engine/EngineTypes.h"
+#include "Engine/World.h"
 #include "FWeaponHudData.h"
 #include "GameplayTagContainer.h"
 #include "TimerManager.h"
@@ -223,5 +224,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual bool NativeIsReloadAbilityActive830() const override;
+	float NativeGetReloadTimerRemaining1426cfa00() const;
 };
 

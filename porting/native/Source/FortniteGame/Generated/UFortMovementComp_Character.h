@@ -18,6 +18,7 @@
 #include "FWaterJumpParams.h"
 #include "FWaterSprintBoostParams.h"
 #include "FortJumpMathNative.h"
+#include "GameFramework/PhysicsVolume.h"
 #include "Math/Vector.h"
 
 class AFortPawn;
@@ -303,5 +304,6 @@ public:
 	void NativeAddMoveCombiningBlocker1420ebf70(FName AbilityName);
 	void NativeRemoveMoveCombiningBlocker1420eaed0(FName AbilityName);
 	virtual void UpdateFromCompressedFlags(uint8 Flags) override;
+	virtual void ApplyVelocityBraking(float DeltaTime, float Friction, float BrakingDeceleration) override;
 };
 

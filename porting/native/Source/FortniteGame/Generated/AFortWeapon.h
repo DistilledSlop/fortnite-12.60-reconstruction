@@ -45,6 +45,8 @@
 #include "Math/TransformNonVectorized.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
+#include "SharedFortGameLog.h"
+#include "TimerManager.h"
 #include "UObject/UnrealType.h"
 
 class ACustomItemWrapModifier;
@@ -726,6 +728,12 @@ public:
 	UPROPERTY(Transient)
 	ACustomItemWrapModifier* ItemWrapModifier;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xb30): not a UPROPERTY, not replicated.
+	FTimerHandle NativeCockingTimerB30;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xb38): not a UPROPERTY, not replicated.
+	FTimerHandle NativeCockingTimerB38;
+
 	// table index 5, flags 0x20080000002000
 	UPROPERTY(Transient)
 	AActor* LockOnTargetCandidate;
@@ -737,6 +745,9 @@ public:
 	// table index 3, flags 0x20080000010001
 	UPROPERTY()
 	bool bFireConsumableAnalyticEvent;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xb48): not a UPROPERTY, not replicated.
+	bool NativeNeedsToBeCocked = false;
 
 	// table index 2, flags 0x10000010080000
 	UPROPERTY()
@@ -1102,5 +1113,6 @@ public:
 	virtual bool NativeAllowsADSInAirA80() const;
 	AController* NativeResolveController1426a07c0();
 	virtual void NativeSetTargeting1426b3730(bool bNewTargeting);
+	void NativeClearNeedsToBeCocked1426afaa0();
 };
 

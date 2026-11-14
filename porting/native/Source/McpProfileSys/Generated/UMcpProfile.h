@@ -110,5 +110,7 @@ public:
 	static void NativeUpdateItemObject(const TMap<FString, UClass*>& Registry, UMcpProfile* Owner, FMcpProfileItemPtr Item, bool bForcePopulate);
 	static int32 NativeRecomputeOverlayProfileGroup(const FMcpProfileGroupMap& BaseGroups, const FMcpProfileOverlayMap& Overrides, const FString& Key, FMcpProfileItemArray& OutItems);
 	static const FMcpProfileItemArray* NativeFindOverlayProfileGroup(const FMcpProfileGroupMap& BaseGroups, FMcpProfileOverlayState& Overlay, const FString& Key);
+	static FMcpProfileItemPtr NativeFindBaseProfileItem(const FMcpProfileItemMap& ItemsById, const FString& ItemId);
+	static FMcpProfileItemPtr NativeFindOverlayProfileItem(const FMcpProfileItemMap& ItemsById, const FMcpProfileOverlayState& Overlay, const FString& ItemId);
 };
 

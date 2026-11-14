@@ -286,3 +286,26 @@ const FMcpProfileItemArray* UMcpProfile::NativeFindOverlayProfileGroup(const FMc
 	return &Cached;
 }
 
+FMcpProfileItemPtr UMcpProfile::NativeFindBaseProfileItem(const FMcpProfileItemMap& ItemsById, const FString& ItemId)
+{
+	// CONFIDENCE: HIGH. Complete original body; broader lifecycle remains open.
+	// 0x1410fdd30, semantic body. ItemsById is the actual backend's base index.
+	if (const FMcpProfileItemPtr* Found = ItemsById.Find(ItemId))
+	{
+	    return *Found;
+	}
+	return FMcpProfileItemPtr();
+}
+
+FMcpProfileItemPtr UMcpProfile::NativeFindOverlayProfileItem(const FMcpProfileItemMap& ItemsById, const FMcpProfileOverlayState& Overlay, const FString& ItemId)
+{
+	// CONFIDENCE: HIGH. Complete original body; broader lifecycle remains open.
+	// 0x1410fde50, semantic body. Both arguments are from the same real backend.
+	// A present null override is returned as-is; only an absent key reaches base.
+	if (const FMcpProfileItemPtr* Found = Overlay.OverridesByItemId.Find(ItemId))
+	{
+	    return *Found;
+	}
+	return NativeFindBaseProfileItem(ItemsById, ItemId);
+}
+

@@ -15,11 +15,11 @@
 #include "Engine/NetSerialization.h"
 #include "FAirControlParams.h"
 #include "FortJumpMathNative.h"
+#include "GameFramework/PhysicsVolume.h"
 #include "Math/Vector.h"
 #include "UFortAbilitySystemComponent.h"
 #include "UFortJumpBoostSet.h"
 #include "../../../../behavior/movement_speed64_runtime/MovementSpeedMath.h"
-#include "GameFramework/PhysicsVolume.h"
 #include "../../../../behavior/movement_servermove67_runtime/cpp_support.inc"
 
 float UFortMovementComp_Character::GetFallingStartedZ() const
@@ -493,6 +493,29 @@ void UFortMovementComp_Character::UpdateFromCompressedFlags(uint8 Flags)
 	    }
 	    Pawn->NativeSprintState1062Bit0 = (Flags & 0x40) != 0;
 	}
+}
+
+void UFortMovementComp_Character::ApplyVelocityBraking(float DeltaTime, float Friction, float BrakingDeceleration)
+{
+	// CONFIDENCE: HIGH. Complete original body; broader lifecycle remains open.
+	// Original 0x1420d8430, movement primary vtable +0x890.
+	if (MovementMode == MOVE_Walking)
+	{
+	    if (const AFortPlayerPawn* FortPawn = Cast<AFortPlayerPawn>(CharacterOwner))
+	    {
+	        if (FortPawn->bIsInSlipperyMovement)
+	        {
+	            APhysicsVolume* Volume = GetPhysicsVolume();
+	            if (Volume && (Volume->IsA<AWaterVolume_Deep>() || Volume->IsA<AWaterVolume_Shallow>()))
+	            {
+	                const float MinimumBraking = FortPawn->SlipperySlopeParams.BrakingDecelerationInWater.GetValueAtLevel(0.0f, nullptr);
+	                if (BrakingDeceleration < MinimumBraking)
+	                    BrakingDeceleration = MinimumBraking;
+	            }
+	        }
+	    }
+	}
+	Super::ApplyVelocityBraking(DeltaTime, Friction, BrakingDeceleration);
 }
 
 
