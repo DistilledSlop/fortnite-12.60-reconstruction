@@ -81,7 +81,15 @@ def settings_capture(mem, world, level, cached):
         raise RuntimeError('WorldSettings actor changed during capture')
     result = {'object': obj(mem, actor)}
     result.update({name: finite(mem, actor + off, name) for name, off in SETTINGS_FIELDS.items()})
+    # Original Fortnite WorldSettings effective-dilation override at +0x638
+    # multiplies a fourth, unreflected factor at +0x3e4. Validate the dispatch
+    # before reading that extension; the base engine actor lacks this field.
+    vtable = req(mem, actor, '<Q', 'WorldSettings vtable')
+    if req(mem, vtable + 0x638, '<Q', 'effective dilation getter') != 0x141fc0920:
+        raise RuntimeError('WorldSettings effective dilation getter did not match original Fortnite')
+    result['native_effective_dilation_factor_3e4'] = finite(mem, actor + 0x3e4, 'native dilation factor')
     if (req(mem, SETTINGS_CLASS, '<Q', 'WorldSettings class recheck') != base or
+            req(mem, actor, '<Q', 'WorldSettings vtable recheck') != vtable or
             req(mem, level + offset, '<Qii', 'settings array final recheck') != [data, count, capacity] or
             req(mem, data + 8 * index, '<Q', 'settings entry final recheck') != actor or
             not pawn_actor(mem, actor, level, base)):
