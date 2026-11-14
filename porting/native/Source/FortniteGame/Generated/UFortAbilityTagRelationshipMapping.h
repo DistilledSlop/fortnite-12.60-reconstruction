@@ -25,5 +25,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	void ExpandAbilityTagRelationships(const FGameplayTagContainer& AbilityTags, FGameplayTagContainer* BlockTags, FGameplayTagContainer* CancelTags);
+	bool NativeRelationshipReferences141602e60(const FGameplayTagContainer& AbilityTags, const FGameplayTag& TargetTag) const;
 };
 

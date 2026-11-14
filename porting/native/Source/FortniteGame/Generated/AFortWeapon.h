@@ -7,6 +7,8 @@
 #include "GameFramework/Actor.h"
 
 #include "AbilitySystemComponent.h"
+#include "Components/AudioComponent.h"
+#include "Components/SceneComponent.h"
 #include "EFortItemType.h"
 #include "EFortRarity.h"
 #include "EFortReloadFXState.h"
@@ -15,6 +17,7 @@
 #include "EFortWeaponTriggerType.h"
 #include "Engine/DataTable.h"
 #include "Engine/EngineTypes.h"
+#include "Engine/World.h"
 #include "FCosmeticVariantCache.h"
 #include "FFortAbilitySetHandle.h"
 #include "FFortBaseWeaponStats.h"
@@ -1090,5 +1093,7 @@ public:
 	void NativeGetChargeRange(float& OutMin, float& OutMax) const;
 	virtual bool NativeIsEquippingWeapon() const;
 	static void NativeDecodeDamageStartVectors142119f50(AFortWeapon* WeaponObj, FVector& OutFirst, FVector& OutSecond);
+	bool NativeCanTarget14268efc0();
+	void NativeConfigureAudio1426a2720(UAudioComponent* Audio);
 };
 

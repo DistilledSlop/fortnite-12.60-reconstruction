@@ -7,8 +7,10 @@
 #include "AFortPawn.h"
 
 #include "Abilities/GameplayAbilityTypes.h"
+#include "AbilitySystemComponent.h"
 #include "Animation/AnimInstance.h"
 #include "AttributeSet.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/TimelineComponent.h"
 #include "EColorSwatchType.h"
@@ -67,6 +69,7 @@
 #include "GameFramework/Controller.h"
 #include "GameplayTagContainer.h"
 #include "Interfaces/NetworkPredictionInterface.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
@@ -406,6 +409,9 @@ public:
 	// table index 259, flags 0x40000000010005
 	UPROPERTY()
 	uint8 bIsInFrontEndHologram : 1;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x10e8): not a UPROPERTY, not replicated.
+	bool bNativeParachuteTraceResult10e8Bit7 = false;
 
 	// table index 258, flags 0x24080000002000
 	UPROPERTY(Transient)
@@ -1097,6 +1103,9 @@ public:
 	// table index 82, flags 0x20080000002000
 	UPROPERTY(Transient)
 	bool bLocalParachuteLockedOpen;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2280): not a UPROPERTY, not replicated.
+	float NativeParachuteTraceTime2280 = 0.0f;
 
 	// table index 81, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_AttachmentMesh)
@@ -2113,6 +2122,7 @@ public:
 	virtual IFortVehicleInterface* NativeGetVehicleInterface163();
 	static void NativeSetClothDynamicsState144517e00(AFortPlayerPawn* TargetPawn);
 	static void NativeSyncFacialInputToAnimInstances142345bd0(AFortPlayerPawn* Pawn);
+	AFortAthenaVehicle* NativeGetAthenaVehicle1423254c0() const;
 	static const uint16* NativeFindSubstringNoCase142bb47d0(const uint16* Haystack, const uint16* Needle);
 	static void NativeIncrementCounter142ee77f0(UObject* Target);
 	static int32 NativeDecrementCounter142ee43c0(uint8* Self);
@@ -2127,6 +2137,9 @@ public:
 	bool NativeSprintTagGate14232cb50() const;
 	bool NativeCanCloseParachute142331a80();
 	void NativeSetParachuteRequest14234bc70(int32 Request);
+	virtual bool NativeCanPerformAction14230c260(const FGameplayTag& ActionTag);
+	virtual bool NativeCanDeployParachute14230bcb0();
+	virtual bool CanCrouch() const override;
 protected:
 	void NativeUpdateAccelerationPack1423442e0();
 	void NativeUpdateRemoteViewData142344420();

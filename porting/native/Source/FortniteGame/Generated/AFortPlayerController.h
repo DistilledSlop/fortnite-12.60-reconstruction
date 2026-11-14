@@ -8,6 +8,7 @@
 
 #include "AnalyticsEventAttribute.h"
 #include "AttributeSet.h"
+#include "CoreGlobals.h"
 #include "EAthenaCustomizationCategory.h"
 #include "EFortBuildPreviewMarkerOptionalAdjustment.h"
 #include "EFortCostInfoTypes.h"
@@ -75,6 +76,7 @@
 #include "Math/TransformNonVectorized.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
+#include "SharedFortGameLog.h"
 #include "UFortAnalyticsControllerInterface.h"
 #include "UFortInventoryOwnerInterface.h"
 #include "UFortTeamActorInterface.h"
@@ -475,6 +477,9 @@ public:
 	// table index 209, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint64 LastMoveInputFrame;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xae8): not a UPROPERTY, not replicated.
+	uint64 NativeAutoRunStartFrameAe8;
 
 	// table index 208, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -2036,6 +2041,9 @@ public:
 	static void* NativeGetQuickBarSlotStorage14205b290(UObject* Owner, uint8 SlotKind);
 	static bool NativeCanToggleFullscreenMap142607f40(UObject* Controller);
 	bool NativeSprintTagGate142390740() const;
+	void NativeSetAutoRun1423ae530(bool bEnable);
+	virtual void NativeStartMovementCancellableAction1423b8b70();
+	virtual void NativeEndMovementCancellableAction142378db0();
 public:
     TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
 	int32 GetNativeStatValue(FName Name, EStatRecordingPeriod Period) const;

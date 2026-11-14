@@ -14,6 +14,8 @@
 #include "FOnlineAccountTexts.h"
 #include "FPartnerPcbInfo.h"
 #include "FSubGameInfo.h"
+#include "FortAssets.h"
+#include "FortDelayedObjectLoader.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Vector.h"
@@ -654,5 +656,11 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UWorld> DefaultLobbyBackgroundLevel;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	UFortAbilityTagRelationshipMapping* NativeResolveAbilityRelationships141e410c0(bool bLogLoad);
+	void NativeExpandAbilityRelationships141e5b330(const FGameplayTagContainer& AbilityTags, FGameplayTagContainer* BlockTags, FGameplayTagContainer* CancelTags);
+	bool NativeAbilityRelationshipReferences141e6c4f0(const FGameplayTagContainer& AbilityTags, const FGameplayTag& TargetTag);
 };
 

@@ -262,6 +262,5 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static void NativeBroadcastPlayerStringDelegate144c1b2a0(FStringDelegate* Delegate, UAthenaRemotePlayerViewData* PlayerData, const FString& StringParam);
-	static UObject* NativeGetVehicleFromViewData1423254c0(UAthenaRemotePlayerViewData* ViewData);
 };
 

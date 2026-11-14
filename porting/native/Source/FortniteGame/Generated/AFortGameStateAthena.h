@@ -106,6 +106,7 @@ class AFortPropertyOverrideReplShared;
 class AFortSafeZoneIndicator;
 class AFortSpecialActorReplicationInfo;
 class AFortVolumeManager;
+class AFortWeapon;
 class APlayerState;
 class AUnicornDriver;
 class UAthenaBattleBusItemDefinition;
@@ -1184,5 +1185,8 @@ public:
 	static int32 NativeGetHardcodedChangelistNumber142ba3400();
 	virtual FFortPlayerPawnStats* GetPlaylistHeroStats(const FName& RowName) const override;
 	bool NativeEvaluateJumpPenaltyMutators1419aff90(ACharacter* Pawn);
+	bool NativeQueryActionPermission1419afdf0(const FGameplayTag& ActionTag);
+	bool NativeQueryGliderRedeploy14198b790(ACharacter* Pawn);
+	bool NativeQueryWeaponTargeting1419b08a0(AFortWeapon* Weapon);
 };
 

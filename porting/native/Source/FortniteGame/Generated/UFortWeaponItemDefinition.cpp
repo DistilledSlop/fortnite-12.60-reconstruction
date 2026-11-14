@@ -408,3 +408,10 @@ FText UFortWeaponItemDefinition::GetDisplayName(bool bBaseName) const
 	return FText::Format(NSLOCTEXT("DisplayNameFormat", "DisplayNameFormatWithoutPrefix", "{0} {1}"), Tier, Name);
 }
 
+bool UFortWeaponItemDefinition::NativeAllowTargetingDuringReload142684ac0() const
+{
+	// CONFIDENCE: HIGH. Complete original body.
+	// Original 0x142684ac0: read byte +0x9a7, mask0x04, pinned bool_bits.
+	return bAllowTargetingDuringReload;
+}
+

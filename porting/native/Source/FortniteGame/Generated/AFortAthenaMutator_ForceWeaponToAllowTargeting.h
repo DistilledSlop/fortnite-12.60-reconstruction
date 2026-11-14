@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortAthenaMutator.h"
 
+class AFortWeapon;
+
 #include "AFortAthenaMutator_ForceWeaponToAllowTargeting.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,9 @@ class FORTNITEGAME_API AFortAthenaMutator_ForceWeaponToAllowTargeting : public A
 	GENERATED_BODY()
 
 public:
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual uint8 NativeQueryWeaponTargeting960(AFortWeapon* Weapon, bool& bAllowed) override;
 };
 

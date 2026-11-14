@@ -6,10 +6,12 @@
 #include "CoreMinimal.h"
 #include "AFortGameplayMutator.h"
 
+#include "GameplayTagContainer.h"
 #include "UObject/Object.h"
 
 class AFortGameModeAthena;
 class AFortGameStateAthena;
+class AFortWeapon;
 class UFortWeaponItemDefinition;
 
 #include "AFortAthenaMutator.generated.h"
@@ -43,5 +45,8 @@ public:
 	virtual uint8 NativeQueryInfiniteAmmo(bool& OutInfiniteAmmo, UFortWeaponItemDefinition* WeaponDefinition);
 	virtual uint8 NativeQueryFriendlyFire163(bool& Value);
 	virtual uint8 NativeQueryJumpPenaltyB38(bool& bApply);
+	virtual uint8 NativeQueryActionPermission978(bool& bAllowed, const FGameplayTag& ActionTag);
+	virtual uint8 NativeQueryGliderRedeployB48(bool& bAllowed);
+	virtual uint8 NativeQueryWeaponTargeting960(AFortWeapon* Weapon, bool& bAllowed);
 };
 

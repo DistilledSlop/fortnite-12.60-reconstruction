@@ -86817,21 +86817,19 @@
     "notes": "Linear find of 8-byte element in TArray; returns its index if present, else appends *Value and returns old Num."
   },
   {
-    "class": "UAthenaRemotePlayerViewData",
-    "function": "NativeGetVehicleFromViewData1423254c0",
+    "class": "AFortPlayerPawn",
+    "function": "NativeGetAthenaVehicle1423254c0",
     "kind": "helper",
-    "signature": "UObject* NativeGetVehicleFromViewData1423254c0(UAthenaRemotePlayerViewData* ViewData)",
+    "signature": "AFortAthenaVehicle* NativeGetAthenaVehicle1423254c0() const",
     "signature_status": "proposed",
-    "static": true,
+    "static": false,
     "access": "public",
-    "inc_path": "porting/behavior/hq6_runtime/UAthenaRemotePlayerViewData/NativeGetVehicleFromViewData1423254c0.inc",
+    "inc_path": "porting/behavior/AFortPlayerPawn/NativeGetAthenaVehicle1423254c0.inc",
     "address": "0x1423254c0",
-    "confidence": "medium",
+    "confidence": "HIGH",
     "status": "ported",
-    "includes": [
-      "UObject/Object.h"
-    ],
-    "notes": "Helper 0x1423254c0; asm evidence and caller use in .inc comments."
+    "includes": [],
+    "notes": "Corrected host to AFortPlayerPawn: reflected VehicleStateLocal offset1578, Vehicle offset0. Replaces unsupported remote-view raw-offset alias."
   },
   {
     "class": "AFortAthenaCreativePortal",
@@ -92376,7 +92374,8 @@
     "inc_path": "porting/behavior/athena_jump_runtime/CanJumpInternalEvent.inc",
     "includes": [
       "GameFramework/Character.h"
-    ]
+    ],
+    "static": true
   },
   {
     "class": "AFortGameStateAthena",
@@ -92584,5 +92583,402 @@
       "Engine/World.h"
     ],
     "override": true
+  },
+  {
+    "class": "UFortGameData",
+    "function": "NativeResolveAbilityRelationships141e410c0",
+    "kind": "helper",
+    "signature": "UFortAbilityTagRelationshipMapping* NativeResolveAbilityRelationships141e410c0(bool bLogLoad)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortGameData/NativeResolveAbilityRelationships141e410c0.inc",
+    "address": "0x141e410c0",
+    "confidence": "HIGH",
+    "status": "ported",
+    "includes": [
+      "FortDelayedObjectLoader.h",
+      "FortAssets.h"
+    ]
+  },
+  {
+    "class": "UFortAbilityTagRelationshipMapping",
+    "function": "NativeRelationshipReferences141602e60",
+    "kind": "helper",
+    "signature": "bool NativeRelationshipReferences141602e60(const FGameplayTagContainer& AbilityTags, const FGameplayTag& TargetTag) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortAbilityTagRelationshipMapping/NativeRelationshipReferences141602e60.inc",
+    "address": "0x141602e60",
+    "confidence": "HIGH",
+    "status": "ported"
+  },
+  {
+    "class": "UFortGameData",
+    "function": "NativeExpandAbilityRelationships141e5b330",
+    "kind": "helper",
+    "signature": "void NativeExpandAbilityRelationships141e5b330(const FGameplayTagContainer& AbilityTags, FGameplayTagContainer* BlockTags, FGameplayTagContainer* CancelTags)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortGameData/NativeExpandAbilityRelationships141e5b330.inc",
+    "address": "0x141e5b330",
+    "confidence": "HIGH",
+    "status": "ported"
+  },
+  {
+    "class": "UFortGameData",
+    "function": "NativeAbilityRelationshipReferences141e6c4f0",
+    "kind": "helper",
+    "signature": "bool NativeAbilityRelationshipReferences141e6c4f0(const FGameplayTagContainer& AbilityTags, const FGameplayTag& TargetTag)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortGameData/NativeAbilityRelationshipReferences141e6c4f0.inc",
+    "address": "0x141e6c4f0",
+    "confidence": "HIGH",
+    "status": "ported"
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeSetAutoRun1423ae530",
+    "kind": "helper",
+    "signature": "void NativeSetAutoRun1423ae530(bool bEnable)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPlayerController/NativeSetAutoRun1423ae530.inc",
+    "address": "0x1423ae530",
+    "confidence": "HIGH",
+    "status": "ported",
+    "includes": [
+      "CoreGlobals.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeStartMovementCancellableAction1423b8b70",
+    "kind": "helper",
+    "signature": "void NativeStartMovementCancellableAction1423b8b70()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPlayerController/NativeStartMovementCancellableAction1423b8b70.inc",
+    "address": "0x1423b8b70",
+    "confidence": "HIGH",
+    "status": "ported",
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "virtual": true
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeEndMovementCancellableAction142378db0",
+    "kind": "helper",
+    "signature": "void NativeEndMovementCancellableAction142378db0()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPlayerController/NativeEndMovementCancellableAction142378db0.inc",
+    "address": "0x142378db0",
+    "confidence": "HIGH",
+    "status": "ported",
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "virtual": true
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeAutoRunStartFrameAe8",
+    "kind": "member_field",
+    "signature": "uint64 NativeAutoRunStartFrameAe8",
+    "offset": "0xae8",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "HIGH",
+    "status": "ported",
+    "address": "0x1423ae530",
+    "notes": "Stores original GFrameCounter global1482472b8. Plain field; no invented constructor initializer. Remaining producers/readers and class lifecycle separate."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "NativeQueryActionPermission1419afdf0",
+    "kind": "helper",
+    "signature": "bool NativeQueryActionPermission1419afdf0(const FGameplayTag& ActionTag)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "address": "0x1419afdf0",
+    "inc_path": "porting/behavior/AFortGameStateAthena/NativeQueryActionPermission1419afdf0.inc"
+  },
+  {
+    "class": "AFortAthenaMutator",
+    "function": "NativeQueryActionPermission978",
+    "kind": "helper",
+    "signature": "uint8 NativeQueryActionPermission978(bool& bAllowed, const FGameplayTag& ActionTag)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "address": "0x1406801e0",
+    "inc_path": "porting/behavior/AFortAthenaMutator/NativeQueryActionPermission978.inc"
+  },
+  {
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "class": "AFortGameStateAthena",
+    "function": "NativeQueryGliderRedeploy14198b790",
+    "signature": "bool NativeQueryGliderRedeploy14198b790(ACharacter* Pawn)",
+    "address": "0x14198b790",
+    "inc_path": "porting/behavior/AFortGameStateAthena/NativeQueryGliderRedeploy14198b790.inc",
+    "includes": [
+      "GameFramework/Character.h"
+    ]
+  },
+  {
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "class": "AFortAthenaMutator",
+    "function": "NativeQueryGliderRedeployB48",
+    "signature": "uint8 NativeQueryGliderRedeployB48(bool& bAllowed)",
+    "address": "0x1406801e0",
+    "inc_path": "porting/behavior/AFortAthenaMutator/NativeQueryGliderRedeployB48.inc",
+    "virtual": true
+  },
+  {
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "class": "AFortAthenaMutator_GliderRedeploy",
+    "function": "NativeQueryGliderRedeployB48",
+    "signature": "uint8 NativeQueryGliderRedeployB48(bool& bAllowed)",
+    "address": "0x141aa75e0",
+    "inc_path": "porting/behavior/AFortAthenaMutator_GliderRedeploy/NativeQueryGliderRedeployB48.inc",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "class": "AFortAthenaMutator_PlayerSettingsBase",
+    "function": "NativeQueryGliderRedeployB48",
+    "signature": "uint8 NativeQueryGliderRedeployB48(bool& bAllowed)",
+    "address": "0x141afae00",
+    "inc_path": "porting/behavior/AFortAthenaMutator_PlayerSettingsBase/NativeQueryGliderRedeployB48.inc",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeCanPerformAction14230c260",
+    "kind": "helper",
+    "signature": "bool NativeCanPerformAction14230c260(const FGameplayTag& ActionTag)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "address": "0x14230c260",
+    "inc_path": "porting/behavior/AFortPlayerPawn/NativeCanPerformAction14230c260.inc",
+    "virtual": true
+  },
+  {
+    "class": "AFortPlayerPawnAthena",
+    "function": "NativeCanPerformAction14230c260",
+    "kind": "helper",
+    "signature": "bool NativeCanPerformAction14230c260(const FGameplayTag& ActionTag)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "address": "0x141a0d7c0",
+    "inc_path": "porting/behavior/AFortPlayerPawnAthena/NativeCanPerformAction14230c260.inc",
+    "virtual": true,
+    "override": true,
+    "includes": [
+      "Engine/World.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeCanDeployParachute14230bcb0",
+    "kind": "helper",
+    "signature": "bool NativeCanDeployParachute14230bcb0()",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "address": "0x14230bcb0",
+    "inc_path": "porting/behavior/AFortPlayerPawn/NativeCanDeployParachute14230bcb0.inc",
+    "virtual": true,
+    "includes": [
+      "FortParachuteInputNative.h",
+      "FortNativeGameplayTagsRuntime.h",
+      "AbilitySystemComponent.h",
+      "Components/CapsuleComponent.h",
+      "Engine/World.h",
+      "GameFramework/CharacterMovementComponent.h",
+      "Kismet/KismetSystemLibrary.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeParachuteTraceTime2280",
+    "kind": "member_field",
+    "signature": "float NativeParachuteTraceTime2280",
+    "offset": "0x2280",
+    "default": "0.0f",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "address": "0x1422fe830",
+    "notes": "Constructor1422fe830 explicitzero at2280."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "bNativeParachuteTraceResult10e8Bit7",
+    "kind": "member_field",
+    "signature": "bool bNativeParachuteTraceResult10e8Bit7",
+    "offset": "0x10e8",
+    "default": "false",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "address": "0x1422fe830",
+    "notes": "Original bit7. Constructor1422fe830 AND1f clears bit; separate semantic bool avoids aliasing adjacent flags."
+  },
+  {
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "class": "AFortGameStateAthena",
+    "function": "NativeQueryWeaponTargeting1419b08a0",
+    "signature": "bool NativeQueryWeaponTargeting1419b08a0(AFortWeapon* Weapon)",
+    "address": "0x1419b08a0",
+    "inc_path": "porting/behavior/AFortGameStateAthena/NativeQueryWeaponTargeting1419b08a0.inc"
+  },
+  {
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "class": "AFortAthenaMutator",
+    "function": "NativeQueryWeaponTargeting960",
+    "signature": "uint8 NativeQueryWeaponTargeting960(AFortWeapon* Weapon, bool& bAllowed)",
+    "address": "0x1406801e0",
+    "inc_path": "porting/behavior/AFortAthenaMutator/NativeQueryWeaponTargeting960.inc",
+    "virtual": true
+  },
+  {
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "class": "AFortAthenaMutator_ForceWeaponToAllowTargeting",
+    "function": "NativeQueryWeaponTargeting960",
+    "signature": "uint8 NativeQueryWeaponTargeting960(AFortWeapon* Weapon, bool& bAllowed)",
+    "address": "0x141ad25a0",
+    "inc_path": "porting/behavior/AFortAthenaMutator_ForceWeaponToAllowTargeting/NativeQueryWeaponTargeting960.inc",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "class": "AFortPlayerPawnAthena",
+    "function": "CanCrouch",
+    "kind": "helper",
+    "signature": "bool CanCrouch() const",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "HIGH",
+    "address": "0x141a0d380",
+    "inc_path": "porting/behavior/AFortPlayerPawnAthena/CanCrouch.inc",
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ],
+    "notes": "Virtual slot +0x810; directly calls ACharacter::CanCrouch, then EmoteCount==0, virtual movement IsMovingOnGround then CanCrouchInCurrentState, vehicle pointer null and !bLocalIsSkydiving. Does not call AFortPlayerPawn override.",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "CanCrouch",
+    "kind": "helper",
+    "signature": "bool CanCrouch() const",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "HIGH",
+    "address": "0x14230afa0",
+    "inc_path": "porting/behavior/AFortPlayerPawn/CanCrouch.inc",
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h",
+      "FortNativeGameplayTagsRuntime.h"
+    ],
+    "notes": "Virtual action permission method NativeCanPerformAction14230c260 supplied by root; singleton +0x698 is crouch.",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "function": "NativeCanTarget14268efc0",
+    "address": "0x14268efc0",
+    "signature": "bool NativeCanTarget14268efc0()",
+    "kind": "helper",
+    "access": "public",
+    "virtual": false,
+    "status": "ported",
+    "inc_path": "porting/behavior/AFortWeapon/NativeCanTarget14268efc0.inc",
+    "signature_status": "proposed",
+    "notes": "GameState/mutator targeting query closed; shared weapon targeting callback integration remains separate.",
+    "class": "AFortWeapon",
+    "confidence": "HIGH",
+    "includes": [
+      "Engine/World.h"
+    ]
+  },
+  {
+    "function": "NativeAllowTargetingDuringReload142684ac0",
+    "address": "0x142684ac0",
+    "signature": "bool NativeAllowTargetingDuringReload142684ac0() const",
+    "kind": "helper",
+    "access": "public",
+    "virtual": false,
+    "status": "ported",
+    "inc_path": "porting/behavior/UFortWeaponItemDefinition/NativeAllowTargetingDuringReload142684ac0.inc",
+    "signature_status": "proposed",
+    "notes": "Complete original reflected flag query.",
+    "class": "UFortWeaponItemDefinition",
+    "confidence": "HIGH"
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeConfigureAudio1426a2720",
+    "address": "0x1426a2720",
+    "signature": "void NativeConfigureAudio1426a2720(UAudioComponent* Audio)",
+    "kind": "helper",
+    "access": "public",
+    "status": "ported",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortWeapon/NativeConfigureAudio1426a2720.inc",
+    "notes": "Full registration, attachment configuration and wrap-modifier event behavior.",
+    "confidence": "HIGH",
+    "includes": [
+      "Components/AudioComponent.h",
+      "Components/SceneComponent.h"
+    ]
   }
 ]

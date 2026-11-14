@@ -18,17 +18,21 @@
 
 #include "../../../../behavior/movement_speed64_runtime/MovementSpeedMath.h"
 #include "AFortAthenaVehicle.h"
+#include "AFortGameStateAthena.h"
 #include "AFortPawn.h"
 #include "AFortPlayerCharm.h"
 #include "AFortPlayerController.h"
 #include "AFortPlayerControllerGameplay.h"
 #include "AFortPlayerState.h"
 #include "AFortPlayerStateZone.h"
+#include "AbilitySystemComponent.h"
 #include "Animation/AnimInstance.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/SceneComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Curves/CurveFloat.h"
 #include "EFortCustomMovement.h"
+#include "Engine/EngineTypes.h"
 #include "Engine/World.h"
 #include "FFortPawnStats.h"
 #include "FWaterControlParams.h"
@@ -38,7 +42,10 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
+#include "GameplayTagContainer.h"
 #include "Interfaces/NetworkPredictionInterface.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "Math/Color.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Net/UnrealNetwork.h"
@@ -50,6 +57,7 @@
 #include "UFortGlobals.h"
 #include "UFortKismetLibrary.h"
 #include "UFortMovementComp_Character.h"
+#include "UFortMovementComp_CharacterAthena.h"
 #include "UFortMovementSet.h"
 #include "UFortPlayerAttrSet.h"
 #include "UFortVehicleInterface.h"
@@ -1814,6 +1822,13 @@ void AFortPlayerPawn::NativeSyncFacialInputToAnimInstances142345bd0(AFortPlayerP
 	}
 }
 
+AFortAthenaVehicle* AFortPlayerPawn::NativeGetAthenaVehicle1423254c0() const
+{
+	// CONFIDENCE: HIGH. Original1423254c0, cached native-cap-helpers3/0x1423254c0.c.
+	// Pawn VehicleStateLocal at1578 owns Vehicle at0; this is not a remote-view-data method.
+	return Cast<AFortAthenaVehicle>(VehicleStateLocal.Vehicle);
+}
+
 const uint16* AFortPlayerPawn::NativeFindSubstringNoCase142bb47d0(const uint16* Haystack, const uint16* Needle)
 {
 	// helper 0x142bb47d0 (AFortPlayerPawn): ASCII case-insensitive wide-string substring search.
@@ -2175,6 +2190,115 @@ void AFortPlayerPawn::NativeSetParachuteRequest14234bc70(int32 Request)
 	{
 	    NativeParachuteRequest1fc0 = Request;
 	}
+}
+
+bool AFortPlayerPawn::NativeCanPerformAction14230c260(const FGameplayTag& ActionTag)
+{
+	// CONFIDENCE: HIGH. Complete original body; class lifecycle acceptance remains separate.
+	UFortAbilitySystemComponent* Component = AbilitySystemComponent;
+	if (!Component) return false;
+	// Original static container1480fa6e0 is shared across calls, including reentry.
+	static FGameplayTagContainer ActionTags;
+	ActionTags.Reset();
+	ActionTags.AddTag(ActionTag);
+	return !Component->AreAbilityTagsBlocked(ActionTags);
+}
+
+bool AFortPlayerPawn::NativeCanDeployParachute14230bcb0()
+{
+	// CONFIDENCE: HIGH. Complete original body; class lifecycle acceptance remains separate.
+	// 0x14230bcb0, AFortPlayerPawn virtual +0x1328.
+	// Dependencies and initialization are specified in contracts.json.
+	const FFortNativeGameplayTagsRuntime& NativeTags = FFortNativeGameplayTagsRuntime::Get();
+	if (!NativeCanPerformAction14230c260(NativeTags.GetTagAtOriginalOffset(0x798))) return false;
+	if (CurrentSkyTube) return false;
+	UCharacterMovementComponent* Move = GetCharacterMovement();
+	// Original dereferences the movement component before its later null check.
+	if (Move->MovementMode == MOVE_Custom && Move->CustomMovementMode == 10) return false;
+	if (bLocalIsSkydiving || bIsParachuteOpen) return true;
+	if (!Move || Move->MovementMode != MOVE_Falling) return false;
+	if (!UFortMovementComp_CharacterAthena::NativeCanJumpInternalEvent1440739b0(this) &&
+	    NativeEnableParachuteEverywhere148157cf4() != 0) return true;
+	if (bIsDBNO) return false;
+	UWorld* World = GetWorld();
+	if (!World) return false;
+
+	// Original ANDPS clears the sign bit (including negative zero and NaNs).
+	const auto NativeAbsBits = [](float Value) {
+	    uint32 Bits;
+	    FMemory::Memcpy(&Bits, &Value, sizeof(Bits));
+	    Bits &= 0x7fffffffU;
+	    FMemory::Memcpy(&Value, &Bits, sizeof(Value));
+	    return Value;
+	};
+	bool bRedeploy = GliderRedeployAllowedRow.GetValueAtLevel(0.0f, nullptr) > 0.0f;
+	float Height = NativeAbsBits(GliderRedeployHeighLimitRow.GetValueAtLevel(0.0f, nullptr));
+	float Lateral = NativeAbsBits(GliderRedeployLateralVelocityMultiplierRow.GetValueAtLevel(0.0f, nullptr));
+	if (AFortGameStateAthena* GameState = Cast<AFortGameStateAthena>(World->GetGameState()))
+	{
+	    bRedeploy = GameState->NativeQueryGliderRedeploy14198b790(this);
+	    Height = GameState->DefaultRedeployGliderHeightLimit;
+	    Lateral = GameState->DefaultRedeployGliderLateralVelocityMult;
+	}
+	UAbilitySystemComponent* AbilitySystem = GetAbilitySystemComponent();
+	FGameplayTagContainer Tags;
+	Tags.AddTag(NativeTags.GetTagAtOriginalOffset(0x1848));
+	Tags.AddTag(NativeTags.GetTagAtOriginalOffset(0x7e0));
+	if (!bRedeploy && (!AbilitySystem || !AbilitySystem->HasAnyMatchingGameplayTags(Tags))) return false;
+	if (bLocalIsSkydiving) return false;
+	// The subsequent original tests of skydiving-from-bus and launch-pad both
+	// require bLocalIsSkydiving and thus are unreachable after the test above.
+	if (NativeGliderRedeployRequiresJump148157d08() > 0 &&
+	    !(NativeAbsBits(JumpLastActivatedTime - -1.0f) > 1.e-8f)) return false;
+	if (NativeGliderRedeployUseWindowOfTime148157d0c() > 0 &&
+	    World->GetTimeSeconds() - JumpLastActivatedTime >= NativeGliderRedeployWindowLength1478de4b0()) return false;
+	const float Now = World->GetTimeSeconds();
+	if (!(Now - NativeParachuteTraceTime2280 >= 0.1f)) return bNativeParachuteTraceResult10e8Bit7;
+	NativeParachuteTraceTime2280 = Now;
+	if (!(Height > 0.0f)) return false;
+	USceneComponent* InitialRoot = GetRootComponent();
+	const FVector Start = InitialRoot ? InitialRoot->GetComponentLocation() : FVector::ZeroVector;
+	const FVector Velocity = GetVelocity();
+	const FVector End(Start.X + Lateral * Velocity.X, Start.Y + Lateral * Velocity.Y, Start.Z + -Height);
+	UCapsuleComponent* Capsule = Cast<UCapsuleComponent>(GetRootComponent());
+	if (!Capsule) return false;
+	const FVector Scale = Capsule->GetComponentScale();
+	// MINSS(scale.Y, scale.X) selects the second operand on equality or unordered.
+	const float Radius = (Scale.Y < Scale.X ? Scale.Y : Scale.X) * Capsule->GetUnscaledCapsuleRadius();
+	const float HalfHeight = Capsule->GetUnscaledCapsuleHalfHeight();
+	FHitResult Hit;
+	const bool bHit = UKismetSystemLibrary::CapsuleTraceSingle(
+	    this, Start, End, Radius, HalfHeight,
+	    UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel11), false, TArray<AActor*>(),
+	    EDrawDebugTrace::None, Hit, true, FLinearColor::Red, FLinearColor::Green, 5.0f);
+	bNativeParachuteTraceResult10e8Bit7 = !bHit || Hit.Distance >= Height;
+	return bNativeParachuteTraceResult10e8Bit7;
+}
+
+bool AFortPlayerPawn::CanCrouch() const
+{
+	// CONFIDENCE: HIGH. Complete original override; class lifecycle acceptance remains separate.
+	if (!ACharacter::CanCrouch())
+	{
+	    return false;
+	}
+	if (bIsDBNO)
+	{
+	    return false;
+	}
+	if (!GetCharacterMovement()->IsMovingOnGround())
+	{
+	    return false;
+	}
+	if (!GetCharacterMovement()->CanCrouchInCurrentState())
+	{
+	    return false;
+	}
+	if (!NativeCanPerformAction14230c260(FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x698)))
+	{
+	    return false;
+	}
+	return !IsInVehicle() && !bLocalIsSkydiving;
 }
 
 void AFortPlayerPawn::NativeUpdateAccelerationPack1423442e0()

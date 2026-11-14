@@ -45,3 +45,16 @@ uint8 AFortAthenaMutator_PlayerSettingsBase::NativeQueryJumpPenaltyB38(bool& bAp
 	return 0; // Original null RAX low byte is returned, does not change bApply.
 }
 
+uint8 AFortAthenaMutator_PlayerSettingsBase::NativeQueryGliderRedeployB48(bool& bAllowed)
+{
+	// CONFIDENCE: HIGH. Complete original body; all164 native mutator tables inventoried.
+	// 0x141afae00, inherited by class/team/zone settings.
+	const FName Name(TEXT("bGliderRedeploy"));
+	if (UFortPlayerSettingsComponentBase* Settings = NativeFindEnabledPlayerSettings163(Name, true))
+	{
+	    bAllowed = Settings->bGliderRedeploy;
+	    return 2;
+	}
+	return 0;
+}
+

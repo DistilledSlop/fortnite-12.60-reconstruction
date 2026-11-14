@@ -11,11 +11,13 @@
 #include "AFortUIZone.h"
 #include "AFortWeapon.h"
 #include "AnalyticsEventAttribute.h"
+#include "CoreGlobals.h"
 #include "EFortQuickBars.h"
 #include "ELockOnState.h"
 #include "Engine/World.h"
 #include "FortNativeAnalyticsProvider.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "SharedFortGameLog.h"
 #include "UFortControllerComponent_Aircraft.h"
 #include "UFortItem.h"
 #include "UFortItemDefinition.h"
@@ -2117,6 +2119,62 @@ bool AFortPlayerController::NativeSprintTagGate142390740() const
 	// CONFIDENCE: HIGH. Full original body.
 	// Original 0x142390740. MyFortPawn is the original controller field at +0x6e0.
 	return MyFortPawn && MyFortPawn->NativeSprintTagGate14232cb50();
+}
+
+void AFortPlayerController::NativeSetAutoRun1423ae530(bool bEnable)
+{
+	// CONFIDENCE: HIGH. Original1423ae530; preserve pawn re-reads around virtual calls.
+	if (bAutoRunOn == bEnable) return;
+	const bool bDriving = MyFortPawn && MyFortPawn->IsDrivingVehicle();
+	if (MyFortPawn && MyFortPawn->NativeGetAthenaVehicle1423254c0() && !bDriving)
+	{
+	    bEnable = false;
+	}
+	bAutoRunOn = bEnable;
+	if (bEnable)
+	{
+	    // Original1482472b8 is GFrameCounter: TimerManager1446278d0 compares it
+	    // against LastTickedFrame at150 before adding InternalTime at140.
+	    NativeAutoRunStartFrameAe8 = GFrameCounter;
+	}
+	OnAutoRunEnabled.Broadcast(bEnable);
+}
+
+void AFortPlayerController::NativeStartMovementCancellableAction1423b8b70()
+{
+	// CONFIDENCE: HIGH. Original1423b8b70; counter is native 32-bit wraparound.
+	NativeSetAutoRun1423ae530(false);
+	InMovementCancellableAction = static_cast<int32>(static_cast<uint32>(InMovementCancellableAction) + 1u);
+	if (!bMovementDisabledDueToCancellableAction)
+	{
+	    if (!MyFortPawn || !MyFortPawn->bMovingEmote)
+	    {
+	        bMovementDisabledDueToCancellableAction = true;
+	        SetIgnoreMoveInput(true);
+	    }
+	}
+	else
+	{
+	    UE_LOG(LogFort, Warning, TEXT("Got request to start movement cancellable action when already in one. InMovementCancellableAction count %d"), InMovementCancellableAction);
+	}
+}
+
+void AFortPlayerController::NativeEndMovementCancellableAction142378db0()
+{
+	// CONFIDENCE: HIGH. Original142378db0. Zero decrements to -1; do not clamp/count-gate unlock.
+	if (InMovementCancellableAction >= 0)
+	{
+	    --InMovementCancellableAction;
+	    if (bMovementDisabledDueToCancellableAction)
+	    {
+	        bMovementDisabledDueToCancellableAction = false;
+	        SetIgnoreMoveInput(false);
+	    }
+	}
+	else
+	{
+	    UE_LOG(LogFort, Warning, TEXT("Got request to end movement cancellable action when not in one! Ignoring\n"));
+	}
 }
 
 void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
