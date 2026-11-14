@@ -108,3 +108,38 @@ void ABuildingFoundation::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	DOREPLIFETIME(ABuildingFoundation, bServerStreamedInLevel);
 }
 
+
+ABuildingFoundation::ABuildingFoundation(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    // Selected original constructor fields; see policy EVIDENCE.md for scope.
+    static_assert(TIsSame<decltype(NetPriority), float>::Value, "NetPriority type changed");
+    static_assert(TIsSame<decltype(SnapOffset), FVector>::Value, "SnapOffset type changed");
+    static_assert(TIsSame<decltype(BaseLocToPivotOffset), FVector>::Value, "BaseLocToPivotOffset type changed");
+    static_assert(TIsSame<decltype(AbilitySystemComponentCreationPolicy), EAbilitySystemComponentCreationPolicy>::Value, "creation policy type changed");
+    static_assert(TIsSame<decltype(DynamicBuildingPlacementType), TEnumAsByte<EDynamicBuildingPlacementType::Type>>::Value, "placement type changed");
+    static_assert(BFT_None == 3 && int32(EDynamicBuildingPlacementType::DestroyAnythingThatCollides) == 2 && int32(EAbilitySystemComponentCreationPolicy::Lazy) == 1, "original enum values changed");
+    bRotateInPlaceEditor = false;
+    bAlwaysRelevant = true;
+    SnapOffset.X = 0.0f;
+    SnapOffset.Y = 0.0f;
+    BaseLocToPivotOffset.X = 0.0f;
+    BaseLocToPivotOffset.Y = 0.0f;
+    FoundationType = BFT_None;
+    bNoCollision = true;
+    bConditionalFoundation = false;
+    bOverrideNavigationGraphCells = true;
+    bHasExcludedZone = false;
+    bForceDitheringTransition = true;
+    bStreamingDataBasedBounds = false;
+    NetPriority = 10.0f;
+    DynamicBuildingPlacementType = EDynamicBuildingPlacementType::DestroyAnythingThatCollides;
+    AbilitySystemComponentCreationPolicy = EAbilitySystemComponentCreationPolicy::Lazy;
+    bMergeHLODs = true;
+    bExcludeFromHLODMerge = false;
+    bHLODMergeUseCustomTextureSize = false;
+    ProxyMeshMaxDrawDistanceMultiplier = 1.0f;
+    HLODMergeCustomTextureSize = FIntPoint(0, 0);
+    bReplayRewindable = true;
+    bCanBeSavedInCreativeVolume = false;
+}

@@ -33,6 +33,7 @@
 #include "UFortPlaylistAthena.h"
 #include "FortAthenaLootData.h"
 #include "UFortControllerComponent_Aircraft.h"
+#include "UFortMovementComp_CharacterAthena.h"
 #include "FAircraftFlightInfo.h"
 #include "FFortSafeZoneDefinition.h"
 #include "EAthenaGamePhase.h"
@@ -1738,6 +1739,30 @@ namespace FortAthenaMatchFlow
         AFortPlayerPawn* Pawn = Cast<AFortPlayerPawn>(Controller->GetPawn());
         if (!GameState || !Pawn)
             return;
+
+        if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeMovementDefaults")))
+        {
+            const UFortMovementComp_CharacterAthena* Movement = Cast<UFortMovementComp_CharacterAthena>(Pawn->GetCharacterMovement());
+            if (Movement)
+            {
+                const UFortMovementComp_CharacterAthena* Samples[] = {Movement,
+                    Cast<UFortMovementComp_CharacterAthena>(Movement->GetArchetype()),
+                    Movement->GetClass()->GetDefaultObject<UFortMovementComp_CharacterAthena>()};
+                const TCHAR* Labels[] = {TEXT("instance"), TEXT("archetype"), TEXT("class-default")};
+                for (int32 Index = 0; Index < UE_ARRAY_COUNT(Samples); ++Index)
+                {
+                    const UFortMovementComp_CharacterAthena* Sample = Samples[Index];
+                    if (!Sample)
+                        continue;
+                    UE_LOG(LogTemp, Display, TEXT("Movement defaults: pawn=%s sample=%s class=%s penalties=%d reset=%.9g maxSmooth=%.9g noSmooth=%.9g smoothTime=%.9g visibility=%.9g lod=%d timestampReset=%.9g brakingStep=%.9g flyingAcceleration=%.9g"),
+                        *Pawn->GetName(), Labels[Index], *Sample->GetClass()->GetName(), Sample->JumpPenalties.Num(),
+                        Sample->JumpPenaltyResetTime, Sample->NetworkMaxSmoothUpdateDistance, Sample->NetworkNoSmoothUpdateDistance,
+                        Sample->NetworkSimulatedSmoothLocationTime, Sample->NetworkSmoothingVisibilityThreshold,
+                        Sample->NetworkSkipSkyDivingCollisionForPawnLOD, Sample->MinTimeBetweenTimeStampResets,
+                        Sample->BrakingSubStepTime, Sample->MaxAccelerationFlying);
+                }
+            }
+        }
 
         // FinishRestartPlayer applies GE_OutsideSafeZone once per pawn (D2 10, R6 3). Health setup initializes the ASC
         // before this hook runs.

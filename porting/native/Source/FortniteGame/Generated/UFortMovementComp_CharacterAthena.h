@@ -16,6 +16,8 @@ class FORTNITEGAME_API UFortMovementComp_CharacterAthena : public UFortMovementC
 	GENERATED_BODY()
 
 public:
+	UFortMovementComp_CharacterAthena(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 3, flags 0x10000000000015
 	UPROPERTY()
 	TArray<FAthenaJumpPenalty> JumpPenalties;

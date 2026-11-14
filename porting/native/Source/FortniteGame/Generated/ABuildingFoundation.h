@@ -34,6 +34,8 @@ class FORTNITEGAME_API ABuildingFoundation : public ABuildingSMActor
 	GENERATED_BODY()
 
 public:
+	ABuildingFoundation(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 46, flags 0x20080000000001
 	UPROPERTY()
 	TArray<UBuildingGroup*> BuildingGroups;
