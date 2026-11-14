@@ -88,3 +88,8 @@ private:
 
     void LoadMesh();
 };
+
+namespace FortniteAthenaGameplay
+{
+    FORTNITEGAME_API void EnsureWorldManager(UWorld* World);
+}

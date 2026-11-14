@@ -524,7 +524,7 @@ static void EnsureWarmupPhase(UWorld* World)
 // stands in until that is ported.
 // The client derives its in-game UI state tag from GameState+0x3d0 (the replicated WorldManager); with no manager the tag
 // stays None and the client's loading screen manager reports "UIDirector has no valid state" forever.
-static void EnsureWorldManager(UWorld* World)
+void FortniteAthenaGameplay::EnsureWorldManager(UWorld* World)
 {
     AFortGameStateAthena* GameState = World ? World->GetGameState<AFortGameStateAthena>() : nullptr;
     if (!GameState || GameState->WorldManager)
@@ -609,7 +609,7 @@ void AFortGameModeAthena::RestartPlayer(AController* NewPlayer)
     if (!FortAthenaRegisteredSession::Enabled())
         EnsureHero(NewPlayer);
     EnsureTimeOfDayManager(GetWorld());
-    EnsureWorldManager(GetWorld());
+    FortniteAthenaGameplay::EnsureWorldManager(GetWorld());
     if (!FortAthenaMatchFlow::IsActive())
         EnsureWarmupPhase(GetWorld());
     Super::RestartPlayer(NewPlayer);

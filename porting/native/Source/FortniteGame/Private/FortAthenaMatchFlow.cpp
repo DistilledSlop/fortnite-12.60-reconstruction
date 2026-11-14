@@ -14,6 +14,7 @@
 
 #include "FortAthenaMatchFlow.h"
 #include "EngineUtils.h"
+#include "FortniteAthenaGameplay.h"
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaHealth.h"
 #include "FortAthenaEndGame.h"
@@ -23,6 +24,8 @@
 #include "Engine/LODActor.h"
 #include "ABuildingFoundation.h"
 #include "AWorldTileFoundation.h"
+#include "EDynamicFoundationEnabledState.h"
+#include "EDynamicFoundationType.h"
 #include "Misc/PackageName.h"
 #include "LandscapeProxy.h"
 
@@ -1236,26 +1239,41 @@ namespace FortAthenaMatchFlowPrivate
         return NAME_None;
     }
 
-    void StreamFoundation(UWorld* World, ABuildingFoundation* Foundation)
+    void EnsureFoundationEnabledState(ABuildingFoundation* Foundation)
+    {
+        int32 Depth = 0;
+        for (ABuildingFoundation* Current = Foundation; Current && Depth < 16; Current = Current->ParentFoundation, ++Depth)
+        {
+            if (Current->FoundationEnabledState == EDynamicFoundationEnabledState::Unknown)
+            {
+                Current->FoundationEnabledState = Current->DynamicFoundationType == EDynamicFoundationType::StartDisabled
+                    ? EDynamicFoundationEnabledState::Disabled
+                    : EDynamicFoundationEnabledState::Enabled;
+            }
+        }
+    }
+
+    bool StreamFoundation(UWorld* World, ABuildingFoundation* Foundation)
     {
         if (!World || !Foundation)
-            return;
+            return false;
+        EnsureFoundationEnabledState(Foundation);
         if (!Foundation->NativeIsFoundationAndParentsEnabled())
-            return;
+            return false;
         if (Foundation->LevelStreamInfo || Foundation->bServerStreamedInLevel)
-            return;
+            return false;
 
         const FName PackageName = SelectFoundationPackage(Foundation);
         if (PackageName.IsNone())
-            return;
+            return false;
         const FString Package = PackageName.ToString();
         if (!FPackageName::IsValidLongPackageName(Package))
-            return;
+            return false;
 
         const uint32 InstanceId = ABuildingFoundation::NativeComputeFoundationInstanceId(
             Foundation->GetActorLocation(), Foundation->GetName());
         if (State().StreamedFoundationIds.Contains(InstanceId))
-            return;
+            return false;
         State().StreamedFoundationIds.Add(InstanceId);
 
         const FRotator Rotation = Foundation->IsA<AWorldTileFoundation>()
@@ -1269,7 +1287,7 @@ namespace FortAthenaMatchFlowPrivate
         {
             UE_LOG(LogTemp, Warning, TEXT("MatchFlow: foundation stream rejected actor=%s package=%s"),
                 *Foundation->GetPathName(), *Package);
-            return;
+            return false;
         }
         Streaming->SetShouldBeLoaded(true);
         Streaming->SetShouldBeVisible(true);
@@ -1280,16 +1298,29 @@ namespace FortAthenaMatchFlowPrivate
         Entry.Streaming = Streaming;
         Entry.PackageName = PackageName;
         State().PendingFoundationStreams.Add(Entry);
+        return true;
     }
 
     void StreamFoundationsInLevel(UWorld* World, ULevel* Level)
     {
         if (!World || !Level)
             return;
+        int32 FoundCount = 0;
+        int32 QueuedCount = 0;
         for (AActor* Actor : Level->Actors)
         {
             if (ABuildingFoundation* Foundation = Cast<ABuildingFoundation>(Actor))
-                StreamFoundation(World, Foundation);
+            {
+                ++FoundCount;
+                if (StreamFoundation(World, Foundation))
+                    ++QueuedCount;
+            }
+        }
+        if (FoundCount > 0)
+        {
+            const FString LevelName = Level->GetOutermost() ? Level->GetOutermost()->GetName() : Level->GetName();
+            UE_LOG(LogTemp, Display, TEXT("MatchFlow: foundations scanned level=%s found=%d queued=%d pendingTotal=%d"),
+                *LevelName, FoundCount, QueuedCount, State().PendingFoundationStreams.Num());
         }
     }
 
@@ -1306,8 +1337,12 @@ namespace FortAthenaMatchFlowPrivate
         if (!World || State().PendingFoundationStreams.Num() == 0)
             return;
 
+        TArray<FPendingFoundationStream> Pending = MoveTemp(State().PendingFoundationStreams);
+        State().PendingFoundationStreams.Reset();
+
+        int32 FinalizedCount = 0;
         TArray<FPendingFoundationStream> Remaining;
-        for (const FPendingFoundationStream& Entry : State().PendingFoundationStreams)
+        for (const FPendingFoundationStream& Entry : Pending)
         {
             ULevelStreamingDynamic* Streaming = Entry.Streaming.Get();
             if (!Streaming || Streaming->GetCurrentState() == ULevelStreaming::ECurrentState::FailedToLoad)
@@ -1319,6 +1354,7 @@ namespace FortAthenaMatchFlowPrivate
                 continue;
             }
 
+            ++FinalizedCount;
             if (ABuildingFoundation* Foundation = Entry.Foundation.Get())
             {
                 Foundation->bServerStreamedInLevel = true;
@@ -1361,7 +1397,14 @@ namespace FortAthenaMatchFlowPrivate
                 StreamFoundationsInLevel(World, LoadedLevel);
             }
         }
-        State().PendingFoundationStreams = MoveTemp(Remaining);
+        // Prepend/append any still-loading streams while keeping nested streams added by StreamFoundationsInLevel.
+        if (Remaining.Num() > 0)
+            State().PendingFoundationStreams.Append(MoveTemp(Remaining));
+        if (FinalizedCount > 0)
+        {
+            UE_LOG(LogTemp, Display, TEXT("MatchFlow: finalized %d foundation stream(s); pending=%d"),
+                FinalizedCount, State().PendingFoundationStreams.Num());
+        }
     }
 
     // The Apollo_Background level (cloud sheets, skybox meshes) is decoration. The server loads its static-mesh collision,
@@ -1751,6 +1794,7 @@ namespace FortAthenaMatchFlowPrivate
         S.LastDriverTime = WorldTime;
         FortAthenaInventory::Tick(World);
         FortAthenaEndGame::Tick(GameMode, Delta);
+        FinalizeVisibleFoundationStreams(World);
 
         // HandleMatchHasStarted -> StartWarmupPhase. inferred: deferred until RequiredPlayers have joined (the original
         // waits for the match to start; with no player the countdown would end in the "all players disconnected" branch).
@@ -1759,7 +1803,6 @@ namespace FortAthenaMatchFlowPrivate
             if (GameMode->GetNumPlayers() < S.RequiredPlayers)
                 return;
             DisableBackgroundCollision(GameMode->GetWorld());  // streamed levels may have finished after the driver armed
-            FinalizeVisibleFoundationStreams(GameMode->GetWorld());
             UE_LOG(LogTemp, Display, TEXT("MatchFlow: %d of %d required players joined; starting warmup"), GameMode->GetNumPlayers(), S.RequiredPlayers);
             if (!StartWarmupPhase(GameMode))
                 WarmupEnd(GameMode);
@@ -1866,17 +1909,22 @@ namespace FortAthenaMatchFlow
             return;
         }
         GameMode->GetWorldTimerManager().SetTimer(S.DriverHandle, FTimerDelegate::CreateStatic(&DriverTick), DriverInterval, true);
-        DisableBackgroundCollision(GameMode->GetWorld());
-        StreamFoundationsInWorld(GameMode->GetWorld());
+        UWorld* World = GameMode->GetWorld();
+        FortniteAthenaGameplay::EnsureWorldManager(World);
         if (!S.bFoundationStreamingHooked)
         {
             S.bFoundationStreamingHooked = true;
             FWorldDelegates::LevelAddedToWorld.AddStatic([](ULevel* InLevel, UWorld* InWorld)
             {
                 if (State().GameMode.IsValid() && InWorld == State().GameMode->GetWorld())
+                {
+                    DisableBackgroundCollision(InWorld);
                     StreamFoundationsInLevel(InWorld, InLevel);
+                }
             });
         }
+        DisableBackgroundCollision(World);
+        StreamFoundationsInWorld(World);
         UE_LOG(LogTemp, Display, TEXT("MatchFlow: driver armed (%.2f s); waiting for %d player(s)"), DriverInterval, S.RequiredPlayers);
     }
 
