@@ -25,6 +25,7 @@
 #include "AFortPlayerControllerGameplay.h"
 #include "AFortPlayerState.h"
 #include "AFortPlayerStateZone.h"
+#include "Abilities/GameplayAbilityTypes.h"
 #include "AbilitySystemComponent.h"
 #include "Animation/AnimInstance.h"
 #include "Components/CapsuleComponent.h"
@@ -53,6 +54,7 @@
 #include "SkeletalMeshComponentBudgeted.h"
 #include "UFortAbilitySystemComponent.h"
 #include "UFortAdvancedMovementSet.h"
+#include "UFortControllerComponent_SkydiveFeedback.h"
 #include "UFortFootstepAudioBank.h"
 #include "UFortGlobals.h"
 #include "UFortKismetLibrary.h"
@@ -2299,6 +2301,76 @@ bool AFortPlayerPawn::CanCrouch() const
 	    return false;
 	}
 	return !IsInVehicle() && !bLocalIsSkydiving;
+}
+
+UFortControllerComponent_SkydiveFeedback* AFortPlayerPawn::NativeControllerFeedback1423240e0()
+{
+	// CONFIDENCE: HIGH. Original1423240e0; controller component lookup stays virtual.
+	if (Controller && NativeNetMode143f7a920() != NM_DedicatedServer)
+	{
+	    return static_cast<UFortControllerComponent_SkydiveFeedback*>(
+	        Controller->FindComponentByClass(UFortControllerComponent_SkydiveFeedback::StaticClass()));
+	}
+	return nullptr;
+}
+
+void AFortPlayerPawn::NativeCloseParachute14230e850()
+{
+	// CONFIDENCE: HIGH. Original14230e850. Mode-change callbacks own the later state changes.
+	if (!bIsParachuteOpen) return;
+	UCharacterMovementComponent* Movement = GetCharacterMovement();
+	if (bLocalIsSkydiving)
+	{
+	    if (bIsSkydivingFromBus)
+	    {
+	        UFortControllerComponent_SkydiveFeedback* Feedback = NativeControllerFeedback1423240e0();
+	        if (Feedback) Feedback->NativeSetFeedback1418bfe90(0);
+	    }
+	    Movement->SetMovementMode(MOVE_Custom, 4);
+	}
+	else
+	{
+	    if (Movement->IsSwimming()) return;
+	    Movement->SetMovementMode(MOVE_Falling, 0);
+	}
+}
+
+void AFortPlayerPawn::NativeSetPendingSkydiveLaunch14234e8b0(bool bPending)
+{
+	// CONFIDENCE: HIGH. Original14234e8b0. Payload destruction precedes from-bus state change.
+	bPendingSkydiveLaunch = bPending;
+	if (!bPending)
+	{
+	    return;
+	}
+
+	if (UAbilitySystemComponent* ASC = GetAbilitySystemComponent())
+	{
+	    // The original destroys the payload before clearing bIsSkydivingFromBus.
+	    FGameplayEventData Payload;
+	    Payload.Instigator = this;
+	    Payload.Target = this;
+	    const FGameplayTag EventTag = FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(
+	        bIsSkydivingFromBus ? 0x1a8 : 0x1a0);
+	    ASC->HandleGameplayEvent(EventTag, &Payload);
+	}
+
+	bIsSkydivingFromBus = false;
+	if (AFortPlayerStateZone* FortState = Cast<AFortPlayerStateZone>(PlayerState))
+	{
+	    FortState->NativeSetHasEverSkydivedFromBus1424293c0(true);
+	    FortState->NativeSetHasEverSkydivedFromBusAndLanded1424293d0(true);
+	}
+	if (Controller && NativeNetMode143f7a920() != NM_DedicatedServer)
+	{
+	    // Reload Controller after net-mode resolution, matching the original.
+	    UActorComponent* Component = Controller->FindComponentByClass(
+	        UFortControllerComponent_SkydiveFeedback::StaticClass());
+	    if (Component)
+	    {
+	        static_cast<UFortControllerComponent_SkydiveFeedback*>(Component)->NativeSetFeedback1418bfe90(3);
+	    }
+	}
 }
 
 void AFortPlayerPawn::NativeUpdateAccelerationPack1423442e0()

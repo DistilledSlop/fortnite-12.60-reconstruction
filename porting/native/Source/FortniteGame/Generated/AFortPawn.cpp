@@ -16,7 +16,10 @@
 #include "EFortControlRecoveryBehavior.h"
 #include "EFortDamageZone.h"
 #include "EFortMovementStyle.h"
+#include "Engine/DemoNetDriver.h"
+#include "Engine/Engine.h"
 #include "Engine/EngineTypes.h"
+#include "Engine/NetDriver.h"
 #include "Engine/World.h"
 #include "FFortActiveMontageDecisionWindow.h"
 #include "FFortPawnStats.h"
@@ -1313,6 +1316,18 @@ AActor* AFortPawn::NativeGetFloorActor142316940(UPrimitiveComponent** OutCompone
 	}
 	if (OutComponent) *OutComponent = CachedNavFloor;
 	return CachedNavFloor ? CachedNavFloor->GetOwner() : nullptr;
+}
+
+ENetMode AFortPawn::NativeNetMode143f7a920() const
+{
+	// CONFIDENCE: HIGH. Original AActor::InternalGetNetMode143f7a920.
+	// Keep the world lookup even in a dedicated build: the original caller observes it.
+	UWorld* World = GetWorld();
+	UNetDriver* Driver = NetDriverName == NAME_GameNetDriver
+	    ? (World ? World->GetNetDriver() : nullptr)
+	    : GEngine->FindNamedNetDriver(World, NetDriverName);
+	if (!Driver && World) Driver = World->DemoNetDriver;
+	return Driver ? Driver->GetNetMode() : NM_Standalone;
 }
 
 void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

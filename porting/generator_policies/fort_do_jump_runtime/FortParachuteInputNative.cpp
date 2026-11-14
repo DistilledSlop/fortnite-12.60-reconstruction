@@ -34,3 +34,10 @@ int32 NativeEnableParachuteEverywhere148157cf4() { return GEnableParachuteEveryw
 int32 NativeGliderRedeployRequiresJump148157d08() { return GGliderRedeployRequiresJump148157d08; }
 int32 NativeGliderRedeployUseWindowOfTime148157d0c() { return GGliderRedeployUseWindowOfTime148157d0c; }
 float NativeGliderRedeployWindowLength1478de4b0() { return GGliderRedeployWindowLength1478de4b0; }
+
+// Registrar140264880; original14810e720 is in the PE's virtual-zero .data tail.
+static int32 GDisableSkydivingFeedback14810e720 = 0;
+static FAutoConsoleVariableRef CVarDisableSkydivingFeedback14810e720(
+    TEXT("Athena.DisableSkydivingFeedback"), GDisableSkydivingFeedback14810e720,
+    TEXT("Whether the skydive feedback should be enabled.\n1: Disable, 0: Enable"), ECVF_Default);
+int32 NativeDisableSkydivingFeedback14810e720() { return GDisableSkydivingFeedback14810e720; }

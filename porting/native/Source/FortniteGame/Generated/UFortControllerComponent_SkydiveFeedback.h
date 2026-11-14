@@ -7,6 +7,10 @@
 #include "UFortControllerComponent_HasCoupledWidgets.h"
 
 #include "AttributeSet.h"
+#include "Camera/PlayerCameraManager.h"
+#include "Delegates/Delegate.h"
+#include "FortParachuteInputNative.h"
+#include "GameFramework/PlayerController.h"
 
 class UCameraShake;
 
@@ -18,6 +22,9 @@ class FORTNITEGAME_API UFortControllerComponent_SkydiveFeedback : public UFortCo
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x100): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, uint8> NativeFeedbackChanged;
+
 	// table index 30, flags 0x20080000002000
 	UPROPERTY(Transient)
 	UCameraShake* SkydiveCamShake;
@@ -142,5 +149,10 @@ public:
 	UPROPERTY()
 	FScalableFloat TransOscZMaxFreq;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	APlayerController* NativeGetPlayerController1418b2820() const;
+	void NativeSetFeedback1418bfe90(uint8 State);
 };
 

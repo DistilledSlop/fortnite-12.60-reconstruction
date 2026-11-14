@@ -11,6 +11,7 @@
 
 class AFortGameModeAthena;
 class AFortGameStateAthena;
+class AFortPlayerPawn;
 class AFortWeapon;
 class UFortWeaponItemDefinition;
 
@@ -48,5 +49,6 @@ public:
 	virtual uint8 NativeQueryActionPermission978(bool& bAllowed, const FGameplayTag& ActionTag);
 	virtual uint8 NativeQueryGliderRedeployB48(bool& bAllowed);
 	virtual uint8 NativeQueryWeaponTargeting960(AFortWeapon* Weapon, bool& bAllowed);
+	virtual uint8 NativeConsumeParachuteOpenBA0(bool bFromInput, AFortPlayerPawn* Pawn);
 };
 

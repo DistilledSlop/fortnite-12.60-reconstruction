@@ -86,6 +86,18 @@ bool AFortPlayerStateZone::ServerSetInAircraft_Validate(bool bNewInAircraft)
 	return true;
 }
 
+void AFortPlayerStateZone::NativeSetHasEverSkydivedFromBus1424293c0(bool bValue)
+{
+	// CONFIDENCE: HIGH. Original0x1424293c0.
+	bHasEverSkydivedFromBus = bValue;
+}
+
+void AFortPlayerStateZone::NativeSetHasEverSkydivedFromBusAndLanded1424293d0(bool bValue)
+{
+	// CONFIDENCE: HIGH. Original0x1424293d0.
+	bHasEverSkydivedFromBusAndLanded = bValue;
+}
+
 void AFortPlayerStateZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -92980,5 +92980,240 @@
       "Components/AudioComponent.h",
       "Components/SceneComponent.h"
     ]
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "NativeGetLastController141947020",
+    "kind": "helper",
+    "signature": "AFortPlayerController* NativeGetLastController141947020() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortCharacterVehicle/NativeGetLastController141947020.inc",
+    "address": "0x141947020",
+    "confidence": "HIGH",
+    "status": "ported",
+    "notes": "Original weak Get on reflected LastController3290, retaining its declared FortPlayerController pointer type. No extra validity guard. Vehicle class lifecycle acceptance separate.",
+    "includes": []
+  },
+  {
+    "class": "UFortAbilitySystemComponent",
+    "function": "HandleChangeAbilityCanBeCanceled",
+    "kind": "helper",
+    "signature": "void HandleChangeAbilityCanBeCanceled(const FGameplayTagContainer& AbilityTags, UGameplayAbility* RequestingAbility, bool bCanBeCanceled)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortAbilitySystemComponent/HandleChangeAbilityCanBeCanceled.inc",
+    "address": "0x141600f50",
+    "confidence": "HIGH",
+    "status": "ported",
+    "virtual": true,
+    "override": true,
+    "includes": [
+      "Abilities/GameplayAbilityTypes.h",
+      "FortNativeGameplayTagsRuntime.h"
+    ],
+    "notes": "Full original ASC+668 callback. OwnerActor->Owner controller preferred; fallback requires both player pawn and character vehicle casts then weak LastController. Relationship lookup and virtual movement cancellation callbacks preserved. RequestingAbility unused in original. ApplyAbilityBlockAndCancelTags and full derived controller/class lifecycle remain separate acceptance gates; UE build/runtime pending."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeNetMode143f7a920",
+    "kind": "helper",
+    "signature": "ENetMode NativeNetMode143f7a920() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPawn/NativeNetMode143f7a920.inc",
+    "address": "0x143f7a920",
+    "confidence": "HIGH",
+    "status": "ported",
+    "includes": [
+      "Engine/World.h",
+      "Engine/Engine.h",
+      "Engine/NetDriver.h",
+      "Engine/DemoNetDriver.h"
+    ],
+    "notes": "Full original actor internal net-mode helper, hosted on FortPawn. Retains world lookup, named driver lookup, demo driver fallback and standalone return; no dedicated-server shortcut."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeControllerFeedback1423240e0",
+    "kind": "helper",
+    "signature": "UFortControllerComponent_SkydiveFeedback* NativeControllerFeedback1423240e0()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPlayerPawn/NativeControllerFeedback1423240e0.inc",
+    "address": "0x1423240e0",
+    "confidence": "HIGH",
+    "status": "ported",
+    "includes": [],
+    "notes": "Preserves controller reload after net-mode call and virtual FindComponentByClass dispatch."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeCloseParachute14230e850",
+    "kind": "helper",
+    "signature": "void NativeCloseParachute14230e850()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPlayerPawn/NativeCloseParachute14230e850.inc",
+    "address": "0x14230e850",
+    "confidence": "HIGH",
+    "status": "ported",
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ],
+    "notes": "Full close body including feedback before movement-mode change. Mode-change class lifecycle and listener wiring are separate acceptance gates; build/runtime pending."
+  },
+  {
+    "class": "UFortControllerComponent_SkydiveFeedback",
+    "function": "NativeGetPlayerController1418b2820",
+    "kind": "helper",
+    "signature": "APlayerController* NativeGetPlayerController1418b2820() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortControllerComponent_SkydiveFeedback/NativeGetPlayerController1418b2820.inc",
+    "address": "0x1418b2820",
+    "confidence": "HIGH",
+    "status": "ported",
+    "includes": [
+      "GameFramework/PlayerController.h"
+    ]
+  },
+  {
+    "class": "UFortControllerComponent_SkydiveFeedback",
+    "function": "NativeSetFeedback1418bfe90",
+    "kind": "helper",
+    "signature": "void NativeSetFeedback1418bfe90(uint8 State)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortControllerComponent_SkydiveFeedback/NativeSetFeedback1418bfe90.inc",
+    "address": "0x1418bfe90",
+    "confidence": "HIGH",
+    "status": "ported",
+    "includes": [
+      "FortParachuteInputNative.h",
+      "GameFramework/PlayerController.h",
+      "Camera/PlayerCameraManager.h"
+    ],
+    "notes": "Complete body with reentrant native multicast, backed CVar, camera shake and active/passive terminal-velocity evaluations. Listener registration/removal and full component lifecycle remain unaccepted; no synthesized listeners. Build/runtime pending."
+  },
+  {
+    "class": "UFortControllerComponent_SkydiveFeedback",
+    "function": "NativeFeedbackChanged",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, uint8> NativeFeedbackChanged",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x100",
+    "confidence": "HIGH",
+    "status": "ported",
+    "address": "0x1428a2420",
+    "notes": "Owned native byte multicast. Original empty array, threshold2, depth0 matches engine initialization/lifetime. Listener registration/removal separately open; not reflected or an asserted Linux ABI offset.",
+    "includes": [
+      "Delegates/Delegate.h"
+    ]
+  },
+  {
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "class": "AFortGameStateAthena",
+    "function": "NativeConsumeParachuteOpen14199ce60",
+    "signature": "bool NativeConsumeParachuteOpen14199ce60(AFortPlayerPawn* Pawn, bool bFromInput)",
+    "address": "0x14199ce60",
+    "inc_path": "porting/behavior/AFortGameStateAthena/NativeConsumeParachuteOpen14199ce60.inc",
+    "notes": "Original mutator+ba0 family; all164 constructor-derived tables verified, 162basefalse and two full overrides. Full mutator class lifecycle remains separate; build/runtime pending."
+  },
+  {
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "class": "AFortAthenaMutator",
+    "function": "NativeConsumeParachuteOpenBA0",
+    "signature": "uint8 NativeConsumeParachuteOpenBA0(bool bFromInput, AFortPlayerPawn* Pawn)",
+    "address": "0x1406801e0",
+    "inc_path": "porting/behavior/AFortAthenaMutator/NativeConsumeParachuteOpenBA0.inc",
+    "virtual": true,
+    "override": false,
+    "notes": "Original mutator+ba0 family; all164 constructor-derived tables verified, 162basefalse and two full overrides. Full mutator class lifecycle remains separate; build/runtime pending."
+  },
+  {
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "class": "AFortAthenaMutator_DeployToVehicle",
+    "function": "NativeConsumeParachuteOpenBA0",
+    "signature": "uint8 NativeConsumeParachuteOpenBA0(bool bFromInput, AFortPlayerPawn* Pawn)",
+    "address": "0x141ad6120",
+    "inc_path": "porting/behavior/AFortAthenaMutator_DeployToVehicle/NativeConsumeParachuteOpenBA0.inc",
+    "virtual": true,
+    "override": true,
+    "includes": [
+      "Components/SceneComponent.h"
+    ],
+    "notes": "Original mutator+ba0 family; all164 constructor-derived tables verified, 162basefalse and two full overrides. Full mutator class lifecycle remains separate; build/runtime pending."
+  },
+  {
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "class": "AFortAthenaMutator_SpecialEvent",
+    "function": "NativeConsumeParachuteOpenBA0",
+    "signature": "uint8 NativeConsumeParachuteOpenBA0(bool bFromInput, AFortPlayerPawn* Pawn)",
+    "address": "0x141b1f570",
+    "inc_path": "porting/behavior/AFortAthenaMutator_SpecialEvent/NativeConsumeParachuteOpenBA0.inc",
+    "virtual": true,
+    "override": true,
+    "notes": "Original mutator+ba0 family; all164 constructor-derived tables verified, 162basefalse and two full overrides. Full mutator class lifecycle remains separate; build/runtime pending."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeSetPendingSkydiveLaunch14234e8b0",
+    "kind": "helper",
+    "signature": "void NativeSetPendingSkydiveLaunch14234e8b0(bool bPending)",
+    "inc_path": "porting/behavior/AFortPlayerPawn/NativeSetPendingSkydiveLaunch14234e8b0.inc",
+    "address": "0x14234e8b0",
+    "includes": [
+      "Abilities/GameplayAbilityTypes.h",
+      "FortNativeGameplayTagsRuntime.h"
+    ],
+    "notes": "Full setter: gameplay event payload/teardown, from-bus clear, two player-state setters, controller component feedback. Shared actor net-mode helper preserves world call. Native delegate subscriber wiring/full pawn lifecycle remain separately unaccepted; build/runtime pending.",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "HIGH",
+    "status": "ported"
+  },
+  {
+    "class": "AFortPlayerStateZone",
+    "function": "NativeSetHasEverSkydivedFromBus1424293c0",
+    "kind": "helper",
+    "signature": "void NativeSetHasEverSkydivedFromBus1424293c0(bool bValue)",
+    "inc_path": "porting/behavior/AFortPlayerStateZone/NativeSetHasEverSkydivedFromBus1424293c0.inc",
+    "address": "0x1424293c0",
+    "notes": "Original bool setter on reflected d00 bit; canonical bool input contract, no noncanonical byte-argument claim.",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "HIGH",
+    "status": "ported"
+  },
+  {
+    "class": "AFortPlayerStateZone",
+    "function": "NativeSetHasEverSkydivedFromBusAndLanded1424293d0",
+    "kind": "helper",
+    "signature": "void NativeSetHasEverSkydivedFromBusAndLanded1424293d0(bool bValue)",
+    "inc_path": "porting/behavior/AFortPlayerStateZone/NativeSetHasEverSkydivedFromBusAndLanded1424293d0.inc",
+    "address": "0x1424293d0",
+    "notes": "Original bool setter on reflected d00 bit; canonical bool input contract, no noncanonical byte-argument claim.",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "HIGH",
+    "status": "ported"
   }
 ]

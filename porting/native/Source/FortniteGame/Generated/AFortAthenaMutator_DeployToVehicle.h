@@ -6,7 +6,10 @@
 #include "CoreMinimal.h"
 #include "AFortAthenaMutator.h"
 
+#include "Components/SceneComponent.h"
+
 class AFortAthenaVehicle;
+class AFortPlayerPawn;
 class UGameplayEffect;
 
 #include "AFortAthenaMutator_DeployToVehicle.generated.h"
@@ -29,5 +32,9 @@ public:
 	UPROPERTY()
 	TSubclassOf<UGameplayEffect> GameplayEffectToApplyOnDeploy;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual uint8 NativeConsumeParachuteOpenBA0(bool bFromInput, AFortPlayerPawn* Pawn) override;
 };
 

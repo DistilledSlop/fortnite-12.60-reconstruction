@@ -20,7 +20,10 @@
 #include "EFortPawnPushSize.h"
 #include "EFortSoundIndicatorTypes.h"
 #include "Engine/DataTable.h"
+#include "Engine/DemoNetDriver.h"
+#include "Engine/Engine.h"
 #include "Engine/EngineTypes.h"
+#include "Engine/NetDriver.h"
 #include "Engine/NetSerialization.h"
 #include "Engine/World.h"
 #include "FAthenaBatchedDamageGameplayCues_NonShared.h"
@@ -1226,5 +1229,6 @@ public:
 	virtual void NativeSetMaxAccelerationFlying141a24e80(float Value);
 	virtual void NativeSetMovementStyle14234bf20(uint8 Style);
 	virtual AActor* NativeGetFloorActor142316940(UPrimitiveComponent** OutComponent);
+	ENetMode NativeNetMode143f7a920() const;
 };
 

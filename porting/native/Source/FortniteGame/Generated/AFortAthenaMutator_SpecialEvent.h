@@ -21,6 +21,7 @@
 #include "Math/Vector.h"
 
 class AFortAthenaAircraft;
+class AFortPlayerPawn;
 class UInputComponent;
 
 #include "AFortAthenaMutator_SpecialEvent.generated.h"
@@ -187,5 +188,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static FString NativeBoolToString140ae9a90(bool bFlag);
+	virtual uint8 NativeConsumeParachuteOpenBA0(bool bFromInput, AFortPlayerPawn* Pawn) override;
 };
 

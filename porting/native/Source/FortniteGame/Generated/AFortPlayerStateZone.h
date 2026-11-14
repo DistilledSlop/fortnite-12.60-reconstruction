@@ -170,5 +170,10 @@ public:
 	bool ServerSetInAircraft_Validate(bool bNewInAircraft);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	void NativeSetHasEverSkydivedFromBus1424293c0(bool bValue);
+	void NativeSetHasEverSkydivedFromBusAndLanded1424293d0(bool bValue);
 };
 

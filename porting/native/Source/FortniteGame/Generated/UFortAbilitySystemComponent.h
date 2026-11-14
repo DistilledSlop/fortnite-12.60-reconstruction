@@ -12,6 +12,7 @@
 #include "FGameplayAbilityRepSharedAnim.h"
 #include "FPersonalVehicleBlockingChanged.h"
 #include "FReplicatedMontagePair.h"
+#include "FortNativeGameplayTagsRuntime.h"
 #include "GameplayTagContainer.h"
 #include "HAL/Platform.h"
 #include "UObject/Object.h"
@@ -86,5 +87,6 @@ public:
 	const FGameplayAbilityRepAnimMontage& NativeRepAnimMontageInfo1406ccd10() const;
 	void NativeSetAttributeMaximum14160c540(const FGameplayAttribute& Attribute, float Value);
 	void NativeSetAttributeMinimum14160c5b0(const FGameplayAttribute& Attribute, float Value);
+	virtual void HandleChangeAbilityCanBeCanceled(const FGameplayTagContainer& AbilityTags, UGameplayAbility* RequestingAbility, bool bCanBeCanceled) override;
 };
 

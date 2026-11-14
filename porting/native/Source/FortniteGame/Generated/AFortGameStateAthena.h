@@ -99,6 +99,7 @@ class AFortGameplayMutator;
 class AFortLocalizationService;
 class AFortPawn;
 class AFortPlayerController;
+class AFortPlayerPawn;
 class AFortPlayerState;
 class AFortPlayerStateAthena;
 class AFortProjectileBase;
@@ -1188,5 +1189,6 @@ public:
 	bool NativeQueryActionPermission1419afdf0(const FGameplayTag& ActionTag);
 	bool NativeQueryGliderRedeploy14198b790(ACharacter* Pawn);
 	bool NativeQueryWeaponTargeting1419b08a0(AFortWeapon* Weapon);
+	bool NativeConsumeParachuteOpen14199ce60(AFortPlayerPawn* Pawn, bool bFromInput);
 };
 
