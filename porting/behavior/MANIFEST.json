@@ -6506,7 +6506,7 @@
     "signature_status": "proposed",
     "confidence": "medium",
     "status": "ported",
-    "notes": "Source-only; native-action producers and transition integration remain pending. Names are reconstructed; see recovery.md. Canonical source body/storage only; full source producers and connected event integration remain pending, no runtime completion claim."
+    "notes": "Original native action tag container. Start/stop action producers now recovered; complete block/cancel override and connected input/ability lifecycle remain open. No runtime completion claim."
   },
   {
     "function": "HasNativeAction",
@@ -93458,5 +93458,254 @@
       "Engine/World.h"
     ],
     "notes": "Complete original body, with original virtual calls and predicate order. Build/runtime and broader class lifecycle remain unaccepted."
+  },
+  {
+    "function": "NativeStartAction14160f8c0",
+    "kind": "helper",
+    "signature": "void NativeStartAction14160f8c0(const FGameplayTag& ActionTag)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortAbilitySystemComponent/NativeStartAction14160f8c0.inc",
+    "address": "0x14160f8c0",
+    "confidence": "HIGH",
+    "status": "ported",
+    "class": "UFortAbilitySystemComponent",
+    "includes": [
+      "SharedFortGameLog.h",
+      "UObject/Class.h",
+      "GameFramework/Actor.h"
+    ],
+    "notes": "Complete original body. Build/runtime and broader class lifecycle remain unaccepted."
+  },
+  {
+    "function": "NativeStopAction14160fd30",
+    "kind": "helper",
+    "signature": "void NativeStopAction14160fd30(const FGameplayTag& ActionTag)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortAbilitySystemComponent/NativeStopAction14160fd30.inc",
+    "address": "0x14160fd30",
+    "confidence": "HIGH",
+    "status": "ported",
+    "class": "UFortAbilitySystemComponent",
+    "includes": [
+      "SharedFortGameLog.h",
+      "UObject/Class.h",
+      "GameFramework/Actor.h"
+    ],
+    "notes": "Complete original body. Build/runtime and broader class lifecycle remain unaccepted."
+  },
+  {
+    "function": "NativeStartAction142353060",
+    "kind": "helper",
+    "signature": "void NativeStartAction142353060(const FGameplayTag& ActionTag)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPawn/NativeStartAction142353060.inc",
+    "address": "0x142353060",
+    "confidence": "HIGH",
+    "status": "ported",
+    "class": "AFortPawn",
+    "virtual": true,
+    "notes": "Complete original body. Build/runtime and broader class lifecycle remain unaccepted."
+  },
+  {
+    "function": "NativeStopAction142353960",
+    "kind": "helper",
+    "signature": "void NativeStopAction142353960(const FGameplayTag& ActionTag)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPawn/NativeStopAction142353960.inc",
+    "address": "0x142353960",
+    "confidence": "HIGH",
+    "status": "ported",
+    "class": "AFortPawn",
+    "virtual": true,
+    "notes": "Complete original body. Build/runtime and broader class lifecycle remain unaccepted."
+  },
+  {
+    "function": "NativeEndWaterSprintBoost142314570",
+    "kind": "helper",
+    "signature": "void NativeEndWaterSprintBoost142314570()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPlayerPawn/NativeEndWaterSprintBoost142314570.inc",
+    "address": "0x142314570",
+    "confidence": "HIGH",
+    "status": "ported",
+    "class": "AFortPlayerPawn",
+    "includes": [
+      "Particles/ParticleSystemComponent.h"
+    ],
+    "notes": "Complete original body. Build/runtime and broader class lifecycle remain unaccepted."
+  },
+  {
+    "function": "NativeTickWaterSprintBoostTime14235bf50",
+    "kind": "helper",
+    "signature": "void NativeTickWaterSprintBoostTime14235bf50(float DeltaSeconds)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPlayerPawn/NativeTickWaterSprintBoostTime14235bf50.inc",
+    "address": "0x14235bf50",
+    "confidence": "HIGH",
+    "status": "ported",
+    "class": "AFortPlayerPawn",
+    "notes": "Complete original body. Build/runtime and broader class lifecycle remain unaccepted."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeWaterSprintBoostTimeRemaining12d4",
+    "kind": "member_field",
+    "signature": "float NativeWaterSprintBoostTimeRemaining12d4",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "offset": "0x12d4",
+    "notes": "Original unreflected boost timer shared by tick/start/end. No fabricated constructor store; full start/audio/FX and movement tick integration remain open."
+  },
+  {
+    "function": "NativeHasAthenaInstigator1426d2410",
+    "kind": "helper",
+    "signature": "bool NativeHasAthenaInstigator1426d2410() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortWeaponRanged/NativeHasAthenaInstigator1426d2410.inc",
+    "address": "0x1426d2410",
+    "confidence": "HIGH",
+    "status": "ported",
+    "class": "AFortWeaponRanged",
+    "notes": "Complete original body. Build/runtime and broader class lifecycle remain unaccepted."
+  },
+  {
+    "function": "NativeClearFirstShotAccuracy1426ddc90",
+    "kind": "helper",
+    "signature": "void NativeClearFirstShotAccuracy1426ddc90()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortWeaponRanged/NativeClearFirstShotAccuracy1426ddc90.inc",
+    "address": "0x1426ddc90",
+    "confidence": "HIGH",
+    "status": "ported",
+    "class": "AFortWeaponRanged",
+    "includes": [
+      "TimerManager.h"
+    ],
+    "notes": "Complete original body. Build/runtime and broader class lifecycle remain unaccepted."
+  },
+  {
+    "function": "NativeMarkFirstShotAccuracy1426dd430",
+    "kind": "helper",
+    "signature": "void NativeMarkFirstShotAccuracy1426dd430()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortWeaponRanged/NativeMarkFirstShotAccuracy1426dd430.inc",
+    "address": "0x1426dd430",
+    "confidence": "HIGH",
+    "status": "ported",
+    "class": "AFortWeaponRanged",
+    "notes": "Complete original body. Build/runtime and broader class lifecycle remain unaccepted."
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "NativeFirstShotAccuracyReady",
+    "kind": "member_field",
+    "signature": "bool NativeFirstShotAccuracyReady",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "offset": "0xdf8",
+    "notes": "Original ranged constructor ORs mask1 at df8, initializing ready true. Other encoded accuracy storage, writers and full timer lifecycle remain open.",
+    "address": "0x1426bd2a0",
+    "default": "true"
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "NativeFirstShotAccuracyTimer",
+    "kind": "member_field",
+    "signature": "FTimerHandle NativeFirstShotAccuracyTimer",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "offset": "0xda0",
+    "notes": "Original ranged constructor initializes timer handle invalid; typed FTimerHandle default construction preserves invalid state. Full scheduling/lifecycle remains open.",
+    "address": "0x1426bd2a0",
+    "includes": [
+      "TimerManager.h"
+    ]
+  },
+  {
+    "function": "NativeAddMoveCombiningBlocker1420ebf70",
+    "kind": "helper",
+    "signature": "void NativeAddMoveCombiningBlocker1420ebf70(FName AbilityName)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortMovementComp_Character/NativeAddMoveCombiningBlocker1420ebf70.inc",
+    "address": "0x1420ebf70",
+    "confidence": "HIGH",
+    "status": "ported",
+    "class": "UFortMovementComp_Character",
+    "notes": "Complete original body. Build/runtime and broader class lifecycle remain unaccepted."
+  },
+  {
+    "function": "NativeRemoveMoveCombiningBlocker1420eaed0",
+    "kind": "helper",
+    "signature": "void NativeRemoveMoveCombiningBlocker1420eaed0(FName AbilityName)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortMovementComp_Character/NativeRemoveMoveCombiningBlocker1420eaed0.inc",
+    "address": "0x1420eaed0",
+    "confidence": "HIGH",
+    "status": "ported",
+    "class": "UFortMovementComp_Character",
+    "notes": "Complete original body. Build/runtime and broader class lifecycle remain unaccepted."
+  },
+  {
+    "class": "UFortMovementComp_Character",
+    "function": "NativeMoveCombiningBlockers1c60",
+    "kind": "member_field",
+    "signature": "TArray<FName, TInlineAllocator<2>> NativeMoveCombiningBlockers1c60",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "offset": "0x1c60",
+    "notes": "Original inline-two FName array (data starts1c60, Num1c78, Max1c7c). Typed construction/destruction preserves original empty inline capacity. Ability activation/end producers and saved-move readers remain unaccepted.",
+    "address": "0x1420dc080",
+    "includes": [
+      "Containers/Array.h",
+      "Containers/ContainerAllocationPolicies.h"
+    ]
+  },
+  {
+    "function": "GetFollowedPlayer",
+    "kind": "helper",
+    "signature": "AFortPlayerState* GetFollowedPlayer() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortLiveSpectatorController/GetFollowedPlayer.inc",
+    "address": "0x141ed4ff0",
+    "confidence": "HIGH",
+    "status": "ported",
+    "class": "AFortLiveSpectatorController",
+    "virtual": true,
+    "override": true,
+    "notes": "Complete original body. Build/runtime and broader class lifecycle remain unaccepted."
+  },
+  {
+    "class": "AFortPlayerControllerSpectating",
+    "function": "NativeCanFollowPlayer1423d97f0",
+    "kind": "helper",
+    "signature": "bool NativeCanFollowPlayer1423d97f0(AFortPlayerState* State) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/AFortPlayerControllerSpectating/NativeCanFollowPlayer1423d97f0.inc",
+    "address": "0x1423d97f0",
+    "confidence": "HIGH",
+    "status": "ported",
+    "notes": "Complete original primary virtual2090 body; repeated pawn queries retained. Original bit29 independently mapped to PendingKill by reflected IsValid144773740. Replay delegate/context lifecycle and build/runtime remain open."
   }
 ]

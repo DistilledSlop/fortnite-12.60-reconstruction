@@ -2380,6 +2380,40 @@ bool AFortPlayerPawn::NativeAllowsADSWhileNotOnGround10B0() const
 	return false;
 }
 
+void AFortPlayerPawn::NativeEndWaterSprintBoost142314570()
+{
+	// CONFIDENCE: HIGH. Original142314570; only active-bit clearing is role gated.
+	if (bIsWaterSprintBoost)
+	{
+	    if (GetLocalRole() != ROLE_SimulatedProxy)
+	    {
+	        bIsWaterSprintBoost = false;
+	    }
+	    if (NiagaraPlayerWaterBoost && NiagaraPlayerWaterBoost->IsActive())
+	    {
+	        NiagaraPlayerWaterBoost->Deactivate();
+	    }
+	    OnEndWaterSprintBoost();
+	    ForceNetUpdate();
+	}
+	bIsWaterSprintBoostPending = false;
+	NativeWaterSprintBoostTimeRemaining12d4 = 0.0f;
+}
+
+void AFortPlayerPawn::NativeTickWaterSprintBoostTime14235bf50(float DeltaSeconds)
+{
+	// CONFIDENCE: HIGH. Original14235bf50; MAXSS chooses zero for an unordered subtraction.
+	if (NativeWaterSprintBoostTimeRemaining12d4 > 0.0f)
+	{
+	    const float Remaining = NativeWaterSprintBoostTimeRemaining12d4 - DeltaSeconds;
+	    NativeWaterSprintBoostTimeRemaining12d4 = Remaining > 0.0f ? Remaining : 0.0f;
+	    if (NativeWaterSprintBoostTimeRemaining12d4 == 0.0f)
+	    {
+	        NativeEndWaterSprintBoost142314570();
+	    }
+	}
+}
+
 void AFortPlayerPawn::NativeUpdateAccelerationPack1423442e0()
 {
 	// CONFIDENCE: high

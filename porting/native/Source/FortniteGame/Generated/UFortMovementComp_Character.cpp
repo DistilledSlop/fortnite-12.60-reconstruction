@@ -459,6 +459,25 @@ bool UFortMovementComp_Character::DoJump(bool bReplayingMoves)
 	return bResult;
 }
 
+void UFortMovementComp_Character::NativeAddMoveCombiningBlocker1420ebf70(FName AbilityName)
+{
+	// CONFIDENCE: HIGH. Original1420ebf70 forwards to AddUnique helper1420cdba0.
+	NativeMoveCombiningBlockers1c60.AddUnique(AbilityName);
+}
+
+void UFortMovementComp_Character::NativeRemoveMoveCombiningBlocker1420eaed0(FName AbilityName)
+{
+	// CONFIDENCE: HIGH. Original1420eaed0 removes every matching name, swapping and shrinking.
+	for (int32 Index = 0; Index < NativeMoveCombiningBlockers1c60.Num(); ++Index)
+	{
+	    if (NativeMoveCombiningBlockers1c60[Index] == AbilityName)
+	    {
+	        NativeMoveCombiningBlockers1c60.RemoveAtSwap(Index, 1, true);
+	        --Index;
+	    }
+	}
+}
+
 
 UFortMovementComp_Character::UFortMovementComp_Character(const FObjectInitializer& ObjectInitializer)
     : Super(ObjectInitializer)

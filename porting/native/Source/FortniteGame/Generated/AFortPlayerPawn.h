@@ -75,6 +75,7 @@
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
 #include "Net/UnrealNetwork.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "Styling/SlateBrush.h"
 #include "UFortArmoredInterface.h"
 #include "UFortVehicleInterface.h"
@@ -569,6 +570,9 @@ public:
 	// table index 222, flags 0x10000000002000
 	UPROPERTY(Transient)
 	float SprintCancelTime;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x12d4): not a UPROPERTY, not replicated.
+	float NativeWaterSprintBoostTimeRemaining12d4;
 
 	// table index 221, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -2145,6 +2149,8 @@ public:
 	void NativeCloseParachute14230e850();
 	void NativeSetPendingSkydiveLaunch14234e8b0(bool bPending);
 	virtual bool NativeAllowsADSWhileNotOnGround10B0() const;
+	void NativeEndWaterSprintBoost142314570();
+	void NativeTickWaterSprintBoostTime14235bf50(float DeltaSeconds);
 protected:
 	void NativeUpdateAccelerationPack1423442e0();
 	void NativeUpdateRemoteViewData142344420();

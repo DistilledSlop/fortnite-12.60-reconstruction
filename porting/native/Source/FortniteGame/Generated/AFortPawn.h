@@ -1230,5 +1230,7 @@ public:
 	virtual void NativeSetMovementStyle14234bf20(uint8 Style);
 	virtual AActor* NativeGetFloorActor142316940(UPrimitiveComponent** OutComponent);
 	ENetMode NativeNetMode143f7a920() const;
+	virtual void NativeStartAction142353060(const FGameplayTag& ActionTag);
+	virtual void NativeStopAction142353960(const FGameplayTag& ActionTag);
 };
 

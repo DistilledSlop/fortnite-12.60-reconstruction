@@ -1330,6 +1330,24 @@ ENetMode AFortPawn::NativeNetMode143f7a920() const
 	return Driver ? Driver->GetNetMode() : NM_Standalone;
 }
 
+void AFortPawn::NativeStartAction142353060(const FGameplayTag& ActionTag)
+{
+	// CONFIDENCE: HIGH. Original142353060 tail-dispatches to the component helper.
+	if (UFortAbilitySystemComponent* Component = AbilitySystemComponent)
+	{
+	    Component->NativeStartAction14160f8c0(ActionTag);
+	}
+}
+
+void AFortPawn::NativeStopAction142353960(const FGameplayTag& ActionTag)
+{
+	// CONFIDENCE: HIGH. Original142353960 tail-dispatches to the component helper.
+	if (UFortAbilitySystemComponent* Component = AbilitySystemComponent)
+	{
+	    Component->NativeStopAction14160fd30(ActionTag);
+	}
+}
+
 void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -20,6 +20,7 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
+#include "TimerManager.h"
 
 class AFortProjectileBase;
 class AFortTracerBase;
@@ -236,6 +237,9 @@ public:
 	UPROPERTY()
 	TArray<FFortBulletPatternEntry> BulletPattern;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xda0): not a UPROPERTY, not replicated.
+	FTimerHandle NativeFirstShotAccuracyTimer;
+
 	// table index 26, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UNiagaraSystem* BeamNiagaraSystemInstance;
@@ -251,6 +255,9 @@ public:
 	// table index 23, flags 0x40000000004000
 	UPROPERTY(Config)
 	uint8 bFirstShotAccuracyCheckVehicleMovement : 1;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xdf8): not a UPROPERTY, not replicated.
+	bool NativeFirstShotAccuracyReady = true;
 
 	// table index 22, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -481,5 +488,8 @@ public:
 	static APawn* NativeGetActorInstigator141125940(AActor* TargetActor);
 	static bool NativeHelper1423cb760(AFortWeaponRanged* WeaponObj);
 	virtual bool NativeAllowsADSInAirA80() const override;
+	bool NativeHasAthenaInstigator1426d2410() const;
+	void NativeClearFirstShotAccuracy1426ddc90();
+	void NativeMarkFirstShotAccuracy1426dd430();
 };
 

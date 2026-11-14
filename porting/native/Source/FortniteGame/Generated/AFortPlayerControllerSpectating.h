@@ -320,5 +320,6 @@ public:
 	virtual AFortPlayerState* NativeGetSpectatingPlayerState163();
 	virtual uint8 NativeGetTeam163();
 	virtual bool NativeCanPerformAction15f0(const FGameplayTag& ActionTag) override;
+	virtual bool NativeCanFollowPlayer1423d97f0(AFortPlayerState* State) const;
 };
 

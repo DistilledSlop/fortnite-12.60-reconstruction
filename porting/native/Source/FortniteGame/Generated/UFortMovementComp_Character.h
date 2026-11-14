@@ -9,6 +9,8 @@
 #include "AttributeSet.h"
 #include "Components/PrimitiveComponent.h"
 #include "Components/SceneComponent.h"
+#include "Containers/Array.h"
+#include "Containers/ContainerAllocationPolicies.h"
 #include "EFortAILODLevel.h"
 #include "Engine/NetSerialization.h"
 #include "FAirControlParams.h"
@@ -193,6 +195,9 @@ public:
 	UPROPERTY()
 	FWaterSprintBoostParams WaterSprintBoostParams;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1c60): not a UPROPERTY, not replicated.
+	TArray<FName, TInlineAllocator<2>> NativeMoveCombiningBlockers1c60;
+
 	// table index 11, flags 0x20080000000015
 	UPROPERTY()
 	float SkydivingMaxSmoothUpdateDistanceScale;
@@ -296,5 +301,7 @@ public:
 	virtual float GetMaxSpeed() const override;
 	FVector NativeComputeSlipperyJump1420da5d0(const FVector& InVelocity, const FVector& FloorImpactNormal, AFortPlayerPawn& Player) const;
 	virtual bool DoJump(bool bReplayingMoves) override;
+	void NativeAddMoveCombiningBlocker1420ebf70(FName AbilityName);
+	void NativeRemoveMoveCombiningBlocker1420eaed0(FName AbilityName);
 };
 

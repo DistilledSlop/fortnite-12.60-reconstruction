@@ -6,13 +6,17 @@
 #include "Abilities/GameplayAbility.h"
 #include "Abilities/GameplayAbilityTypes.h"
 #include "AttributeSet.h"
+#include "Engine/EngineTypes.h"
 #include "FFortGameplayAttributeData.h"
 #include "FortNativeGameplayTagsRuntime.h"
+#include "GameFramework/Actor.h"
 #include "GameplayAbilitySpec.h"
 #include "GameplayTagContainer.h"
 #include "HAL/Platform.h"
+#include "SharedFortGameLog.h"
 #include "UFortAssetManager.h"
 #include "UFortGameData.h"
+#include "UObject/Class.h"
 #include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"
 
@@ -307,6 +311,48 @@ void UFortAbilitySystemComponent::HandleChangeAbilityCanBeCanceled(const FGamepl
 	        FortController->NativeStartMovementCancellableAction1423b8b70();
 	    else
 	        FortController->NativeEndMovementCancellableAction142378db0();
+	}
+}
+
+void UFortAbilitySystemComponent::NativeStartAction14160f8c0(const FGameplayTag& ActionTag)
+{
+	// CONFIDENCE: HIGH. Original14160f8c0; containers exist before the duplicate check.
+	FGameplayTagContainer AbilityTags(ActionTag);
+	FGameplayTagContainer EmptyBlockTags;
+	FGameplayTagContainer EmptyCancelTags;
+	if (NativeActiveActionTags.HasTag(ActionTag))
+	{
+	    if (UE_LOG_ACTIVE(LogFort, Log))
+	    {
+	        const FString ActionName = ActionTag.ToString();
+	        const FString RoleName = UEnum::GetValueAsString(TEXT("Engine.ENetRole"), OwnerActor->GetLocalRole());
+	        UE_LOG(LogFort, Log, TEXT("Native Action Role(%s) Can't start %s, already active!"), *RoleName, *ActionName);
+	    }
+	    return;
+	}
+	NativeActiveActionTags.AddTag(ActionTag);
+	ApplyAbilityBlockAndCancelTags(AbilityTags, nullptr, true, EmptyBlockTags, true, EmptyCancelTags);
+	HandleChangeAbilityCanBeCanceled(AbilityTags, nullptr, true);
+}
+
+void UFortAbilitySystemComponent::NativeStopAction14160fd30(const FGameplayTag& ActionTag)
+{
+	// CONFIDENCE: HIGH. Original14160fd30; stop tests explicit tags only.
+	FGameplayTagContainer AbilityTags(ActionTag);
+	FGameplayTagContainer EmptyBlockTags;
+	FGameplayTagContainer EmptyCancelTags;
+	if (NativeActiveActionTags.HasTagExact(ActionTag))
+	{
+	    NativeActiveActionTags.RemoveTag(ActionTag);
+	    ApplyAbilityBlockAndCancelTags(AbilityTags, nullptr, false, EmptyBlockTags, false, EmptyCancelTags);
+	    HandleChangeAbilityCanBeCanceled(AbilityTags, nullptr, false);
+	    return;
+	}
+	if (UE_LOG_ACTIVE(LogFort, Verbose))
+	{
+	    const FString ActionName = ActionTag.ToString();
+	    const FString RoleName = UEnum::GetValueAsString(TEXT("Engine.ENetRole"), OwnerActor->GetLocalRole());
+	    UE_LOG(LogFort, Verbose, TEXT("Native Action Role(%s) Can't stop %s, not active!"), *RoleName, *ActionName);
 	}
 }
 
