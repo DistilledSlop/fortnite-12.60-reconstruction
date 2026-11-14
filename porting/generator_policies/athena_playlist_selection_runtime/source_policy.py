@@ -133,8 +133,14 @@ def finalize(model, header, cpp):
     for include in INCLUDES[name]:
         if cpp.count('#include "' + include + '"') != 1:
             raise ValueError(name + ': missing/duplicate playlist helper include: ' + include)
-    if 'LogFortPlaylistSelection' in header or 'DEFINE_LOG_CATEGORY_STATIC(LogFortPlaylistSelection' in cpp:
+    if ('LogFortPlaylistSelection' in header
+            or re.search(r'(?:DEFINE|DECLARE)_LOG_CATEGORY\w*\(LogFortPlaylistSelection', cpp)):
         raise ValueError(name + ': competing playlist log category')
-    # Every TU uses one category name; runtime -LogCmds can configure it by name.
-    cpp = cpp.replace(own_include, own_include + '\nDEFINE_LOG_CATEGORY_STATIC(LogFortPlaylistSelection, Log, All);', 1)
+    # All three implementation units include the manager header. Its pragma-once
+    # declaration also avoids duplicate category types when UE merges unity TUs.
+    if name == 'UFortPlaylistManager':
+        header += '\nDECLARE_LOG_CATEGORY_EXTERN(LogFortPlaylistSelection, Log, All);\n'
+    if name == 'AFortGameMode':
+        include = '#include "UFortPlaylistManager.h"'
+        cpp = cpp.replace(include, include + '\nDEFINE_LOG_CATEGORY(LogFortPlaylistSelection);', 1)
     return header, cpp

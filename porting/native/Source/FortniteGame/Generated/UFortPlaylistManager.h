@@ -27,3 +27,5 @@ public:
 	UFortPlaylistAthena* GetPlaylistByNameNative(FName PlaylistName);
 };
 
+
+DECLARE_LOG_CATEGORY_EXTERN(LogFortPlaylistSelection, Log, All);
