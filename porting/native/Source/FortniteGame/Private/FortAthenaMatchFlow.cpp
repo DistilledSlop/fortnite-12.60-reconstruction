@@ -50,6 +50,8 @@
 #include "Engine/CurveTable.h"
 #include "Engine/DataTable.h"
 #include "FFortPawnStats.h"
+#include "UFortHealthSet.h"
+#include "UFortMovementSet.h"
 #include "Engine/World.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
@@ -1745,6 +1747,24 @@ namespace FortAthenaMatchFlow
 
         if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeMovementDefaults")))
         {
+            if (const UFortHealthSet* Health = Pawn->HealthSet)
+            {
+                UE_LOG(LogTemp, Display, TEXT("Health attributes: pawn=%s current=%.9g base=%.9g unclampedCurrent=%.9g unclampedBase=%.9g min=%.9g max=%.9g maxHealth=%.9g synced=%d"),
+                    *Pawn->GetName(), Health->Health.GetCurrentValue(), Health->Health.GetBaseValue(),
+                    Health->Health.UnclampedCurrentValue, Health->Health.UnclampedBaseValue,
+                    Health->Health.Minimum, Health->Health.Maximum, Health->MaxHealth.GetCurrentValue(), Pawn->bHealthSynced);
+            }
+            if (const UAbilitySystemComponent* ASC = Pawn->GetAbilitySystemComponent())
+            {
+                if (const UFortMovementSet* Attributes = ASC->GetSet<UFortMovementSet>())
+                {
+                    UE_LOG(LogTemp, Display, TEXT("Movement attributes: pawn=%s walk=%.9g run=%.9g speedMultiplier=%.9g speedUnclamped=%.9g backwardMultiplier=%.9g gravityMultiplier=%.9g vehicleGravityMultiplier=%.9g"),
+                        *Pawn->GetName(), Attributes->WalkSpeed.GetCurrentValue(), Attributes->RunSpeed.GetCurrentValue(),
+                        Attributes->SpeedMultiplier.GetCurrentValue(), Attributes->SpeedMultiplier.UnclampedCurrentValue,
+                        Attributes->BackwardSpeedMultiplier.GetCurrentValue(), Attributes->GravityZScale.GetCurrentValue(),
+                        Attributes->VehicleGravityZScale.GetCurrentValue());
+                }
+            }
             UE_LOG(LogTemp, Display, TEXT("Session defaults: engineSession=%s fortSessionAlias=%s"),
                 *GetNameSafe(GameMode->GameSession), *GetNameSafe(GameMode->FortGameSession));
             const UFortMovementComp_CharacterAthena* Movement = Cast<UFortMovementComp_CharacterAthena>(Pawn->GetCharacterMovement());

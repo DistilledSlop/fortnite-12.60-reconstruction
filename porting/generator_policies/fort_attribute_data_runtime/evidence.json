@@ -1,0 +1,71 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "functions": [
+    {
+      "address": "0x142840060",
+      "length": 42,
+      "sha256": "93274be870ca7a4c9b36ffe8b950ae82854a93cc167c91c302eb398fab8690a4",
+      "bytes": "33c9c74210ffff7fff488d0550126b0348894a0848890266894a18884a1a48894a1cc74214ffff7f7fc3"
+    },
+    {
+      "address": "0x142840460",
+      "length": 102,
+      "sha256": "f0006d08313fe219819159fcbc644555b6dfac8bdf81c3be83cc73ae538e9e21",
+      "bytes": "4585c9745e488d4a0c4c2bc20f1f4000418b4408fc8941fc418b04088901418b440804894104418b440808894108410fb644080c88410c410fb644080d88410d410fb644080e88410e418b440810894110418b440814894114488d49284183e90175adb001c3"
+    },
+    {
+      "address": "0x14134da40",
+      "length": 5,
+      "sha256": "737fb9d7c3f0259c0c351fc7e5464d5adc84bf987a8c2589987db754079e009f",
+      "bytes": "c6411a01c3"
+    },
+    {
+      "address": "0x14075d4d0",
+      "length": 5,
+      "sha256": "5d3410efb60ed3f6612e7258a6eb455128e5778719d9709cda9c69c924e9166d",
+      "bytes": "c6411901c3"
+    },
+    {
+      "address": "0x140746240",
+      "length": 5,
+      "sha256": "2abee44d67e22c68f420a3ca0b9afd9c84eb065d62622333474181643a7a41a5",
+      "bytes": "c6411801c3"
+    },
+    {
+      "address": "0x141bc4960",
+      "length": 52,
+      "sha256": "05f535b6ce187304b8254427cec168a2e2228705eb2145f6a6565c69a53825d5",
+      "bytes": "0f2e4920742df30f1041100f2fc8f30f1149207209f30f104114f30f5dc10f2ec1f30f11410c7406b001884118c332c0884118c3"
+    },
+    {
+      "address": "0x141bc47e0",
+      "length": 63,
+      "sha256": "2bcb25a67e0fb745d8250b390057e4991aa403981e9527680e838e03d1b43ac9",
+      "bytes": "0f2e491c743880791a00f30f11491c7415f30f1041100f2fc8720ef30f104114f30f5dc1eb030f28c10f2ec1f30f1141087406b001884119c332c0884119c3"
+    },
+    {
+      "address": "0x141b5c720",
+      "length": 44,
+      "sha256": "7f746f1196539cb5b0425662bf6e18b3e3649193a5a803ba341da5fc64245217",
+      "bytes": "40534883ec20488d0583cfe703488bd9488901f6c201740aba28000000e86e8582ff488bc34883c4205bc390"
+    }
+  ],
+  "native_vtable": {
+    "address": "0x145ef12c0",
+    "slots": [
+      "0x141b5c720",
+      "0x141bc4960",
+      "0x141bc47e0"
+    ]
+  },
+  "bool_setters": {
+    "bIsCurrentClamped": "0x140746240",
+    "bIsBaseClamped": "0x14075d4d0",
+    "bShouldClampBase": "0x14134da40"
+  },
+  "struct_ops_vtable": "0x14633bb10",
+  "struct_ops_constructor": "0x142840060",
+  "struct_ops_copy": "0x142840460",
+  "decompilation_warning": "Raw ASM controls: Ghidra emits C != for UCOMISS+JE, which differs for NaN. Use ordered comparisons in port."
+}

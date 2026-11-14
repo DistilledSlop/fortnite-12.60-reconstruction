@@ -24,3 +24,17 @@ void UFortMovementSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME(UFortMovementSet, WalkSpeed);
 }
 
+
+UFortMovementSet::UFortMovementSet(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    // Reflected projection of original constructor 0x141b8bd50.
+    BackwardSpeedMultiplier.SetBaseValue(1.0f);
+    BackwardSpeedMultiplier.SetCurrentValue(1.0f);
+    GravityZScale.SetBaseValue(1.0f);
+    GravityZScale.SetCurrentValue(1.0f);
+    VehicleGravityZScale.SetBaseValue(1.0f);
+    VehicleGravityZScale.SetCurrentValue(1.0f);
+    SpeedMultiplier.SetBaseValue(1.0f);
+    SpeedMultiplier.SetCurrentValue(1.0f);
+}

@@ -16,6 +16,8 @@ class FORTNITEGAME_API UFortMovementSet : public UFortAttributeSet
 	GENERATED_BODY()
 
 public:
+	UFortMovementSet(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 10, flags 0x40000000000034
 	UPROPERTY(Replicated)
 	FFortGameplayAttributeData WalkSpeed;

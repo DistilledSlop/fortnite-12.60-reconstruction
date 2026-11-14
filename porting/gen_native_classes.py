@@ -2501,6 +2501,14 @@ _pawn_stats_derived_rows_spec = _common_activation_import.spec_from_file_locatio
     "pawn_stats_derived_rows_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "pawn_stats_derived_rows_runtime", "source_policy.py"))
 _pawn_stats_derived_rows_policy = _common_activation_import.module_from_spec(_pawn_stats_derived_rows_spec)
 _pawn_stats_derived_rows_spec.loader.exec_module(_pawn_stats_derived_rows_policy)
+_fort_attribute_data_spec = _common_activation_import.spec_from_file_location(
+    "fort_attribute_data_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "fort_attribute_data_runtime", "source_policy.py"))
+_fort_attribute_data_policy = _common_activation_import.module_from_spec(_fort_attribute_data_spec)
+_fort_attribute_data_spec.loader.exec_module(_fort_attribute_data_policy)
+_movement_attribute_defaults_spec = _common_activation_import.spec_from_file_location(
+    "movement_attribute_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "movement_attribute_defaults_runtime", "source_policy.py"))
+_movement_attribute_defaults_policy = _common_activation_import.module_from_spec(_movement_attribute_defaults_spec)
+_movement_attribute_defaults_spec.loader.exec_module(_movement_attribute_defaults_policy)
 _flying_acceleration_family_spec = _common_activation_import.spec_from_file_location(
     "flying_acceleration_family_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "flying_acceleration_family_runtime", "source_policy.py"))
 _flying_acceleration_family_policy = _common_activation_import.module_from_spec(_flying_acceleration_family_spec)
@@ -4972,6 +4980,7 @@ def promote(args):
         header, cpp = _movement_max_acceleration_policy.finalize(model, header, cpp)
         header, cpp = _athena_playerstate_constructor_policy.finalize(model, header, cpp)
         header, cpp = _world_profile_gate_policy.finalize(model, header, cpp)
+        header, cpp = _movement_attribute_defaults_policy.finalize(model, header, cpp)
         header, cpp = _pawn_hand_socket_policy.finalize(model, header, cpp)
         header, cpp = _replicated_building_defaults_policy.finalize(model, header, cpp)
         header, cpp = _playlist_storm_defaults_policy.finalize(model, header, cpp)
@@ -5041,6 +5050,7 @@ def promote(args):
     _athena_loot_policy.add_roots(gate, seeds)
     _pawn_stats_native_row_policy.add_roots(gate, seeds)
     _pawn_stats_derived_rows_policy.add_roots(gate, seeds)
+    _fort_attribute_data_policy.add_roots(gate, seeds)
     _server_baseline_policy.add_roots(gate, seeds)
     _common_input_policy.add_roots(gate, seeds)
     # Native anim-node structs that only Animation Blueprint generated classes reference (so no promoted class
@@ -5906,6 +5916,7 @@ class TypeGate:
             model = _athena_loot_policy.apply_struct(info, model)
             model = _pawn_stats_native_row_policy.apply_struct(info, model)
             model = _pawn_stats_derived_rows_policy.apply_struct(info, model)
+            model = _fort_attribute_data_policy.apply_struct(info, model)
             model = _maps_fog_policy.apply_struct(info, model)
             model = _maps_wind_handle_policy.apply_struct(info, model)
             model = _maps_wind_break_policy.apply_struct(info, model)
@@ -6210,6 +6221,7 @@ def render_struct_header(model, source_label):
     includes.extend(_pickaxe_vfx_policy.struct_includes(model))
     includes.extend(_pawn_stats_native_row_policy.struct_includes(model))
     includes.extend(_pawn_stats_derived_rows_policy.struct_includes(model))
+    includes.extend(_fort_attribute_data_policy.struct_includes(model))
     includes = list(dict.fromkeys(includes))
     if name == "FFortItemList":
         includes.append("Misc/Crc.h")
@@ -6276,6 +6288,9 @@ def render_struct_header(model, source_label):
     lines.extend(_athena_loot_policy.declarations(model))
     lines.extend(_pawn_stats_native_row_policy.declarations(model))
     lines.extend(_pawn_stats_derived_rows_policy.declarations(model))
+    attribute_declarations = _fort_attribute_data_policy.declarations(model)
+    _movement_attribute_defaults_policy.validate_struct(model, attribute_declarations)
+    lines.extend(attribute_declarations)
     if delta:
         item = net["item"]
         lines.append("\t// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable %s, traits %s): the"
@@ -6307,6 +6322,7 @@ def render_struct_header(model, source_label):
     lines.extend(_athena_loot_policy.footer(model))
     lines.extend(_pawn_stats_native_row_policy.footer(model))
     lines.extend(_pawn_stats_derived_rows_policy.footer(model))
+    lines.extend(_fort_attribute_data_policy.footer(model))
     lines.extend(_maps_wind_building_policy.postamble(model))
     lines.extend(_ui_root_layout_policy.postamble(model))
     lines.extend(native_serializer_traits(name))

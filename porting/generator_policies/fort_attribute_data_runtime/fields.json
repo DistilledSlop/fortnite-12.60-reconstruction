@@ -1,0 +1,37 @@
+[
+  [
+    "Minimum",
+    "float",
+    16
+  ],
+  [
+    "Maximum",
+    "float",
+    20
+  ],
+  [
+    "bIsCurrentClamped",
+    "bool",
+    24
+  ],
+  [
+    "bIsBaseClamped",
+    "bool",
+    25
+  ],
+  [
+    "bShouldClampBase",
+    "bool",
+    26
+  ],
+  [
+    "UnclampedBaseValue",
+    "float",
+    28
+  ],
+  [
+    "UnclampedCurrentValue",
+    "float",
+    32
+  ]
+]

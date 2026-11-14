@@ -1,0 +1,152 @@
+{
+  "fn": "0x142841da0",
+  "package": "/Script/FortniteGame",
+  "size": 40,
+  "align": 8,
+  "super_fn": "0x140762fb0",
+  "record_sha256": "1ecfa2cfe5c228d5e0146bc12d47446b0e8d945c2f90de1272ec0704676e6995",
+  "record": {
+    "block_va": "0x1479c8c70",
+    "name": "FortGameplayAttributeData",
+    "construct_fns": [
+      "0x142841da0"
+    ],
+    "package_fn": "0x142a02c30",
+    "package": "/Script/FortniteGame",
+    "super_fn": "0x140762fb0",
+    "struct_ops_fn": "0x14283e4d0",
+    "size": 40,
+    "align": 8,
+    "struct_flags": "0x201",
+    "struct_flag_names": [
+      "Native",
+      "RequiredAPI"
+    ],
+    "object_flags": "0x45",
+    "struct_ops": {
+      "vtable_va": "0x14633bb10",
+      "ops_size": 40,
+      "ops_align": 8,
+      "size_matches": true,
+      "align_matches": true,
+      "traits": {
+        "HasNoopConstructor": false,
+        "HasZeroConstructor": false,
+        "HasDestructor": true,
+        "HasSerializer": false,
+        "HasStructuredSerializer": false,
+        "HasPostSerialize": false,
+        "HasNetSerializer": false,
+        "HasNetSharedSerialization": false,
+        "HasNetDeltaSerializer": false,
+        "HasPostScriptConstruct": false,
+        "IsPlainOldData": false,
+        "HasCopy": true,
+        "HasIdentical": false,
+        "HasExportTextItem": false,
+        "HasImportTextItem": false,
+        "HasAddStructReferencedObjects": false,
+        "HasSerializeFromMismatchedTag": false,
+        "HasStructuredSerializeFromMismatchedTag": false,
+        "HasGetTypeHash": false
+      },
+      "unclassified_slots": []
+    },
+    "properties": [
+      {
+        "index": 0,
+        "name": "UnclampedCurrentValue",
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "property_flags": "0x20080000000014",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 32
+      },
+      {
+        "index": 1,
+        "name": "UnclampedBaseValue",
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "property_flags": "0x20080000000014",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 28
+      },
+      {
+        "index": 2,
+        "name": "bShouldClampBase",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x20080000000014",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 40,
+        "bitfield": true,
+        "offset": null
+      },
+      {
+        "index": 3,
+        "name": "bIsBaseClamped",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x20080000000014",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 40,
+        "bitfield": true,
+        "offset": null
+      },
+      {
+        "index": 4,
+        "name": "bIsCurrentClamped",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x20080000000014",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 40,
+        "bitfield": true,
+        "offset": null
+      },
+      {
+        "index": 5,
+        "name": "Maximum",
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "property_flags": "0x20080000000014",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 20
+      },
+      {
+        "index": 6,
+        "name": "Minimum",
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "property_flags": "0x20080000000014",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 16
+      }
+    ],
+    "num_properties": 7
+  }
+}

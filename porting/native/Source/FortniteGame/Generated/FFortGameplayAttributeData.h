@@ -5,6 +5,7 @@
 
 #include "CoreMinimal.h"
 #include "AttributeSet.h"
+#include "xmmintrin.h"
 
 #include "FFortGameplayAttributeData.generated.h"
 
@@ -21,15 +22,15 @@ struct FFortGameplayAttributeData : public FGameplayAttributeData
 	UPROPERTY()
 	float Maximum;
 
-	// table index 4, offset None, flags 0x20080000000014
+	// table index 4, offset 24, flags 0x20080000000014
 	UPROPERTY()
 	bool bIsCurrentClamped;
 
-	// table index 3, offset None, flags 0x20080000000014
+	// table index 3, offset 25, flags 0x20080000000014
 	UPROPERTY()
 	bool bIsBaseClamped;
 
-	// table index 2, offset None, flags 0x20080000000014
+	// table index 2, offset 26, flags 0x20080000000014
 	UPROPERTY()
 	bool bShouldClampBase;
 
@@ -41,5 +42,73 @@ struct FFortGameplayAttributeData : public FGameplayAttributeData
 	UPROPERTY()
 	float UnclampedCurrentValue;
 
+	// Native struct-ops constructor 0x142840060.
+	FFortGameplayAttributeData()
+		: FGameplayAttributeData(), Minimum(-MAX_flt), Maximum(MAX_flt),
+		  bIsCurrentClamped(false), bIsBaseClamped(false), bShouldClampBase(false),
+		  UnclampedBaseValue(0.0f), UnclampedCurrentValue(0.0f)
+	{}
+
+	virtual void SetCurrentValue(float NewValue) override
+	{
+		// 0x141bc4960: UCOMISS/JE returns for equality OR unordered operands.
+		if (!NativeOrderedDifferent(NewValue, UnclampedCurrentValue))
+		{
+		    return;
+		}
+		UnclampedCurrentValue = NewValue;
+		const float ClampedValue = NativeClampValue(NewValue);
+		CurrentValue = ClampedValue;
+		bIsCurrentClamped = NativeOrderedDifferent(ClampedValue, NewValue);
+	}
+
+	virtual void SetBaseValue(float NewValue) override
+	{
+		// 0x141bc47e0: changing limits alone never bypasses the input equality guard.
+		if (!NativeOrderedDifferent(NewValue, UnclampedBaseValue))
+		{
+		    return;
+		}
+		UnclampedBaseValue = NewValue;
+		const float ClampedValue = bShouldClampBase ? NativeClampValue(NewValue) : NewValue;
+		BaseValue = ClampedValue;
+		bIsBaseClamped = NativeOrderedDifferent(ClampedValue, NewValue);
+	}
+
+private:
+	// Bit tests preserve unordered handling even when target compiler assumes finite comparisons.
+	static bool NativeIsNaN(float Value)
+	{
+		uint32 Bits;
+		FMemory::Memcpy(&Bits, &Value, sizeof(Bits));
+		return (Bits & 0x7fffffffu) > 0x7f800000u;
+	}
+	static bool NativeOrderedDifferent(float Left, float Right)
+	{
+		return !NativeIsNaN(Left) && !NativeIsNaN(Right) && Left != Right;
+	}
+	float NativeClampValue(float Value) const
+	{
+		// COMISS/JB selects Minimum for a NaN lower bound.
+		if (NativeIsNaN(Minimum) || Value < Minimum)
+		{
+			return Minimum;
+		}
+		// MINSS(Maximum, Value): Value wins equality (including signed zero) and NaN.
+		return _mm_cvtss_f32(_mm_min_ss(_mm_set_ss(Maximum), _mm_set_ss(Value)));
+	}
+public:
+
 };
 
+template<> struct TStructOpsTypeTraits<FFortGameplayAttributeData> : public TStructOpsTypeTraitsBase2<FFortGameplayAttributeData>
+{ enum { WithCopy = true }; };
+static_assert(sizeof(FFortGameplayAttributeData) == 40, "attribute data size drift");
+static_assert(alignof(FFortGameplayAttributeData) == 8, "attribute data alignment drift");
+static_assert(STRUCT_OFFSET(FFortGameplayAttributeData, Minimum) == 16, "attribute data field drift");
+static_assert(STRUCT_OFFSET(FFortGameplayAttributeData, Maximum) == 20, "attribute data field drift");
+static_assert(STRUCT_OFFSET(FFortGameplayAttributeData, bIsCurrentClamped) == 24, "attribute data field drift");
+static_assert(STRUCT_OFFSET(FFortGameplayAttributeData, bIsBaseClamped) == 25, "attribute data field drift");
+static_assert(STRUCT_OFFSET(FFortGameplayAttributeData, bShouldClampBase) == 26, "attribute data field drift");
+static_assert(STRUCT_OFFSET(FFortGameplayAttributeData, UnclampedBaseValue) == 28, "attribute data field drift");
+static_assert(STRUCT_OFFSET(FFortGameplayAttributeData, UnclampedCurrentValue) == 32, "attribute data field drift");
