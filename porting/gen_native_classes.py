@@ -2542,6 +2542,10 @@ _item_character_ctor_spec = _common_activation_import.spec_from_file_location(
     "item_character_ctor_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "item_character_ctor92_runtime", "source_policy.py"))
 _item_character_ctor_policy = _common_activation_import.module_from_spec(_item_character_ctor_spec)
 _item_character_ctor_spec.loader.exec_module(_item_character_ctor_policy)
+_pawn_capsule_spec = _common_activation_import.spec_from_file_location(
+    "pawn_capsule_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "pawn_capsule_runtime", "source_policy.py"))
+_pawn_capsule_policy = _common_activation_import.module_from_spec(_pawn_capsule_spec)
+_pawn_capsule_spec.loader.exec_module(_pawn_capsule_policy)
 _attribute_limit_spec = _common_activation_import.spec_from_file_location(
     "attribute_limit_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "attribute_limit_runtime", "source_policy.py"))
 _attribute_limit_policy = _common_activation_import.module_from_spec(_attribute_limit_spec)
@@ -5020,6 +5024,7 @@ def promote(args):
         header, cpp = _hero_item_policy.finalize(model, header, cpp)
         header, cpp = _character_set_ctor_policy.finalize(model, header, cpp)
         header, cpp = _item_character_ctor_policy.finalize(model, header, cpp)
+        header, cpp = _pawn_capsule_policy.finalize(model, header, cpp)
         header, cpp = _athena_playerstate_constructor_policy.finalize(model, header, cpp)
         header, cpp = _world_profile_gate_policy.finalize(model, header, cpp)
         header, cpp = _movement_attribute_defaults_policy.finalize(model, header, cpp)

@@ -1,5 +1,5 @@
 diff --git a/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp b/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp
-index fc917c46c..03ccb1fc9 100644
+index fc917c46c..f55b22452 100644
 --- a/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp
 +++ b/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp
 @@ -3,6 +3,10 @@
@@ -13,7 +13,7 @@ index fc917c46c..03ccb1fc9 100644
  #include "Stats/Stats.h"
  #include "Serialization/BufferArchive.h"
  #include "Misc/FeedbackContext.h"
-@@ -569,6 +573,116 @@ void ULandscapeHeightfieldCollisionComponent::ApplyWorldOffset(const FVector& In
+@@ -569,6 +573,264 @@ void ULandscapeHeightfieldCollisionComponent::ApplyWorldOffset(const FVector& In
  	}
  }
  
@@ -72,65 +72,213 @@ index fc917c46c..03ccb1fc9 100644
 +	SavedLayouts.Add(Layout);
 +	UE_LOG(LogLandscape, Display, TEXT("Saved landscape heightfield sample %s (%d bytes)"), *BlobPath, Blob.Num());
 +}
-+// Fortnite server: Windows-cooked landscape collision is Chaos THeightField data (uint16 heights, row-major),
-+// which PhysX cannot read. Rebuild a PhysX heightfield with the same orientation ConvertHeightfieldDataForPhysx uses.
-+static PxHeightField* FortniteBuildPhysXHeightfieldFromChaosBlob(const TArray<uint8>& Blob, const int32 N, const bool bIsMirrored)
++// Exact original 12.60 profile observed in full127/simple0 and full63/simple0 dumps.
++// CookedCollisionData carries no archive versions: reject other layouts rather than
++// guessing offsets. Original simple-object framing still needs a runtime fixture.
++struct FFortniteHeightfieldCursor
 +{
-+	const int32 NumSamples = N * N;
-+	if (Blob.Num() < 33 + NumSamples * 2 + 40) return nullptr;
-+	int32 Count = 0;
-+	FMemory::Memcpy(&Count, Blob.GetData() + 29, sizeof(int32));
-+	if (Count != NumSamples) { UE_LOG(LogLandscape, Warning, TEXT("Chaos heightfield blob: sample count %d != %d"), Count, NumSamples); return nullptr; }
-+	const uint8* Heights8 = Blob.GetData() + 33;
-+	const uint8* Tail = Heights8 + NumSamples * 2;
-+	float MinValue, MaxValue, HeightPerUnit;
-+	uint16 NumRows, NumCols;
-+	FMemory::Memcpy(&MinValue, Tail + 12, 4);
-+	FMemory::Memcpy(&MaxValue, Tail + 16, 4);
-+	FMemory::Memcpy(&NumRows, Tail + 20, 2);
-+	FMemory::Memcpy(&NumCols, Tail + 22, 2);
-+	FMemory::Memcpy(&HeightPerUnit, Tail + 28, 4);
-+	if (NumRows != N || NumCols != N) { UE_LOG(LogLandscape, Warning, TEXT("Chaos heightfield blob: dims %dx%d != %d"), NumRows, NumCols, N); return nullptr; }
++	const TArray<uint8>& Blob;
++	int64 Position = 0;
++	const TCHAR* Error = TEXT("unsupported original Chaos profile");
 +
-+	TArray<PxHeightFieldSample> Samples;
-+	Samples.AddZeroed(NumSamples);
-+	for (int32 RowIndex = 0; RowIndex < N; RowIndex++)
++	explicit FFortniteHeightfieldCursor(const TArray<uint8>& InBlob) : Blob(InBlob) {}
++
++	bool Check(bool bValid, const TCHAR* Reason)
 +	{
-+		for (int32 ColIndex = 0; ColIndex < N; ColIndex++)
-+		{
-+			const int32 Src = (ColIndex * N) + (bIsMirrored ? RowIndex : (N - RowIndex - 1));
-+			uint16 H;
-+			FMemory::Memcpy(&H, Heights8 + Src * 2, 2);
-+			const float Value = MinValue + (float)H * HeightPerUnit;
-+			PxHeightFieldSample& Sample = Samples[RowIndex * N + ColIndex];
-+			Sample.height = (PxI16)FMath::Clamp(FMath::RoundToInt(Value), -32768, 32767);
-+			Sample.materialIndex0 = 0;
-+			Sample.materialIndex1 = 0;
-+		}
++		if (!bValid) Error = Reason;
++		return bValid;
 +	}
 +
++	bool Bytes(const uint8*& Out, int64 Size)
++	{
++		if (!Check(Size >= 0 && Size <= int64(Blob.Num()) - Position, TEXT("truncated field"))) return false;
++		Out = Blob.GetData() + Position;
++		Position += Size;
++		return true;
++	}
++
++	template<typename T> bool Read(T& Out)
++	{
++		const uint8* Data;
++		if (!Bytes(Data, sizeof(T))) return false;
++		FMemory::Memcpy(&Out, Data, sizeof(T));
++		return true;
++	}
++
++	bool Boolean(bool& Out)
++	{
++		uint32 Value;
++		if (!Read(Value) || !Check(Value <= 1, TEXT("invalid archive bool"))) return false;
++		Out = Value != 0;
++		return true;
++	}
++};
++
++struct FFortniteChaosHeightfield
++{
++	int32 NumVerts = 0;
++	const uint8* Heights = nullptr;
++	float Scale[3];
++	float MinValue, MaxValue, Range, HeightPerUnit;
++	int32 NumMaterials = 0;
++	const uint8* Materials = nullptr;
++	float GridMin[2], GridMax[2], GridDx[2];
++	int32 GridCells[2];
++	// Original fixtures contain invalid cached flattened bounds. Preserve the bytes,
++	// but never use them for geometry or reject otherwise valid original data for them.
++	const uint8* FlattenedBounds = nullptr;
++	float BoundsMin[3], BoundsMax[3];
++};
++
++static bool FortniteReadChaosHeightfield(FFortniteHeightfieldCursor& Cursor, int32 Quads,
++	int32 ExpectedTag, int32 PhysicalMaterialCount, FFortniteChaosHeightfield& Out)
++{
++	if (!Cursor.Check(Quads > 0 && Quads < 65535 && PhysicalMaterialCount > 0, TEXT("component dimensions/material table"))) return false;
++	bool bExists, bConvex, bCollide;
++	int32 Tag, RealSize, StorageSize, HeightCount;
++	uint8 Type;
++	if (!Cursor.Boolean(bExists) || !Cursor.Check(bExists, TEXT("missing required heightfield")) ||
++		!Cursor.Read(Tag) || !Cursor.Read(Type) || !Cursor.Boolean(bConvex) || !Cursor.Boolean(bCollide) ||
++		!Cursor.Read(RealSize) || !Cursor.Read(StorageSize) || !Cursor.Read(HeightCount)) return false;
++	const int64 N = int64(Quads) + 1;
++	const int64 NumSamples = N * N;
++	if (!Cursor.Check(Tag == ExpectedTag && Type == 12 && !bConvex && bCollide && RealSize == 4 && StorageSize == 2,
++		TEXT("unsupported object framing/types")) ||
++		!Cursor.Check(NumSamples <= MAX_int32 && HeightCount == NumSamples, TEXT("height count")) ||
++		!Cursor.Bytes(Out.Heights, NumSamples * 2) || !Cursor.Read(Out.Scale) ||
++		!Cursor.Read(Out.MinValue) || !Cursor.Read(Out.MaxValue)) return false;
++	uint16 Rows, Cols;
++	if (!Cursor.Read(Rows) || !Cursor.Read(Cols) || !Cursor.Read(Out.Range) || !Cursor.Read(Out.HeightPerUnit)) return false;
++	if (!Cursor.Check(Rows == N && Cols == N, TEXT("serialized dimensions"))) return false;
++	Out.NumVerts = int32(N);
++	// The shape setup already supplies landscape XY and Z scales. Both original
++	// fixtures use unit GeomData.Scale; other scales must not be silently ignored.
++	for (int32 Axis = 0; Axis < 3; ++Axis)
++		if (!Cursor.Check(Out.Scale[Axis] == 1.f, TEXT("unsupported geometry scale"))) return false;
++	if (!Cursor.Check(FMath::IsFinite(Out.MinValue) && FMath::IsFinite(Out.MaxValue) &&
++		FMath::IsFinite(Out.Range) && FMath::IsFinite(Out.HeightPerUnit) &&
++		Out.MinValue <= Out.MaxValue && Out.Range >= 0.f && Out.HeightPerUnit >= 0.f,
++		TEXT("invalid height interval"))) return false;
++	const float Tolerance = FMath::Max(0.002f, Out.Range * 2.e-6f);
++	if (!Cursor.Check(FMath::Abs((Out.MaxValue - Out.MinValue) - Out.Range) <= Tolerance &&
++		FMath::Abs(Out.HeightPerUnit * 65535.f - Out.Range) <= Tolerance, TEXT("inconsistent height range"))) return false;
++	for (int32 Index = 0; Index < HeightCount; ++Index)
++	{
++		uint16 Height;
++		FMemory::Memcpy(&Height, Out.Heights + int64(Index) * 2, sizeof(Height));
++		const float Value = Out.MinValue + Height * Out.HeightPerUnit;
++		// Check before RoundToInt and reject unrepresentable heights instead of clamping.
++		if (!Cursor.Check(FMath::IsFinite(Value) && Value <= Out.MaxValue + Tolerance &&
++			Value >= -32768.5f && Value < 32767.5f, TEXT("unrepresentable height"))) return false;
++		const int32 Rounded = FMath::RoundToInt(Value);
++		if (!Cursor.Check(Rounded >= -32768 && Rounded <= 32767, TEXT("unrepresentable rounded height"))) return false;
++	}
++	if (!Cursor.Read(Out.NumMaterials) ||
++		!Cursor.Check(Out.NumMaterials == 1 || Out.NumMaterials == int64(Quads) * Quads, TEXT("material cell count")) ||
++		!Cursor.Bytes(Out.Materials, Out.NumMaterials)) return false;
++	for (int32 Index = 0; Index < Out.NumMaterials; ++Index)
++	{
++		const uint8 Material = Out.Materials[Index];
++		if (!Cursor.Check(Material == 255 || (Material < PxHeightFieldMaterial::eHOLE && Material < PhysicalMaterialCount),
++			TEXT("unrepresentable material index"))) return false;
++	}
++	if (!Cursor.Read(Out.GridMin) || !Cursor.Read(Out.GridMax) || !Cursor.Read(Out.GridCells) ||
++		!Cursor.Read(Out.GridDx) || !Cursor.Bytes(Out.FlattenedBounds, 16) ||
++		!Cursor.Read(Out.BoundsMin) || !Cursor.Read(Out.BoundsMax)) return false;
++	for (int32 Axis = 0; Axis < 2; ++Axis)
++	{
++		if (!Cursor.Check(Out.GridMin[Axis] == 0.f && Out.GridMax[Axis] == Quads &&
++			Out.GridCells[Axis] == Quads && Out.GridDx[Axis] == 1.f, TEXT("grid disagreement"))) return false;
++	}
++	for (int32 Axis = 0; Axis < 3; ++Axis)
++	{
++		if (!Cursor.Check(FMath::IsFinite(Out.BoundsMin[Axis]) && FMath::IsFinite(Out.BoundsMax[Axis]) &&
++			Out.BoundsMin[Axis] <= Out.BoundsMax[Axis], TEXT("invalid local AABB"))) return false;
++	}
++	return Cursor.Check(Out.BoundsMin[0] <= 0.f && Out.BoundsMin[1] <= 0.f &&
++		Out.BoundsMax[0] >= Quads && Out.BoundsMax[1] >= Quads &&
++		Out.BoundsMin[2] <= Out.MinValue + Tolerance && Out.BoundsMax[2] >= Out.MaxValue - Tolerance,
++		TEXT("local AABB does not enclose geometry"));
++}
++
++static PxHeightField* FortniteCookPhysXHeightfield(const FFortniteChaosHeightfield& Field, bool bIsMirrored)
++{
++	const int32 N = Field.NumVerts;
++	TArray<PxHeightFieldSample> Samples;
++	Samples.AddZeroed(N * N);
++	for (int32 RowIndex = 0; RowIndex < N; ++RowIndex)
++	{
++		for (int32 ColIndex = 0; ColIndex < N; ++ColIndex)
++		{
++			const int32 Src = ColIndex * N + (bIsMirrored ? RowIndex : N - RowIndex - 1);
++			uint16 Height;
++			FMemory::Memcpy(&Height, Field.Heights + int64(Src) * 2, sizeof(Height));
++			PxHeightFieldSample& Sample = Samples[RowIndex * N + ColIndex];
++			Sample.height = PxI16(FMath::RoundToInt(Field.MinValue + Height * Field.HeightPerUnit));
++			if (RowIndex < N - 1 && ColIndex < N - 1)
++			{
++				// Materials are cells with stride N-1, not vertices with stride N.
++				const int32 Cell = ColIndex * (N - 1) + (bIsMirrored ? RowIndex : N - 2 - RowIndex);
++				const uint8 Material = Field.Materials[Field.NumMaterials == 1 ? 0 : Cell];
++				const PxU8 PhysXMaterial = Material == 255 ? PxU8(PxHeightFieldMaterial::eHOLE) : Material;
++				Sample.materialIndex0 = PhysXMaterial;
++				Sample.materialIndex1 = PhysXMaterial;
++			}
++			// Chaos splits source00--11. The non-mirrored reflection maps it to
++			// destination01--10 (clear); the mirrored transpose needs00--11 (set).
++			if (bIsMirrored) Sample.setTessFlag();
++		}
++	}
 +	PxHeightFieldDesc Desc;
 +	Desc.nbColumns = N;
 +	Desc.nbRows = N;
 +	Desc.format = PxHeightFieldFormat::eS16_TM;
 +	Desc.samples.data = Samples.GetData();
-+	Desc.samples.stride = sizeof(PxU32);
++	Desc.samples.stride = sizeof(PxHeightFieldSample);
 +	Desc.flags = PxHeightFieldFlag::eNO_BOUNDARY_EDGES;
-+
 +	if (FParse::Param(FCommandLine::Get(), TEXT("FortniteLogLandscapeHeightfield")))
 +	{
-+		UE_LOG(LogLandscape, Warning, TEXT("Chaos->PhysX heightfield N=%d min=%f max=%f hpu=%f mirrored=%d"), N, MinValue, MaxValue, HeightPerUnit, bIsMirrored ? 1 : 0);
++		UE_LOG(LogLandscape, Warning, TEXT("Chaos->PhysX heightfield N=%d min=%f max=%f hpu=%f mirrored=%d materials=%d"),
++			N, Field.MinValue, Field.MaxValue, Field.HeightPerUnit, bIsMirrored ? 1 : 0, Field.NumMaterials);
 +	}
 +	static PxCooking* Cooking = PxCreateCooking(PX_PHYSICS_VERSION, *GPhysXFoundation, PxCookingParams(PxTolerancesScale()));
-+	if (!Cooking) return nullptr;
-+	return Cooking->createHeightField(Desc, GPhysXSDK->getPhysicsInsertionCallback());
++	return Cooking ? Cooking->createHeightField(Desc, GPhysXSDK->getPhysicsInsertionCallback()) : nullptr;
++}
++
++static bool FortniteBuildPhysXHeightfieldsFromChaosBlob(const TArray<uint8>& Blob, int32 FullQuads,
++	int32 SimpleQuads, int32 PhysicalMaterialCount, bool bIsMirrored, PxHeightField*& OutFull, PxHeightField*& OutSimple)
++{
++	FFortniteHeightfieldCursor Cursor(Blob);
++	FFortniteChaosHeightfield Full, Simple;
++	bool bContainsSimple;
++	if (!Cursor.Boolean(bContainsSimple) ||
++		!Cursor.Check(SimpleQuads >= 0 && bContainsSimple == (SimpleQuads > 0), TEXT("component/simple stream disagreement")) ||
++		!FortniteReadChaosHeightfield(Cursor, FullQuads, 0, PhysicalMaterialCount, Full) ||
++		(bContainsSimple && !FortniteReadChaosHeightfield(Cursor, SimpleQuads, 1, PhysicalMaterialCount, Simple)) ||
++		!Cursor.Check(Cursor.Position == Blob.Num(), TEXT("trailing data/unsupported archive profile")))
++	{
++		UE_LOG(LogLandscape, Warning, TEXT("Rejected original Chaos landscape at byte %lld/%d: %s"), Cursor.Position, Blob.Num(), Cursor.Error);
++		return false;
++	}
++	// Validate the entire stream before cooking; publish neither object on failure.
++	PxHeightField* FullHeightfield = FortniteCookPhysXHeightfield(Full, bIsMirrored);
++	if (!FullHeightfield) return false;
++	PxHeightField* SimpleHeightfield = bContainsSimple ? FortniteCookPhysXHeightfield(Simple, bIsMirrored) : nullptr;
++	if (bContainsSimple && !SimpleHeightfield)
++	{
++		FullHeightfield->release();
++		return false;
++	}
++	OutFull = FullHeightfield;
++	OutSimple = SimpleHeightfield;
++	return true;
 +}
 +#endif
 +
  void ULandscapeHeightfieldCollisionComponent::CreateCollisionObject()
  {
  #if WITH_CHAOS
-@@ -625,12 +739,28 @@ void ULandscapeHeightfieldCollisionComponent::CreateCollisionObject()
+@@ -625,12 +887,31 @@ void ULandscapeHeightfieldCollisionComponent::CreateCollisionObject()
  #if WITH_PHYSX && PHYSICS_INTERFACE_PHYSX
  				// Create heightfield shape
  				{
@@ -142,7 +290,10 @@ index fc917c46c..03ccb1fc9 100644
 +					if (HeightfieldRef->RBHeightfield == nullptr)
 +					{
 +						// Fortnite server: the Windows cook stores Chaos THeightField data; rebuild a PhysX heightfield from it.
-+						HeightfieldRef->RBHeightfield = FortniteBuildPhysXHeightfieldFromChaosBlob(CookedCollisionData, CollisionSizeQuads + 1, (GetComponentTransform().GetScale3D().X * GetComponentTransform().GetScale3D().Y * GetComponentTransform().GetScale3D().Z) < 0.f);
++						FortniteBuildPhysXHeightfieldsFromChaosBlob(CookedCollisionData, CollisionSizeQuads,
++							SimpleCollisionSizeQuads, CookedPhysicalMaterials.Num(),
++							(GetComponentTransform().GetScale3D().X * GetComponentTransform().GetScale3D().Y * GetComponentTransform().GetScale3D().Z) < 0.f,
++							HeightfieldRef->RBHeightfield, HeightfieldRef->RBHeightfieldSimple);
 +					}
 +					else if (SimpleCollisionSizeQuads > 0)
  					{

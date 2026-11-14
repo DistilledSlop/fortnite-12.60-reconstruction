@@ -48,6 +48,9 @@
 #include "GameplayTagContainer.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Engine/StaticMesh.h"
+#include "PhysicsEngine/BodySetup.h"
+#include "UObject/UObjectIterator.h"
 #include "Engine/CurveTable.h"
 #include "Engine/DataTable.h"
 #include "FFortPawnStats.h"
@@ -1736,6 +1739,65 @@ namespace FortAthenaMatchFlow
         Pawn->SetActorLocationAndRotation(DropLocation, FRotator(0.0f, Player->ExitRotation.Yaw, 0.0f), false, nullptr, ETeleportType::TeleportPhysics);
     }
 
+    // Inspect nearby mesh bounds including components that do not participate in collision queries.
+    void LogNearbyGroundMeshes(UWorld* World, const UCapsuleComponent* Capsule, int32 Sample)
+    {
+        struct FNearbyMesh
+        {
+            UStaticMeshComponent* Component;
+            float DistanceSquared;
+        };
+        TArray<FNearbyMesh> Nearest;
+        const FBox CapsuleBox = Capsule->Bounds.GetBox();
+        for (TObjectIterator<UStaticMeshComponent> It; It; ++It)
+        {
+            UStaticMeshComponent* Component = *It;
+            if (Component->GetWorld() != World || Component->HasAnyFlags(RF_ClassDefaultObject | RF_ArchetypeObject))
+                continue;
+            const FBox MeshBox = Component->Bounds.GetBox();
+            const FVector Gap(
+                FMath::Max(0.0f, FMath::Max(CapsuleBox.Min.X - MeshBox.Max.X, MeshBox.Min.X - CapsuleBox.Max.X)),
+                FMath::Max(0.0f, FMath::Max(CapsuleBox.Min.Y - MeshBox.Max.Y, MeshBox.Min.Y - CapsuleBox.Max.Y)),
+                FMath::Max(0.0f, FMath::Max(CapsuleBox.Min.Z - MeshBox.Max.Z, MeshBox.Min.Z - CapsuleBox.Max.Z)));
+            const float DistanceSquared = Gap.SizeSquared();
+            if (DistanceSquared > FMath::Square(150.0f))
+                continue;
+            int32 Index = 0;
+            while (Index < Nearest.Num() && Nearest[Index].DistanceSquared <= DistanceSquared)
+                ++Index;
+            if (Index < 6)
+            {
+                Nearest.Insert(FNearbyMesh{Component, DistanceSquared}, Index);
+                if (Nearest.Num() > 6)
+                    Nearest.RemoveAt(6);
+            }
+        }
+        UE_LOG(LogTemp, Display, TEXT("GroundContactMesh: sample=%d count=%d (nearest six within 150cm)"), Sample, Nearest.Num());
+        for (const FNearbyMesh& Entry : Nearest)
+        {
+            UStaticMeshComponent* Component = Entry.Component;
+            const AActor* Owner = Component->GetOwner();
+            const UBodySetup* Body = Component->GetBodySetup();
+            int32 PhysXTriangleMeshes = 0;
+            int32 ChaosTriangleMeshes = 0;
+#if WITH_PHYSX
+            if (Body) PhysXTriangleMeshes = Body->TriMeshes.Num();
+#endif
+#if WITH_CHAOS
+            if (Body) ChaosTriangleMeshes = Body->ChaosTriMeshes.Num();
+#endif
+            UE_LOG(LogTemp, Display, TEXT("GroundContactMesh: sample=%d distance=%.3f owner=%s component=%s registered=%d actorCollision=%d actorHidden=%d componentVisible=%d physicsState=%d collisionEnabled=%d profile=%s pawnResponse=%d mesh=%s body=%s traceFlag=%d convex=%d spheres=%d boxes=%d capsules=%d physxTriMeshes=%d chaosTriMeshes=%d"),
+                Sample, FMath::Sqrt(Entry.DistanceSquared), *GetPathNameSafe(Owner), *GetPathNameSafe(Component),
+                Component->IsRegistered(), Owner ? Owner->GetActorEnableCollision() : false, Owner ? Owner->IsHidden() : false,
+                Component->IsVisible(), Component->IsPhysicsStateCreated(), static_cast<int32>(Component->GetCollisionEnabled()),
+                *Component->GetCollisionProfileName().ToString(), static_cast<int32>(Component->GetCollisionResponseToChannel(ECC_Pawn)),
+                *GetPathNameSafe(Component->GetStaticMesh()), *GetPathNameSafe(Body), Body ? static_cast<int32>(Body->GetCollisionTraceFlag()) : -1,
+                Body ? Body->AggGeom.ConvexElems.Num() : -1, Body ? Body->AggGeom.SphereElems.Num() : -1,
+                Body ? Body->AggGeom.BoxElems.Num() : -1, Body ? Body->AggGeom.SphylElems.Num() : -1,
+                PhysXTriangleMeshes, ChaosTriangleMeshes);
+        }
+    }
+
     // Read-only, bounded samples for comparing server contact with the original client.
     void StartGroundContactProbe(AFortPlayerPawn* Pawn)
     {
@@ -1756,7 +1818,7 @@ namespace FortAthenaMatchFlow
             AFortPlayerPawn* SamplePawn = WeakPawn.Get();
             if (!SampleWorld)
                 return; // World teardown destroys its timer manager.
-            if (!SamplePawn || ++Probe->Samples > 60)
+            if (!SamplePawn || ++Probe->Samples > 180)
             {
                 SampleWorld->GetTimerManager().ClearTimer(Probe->Handle);
                 return;
@@ -1790,11 +1852,16 @@ namespace FortAthenaMatchFlow
             const bool bWall = SampleWorld->SweepSingleByChannel(Wall, Start, Start + Direction * 100.0f,
                 Capsule->GetComponentQuat(), Capsule->GetCollisionObjectType(),
                 FCollisionShape::MakeCapsule(Radius, HalfHeight), Params, Responses);
+            Params.bTraceComplex = true;
+            FHitResult ComplexWall;
+            const bool bComplexWall = SampleWorld->SweepSingleByChannel(ComplexWall, Start, Start + Direction * 100.0f,
+                Capsule->GetComponentQuat(), Capsule->GetCollisionObjectType(),
+                FCollisionShape::MakeCapsule(Radius, HalfHeight), Params, Responses);
             const FFindFloorResult& Floor = Movement->CurrentFloor;
             const FHitResult& FloorHit = Floor.HitResult;
             const UPrimitiveComponent* FloorComponent = FloorHit.GetComponent();
             const UPrimitiveComponent* WallComponent = Wall.GetComponent();
-            UE_LOG(LogTemp, Display, TEXT("GroundContact: sample=%d time=%.3f pawn=%s pos=%s velocity=%s maxSpeed=%.3f maxAccel=%.3f capsuleRadius=%.3f capsuleHalfHeight=%.3f scaledRadius=%.3f scaledHalfHeight=%.3f scale=%s profile=%s collisionEnabled=%d objectChannel=%d worldStaticResponse=%d floorBlocking=%d floorWalkable=%d floorDist=%.3f floorLineDist=%.3f floorImpact=%s floorActor=%s floorComponent=%s floorClass=%s wallBlocking=%d wallStartPenetrating=%d wallDistance=%.3f wallImpact=%s wallActor=%s wallComponent=%s wallClass=%s direction=%s"),
+            UE_LOG(LogTemp, Display, TEXT("GroundContact: sample=%d time=%.3f pawn=%s pos=%s velocity=%s maxSpeed=%.3f maxAccel=%.3f capsuleRadius=%.3f capsuleHalfHeight=%.3f scaledRadius=%.3f scaledHalfHeight=%.3f scale=%s profile=%s collisionEnabled=%d objectChannel=%d worldStaticResponse=%d floorBlocking=%d floorWalkable=%d floorDist=%.3f floorLineDist=%.3f floorImpact=%s floorActor=%s floorComponent=%s floorClass=%s wallBlocking=%d wallStartPenetrating=%d wallDistance=%.3f wallImpact=%s wallActor=%s wallComponent=%s wallClass=%s direction=%s complexBlocking=%d complexStartPenetrating=%d complexDistance=%.3f complexImpact=%s complexActor=%s complexComponent=%s"),
                 Probe->Samples, SampleWorld->GetTimeSeconds(), *GetNameSafe(SamplePawn), *Position.ToString(), *Velocity.ToString(),
                 Movement->GetMaxSpeed(), Movement->GetMaxAcceleration(), Capsule->GetUnscaledCapsuleRadius(),
                 Capsule->GetUnscaledCapsuleHalfHeight(), Capsule->GetScaledCapsuleRadius(), Capsule->GetScaledCapsuleHalfHeight(),
@@ -1804,8 +1871,12 @@ namespace FortAthenaMatchFlow
                 Floor.FloorDist, Floor.LineDist, *FloorHit.ImpactPoint.ToString(), *GetNameSafe(FloorHit.GetActor()),
                 *GetNameSafe(FloorComponent), *GetNameSafe(FloorComponent ? FloorComponent->GetClass() : nullptr),
                 bWall, Wall.bStartPenetrating, Wall.Distance, *Wall.ImpactPoint.ToString(), *GetNameSafe(Wall.GetActor()),
-                *GetNameSafe(WallComponent), *GetNameSafe(WallComponent ? WallComponent->GetClass() : nullptr), *Direction.ToString());
-            if (Probe->Samples == 60)
+                *GetNameSafe(WallComponent), *GetNameSafe(WallComponent ? WallComponent->GetClass() : nullptr), *Direction.ToString(),
+                bComplexWall, ComplexWall.bStartPenetrating, ComplexWall.Distance, *ComplexWall.ImpactPoint.ToString(),
+                *GetNameSafe(ComplexWall.GetActor()), *GetNameSafe(ComplexWall.GetComponent()));
+            if (Probe->Samples % 10 == 0)
+                LogNearbyGroundMeshes(SampleWorld, Capsule, Probe->Samples);
+            if (Probe->Samples == 180)
                 SampleWorld->GetTimerManager().ClearTimer(Probe->Handle);
         });
         World->GetTimerManager().SetTimer(Probe->Handle, Delegate, 1.0f, true);
