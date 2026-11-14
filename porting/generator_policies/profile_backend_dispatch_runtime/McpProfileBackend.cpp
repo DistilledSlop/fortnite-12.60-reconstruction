@@ -22,3 +22,14 @@ FMcpProfileItemPtr FMcpProfileBackendOverlay::FindItemById(const FString& ItemId
 {
     return UMcpProfile::NativeFindOverlayProfileItem(ItemsById, Overlay, ItemId); // 1410fde50
 }
+
+// Semantic adapters: bodies attributed once to UMcpProfile static helpers.
+void FMcpProfileBackendBase::CopyItemsByTemplateKey(const FString& Key, FMcpProfileItemArray& OutItems)
+{
+    UMcpProfile::NativeCopyProfileGroup1410fe3c0(Groups, Key, OutItems);
+}
+
+void FMcpProfileBackendOverlay::CopyItemsByTemplateKey(const FString& Key, FMcpProfileItemArray& OutItems)
+{
+    UMcpProfile::NativeCopyOverlayProfileGroup1410fe440(*this, Key, OutItems);
+}

@@ -2,6 +2,7 @@
 #include "AFortPlayerPawnAthena.h"
 #include "AFortGameStateAthena.h"
 #include "AFortPawn.h"
+#include "AFortPlayerControllerAthena.h"
 #include "AFortPlayerPawn.h"
 #include "AFortPlayerState.h"
 #include "Components/AudioComponent.h"
@@ -13,6 +14,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "SkeletalMeshComponentBudgeted.h"
 #include "UFortAdvancedMovementSet.h"
+#include "UFortControllerComponent_PerkSystem.h"
 #include "UFortMovementComp_CharacterAthena.h"
 #include "UFortPooledSkelMeshComponent.h"
 #include "Net/UnrealNetwork.h"
@@ -324,6 +326,36 @@ bool AFortPlayerPawnAthena::NativeAllowsADSWhileNotOnGround10B0() const
 	    return true;
 	}
 	return bOriginalAllow;
+}
+
+void AFortPlayerPawnAthena::GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const
+{
+	// CONFIDENCE: HIGH. Complete original body; build/runtime pending.
+	// Original 141a14f80; inherited unchanged by vehicle and remote pawn families.
+	AFortPawn::GetOwnedGameplayTags(TagContainer);
+	if (GetLocalRole() == ROLE_Authority)
+	{
+	    if (AFortPlayerControllerAthena* PC = Cast<AFortPlayerControllerAthena>(GetController()))
+	    {
+	        if (UFortControllerComponent_PerkSystem* Perks = PC->FindComponentByClass<UFortControllerComponent_PerkSystem>())
+	        {
+	            const FGameplayTag FactionTag = Perks->NativeGetFactionTag141b46360();
+	            if (FactionTag.IsValid())
+	            {
+	                TagContainer.AddTag(FactionTag);
+	            }
+	        }
+	    }
+	}
+}
+
+void AFortPlayerPawnAthena::CheckJumpInput(float DeltaTime)
+{
+	// CONFIDENCE: HIGH. Complete original 0x141a0e190; build/runtime pending.
+	auto* Movement = static_cast<UFortMovementComp_CharacterAthena*>(GetCharacterMovement());
+	const float Remaining = Movement->NativeJumpPenaltyRemaining1e58 - DeltaTime;
+	Movement->NativeJumpPenaltyRemaining1e58 = Remaining > 0.0f ? Remaining : 0.0f;
+	AFortPlayerPawn::CheckJumpInput(DeltaTime);
 }
 
 void AFortPlayerPawnAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

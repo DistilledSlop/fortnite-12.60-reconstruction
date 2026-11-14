@@ -601,5 +601,7 @@ public:
 	virtual bool NativeCanPerformAction14230c260(const FGameplayTag& ActionTag) const override;
 	virtual bool CanCrouch() const override;
 	virtual bool NativeAllowsADSWhileNotOnGround10B0() const override;
+	virtual void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const override;
+	virtual void CheckJumpInput(float DeltaTime) override;
 };
 

@@ -86,6 +86,12 @@ void AFortCharacterVehicle_Ostrich::NativeMarkFlagAndClampPositive143fa3d30(AFor
 	*reinterpret_cast<float*>(VehicleBytes + 0x8) = (Value > 0.0f) ? Value : 0.0f;
 }
 
+bool AFortCharacterVehicle_Ostrich::NativeCanDeployParachute14230bcb0()
+{
+	// CONFIDENCE: HIGH. Original 0x1406801e0, pawn virtual +0x1328.
+	return false;
+}
+
 void AFortCharacterVehicle_Ostrich::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

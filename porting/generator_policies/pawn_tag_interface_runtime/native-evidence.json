@@ -1,0 +1,294 @@
+{
+  "source_image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "windows": [
+    {
+      "begin": "0x1410fe3c0",
+      "length": 121,
+      "sha256": "3f252f2d28b8cece2c0c9f3e4bd651edd1849c48c8f712008a28e3ccf9d5de96"
+    },
+    {
+      "begin": "0x1410fe440",
+      "length": 78,
+      "sha256": "f3c8e7e58566728f676af96796f2e9c289e9f2cadc6b200019a7c17bf21b033b"
+    },
+    {
+      "begin": "0x1410fe490",
+      "length": 14,
+      "sha256": "68c0e96986a942d1c50eefe2dbb451e566b92861ec2fcfeb960e71189886e641"
+    },
+    {
+      "begin": "0x141b46360",
+      "length": 848,
+      "sha256": "3056b25ebdf0a43bf23366ea1bc3480fbceafe93136285e5c3666e6dfdc75873"
+    },
+    {
+      "begin": "0x141b462b0",
+      "length": 127,
+      "sha256": "7092a9e0d5496bee558dcfb7041b601d75f5847ca40bda22aade9360fc9f7445"
+    },
+    {
+      "begin": "0x1423233c0",
+      "length": 69,
+      "sha256": "5817e998445f022f5d90b8836a1f4ec63a1e7a831f78a73152f2cb961cf7eff9"
+    },
+    {
+      "begin": "0x141a14f80",
+      "length": 168,
+      "sha256": "9f3839dd599bc49212ea968e659761432615cf28eedb86f981a71ac899b76475"
+    },
+    {
+      "begin": "0x14232c970",
+      "length": 56,
+      "sha256": "19110b6d8ff8645f7e83be34fcd311f5bc58cb5e61193bcd1d4e91dd37dac93e"
+    },
+    {
+      "begin": "0x14232c9b0",
+      "length": 56,
+      "sha256": "b64deb00a798c43a0825f8182ee014214dca1969a0430794c6e42b4ef5dd4944"
+    },
+    {
+      "begin": "0x14232c9f0",
+      "length": 56,
+      "sha256": "bbcff4d077b7b6c8a12c2aecb20d72608271af21a311673b25c157ed4266ab11"
+    },
+    {
+      "begin": "0x14028ef40",
+      "length": 66,
+      "sha256": "0526569cc2a38600555c33cffe97790a31ad4c9d64375f8b32b6c1b844a62abc"
+    },
+    {
+      "begin": "0x145ee3d70",
+      "length": 76,
+      "sha256": "25deda9b9f96ae53f8822fb40c52379b6e0ee1ad089bfc06b797ef4b62cff389"
+    },
+    {
+      "begin": "0x142790070",
+      "length": 178,
+      "sha256": "3dd4ba386d81f7ba7ad4c573187a88a7768c529c1149022e51f8708b36dbfe31"
+    },
+    {
+      "begin": "0x142790a00",
+      "length": 20,
+      "sha256": "119d24a3b5b417367a1277a5bb2b8f5ed873da81315ec68140f5625541e62337"
+    },
+    {
+      "begin": "0x1422b5db0",
+      "length": 384,
+      "sha256": "c94d6101be0f2b771935cb40fefec33a1581b0c51c3fcffbbea6910fb65f449c"
+    },
+    {
+      "begin": "0x1422b6090",
+      "length": 384,
+      "sha256": "6526412c42d6f88779b0018e34ee28d46f0aad7e97820bd36308aa12b69e2c23"
+    },
+    {
+      "begin": "0x1422fccd0",
+      "length": 384,
+      "sha256": "4dab527100898a79b4fb5ecdde732949921fdb487fb6a7eb8c122eb16360582b"
+    },
+    {
+      "begin": "0x14192d0d0",
+      "length": 384,
+      "sha256": "111626d7e5951c3e96ee864b52abb9dd8e3ae96c7b25b3cbea3edaf6c9367b5a"
+    },
+    {
+      "begin": "0x14192d5d0",
+      "length": 384,
+      "sha256": "d965a2f456e0e3cac80743a887d38ac010b210a6de73d7bfe7151310d422c413"
+    },
+    {
+      "begin": "0x1422fce30",
+      "length": 384,
+      "sha256": "2a4fc563d437bb2d2f299d2b1107699c1b0697681d6f942f4f516b4fd81042bc"
+    },
+    {
+      "begin": "0x142498f80",
+      "length": 384,
+      "sha256": "2c3cd0c7631759052ddd7e39f4cee056ea0b4e7c1d9f27540bb5298f8d55e53c"
+    },
+    {
+      "begin": "0x1422fe440",
+      "length": 384,
+      "sha256": "a45b1fcab4fac9cf1c78a1d6afe11fb4406b9039f7b2e3f5dfb4ed2909e01081"
+    },
+    {
+      "begin": "0x1422fe5a0",
+      "length": 384,
+      "sha256": "4753e297b3f95a181f7f34163fc24e9b07518e2122d885f26c82d20c8895246d"
+    },
+    {
+      "begin": "0x1422fe830",
+      "length": 384,
+      "sha256": "49f0cc9ea58a2be682482e4ad38e44bd29cee0d671993bd943966ee78796d003"
+    },
+    {
+      "begin": "0x141a08ef0",
+      "length": 384,
+      "sha256": "3a84a64ca7e3423b559b0a56efc9e2458e9a898a309cdc7a616ab6b247f30f48"
+    },
+    {
+      "begin": "0x142432080",
+      "length": 384,
+      "sha256": "1a4dddc459d320043958904646844d1c8ac479ca6f43a3ad02be8312dcbba8b3"
+    },
+    {
+      "begin": "0x14610e978",
+      "length": 48,
+      "sha256": "cc9064104163f1191033e4528452cc9db77d1d8dd6df151d26e588a9f8e36ee9"
+    },
+    {
+      "begin": "0x1461084b8",
+      "length": 48,
+      "sha256": "5d999102d4aa063f46ef0e630f378a0a0900a2f8117ca6544eb7e9e28306d9b6"
+    },
+    {
+      "begin": "0x145df7f20",
+      "length": 48,
+      "sha256": "9573f1c13e82036a177aee01dec6cc4a63b555a790fd650a0822e02981c77102"
+    },
+    {
+      "begin": "0x145dfa150",
+      "length": 48,
+      "sha256": "0372ff1265495248b441e5de437cc07a752f292a17a56c3f04a5f89b97b7e993"
+    },
+    {
+      "begin": "0x146116730",
+      "length": 48,
+      "sha256": "90e59d707b6f0535867195fb0d053c586d08dc7be093d1b58e40c92a9495ab61"
+    },
+    {
+      "begin": "0x14611afb0",
+      "length": 48,
+      "sha256": "35161b9ce4b444e1aa33ba991b05b3cbd0cf7aae367a2d4946f4df3c0f74562f"
+    },
+    {
+      "begin": "0x14611c4c8",
+      "length": 48,
+      "sha256": "14b0a40395ab965dc2d3cf36b6bd5819bf4f05bdd3b7d33be0922de7b0527b0e"
+    },
+    {
+      "begin": "0x146117f30",
+      "length": 48,
+      "sha256": "be661ee4a0c4b41ca4cb2bd232104d9e8158bdf63b4318d9d897a9978beca228"
+    },
+    {
+      "begin": "0x145e2e4c0",
+      "length": 48,
+      "sha256": "150f088a245740f4628839ffa1b94421936d05cd6b3fca4790e04f1c72817cb0"
+    },
+    {
+      "begin": "0x14615eda8",
+      "length": 48,
+      "sha256": "904a5b0b91529c8d86e56a1a02137040486ed2bda920d2dd57b0da95e9e6ca47"
+    },
+    {
+      "begin": "0x142ba6a50",
+      "length": 29,
+      "sha256": "cb0443d3912f19b07e9104d5d2e803526bb6ba8ce33c5d1b6e3a76f3edd34874"
+    },
+    {
+      "begin": "0x142cd48a0",
+      "length": 130,
+      "sha256": "80d30baebd1d127267f4bad0eea82d4711e9d6d3aad651764d15b5b9b83ba897"
+    },
+    {
+      "begin": "0x141b01ee0",
+      "length": 174,
+      "sha256": "e8cfddea96867a9ea6a02c52bfdae20b4f00c6eae35c718c61106f45bad7db1d"
+    },
+    {
+      "begin": "0x1407bb0e0",
+      "length": 150,
+      "sha256": "fdbc23aae6fbca0c79d21fc9a06933e84e447d5d1ce24dee31b0746ec5682aa8"
+    },
+    {
+      "begin": "0x140fb93a0",
+      "length": 233,
+      "sha256": "a3825ab85de6c697380eb7c509b3a5cd20eb92a2713ce525912d9a8c128ba4a3"
+    }
+  ],
+  "classes": [
+    {
+      "class": "AFortAIBuddy",
+      "constructor": "0x1422b5db0",
+      "interface_vtable": "0x14610e978",
+      "primary_vtable": "0x14610da00",
+      "registration_thunk": "0x142790a00",
+      "gpsc": "0x142790070",
+      "getter": "0x1423233c0"
+    },
+    {
+      "class": "AFortAIPawn",
+      "constructor": "0x1422b6090",
+      "interface_vtable": "0x1461084b8",
+      "getter": "0x1423233c0"
+    },
+    {
+      "class": "AFortBotPawn",
+      "constructor": "0x1422fccd0",
+      "interface_vtable": "0x1461084b8",
+      "getter": "0x1423233c0"
+    },
+    {
+      "class": "AFortCharacterVehicle",
+      "constructor": "0x14192d0d0",
+      "interface_vtable": "0x145df7f20",
+      "getter": "0x141a14f80"
+    },
+    {
+      "class": "AFortCharacterVehicle_Ostrich",
+      "constructor": "0x14192d5d0",
+      "interface_vtable": "0x145dfa150",
+      "getter": "0x141a14f80"
+    },
+    {
+      "class": "AFortPawn",
+      "constructor": "0x1422fce30",
+      "interface_vtable": "0x146116730",
+      "getter": "0x1423233c0"
+    },
+    {
+      "class": "AFortPawn_FeedbackAnnouncer",
+      "constructor": "0x142498f80",
+      "interface_vtable": "0x146116730",
+      "getter": "0x1423233c0"
+    },
+    {
+      "class": "AFortPawn_InteractablePawn",
+      "constructor": "0x1422fe440",
+      "interface_vtable": "0x14611afb0",
+      "getter": "0x1423233c0"
+    },
+    {
+      "class": "AFortPawn_Taker",
+      "constructor": "0x1422fe5a0",
+      "interface_vtable": "0x14611c4c8",
+      "getter": "0x1423233c0"
+    },
+    {
+      "class": "AFortPlayerPawn",
+      "constructor": "0x1422fe830",
+      "interface_vtable": "0x146117f30",
+      "getter": "0x1423233c0"
+    },
+    {
+      "class": "AFortPlayerPawnAthena",
+      "constructor": "0x141a08ef0",
+      "interface_vtable": "0x145e2e4c0",
+      "getter": "0x141a14f80"
+    },
+    {
+      "class": "AFortRemoteControlledPawnAthena",
+      "constructor": "0x142432080",
+      "interface_vtable": "0x14615eda8",
+      "getter": "0x141a14f80"
+    }
+  ],
+  "captures": [
+    "0e976a79c0b84ba0a6b9eb6e63ea07cd",
+    "fbecdf6babbb4edcb0917285e235b54c",
+    "0f35ff97892d4cb2bf80435626816e9d",
+    "918fadec0f3f4af78474b3005a02f5b4"
+  ]
+}

@@ -62,6 +62,7 @@
 #include "GameplayEffect.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayPrediction.h"
+#include "GameplayTagAssetInterface.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Vector.h"
@@ -109,7 +110,7 @@ class UWeaponHitNotifyAudioBank;
 #include "AFortPawn.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortPawn : public ACharacter, public IFortAbilitySystemInterface, public IFortTeamActorInterface
+class FORTNITEGAME_API AFortPawn : public ACharacter, public IGameplayTagAssetInterface, public IFortAbilitySystemInterface, public IFortTeamActorInterface
 {
 	GENERATED_BODY()
 
@@ -1236,5 +1237,9 @@ public:
 	virtual bool NativeCanPerformAction14230c260(const FGameplayTag& ActionTag) const;
 	static bool NativeTestActionOnComponent1415ee070(UFortAbilitySystemComponent* Component, const FGameplayTag& ActionTag);
 	virtual IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterfaceBD8();
+	virtual void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const override;
+	virtual bool HasMatchingGameplayTag(FGameplayTag TagToCheck) const override;
+	virtual bool HasAllMatchingGameplayTags(const FGameplayTagContainer& TagContainer) const override;
+	virtual bool HasAnyMatchingGameplayTags(const FGameplayTagContainer& TagContainer) const override;
 };
 

@@ -621,5 +621,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static void NativeMarkFlagAndClampPositive143fa3d30(AFortCharacterVehicle_Ostrich* Vehicle, float Value);
+	virtual bool NativeCanDeployParachute14230bcb0() override;
 };
 

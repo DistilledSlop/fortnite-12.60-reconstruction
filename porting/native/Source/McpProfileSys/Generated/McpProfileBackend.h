@@ -18,8 +18,9 @@ public:
     FMcpProfileItemMap ItemsById;
     FMcpProfileGroupMap Groups;
 
-    // Original virtual +0x28 and +0x38. Recompiled vtable order is not asserted.
+    // Original virtual +0x28, +0x30 and +0x38. Recompiled vtable order is not asserted.
     virtual const FMcpProfileItemArray* FindItemsByTemplateKey(const FString& Key);
+    virtual void CopyItemsByTemplateKey(const FString& Key, FMcpProfileItemArray& OutItems);
     virtual FMcpProfileItemPtr FindItemById(const FString& ItemId);
 
 protected:
@@ -38,6 +39,7 @@ public:
     FMcpProfileOverlayState Overlay;
 
     const FMcpProfileItemArray* FindItemsByTemplateKey(const FString& Key) override;
+    void CopyItemsByTemplateKey(const FString& Key, FMcpProfileItemArray& OutItems) override;
     FMcpProfileItemPtr FindItemById(const FString& ItemId) override;
 
 protected:

@@ -95568,5 +95568,232 @@
       "GameplayTagContainer.h"
     ],
     "notes": "Complete original 1415e9850 override, independently reviewed against assembly and tag matching helper. Ranged targeting prerequisite integrated in c93f9707. See generator_policies/weapon_targeting_runtime/ASC_CANCELLATION_EVIDENCE.md. UE build/runtime pending."
+  },
+  {
+    "function": "NativeCopyProfileGroup1410fe3c0",
+    "kind": "helper",
+    "signature": "void NativeCopyProfileGroup1410fe3c0(const FMcpProfileGroupMap& Groups, const FString& Key, FMcpProfileItemArray& OutItems)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UMcpProfile/NativeCopyProfileGroup1410fe3c0.inc",
+    "address": "0x1410fe3c0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Complete original body. See generator_policies/pawn_tag_interface_runtime/EVIDENCE.md. Build/runtime pending.",
+    "static": true,
+    "includes": [
+      "McpProfileBaseTypes.h"
+    ],
+    "class": "UMcpProfile"
+  },
+  {
+    "function": "NativeCopyOverlayProfileGroup1410fe440",
+    "kind": "helper",
+    "signature": "void NativeCopyOverlayProfileGroup1410fe440(FMcpProfileBackendBase& Backend, const FString& Key, FMcpProfileItemArray& OutItems)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UMcpProfile/NativeCopyOverlayProfileGroup1410fe440.inc",
+    "address": "0x1410fe440",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Complete original body. See generator_policies/pawn_tag_interface_runtime/EVIDENCE.md. Build/runtime pending.",
+    "static": true,
+    "includes": [
+      "McpProfileBackend.h"
+    ],
+    "class": "UMcpProfile"
+  },
+  {
+    "function": "NativeGetProfileGroupSnapshot",
+    "kind": "helper",
+    "signature": "void NativeGetProfileGroupSnapshot(const FString& Key, FMcpProfileItemArray& OutItems)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UMcpProfile/NativeGetProfileGroupSnapshot.inc",
+    "address": "0x1410fe490",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Complete original body. See generator_policies/pawn_tag_interface_runtime/EVIDENCE.md. Build/runtime pending.",
+    "includes": [
+      "McpProfileBackend.h"
+    ],
+    "class": "UMcpProfile"
+  },
+  {
+    "function": "NativeGetFactionTag141b46360",
+    "kind": "helper",
+    "signature": "FGameplayTag NativeGetFactionTag141b46360()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortControllerComponent_PerkSystem/NativeGetFactionTag141b46360.inc",
+    "address": "0x141b46360",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Complete original body. See generator_policies/pawn_tag_interface_runtime/EVIDENCE.md. Build/runtime pending.",
+    "includes": [
+      "AbilitySystemComponent.h",
+      "SharedFortPerkSystemLog.h"
+    ],
+    "class": "UFortControllerComponent_PerkSystem"
+  },
+  {
+    "function": "GetOwnedGameplayTags",
+    "kind": "helper",
+    "signature": "void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const",
+    "signature_status": "verified",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPawn/GetOwnedGameplayTags.inc",
+    "address": "0x1423233c0",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "class": "AFortPawn",
+    "override": true,
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Complete original body. See generator_policies/pawn_tag_interface_runtime/EVIDENCE.md. Build/runtime pending."
+  },
+  {
+    "function": "HasMatchingGameplayTag",
+    "kind": "helper",
+    "signature": "bool HasMatchingGameplayTag(FGameplayTag TagToCheck) const",
+    "signature_status": "verified",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPawn/HasMatchingGameplayTag.inc",
+    "address": "0x14232c9f0",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "class": "AFortPawn",
+    "override": true,
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Complete original body. See generator_policies/pawn_tag_interface_runtime/EVIDENCE.md. Build/runtime pending."
+  },
+  {
+    "function": "HasAllMatchingGameplayTags",
+    "kind": "helper",
+    "signature": "bool HasAllMatchingGameplayTags(const FGameplayTagContainer& TagContainer) const",
+    "signature_status": "verified",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPawn/HasAllMatchingGameplayTags.inc",
+    "address": "0x14232c970",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "class": "AFortPawn",
+    "override": true,
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Complete original body. See generator_policies/pawn_tag_interface_runtime/EVIDENCE.md. Build/runtime pending."
+  },
+  {
+    "function": "HasAnyMatchingGameplayTags",
+    "kind": "helper",
+    "signature": "bool HasAnyMatchingGameplayTags(const FGameplayTagContainer& TagContainer) const",
+    "signature_status": "verified",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPawn/HasAnyMatchingGameplayTags.inc",
+    "address": "0x14232c9b0",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "class": "AFortPawn",
+    "override": true,
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Complete original body. See generator_policies/pawn_tag_interface_runtime/EVIDENCE.md. Build/runtime pending."
+  },
+  {
+    "function": "GetOwnedGameplayTags",
+    "kind": "helper",
+    "signature": "void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPlayerPawnAthena/AthenaGetOwnedGameplayTags.inc",
+    "address": "0x141a14f80",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Complete original body. See generator_policies/pawn_tag_interface_runtime/EVIDENCE.md. Build/runtime pending.",
+    "virtual": true,
+    "override": true,
+    "class": "AFortPlayerPawnAthena"
+  },
+  {
+    "function": "CheckJumpInput",
+    "kind": "helper",
+    "signature": "void CheckJumpInput(float DeltaTime)",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/AFortPlayerPawn/CheckJumpInput.inc",
+    "address": "0x14230d2f0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h",
+      "Engine/World.h",
+      "FortParachuteInputNative.h"
+    ],
+    "notes": "Complete original algorithm; real tag interface and override family integrated. See generator_policies/pawn_tag_interface_runtime/JUMP_EVIDENCE.md. Saved-move and producer lifecycle runtime parity remain open. Build/runtime pending.",
+    "class": "AFortPlayerPawn",
+    "override": true
+  },
+  {
+    "function": "NativeOpenParachute14233e6e0",
+    "kind": "helper",
+    "signature": "void NativeOpenParachute14233e6e0(bool bFromInput)",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/AFortPlayerPawn/NativeOpenParachute14233e6e0.inc",
+    "address": "0x14233e6e0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h",
+      "Engine/World.h",
+      "Abilities/GameplayAbilityTypes.h",
+      "FortNativeGameplayTagsRuntime.h"
+    ],
+    "notes": "Complete original algorithm; real tag interface and override family integrated. See generator_policies/pawn_tag_interface_runtime/JUMP_EVIDENCE.md. Saved-move and producer lifecycle runtime parity remain open. Build/runtime pending.",
+    "class": "AFortPlayerPawn"
+  },
+  {
+    "function": "CheckJumpInput",
+    "kind": "helper",
+    "signature": "void CheckJumpInput(float DeltaTime)",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/AFortPlayerPawnAthena/CheckJumpInput.inc",
+    "address": "0x141a0e190",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ],
+    "notes": "Complete original algorithm; real tag interface and override family integrated. See generator_policies/pawn_tag_interface_runtime/JUMP_EVIDENCE.md. Saved-move and producer lifecycle runtime parity remain open. Build/runtime pending.",
+    "class": "AFortPlayerPawnAthena",
+    "override": true
+  },
+  {
+    "class": "AFortCharacterVehicle_Ostrich",
+    "function": "NativeCanDeployParachute14230bcb0",
+    "kind": "helper",
+    "signature": "bool NativeCanDeployParachute14230bcb0()",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": true,
+    "override": true,
+    "inc_path": "porting/behavior/AFortCharacterVehicle_Ostrich/NativeCanDeployParachute14230bcb0.inc",
+    "address": "0x1406801e0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Constructor-confirmed original table override; shared constant body already known elsewhere, not new distinct-address credit. See pawn_tag_interface_runtime/JUMP_EVIDENCE.md."
   }
 ]

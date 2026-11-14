@@ -1,0 +1,77 @@
+[
+  {
+    "class": "AFortAIBuddy",
+    "constructor": "0x1422b5db0",
+    "interface_vtable": "0x14610e978",
+    "primary_vtable": "0x14610da00",
+    "registration_thunk": "0x142790a00",
+    "gpsc": "0x142790070",
+    "getter": "0x1423233c0"
+  },
+  {
+    "class": "AFortAIPawn",
+    "constructor": "0x1422b6090",
+    "interface_vtable": "0x1461084b8",
+    "getter": "0x1423233c0"
+  },
+  {
+    "class": "AFortBotPawn",
+    "constructor": "0x1422fccd0",
+    "interface_vtable": "0x1461084b8",
+    "getter": "0x1423233c0"
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "constructor": "0x14192d0d0",
+    "interface_vtable": "0x145df7f20",
+    "getter": "0x141a14f80"
+  },
+  {
+    "class": "AFortCharacterVehicle_Ostrich",
+    "constructor": "0x14192d5d0",
+    "interface_vtable": "0x145dfa150",
+    "getter": "0x141a14f80"
+  },
+  {
+    "class": "AFortPawn",
+    "constructor": "0x1422fce30",
+    "interface_vtable": "0x146116730",
+    "getter": "0x1423233c0"
+  },
+  {
+    "class": "AFortPawn_FeedbackAnnouncer",
+    "constructor": "0x142498f80",
+    "interface_vtable": "0x146116730",
+    "getter": "0x1423233c0"
+  },
+  {
+    "class": "AFortPawn_InteractablePawn",
+    "constructor": "0x1422fe440",
+    "interface_vtable": "0x14611afb0",
+    "getter": "0x1423233c0"
+  },
+  {
+    "class": "AFortPawn_Taker",
+    "constructor": "0x1422fe5a0",
+    "interface_vtable": "0x14611c4c8",
+    "getter": "0x1423233c0"
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "constructor": "0x1422fe830",
+    "interface_vtable": "0x146117f30",
+    "getter": "0x1423233c0"
+  },
+  {
+    "class": "AFortPlayerPawnAthena",
+    "constructor": "0x141a08ef0",
+    "interface_vtable": "0x145e2e4c0",
+    "getter": "0x141a14f80"
+  },
+  {
+    "class": "AFortRemoteControlledPawnAthena",
+    "constructor": "0x142432080",
+    "interface_vtable": "0x14615eda8",
+    "getter": "0x141a14f80"
+  }
+]

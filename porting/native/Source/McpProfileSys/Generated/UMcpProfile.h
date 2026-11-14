@@ -117,5 +117,8 @@ public:
 	static FMcpProfileItemPtr NativeFindBaseProfileItem(const FMcpProfileItemMap& ItemsById, const FString& ItemId);
 	static FMcpProfileItemPtr NativeFindOverlayProfileItem(const FMcpProfileItemMap& ItemsById, const FMcpProfileOverlayState& Overlay, const FString& ItemId);
 	const FMcpProfileItemArray* NativeFindItemsByTemplateKey(const FString& Key);
+	static void NativeCopyProfileGroup1410fe3c0(const FMcpProfileGroupMap& Groups, const FString& Key, FMcpProfileItemArray& OutItems);
+	static void NativeCopyOverlayProfileGroup1410fe440(FMcpProfileBackendBase& Backend, const FString& Key, FMcpProfileItemArray& OutItems);
+	void NativeGetProfileGroupSnapshot(const FString& Key, FMcpProfileItemArray& OutItems);
 };
 

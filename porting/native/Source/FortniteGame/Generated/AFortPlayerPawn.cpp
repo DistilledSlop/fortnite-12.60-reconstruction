@@ -2526,6 +2526,103 @@ bool AFortPlayerPawn::NativeSwimSprintByDefault1423508d0()
 	    GetCharacterMovement()->CustomMovementMode == 10;
 }
 
+void AFortPlayerPawn::CheckJumpInput(float DeltaTime)
+{
+	// CONFIDENCE: HIGH. Complete original 0x14230d2f0; build/runtime pending.
+	if (IsLocallyControlled() && !bClientUpdating)
+	{
+	    NativeSprintState1062Bit0 = NativeSprintTagGate14232cb50();
+	}
+	uint8 PreviousStyle;
+	if ((*NativeGetCurrentMovementStyle14231a980(&PreviousStyle) == 3) != NativeSprintState1062Bit0)
+	{
+	    NativeUpdateMovementStyle14235bbf0();
+	}
+	if (bPressedJump && GetCharacterMovement()->IsFalling())
+	{
+	    return;
+	}
+	if (NativeParachuteRequest1fc0 == 0 || !NativeCanDeployParachute14230bcb0())
+	{
+	    ACharacter::CheckJumpInput(DeltaTime);
+	    return;
+	}
+	UWorld* World = GetWorld();
+	const float Now = World ? World->GetTimeSeconds() : 0.0f;
+	if (NativeParachuteRequest1fc0 == 1)
+	{
+	    if (bIsParachuteOpen)
+	    {
+	        NativeParachuteRequest1fc0 = 0;
+	        return;
+	    }
+	    if (!bIsParachuteForcedOpen)
+	    {
+	        AFortPlayerControllerGameplay* GameplayController = Cast<AFortPlayerControllerGameplay>(Controller);
+	        if (GameplayController && GameplayController->NativeHasActiveTimer1423d9510())
+	        {
+	            return;
+	        }
+	        // Original deliberately calls GetWorld again; retain potential callback/reentry effects.
+	        if (NativeLimitParachuteDeployRate148157cfc() != 0)
+	        {
+	            UWorld* CooldownWorld = GetWorld();
+	            // COMISS/JC rejects unordered operands as well as elapsed < cooldown.
+	            if (CooldownWorld && !(CooldownWorld->GetTimeSeconds() - NativeParachuteLastTime264c >= ParachuteCooldownToOpen))
+	            {
+	                return;
+	            }
+	        }
+	    }
+	    NativeOpenParachute14233e6e0(false); // original virtual +0x1330, preserve overrides
+	    NativeParachuteLastTime264c = Now; // written even if deployment callback did not deploy
+	}
+	else if (NativeParachuteRequest1fc0 == 2 && NativeCanCloseParachute142331a80())
+	{
+	    NativeCloseParachute14230e850();
+	    NativeParachuteLastTime264c = Now; // likewise written after no-op close
+	}
+}
+
+void AFortPlayerPawn::NativeOpenParachute14233e6e0(bool bFromInput)
+{
+	// CONFIDENCE: HIGH. Complete original 0x14233e6e0; build/runtime pending.
+	UWorld* World = GetWorld();
+	AFortGameStateAthena* AthenaState = World ? World->GetGameState<AFortGameStateAthena>() : nullptr;
+	if (UFortControllerComponent_SkydiveFeedback* Feedback = NativeControllerFeedback1423240e0())
+	{
+	    Feedback->NativeSetFeedback1418bfe90(1);
+	}
+	if (AthenaState && AthenaState->NativeConsumeParachuteOpen14199ce60(this, bFromInput)) return;
+	if ((!bFromInput || GetLocalRole() == ROLE_Authority) && NativeCanDeployParachute14230bcb0())
+	{
+	    bool bConsumeEvent = false;
+	    OnOpenParachute(bConsumeEvent);
+	    if (bConsumeEvent) return;
+	    GetCharacterMovement()->SetMovementMode(MOVE_Custom, 3);
+	}
+	if (AFortPlayerController* FortController = Cast<AFortPlayerController>(Controller))
+	{
+	    if (FortController->IsLocalController()) FortController->NativeControllerVirtual1d10();
+	}
+	const auto& Tags = FFortNativeGameplayTagsRuntime::Get();
+	const FGameplayTag& Action = Tags.GetTagAtOriginalOffset(0x6a0);
+	if (!HasNativeAction(Action))
+	{
+	    NativeStartAction142353060(Action);
+	    if (AbilitySystemComponent)
+	    {
+	        FGameplayEventData Payload;
+	        Payload.Instigator = this;
+	        Payload.Target = this;
+	        GetOwnedGameplayTags(Payload.InstigatorTags);
+	        GetOwnedGameplayTags(Payload.TargetTags);
+	        AbilitySystemComponent->HandleGameplayEvent(Tags.GetTagAtOriginalOffset(0x198), &Payload);
+	        AbilitySystemComponent->UpdateTagMap(Tags.GetTagAtOriginalOffset(0x1f70), 1);
+	    }
+	}
+}
+
 void AFortPlayerPawn::NativeUpdateAccelerationPack1423442e0()
 {
 	// CONFIDENCE: high

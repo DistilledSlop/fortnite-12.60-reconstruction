@@ -2165,6 +2165,8 @@ public:
 	virtual IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterfaceBD8() override;
 	void NativeCancelCrouch142336830();
 	bool NativeSwimSprintByDefault1423508d0();
+	virtual void CheckJumpInput(float DeltaTime) override;
+	virtual void NativeOpenParachute14233e6e0(bool bFromInput);
 protected:
 	void NativeUpdateAccelerationPack1423442e0();
 	void NativeUpdateRemoteViewData142344420();

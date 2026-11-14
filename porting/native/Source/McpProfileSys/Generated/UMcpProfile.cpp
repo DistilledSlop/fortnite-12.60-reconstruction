@@ -318,3 +318,32 @@ const FMcpProfileItemArray* UMcpProfile::NativeFindItemsByTemplateKey(const FStr
 	return NativeBackend->FindItemsByTemplateKey(Key);
 }
 
+void UMcpProfile::NativeCopyProfileGroup1410fe3c0(const FMcpProfileGroupMap& Groups, const FString& Key, FMcpProfileItemArray& OutItems)
+{
+	// CONFIDENCE: HIGH. Complete original body; build/runtime pending.
+	// Original base backend +0x30: direct Groups+0x58, never virtual +0x28.
+	OutItems.Empty(0);
+	if (const FMcpProfileItemArray* Group = NativeFindProfileGroup(Groups, Key))
+	{
+	    OutItems = *Group;
+	}
+}
+
+void UMcpProfile::NativeCopyOverlayProfileGroup1410fe440(FMcpProfileBackendBase& Backend, const FString& Key, FMcpProfileItemArray& OutItems)
+{
+	// CONFIDENCE: HIGH. Complete original body; build/runtime pending.
+	// Original overlay +0x30: reset before calling the backend's +0x28 virtual.
+	OutItems.Reset(0);
+	if (const FMcpProfileItemArray* Group = Backend.FindItemsByTemplateKey(Key))
+	{
+	    OutItems = *Group;
+	}
+}
+
+void UMcpProfile::NativeGetProfileGroupSnapshot(const FString& Key, FMcpProfileItemArray& OutItems)
+{
+	// CONFIDENCE: HIGH. Complete original body; build/runtime pending.
+	// Original 1410fe490. Original precondition: actual installed live backend.
+	NativeBackend->CopyItemsByTemplateKey(Key, OutItems);
+}
+

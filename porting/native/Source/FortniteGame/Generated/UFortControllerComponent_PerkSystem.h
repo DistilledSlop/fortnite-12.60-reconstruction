@@ -14,6 +14,7 @@
 #include "FRoundTechDataCache.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
+#include "SharedFortPerkSystemLog.h"
 
 class UFortSpyTechItemDefinition;
 
@@ -100,5 +101,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	UAbilitySystemComponent* NativeGetAbilitySystemComponent141b462b0() const;
+	FGameplayTag NativeGetFactionTag141b46360();
 };
 

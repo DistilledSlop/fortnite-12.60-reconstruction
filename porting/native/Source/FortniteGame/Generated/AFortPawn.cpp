@@ -1377,6 +1377,41 @@ IFortInventoryOwnerInterface* AFortPawn::NativeGetInventoryOwnerInterfaceBD8()
 	return nullptr;
 }
 
+void AFortPawn::GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const
+{
+	// CONFIDENCE: HIGH. Complete original body; build/runtime pending.
+	// Original 0x1423233c0, interface this = pawn + 0x4b0.
+	TagContainer.Reset();
+	if (UAbilitySystemComponent* ASC = GetAbilitySystemComponent())
+	{
+	    ASC->GetOwnedGameplayTags(TagContainer);
+	}
+}
+
+bool AFortPawn::HasMatchingGameplayTag(FGameplayTag TagToCheck) const
+{
+	// CONFIDENCE: HIGH. Complete original body; build/runtime pending.
+	// Original 0x14232c9f0. The missing ASC case returns false.
+	UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
+	return ASC && ASC->HasMatchingGameplayTag(TagToCheck);
+}
+
+bool AFortPawn::HasAllMatchingGameplayTags(const FGameplayTagContainer& TagContainer) const
+{
+	// CONFIDENCE: HIGH. Complete original body; build/runtime pending.
+	// Original 0x14232c970. Even an empty query returns false if ASC is absent.
+	UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
+	return ASC && ASC->HasAllMatchingGameplayTags(TagContainer);
+}
+
+bool AFortPawn::HasAnyMatchingGameplayTags(const FGameplayTagContainer& TagContainer) const
+{
+	// CONFIDENCE: HIGH. Complete original body; build/runtime pending.
+	// Original 0x14232c9b0. The missing ASC case returns false.
+	UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
+	return ASC && ASC->HasAnyMatchingGameplayTags(TagContainer);
+}
+
 void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

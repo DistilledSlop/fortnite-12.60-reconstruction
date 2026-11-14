@@ -2610,6 +2610,10 @@ _aircraft_tick_spec = _common_activation_import.spec_from_file_location(
     "aircraft_tick_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "aircraft_tick_runtime", "source_policy.py"))
 _aircraft_tick_policy = _common_activation_import.module_from_spec(_aircraft_tick_spec)
 _aircraft_tick_spec.loader.exec_module(_aircraft_tick_policy)
+_pawn_tag_interface_spec = _common_activation_import.spec_from_file_location(
+    "pawn_tag_interface_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "pawn_tag_interface_runtime", "source_policy.py"))
+_pawn_tag_interface_policy = _common_activation_import.module_from_spec(_pawn_tag_interface_spec)
+_pawn_tag_interface_spec.loader.exec_module(_pawn_tag_interface_policy)
 _item_tag_interface_spec = _common_activation_import.spec_from_file_location(
     "item_tag_interface_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "item_tag_interface_runtime", "source_policy.py"))
 _item_tag_interface_policy = _common_activation_import.module_from_spec(_item_tag_interface_spec)
@@ -2994,6 +2998,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _client_event_policy.apply(model, block, native_execs)
     model = _local_signin_policy.apply(model, block)
     model = _item_tag_interface_policy.apply(model, block, owner_fns)
+    model = _pawn_tag_interface_policy.apply(model, block, owner_fns)
     model = _pawn_ability_interface_policy.apply(model, block, owner_fns)
     model = _fort_ability_interface_policy.apply(model, block, owner_fns)
     model = _native_virtual_interfaces_policy.apply(model)
@@ -4720,6 +4725,9 @@ def promote(args):
     if 'AFortPlayerCameraZone' in listed:
         asset_diagnostic_sources = asset_diagnostic_sources or {}
         asset_diagnostic_sources.update(_controller_tick_policy.sources())
+    if 'UFortControllerComponent_PerkSystem' in listed:
+        asset_diagnostic_sources = asset_diagnostic_sources or {}
+        asset_diagnostic_sources.update(_pawn_tag_interface_policy.sources())
     if 'AFortWeapon' in listed:
         asset_diagnostic_sources = asset_diagnostic_sources or {}
         asset_diagnostic_sources.update(_weapon_targeting_policy.sources())
