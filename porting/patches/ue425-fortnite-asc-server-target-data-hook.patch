@@ -1,0 +1,43 @@
+diff --git a/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemComponent.h b/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemComponent.h
+--- a/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemComponent.h
++++ b/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemComponent.h
+@@ -67,6 +67,9 @@
+ DECLARE_MULTICAST_DELEGATE_OneParam(FAbilitySpecDirtied, const FGameplayAbilitySpec&);
+ 
+ /** Notifies when GameplayEffectSpec is blocked by an ActiveGameplayEffect due to immunity  */
++/** Fortnite port: broadcast on the server for every ServerSetReplicatedTargetData RPC, after the replicated data cache is updated. */
++DECLARE_MULTICAST_DELEGATE_FourParams(FFortServerTargetDataReceived, UAbilitySystemComponent*, FGameplayAbilitySpecHandle, const FGameplayAbilityTargetDataHandle&, FGameplayTag);
++
+ DECLARE_MULTICAST_DELEGATE_TwoParams(FImmunityBlockGE, const FGameplayEffectSpec& /*BlockedSpec*/, const FActiveGameplayEffect* /*ImmunityGameplayEffect*/);
+ 
+ /** How gameplay effects will be replicated to clients */
+@@ -1270,6 +1273,9 @@
+ 	/** Calls local callbacks that are registered with the given Generic Replicated Event */
+ 	bool InvokeReplicatedEventWithPayload(EAbilityGenericReplicatedEvent::Type EventType, FGameplayAbilitySpecHandle AbilityHandle, FPredictionKey AbilityOriginalPredictionKey, FPredictionKey CurrentPredictionKey, FVector_NetQuantize100 VectorPayload);
+ 	
++	/** Fortnite port: global hook for server-side handlers that replace missing native ability tasks. */
++	static FFortServerTargetDataReceived FortServerTargetDataReceived;
++
+ 	/** Replicates targeting data to the server */
+ 	UFUNCTION(Server, reliable, WithValidation)
+ 	void ServerSetReplicatedTargetData(FGameplayAbilitySpecHandle AbilityHandle, FPredictionKey AbilityOriginalPredictionKey, const FGameplayAbilityTargetDataHandle& ReplicatedTargetDataHandle, FGameplayTag ApplicationTag, FPredictionKey CurrentPredictionKey);
+diff --git a/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Private/AbilitySystemComponent_Abilities.cpp b/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Private/AbilitySystemComponent_Abilities.cpp
+--- a/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Private/AbilitySystemComponent_Abilities.cpp
++++ b/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Private/AbilitySystemComponent_Abilities.cpp
+@@ -3100,6 +3100,8 @@
+ 	InvokeReplicatedEvent(EventType, AbilityHandle, AbilityOriginalPredictionKey, ScopedPredictionKey);
+ }
+ 
++FFortServerTargetDataReceived UAbilitySystemComponent::FortServerTargetDataReceived;
++
+ void UAbilitySystemComponent::ServerSetReplicatedTargetData_Implementation(FGameplayAbilitySpecHandle AbilityHandle, FPredictionKey AbilityOriginalPredictionKey, const FGameplayAbilityTargetDataHandle& ReplicatedTargetDataHandle, FGameplayTag ApplicationTag, FPredictionKey CurrentPredictionKey)
+ {
+ 	FScopedPredictionWindow ScopedPrediction(this, CurrentPredictionKey);
+@@ -3124,6 +3126,7 @@
+ 	ReplicatedData->PredictionKey = CurrentPredictionKey;
+ 
+ 	ReplicatedData->TargetSetDelegate.Broadcast(ReplicatedTargetDataHandle, ReplicatedData->ApplicationTag);
++	FortServerTargetDataReceived.Broadcast(this, AbilityHandle, ReplicatedTargetDataHandle, ApplicationTag);
+ }
+ 
+ bool UAbilitySystemComponent::ServerSetReplicatedTargetData_Validate(FGameplayAbilitySpecHandle AbilityHandle, FPredictionKey AbilityOriginalPredictionKey, const FGameplayAbilityTargetDataHandle& ReplicatedTargetDataHandle, FGameplayTag ApplicationTag, FPredictionKey CurrentPredictionKey)
