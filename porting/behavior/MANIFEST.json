@@ -95449,5 +95449,103 @@
     ],
     "notes": "Original body captured; see cancel-sprint243 proposal evidence. Source only; build/runtime pending. Complete original algorithm under native preconditions; evidence: generator_policies/weapon_targeting_runtime/SPRINT_INPUT_EVIDENCE.md. Build/runtime pending.",
     "class": "AFortPlayerPawn"
+  },
+  {
+    "function": "NativeReload838",
+    "kind": "helper",
+    "signature": "void NativeReload838()",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x1426aecd0",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/AFortWeapon/NativeReload838.inc",
+    "includes": [
+      "AbilitySystemComponent.h",
+      "Engine/World.h"
+    ],
+    "virtual": true,
+    "notes": "Complete original algorithm; evidence: generator_policies/weapon_targeting_runtime/RELOAD_ACTIONS_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortWeapon"
+  },
+  {
+    "function": "NativeTryAutoReload848",
+    "kind": "helper",
+    "signature": "void NativeTryAutoReload848()",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x1426b7a40",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/AFortWeapon/NativeTryAutoReload848.inc",
+    "includes": [
+      "FortWeaponAutoReloadHitchNative.h",
+      "AbilitySystemComponent.h",
+      "FortNativeGameplayTagsRuntime.h",
+      "Engine/World.h"
+    ],
+    "virtual": true,
+    "notes": "Complete original algorithm; evidence: generator_policies/weapon_targeting_runtime/RELOAD_ACTIONS_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortWeapon"
+  },
+  {
+    "function": "NativeSetTargeting1426b3730",
+    "kind": "helper",
+    "signature": "void NativeSetTargeting1426b3730(bool bNewTargeting)",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x1426dfd80",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/AFortWeaponRanged/NativeSetTargeting1426b3730.inc",
+    "includes": [
+      "TimerManager.h"
+    ],
+    "virtual": true,
+    "notes": "Complete original algorithm; evidence: generator_policies/weapon_targeting_runtime/RELOAD_ACTIONS_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortWeaponRanged",
+    "override": true
+  },
+  {
+    "function": "NativeChargeReload900Bit7",
+    "kind": "member_field",
+    "signature": "bool NativeChargeReload900Bit7",
+    "access": "public",
+    "offset": "0x900",
+    "inc_path": null,
+    "status": "ported",
+    "confidence": "high",
+    "includes": [],
+    "notes": "Complete original algorithm; evidence: generator_policies/weapon_targeting_runtime/RELOAD_ACTIONS_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortWeapon",
+    "mask": "0x80"
+  },
+  {
+    "function": "NativeTargetingChangedCE8",
+    "kind": "member_field",
+    "signature": "bool NativeTargetingChangedCE8",
+    "access": "public",
+    "offset": "0xce8",
+    "inc_path": null,
+    "status": "ported",
+    "confidence": "high",
+    "includes": [],
+    "notes": "Complete original algorithm; evidence: generator_policies/weapon_targeting_runtime/RELOAD_ACTIONS_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortWeaponRanged"
+  },
+  {
+    "function": "NativeAutoReloadTimerD98",
+    "kind": "member_field",
+    "signature": "FTimerHandle NativeAutoReloadTimerD98",
+    "access": "public",
+    "offset": "0xd98",
+    "inc_path": null,
+    "status": "ported",
+    "confidence": "high",
+    "includes": [
+      "TimerManager.h"
+    ],
+    "notes": "Complete original algorithm; evidence: generator_policies/weapon_targeting_runtime/RELOAD_ACTIONS_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortWeaponRanged"
   }
 ]

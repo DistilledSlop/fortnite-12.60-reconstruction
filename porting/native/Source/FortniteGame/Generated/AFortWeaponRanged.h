@@ -221,6 +221,9 @@ public:
 	UPROPERTY(Transient)
 	int32 ShellReloadCounter;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xce8): not a UPROPERTY, not replicated.
+	bool NativeTargetingChangedCE8;
+
 	// table index 34, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FRotator TargetingRotAdjustmentTotal;
@@ -250,6 +253,9 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0xd90): not a UPROPERTY, not replicated.
 	FTimerHandle NativeFiringTimerD90;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xd98): not a UPROPERTY, not replicated.
+	FTimerHandle NativeAutoReloadTimerD98;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0xda0): not a UPROPERTY, not replicated.
 	FTimerHandle NativeFirstShotAccuracyTimer;
@@ -518,5 +524,6 @@ public:
 	bool NativeHasFirstShotAccuracy1426d2660();
 	bool NativeOwnerIsMoving1426d6940();
 	virtual FFortRangedWeaponStats* NativeGetRangedWeaponStats6B0() const override;
+	virtual void NativeSetTargeting1426b3730(bool bNewTargeting) override;
 };
 

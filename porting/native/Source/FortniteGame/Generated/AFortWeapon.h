@@ -39,6 +39,7 @@
 #include "FWeaponEventDelegate.h"
 #include "FWeaponHudData.h"
 #include "FortNativeGameplayTagsRuntime.h"
+#include "FortWeaponAutoReloadHitchNative.h"
 #include "FortWeaponStopSoundNative.h"
 #include "FortWeaponTargetingNative.h"
 #include "GameFramework/Controller.h"
@@ -612,6 +613,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x900): not a UPROPERTY, not replicated.
 	bool NativeChargeState900Bit6;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x900): not a UPROPERTY, not replicated.
+	bool NativeChargeReload900Bit7;
+
 	// table index 48, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ChargeStatusPack)
 	int16 ChargeStatusPack;
@@ -1175,5 +1179,7 @@ public:
 	void NativeNotifyChargeState1426933f0(uint8 OldState, uint8 NewState);
 	virtual void NativeStopFireFX690();
 	virtual void NativeAbilityEnd758();
+	virtual void NativeReload838();
+	virtual void NativeTryAutoReload848();
 };
 
