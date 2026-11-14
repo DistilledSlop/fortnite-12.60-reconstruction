@@ -1,0 +1,29 @@
+{
+  "windows": [
+    {
+      "begin": "0x1440afb70",
+      "length": 32,
+      "sha256": "f874dcb8ddb16d99deaed51d318b30d1be54e7ab468970e33cfc156e0e450c35"
+    },
+    {
+      "begin": "0x1426bd476",
+      "length": 24,
+      "sha256": "7629ff6acc38a10de5a97762501bfc8a9e6435af21fca10736e33ab8fc3d2a14"
+    },
+    {
+      "begin": "0x1426bd796",
+      "length": 64,
+      "sha256": "f481ea8adc14b184aaec7fe1e4221e9573a110ac5fe6b347e8080ce128bf453c"
+    },
+    {
+      "begin": "0x14190de30",
+      "length": 40,
+      "sha256": "d48f9e96ea9f9d670ae2550da535bb938865178855ccedad66f31ed7a64306ee"
+    },
+    {
+      "begin": "0x1426d6940",
+      "length": 160,
+      "sha256": "1cb352ac4fb6c30b26e60de06d7ff4d0846036d5eadfb1e40278e9571db60e9f"
+    }
+  ]
+}

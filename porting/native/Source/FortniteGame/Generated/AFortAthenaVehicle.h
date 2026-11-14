@@ -58,6 +58,7 @@ class UFortHealthBarIndicator;
 class UFortHealthSet;
 class UFortSkyTubePhysicsComponent;
 class UFortVehicleAnimSet;
+class UFortVehicleConfigs;
 class UFortVehicleImminentCollisionComponent;
 class UFortVehicleMovementSet;
 class UFortVehiclePontoonsComponent;
@@ -283,7 +284,7 @@ public:
 	FVehicleReachedChargeThreshold OnNotOutOfFuel;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x738): not a UPROPERTY, not replicated.
-	uint64 NativeRecoveredUInt64_0x738;
+	UFortVehicleConfigs* NativeVehicleConfigs738;
 
 	// table index 102, flags 0x10000010080000
 	UPROPERTY()

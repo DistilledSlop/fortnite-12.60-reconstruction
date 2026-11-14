@@ -2158,6 +2158,7 @@ public:
 	void NativeSetTargeting14234f020(bool bNewTargeting);
 	void NativeOnWeaponTargeting1423336c0(bool bNewTargeting);
 	virtual IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterfaceBD8() override;
+	void NativeCancelCrouch142336830();
 protected:
 	void NativeUpdateAccelerationPack1423442e0();
 	void NativeUpdateRemoteViewData142344420();

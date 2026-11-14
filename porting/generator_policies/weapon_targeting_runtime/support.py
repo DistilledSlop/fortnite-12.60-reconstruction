@@ -15,5 +15,13 @@ def sources():
                 data = stream.read(window['length'])
                 if hashlib.sha256(data).hexdigest() != window['sha256']:
                     raise ValueError('weapon targeting evidence changed: ' + window['address'])
-    return {filename: (HERE / filename).read_text() for filename in
-            ('FortWeaponTargetingNative.h', 'FortWeaponTargetingNative.cpp')}
+    result = {filename: (HERE / filename).read_text() for filename in
+              ('FortWeaponTargetingNative.h', 'FortWeaponTargetingNative.cpp')}
+    accuracy = HERE.parent / 'accuracy_consumers_runtime'
+    with Path(evidence['image']).open('rb') as stream:
+        for item in json.loads((accuracy / 'native-evidence.json').read_text())['windows']:
+            stream.seek(int(item['begin'], 16) - 0x140000000)
+            if hashlib.sha256(stream.read(item['length'])).hexdigest() != item['sha256']:
+                raise ValueError('accuracy consumer evidence changed: ' + item['begin'])
+    result['NativeEncodedReticleMinimumState.h'] = (accuracy / 'NativeEncodedReticleMinimumState.h').read_text()
+    return result

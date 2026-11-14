@@ -71831,9 +71831,9 @@
     "function": "BlocksBuilding",
     "kind": "exec",
     "signature": "bool BlocksBuilding() const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/small1_runtime/AFortAthenaVehicle/BlocksBuilding.inc",
-    "confidence": "medium",
+    "signature_status": "verified",
+    "inc_path": "porting/behavior/AFortAthenaVehicle/BlocksBuilding.inc",
+    "confidence": "high",
     "address": "0x14283a710",
     "status": "ported",
     "reflection_flags": "0x54020402",
@@ -71841,7 +71841,8 @@
     "virtual": true,
     "access": "public",
     "native_body_address": "0x14190de30",
-    "notes": "Reads pointer from gap qword 0x738; returns byte +0xac of the pointee as bool, false when the pointer is null."
+    "notes": "Original14190de30 adjusts interface receiver, reads same native config +738, returns reflected bBlockBuilding +ac or false for null. Portable typed actual-object binding replaces raw Linux offset access.",
+    "includes": []
   },
   {
     "class": "AFortAthenaVehicle",
@@ -71939,18 +71940,16 @@
   },
   {
     "class": "AFortAthenaVehicle",
-    "function": "NativeRecoveredUInt64_0x738",
+    "function": "NativeVehicleConfigs738",
     "kind": "member_field",
-    "signature": "uint64 NativeRecoveredUInt64_0x738",
-    "signature_status": "proposed",
+    "signature": "UFortVehicleConfigs* NativeVehicleConfigs738",
     "access": "public",
-    "offset": "0x738",
-    "inc_path": null,
-    "confidence": "medium",
-    "address": null,
+    "signature_status": "verified",
     "status": "ported",
-    "recovery_source": "small_leaf_batch",
-    "notes": "Undeclared pointer after OnNotOutOfFuel delegate; read by BlocksBuilding."
+    "confidence": "high",
+    "offset": "0x738",
+    "includes": [],
+    "notes": "Actual original shared selected class CDO pointer, not a snapshot or separate physics pointer. Plain nonreflected field; no explicit default or fallback. UObject allocation supplies fresh zeros; selected live class retains its CDO. Getter and all producers must share this member. Original consumer assumes valid physics layout at read; family-wide validity unproved."
   },
   {
     "class": "AFortAthenaAIBotController",
@@ -94939,5 +94938,70 @@
     "override": true,
     "includes": [],
     "notes": "Original ranged +0x828 gate, then nonvirtual base call. Cock-state producer lifecycle remains separate; native state field/default already integrated."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeCancelCrouch142336830",
+    "kind": "helper",
+    "signature": "void NativeCancelCrouch142336830()",
+    "access": "public",
+    "signature_status": "verified",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x142336830",
+    "inc_path": "porting/behavior/AFortPlayerPawn/NativeCancelCrouch142336830.inc",
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ],
+    "notes": "Complete original consumer body; source admission preserves documented original live storage/domain preconditions. Vehicle family validity and broader producer lifecycle remain unaccepted; UE build/runtime pending."
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "NativeHasFirstShotAccuracy1426d2660",
+    "kind": "helper",
+    "signature": "bool NativeHasFirstShotAccuracy1426d2660()",
+    "access": "public",
+    "signature_status": "verified",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1426d2660",
+    "inc_path": "porting/behavior/AFortWeaponRanged/NativeHasFirstShotAccuracy1426d2660.inc",
+    "includes": [
+      "TimerManager.h"
+    ],
+    "notes": "Complete original consumer body; source admission preserves documented original live storage/domain preconditions. Vehicle family validity and broader producer lifecycle remain unaccepted; UE build/runtime pending."
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "NativeOwnerIsMoving1426d6940",
+    "kind": "helper",
+    "signature": "bool NativeOwnerIsMoving1426d6940()",
+    "access": "public",
+    "signature_status": "verified",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1426d6940",
+    "inc_path": "porting/behavior/AFortWeaponRanged/NativeOwnerIsMoving1426d6940.inc",
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h",
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Complete original consumer body; source admission preserves documented original live storage/domain preconditions. Vehicle family validity and broader producer lifecycle remain unaccepted; UE build/runtime pending."
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "NativeAtMinimumReticleSpread",
+    "kind": "member_field",
+    "signature": "FNativeEncodedReticleMinimumState NativeAtMinimumReticleSpread",
+    "access": "public",
+    "signature_status": "verified",
+    "status": "ported",
+    "confidence": "high",
+    "offset": "0xe08",
+    "address": "0x1426bd2a0",
+    "includes": [
+      "NativeEncodedReticleMinimumState.h"
+    ],
+    "notes": "Actual shared encoded ring e08..e0d. Type default constructor reproduces index/key seed and true transition. Reset/copy/shot producers must use this same object when lifted; class lifecycle remains incomplete."
   }
 ]

@@ -18,12 +18,15 @@
 #include "FOnProjectileSpawned.h"
 #include "FortWeaponTargetingNative.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Pawn.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
+#include "NativeEncodedReticleMinimumState.h"
+#include "SharedFortGameLog.h"
 #include "TimerManager.h"
 
 class AFortProjectileBase;
@@ -276,6 +279,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0xe00): not a UPROPERTY, not replicated.
 	FFortBaseWeaponStats* NativeOverrideWeaponStats201 = nullptr;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xe08): not a UPROPERTY, not replicated.
+	FNativeEncodedReticleMinimumState NativeAtMinimumReticleSpread;
+
 	// table index 21, flags 0x20080000000001
 	UPROPERTY()
 	UAnimMontage* FireAnimation;
@@ -508,5 +514,7 @@ public:
 	virtual FFortBaseWeaponStats* NativeGetWeaponStats() const;
 	virtual bool NativeIsFiring708() const override;
 	virtual bool NativeCanReload828(bool bCheckExtra, FGameplayTagContainer* FailureTags) override;
+	bool NativeHasFirstShotAccuracy1426d2660();
+	bool NativeOwnerIsMoving1426d6940();
 };
 
