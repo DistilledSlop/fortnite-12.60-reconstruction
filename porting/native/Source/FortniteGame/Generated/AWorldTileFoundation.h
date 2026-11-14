@@ -18,6 +18,12 @@ public:
 	UPROPERTY(Replicated, Transient)
 	uint8 NumRotations;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xee4): not a UPROPERTY, not replicated.
+	int32 NativeTileX_0xee4;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xee8): not a UPROPERTY, not replicated.
+	int32 NativeTileY_0xee8;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

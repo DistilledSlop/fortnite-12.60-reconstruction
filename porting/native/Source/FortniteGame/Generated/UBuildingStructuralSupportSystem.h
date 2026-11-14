@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FortStructuralGrid.h"
 #include "Math/Box.h"
+#include "Math/IntVector.h"
 #include "Math/Vector.h"
 
 class ABuildingLayoutRequirement;
@@ -25,6 +27,21 @@ public:
 	// table index 3, flags 0x40000000000000
 	UPROPERTY()
 	AController* BatchedRemovalInstigator;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x178): not a UPROPERTY, not replicated.
+	TMap<FIntVector, TWeakObjectPtr<ABuildingSMActor>, FDefaultSetAllocator, FortStructuralOriginal::FGridKeyFuncs> NativeCenterCellActors_0x178;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1c8): not a UPROPERTY, not replicated.
+	TMap<int32, TWeakObjectPtr<ABuildingSMActor>> NativeWallXActors_0x1c8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x218): not a UPROPERTY, not replicated.
+	TMap<int32, TWeakObjectPtr<ABuildingSMActor>> NativeWallYActors_0x218;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x268): not a UPROPERTY, not replicated.
+	TMap<int32, TWeakObjectPtr<ABuildingSMActor>> NativeFloorActors_0x268;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2b8): not a UPROPERTY, not replicated.
+	TMap<uint32, TWeakObjectPtr<ABuildingLayoutRequirement>> NativeLayoutByUID_0x2b8;
 
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -66,5 +83,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FBox K2_GetGridBoxFromWorldLoc(FVector& WorldLocation) const;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	bool NativeWorldToGrid141c78270(const FVector& World, FIntVector& Out) const;
+	ABuildingLayoutRequirement* NativeFindLayout141c78520(uint32 UID) const;
+	TWeakObjectPtr<ABuildingLayoutRequirement>& NativeInsertLayout1412e1db0(uint32 UID, const TWeakObjectPtr<ABuildingLayoutRequirement>& Actor);
+	ABuildingSMActor* NativeFindCenter141c76e40(const FIntVector& Cell) const;
+	int32 NativeWallIndex141c7db30(const FIntVector& C, uint8 Side) const;
+	ABuildingSMActor* NativeFindWall141c7d9e0(const FIntVector& Cell, uint8 Side) const;
+	ABuildingSMActor* NativeFindFloor141c77b40(const FIntVector& Cell, uint8 Below) const;
 };
 

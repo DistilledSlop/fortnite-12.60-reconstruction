@@ -88763,7 +88763,7 @@
     "static": true,
     "access": "private",
     "native_body_address": "0x141c82140",
-    "notes": "Ported from body 0x141c82140 (call); see .inc evidence comments."
+    "notes": "Original null/pending-kill and reflected bDestroyed check at byte0x3e1 mask0x80. Synthetic duplicate field removed; no in-tree caller currently established."
   },
   {
     "class": "UCreativeHUDLContext",
@@ -88825,21 +88825,6 @@
     "status": "ported",
     "recovery_source": "small_leaf_batch",
     "notes": "Unreflected gap at 0x1584 read by ct2 port (FVector)."
-  },
-  {
-    "class": "ABuildingSMActor",
-    "function": "NativeRecoveredUint8_0x3e1",
-    "kind": "member_field",
-    "signature": "uint8 NativeRecoveredUint8_0x3e1",
-    "signature_status": "proposed",
-    "access": "public",
-    "offset": "0x3e1",
-    "inc_path": null,
-    "confidence": "medium",
-    "address": null,
-    "status": "ported",
-    "recovery_source": "small_leaf_batch",
-    "notes": "Unreflected gap at 0x3e1 read by ct2 port (uint8)."
   },
   {
     "class": "UCreativeHUDLContext",
@@ -91500,5 +91485,396 @@
     "confidence": "high",
     "status": "ported",
     "notes": "Complete factory specialization for original FortHeroType class slot +0x280 returning FortHero. Uses recovered inherited CDO level and original hero constructor clamp."
+  },
+  {
+    "class": "AWorldTileFoundation",
+    "function": "NativeTileX_0xee4",
+    "kind": "member_field",
+    "signature": "int32 NativeTileX_0xee4",
+    "offset": "0xee4",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Original native field identity; host ABI follows typed UE layout. No replication is introduced."
+  },
+  {
+    "class": "AWorldTileFoundation",
+    "function": "NativeTileY_0xee8",
+    "kind": "member_field",
+    "signature": "int32 NativeTileY_0xee8",
+    "offset": "0xee8",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Original native field identity; host ABI follows typed UE layout. No replication is introduced."
+  },
+  {
+    "class": "AFortWorldManager",
+    "function": "NativeWorldQueryResult_0x848",
+    "kind": "member_field",
+    "signature": "FFortNativeWorldQueryResult NativeWorldQueryResult_0x848",
+    "offset": "0x848",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Original native field identity; host ABI follows typed UE layout. No replication is introduced.",
+    "includes": [
+      "FortWorldManagerNative.h"
+    ]
+  },
+  {
+    "class": "AFortWorldManager",
+    "function": "NativeConstructTileGrid141f85970",
+    "kind": "helper",
+    "signature": "void NativeConstructTileGrid141f85970()",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141f85970",
+    "inc_path": "porting/behavior/AFortWorldManager/NativeConstructTileGrid141f85970.inc",
+    "notes": "Complete original helper. Original startup/Tick and foundation-stream callbacks remain unwired; no collision or movement acceptance. Combined build pending.",
+    "includes": [
+      "FortWorldManagerNative.h",
+      "Engine/World.h"
+    ]
+  },
+  {
+    "class": "AFortWorldManager",
+    "function": "NativeResolveStructuralSupportSystem",
+    "kind": "helper",
+    "signature": "UBuildingStructuralSupportSystem* NativeResolveStructuralSupportSystem(const UObject* WorldContextObject)",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141c77490",
+    "inc_path": "porting/behavior/AFortWorldManager/NativeResolveStructuralSupportSystem.inc",
+    "notes": "Complete original helper. Original startup/Tick and foundation-stream callbacks remain unwired; no collision or movement acceptance. Combined build pending.",
+    "includes": [
+      "Engine/Engine.h",
+      "Engine/World.h"
+    ],
+    "static": true
+  },
+  {
+    "class": "AFortWorldManager",
+    "function": "NativeWorldQueryCompletion",
+    "kind": "helper",
+    "signature": "void NativeWorldQueryCompletion(bool bSucceeded)",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141f99860",
+    "inc_path": "porting/behavior/AFortWorldManager/NativeWorldQueryCompletion.inc",
+    "notes": "Complete original helper. Original startup/Tick and foundation-stream callbacks remain unwired; no collision or movement acceptance. Combined build pending.",
+    "includes": [
+      "SharedFortGameLog.h"
+    ]
+  },
+  {
+    "class": "AFortGameState",
+    "function": "NativeSetCurrentWUID",
+    "kind": "helper",
+    "signature": "void NativeSetCurrentWUID(const FString& InWUID)",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141eb1650",
+    "inc_path": "porting/behavior/AFortGameState/NativeSetCurrentWUID.inc",
+    "notes": "Complete original helper. Original startup/Tick and foundation-stream callbacks remain unwired; no collision or movement acceptance. Combined build pending."
+  },
+  {
+    "class": "AFortWorldManager",
+    "function": "NativeGetZoneInstanceDetails",
+    "kind": "helper",
+    "signature": "FFortZoneInstanceDetails* NativeGetZoneInstanceDetails()",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141f886f0",
+    "inc_path": "porting/behavior/AFortWorldManager/NativeGetZoneInstanceDetails.inc",
+    "notes": "Complete original helper. Original startup/Tick and foundation-stream callbacks remain unwired; no collision or movement acceptance. Combined build pending.",
+    "includes": []
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "kind": "member_field",
+    "function": "NativeCenterCellActors_0x178",
+    "signature": "TMap<FIntVector, TWeakObjectPtr<ABuildingSMActor>, FDefaultSetAllocator, FortStructuralOriginal::FGridKeyFuncs> NativeCenterCellActors_0x178",
+    "offset": "0x178",
+    "access": "public",
+    "notes": "non-reflected original offset identifies ownership, never host ABI layout",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortStructuralGrid.h"
+    ]
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "kind": "member_field",
+    "function": "NativeWallXActors_0x1c8",
+    "signature": "TMap<int32, TWeakObjectPtr<ABuildingSMActor>> NativeWallXActors_0x1c8",
+    "offset": "0x1c8",
+    "access": "public",
+    "notes": "non-reflected original offset identifies ownership, never host ABI layout",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortStructuralGrid.h"
+    ]
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "kind": "member_field",
+    "function": "NativeWallYActors_0x218",
+    "signature": "TMap<int32, TWeakObjectPtr<ABuildingSMActor>> NativeWallYActors_0x218",
+    "offset": "0x218",
+    "access": "public",
+    "notes": "non-reflected original offset identifies ownership, never host ABI layout",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortStructuralGrid.h"
+    ]
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "kind": "member_field",
+    "function": "NativeFloorActors_0x268",
+    "signature": "TMap<int32, TWeakObjectPtr<ABuildingSMActor>> NativeFloorActors_0x268",
+    "offset": "0x268",
+    "access": "public",
+    "notes": "non-reflected original offset identifies ownership, never host ABI layout",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortStructuralGrid.h"
+    ]
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "kind": "member_field",
+    "function": "NativeLayoutByUID_0x2b8",
+    "signature": "TMap<uint32, TWeakObjectPtr<ABuildingLayoutRequirement>> NativeLayoutByUID_0x2b8",
+    "offset": "0x2b8",
+    "access": "public",
+    "notes": "non-reflected original offset identifies ownership, never host ABI layout",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortStructuralGrid.h"
+    ]
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "NativeWorldToGrid141c78270",
+    "signature": "bool NativeWorldToGrid141c78270(const FVector& World, FIntVector& Out) const",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/structural_grid_runtime/NativeWorldToGrid141c78270.inc",
+    "confidence": "high",
+    "address": "0x141c78270",
+    "status": "ported",
+    "includes": [
+      "FortStructuralGrid.h"
+    ],
+    "notes": "Original C/assembly reviewed; compile/runtime pending; artifact structural-grid109 captures."
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "NativeFindLayout141c78520",
+    "signature": "ABuildingLayoutRequirement* NativeFindLayout141c78520(uint32 UID) const",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/structural_grid_runtime/NativeFindLayout141c78520.inc",
+    "confidence": "high",
+    "address": "0x141c78520",
+    "status": "ported",
+    "includes": [
+      "FortStructuralGrid.h"
+    ],
+    "notes": "Original C/assembly reviewed; compile/runtime pending; artifact structural-grid109 captures."
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "NativeInsertLayout1412e1db0",
+    "signature": "TWeakObjectPtr<ABuildingLayoutRequirement>& NativeInsertLayout1412e1db0(uint32 UID, const TWeakObjectPtr<ABuildingLayoutRequirement>& Actor)",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/structural_grid_runtime/NativeInsertLayout1412e1db0.inc",
+    "confidence": "high",
+    "address": "0x1412e1db0",
+    "status": "ported",
+    "includes": [
+      "FortStructuralGrid.h"
+    ],
+    "notes": "Original C/assembly reviewed; compile/runtime pending; artifact structural-grid109 captures."
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "NativeFindCenter141c76e40",
+    "signature": "ABuildingSMActor* NativeFindCenter141c76e40(const FIntVector& Cell) const",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/structural_grid_runtime/NativeFindCenter141c76e40.inc",
+    "confidence": "high",
+    "address": "0x141c76e40",
+    "status": "ported",
+    "includes": [
+      "FortStructuralGrid.h"
+    ],
+    "notes": "Original C/assembly reviewed; compile/runtime pending; artifact structural-grid109 captures."
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "NativeWallIndex141c7db30",
+    "signature": "int32 NativeWallIndex141c7db30(const FIntVector& C, uint8 Side) const",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/structural_grid_runtime/NativeWallIndex141c7db30.inc",
+    "confidence": "high",
+    "address": "0x141c7db30",
+    "status": "ported",
+    "includes": [
+      "FortStructuralGrid.h"
+    ],
+    "notes": "Original C/assembly reviewed; compile/runtime pending; artifact structural-grid109 captures."
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "NativeFindWall141c7d9e0",
+    "signature": "ABuildingSMActor* NativeFindWall141c7d9e0(const FIntVector& Cell, uint8 Side) const",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/structural_grid_runtime/NativeFindWall141c7d9e0.inc",
+    "confidence": "high",
+    "address": "0x141c7d9e0",
+    "status": "ported",
+    "includes": [
+      "FortStructuralGrid.h"
+    ],
+    "notes": "Original C/assembly reviewed; compile/runtime pending; artifact structural-grid109 captures."
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "NativeFindFloor141c77b40",
+    "signature": "ABuildingSMActor* NativeFindFloor141c77b40(const FIntVector& Cell, uint8 Below) const",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/structural_grid_runtime/NativeFindFloor141c77b40.inc",
+    "confidence": "high",
+    "address": "0x141c77b40",
+    "status": "ported",
+    "includes": [
+      "FortStructuralGrid.h"
+    ],
+    "notes": "Original C/assembly reviewed; compile/runtime pending; artifact structural-grid109 captures."
+  },
+  {
+    "class": "ABuildingLayoutRequirement",
+    "function": "NativeResourceMatches141bfebe0",
+    "signature": "bool NativeResourceMatches141bfebe0(const ABuildingSMActor* Actor) const",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/structural_grid_runtime/NativeResourceMatches141bfebe0.inc",
+    "confidence": "high",
+    "address": "0x141bfebe0",
+    "status": "ported",
+    "includes": [
+      "FortStructuralGrid.h"
+    ],
+    "notes": "Original C/assembly reviewed; compile/runtime pending; artifact structural-grid109 captures."
+  },
+  {
+    "class": "AFortWorldManager",
+    "function": "NativeUsedBuildingNames_0x758",
+    "kind": "member_field",
+    "signature": "TSet<FName> NativeUsedBuildingNames_0x758",
+    "offset": "0x758",
+    "access": "public",
+    "status": "ported",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "notes": "Original manager-owned FName set; native ctor initializes empty sparse storage, ordinary typed UE construction/destruction retained."
+  },
+  {
+    "class": "AFortWorldManager",
+    "function": "NativeHasUsedBuilding",
+    "kind": "helper",
+    "signature": "bool NativeHasUsedBuilding(FName BuildingName) const",
+    "address": "0x141f8f0b0",
+    "inc_path": "porting/behavior/AFortWorldManager/NativeHasUsedBuilding.inc",
+    "access": "public",
+    "status": "ported",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "notes": "Complete original choice bookkeeping/source-name utility. Selection/lifecycle caller remains unwired; combined build pending."
+  },
+  {
+    "class": "AFortWorldManager",
+    "function": "NativeRecordUsedBuilding",
+    "kind": "helper",
+    "signature": "void NativeRecordUsedBuilding(FName BuildingName)",
+    "address": "0x141f800e0",
+    "inc_path": "porting/behavior/AFortWorldManager/NativeRecordUsedBuilding.inc",
+    "access": "public",
+    "status": "ported",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "notes": "Complete original choice bookkeeping/source-name utility. Selection/lifecycle caller remains unwired; combined build pending."
+  },
+  {
+    "class": "AFortWorldManager",
+    "function": "NativeSourceName",
+    "kind": "helper",
+    "signature": "FName NativeSourceName(FName SelectedInstance)",
+    "address": "0x141fca500",
+    "inc_path": "porting/behavior/AFortWorldManager/NativeSourceName.inc",
+    "access": "public",
+    "status": "ported",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "notes": "Complete original choice bookkeeping/source-name utility. Selection/lifecycle caller remains unwired; combined build pending.",
+    "static": true
+  },
+  {
+    "class": "ABuildingFoundation",
+    "function": "NativeComputeFoundationInstanceId",
+    "kind": "helper",
+    "signature": "uint32 NativeComputeFoundationInstanceId(const FVector& Location, const FString& ActorName)",
+    "static": true,
+    "address": "0x141bdc710",
+    "inc_path": "porting/behavior/ABuildingFoundation/NativeComputeFoundationInstanceId.inc",
+    "access": "public",
+    "status": "ported",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "includes": [
+      "Containers/StringConv.h",
+      "Misc/Crc.h",
+      "FortWorldManagerNative.h"
+    ],
+    "notes": "Complete original name/location hash with UTF-16 CRC and original SSE rounding on x86. Does not install or partially replace PostInitializeComponents."
   }
 ]

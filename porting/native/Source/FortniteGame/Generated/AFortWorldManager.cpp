@@ -4,18 +4,24 @@
 #include "AFortGameState.h"
 #include "AFortGameStateZone.h"
 #include "AFortWindManager.h"
+#include "AWorldTileFoundation.h"
 #include "Components/SceneComponent.h"
 #include "Engine/DataTable.h"
 #include "Engine/Engine.h"
+#include "Engine/EngineTypes.h"
 #include "Engine/World.h"
 #include "FFortWindIntensityAndDirection.h"
 #include "FFortZoneInstanceDetails.h"
 #include "FGameDifficultyInfo.h"
 #include "FortAssets.h"
 #include "FortDelayedObjectLoader.h"
+#include "FortWorldManagerNative.h"
 #include "GameplayTagContainer.h"
+#include "Math/Rotator.h"
 #include "Math/Vector.h"
+#include "Misc/CString.h"
 #include "SharedFortGameLog.h"
+#include "UBuildingStructuralSupportSystem.h"
 #include "UFortGameInstance.h"
 #include "UFortMissionGenerator.h"
 #include "UFortMissionInfo.h"
@@ -222,6 +228,116 @@ UFortZoneRecord* AFortWorldManager::NativeCreateNewZoneRecord(UObject* Outer)
 	// Original 0x141f7c620 is the generic NewObject<UFortZoneRecord> helper.
 	// Its caller supplies the world manager as Outer; preserve the explicit argument.
 	return NewObject<UFortZoneRecord>(Outer);
+}
+
+void AFortWorldManager::NativeConstructTileGrid141f85970()
+{
+	// CONFIDENCE: HIGH
+	// Complete 0x141f85970. Needs generated AWorldTileFoundation native X/Y
+	// int32 fields at original +0xee4/+0xee8. Original offsets are evidence,
+	// never offsets into the reconstructed host object.
+	if (GetLocalRole() != ROLE_Authority)
+	{
+	    return;
+	}
+	const float OriginX = FortWorldManagerOriginalGrid::Origin(X_Size, TileEdgeSize);
+	const float OriginY = FortWorldManagerOriginalGrid::Origin(Y_Size, TileEdgeSize);
+	// Original appends zeroed rows but indexes from row zero, even on repeated calls.
+	// Preserve this unusual behavior; replacing it with SetNum/Empty changes parity.
+	Y.AddZeroed(Y_Size);
+	for (int32 Row = 0; Row < Y_Size; ++Row)
+	{
+	    Y[Row].X.AddZeroed(X_Size);
+	    for (int32 Column = 0; Column < X_Size; ++Column)
+	    {
+	        const float X = float(FortWorldManagerOriginalGrid::Mul32(
+	            FortWorldManagerOriginalGrid::Mul32(TileEdgeSize, Column), 512)) + OriginX;
+	        const float YPosition = float(FortWorldManagerOriginalGrid::Mul32(
+	            FortWorldManagerOriginalGrid::Mul32(TileEdgeSize, Row), 512)) + OriginY;
+	        const FVector Position(X, YPosition, 0.0f);
+	        const FRotator Rotation(0.0f, 0.0f, 0.0f);
+	        FActorSpawnParameters Parameters;
+	        Parameters.Owner = this;
+	        Parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	        AWorldTileFoundation* Foundation = GetWorld()->SpawnActor<AWorldTileFoundation>(
+	            AWorldTileFoundation::StaticClass(), Position, Rotation, Parameters);
+	        Y[Row].X[Column] = Foundation;
+	        Foundation->NativeTileY_0xee8 = Row;
+	        Foundation->NativeTileX_0xee4 = Column;
+	    }
+	}
+}
+
+UBuildingStructuralSupportSystem* AFortWorldManager::NativeResolveStructuralSupportSystem(const UObject* WorldContextObject)
+{
+	// CONFIDENCE: HIGH
+	// Complete 0x141c77490. Requires Engine/Engine.h, Engine/World.h,
+	// AFortGameStateZone.h and UBuildingStructuralSupportSystem.h.
+	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
+	AFortGameStateZone* State = World ? Cast<AFortGameStateZone>(World->GetGameState()) : nullptr;
+	return State ? State->StructuralSupportSystem : nullptr;
+}
+
+void AFortWorldManager::NativeWorldQueryCompletion(bool bSucceeded)
+{
+	// CONFIDENCE: HIGH
+	// Original 0x141f99860.
+	if (CurrentWorldRecord && bSucceeded)
+	{
+	    WorldManagerState = WMS_WorldQueryComplete;
+	    NativeWorldQueryResult_0x848.ExecuteIfBound(true, CurrentWorldRecord->WUID);
+	    return;
+	}
+	UE_LOG(LogFortWorld, Warning, TEXT("Invalid world record when transition to world query complete state!"));
+	WorldManagerState = WMS_Failed;
+	CurrentWorldRecord = nullptr;
+	const FString EmptyWUID;
+	NativeWorldQueryResult_0x848.ExecuteIfBound(false, EmptyWUID);
+}
+
+FFortZoneInstanceDetails* AFortWorldManager::NativeGetZoneInstanceDetails()
+{
+	// CONFIDENCE: HIGH
+	// Original 0x141f886f0. Returned storage belongs to the record, first queued
+	// action, or a process-wide default, respectively; do not return a copy.
+	if (CurrentWorldRecord)
+	    return &CurrentWorldRecord->ZoneInstanceInfo;
+	if (NativeWorldRecordActions_0x6c0.Num() > 0)
+	{
+	    FFortZoneInstanceDetails& First = NativeWorldRecordActions_0x6c0[0].ZoneInstanceInfo;
+	    if (!First.ZoneThemeClass.IsNull() && (!First.WorldId.IsEmpty() || !First.TheaterId.IsEmpty()))
+	        return &First;
+	}
+	static FFortZoneInstanceDetails EmptyDetails;
+	return &EmptyDetails;
+}
+
+bool AFortWorldManager::NativeHasUsedBuilding(FName BuildingName) const
+{
+	// CONFIDENCE: HIGH
+	// 0x141f8f0b0. UsedBuildingNames is the manager-owned native set at +0x758.
+	return NativeUsedBuildingNames_0x758.Contains(BuildingName);
+}
+
+void AFortWorldManager::NativeRecordUsedBuilding(FName BuildingName)
+{
+	// CONFIDENCE: HIGH
+	// 0x141f800e0. Native Add does not replace anything when key already exists.
+	NativeUsedBuildingNames_0x758.Add(BuildingName);
+}
+
+FName AFortWorldManager::NativeSourceName(FName SelectedInstance)
+{
+	// CONFIDENCE: HIGH
+	// Original 0x141fca500. Split on the first case-insensitive /Temp occurrence,
+	// then take the part before the last underscore in the right-hand string.
+	FString Right;
+	SelectedInstance.ToString().Split(TEXT("/Temp"), nullptr, &Right,
+	                                  ESearchCase::IgnoreCase, ESearchDir::FromStart);
+	int32 UnderscoreIndex = INDEX_NONE;
+	if (Right.FindLastChar(TEXT('_'), UnderscoreIndex))
+	    return FName(*Right.Left(UnderscoreIndex));
+	return NAME_None;
 }
 
 void AFortWorldManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

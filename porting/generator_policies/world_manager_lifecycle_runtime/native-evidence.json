@@ -1,0 +1,88 @@
+{
+  "status": "Complete independent helpers; startup/streaming lifecycle and runtime acceptance remain pending.",
+  "source_windows": [
+    {
+      "address": "0x141f85970",
+      "length": 717,
+      "sha256": "839d0dcaadf441fd29e4c29111b5dddafdb10a5bec23be9d8031f8f4580ff3b6"
+    },
+    {
+      "address": "0x141c77490",
+      "length": 100,
+      "sha256": "e44c3ff4ac68baebd1308a79db5469b2ea8ffcf5b16569ba52b75fdcabf9c4ec"
+    },
+    {
+      "address": "0x141f99860",
+      "length": 222,
+      "sha256": "b726e9953d8330667b0e338bb5b8518e3be49697ffec3aba84e7a3239ca3e70d"
+    },
+    {
+      "address": "0x141eb1650",
+      "length": 58,
+      "sha256": "ea917678bcf336c6f2995950f54ba367d6813c513dec97ccc8a58fc41be57336"
+    },
+    {
+      "address": "0x140d08bc0",
+      "length": 135,
+      "sha256": "4ddd5fe581c341688d49660a202e03a0c655dc688b6a28fa0ddd907f605d8674"
+    },
+    {
+      "address": "0x141f886f0",
+      "length": 160,
+      "sha256": "3e269b7a40b62fa1e19eed4ff514964373880a68d3dde25ae3271d510d777fee"
+    },
+    {
+      "address": "0x148218638",
+      "length": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "address": "0x1459a86f0",
+      "length": 4,
+      "sha256": "d99e58435243d9fef9c88273b8d553b4fba4d0baf8009d29eae74fa99e0d9f57"
+    },
+    {
+      "address": "0x1460452fc",
+      "length": 4,
+      "sha256": "3c342b7cf3cb757db87af73bee55ed05249b954aa04b258e24fbe7c666bf9734"
+    },
+    {
+      "address": "0x141f8f0b0",
+      "length": 32,
+      "sha256": "7681d2d033e6903a6def7c200c182e2cfcac11abb1eb323c83c6c94d26f9f744"
+    },
+    {
+      "address": "0x141f800e0",
+      "length": 32,
+      "sha256": "20dc1f3f328633fa440290ad0aa21eb0b9da00b3871b9b9abda139c03401e6a0"
+    },
+    {
+      "address": "0x141fca500",
+      "length": 32,
+      "sha256": "e1bdb932b91d6df8352debe517ca770da82eaeefde23853bf1491916cb24aa52"
+    },
+    {
+      "address": "0x1409fe030",
+      "length": 32,
+      "sha256": "8dc5cec6f0861883872c0779f3100f896ec27cf656cb757e1b336e2fcdedcfb8"
+    },
+    {
+      "address": "0x141bdc710",
+      "length": 32,
+      "sha256": "f1e50e594d72a3271b6a142aea494b3e40c30c91a79261e7a13a1c7aca00b940"
+    },
+    {
+      "address": "0x1402dad00",
+      "length": 32,
+      "sha256": "6a6c948fedb2d513d724592b658530ec771f85b4aace13033f7690c25b981976"
+    }
+  ],
+  "fields": {
+    "AFortWorldManager+0x848": "Native single-cast callback bool and borrowed FString. Success passes address of record WUID directly; no by-value FString copy/destruction.",
+    "AWorldTileFoundation+0xee4/+0xee8": "int32 grid X/Y written immediately after spawn in141f85970; consumed by saved-level resolver141f89870.",
+    "AFortWorldManager+0x758": "TSet<FName>, original16-byte entries with8-byte key, empty native sparse-set ctor/destructor."
+  },
+  "rounding": "Original IMUL32; signed divide by2 truncates toward zero; CVTSS2SI with current MXCSR followed by SAR1. Spawn collision override AlwaysSpawn, owner=this, zero rotation/Z; append rows then index from zero.",
+  "lifecycle": "Helpers are not a replacement for full Tick/startup/zone binding/stream callbacks. No forced state driver or blanket level loading added.",
+  "source_name": "FString::Split /Temp with IgnoreCase=1/FromStart=0, take prefix before last underscore; None on failed split/missing delimiter."
+}

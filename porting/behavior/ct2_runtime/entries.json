@@ -79,7 +79,7 @@
     "static": true,
     "access": "private",
     "native_body_address": "0x141c82140",
-    "notes": "Ported from body 0x141c82140 (call); see .inc evidence comments."
+    "notes": "Original null/pending-kill and reflected bDestroyed check at byte0x3e1 mask0x80. Synthetic duplicate field removed; no in-tree caller currently established."
   },
   {
     "class": "UCreativeHUDLContext",
@@ -141,21 +141,6 @@
     "status": "ported",
     "recovery_source": "small_leaf_batch",
     "notes": "Unreflected gap at 0x1584 read by ct2 port (FVector)."
-  },
-  {
-    "class": "ABuildingSMActor",
-    "function": "NativeRecoveredUint8_0x3e1",
-    "kind": "member_field",
-    "signature": "uint8 NativeRecoveredUint8_0x3e1",
-    "signature_status": "proposed",
-    "access": "public",
-    "offset": "0x3e1",
-    "inc_path": null,
-    "confidence": "medium",
-    "address": null,
-    "status": "ported",
-    "recovery_source": "small_leaf_batch",
-    "notes": "Unreflected gap at 0x3e1 read by ct2 port (uint8)."
   },
   {
     "class": "AFortCreativeMoveTool",

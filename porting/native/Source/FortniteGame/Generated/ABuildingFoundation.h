@@ -6,16 +6,19 @@
 #include "CoreMinimal.h"
 #include "ABuildingSMActor.h"
 
+#include "Containers/StringConv.h"
 #include "EBuildingFoundationType.h"
 #include "EDynamicFoundationEnabledState.h"
 #include "EDynamicFoundationType.h"
 #include "FBuildingFoundationStreamingData.h"
 #include "FDynamicBuildingFoundationRepData.h"
+#include "FortWorldManagerNative.h"
 #include "GameplayTagContainer.h"
 #include "Math/Box.h"
 #include "Math/IntPoint.h"
 #include "Math/TransformNonVectorized.h"
 #include "Math/Vector.h"
+#include "Misc/Crc.h"
 #include "Styling/SlateBrush.h"
 
 class AActor;
@@ -233,5 +236,6 @@ public:
 	bool NativeIsDynamicFoundationOrParent() const;
 	bool NativeIsFoundationAndParentsEnabled() const;
 	bool NativeCanSelectBuildingLevel() const;
+	static uint32 NativeComputeFoundationInstanceId(const FVector& Location, const FString& ActorName);
 };
 

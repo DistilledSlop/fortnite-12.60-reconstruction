@@ -194,6 +194,17 @@ FFortPlayerPawnStats* AFortGameState::GetPlaylistHeroStats(const FName& RowName)
 	return nullptr;
 }
 
+void AFortGameState::NativeSetCurrentWUID(const FString& InWUID)
+{
+	// CONFIDENCE: HIGH
+	// Original 0x141eb1650.
+	CurrentWUID = InWUID;
+	if (GetNetMode() < NM_Client)
+	{
+	    OnRep_CurrentWUID();
+	}
+}
+
 void AFortGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -18,6 +18,10 @@
 #include "FortAthenaHealth.h"
 #include "FortAthenaEndGame.h"
 #include "Engine/LevelStreaming.h"
+#include "Engine/LevelStreamingDynamic.h"
+#include "Engine/Level.h"
+#include "ABuildingFoundation.h"
+#include "Misc/PackageName.h"
 #include "LandscapeProxy.h"
 
 #include "AFortGameModeAthena.h"
@@ -1739,6 +1743,120 @@ namespace FortAthenaMatchFlow
         Pawn->SetActorLocationAndRotation(DropLocation, FRotator(0.0f, Player->ExitRotation.Yaw, 0.0f), false, nullptr, ETeleportType::TeleportPhysics);
     }
 
+    void LogGroundContactLevels(UWorld* World);
+
+    // Diagnostic only: bypasses Fortnite foundation lifecycle to test collision causality.
+    void StartFoundationCollisionCausalityProbe(UWorld* World, const AFortPlayerPawn* Pawn)
+    {
+        FString RequestedName;
+        if (!FParse::Value(FCommandLine::Get(), TEXT("FortniteProbeFoundationCollision="), RequestedName))
+            return;
+        if (!World || World->GetNetMode() != NM_DedicatedServer)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("FoundationCollisionProbe: rejected; requires a dedicated server world"));
+            return;
+        }
+        static TSet<TWeakObjectPtr<UWorld>> AttemptedWorlds;
+        for (auto It = AttemptedWorlds.CreateIterator(); It; ++It)
+            if (!It->IsValid()) It.RemoveCurrent();
+        const TWeakObjectPtr<UWorld> WorldKey(World);
+        if (AttemptedWorlds.Contains(WorldKey))
+            return;
+        AttemptedWorlds.Add(WorldKey); // Includes rejected attempts: never retry on respawn.
+
+        ABuildingFoundation* Foundation = nullptr;
+        int32 Matches = 0;
+        for (TActorIterator<ABuildingFoundation> It(World); It; ++It)
+        {
+            if (It->GetName().Equals(RequestedName, ESearchCase::CaseSensitive))
+            {
+                Foundation = *It;
+                ++Matches;
+            }
+        }
+        if (RequestedName.IsEmpty() || Matches != 1)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("FoundationCollisionProbe: rejected actor=%s matches=%d"), *RequestedName, Matches);
+            return;
+        }
+        const FTransform Transform = Foundation->GetActorTransform();
+        if (Foundation->AdditionalWorlds.Num() != 1 || Foundation->AdditionalWorlds[0].IsNull() ||
+            Foundation->LevelStreamInfo || !Transform.GetScale3D().Equals(FVector::OneVector, KINDA_SMALL_NUMBER))
+        {
+            UE_LOG(LogTemp, Warning, TEXT("FoundationCollisionProbe: rejected actor=%s additionalWorlds=%d levelStreamInfo=%s transform=%s"),
+                *Foundation->GetPathName(), Foundation->AdditionalWorlds.Num(), *GetNameSafe(Foundation->LevelStreamInfo), *Transform.ToHumanReadableString());
+            return;
+        }
+        const FString Package = Foundation->AdditionalWorlds[0].GetLongPackageName();
+        if (!FPackageName::IsValidLongPackageName(Package))
+        {
+            UE_LOG(LogTemp, Warning, TEXT("FoundationCollisionProbe: rejected actor=%s invalid package=%s"), *Foundation->GetPathName(), *Package);
+            return;
+        }
+        bool bAccepted = false;
+        ULevelStreamingDynamic* Streaming = ULevelStreamingDynamic::LoadLevelInstance(
+            World, Package, Transform.GetLocation(), Transform.Rotator(), bAccepted);
+        UE_LOG(LogTemp, Display, TEXT("FoundationCollisionProbe: actor=%s package=%s transform=%s accepted=%d instance=%s state=%s"),
+            *Foundation->GetPathName(), *Package, *Transform.ToHumanReadableString(), bAccepted ? 1 : 0,
+            *GetNameSafe(Streaming), Streaming ? ULevelStreaming::EnumToString(Streaming->GetCurrentState()) : TEXT("none"));
+        if (!bAccepted || !Streaming)
+            return;
+
+        struct FProbePoll { FTimerHandle Handle; int32 Samples = 0; };
+        const TSharedRef<FProbePoll> Poll = MakeShared<FProbePoll>();
+        const TWeakObjectPtr<UWorld> WeakWorld(World);
+        const TWeakObjectPtr<ULevelStreamingDynamic> WeakStreaming(Streaming);
+        const FString ActorPath = Foundation->GetPathName();
+        const FVector SpawnLocation = Pawn->GetActorLocation();
+        const TWeakObjectPtr<const AFortPlayerPawn> WeakPawn(Pawn);
+        FTimerDelegate Delegate = FTimerDelegate::CreateLambda([Poll, WeakWorld, WeakStreaming, WeakPawn, ActorPath, Package, SpawnLocation]()
+        {
+            UWorld* PollWorld = WeakWorld.Get();
+            if (!PollWorld) return;
+            ULevelStreamingDynamic* Level = WeakStreaming.Get();
+            ++Poll->Samples;
+            const bool bLoaded = Level && Level->GetLoadedLevel();
+            const bool bVisible = Level && Level->IsLevelVisible();
+            const bool bFailed = !Level || Level->GetCurrentState() == ULevelStreaming::ECurrentState::FailedToLoad;
+            const bool bDone = bVisible || bFailed || Poll->Samples >= 30;
+            UE_LOG(LogTemp, Display, TEXT("FoundationCollisionProbe: poll=%d actor=%s package=%s state=%s loaded=%d visible=%d outcome=%s"),
+                Poll->Samples, *ActorPath, *Package, Level ? ULevelStreaming::EnumToString(Level->GetCurrentState()) : TEXT("destroyed"),
+                bLoaded ? 1 : 0, bVisible ? 1 : 0, bVisible ? TEXT("visible") : bFailed ? TEXT("failed") : bDone ? TEXT("timeout") : TEXT("pending"));
+            if (bVisible)
+            {
+                LogGroundContactLevels(PollWorld);
+                int32 Meshes = 0, PhysicsStates = 0, PawnBlockingMeshes = 0;
+                for (AActor* Actor : Level->GetLoadedLevel()->Actors)
+                {
+                    if (!Actor) continue;
+                    TInlineComponentArray<UStaticMeshComponent*> Components(Actor);
+                    for (UStaticMeshComponent* Component : Components)
+                    {
+                        ++Meshes;
+                        PhysicsStates += Component->IsPhysicsStateCreated();
+                        PawnBlockingMeshes += Component->GetCollisionResponseToChannel(ECC_Pawn) == ECR_Block;
+                    }
+                }
+                UE_LOG(LogTemp, Display, TEXT("FoundationCollisionProbe: loaded meshes=%d physicsStates=%d pawnBlockingMeshes=%d spawn=%s"),
+                    Meshes, PhysicsStates, PawnBlockingMeshes, *SpawnLocation.ToString());
+                for (int32 Complex = 0; Complex < 2; ++Complex)
+                {
+                    FCollisionQueryParams Params(SCENE_QUERY_STAT(FoundationCollisionProbe), Complex != 0);
+                    if (const AFortPlayerPawn* ProbePawn = WeakPawn.Get()) Params.AddIgnoredActor(ProbePawn);
+                    FHitResult Hit;
+                    const bool bHit = PollWorld->SweepSingleByChannel(Hit,
+                        SpawnLocation + FVector(0.0f, 0.0f, 1000.0f), SpawnLocation - FVector(0.0f, 0.0f, 1000.0f),
+                        FQuat::Identity, ECC_Pawn, FCollisionShape::MakeCapsule(42.0f, 75.0f), Params);
+                    UE_LOG(LogTemp, Display, TEXT("FoundationCollisionProbe: complex=%d hit=%d startPenetrating=%d location=%s impact=%s actor=%s component=%s"),
+                        Complex, bHit, Hit.bStartPenetrating, *Hit.Location.ToString(), *Hit.ImpactPoint.ToString(),
+                        *GetPathNameSafe(Hit.GetActor()), *GetPathNameSafe(Hit.GetComponent()));
+                }
+            }
+            if (bDone) PollWorld->GetTimerManager().ClearTimer(Poll->Handle);
+        });
+        World->GetTimerManager().SetTimer(Poll->Handle, Delegate, 1.0f, true);
+    }
+
     void LogGroundContactLevels(UWorld* World)
     {
         int32 Loaded = 0, Visible = 0, StaticMeshCount = 0, Matches = 0;
@@ -1928,6 +2046,8 @@ namespace FortAthenaMatchFlow
         AFortPlayerPawn* Pawn = Cast<AFortPlayerPawn>(Controller->GetPawn());
         if (!GameState || !Pawn)
             return;
+
+        StartFoundationCollisionCausalityProbe(GameMode->GetWorld(), Pawn);
 
         if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeGroundContact")))
             StartGroundContactProbe(Pawn);

@@ -13,6 +13,11 @@ def sources():
         (0x141f7d310, 296, 'fcab2f4f4e4c813dbb882ae5e41868510364ba250f41588cd404d3fdff25b22c'),
         (0x141f7e890, 299, '1a8109ad3fe111687e28e96f667c5d01543d9015071983f272cba1e8447007ec'),
         (0x141f7e7e0, 164, '3a949e204b0e25898ca0b1d1452d5a7ce3d146e7e0c05cfbf6ee93eb28011ceb'),
+        # Pump passes false on failure, true on success, to the copied delegate.
+        (0x141f93dd8, 19, '28506496b3bef896464ac5030d62bc2df54b66ed3bb87d12e359b3295321d1ae'),
+        (0x141f93f9d, 20, '6f930c8327537e95b26cf3d5cd9375c85483b5820da17f3ab63971decabff6c2'),
+        # The kickoff's bound callback is a direct jump to completion(bool).
+        (0x141fa19a0, 5, '3fc2f251d17e7a86af6c85153cc38b954080ba57bcaace9311b00857e1aca803'),
     )
     with IMAGE.open('rb') as stream:
         for address, length, digest in windows:
@@ -26,6 +31,8 @@ def sources():
 #include "GameFramework/OnlineReplStructs.h"
 #include "Delegates/Delegate.h"
 #include "HAL/PlatformTime.h"
+
+DECLARE_DELEGATE_OneParam(FFortWorldRecordActionCompletion, bool);
 
 // Original stride 0x38. Host layout follows the actual UE types.
 struct FFortWorldRecordActionEntry
@@ -48,7 +55,7 @@ struct FFortWorldRecordAction
     int32 Value_0x150;
     FString String_0x158;
     FString String_0x168;
-    FSimpleDelegate Delegate_0x178;
+    FFortWorldRecordActionCompletion Delegate_0x178;
     double StartTime_0x188;
     double CreationTime_0x190;
     FUniqueNetIdRepl UniqueId_0x198;

@@ -73,9 +73,6 @@ class FORTNITEGAME_API ABuildingSMActor : public ABuildingActor
 public:
     ABuildingSMActor(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
-	// Non-reflected field (behaviour kind "member_field", offset 0x3e1): not a UPROPERTY, not replicated.
-	uint8 NativeRecoveredUint8_0x3e1;
-
 	// table index 151, flags 0x40000101000021
 	UPROPERTY(ReplicatedUsing=OnRep_MetaData, SaveGame)
 	UBuildingTextureData* TextureData[4];

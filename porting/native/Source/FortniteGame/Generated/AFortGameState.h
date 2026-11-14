@@ -350,5 +350,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static bool NativeGameStateRefHasFlag1442dd540(AFortGameState* GameState);
 	virtual FFortPlayerPawnStats* GetPlaylistHeroStats(const FName& RowName) const;
+	void NativeSetCurrentWUID(const FString& InWUID);
 };
 

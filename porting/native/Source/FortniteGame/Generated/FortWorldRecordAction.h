@@ -6,6 +6,8 @@
 #include "Delegates/Delegate.h"
 #include "HAL/PlatformTime.h"
 
+DECLARE_DELEGATE_OneParam(FFortWorldRecordActionCompletion, bool);
+
 // Original stride 0x38. Host layout follows the actual UE types.
 struct FFortWorldRecordActionEntry
 {
@@ -27,7 +29,7 @@ struct FFortWorldRecordAction
     int32 Value_0x150;
     FString String_0x158;
     FString String_0x168;
-    FSimpleDelegate Delegate_0x178;
+    FFortWorldRecordActionCompletion Delegate_0x178;
     double StartTime_0x188;
     double CreationTime_0x190;
     FUniqueNetIdRepl UniqueId_0x198;

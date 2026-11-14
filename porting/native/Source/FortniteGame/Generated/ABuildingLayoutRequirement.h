@@ -9,6 +9,7 @@
 #include "EFortResourceType.h"
 #include "ELayoutRequirementStatus.h"
 #include "FOnLayoutSatisfied.h"
+#include "FortStructuralGrid.h"
 
 class ABuildingSMActor;
 class UMaterialInstanceDynamic;
@@ -81,5 +82,9 @@ public:
 	bool SupportsEditingOfOccupant() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	bool NativeResourceMatches141bfebe0(const ABuildingSMActor* Actor) const;
 };
 

@@ -23,6 +23,7 @@
 #include "FWorldTileSubArray.h"
 #include "FortAssets.h"
 #include "FortDelayedObjectLoader.h"
+#include "FortWorldManagerNative.h"
 #include "FortWorldRecordAction.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
@@ -30,6 +31,7 @@
 #include "UObject/Object.h"
 
 class ABuildingFoundation;
+class UBuildingStructuralSupportSystem;
 class UFortUserCloudHelperComponent;
 class UFortWorldRecord;
 class UFortZoneRecord;
@@ -230,6 +232,12 @@ public:
 	UPROPERTY()
 	TArray<FFortDeferredNewActorData> DeferredActors;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x758): not a UPROPERTY, not replicated.
+	TSet<FName> NativeUsedBuildingNames_0x758;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x848): not a UPROPERTY, not replicated.
+	FFortNativeWorldQueryResult NativeWorldQueryResult_0x848;
+
 	// table index 6, flags 0x10000000002020
 	UPROPERTY(Replicated, Transient)
 	int32 FinalNumChosenBuildingFoundations;
@@ -263,5 +271,12 @@ public:
 	bool NativeFindGlobalWindValues(float& OutIntensity, FVector& OutDirection);
 	UFortWorldRecord* CreateNewWorldRecord(const FFortZoneInstanceDetails& InstanceDetails);
 	static UFortZoneRecord* NativeCreateNewZoneRecord(UObject* Outer);
+	void NativeConstructTileGrid141f85970();
+	static UBuildingStructuralSupportSystem* NativeResolveStructuralSupportSystem(const UObject* WorldContextObject);
+	void NativeWorldQueryCompletion(bool bSucceeded);
+	FFortZoneInstanceDetails* NativeGetZoneInstanceDetails();
+	bool NativeHasUsedBuilding(FName BuildingName) const;
+	void NativeRecordUsedBuilding(FName BuildingName);
+	static FName NativeSourceName(FName SelectedInstance);
 };
 
