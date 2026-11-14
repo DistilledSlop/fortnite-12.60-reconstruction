@@ -41,3 +41,12 @@ Checkpoint213's existing simple and complex spawn sweeps hit only landscape
 although the loaded level has 672 mesh physics states and 664 pawn-blocking
 profiles. Its nearest-mesh output never identifies the actual floor component;
 those counts alone cannot distinguish geometry, placement or profile defects.
+
+The optional `-FortniteProbeFoundationColumn=X=...,Y=...,Z=...` selects a
+diagnostic column independently of the spawn and existing movement sweeps. It
+accepts three ordered, finite decimal coordinates; malformed input skips only
+this column scan with a warning. Build `20261114-080717-server.log` passed and
+was staged. Runtime253 found good flat movement comparisons within 1 cm and
+repeated corrections where the client blocks near X182230, about 24 metres
+from the original spawn scan. The next scan targets that measured boundary;
+the blocking component is not yet identified.

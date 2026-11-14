@@ -1901,8 +1901,41 @@ namespace FortAthenaMatchFlow
                     Meshes, PhysicsStates, PawnBlockingMeshes, *SpawnLocation.ToString());
                 if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeGroundContact")))
                 {
-                    // Match the existing fixed 42 cm sweep footprint below.
-                    LogFoundationSpawnColumn(Level->GetLoadedLevel(), SpawnLocation, 42.0f);
+                    // Match the existing fixed 42 cm sweep footprint below. An optional
+                    // column override affects this diagnostic only, never the sweep or spawn.
+                    FString RequestedColumn;
+                    const bool bOverride = FParse::Value(FCommandLine::Get(), TEXT("FortniteProbeFoundationColumn="), RequestedColumn, false);
+                    FVector Column = SpawnLocation;
+                    bool bValidColumn = true;
+                    if (bOverride)
+                    {
+                        TArray<FString> Coordinates;
+                        RequestedColumn.ParseIntoArray(Coordinates, TEXT(","), false);
+                        bValidColumn = Coordinates.Num() == 3;
+                        const TCHAR* Labels[] = { TEXT("X="), TEXT("Y="), TEXT("Z=") };
+                        for (int32 Index = 0; bValidColumn && Index < 3; ++Index)
+                        {
+                            const FString& Part = Coordinates[Index];
+                            const FString Number = Part.Mid(2);
+                            bool bHasDigit = false;
+                            for (TCHAR Character : Number)
+                                bHasDigit |= FChar::IsDigit(Character);
+                            bValidColumn = Part.StartsWith(Labels[Index], ESearchCase::CaseSensitive) &&
+                                Number.IsNumeric() && bHasDigit;
+                        }
+                        bValidColumn = bValidColumn && Column.InitFromString(RequestedColumn) &&
+                            FMath::IsFinite(Column.X) && FMath::IsFinite(Column.Y) && FMath::IsFinite(Column.Z);
+                    }
+                    if (bValidColumn)
+                    {
+                        UE_LOG(LogTemp, Display, TEXT("FoundationSpawnColumn: source=%s requestedcolumn=%s"),
+                            bOverride ? TEXT("commandline") : TEXT("spawn"), *Column.ToString());
+                        LogFoundationSpawnColumn(Level->GetLoadedLevel(), Column, 42.0f);
+                    }
+                    else
+                    {
+                        UE_LOG(LogTemp, Warning, TEXT("FoundationSpawnColumn: invalid requestedcolumn='%s'; column scan skipped"), *RequestedColumn);
+                    }
                 }
                 for (int32 Complex = 0; Complex < 2; ++Complex)
                 {
