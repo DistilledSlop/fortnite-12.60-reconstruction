@@ -47,7 +47,10 @@ inline float Origin(int32 Dimension, int32 TileEdge)
     return float(ConvertAndHalf((HalfProduct + HalfProduct) - 0.5f)) * -512.0f;
 }
 }
-'''}
+''',
+        'FortBuildingFoundationRuntime.h': Path(__file__).with_name('FortBuildingFoundationRuntime.h.in').read_text(),
+        'FortBuildingFoundationRuntime.cpp': Path(__file__).with_name('FortBuildingFoundationRuntime.cpp.in').read_text(),
+    }
 
 
 def validate(ctx, snippets_by_class):

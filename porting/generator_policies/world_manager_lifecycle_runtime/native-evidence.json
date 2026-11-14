@@ -75,6 +75,26 @@
       "address": "0x1402dad00",
       "length": 32,
       "sha256": "6a6c948fedb2d513d724592b658530ec771f85b4aace13033f7690c25b981976"
+    },
+    {
+      "address": "0x140295b50",
+      "length": 100,
+      "sha256": "67981e78d775be6e36fc6dafbd13ac5ab2488e8ccdacb680ceff02de794a7536"
+    },
+    {
+      "address": "0x141bdf240",
+      "length": 32,
+      "sha256": "3620b20343b36eb6133cca1c3422ea358063945078232f364629797de7ad6724"
+    },
+    {
+      "address": "0x141be3020",
+      "length": 131,
+      "sha256": "25fb49e7ea04571d06ccbedc3e34c166edbeeed4e110468083317e2ce0e7d86d"
+    },
+    {
+      "address": "0x141738f90",
+      "length": 103,
+      "sha256": "70be6c5aedc30536b2995d24c307e14ba15e19e8d8aa59b35662199e267d4c1a"
     }
   ],
   "fields": {
@@ -84,5 +104,37 @@
   },
   "rounding": "Original IMUL32; signed divide by2 truncates toward zero; CVTSS2SI with current MXCSR followed by SAR1. Spawn collision override AlwaysSpawn, owner=this, zero rotation/Z; append rows then index from zero.",
   "lifecycle": "Helpers are not a replacement for full Tick/startup/zone binding/stream callbacks. No forced state driver or blanket level loading added.",
-  "source_name": "FString::Split /Temp with IgnoreCase=1/FromStart=0, take prefix before last underscore; None on failed split/missing delimiter."
+  "source_name": "FString::Split /Temp with IgnoreCase=1/FromStart=0, take prefix before last underscore; None on failed split/missing delimiter.",
+  "foundation_bounds_navigation": {
+    "status": "Complete three helpers and exact original bounds configuration producer; no foundation streaming lifecycle integration",
+    "cvar": {
+      "initializer": "0x140295b50",
+      "backing": "int32 0x14811f2bc",
+      "name": "Fort.BuildingFoundationUseStreamingDataBounds",
+      "flags": 0,
+      "default": 0,
+      "initialization_evidence": {
+        "source": "Fortnite/FortniteGame/Binaries/Win64/FortniteClient-Win64-Shipping.exe",
+        "size_bytes": 162639104,
+        "image_base": "0x140000000",
+        "field_va": "0x14811f2bc",
+        "rva": "0x811f2bc",
+        "section": ".data",
+        "section_virtual_address": "0x7812000",
+        "section_virtual_size": "0xbeebd0",
+        "section_raw_size": "0x8bc000",
+        "section_raw_offset": "0x7810e00",
+        "field_offset_in_section": "0x90d2bc",
+        "zero_virtual_tail": true,
+        "initial_int32": 0,
+        "basis": "Field falls beyond section SizeOfRawData but within VirtualSize; PE loader zero initializes this region. Original registration binds backing int without assigning it."
+      }
+    },
+    "bodies": {
+      "0x141bdf240": "ABuildingFoundation::NativeGetFoundationBounds; borrowed const FBox&, not a copy",
+      "0x141be3020": "ABuildingFoundation::NativeNotifyNavigationBoundsDirty; validity check before navigation lookup",
+      "0x141738f90": "UAthenaNavSystem::NativeMarkBuildingFoundationDirty; nonnull foundation argument, actual root transform or original identity, flags3=Geometry|DynamicModifier"
+    },
+    "runtime": "No new caller; UE build/runtime pending. Missing stream root, callbacks and initialization remain explicit dependencies."
+  }
 }

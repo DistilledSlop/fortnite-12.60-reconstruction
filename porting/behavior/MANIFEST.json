@@ -95835,5 +95835,55 @@
     "status": "ported",
     "notes": "Complete original record append/resolver under original initialized-foundation state. NativeInstanceId_0xea0 must be produced by full original postinitialization, which remains unported. No new caller or lifecycle hook; no streaming repair claim. UE build/runtime pending. See generator_policies/foundation_detail_streaming_runtime/native-evidence.json.",
     "confidence": "high"
+  },
+  {
+    "function": "NativeGetFoundationBounds",
+    "kind": "helper",
+    "signature": "const FBox& NativeGetFoundationBounds() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141bdf240",
+    "inc_path": "porting/behavior/ABuildingFoundation/NativeGetFoundationBounds.inc",
+    "includes": [
+      "FortBuildingFoundationRuntime.h",
+      "Math/Box.h"
+    ],
+    "notes": "Complete original bounds/navigation helper, with exact original console-variable producer and backing state supplied in world_manager_lifecycle_runtime support. No new lifecycle caller; UE build/runtime pending.",
+    "class": "ABuildingFoundation"
+  },
+  {
+    "function": "NativeNotifyNavigationBoundsDirty",
+    "kind": "helper",
+    "signature": "void NativeNotifyNavigationBoundsDirty()",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141be3020",
+    "inc_path": "porting/behavior/ABuildingFoundation/NativeNotifyNavigationBoundsDirty.inc",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "Complete original bounds/navigation helper, with exact original console-variable producer and backing state supplied in world_manager_lifecycle_runtime support. No new lifecycle caller; UE build/runtime pending.",
+    "class": "ABuildingFoundation"
+  },
+  {
+    "function": "NativeMarkBuildingFoundationDirty",
+    "kind": "helper",
+    "signature": "void NativeMarkBuildingFoundationDirty(const ABuildingFoundation* Foundation)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141738f90",
+    "inc_path": "porting/behavior/UAthenaNavSystem/NativeMarkBuildingFoundationDirty.inc",
+    "includes": [
+      "Components/SceneComponent.h",
+      "AI/Navigation/NavigationTypes.h"
+    ],
+    "notes": "Complete original bounds/navigation helper, with exact original console-variable producer and backing state supplied in world_manager_lifecycle_runtime support. No new lifecycle caller; UE build/runtime pending.",
+    "class": "UAthenaNavSystem"
   }
 ]

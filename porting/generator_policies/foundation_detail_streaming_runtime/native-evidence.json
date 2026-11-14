@@ -93,5 +93,41 @@
       "porting/generated/agents/zone-record264/REPORT.md"
     ],
     "validation": "Generation accepts6022 entries, zero rejected;174 selfchecks passed. Two original function bodies plus one member field added. UE build/runtime pending in next coherent batch."
+  },
+  "stream_root_contract": {
+    "return_type": "bool; original existing stream returns AL=1 at141bed64f; failure AL=0 at141bedf71; new success BL=1 thenMOVZXEAXBL",
+    "hlod_role_predicate": "141bec0f0 explicit int32 Role in EDX: global1478c36ed && (SpawnedLODActors.Num || SpawnedLODActorsMinDrawDistances.Num) && Role !=3; first root call passes3",
+    "navigation_prerequisites": "141bdf240,141be3020,141738f90 source-admitted with exact bounds CVar registration140295b50; no stream caller yet",
+    "remaining_native_state": [
+      "Typed native fields0xb69 mask0x10,0xb80,0xea8,0xed8,0xedc and timing record0xdf8 require declarations; copied quality state from GameStateAthena+0x1eba and local controller virtual0x14d8 returned object+0x10e7 require actual types. Existing reflected LevelStreamInfo, LevelToStream, deconstructor vectors/root transform already supply other data.",
+      "Root virtual+0xec8 rotation must retain derived overrides: do not hardcode actor rotation until derived vtable contracts verified.",
+      "Root must preserve original ULevelStreaming type getter144782210, streaming callbacks, package validity142d22200 and normalized package source; use engine equivalents after mapping actual APIs."
+    ],
+    "remaining_body_addresses": [
+      "0x141d54630",
+      "0x141bec0f0",
+      "0x141be5e90",
+      "0x141bea280",
+      "0x141c340b0",
+      "0x141be3f50",
+      "0x141be38f0"
+    ],
+    "postinit_prerequisites": {
+      "0x141bbf030": "ABuildingActor postinit fullbody still missing; calls unported virtual building initializer, tick manager/cull handling and mission interface",
+      "0x141c17840": "SM postinit override requires full base",
+      "0x141be1e60": "foundation streaming-data initialization fullbody missing",
+      "0x141be6cf0": "foundation postinit writes exact instance ID after stream-data init, thenbase; no partialhook",
+      "missing_virtuals": [
+        "0x141bae840",
+        "0x141c0d460",
+        "0x141bc6310",
+        "0x141bc90d0"
+      ],
+      "mission_interface": "originalthis+248,slot18,base141bbf3e0; AssociatedMissionParam/OriginatingPlacementActor registration"
+    },
+    "evidence": [
+      "porting/generated/agents/foundation-closure263/REPORT.json",
+      "porting/generated/agents/building-postinit265/REPORT.md"
+    ]
   }
 }

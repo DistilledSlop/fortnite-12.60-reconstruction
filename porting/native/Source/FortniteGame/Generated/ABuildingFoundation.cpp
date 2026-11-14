@@ -6,9 +6,13 @@
 #include "EDynamicFoundationEnabledState.h"
 #include "EDynamicFoundationType.h"
 #include "Engine/LevelStreaming.h"
+#include "Engine/World.h"
+#include "FortBuildingFoundationRuntime.h"
 #include "FortWorldManagerNative.h"
+#include "Math/Box.h"
 #include "Math/Vector.h"
 #include "Misc/Crc.h"
+#include "UAthenaNavSystem.h"
 #include "Net/UnrealNetwork.h"
 
 bool ABuildingFoundation::DoesBuildingFoundationContainActor(AActor* Actor) const
@@ -133,6 +137,35 @@ uint32 ABuildingFoundation::NativeComputeFoundationInstanceId(const FVector& Loc
 	uint32 Result = HashCombine(NameHash, OriginalRound(Location.X));
 	Result = HashCombine(Result, OriginalRound(Location.Y));
 	return HashCombine(Result, OriginalRound(Location.Z));
+}
+
+const FBox& ABuildingFoundation::NativeGetFoundationBounds() const
+{
+	// CONFIDENCE: HIGH
+	// Original 0x141bdf240; backing storage and actual cvar registration are supplied together.
+	if (bStreamingDataBasedBounds && GNativeFoundationUseStreamingDataBounds != 0)
+	{
+	    return StreamingData.BoundingBox;
+	}
+	return StreamingBoundingBox;
+}
+
+void ABuildingFoundation::NativeNotifyNavigationBoundsDirty()
+{
+	// CONFIDENCE: HIGH
+	// Original 0x141be3020. Preserve bounds validity before world/navigation lookup.
+	if (NativeGetFoundationBounds().IsValid)
+	{
+	    UWorld* World = GetWorld();
+	    if (World)
+	    {
+	        UAthenaNavSystem* NavigationSystem = Cast<UAthenaNavSystem>(World->GetNavigationSystem());
+	        if (NavigationSystem)
+	        {
+	            NavigationSystem->NativeMarkBuildingFoundationDirty(this);
+	        }
+	    }
+	}
 }
 
 void ABuildingFoundation::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

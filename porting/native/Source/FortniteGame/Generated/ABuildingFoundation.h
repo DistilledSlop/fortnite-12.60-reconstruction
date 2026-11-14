@@ -10,8 +10,10 @@
 #include "EBuildingFoundationType.h"
 #include "EDynamicFoundationEnabledState.h"
 #include "EDynamicFoundationType.h"
+#include "Engine/World.h"
 #include "FBuildingFoundationStreamingData.h"
 #include "FDynamicBuildingFoundationRepData.h"
+#include "FortBuildingFoundationRuntime.h"
 #include "FortWorldManagerNative.h"
 #include "GameplayTagContainer.h"
 #include "Math/Box.h"
@@ -240,5 +242,7 @@ public:
 	bool NativeIsFoundationAndParentsEnabled() const;
 	bool NativeCanSelectBuildingLevel() const;
 	static uint32 NativeComputeFoundationInstanceId(const FVector& Location, const FString& ActorName);
+	const FBox& NativeGetFoundationBounds() const;
+	void NativeNotifyNavigationBoundsDirty();
 };
 
