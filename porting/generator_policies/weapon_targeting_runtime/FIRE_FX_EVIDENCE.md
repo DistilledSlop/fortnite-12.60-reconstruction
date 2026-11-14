@@ -34,3 +34,12 @@ wrapper. It receives no original-address/body credit for the general helper.
 Independent review caught sound-selection and conditional-read order before
 integration. Engine audio ABI, generated delegates and runtime behavior remain
 build/runtime pending; source completeness does not establish gameplay parity.
+
+The first combined build (`20261114-073719-server.log`) compiled the expanded
+Engine/game batch but rejected the qualified K2_EndAbility call because stock
+UE exposes it as protected. `patches/ue425-fortnite-gameplay-ability-access.patch`
+grants friendship only to AFortWeapon. This changes no layout, reflection, method
+implementation or dispatch: the recovered qualified call remains nonvirtual,
+and the base K2 body still dispatches EndAbility with its original stored state.
+Engine diff/reverse-application checks pass; the corrected combined build is
+pending. This is compatibility access support, with no original-body credit.

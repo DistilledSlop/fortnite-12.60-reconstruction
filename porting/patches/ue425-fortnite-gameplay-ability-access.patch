@@ -1,0 +1,14 @@
+diff --git a/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/Abilities/GameplayAbility.h b/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/Abilities/GameplayAbility.h
+index 42bf9fae0..ab88c44d4 100644
+--- a/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/Abilities/GameplayAbility.h
++++ b/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/Abilities/GameplayAbility.h
+@@ -568,6 +568,9 @@ protected:
+ 	//	EndAbility
+ 	// -------------------------------------
+ 
++	// Fortnite's recovered weapon path directly calls the base end implementation.
++	friend class AFortWeapon;
++
+ 	/** Call from kismet to end the ability naturally */
+ 	UFUNCTION(BlueprintCallable, Category = Ability, DisplayName="EndAbility", meta=(ScriptName = "EndAbility"))
+ 	virtual void K2_EndAbility();
