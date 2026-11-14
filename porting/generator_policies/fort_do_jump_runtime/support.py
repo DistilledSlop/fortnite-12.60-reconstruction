@@ -1,4 +1,4 @@
-"""Complete base jump bodies; the Athena jump/saved-move overrides remain open."""
+"""Complete jump bodies; input and saved-move lifecycle acceptance remains open."""
 import hashlib
 import json
 from pathlib import Path
@@ -25,3 +25,20 @@ def validate(ctx, snippets_by_class):
             or int(str(fields[0].get('offset')), 0) != 0x1dfd
             or fields[0].get('default') is not None):
         raise ValueError('base jump shared native flag changed')
+    for cls, name, signature, offset, default in [
+        ('UFortMovementComp_CharacterAthena', 'NativeJumpPenaltyIndex1e54',
+         'int32 NativeJumpPenaltyIndex1e54', 0x1e54, '0'),
+        ('UFortMovementComp_CharacterAthena', 'NativeJumpPenaltyRemaining1e58',
+         'float NativeJumpPenaltyRemaining1e58', 0x1e58, '0.0f'),
+        ('UFortMovementComp_CharacterAthena', 'NativeMeleeSlowRemaining1e5c',
+         'float NativeMeleeSlowRemaining1e5c', 0x1e5c, '0.0f'),
+        ('ABuildingSMActor', 'NativeFloorAttributionWeak718',
+         'TWeakObjectPtr<AController> NativeFloorAttributionWeak718', 0x718, None),
+    ]:
+        matches = [e for e in snippets_by_class.get(cls, [])
+                   if e.get('function') == name]
+        if (len(matches) != 1 or matches[0].get('kind') != 'member_field'
+                or matches[0].get('signature') != signature
+                or int(str(matches[0].get('offset')), 0) != offset
+                or matches[0].get('default') != default):
+            raise ValueError('Athena jump shared state changed: ' + cls + '::' + name)

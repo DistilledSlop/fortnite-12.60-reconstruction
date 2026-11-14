@@ -1582,6 +1582,9 @@ public:
 	bool IsCharacterCustomizationLoadingCompleted() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsDrivingVehicle() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInFrontEndHologram() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

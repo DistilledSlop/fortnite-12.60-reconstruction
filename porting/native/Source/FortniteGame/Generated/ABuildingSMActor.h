@@ -35,6 +35,7 @@
 #include "FRepairStartedDelegate.h"
 #include "FTierMeshSets.h"
 #include "FTrapAttachedDelegate.h"
+#include "GameFramework/Controller.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayPrediction.h"
@@ -331,6 +332,9 @@ public:
 	// table index 87, flags 0x10040000010001
 	UPROPERTY()
 	TArray<FBuildingNavObstacle> NavObstacles;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x718): not a UPROPERTY, not replicated.
+	TWeakObjectPtr<AController> NativeFloorAttributionWeak718;
 
 	// table index 86, flags 0x10000000010005
 	UPROPERTY()

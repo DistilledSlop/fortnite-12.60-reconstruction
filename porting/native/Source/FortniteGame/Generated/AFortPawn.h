@@ -9,6 +9,8 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
 #include "Animation/AnimInstance.h"
+#include "CollisionQueryParams.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/SceneComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "EFortControlRecoveryBehavior.h"
@@ -20,6 +22,7 @@
 #include "Engine/DataTable.h"
 #include "Engine/EngineTypes.h"
 #include "Engine/NetSerialization.h"
+#include "Engine/World.h"
 #include "FAthenaBatchedDamageGameplayCues_NonShared.h"
 #include "FAthenaBatchedDamageGameplayCues_Shared.h"
 #include "FCalloutEntry.h"
@@ -63,6 +66,7 @@
 #include "UFortAbilitySystemInterface.h"
 #include "UFortTeamActorInterface.h"
 #include "UObject/Object.h"
+#include "WorldCollision.h"
 
 class AActor;
 class AController;
@@ -1221,5 +1225,6 @@ public:
 	virtual float NativeGetMinAnalogWalkSpeed14231a8f0() const;
 	virtual void NativeSetMaxAccelerationFlying141a24e80(float Value);
 	virtual void NativeSetMovementStyle14234bf20(uint8 Style);
+	virtual AActor* NativeGetFloorActor142316940(UPrimitiveComponent** OutComponent);
 };
 

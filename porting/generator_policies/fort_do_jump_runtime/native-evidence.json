@@ -60,6 +60,16 @@
       "address": "0x145a179f4",
       "length": 4,
       "sha256": "7b7fb542bc7a640001d150facc7e8affb20ed83acd8232693299cbdbe53f1d28"
+    },
+    {
+      "address": "0x1419cd830",
+      "length": 1165,
+      "sha256": "a0f4835b9c730c1d13d08a30c22fdd8b8ffbe15ed844b496e64fc9ee150e0d00"
+    },
+    {
+      "address": "0x142316940",
+      "length": 755,
+      "sha256": "af414e383b1f26794f7b3c1e8099a270bc7ed9dfee113212bae39b3a721077c2"
     }
   ],
   "typed_mappings": {
@@ -90,5 +100,6 @@
     }
   },
   "native_byte_scope": "Plain shared uint8 at original1dfd, save/set/restore. No invented explicit numeric constructor initializer; constructor and saved-move lifecycle recovery remain separate.",
-  "oracle": "Original-code helper oracle:266200 identical XYZ and scalable call/order/field/level comparisons with GCC15 and UEClang9; artifacts jump-adjustment136. Full Athena jump path and gameplay acceptance remain open."
+  "oracle": "Original-code helper oracle:266200 identical XYZ and scalable call/order/field/level comparisons with GCC15 and UEClang9; artifacts jump-adjustment136. Full Athena jump path and gameplay acceptance remain open.",
+  "scope": "Base and Athena DoJump and floor query are complete bodies. Shared jump/melee constructors are projections; input timer aging, saved-move restore, floor-cache invalidation and structural weak-controller producers remain separate class/runtime acceptance work."
 }

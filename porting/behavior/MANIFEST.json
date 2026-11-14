@@ -92284,5 +92284,173 @@
     "address": "0x1406801e0",
     "status": "ported",
     "confidence": "HIGH"
+  },
+  {
+    "class": "UFortMovementComp_CharacterAthena",
+    "function": "NativeJumpPenaltyIndex1e54",
+    "kind": "member_field",
+    "signature": "int32 NativeJumpPenaltyIndex1e54",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "offset": "0x1e54",
+    "default": "0",
+    "address": "0x1419b9480",
+    "notes": "Constructor storage projection. Shared jump/melee state; timer aging and saved-move lifecycle remain independently incomplete."
+  },
+  {
+    "class": "UFortMovementComp_CharacterAthena",
+    "function": "NativeJumpPenaltyRemaining1e58",
+    "kind": "member_field",
+    "signature": "float NativeJumpPenaltyRemaining1e58",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "offset": "0x1e58",
+    "default": "0.0f",
+    "address": "0x1419b9480",
+    "notes": "Constructor storage projection. Shared jump/melee state; timer aging and saved-move lifecycle remain independently incomplete."
+  },
+  {
+    "class": "UFortMovementComp_CharacterAthena",
+    "function": "NativeMeleeSlowRemaining1e5c",
+    "kind": "member_field",
+    "signature": "float NativeMeleeSlowRemaining1e5c",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "offset": "0x1e5c",
+    "default": "0.0f",
+    "address": "0x1419b9480",
+    "notes": "Constructor storage projection. Shared jump/melee state; timer aging and saved-move lifecycle remain independently incomplete."
+  },
+  {
+    "class": "ABuildingSMActor",
+    "function": "NativeFloorAttributionWeak718",
+    "kind": "member_field",
+    "signature": "TWeakObjectPtr<AController> NativeFloorAttributionWeak718",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "offset": "0x718",
+    "address": "0x141bf8e30",
+    "includes": [
+      "GameFramework/Controller.h"
+    ],
+    "notes": "Default weak construction matches original index=-1 serial=0. Shared floor/fall attribution; structural graph assignment/reset bodies remain separate recovery work."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeGetFloorActor142316940",
+    "kind": "helper",
+    "signature": "AActor* NativeGetFloorActor142316940(UPrimitiveComponent** OutComponent)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "address": "0x142316940",
+    "inc_path": "porting/behavior/athena_jump_runtime/AFortPawn.NativeGetFloorActor142316940.inc",
+    "includes": [
+      "Components/CapsuleComponent.h",
+      "GameFramework/CharacterMovementComponent.h",
+      "Engine/World.h",
+      "CollisionQueryParams.h",
+      "WorldCollision.h"
+    ]
+  },
+  {
+    "class": "UFortMovementComp_CharacterAthena",
+    "function": "NativeCanJumpInternalEvent1440739b0",
+    "kind": "helper",
+    "signature": "bool NativeCanJumpInternalEvent1440739b0(ACharacter* Owner)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "address": "0x1440739b0",
+    "inc_path": "porting/behavior/athena_jump_runtime/CanJumpInternalEvent.inc",
+    "includes": [
+      "GameFramework/Character.h"
+    ]
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "NativeEvaluateJumpPenaltyMutators1419aff90",
+    "kind": "helper",
+    "signature": "bool NativeEvaluateJumpPenaltyMutators1419aff90(ACharacter* Pawn)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "address": "0x1419aff90",
+    "inc_path": "porting/behavior/athena_jump_runtime/NativeEvaluateJumpPenaltyMutators.inc",
+    "includes": [
+      "GameFramework/Character.h"
+    ]
+  },
+  {
+    "class": "AFortAthenaMutator",
+    "function": "NativeQueryJumpPenaltyB38",
+    "kind": "helper",
+    "signature": "uint8 NativeQueryJumpPenaltyB38(bool& bApply)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "override": false,
+    "address": "0x1406801e0",
+    "inc_path": "porting/behavior/athena_jump_runtime/AFortAthenaMutator.NativeQueryJumpPenaltyB38.inc"
+  },
+  {
+    "class": "AFortAthenaMutator_JumpPenalty",
+    "function": "NativeQueryJumpPenaltyB38",
+    "kind": "helper",
+    "signature": "uint8 NativeQueryJumpPenaltyB38(bool& bApply)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "override": true,
+    "address": "0x141aa75e0",
+    "inc_path": "porting/behavior/athena_jump_runtime/AFortAthenaMutator_JumpPenalty.NativeQueryJumpPenaltyB38.inc"
+  },
+  {
+    "class": "AFortAthenaMutator_PlayerSettingsBase",
+    "function": "NativeQueryJumpPenaltyB38",
+    "kind": "helper",
+    "signature": "uint8 NativeQueryJumpPenaltyB38(bool& bApply)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "override": true,
+    "address": "0x141afe3e0",
+    "inc_path": "porting/behavior/athena_jump_runtime/AFortAthenaMutator_PlayerSettingsBase.NativeQueryJumpPenaltyB38.inc"
+  },
+  {
+    "class": "UFortMovementComp_CharacterAthena",
+    "function": "DoJump",
+    "kind": "helper",
+    "signature": "bool DoJump(bool bReplayingMoves)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "override": true,
+    "address": "0x1419cd830",
+    "inc_path": "porting/behavior/athena_jump_runtime/DoJump.inc",
+    "includes": [
+      "FortJumpMathNative.h"
+    ],
+    "notes": "Complete Athena DoJump body. Constructor fields are shared; timer aging, saved-move restore, floor-cache invalidation and structural weak-controller writers remain separate class/gameplay acceptance dependencies. Build/runtime pending."
   }
 ]

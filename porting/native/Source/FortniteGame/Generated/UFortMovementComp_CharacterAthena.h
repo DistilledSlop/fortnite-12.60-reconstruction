@@ -7,6 +7,8 @@
 #include "UFortMovementComp_Character.h"
 
 #include "FAthenaJumpPenalty.h"
+#include "FortJumpMathNative.h"
+#include "GameFramework/Character.h"
 
 #include "UFortMovementComp_CharacterAthena.generated.h"
 
@@ -28,6 +30,15 @@ public:
 	UPROPERTY()
 	float JumpPenaltyResetTime;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1e54): not a UPROPERTY, not replicated.
+	int32 NativeJumpPenaltyIndex1e54 = 0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1e58): not a UPROPERTY, not replicated.
+	float NativeJumpPenaltyRemaining1e58 = 0.0f;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1e5c): not a UPROPERTY, not replicated.
+	float NativeMeleeSlowRemaining1e5c = 0.0f;
+
 	// table index 1, flags 0x10000000000001
 	UPROPERTY()
 	int32 NetworkSkipSkyDivingCollisionForPawnLOD;
@@ -40,5 +51,7 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual float GetMaxAcceleration() const override;
+	bool NativeCanJumpInternalEvent1440739b0(ACharacter* Owner);
+	virtual bool DoJump(bool bReplayingMoves) override;
 };
 

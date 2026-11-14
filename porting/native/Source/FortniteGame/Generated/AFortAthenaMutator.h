@@ -42,5 +42,6 @@ public:
 	virtual void NativeSetMutatorContext(UObject* Context);
 	virtual uint8 NativeQueryInfiniteAmmo(bool& OutInfiniteAmmo, UFortWeaponItemDefinition* WeaponDefinition);
 	virtual uint8 NativeQueryFriendlyFire163(bool& Value);
+	virtual uint8 NativeQueryJumpPenaltyB38(bool& bApply);
 };
 

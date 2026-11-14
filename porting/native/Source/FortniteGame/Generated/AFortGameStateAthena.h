@@ -76,6 +76,7 @@
 #include "FUpdateNamedPoiColorDelegate.h"
 #include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/Character.h"
 #include "GameplayTagContainer.h"
 #include "HAL/Platform.h"
 #include "HAL/UnrealMemory.h"
@@ -1182,5 +1183,6 @@ public:
 	static void NativeByteArrayGrowSlack14069e940(void* Array);
 	static int32 NativeGetHardcodedChangelistNumber142ba3400();
 	virtual FFortPlayerPawnStats* GetPlaylistHeroStats(const FName& RowName) const override;
+	bool NativeEvaluateJumpPenaltyMutators1419aff90(ACharacter* Pawn);
 };
 
