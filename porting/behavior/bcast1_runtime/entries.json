@@ -263,6 +263,7 @@
     "signature_status": "proposed",
     "access": "public",
     "offset": "0x50",
+    "default": "0",
     "inc_path": null,
     "confidence": "medium",
     "address": null,

@@ -187,26 +187,8 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x12d8): not a UPROPERTY, not replicated.
 	FVector NativeRecoveredFVector_0x12d8;
 
-	// Non-reflected field (behaviour kind "member_field", offset 0x12d8): not a UPROPERTY, not replicated.
-	float NativeRecoveredFloat_0x12d8;
-
-	// Non-reflected field (behaviour kind "member_field", offset 0x12dc): not a UPROPERTY, not replicated.
-	float NativeRecoveredFloat_0x12dc;
-
-	// Non-reflected field (behaviour kind "member_field", offset 0x12e0): not a UPROPERTY, not replicated.
-	float NativeRecoveredFloat_0x12e0;
-
 	// Non-reflected field (behaviour kind "member_field", offset 0x12e4): not a UPROPERTY, not replicated.
 	FVector NativeRecoveredFVector_0x12e4;
-
-	// Non-reflected field (behaviour kind "member_field", offset 0x12e4): not a UPROPERTY, not replicated.
-	float NativeRecoveredFloat_0x12e4;
-
-	// Non-reflected field (behaviour kind "member_field", offset 0x12e8): not a UPROPERTY, not replicated.
-	float NativeRecoveredFloat_0x12e8;
-
-	// Non-reflected field (behaviour kind "member_field", offset 0x12ec): not a UPROPERTY, not replicated.
-	float NativeRecoveredFloat_0x12ec;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x12fc): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0x12fc;
