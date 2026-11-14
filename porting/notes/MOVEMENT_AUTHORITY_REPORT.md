@@ -184,7 +184,7 @@ server's movement network settings (they are the original file's values).
 File and function names below are in `porting/native/Source/FortniteGame/` unless a full path is given.
 `MatchFlow.cpp` means `Private/FortAthenaMatchFlow.cpp`.
 
-### Step 0. Client authority for all movement (done 2026-11-14, built, needs a server restart)
+### Step 0. Client authority for all movement (done 2026-11-14; user confirmed movement is correct with it)
 
 The server already trusted the client during skydiving, because skydive physics was never ported. That stand-in set
 two engine flags on the pawn's movement component at bus exit and cleared them at landing:
@@ -368,6 +368,29 @@ untested. ProjectChrono cannot pass it today: `launch()` in `porting/local_clien
 line from a fixed argument list plus account, server and session values read from `local-server.ini`, and has no
 setting for extra arguments. Adding one (an `ExtraArguments` key under `[LocalServer]`, split and appended with the
 existing `append_arg`) is a small change, to be made only if the server-side trace turns out not to be enough.
+
+## 8. What this document does not contain yet
+
+The plan, order, addresses and integration recipe are complete. These inputs still have to be produced during the
+work; none of them is written down here because none of them is known yet:
+
+1. **Most function bodies.** Only `IsFalling` exists as ready code. Gravity, fall velocity, velocity update and the
+   mode-change function were decompiled and summarised; the other roughly 70 have an address and a probable name
+   only. Each needs a capture and a typed body.
+2. **Confirmed names for unanchored slots.** Seven slots are verified. The rest must be checked against the body
+   before the override is declared, because a wrong name means overriding the wrong engine function.
+3. **Custom-mode physics handlers.** The five handlers behind `PhysCustom` (modes 5, 6, 7, 8, 10) have unresolved
+   callees listed in `porting/generated/agents/airborne-dispatch-state/REPORT.md`.
+4. **Native state.** Several bodies read unreflected members (for example the cached velocity at original `+0x1e0c`
+   and the replicated-acceleration flag at `+0x1e38` bit 3). Their writers and initial values have to be recovered
+   so they can be declared as typed members.
+5. **Why loaded building meshes gave no contact.** Step 2 describes what to build and how to accept it, not the
+   cause of the earlier failure.
+6. **The source of the gravity-free first jump step.** Step 3 gives the debugger procedure; the answer is unknown.
+7. **The trace summariser.** Step 1 specifies it; the script used for this report was throwaway and is not in the
+   repository.
+8. **Client-side saved-move behaviour.** Fortnite has its own saved-move type and extra compressed flags. The server
+   decodes the flags it knows about; whether every flag the client sets is handled has not been audited.
 
 ## Appendix: original movement overrides
 
