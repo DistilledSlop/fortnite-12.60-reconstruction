@@ -11,6 +11,7 @@
 #include "FClientUrlContext.h"
 #include "FDedicatedServerUrlContext.h"
 #include "JsonObjectConverter.h"
+#include "McpProfileBackend.h"
 #include "McpProfileBaseTypes.h"
 #include "McpProfileItem.h"
 #include "McpProfileJsonIntern.h"
@@ -75,6 +76,9 @@ public:
 	UPROPERTY()
 	FDateTime ProfileWriteLockExpireTime;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xd8): not a UPROPERTY, not replicated.
+	FMcpProfileBackendBase* NativeBackend = nullptr;
+
 	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
 	void DeleteAllProfiles(UPARAM(NotReplicated) FClientUrlContext& Context);
 
@@ -112,5 +116,6 @@ public:
 	static const FMcpProfileItemArray* NativeFindOverlayProfileGroup(const FMcpProfileGroupMap& BaseGroups, FMcpProfileOverlayState& Overlay, const FString& Key);
 	static FMcpProfileItemPtr NativeFindBaseProfileItem(const FMcpProfileItemMap& ItemsById, const FString& ItemId);
 	static FMcpProfileItemPtr NativeFindOverlayProfileItem(const FMcpProfileItemMap& ItemsById, const FMcpProfileOverlayState& Overlay, const FString& ItemId);
+	const FMcpProfileItemArray* NativeFindItemsByTemplateKey(const FString& Key);
 };
 

@@ -3,9 +3,12 @@
 #include "AFortPlayerController.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
+#include "McpProfileBaseTypes.h"
 #include "McpProfileItem.h"
 #include "SharedFortGameLog.h"
+#include "UFortAccountItem.h"
 #include "UFortAssetManager.h"
+#include "UFortItem.h"
 #include "UObject/NoExportTypes.h"
 
 void UFortMcpProfile::NotifyProfileItemUpdated(FMcpProfileItem& Item)
@@ -53,5 +56,53 @@ AFortPlayerController* UFortMcpProfile::NativeFindOwningController() const
 	    }
 	}
 	return nullptr;
+}
+
+void UFortMcpProfile::NativeFindProfileItems(const FString& ProfileKey, TArray<UFortItem*>& OutItems)
+{
+	// CONFIDENCE: HIGH
+	// Original 0x141ff83f0; borrowed group from inherited dynamic backend dispatch.
+	const FMcpProfileItemArray* Group = NativeFindItemsByTemplateKey(ProfileKey);
+	OutItems.Empty();
+	if (Group)
+	{
+	    OutItems.Reserve(Group->Num());
+	}
+	if (Group)
+	{
+	    for (const FMcpProfileItemPtr& Record : *Group)
+	    {
+	        // Original assumes every record's pointee is valid; do not silently skip null records.
+	        UFortItem* Item = Cast<UFortItem>(Record->ItemObject);
+	        if (Item && Item->GetItemDefinitionBP())
+	        {
+	            OutItems.Add(Item);
+	        }
+	    }
+	}
+}
+
+void UFortMcpProfile::NativeFindAccountItems1421c1800(const FString& Key, TArray<UFortAccountItem*>& OutItems)
+{
+	// CONFIDENCE: HIGH
+	// Original 0x1421c1800; borrowed group from inherited dynamic backend dispatch.
+	const FMcpProfileItemArray* Group = NativeFindItemsByTemplateKey(Key);
+	OutItems.Empty();
+	if (Group)
+	{
+	    if (Group->Num() > 0)
+	    {
+	        OutItems.Reserve(Group->Num());
+	    }
+	    for (const FMcpProfileItemPtr& Record : *Group)
+	    {
+	        // No shared-pointer copy or validity test in the original record loop.
+	        UFortAccountItem* Item = Cast<UFortAccountItem>(Record->ItemObject);
+	        if (Item && Item->GetItemDefinitionBP())
+	        {
+	            OutItems.Add(Item);
+	        }
+	    }
+	}
 }
 

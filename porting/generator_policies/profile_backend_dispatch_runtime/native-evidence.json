@@ -1,0 +1,65 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "read_only_cached_image": true,
+  "tables": [
+    {
+      "address": "0x145bfcc38",
+      "length": 72,
+      "sha256": "b9e1491c3828481f5842f1ca222a4de29119b1915f0e611b7f4ec763a39fc5c6",
+      "slots": {
+        "0x0": "0x1410efb60",
+        "0x8": "0x1410f0e40",
+        "0x10": "0x1410fe080",
+        "0x18": "0x1410fd3a0",
+        "0x20": "0x1410fcd50",
+        "0x28": "0x1410fe1c0",
+        "0x30": "0x1410fe3c0",
+        "0x38": "0x1410fdd30",
+        "0x40": "0x1410ff200"
+      }
+    },
+    {
+      "address": "0x145bfcca8",
+      "length": 72,
+      "sha256": "c9510d2b22d5e7163ae8a90f8a83aba69c5be0181dc1e9e36f8a1136b88d14a9",
+      "slots": {
+        "0x0": "0x1410efba0",
+        "0x8": "0x1410f1060",
+        "0x10": "0x1410fe100",
+        "0x18": "0x1410fd3b0",
+        "0x20": "0x1410fcfd0",
+        "0x28": "0x1410fe220",
+        "0x30": "0x1410fe440",
+        "0x38": "0x1410fde50",
+        "0x40": "0x1410ff220"
+      }
+    }
+  ],
+  "windows": [
+    {
+      "begin": "0x1410fe3b0",
+      "length": 14,
+      "sha256": "b92afbc030f7edd3f4034fddac8484a4c88185ddfdc4f6c3dca446ff72fc895c",
+      "cached_c": "porting/generated/callee_probe/profile_inventory_lookup/0x1410fe3b0.c"
+    },
+    {
+      "begin": "0x1410ac0f0",
+      "length": 353,
+      "sha256": "7610f29c30230241559d837f46d8ecda51125c98a81e9589ba331bf330cda34a",
+      "cached_c": "porting/generated/callee_probe/profile_backend_installation/0x1410ac0f0.c"
+    },
+    {
+      "begin": "0x1410ec490",
+      "length": 349,
+      "sha256": "5f647cccfedbd84d6673845bc01b55efc5664166a35bb493354d10187b77a4f9",
+      "cached_c": "porting/generated/callee_probe/profile_backend_installation/0x1410ec490.c"
+    },
+    {
+      "begin": "0x14110e120",
+      "length": 522,
+      "sha256": "d8918d3fd698bff070b46b35d7db2021769fcfdc9bc7f958385be9af6ee67324",
+      "cached_c": "porting/generated/callee_probe/profile_backend_installation/0x14110e120.c"
+    }
+  ]
+}

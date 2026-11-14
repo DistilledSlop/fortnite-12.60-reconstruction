@@ -9,10 +9,13 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "FClientUrlContext.h"
+#include "McpProfileBaseTypes.h"
 #include "McpProfileItem.h"
 #include "SharedFortGameLog.h"
 
 class AFortPlayerController;
+class UFortAccountItem;
+class UFortItem;
 
 #include "UFortMcpProfile.generated.h"
 
@@ -33,5 +36,7 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual void NotifyProfileItemUpdated(FMcpProfileItem& Item);
 	AFortPlayerController* NativeFindOwningController() const;
+	void NativeFindProfileItems(const FString& ProfileKey, TArray<UFortItem*>& OutItems);
+	void NativeFindAccountItems1421c1800(const FString& Key, TArray<UFortAccountItem*>& OutItems);
 };
 

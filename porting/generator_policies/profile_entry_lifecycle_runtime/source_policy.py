@@ -52,4 +52,14 @@ def sources():
             if hashlib.sha256(stream.read(item['length'])).hexdigest() != item['sha256']:
                 raise ValueError('profile overlay original capture changed: ' + item['begin'])
     result['ProfileOverlayState.h'] = banner + (overlay_dir / 'ProfileOverlayState.h').read_text()
+    backend_dir = HERE.parent / 'profile_backend_dispatch_runtime'
+    backend_evidence = json.loads((backend_dir / 'native-evidence.json').read_text())
+    with image.open('rb') as stream:
+        for item in backend_evidence['tables'] + backend_evidence['windows']:
+            address = item.get('begin', item.get('address'))
+            stream.seek(int(address, 16) - 0x140000000)
+            if hashlib.sha256(stream.read(item['length'])).hexdigest() != item['sha256']:
+                raise ValueError('profile backend dispatch capture changed: ' + address)
+    for name in ('McpProfileBackend.h', 'McpProfileBackend.cpp'):
+        result[name] = banner + (backend_dir / name).read_text()
     return result

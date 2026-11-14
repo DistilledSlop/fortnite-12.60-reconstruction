@@ -94398,5 +94398,68 @@
     "status": "ported",
     "inc_path": "porting/behavior/AFortInventory/NativeFindAllWorldItems.inc",
     "notes": "Appends matches, including null definition matches; return count added. Uses real ItemInstances and dynamic item methods. Build pending."
+  },
+  {
+    "class": "UMcpProfile",
+    "function": "NativeBackend",
+    "kind": "member_field",
+    "signature": "FMcpProfileBackendBase* NativeBackend",
+    "access": "public",
+    "offset": "0xd8",
+    "default": "nullptr",
+    "status": "ported",
+    "confidence": "high",
+    "includes": [
+      "McpProfileBackend.h"
+    ],
+    "notes": "Actual shared backend pointer, profile ctor 1410ac0f0 explicitly initializes null; installation 14110e120 chooses original base/overlay identities. Partial storage contract only; owner installation/destruction/mutation/GC remain unported. No synthetic backend allocation. Support sources are emitted by profile_entry_lifecycle_runtime."
+  },
+  {
+    "class": "UMcpProfile",
+    "function": "NativeFindItemsByTemplateKey",
+    "kind": "helper",
+    "signature": "const FMcpProfileItemArray* NativeFindItemsByTemplateKey(const FString& Key)",
+    "signature_status": "verified",
+    "access": "public",
+    "address": "0x1410fe3b0",
+    "inc_path": "porting/behavior/UMcpProfile/NativeFindItemsByTemplateKey.inc",
+    "includes": [
+      "McpProfileBackend.h"
+    ],
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Complete original body under its original live-installed-backend precondition; actual typed pointer dispatch retains base versus overlay. No backend guard/default; borrowed pointer lifetime follows backend group/cache mutation. Owner lifecycle remains explicitly unported; does not establish runtime usability. Build pending."
+  },
+  {
+    "class": "UFortMcpProfile",
+    "function": "NativeFindProfileItems",
+    "kind": "helper",
+    "signature": "void NativeFindProfileItems(const FString& ProfileKey, TArray<UFortItem*>& OutItems)",
+    "signature_status": "verified",
+    "access": "public",
+    "address": "0x141ff83f0",
+    "inc_path": "porting/behavior/UFortMcpProfile/NativeFindProfileItems.inc",
+    "status": "ported",
+    "confidence": "high",
+    "includes": [
+      "McpProfileBaseTypes.h"
+    ],
+    "notes": "Complete original group filter, shared live backend precondition; source body completion does not establish backend installation, population or GC. Build pending."
+  },
+  {
+    "class": "UFortMcpProfile",
+    "function": "NativeFindAccountItems1421c1800",
+    "kind": "helper",
+    "signature": "void NativeFindAccountItems1421c1800(const FString& Key, TArray<UFortAccountItem*>& OutItems)",
+    "signature_status": "verified",
+    "access": "public",
+    "address": "0x1421c1800",
+    "inc_path": "porting/behavior/UFortMcpProfile/NativeFindAccountItems1421c1800.inc",
+    "status": "ported",
+    "confidence": "high",
+    "includes": [
+      "McpProfileBaseTypes.h"
+    ],
+    "notes": "Complete original group filter, shared live backend precondition; source body completion does not establish backend installation, population or GC. Build pending."
   }
 ]
