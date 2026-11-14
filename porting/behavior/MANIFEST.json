@@ -91876,5 +91876,298 @@
       "FortWorldManagerNative.h"
     ],
     "notes": "Complete original name/location hash with UTF-16 CRC and original SSE rounding on x86. Does not install or partially replace PostInitializeComponents."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeGetGroundFriction14231a750",
+    "kind": "helper",
+    "signature": "float NativeGetGroundFriction14231a750() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/movement_style_runtime/AFortPawn_NativeGetGroundFriction14231a750.inc",
+    "address": "0x14231a750",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeGetBrakingDecelerationWalking14231a5f0",
+    "kind": "helper",
+    "signature": "float NativeGetBrakingDecelerationWalking14231a5f0() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/movement_style_runtime/AFortPawn_NativeGetBrakingDecelerationWalking14231a5f0.inc",
+    "address": "0x14231a5f0",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeGetBrakingDecelerationFalling14231a550",
+    "kind": "helper",
+    "signature": "float NativeGetBrakingDecelerationFalling14231a550() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/movement_style_runtime/AFortPawn_NativeGetBrakingDecelerationFalling14231a550.inc",
+    "address": "0x14231a550",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeGetBrakingDecelerationFlying14231a5a0",
+    "kind": "helper",
+    "signature": "float NativeGetBrakingDecelerationFlying14231a5a0() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/movement_style_runtime/AFortPawn_NativeGetBrakingDecelerationFlying14231a5a0.inc",
+    "address": "0x14231a5a0",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeGetBrakingFrictionFactor14231a640",
+    "kind": "helper",
+    "signature": "float NativeGetBrakingFrictionFactor14231a640() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/movement_style_runtime/AFortPawn_NativeGetBrakingFrictionFactor14231a640.inc",
+    "address": "0x14231a640",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeGetMaxAcceleration14231a830",
+    "kind": "helper",
+    "signature": "float NativeGetMaxAcceleration14231a830() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/movement_style_runtime/AFortPawn_NativeGetMaxAcceleration14231a830.inc",
+    "address": "0x14231a830",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeGetJumpZVelocity14231a7e0",
+    "kind": "helper",
+    "signature": "float NativeGetJumpZVelocity14231a7e0() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/movement_style_runtime/AFortPawn_NativeGetJumpZVelocity14231a7e0.inc",
+    "address": "0x14231a7e0",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeGetMinAnalogWalkSpeed14231a8f0",
+    "kind": "helper",
+    "signature": "float NativeGetMinAnalogWalkSpeed14231a8f0() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/movement_style_runtime/AFortPawn_NativeGetMinAnalogWalkSpeed14231a8f0.inc",
+    "address": "0x14231a8f0",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerPawnAthena",
+    "function": "NativeGetMinAnalogWalkSpeed14231a8f0",
+    "kind": "helper",
+    "signature": "float NativeGetMinAnalogWalkSpeed14231a8f0() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/movement_style_runtime/AFortPlayerPawnAthena_NativeGetMinAnalogWalkSpeed14231a8f0.inc",
+    "address": "0x141a13030",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "override": true,
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeSetMaxAccelerationFlying141a24e80",
+    "kind": "helper",
+    "signature": "void NativeSetMaxAccelerationFlying141a24e80(float Value)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/movement_style_runtime/AFortPawn_NativeSetMaxAccelerationFlying141a24e80.inc",
+    "address": "0x1406801c0",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerPawnAthena",
+    "function": "NativeSetMaxAccelerationFlying141a24e80",
+    "kind": "helper",
+    "signature": "void NativeSetMaxAccelerationFlying141a24e80(float Value)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/movement_style_runtime/AFortPlayerPawnAthena_NativeSetMaxAccelerationFlying141a24e80.inc",
+    "address": "0x141a24e80",
+    "status": "ported",
+    "confidence": "HIGH",
+    "virtual": true,
+    "override": true,
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ]
+  },
+  {
+    "function": "NativeSetMovementStyle14234bf20",
+    "kind": "helper",
+    "signature": "void NativeSetMovementStyle14234bf20(uint8 Style)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/movement_style_runtime/AFortPawn.NativeSetMovementStyle14234bf20.inc",
+    "address": "0x14234bf20",
+    "status": "ported",
+    "confidence": "HIGH",
+    "class": "AFortPawn",
+    "virtual": true,
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h",
+      "FortNativeGameplayTagsRuntime.h",
+      "FortMovementStyleNative.h"
+    ]
+  },
+  {
+    "function": "NativeSetMovementStyle14234bf20",
+    "kind": "helper",
+    "signature": "void NativeSetMovementStyle14234bf20(uint8 Style)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/movement_style_runtime/AFortPlayerPawn.NativeSetMovementStyle14234bf20.inc",
+    "address": "0x14234c0a0",
+    "status": "ported",
+    "confidence": "HIGH",
+    "class": "AFortPlayerPawn",
+    "virtual": true,
+    "override": true,
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h",
+      "FortNativeGameplayTagsRuntime.h",
+      "FortMovementStyleNative.h"
+    ]
+  },
+  {
+    "function": "NativeUpdateMovementStyle14235bbf0",
+    "kind": "helper",
+    "signature": "void NativeUpdateMovementStyle14235bbf0()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/movement_style_runtime/AFortPlayerPawn.NativeUpdateMovementStyle14235bbf0.inc",
+    "address": "0x14235bbf0",
+    "status": "ported",
+    "confidence": "HIGH",
+    "class": "AFortPlayerPawn",
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h",
+      "FortNativeGameplayTagsRuntime.h",
+      "FortMovementStyleNative.h"
+    ]
+  },
+  {
+    "function": "NativeSprintTagGate14232cb50",
+    "kind": "helper",
+    "signature": "bool NativeSprintTagGate14232cb50() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/movement_style_runtime/AFortPlayerPawn.NativeSprintTagGate14232cb50.inc",
+    "address": "0x14232cb50",
+    "status": "ported",
+    "confidence": "HIGH",
+    "class": "AFortPlayerPawn",
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h",
+      "FortNativeGameplayTagsRuntime.h",
+      "FortMovementStyleNative.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeSprintState1062Bit0",
+    "kind": "member_field",
+    "signature": "bool NativeSprintState1062Bit0",
+    "access": "public",
+    "offset": "0x1062",
+    "status": "ported",
+    "confidence": "HIGH",
+    "notes": "Unreflected sprint input bit. Original constructor preserves bit0; UObject allocation zeroes native storage before construction (UObjectGlobals.cpp). Shared decode/read producers remain uninstalled.",
+    "includes": [
+      "FortMovementStyleNative.h"
+    ],
+    "mask": "0x1"
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeLocalMovementNotify2004Bit2",
+    "kind": "member_field",
+    "signature": "bool NativeLocalMovementNotify2004Bit2",
+    "access": "public",
+    "offset": "0x2004",
+    "status": "ported",
+    "confidence": "HIGH",
+    "notes": "Original constructor1422fe830 ANDs DWORD+2004 withfffffffa, clearing bit2.",
+    "includes": [
+      "FortMovementStyleNative.h"
+    ],
+    "mask": "0x4"
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativePersonalVehicleStyleChanged1608",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, bool> NativePersonalVehicleStyleChanged1608",
+    "access": "public",
+    "offset": "0x1608",
+    "status": "ported",
+    "confidence": "HIGH",
+    "notes": "Original constructor1422fe830 zeroes InvocationList+1608; native bool multicast uses standard host construction/destruction.",
+    "includes": [
+      "FortMovementStyleNative.h"
+    ]
   }
 ]

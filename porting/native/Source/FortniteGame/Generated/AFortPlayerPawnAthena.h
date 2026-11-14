@@ -15,6 +15,7 @@
 #include "FOnInteractionFailedCallback.h"
 #include "FOnUIGameplayCueEvent.h"
 #include "FSharedRepMovement.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameplayCueInterface.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
@@ -594,5 +595,7 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual float NativeGetFlyingAcceleration14231a880() const override;
+	virtual float NativeGetMinAnalogWalkSpeed14231a8f0() const override;
+	virtual void NativeSetMaxAccelerationFlying141a24e80(float Value) override;
 };
 

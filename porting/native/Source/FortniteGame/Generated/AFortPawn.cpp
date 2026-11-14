@@ -14,9 +14,13 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "EFortControlRecoveryBehavior.h"
 #include "EFortDamageZone.h"
+#include "EFortMovementStyle.h"
 #include "Engine/World.h"
 #include "FFortActiveMontageDecisionWindow.h"
 #include "FFortPawnStats.h"
+#include "FortMovementStyleNative.h"
+#include "FortNativeGameplayTagsRuntime.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameplayTagContainer.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/Rotator.h"
@@ -1135,6 +1139,133 @@ float AFortPawn::NativeGetJumpHorizontalVelocityOverride14231a7c0() const
 	// CONFIDENCE: high
 	// Original 0x14231a7c0, primary virtual +0x988. Zero is the explicit absent-set result.
 	return AdvancedMovementSet ? AdvancedMovementSet->JumpHorizontalVelocityOverride.GetCurrentValue() : 0.0f;
+}
+
+float AFortPawn::NativeGetGroundFriction14231a750() const
+{
+	// CONFIDENCE: HIGH
+	// Original AFortPawn virtual +0x938, 0x14231a750.
+	if (AdvancedMovementSet)
+	    return AdvancedMovementSet->GroundFriction.GetCurrentValue();
+	if (const UCharacterMovementComponent* Movement = GetCharacterMovement())
+	    return Movement->GroundFriction;
+	return NativeGetPawnStats141a07b70()->GroundFriction;
+}
+
+float AFortPawn::NativeGetBrakingDecelerationWalking14231a5f0() const
+{
+	// CONFIDENCE: HIGH
+	// Original AFortPawn virtual +0x940, 0x14231a5f0.
+	if (AdvancedMovementSet)
+	    return AdvancedMovementSet->BrakingDecelerationWalking.GetCurrentValue();
+	if (const UCharacterMovementComponent* Movement = GetCharacterMovement())
+	    return Movement->BrakingDecelerationWalking;
+	return NativeGetPawnStats141a07b70()->BrakingDecelerationWalking;
+}
+
+float AFortPawn::NativeGetBrakingDecelerationFalling14231a550() const
+{
+	// CONFIDENCE: HIGH
+	// Original AFortPawn virtual +0x948, 0x14231a550.
+	if (AdvancedMovementSet)
+	    return AdvancedMovementSet->BrakingDecelerationFalling.GetCurrentValue();
+	if (const UCharacterMovementComponent* Movement = GetCharacterMovement())
+	    return Movement->BrakingDecelerationFalling;
+	return NativeGetPawnStats141a07b70()->BrakingDecelerationFalling;
+}
+
+float AFortPawn::NativeGetBrakingDecelerationFlying14231a5a0() const
+{
+	// CONFIDENCE: HIGH
+	// Original AFortPawn virtual +0x950, 0x14231a5a0.
+	if (AdvancedMovementSet)
+	    return AdvancedMovementSet->BrakingDecelerationFlying.GetCurrentValue();
+	if (const UCharacterMovementComponent* Movement = GetCharacterMovement())
+	    return Movement->BrakingDecelerationFlying;
+	return NativeGetPawnStats141a07b70()->BrakingDecelerationFlying;
+}
+
+float AFortPawn::NativeGetBrakingFrictionFactor14231a640() const
+{
+	// CONFIDENCE: HIGH
+	// Original AFortPawn virtual +0x958, 0x14231a640.
+	if (AdvancedMovementSet)
+	    return AdvancedMovementSet->BrakingFrictionFactor.GetCurrentValue();
+	if (const UCharacterMovementComponent* Movement = GetCharacterMovement())
+	    return Movement->BrakingFrictionFactor;
+	return NativeGetPawnStats141a07b70()->BrakingFrictionFactor;
+}
+
+float AFortPawn::NativeGetMaxAcceleration14231a830() const
+{
+	// CONFIDENCE: HIGH
+	// Original AFortPawn virtual +0x960, 0x14231a830.
+	if (AdvancedMovementSet)
+	    return AdvancedMovementSet->MaxAcceleration.GetCurrentValue();
+	if (const UCharacterMovementComponent* Movement = GetCharacterMovement())
+	    return Movement->MaxAcceleration;
+	return NativeGetPawnStats141a07b70()->MaxAcceleration;
+}
+
+float AFortPawn::NativeGetJumpZVelocity14231a7e0() const
+{
+	// CONFIDENCE: HIGH
+	// Original AFortPawn virtual +0x978, 0x14231a7e0.
+	if (AdvancedMovementSet)
+	    return AdvancedMovementSet->JumpZVelocity.GetCurrentValue();
+	if (const UCharacterMovementComponent* Movement = GetCharacterMovement())
+	    return Movement->JumpZVelocity;
+	return NativeGetPawnStats141a07b70()->JumpZVelocity;
+}
+
+float AFortPawn::NativeGetMinAnalogWalkSpeed14231a8f0() const
+{
+	// CONFIDENCE: HIGH
+	// Original AFortPawn virtual +0x990, 0x14231a8f0.
+	if (AdvancedMovementSet)
+	    return AdvancedMovementSet->MinAnalogWalkSpeed.GetCurrentValue();
+	if (const UCharacterMovementComponent* Movement = GetCharacterMovement())
+	    return Movement->MinAnalogWalkSpeed;
+	return NativeGetPawnStats141a07b70()->MinAnalogWalkSpeed;
+}
+
+void AFortPawn::NativeSetMaxAccelerationFlying141a24e80(float Value)
+{
+	// CONFIDENCE: HIGH
+	// Original AFortPawn virtual +0x970 is the shared return-only function.
+}
+
+void AFortPawn::NativeSetMovementStyle14234bf20(uint8 Style)
+{
+	// CONFIDENCE: high. Original 0x14234bf20; virtual pawn slot +0x9a0.
+	// Deliberately retain the initially captured component for the first two stores.
+	auto* InitialMovement = GetCharacterMovement();
+	CurrentMovementStyle = static_cast<EFortMovementStyle::Type>(Style);
+	if (InitialMovement)
+	{
+	    InitialMovement->MaxWalkSpeed = NativeGetMovementSpeed14231ab10(Style);
+	    InitialMovement->MaxFlySpeed = GetCharacterMovement()->MaxWalkSpeed;
+	    if (AdvancedMovementSet)
+	    {
+	        const float GroundFrictionValue = NativeGetGroundFriction14231a750();
+	        if (auto* Movement = GetCharacterMovement()) Movement->GroundFriction = GroundFrictionValue;
+	        const float WalkingValue = NativeGetBrakingDecelerationWalking14231a5f0();
+	        if (auto* Movement = GetCharacterMovement()) Movement->BrakingDecelerationWalking = WalkingValue;
+	        const float FallingValue = NativeGetBrakingDecelerationFalling14231a550();
+	        if (auto* Movement = GetCharacterMovement()) Movement->BrakingDecelerationFalling = FallingValue;
+	        const float FlyingValue = NativeGetBrakingDecelerationFlying14231a5a0();
+	        if (auto* Movement = GetCharacterMovement()) Movement->BrakingDecelerationFlying = FlyingValue;
+	        const float FrictionFactorValue = NativeGetBrakingFrictionFactor14231a640();
+	        if (auto* Movement = GetCharacterMovement()) Movement->BrakingFrictionFactor = FrictionFactorValue;
+	        const float AccelerationValue = NativeGetMaxAcceleration14231a830();
+	        if (auto* Movement = GetCharacterMovement()) Movement->MaxAcceleration = AccelerationValue;
+	        NativeSetMaxAccelerationFlying141a24e80(NativeGetFlyingAcceleration14231a880());
+	        const float JumpValue = NativeGetJumpZVelocity14231a7e0();
+	        if (auto* Movement = GetCharacterMovement()) Movement->JumpZVelocity = JumpValue;
+	        const float AnalogValue = NativeGetMinAnalogWalkSpeed14231a8f0();
+	        if (auto* Movement = GetCharacterMovement()) Movement->MinAnalogWalkSpeed = AnalogValue;
+	    }
+	}
 }
 
 void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

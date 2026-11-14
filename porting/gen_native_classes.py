@@ -2718,6 +2718,10 @@ _world_manager_lifecycle_spec = _common_activation_import.spec_from_file_locatio
     "world_manager_lifecycle_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "world_manager_lifecycle_runtime", "support.py"))
 _world_manager_lifecycle_policy = _common_activation_import.module_from_spec(_world_manager_lifecycle_spec)
 _world_manager_lifecycle_spec.loader.exec_module(_world_manager_lifecycle_policy)
+_movement_style_spec = _common_activation_import.spec_from_file_location(
+    "movement_style_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "movement_style_runtime", "support.py"))
+_movement_style_policy = _common_activation_import.module_from_spec(_movement_style_spec)
+_movement_style_spec.loader.exec_module(_movement_style_policy)
 _structural_grid_spec = _common_activation_import.spec_from_file_location(
     "structural_grid_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "structural_grid_runtime", "support.py"))
 _structural_grid_policy = _common_activation_import.module_from_spec(_structural_grid_spec)
@@ -4671,6 +4675,7 @@ def promote(args):
     world_record_action_sources = _world_record_action_policy.sources() if 'AFortWorldManager' in listed else None
     world_manager_lifecycle_sources = _world_manager_lifecycle_policy.sources() if 'AFortWorldManager' in listed else None
     structural_grid_sources = _structural_grid_policy.sources() if 'UBuildingStructuralSupportSystem' in listed else None
+    movement_style_sources = _movement_style_policy.sources() if 'AFortPlayerPawn' in listed else None
     _kismet_geometry_policy.validate()
     _pawn_cues_policy.validate()
     asset_diagnostic_sources = _asset_diagnostic_policy.sources() if 'UFortAssetManager' in listed else None
@@ -4805,7 +4810,7 @@ def promote(args):
         "interface_packages": iface_packages,
         # Only headers actually scheduled for emission qualify; arbitrary source-tree
         # files (including stale Native output) must not authorize snippet includes.
-        "generated_support_headers": {filename for bundle in (client_event_sources, native_gameplay_tags_sources, aircraft_timing_sources, profile_entry_sources, pending_save_sources, world_record_action_sources, world_manager_lifecycle_sources, structural_grid_sources, asset_diagnostic_sources)
+        "generated_support_headers": {filename for bundle in (client_event_sources, native_gameplay_tags_sources, aircraft_timing_sources, profile_entry_sources, pending_save_sources, world_record_action_sources, world_manager_lifecycle_sources, structural_grid_sources, movement_style_sources, asset_diagnostic_sources)
                                       for filename in (bundle or {}) if filename.endswith(".h")},
         "button_feedback_sound_identity_proven": 'UCommonButton' in listed,
         "other_promoted": {n for b, n in names.items()
@@ -4816,6 +4821,8 @@ def promote(args):
         _world_manager_lifecycle_policy.validate(splice_ctx, snippets_by_class)
     if structural_grid_sources:
         _structural_grid_policy.validate(splice_ctx, snippets_by_class)
+    if movement_style_sources:
+        _movement_style_policy.validate(splice_ctx, snippets_by_class)
     splice_done, splice_rejects = [], []
     if animated_switcher_sources:
         if 'UCommonActivatableWidget' not in listed:
@@ -5373,6 +5380,10 @@ def promote(args):
                 fh.write(text)
     if world_manager_lifecycle_sources:
         for filename, text in world_manager_lifecycle_sources.items():
+            with open(os.path.join(args.source_root, 'FortniteGame', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
+                fh.write(text)
+    if movement_style_sources:
+        for filename, text in movement_style_sources.items():
             with open(os.path.join(args.source_root, 'FortniteGame', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
                 fh.write(text)
     if structural_grid_sources:

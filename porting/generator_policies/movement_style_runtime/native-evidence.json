@@ -1,0 +1,103 @@
+{
+  "source_windows": [
+    {
+      "address": "0x14031d2a0",
+      "length": 32,
+      "sha256": "995a1112c9f5967428becd99b8449205f82ab3dcdae8c60ceee6714f9ea4c9f7"
+    },
+    {
+      "address": "0x1406801c0",
+      "length": 32,
+      "sha256": "d7d4bcc7351b8f4260fdc882f581069163d9d2a7390c44c054e77f3c345ee9cc"
+    },
+    {
+      "address": "0x141a13030",
+      "length": 32,
+      "sha256": "c0da59f86de4bf8115fa5200e8b740f15925a5d0845e2c93b7014d2e35262b7d"
+    },
+    {
+      "address": "0x141a24e80",
+      "length": 32,
+      "sha256": "7fe6aa9caf7e1a57128c720c9604fa49a94111f0337430ff21dec5b92ec01176"
+    },
+    {
+      "address": "0x1422fe830",
+      "length": 32,
+      "sha256": "6e13882140bb33cdd6f60e38f3d0cf05cb38d02f707093166d00d8f1369083e1"
+    },
+    {
+      "address": "0x14231a550",
+      "length": 32,
+      "sha256": "1401337637fe75923b884ba35328b59ee5ebb69fa511d04a5e04ad7302c0078d"
+    },
+    {
+      "address": "0x14231a5a0",
+      "length": 32,
+      "sha256": "756ad5973c701717a8afd7061f9b8826a9e5d63c7ceb98450078afafe50f48bb"
+    },
+    {
+      "address": "0x14231a5f0",
+      "length": 32,
+      "sha256": "2b62119e7c564eecaeab9e72bef9c7e9b456d34d4f6aa82fe52c5f908deeb639"
+    },
+    {
+      "address": "0x14231a640",
+      "length": 32,
+      "sha256": "d927f7ff392b528353f68dd1685e3b423f2864b46ea8f2ce0ecd09f3d2652991"
+    },
+    {
+      "address": "0x14231a750",
+      "length": 32,
+      "sha256": "9ec653436d4c5c65ec871bc7c00d3c6f435560ae48b0d2a02b9eb92c05629ca5"
+    },
+    {
+      "address": "0x14231a7e0",
+      "length": 32,
+      "sha256": "ec27ac5228d4f6f1490e1bcb4ec15601b71fe25e4dd17f23a1936b15b6bce23c"
+    },
+    {
+      "address": "0x14231a830",
+      "length": 32,
+      "sha256": "833f6a0a06f8b2d65e8e7a0513283a07c6eecb9278c1eab92f388356f57b0746"
+    },
+    {
+      "address": "0x14231a8f0",
+      "length": 32,
+      "sha256": "e6566784d5b2d6fbb818fad71acf6b9f35259062007ff828b8276b578d7bd18b"
+    },
+    {
+      "address": "0x14232cb50",
+      "length": 32,
+      "sha256": "e96f5872a2592bd8130b5142aff51e236971641096c1d3bc36c17ce6ba434f29"
+    },
+    {
+      "address": "0x14234bf20",
+      "length": 32,
+      "sha256": "9f649781dfc9554e24aa51cd3f58604825c32eb57190afc1baddf7102d1bb0ee"
+    },
+    {
+      "address": "0x14234c0a0",
+      "length": 32,
+      "sha256": "a7779e3a3bd7372ce0fc6f7a74e03cbe5c93ac824c13e29a578e4ee50ea42f3f"
+    },
+    {
+      "address": "0x14235bbf0",
+      "length": 32,
+      "sha256": "0d59f6e3e6fd1e241b4777ad61a86ecbc7ad34d4fee3b22b35b01e4bb8c8b099"
+    },
+    {
+      "address": "0x1478de49c",
+      "length": 4,
+      "sha256": "67abdd721024f0ff4e0b3f4c2fc13bc5bad42d0b7851d456d88d203d15aaa450"
+    }
+  ],
+  "on_disk_sprint_cvar": {
+    "address": "0x1478de49c",
+    "image_base": "0x140000000",
+    "section": ".data",
+    "file_offset": "0x78dd29c",
+    "on_disk_value": 1
+  },
+  "field_evidence": "Original1422fe830 constructor +1608 empty multicast; +2004 maskfffffffa. Sprintbit1062bit0 unreflected/preserved by constructor; UObjects zero allocated memory before native constructors (UObjectGlobals.cpp). Offsets identify logical fields, never host ABI offsets.",
+  "scope": "Complete scalar/style helpers only; no full compressed-flag, CheckJumpInput, or Sprint ability acceptance."
+}

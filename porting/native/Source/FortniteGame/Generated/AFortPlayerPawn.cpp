@@ -18,6 +18,7 @@
 
 #include "../../../../behavior/movement_speed64_runtime/MovementSpeedMath.h"
 #include "AFortAthenaVehicle.h"
+#include "AFortPawn.h"
 #include "AFortPlayerCharm.h"
 #include "AFortPlayerController.h"
 #include "AFortPlayerControllerGameplay.h"
@@ -30,6 +31,7 @@
 #include "EFortCustomMovement.h"
 #include "FFortPawnStats.h"
 #include "FWaterControlParams.h"
+#include "FortMovementStyleNative.h"
 #include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -2051,6 +2053,80 @@ float AFortPlayerPawn::NativeGetMovementSpeed14231ab10(uint8 Style) const
 	    DirectionScale = 1.0f;
 	float Result = DirectionScale * Speed * SpeedScale;
 	return FortMovementSpeed64::Positive(Result);
+}
+
+void AFortPlayerPawn::NativeSetMovementStyle14234bf20(uint8 Style)
+{
+	// CONFIDENCE: high. Original 0x14234c0a0; Player/Athena virtual slot +0x9a0.
+	const uint8 PreviousStyle = static_cast<uint8>(CurrentMovementStyle.GetValue());
+	AFortPawn::NativeSetMovementStyle14234bf20(Style);
+	if (static_cast<uint8>(CurrentMovementStyle.GetValue()) == 4)
+	{
+	    if (PreviousStyle != 4)
+	    {
+	        bUseControllerRotationYawToRestore = bUseControllerRotationYaw;
+	        bUseControllerRotationYaw = false;
+	        NativePersonalVehicleStyleChanged1608.Broadcast(true);
+	    }
+	}
+	else if (PreviousStyle == 4)
+	{
+	    bUseControllerRotationYaw = bUseControllerRotationYawToRestore;
+	    NativePersonalVehicleStyleChanged1608.Broadcast(false);
+	}
+	// Original final call is 0x1406801c0 (empty). Retain branch and packed input
+	// reads, including its non-null movement precondition.
+	if (bIsLocalPlayer || NativeLocalMovementNotify2004Bit2)
+	{
+	    auto* Movement = GetCharacterMovement();
+	    uint32 Packed = ((static_cast<uint8>(BuildingState.GetValue()) & 15u) << 4) |
+	        (static_cast<uint8>(CurrentMovementStyle.GetValue()) & 15u);
+	    Packed = (Packed << 4) | (Movement->CustomMovementMode & 15u);
+	    Packed = (Packed << 4) | (static_cast<uint8>(Movement->MovementMode) & 15u);
+	    const auto OriginalEmpty1406801c0 = [](uint32) {};
+	    OriginalEmpty1406801c0(Packed);
+	}
+}
+
+void AFortPlayerPawn::NativeUpdateMovementStyle14235bbf0()
+{
+	// CONFIDENCE: high. Original 0x14235bbf0.
+	if (GetLocalRole() == ROLE_SimulatedProxy) return;
+	if (AbilitySystemComponent && AbilitySystemComponent->HasMatchingGameplayTag(
+	        FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x6b0)))
+	{
+	    NativeSetMovementStyle14234bf20(4);
+	    return;
+	}
+	// The original first movement-mode read requires an initialized component.
+	if (GetCharacterMovement()->MovementMode == MOVE_Flying)
+	{
+	    NativeSetMovementStyle14234bf20(5);
+	}
+	else if (bIsTargeting)
+	{
+	    NativeSetMovementStyle14234bf20(1);
+	}
+	else if (NativeSprintState1062Bit0 &&
+	         (!NativeRequireSprintTag1478de49c() || NativeSprintTagGate14232cb50()))
+	{
+	    NativeSetMovementStyle14234bf20(3);
+	}
+	else
+	{
+	    UFortMovementComp_Character* Movement = Cast<UFortMovementComp_Character>(GetCharacterMovement());
+	    NativeSetMovementStyle14234bf20(Movement && Movement->MovementMode == MOVE_Custom &&
+	        Movement->CustomMovementMode == 12 ? 5 : 0);
+	}
+}
+
+bool AFortPlayerPawn::NativeSprintTagGate14232cb50() const
+{
+	// CONFIDENCE: high. Original 0x14232cb50.
+	// Original +0x4c8 interface +0x10 is GetAbilitySystemComponent; retain its dispatch.
+	UFortAbilitySystemComponent* Component = Cast<UFortAbilitySystemComponent>(GetAbilitySystemComponent());
+	return Component && Component->HasMatchingGameplayTag(
+	    FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x690));
 }
 
 void AFortPlayerPawn::NativeUpdateAccelerationPack1423442e0()

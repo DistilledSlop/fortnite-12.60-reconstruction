@@ -58,6 +58,7 @@
 #include "FVortexParams.h"
 #include "FZiplinePawnState.h"
 #include "FZiplineStateChanged.h"
+#include "FortMovementStyleNative.h"
 #include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -199,6 +200,9 @@ public:
 	// table index 308, flags 0x10000000004000
 	UPROPERTY(Config)
 	uint8 bBuildHotfix : 1;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1062): not a UPROPERTY, not replicated.
+	bool NativeSprintState1062Bit0;
 
 	// table index 306, flags 0x10000100002020
 	UPROPERTY(ReplicatedUsing=HandleInStasis, Transient)
@@ -665,6 +669,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_PossessedProp, Transient)
 	ABuildingGameplayActorPlayerPropAttachment* PossessedProp;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1608): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, bool> NativePersonalVehicleStyleChanged1608;
+
 	// table index 193, flags 0x10000000002000
 	UPROPERTY(Transient)
 	int64 SlopeCameraOffsetFrameCounter;
@@ -970,6 +977,9 @@ public:
 	// table index 115, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 bDamagedEnemy : 1;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2004): not a UPROPERTY, not replicated.
+	bool NativeLocalMovementNotify2004Bit2;
 
 	// table index 114, flags 0x10000000002020
 	UPROPERTY(Replicated, Transient)
@@ -2101,6 +2111,9 @@ public:
 	virtual void PreReplicationForReplay(IRepChangedPropertyTracker& ChangedPropertyTracker) override;
 	virtual float NativeGetFlyingAcceleration14231a880() const override;
 	virtual float NativeGetMovementSpeed14231ab10(uint8 Style) const override;
+	virtual void NativeSetMovementStyle14234bf20(uint8 Style) override;
+	void NativeUpdateMovementStyle14235bbf0();
+	bool NativeSprintTagGate14232cb50() const;
 protected:
 	void NativeUpdateAccelerationPack1423442e0();
 	void NativeUpdateRemoteViewData142344420();

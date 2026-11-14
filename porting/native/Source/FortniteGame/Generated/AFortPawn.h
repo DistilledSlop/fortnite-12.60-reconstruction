@@ -49,6 +49,9 @@
 #include "FPawnTeleportedSignature.h"
 #include "FPawnUpdatedDecisionWindowStackSignature.h"
 #include "FRecordedGunshot.h"
+#include "FortMovementStyleNative.h"
+#include "FortNativeGameplayTagsRuntime.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameplayCueInterface.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectTypes.h"
@@ -1208,5 +1211,15 @@ public:
 	virtual float NativeGetFlyingAcceleration14231a880() const;
 	virtual float NativeGetMovementSpeed14231ab10(uint8 Style) const;
 	virtual float NativeGetJumpHorizontalVelocityOverride14231a7c0() const;
+	virtual float NativeGetGroundFriction14231a750() const;
+	virtual float NativeGetBrakingDecelerationWalking14231a5f0() const;
+	virtual float NativeGetBrakingDecelerationFalling14231a550() const;
+	virtual float NativeGetBrakingDecelerationFlying14231a5a0() const;
+	virtual float NativeGetBrakingFrictionFactor14231a640() const;
+	virtual float NativeGetMaxAcceleration14231a830() const;
+	virtual float NativeGetJumpZVelocity14231a7e0() const;
+	virtual float NativeGetMinAnalogWalkSpeed14231a8f0() const;
+	virtual void NativeSetMaxAccelerationFlying141a24e80(float Value);
+	virtual void NativeSetMovementStyle14234bf20(uint8 Style);
 };
 
