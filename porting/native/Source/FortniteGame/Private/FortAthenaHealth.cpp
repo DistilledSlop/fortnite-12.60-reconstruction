@@ -58,6 +58,7 @@
 #include "AbilitySystemGlobals.h"
 #include "GameplayEffectAggregator.h"
 #include "UObject/StrongObjectPtr.h"
+#include "UObject/UnrealType.h"
 #include "UFortAdvancedMovementSet.h"
 #include "UFortControlResistanceSet.h"
 #include "UFortDamageSet.h"
@@ -266,7 +267,7 @@ namespace
 			FScopedAggregatorOnDirtyBatch Batch;
 			if (const UFortCharacterAttrSet* CharacterSet = ASC.GetSet<UFortCharacterAttrSet>())
 			{
-				static FProperty* LevelProperty = FindFPropertyChecked<FProperty>(
+				static FProperty* LevelProperty = FindFieldChecked<FProperty>(
 					UFortCharacterAttrSet::StaticClass(), TEXT("MaxCharacterLevel"));
 				FGameplayEffectAttributeCaptureSpec Capture(FGameplayEffectAttributeCaptureDefinition(
 					FGameplayAttribute(LevelProperty), EGameplayEffectAttributeCaptureSource::Target, false));
