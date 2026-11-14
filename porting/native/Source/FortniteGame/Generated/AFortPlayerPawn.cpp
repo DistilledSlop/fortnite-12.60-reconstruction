@@ -30,6 +30,7 @@
 #include "Abilities/GameplayAbilityTypes.h"
 #include "AbilitySystemComponent.h"
 #include "Animation/AnimInstance.h"
+#include "AttributeSet.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SceneComponent.h"
 #include "Components/SkeletalMeshComponent.h"
@@ -38,7 +39,9 @@
 #include "Engine/EngineTypes.h"
 #include "Engine/World.h"
 #include "FFortPawnStats.h"
+#include "FFortPlayerPawnStats.h"
 #include "FWaterControlParams.h"
+#include "FWaterJumpParams.h"
 #include "FortMovementStyleNative.h"
 #include "FortNativeGameplayTagsRuntime.h"
 #include "FortParachuteInputNative.h"
@@ -46,6 +49,8 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
+#include "GameplayEffect.h"
+#include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
 #include "Interfaces/NetworkPredictionInterface.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -2623,6 +2628,128 @@ void AFortPlayerPawn::NativeOpenParachute14233e6e0(bool bFromInput)
 	}
 }
 
+float AFortPlayerPawn::GetJumpMaxHoldTime() const
+{
+	// Original address: 0x14231ed20
+	// CONFIDENCE: high
+	if (const UFortMovementComp_Character* FortMove = Cast<UFortMovementComp_Character>(GetCharacterMovement()))
+	{
+		if (FortMove->MovementMode == MOVE_Custom && FortMove->CustomMovementMode == EFortCustomMovement::SurfaceSwimming)
+		{
+			const FWaterJumpParams& Params = IsSprinting() ? FortMove->WaterJumpParamsSprint : FortMove->WaterJumpParams;
+			return Params.JumpForceDuration.GetValueAtLevel(0.0f);
+		}
+	}
+	if (bIsWaterJump)
+	{
+		return 0.0f;
+	}
+	static const FFortPlayerPawnStats DefaultPlayerPawnStats;
+	const FFortPlayerPawnStats* Stats = PawnStatHandle.GetRow<FFortPlayerPawnStats>(TEXT("AFortPawn::GetPawnStats"));
+	if (!Stats)
+	{
+		Stats = &DefaultPlayerPawnStats;
+	}
+	if (!MovementSet)
+	{
+		return Stats->MaxJumpTime;
+	}
+	if (AbilitySystemComponent)
+	{
+		static FProperty* JumpHeightProp = FindFieldChecked<FProperty>(
+			UFortMovementSet::StaticClass(), FName(TEXT("JumpHeight")));
+		static const FGameplayEffectAttributeCaptureDefinition CaptureDef(
+			FGameplayAttribute(JumpHeightProp), EGameplayEffectAttributeCaptureSource::Source, true);
+		FGameplayEffectAttributeCaptureSpec CaptureSpec(CaptureDef);
+		AbilitySystemComponent->CaptureAttributeForGameplayEffect(CaptureSpec);
+		FAggregatorEvaluateParameters EvalParams;
+		float EvaluatedMaxJumpTime = Stats->MaxJumpTime;
+		if (CaptureSpec.AttemptCalculateAttributeMagnitudeWithBase(EvalParams, Stats->MaxJumpTime, EvaluatedMaxJumpTime))
+		{
+			return EvaluatedMaxJumpTime;
+		}
+	}
+	return Stats->MaxJumpTime;
+}
+
+void AFortPlayerPawn::NativeEndZiplining142314600(bool bFromJump)
+{
+	// Original address: 0x142314600
+	// CONFIDENCE: high
+	if (ZiplineState.bIsZiplining && (GetLocalRole() == ROLE_AutonomousProxy || GetLocalRole() == ROLE_Authority))
+	{
+	    if (bFromJump)
+	    {
+	        const float Delay = ZiplineJumpActivateDelay.GetValueAtLevel(0.0f);
+	        if (UWorld* World = GetWorld())
+	        {
+	            if (World->GetTimeSeconds() - ZiplineState.TimeZipliningBegan < Delay)
+	            {
+	                return;
+	            }
+	        }
+	    }
+	    ZiplineState.Zipline = nullptr;
+	    ZiplineState.bIsZiplining = false;
+	    ZiplineState.bJumped = bFromJump;
+	    ZiplineState.AuthoritativeValue++;
+	    if (bFromJump)
+	    {
+	        if (UWorld* World = GetWorld())
+	        {
+	            ZiplineState.TimeZipliningEndedFromJump = World->GetTimeSeconds();
+	        }
+	    }
+	    else
+	    {
+	        ZiplineState.TimeZipliningEndedFromJump = -1.0f;
+	    }
+	    if (GetCharacterMovement() && GetCharacterMovement()->MovementMode == MOVE_Custom && GetCharacterMovement()->CustomMovementMode == EFortCustomMovement::Ziplining)
+	    {
+	        GetCharacterMovement()->SetMovementMode(MOVE_Falling, 0);
+	    }
+	    if (GetLocalRole() == ROLE_AutonomousProxy)
+	    {
+	        ServerSendZiplineState(ZiplineState);
+	    }
+	}
+}
+
+uint8 AFortPlayerPawn::NativeGetSkyTubeAxisBias1409a95b0() const
+{
+	// Original address: 0x1409a95b0
+	// CONFIDENCE: high
+	return 0;
+}
+
+float AFortPlayerPawn::NativeGetVehicleGravityZScale142325690() const
+{
+	// Original address: 0x142325690
+	// CONFIDENCE: high
+	return MovementSet ? MovementSet->VehicleGravityZScale.GetCurrentValue() : 1.0f;
+}
+
+void AFortPlayerPawn::NativeSetIsSlopeSliding14234dae0(bool bNewValue)
+{
+	// Original address: 0x14234dae0
+	// CONFIDENCE: high
+	const bool bChanged = (bNewValue != static_cast<bool>(bIsSlopeSliding));
+	if (bChanged)
+	{
+	    OnRep_IsSlopeSliding();
+	}
+	bIsSlopeSliding = bNewValue ? 1 : 0;
+}
+
+bool AFortPlayerPawn::Native_1423320a0() const
+{
+	// CONFIDENCE: high
+	// Original address: 0x1423320a0
+	uint8 Style = 0;
+	NativeGetCurrentMovementStyle14231a980(&Style);
+	return Style == 3;
+}
+
 void AFortPlayerPawn::NativeUpdateAccelerationPack1423442e0()
 {
 	// CONFIDENCE: high
@@ -2798,5 +2925,28 @@ AFortPlayerPawn::AFortPlayerPawn(const FObjectInitializer& ObjectInitializer)
     PSC_PlayerInWater = NativeDefaultSubobject4;
     UParticleSystemComponent* NativeDefaultSubobject5 = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("PlayerInWaterSurfaceSwimmingFX"));
     PSC_PlayerInWaterSurfaceSwimming = NativeDefaultSubobject5;
+    if (UFortMovementComp_Character* FortMove = Cast<UFortMovementComp_Character>(GetCharacterMovement()))
+    {
+        // Original AFortPlayerPawn constructor 0x1422fe830: CharMoveComp writes verified by disassembly.
+        FortMove->bCanWalkOffLedgesWhenCrouching = true;
+        FortMove->CrouchedHalfHeight = 50.0f;
+        FortMove->MaxWalkSpeed = 450.0f;
+        FortMove->MaxWalkSpeedCrouched = 275.0f;
+        FortMove->MinAnalogWalkSpeed = 200.0f;
+        FortMove->JumpZVelocity = 560.0f;
+        FortMove->AirControl = 0.9f;
+        FortMove->bAlwaysCheckFloor = true;
+        FortMove->PerchRadiusThreshold = 16.0f;
+        FortMove->bEnablePhysicsInteraction = false;
+        FortMove->bApplyGravityWhileJumping = false;
+        FortMove->MaxSimulationIterations = 4;
+        FortMove->MaxSimulationTimeStep = 0.1f;
+        FortMove->bUseRVOAvoidance = true;
+        FortMove->AvoidanceWeight = 1.0f;
+        FortMove->bUseControllerDesiredRotation = true;
+        FortMove->RotationRate = FRotator(0.0f, 36000.0f, 0.0f);
+        FortMove->bAllowPhysicsRotationDuringAnimRootMotion = true;
+        FortMove->bUpdatesFloorWhenNotInFullSimulation = true;
+    }
     BuildingState = EFortBuildingState::None; // Original store 0x1422ffb6b.
 }

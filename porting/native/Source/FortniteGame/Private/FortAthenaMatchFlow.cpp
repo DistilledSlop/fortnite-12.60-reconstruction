@@ -22,6 +22,7 @@
 #include "Engine/Level.h"
 #include "Engine/LODActor.h"
 #include "ABuildingFoundation.h"
+#include "AWorldTileFoundation.h"
 #include "Misc/PackageName.h"
 #include "LandscapeProxy.h"
 
@@ -128,6 +129,13 @@ namespace FortAthenaMatchFlowPrivate
         float LastStandInDamageTime = -1.0f;
     };
 
+    struct FPendingFoundationStream
+    {
+        TWeakObjectPtr<ABuildingFoundation> Foundation;
+        TWeakObjectPtr<ULevelStreamingDynamic> Streaming;
+        FName PackageName;
+    };
+
     struct FMatchFlowState
     {
         bool bActive = false;
@@ -160,6 +168,9 @@ namespace FortAthenaMatchFlowPrivate
         TMap<TWeakObjectPtr<APawn>, FSkydiverState> Skydivers;
         TMap<TWeakObjectPtr<APawn>, FPawnStormState> PawnStorm;
         TSet<FString> LoggedOnce;
+        TSet<uint32> StreamedFoundationIds;
+        TArray<FPendingFoundationStream> PendingFoundationStreams;
+        bool bFoundationStreamingHooked = false;
     };
 
     FMatchFlowState& State()
@@ -1209,34 +1220,148 @@ namespace FortAthenaMatchFlowPrivate
             S.AircraftRuns.Remove(Key);
     }
 
-    // stand-in: skydive and parachute physics (PhysCustom of UFortMovementComp_Character) are not ported on the server.
-    // While a pawn is skydiving the server takes the client's position and movement mode (both CMC flags set in
-    // OnPlayerRestarted). Normal server authority returns once the mirrored mode is no longer custom and the pawn is on
-    // the ground.
-    // stand-in: the server has no building collision and lacks most original movement overrides, so its own simulation
-    // disagrees with the original client (porting/notes/MOVEMENT_AUTHORITY_REPORT.md). By default the server therefore
-    // takes the client's position and movement mode for all movement. -FortniteServerMovementAuthority restores server
-    // authority outside skydiving; acceptance runs that measure corrections must pass it.
-    bool UseServerMovementAuthority()
+    FName SelectFoundationPackage(ABuildingFoundation* Foundation)
     {
-        static const bool bEnabled = FParse::Param(FCommandLine::Get(), TEXT("FortniteServerMovementAuthority"));
-        return bEnabled;
+        if (!Foundation)
+            return NAME_None;
+        if (Foundation->NativeCanSelectBuildingLevel())
+        {
+            FFoundationNativeRandomSequence Sequence;
+            Sequence.CurrentIndex = 0;
+            Sequence.ValueCount = 0;
+            return Foundation->NativeSelectBuildingLevel(&Sequence);
+        }
+        if (Foundation->AdditionalWorlds.Num() == 1 && !Foundation->AdditionalWorlds[0].IsNull())
+            return FName(*NativeFoundationWorldString_141ed80a0(Foundation->AdditionalWorlds[0]));
+        return NAME_None;
     }
 
-    void AcceptClientMovement(UCharacterMovementComponent* Movement)
+    void StreamFoundation(UWorld* World, ABuildingFoundation* Foundation)
     {
-        if (!Movement)
+        if (!World || !Foundation)
             return;
-        Movement->bIgnoreClientMovementErrorChecksAndCorrection = true;
-        Movement->bServerAcceptClientAuthoritativePosition = true;
+        if (!Foundation->NativeIsFoundationAndParentsEnabled())
+            return;
+        if (Foundation->LevelStreamInfo || Foundation->bServerStreamedInLevel)
+            return;
+
+        const FName PackageName = SelectFoundationPackage(Foundation);
+        if (PackageName.IsNone())
+            return;
+        const FString Package = PackageName.ToString();
+        if (!FPackageName::IsValidLongPackageName(Package))
+            return;
+
+        const uint32 InstanceId = ABuildingFoundation::NativeComputeFoundationInstanceId(
+            Foundation->GetActorLocation(), Foundation->GetName());
+        if (State().StreamedFoundationIds.Contains(InstanceId))
+            return;
+        State().StreamedFoundationIds.Add(InstanceId);
+
+        const FRotator Rotation = Foundation->IsA<AWorldTileFoundation>()
+            ? (Foundation->GetActorRotation() + Foundation->NativeGetBuildingRotation())
+            : Foundation->NativeGetBuildingRotation();
+
+        bool bAccepted = false;
+        ULevelStreamingDynamic* Streaming = ULevelStreamingDynamic::LoadLevelInstance(
+            World, Package, Foundation->GetActorLocation(), Rotation, bAccepted);
+        if (!bAccepted || !Streaming)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("MatchFlow: foundation stream rejected actor=%s package=%s"),
+                *Foundation->GetPathName(), *Package);
+            return;
+        }
+        Streaming->SetShouldBeLoaded(true);
+        Streaming->SetShouldBeVisible(true);
+        Foundation->LevelStreamInfo = Streaming;
+
+        FPendingFoundationStream Entry;
+        Entry.Foundation = Foundation;
+        Entry.Streaming = Streaming;
+        Entry.PackageName = PackageName;
+        State().PendingFoundationStreams.Add(Entry);
     }
 
-    void RestoreMovementAuthority(UCharacterMovementComponent* Movement)
+    void StreamFoundationsInLevel(UWorld* World, ULevel* Level)
     {
-        if (!Movement || !UseServerMovementAuthority())
+        if (!World || !Level)
             return;
-        Movement->bIgnoreClientMovementErrorChecksAndCorrection = false;
-        Movement->bServerAcceptClientAuthoritativePosition = false;
+        for (AActor* Actor : Level->Actors)
+        {
+            if (ABuildingFoundation* Foundation = Cast<ABuildingFoundation>(Actor))
+                StreamFoundation(World, Foundation);
+        }
+    }
+
+    void StreamFoundationsInWorld(UWorld* World)
+    {
+        if (!World)
+            return;
+        for (ULevel* Level : World->GetLevels())
+            StreamFoundationsInLevel(World, Level);
+    }
+
+    void FinalizeVisibleFoundationStreams(UWorld* World)
+    {
+        if (!World || State().PendingFoundationStreams.Num() == 0)
+            return;
+
+        TArray<FPendingFoundationStream> Remaining;
+        for (const FPendingFoundationStream& Entry : State().PendingFoundationStreams)
+        {
+            ULevelStreamingDynamic* Streaming = Entry.Streaming.Get();
+            if (!Streaming || Streaming->GetCurrentState() == ULevelStreaming::ECurrentState::FailedToLoad)
+                continue;
+
+            if (!Streaming->IsLevelVisible())
+            {
+                Remaining.Add(Entry);
+                continue;
+            }
+
+            if (ABuildingFoundation* Foundation = Entry.Foundation.Get())
+            {
+                Foundation->bServerStreamedInLevel = true;
+                Foundation->LevelToStream = Entry.PackageName;
+                Foundation->ForceNetUpdate();
+            }
+
+            ULevel* LoadedLevel = Streaming->GetLoadedLevel();
+            if (LoadedLevel)
+            {
+                int32 TotalMeshes = 0;
+                int32 EmptyAggGeomMeshes = 0;
+                for (AActor* Actor : LoadedLevel->Actors)
+                {
+                    if (!Actor)
+                        continue;
+                    TInlineComponentArray<UStaticMeshComponent*> Meshes(Actor);
+                    for (UStaticMeshComponent* Comp : Meshes)
+                    {
+                        ++TotalMeshes;
+                        UStaticMesh* Mesh = Comp->GetStaticMesh();
+                        UBodySetup* Body = Mesh ? Mesh->BodySetup : nullptr;
+                        if (Body && Body->AggGeom.GetElementCount() == 0)
+                        {
+                            ++EmptyAggGeomMeshes;
+                            if (EmptyAggGeomMeshes <= 10)
+                            {
+                                UE_LOG(LogTemp, Display, TEXT("MatchFlow: foundation empty AggGeom level=%s actor=%s mesh=%s traceFlag=%d"),
+                                    *Entry.PackageName.ToString(), *Actor->GetName(), *GetNameSafe(Mesh),
+                                    static_cast<int32>(Body->CollisionTraceFlag));
+                            }
+                        }
+                    }
+                }
+                if (EmptyAggGeomMeshes > 0)
+                {
+                    UE_LOG(LogTemp, Display, TEXT("MatchFlow: foundation %s loaded meshes=%d emptyAggGeom=%d"),
+                        *Entry.PackageName.ToString(), TotalMeshes, EmptyAggGeomMeshes);
+                }
+                StreamFoundationsInLevel(World, LoadedLevel);
+            }
+        }
+        State().PendingFoundationStreams = MoveTemp(Remaining);
     }
 
     // The Apollo_Background level (cloud sheets, skybox meshes) is decoration. The server loads its static-mesh collision,
@@ -1341,8 +1466,7 @@ namespace FortAthenaMatchFlowPrivate
                 // The 10 s limit only covers a client that never reports a ground mode.
                 if (Movement && Movement->MovementMode == MOVE_Custom)
                     Movement->SetMovementMode(MOVE_Falling);
-                RestoreMovementAuthority(Movement);
-                UE_LOG(LogTemp, Display, TEXT("MatchFlow: %s landed, server movement authority restored (mode %s)"), *Pawn->GetName(),
+                UE_LOG(LogTemp, Display, TEXT("MatchFlow: %s landed (mode %s)"), *Pawn->GetName(),
                     Movement ? *Movement->GetMovementName() : TEXT("none"));
                 Done.Add(Pair.Key);
             }
@@ -1635,6 +1759,7 @@ namespace FortAthenaMatchFlowPrivate
             if (GameMode->GetNumPlayers() < S.RequiredPlayers)
                 return;
             DisableBackgroundCollision(GameMode->GetWorld());  // streamed levels may have finished after the driver armed
+            FinalizeVisibleFoundationStreams(GameMode->GetWorld());
             UE_LOG(LogTemp, Display, TEXT("MatchFlow: %d of %d required players joined; starting warmup"), GameMode->GetNumPlayers(), S.RequiredPlayers);
             if (!StartWarmupPhase(GameMode))
                 WarmupEnd(GameMode);
@@ -1742,6 +1867,16 @@ namespace FortAthenaMatchFlow
         }
         GameMode->GetWorldTimerManager().SetTimer(S.DriverHandle, FTimerDelegate::CreateStatic(&DriverTick), DriverInterval, true);
         DisableBackgroundCollision(GameMode->GetWorld());
+        StreamFoundationsInWorld(GameMode->GetWorld());
+        if (!S.bFoundationStreamingHooked)
+        {
+            S.bFoundationStreamingHooked = true;
+            FWorldDelegates::LevelAddedToWorld.AddStatic([](ULevel* InLevel, UWorld* InWorld)
+            {
+                if (State().GameMode.IsValid() && InWorld == State().GameMode->GetWorld())
+                    StreamFoundationsInLevel(InWorld, InLevel);
+            });
+        }
         UE_LOG(LogTemp, Display, TEXT("MatchFlow: driver armed (%.2f s); waiting for %d player(s)"), DriverInterval, S.RequiredPlayers);
     }
 
@@ -1858,32 +1993,43 @@ namespace FortAthenaMatchFlow
             return;
         }
         const FTransform Transform = Foundation->GetActorTransform();
-        if (Foundation->AdditionalWorlds.Num() != 1 || Foundation->AdditionalWorlds[0].IsNull() ||
-            Foundation->LevelStreamInfo || !Transform.GetScale3D().Equals(FVector::OneVector, KINDA_SMALL_NUMBER))
+        ULevelStreaming* Streaming = Foundation->LevelStreamInfo;
+        FString Package;
+        if (!Streaming)
         {
-            UE_LOG(LogTemp, Warning, TEXT("FoundationCollisionProbe: rejected actor=%s additionalWorlds=%d levelStreamInfo=%s transform=%s"),
-                *Foundation->GetPathName(), Foundation->AdditionalWorlds.Num(), *GetNameSafe(Foundation->LevelStreamInfo), *Transform.ToHumanReadableString());
-            return;
+            if (Foundation->AdditionalWorlds.Num() != 1 || Foundation->AdditionalWorlds[0].IsNull() ||
+                !Transform.GetScale3D().Equals(FVector::OneVector, KINDA_SMALL_NUMBER))
+            {
+                UE_LOG(LogTemp, Warning, TEXT("FoundationCollisionProbe: rejected actor=%s additionalWorlds=%d levelStreamInfo=%s transform=%s"),
+                    *Foundation->GetPathName(), Foundation->AdditionalWorlds.Num(), *GetNameSafe(Foundation->LevelStreamInfo), *Transform.ToHumanReadableString());
+                return;
+            }
+            Package = Foundation->AdditionalWorlds[0].GetLongPackageName();
+            if (!FPackageName::IsValidLongPackageName(Package))
+            {
+                UE_LOG(LogTemp, Warning, TEXT("FoundationCollisionProbe: rejected actor=%s invalid package=%s"), *Foundation->GetPathName(), *Package);
+                return;
+            }
+            bool bAccepted = false;
+            Streaming = ULevelStreamingDynamic::LoadLevelInstance(
+                World, Package, Transform.GetLocation(), Transform.Rotator(), bAccepted);
+            UE_LOG(LogTemp, Display, TEXT("FoundationCollisionProbe: actor=%s package=%s transform=%s accepted=%d instance=%s state=%s"),
+                *Foundation->GetPathName(), *Package, *Transform.ToHumanReadableString(), bAccepted ? 1 : 0,
+                *GetNameSafe(Streaming), Streaming ? ULevelStreaming::EnumToString(Streaming->GetCurrentState()) : TEXT("none"));
+            if (!bAccepted || !Streaming)
+                return;
         }
-        const FString Package = Foundation->AdditionalWorlds[0].GetLongPackageName();
-        if (!FPackageName::IsValidLongPackageName(Package))
+        else
         {
-            UE_LOG(LogTemp, Warning, TEXT("FoundationCollisionProbe: rejected actor=%s invalid package=%s"), *Foundation->GetPathName(), *Package);
-            return;
+            Package = Streaming->GetWorldAssetPackageName();
+            UE_LOG(LogTemp, Display, TEXT("FoundationCollisionProbe: actor=%s reusing existing instance=%s package=%s state=%s"),
+                *Foundation->GetPathName(), *GetNameSafe(Streaming), *Package, ULevelStreaming::EnumToString(Streaming->GetCurrentState()));
         }
-        bool bAccepted = false;
-        ULevelStreamingDynamic* Streaming = ULevelStreamingDynamic::LoadLevelInstance(
-            World, Package, Transform.GetLocation(), Transform.Rotator(), bAccepted);
-        UE_LOG(LogTemp, Display, TEXT("FoundationCollisionProbe: actor=%s package=%s transform=%s accepted=%d instance=%s state=%s"),
-            *Foundation->GetPathName(), *Package, *Transform.ToHumanReadableString(), bAccepted ? 1 : 0,
-            *GetNameSafe(Streaming), Streaming ? ULevelStreaming::EnumToString(Streaming->GetCurrentState()) : TEXT("none"));
-        if (!bAccepted || !Streaming)
-            return;
 
         struct FProbePoll { FTimerHandle Handle; int32 Samples = 0; };
         const TSharedRef<FProbePoll> Poll = MakeShared<FProbePoll>();
         const TWeakObjectPtr<UWorld> WeakWorld(World);
-        const TWeakObjectPtr<ULevelStreamingDynamic> WeakStreaming(Streaming);
+        const TWeakObjectPtr<ULevelStreaming> WeakStreaming(Streaming);
         const FString ActorPath = Foundation->GetPathName();
         const FVector SpawnLocation = Pawn->GetActorLocation();
         const TWeakObjectPtr<const AFortPlayerPawn> WeakPawn(Pawn);
@@ -1891,7 +2037,7 @@ namespace FortAthenaMatchFlow
         {
             UWorld* PollWorld = WeakWorld.Get();
             if (!PollWorld) return;
-            ULevelStreamingDynamic* Level = WeakStreaming.Get();
+            ULevelStreaming* Level = WeakStreaming.Get();
             ++Poll->Samples;
             const bool bLoaded = Level && Level->GetLoadedLevel();
             const bool bVisible = Level && Level->IsLevelVisible();
@@ -2155,9 +2301,6 @@ namespace FortAthenaMatchFlow
 
     void OnPlayerRestarted(AFortGameModeAthena* GameMode, AController* Controller)
     {
-        if (!UseServerMovementAuthority())
-            if (const ACharacter* Character = Controller ? Cast<ACharacter>(Controller->GetPawn()) : nullptr)
-                AcceptClientMovement(Character->GetCharacterMovement());
         FMatchFlowState& S = State();
         if (!S.bActive || !GameMode || !Controller)
             return;
@@ -2283,10 +2426,6 @@ namespace FortAthenaMatchFlow
         if (UCharacterMovementComponent* Movement = Pawn->GetCharacterMovement())
         {
             Movement->SetMovementMode(MOVE_Custom, static_cast<uint8>(EFortCustomMovement::Skydiving));
-            // stand-in: no server PhysCustom; skip error checks and take the client's skydive/parachute position and mode
-            // until landing (ServerMoveHandleClientError only reaches the accept branch when no error is detected).
-            Movement->bIgnoreClientMovementErrorChecksAndCorrection = true;
-            Movement->bServerAcceptClientAuthoritativePosition = true;
         }
         if (Player->bJump)
         {

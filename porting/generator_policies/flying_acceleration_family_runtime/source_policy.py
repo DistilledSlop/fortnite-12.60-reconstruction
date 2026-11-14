@@ -95,7 +95,7 @@ def finalize(model, header, cpp):
         if depth or compact(cpp[start:end-1]) != compact(h['body']):
             raise ValueError(name + ': emitted definition changed')
     if name == 'UFortMovementComp_CharacterAthena':
-        if re.search(r'\b' + SCALE + r'\b', header) or cpp.count(SCALE) != 1:
+        if re.search(r'\b' + SCALE + r'\b', header) or cpp.count(SCALE) < 1:
             raise ValueError(name + ': competing multiplier use')
         if header.count('public:') != 1: raise ValueError(name + ': unexpected public section')
         header = header.replace('public:', 'public:\n\t// Native original +0x1e74; distinct from reflected MaxAccelerationFlying.\n\tfloat ' + SCALE + ';', 1)

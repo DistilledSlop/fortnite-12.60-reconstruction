@@ -392,5 +392,19 @@ AFortPlayerPawnAthena::AFortPlayerPawnAthena(const FObjectInitializer& ObjectIni
     (void)NativeDefaultSubobject9;
     UParticleSystemComponent* NativeDefaultSubobject10 = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("PlayerWalkLandFX"));
     (void)NativeDefaultSubobject10;
+    if (UFortMovementComp_CharacterAthena* AthenaMove = Cast<UFortMovementComp_CharacterAthena>(GetCharacterMovement()))
+    {
+        // Original AFortPlayerPawnAthena constructor 0x141a08ef0: CharMoveComp writes verified by disassembly.
+        AthenaMove->NavAgentProps.bCanCrouch = true;
+        AthenaMove->MaxSimulationIterations = 2;
+        AthenaMove->MaxSimulationTimeStep = 0.5f;
+        AthenaMove->NetworkSmoothingMode = ENetworkSmoothingMode::Linear;
+        AthenaMove->bAlwaysCheckFloor = false;
+        AthenaMove->bUseRVOAvoidance = false;
+        AthenaMove->bUseControllerDesiredRotation = true;
+        AthenaMove->RotationRate = FRotator(0.0f, -1.0f, 0.0f);
+        AthenaMove->bUpdatesFloorWhenNotInFullSimulation = false;
+        AthenaMove->bUpdatesFloorWhenNotInFullSimulationOnlyOnNetUpdate = true;
+    }
     ServerWorldTimeRevivalTime = -1.0f; // Original store 0x141a08f7c.
 }

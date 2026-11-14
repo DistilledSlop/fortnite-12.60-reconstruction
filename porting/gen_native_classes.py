@@ -2502,6 +2502,10 @@ _athena_playerstate_constructor_spec = _common_activation_import.spec_from_file_
     "athena_playerstate_constructor_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "athena_playerstate_constructor_runtime", "source_policy.py"))
 _athena_playerstate_constructor_policy = _common_activation_import.module_from_spec(_athena_playerstate_constructor_spec)
 _athena_playerstate_constructor_spec.loader.exec_module(_athena_playerstate_constructor_policy)
+_pawn_movement_defaults_spec = _common_activation_import.spec_from_file_location(
+    "pawn_movement_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "pawn_movement_defaults_runtime", "source_policy.py"))
+_pawn_movement_defaults_policy = _common_activation_import.module_from_spec(_pawn_movement_defaults_spec)
+_pawn_movement_defaults_spec.loader.exec_module(_pawn_movement_defaults_policy)
 _pawn_stats_native_row_spec = _common_activation_import.spec_from_file_location(
     "pawn_stats_native_row_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "pawn_stats_native_row_runtime", "source_policy.py"))
 _pawn_stats_native_row_policy = _common_activation_import.module_from_spec(_pawn_stats_native_row_spec)
@@ -5101,6 +5105,7 @@ def promote(args):
         header, cpp = _item_character_ctor_policy.finalize(model, header, cpp)
         header, cpp = _pawn_capsule_policy.finalize(model, header, cpp)
         header, cpp = _athena_playerstate_constructor_policy.finalize(model, header, cpp)
+        header, cpp = _pawn_movement_defaults_policy.finalize(model, header, cpp)
         header, cpp = _world_profile_gate_policy.finalize(model, header, cpp)
         header, cpp = _movement_attribute_defaults_policy.finalize(model, header, cpp)
         header, cpp = _server_ground_sprint_policy.finalize(model, header, cpp)

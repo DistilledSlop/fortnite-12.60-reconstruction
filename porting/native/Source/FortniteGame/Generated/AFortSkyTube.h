@@ -7,6 +7,8 @@
 #include "GameFramework/Actor.h"
 
 #include "AttributeSet.h"
+#include "Components/SplineComponent.h"
+#include "Math/Vector.h"
 
 class USplineComponent;
 
@@ -177,5 +179,11 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual void PostInitializeComponents() override;
+	FVector NativeAlignVectorToAxis142701c90(const FVector& Axis, const FVector& InputVector) const;
+	FVector NativeAlignVectorWithSplineDirection142701880(const FVector& SplineDirection, const FVector& InputVector) const;
+	FVector NativeAlignVectorWithSplineAtLocation1427016d0(const FVector& WorldLocation, const FVector& InputVector) const;
+	FVector NativeComputeMagnetForce142700d80(const FVector& SplineLocation, const FVector& SplineDirection, const FVector& CurrentLocation, const FVector& Velocity, const FVector& SteeringInput, float DeltaTime) const;
+	void NativeSampleSplineAtLocation142701530(const FVector& WorldLocation, float& OutInputKey, FVector& OutLocation, FVector& OutDirection) const;
+	bool NativeShouldReduceSteering142707a50(const FVector& AlignedAxis, const FVector& ReferenceDir, const FVector& InputVector) const;
 };
 

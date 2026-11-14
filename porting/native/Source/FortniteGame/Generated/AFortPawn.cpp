@@ -1412,6 +1412,20 @@ bool AFortPawn::HasAnyMatchingGameplayTags(const FGameplayTagContainer& TagConta
 	return ASC && ASC->HasAnyMatchingGameplayTags(TagContainer);
 }
 
+float AFortPawn::NativeGetGravityZScale14231c490() const
+{
+	// Original address: 0x14231c490
+	// CONFIDENCE: high
+	return MovementSet ? MovementSet->GravityZScale.GetCurrentValue() : 1.0f;
+}
+
+float AFortPawn::NativeGetJumpHorizontalAccelerationOverride14231a7a0() const
+{
+	// Original address: 0x14231a7a0
+	// CONFIDENCE: high
+	return AdvancedMovementSet ? AdvancedMovementSet->JumpHorizontalAccelerationOverride.GetCurrentValue() : 0.0f;
+}
+
 void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
@@ -1460,6 +1474,15 @@ AFortPawn::AFortPawn(const FObjectInitializer& ObjectInitializer)
     // Original AFortPawn constructor 0x1422fd7d0..0x1422fd84a.
     GetCapsuleComponent()->InitCapsuleSize(42.0f, 88.0f);
     GetCapsuleComponent()->SetCollisionProfileName(FName(TEXT("FortPawnCapsule")), true);
+    if (UCharacterMovementComponent* CharMove = GetCharacterMovement())
+    {
+        // Original AFortPawn constructor 0x1422fce30: CharMoveComp writes verified by disassembly.
+        CharMove->bUpdateOnlyIfRendered = false;
+        CharMove->NavAgentProps.bCanSwim = false;
+        CharMove->MaxWalkSpeed = 300.0f;
+        CharMove->JumpZVelocity = 980.0f;
+        CharMove->AirControl = 0.9f;
+    }
     // Original constructor 0x1422fce30: stores at 0x1422fd75a and 0x1422fcfd4.
     WeaponHandSocketName = FName(TEXT("RightHand"));
     LeftHandWeaponHandSocketName = NAME_None;

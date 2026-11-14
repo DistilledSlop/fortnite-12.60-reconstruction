@@ -6,9 +6,17 @@
 #include "CoreMinimal.h"
 #include "UFortMovementComp_Character.h"
 
+#include "AbilitySystemComponent.h"
+#include "Curves/CurveFloat.h"
+#include "Engine/EngineBaseTypes.h"
+#include "Engine/EngineTypes.h"
 #include "FAthenaJumpPenalty.h"
 #include "FortJumpMathNative.h"
+#include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Math/Vector.h"
+#include "UObject/NoExportTypes.h"
 
 #include "UFortMovementComp_CharacterAthena.generated.h"
 
@@ -54,5 +62,17 @@ public:
 	static bool NativeCanJumpInternalEvent1440739b0(ACharacter* Owner);
 	virtual bool DoJump(bool bReplayingMoves) override;
 	virtual void UpdateFromCompressedFlags(uint8 Flags) override;
+	virtual float GetMaxSpeed() const override;
+	virtual bool CanAttemptJump() const override;
+	virtual void ProcessLanded(const FHitResult& Hit, float remainingTime, int32 Iterations) override;
+	virtual float GetMaxBrakingDeceleration() const override;
+	virtual FVector ScaleInputAcceleration(const FVector& InputAcceleration) const override;
+	virtual void UpdateCharacterStateBeforeMovement(float DeltaSeconds) override;
+	virtual void UpdateCharacterStateAfterMovement(float DeltaSeconds) override;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual bool CheckFall(const FFindFloorResult& OldFloor, const FHitResult& Hit, const FVector& Delta, const FVector& OldLocation, float remainingTime, float timeTick, int32 Iterations, bool bMustJump) override;
+	virtual bool ShouldPerformAirControlForPathFollowing() const override;
+protected:
+	virtual bool MoveUpdatedComponentImpl(const FVector& Delta, const FQuat& NewRotation, bool bSweep, FHitResult* OutHit, ETeleportType Teleport) override;
 };
 

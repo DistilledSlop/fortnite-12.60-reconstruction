@@ -2167,6 +2167,12 @@ public:
 	bool NativeSwimSprintByDefault1423508d0();
 	virtual void CheckJumpInput(float DeltaTime) override;
 	virtual void NativeOpenParachute14233e6e0(bool bFromInput);
+	virtual float GetJumpMaxHoldTime() const override;
+	void NativeEndZiplining142314600(bool bFromJump);
+	uint8 NativeGetSkyTubeAxisBias1409a95b0() const;
+	float NativeGetVehicleGravityZScale142325690() const;
+	void NativeSetIsSlopeSliding14234dae0(bool bNewValue);
+	bool Native_1423320a0() const;
 protected:
 	void NativeUpdateAccelerationPack1423442e0();
 	void NativeUpdateRemoteViewData142344420();

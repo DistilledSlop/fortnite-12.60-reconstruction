@@ -16,7 +16,7 @@ server_map=${FN_SERVER_MAP:-/Game/Athena/Apollo/Maps/Apollo_Terrain}
 server_url_opts=${FN_SERVER_URL_OPTS:-?RequiredPlayers=1}
 state_dir=${FN_STATE_DIR:-$generated/chrono-server-state}
 log_dir=${FN_LOG_DIR:-$generated/chrono-server-logs}
-server_log_cmds=${FN_SERVER_LOG_CMDS:-LogHandshake Log, LogNet Log, LogNetTraffic Warning, PacketHandlerLog Log}
+server_log_cmds=${FN_SERVER_LOG_CMDS:-LogHandshake Log, LogNet Log, LogNetTraffic Warning, PacketHandlerLog Log, LogNetPlayerMovement VeryVerbose}
 
 tls_cert="$generated/tls/cert.pem"
 tls_key="$generated/tls/key.pem"
@@ -119,7 +119,7 @@ then
     exit 1
 fi
 
-read -r -a extra_args <<< "${FN_SERVER_ARGS:--FortniteSkipUnconvertedLegacyShaderMaps -FortniteTolerateNeedLoadDependencies -FortniteSkipEngineClassNetChecksum -FortniteStartingWood=500 -FortniteBlueprintPawn -FortniteNoServerAnimDecode -FortniteInventoryAbilities -FortniteWarmupSeconds=90}"
+read -r -a extra_args <<< "${FN_SERVER_ARGS:--FortniteSkipUnconvertedLegacyShaderMaps -FortniteTolerateNeedLoadDependencies -FortniteSkipEngineClassNetChecksum -FortniteStartingWood=500 -FortniteBlueprintPawn -FortniteNoServerAnimDecode -FortniteInventoryAbilities -FortniteWarmupSeconds=90 -FortniteProbeMovementDefaults -FortniteNetworkTrace=$log_dir/network-rpc.jsonl}"
 
 FORTNITE_GAMESERVER_URL="http://127.0.0.1:$gs_http_port" \
 FORTNITE_GAMESERVER_SECRET="$gs_secret" \

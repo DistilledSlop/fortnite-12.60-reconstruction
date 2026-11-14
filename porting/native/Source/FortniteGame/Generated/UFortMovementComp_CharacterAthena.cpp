@@ -6,9 +6,18 @@
 #include "AFortPawn.h"
 #include "AFortPlayerPawn.h"
 #include "AFortPlayerPawnAthena.h"
+#include "AbilitySystemComponent.h"
+#include "Curves/CurveFloat.h"
+#include "Engine/EngineBaseTypes.h"
+#include "Engine/EngineTypes.h"
+#include "FFortPawnStats.h"
 #include "FortJumpMathNative.h"
+#include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Math/Vector.h"
 #include "UFortMovementComp_Character.h"
+#include "UObject/NoExportTypes.h"
 
 float UFortMovementComp_CharacterAthena::GetMaxAcceleration() const
 {
@@ -160,6 +169,203 @@ void UFortMovementComp_CharacterAthena::UpdateFromCompressedFlags(uint8 Flags)
 	    NativeMeleeSlowRemaining1e5c = Duration > NativeMeleeSlowRemaining1e5c
 	        ? Duration : NativeMeleeSlowRemaining1e5c;
 	}
+}
+
+float UFortMovementComp_CharacterAthena::GetMaxSpeed() const
+{
+	// Original address: 0x1419d53d0
+	// CONFIDENCE: high
+	float Result = Super::GetMaxSpeed();
+
+	if (MovementMode == MOVE_Walking
+		&& JumpPenalties.IsValidIndex(NativeJumpPenaltyIndex1e54)
+		&& NativeJumpPenaltyRemaining1e58 > 0.0f)
+	{
+		Result *= JumpPenalties[NativeJumpPenaltyIndex1e54].MovementScalar;
+	}
+
+	if (NativeMeleeSlowRemaining1e5c > 0.0f)
+	{
+		if (const AFortPlayerPawnAthena* AthenaPawn = Cast<AFortPlayerPawnAthena>(CharacterOwner))
+		{
+			Result *= AthenaPawn->MeleeCombatSlowSpeedMultiplier;
+		}
+	}
+
+	if (MovementMode == MOVE_Flying)
+	{
+		Result *= MaxAccelerationFlyingMultiplier;
+	}
+
+	return Result;
+}
+
+bool UFortMovementComp_CharacterAthena::CanAttemptJump() const
+{
+	// Original address: 0x1419c2ad0
+	// CONFIDENCE: high
+	return IsJumpAllowed()
+		&& !bWantsToCrouch
+		&& (IsMovingOnGround() || IsFalling() || (MovementMode == MOVE_Custom && CustomMovementMode == 10));
+}
+
+void UFortMovementComp_CharacterAthena::ProcessLanded(const FHitResult& Hit, float remainingTime, int32 Iterations)
+{
+	// Original address: 0x1419ec080
+	// CONFIDENCE: high
+	if (const AFortPlayerPawnAthena* AthenaPawn = Cast<AFortPlayerPawnAthena>(CharacterOwner))
+	{
+		if (AthenaPawn->IsBotControlled())
+		{
+			SetGroundMovementMode(MOVE_NavWalking);
+		}
+	}
+	Super::ProcessLanded(Hit, remainingTime, Iterations);
+}
+
+float UFortMovementComp_CharacterAthena::GetMaxBrakingDeceleration() const
+{
+	// Original address: 0x1419d5340
+	// CONFIDENCE: high
+	if (MovementMode == MOVE_Flying)
+	{
+		if (AFortPawn* FortPawn = Cast<AFortPawn>(CharacterOwner))
+		{
+			return FortPawn->NativeGetBrakingDecelerationFlying14231a5a0() * MaxAccelerationFlyingMultiplier;
+		}
+	}
+	return Super::GetMaxBrakingDeceleration();
+}
+
+FVector UFortMovementComp_CharacterAthena::ScaleInputAcceleration(const FVector& InputAcceleration) const
+{
+	// Original address: 0x1419efe30
+	// CONFIDENCE: high
+	FVector Result = Super::ScaleInputAcceleration(InputAcceleration);
+	if (Result.IsNearlyZero(0.0001f))
+	{
+		return Result;
+	}
+
+	const AFortPlayerPawn* Player = Cast<AFortPlayerPawn>(CharacterOwner);
+	if (!Player || !Player->IsSprinting() || !Player->IsLocallyControlled())
+	{
+		return Result;
+	}
+
+	const FFortPawnStats* Stats = Player->PawnStatHandle.GetRow<FFortPawnStats>(TEXT("AFortPawn::GetPawnStats"));
+	const float StrafeMult = Stats ? FMath::Clamp(Stats->AccelerationStrafeMultiplierSprint, 0.0f, 1.0f) : 1.0f;
+	if (FMath::IsNearlyEqual(StrafeMult, 1.0f, 1e-8f))
+	{
+		return Result;
+	}
+
+	const FVector RightVec = Player->GetRootComponent() ? Player->GetRootComponent()->GetRightVector() : Player->GetActorRightVector();
+	const float OrigSize = Result.Size();
+	const float RightDot = FVector::DotProduct(Result, RightVec);
+	FVector Adjusted = Result - RightVec * (RightDot * (1.0f - StrafeMult));
+	const float AdjSizeSq = Adjusted.SizeSquared();
+	if (AdjSizeSq > 1e-8f)
+	{
+		Adjusted *= OrigSize * FMath::InvSqrt(AdjSizeSq);
+	}
+	return Adjusted;
+}
+
+void UFortMovementComp_CharacterAthena::UpdateCharacterStateBeforeMovement(float DeltaSeconds)
+{
+	// Original address: 0x1419fff40
+	// CONFIDENCE: high
+	if (const AFortPlayerPawn* Player = Cast<AFortPlayerPawn>(CharacterOwner))
+	{
+		if (Player->bIsDBNO)
+		{
+			bWantsToCrouch = true;
+		}
+	}
+	Super::UpdateCharacterStateBeforeMovement(DeltaSeconds);
+}
+
+void UFortMovementComp_CharacterAthena::UpdateCharacterStateAfterMovement(float DeltaSeconds)
+{
+	// Original address: 0x1419fff00
+	// CONFIDENCE: high
+	Super::UpdateCharacterStateAfterMovement(DeltaSeconds);
+	NativeMeleeSlowRemaining1e5c = FMath::Max(NativeMeleeSlowRemaining1e5c - DeltaSeconds, 0.0f);
+}
+
+void UFortMovementComp_CharacterAthena::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	// Original address: 0x1419fdef0
+	// CONFIDENCE: high
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+}
+
+bool UFortMovementComp_CharacterAthena::CheckFall(const FFindFloorResult& OldFloor, const FHitResult& Hit, const FVector& Delta, const FVector& OldLocation, float remainingTime, float timeTick, int32 Iterations, bool bMustJump)
+{
+	// Original address: 0x1419c40d0
+	// CONFIDENCE: high
+	const bool bResult = Super::CheckFall(OldFloor, Hit, Delta, OldLocation, remainingTime, timeTick, Iterations, bMustJump);
+	if (bResult)
+	{
+		if (ABuildingSMActor* Building = Cast<ABuildingSMActor>(Hit.Actor.Get()))
+		{
+			if (AFortPlayerPawnAthena* AthenaPawn = Cast<AFortPlayerPawnAthena>(CharacterOwner))
+			{
+				if (Building->NativeFloorAttributionWeak718.IsValid())
+				{
+					AthenaPawn->FallInstigator = Building->NativeFloorAttributionWeak718.Get();
+				}
+				AthenaPawn->LastFloorBeforeFalling = Building;
+			}
+		}
+	}
+	return bResult;
+}
+
+bool UFortMovementComp_CharacterAthena::ShouldPerformAirControlForPathFollowing() const
+{
+	// Original address: 0x1419f9ba0
+	// CONFIDENCE: high
+	if (Super::ShouldPerformAirControlForPathFollowing())
+	{
+		if (const AFortPlayerPawnAthena* AthenaPawn = Cast<AFortPlayerPawnAthena>(CharacterOwner))
+		{
+			if (!AthenaPawn->IsBotControlled())
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool UFortMovementComp_CharacterAthena::MoveUpdatedComponentImpl(const FVector& Delta, const FQuat& NewRotation, bool bSweep, FHitResult* OutHit, ETeleportType Teleport)
+{
+	// Original address: 0x1419dfce0
+	// CONFIDENCE: high
+	bool bEffectiveSweep = bSweep;
+	if (bEffectiveSweep)
+	{
+		if (const AFortPawn* FortPawn = Cast<AFortPawn>(CharacterOwner))
+		{
+			if (FortPawn->GetLocalRole() == ROLE_SimulatedProxy)
+			{
+				if ((NativeExtraFlags_1e39 & 2) == 0)
+				{
+					bEffectiveSweep = false;
+				}
+				else if (const AFortPlayerPawn* Player = Cast<AFortPlayerPawn>(FortPawn))
+				{
+					if (Player->bIsSkydivingFromBus && Player->bIsSkydiving && !Player->bIsParachuteOpen)
+					{
+						bEffectiveSweep = false;
+					}
+				}
+			}
+		}
+	}
+	return Super::MoveUpdatedComponentImpl(Delta, NewRotation, bEffectiveSweep, OutHit, Teleport);
 }
 
 

@@ -86,7 +86,11 @@ if [[ ${FN_RENDERER:-} == dxvk ]]; then
     [[ -d $FN_WINEPREFIX ]] || { echo "DXVK prefix $FN_WINEPREFIX not found" >&2; exit 1; }
 fi
 # An explicit empty value disables input automation; an unset value uses the smoke sequence.
-export FN_ACTIONS="${FN_ACTIONS-125:click,640,592 235:click,1144,473 300:shot 400:hold,w,6 410:shot 430:hold,d,6 440:shot 560:shot}"
+if [[ ${FN_MOVEMENT_ACCEPTANCE:-0} == 1 ]]; then
+    export FN_ACTIONS="${FN_ACTIONS-125:click,640,592 235:click,1144,473 300:shot 400:keydown,w 402:key,space 404:shot 406:keyup,w 410:hold,d,6 420:keydown,w 422:hold,space,0.4 426:keyup,w 430:shot 560:shot}"
+else
+    export FN_ACTIONS="${FN_ACTIONS-125:click,640,592 235:click,1144,473 300:shot 400:hold,w,6 410:shot 430:hold,d,6 440:shot 560:shot}"
+fi
 # Extra server URL options (e.g. '?RequiredPlayers=1') and switches (e.g. '-FortniteWarmupSeconds=20').
 server_url="${FN_SERVER_MAP:-/Game/Maps/FortniteEmptyDedicated}${FN_SERVER_URL_OPTS:-}"
 read -r -a server_extra <<< "${FN_SERVER_ARGS:-}"
@@ -179,5 +183,11 @@ if [[ -s $out/udp.pcap ]]; then
 else echo 'PCAP packets: unavailable'; fi
 printf 'Client LogNet/LogHandshake (last 15):\n'
 grep -aE 'LogNet|LogHandshake' "$out/client.log" 2>/dev/null | grep -avE 'VeryVerbose|TickDispatch|TickFlush' | tail -15 || true
+if [[ ${FN_MOVEMENT_ACCEPTANCE:-0} == 1 ]]; then
+    if ! python3 "$porting/tools/movement_pairs.py" "$out" --checkpoint-json "$out/acceptance-checkpoint.json" --max-median-interval "${FN_MOVEMENT_MAX_INTERVAL:-0.06}"; then
+        echo "Movement acceptance check failed (see $out/acceptance-checkpoint.json)" >&2
+        status=1
+    fi
+fi
 [[ -n $server_pid && -s $out/udp.pcap ]] || exit 1
 exit "$status"

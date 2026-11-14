@@ -1241,5 +1241,7 @@ public:
 	virtual bool HasMatchingGameplayTag(FGameplayTag TagToCheck) const override;
 	virtual bool HasAllMatchingGameplayTags(const FGameplayTagContainer& TagContainer) const override;
 	virtual bool HasAnyMatchingGameplayTags(const FGameplayTagContainer& TagContainer) const override;
+	float NativeGetGravityZScale14231c490() const;
+	float NativeGetJumpHorizontalAccelerationOverride14231a7a0() const;
 };
 

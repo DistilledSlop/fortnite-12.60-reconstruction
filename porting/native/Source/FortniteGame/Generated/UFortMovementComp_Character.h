@@ -6,19 +6,28 @@
 #include "CoreMinimal.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
+#include "AbilitySystemComponent.h"
 #include "AttributeSet.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/PrimitiveComponent.h"
 #include "Components/SceneComponent.h"
 #include "Containers/Array.h"
 #include "Containers/ContainerAllocationPolicies.h"
+#include "Curves/CurveFloat.h"
 #include "EFortAILODLevel.h"
+#include "Engine/EngineBaseTypes.h"
+#include "Engine/EngineTypes.h"
 #include "Engine/NetSerialization.h"
 #include "FAirControlParams.h"
 #include "FWaterControlParams.h"
 #include "FWaterJumpParams.h"
 #include "FWaterSprintBoostParams.h"
 #include "FortJumpMathNative.h"
+#include "FortNativeGameplayTagsRuntime.h"
+#include "GameFramework/Actor.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PhysicsVolume.h"
+#include "Math/Rotator.h"
 #include "Math/Vector.h"
 
 class AFortPawn;
@@ -59,9 +68,15 @@ public:
 	UPROPERTY()
 	float NetworkSmoothingViewAngleThreshold;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x65c): not a UPROPERTY, not replicated.
+	float NativeViewAngleCos_65c;
+
 	// table index 46, flags 0x10000000000001
 	UPROPERTY()
 	float NetworkSmoothingViewAngleThresholdSmall;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x664): not a UPROPERTY, not replicated.
+	float NativeViewAngleSmallCos_664;
 
 	// table index 45, flags 0x10000000000001
 	UPROPERTY()
@@ -226,8 +241,23 @@ public:
 	UPROPERTY(Transient)
 	float FallingStartedZ;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1d04): not a UPROPERTY, not replicated.
+	float NativeWaterSplineKey_1d04;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x1d08): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0x1d08;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1d0c): not a UPROPERTY, not replicated.
+	float NativeWaterNormDepth_1d0c;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1d10): not a UPROPERTY, not replicated.
+	float NativeWaterSurfaceOffsetZ_1d10;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1d14): not a UPROPERTY, not replicated.
+	float NativeWaterVelocityDepthScale_1d14;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1d18): not a UPROPERTY, not replicated.
+	FVector NativeWaterCurrentVelocity_1d18;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x1d24): not a UPROPERTY, not replicated.
 	FVector NativeRecoveredFVector_0x1d24;
@@ -241,15 +271,33 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x1d48): not a UPROPERTY, not replicated.
 	FVector NativeRecoveredFVector_0x1d48;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1dfc): not a UPROPERTY, not replicated.
+	uint8 NativeModeSwitchGuard_1dfc;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x1dfd): not a UPROPERTY, not replicated.
 	uint8 NativeDoJumpFlag1dfd;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x1dfe): not a UPROPERTY, not replicated.
 	uint8 NativeAirborneFlag;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1dff): not a UPROPERTY, not replicated.
+	uint8 NativeZeroAccelFlag_1dff;
+
 	// table index 4, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FVector CustomFallingAcceleration;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1e0c): not a UPROPERTY, not replicated.
+	FVector NativeAirborneVelocity_1e0c;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1e18): not a UPROPERTY, not replicated.
+	float NativeLastImpactTimeSlice_1e18;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1e1c): not a UPROPERTY, not replicated.
+	float NativeSlideStartTime_1e1c;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1e20): not a UPROPERTY, not replicated.
+	FVector NativeSlideImpactNormal_1e20;
 
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -266,6 +314,12 @@ public:
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
 	uint8 bUpdatesFloorWhenNotInFullSimulationOnlyOnNetUpdate : 1;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1e38): not a UPROPERTY, not replicated.
+	uint8 NativePackedAccelFlags_1e38;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1e39): not a UPROPERTY, not replicated.
+	uint8 NativeExtraFlags_1e39;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetFallingStartedZ() const;
@@ -305,5 +359,65 @@ public:
 	void NativeRemoveMoveCombiningBlocker1420eaed0(FName AbilityName);
 	virtual void UpdateFromCompressedFlags(uint8 Flags) override;
 	virtual void ApplyVelocityBraking(float DeltaTime, float Friction, float BrakingDeceleration) override;
+	bool NativeCanStepUpOrLandOn1420e57d0(const FHitResult& Hit) const;
+	void NativeClearCustomParachute1420e6d30();
+	float NativeComputeWaterBobbingAndDrag1420f6570(float DeltaTime);
+	void NativeEnterSurfaceSwimming1420e66c0();
+	float NativeGetCurrentFallDirectionZ1420e2940() const;
+	const FAirControlParams& NativeGetParachuteAirControlParams1420dfab0() const;
+	bool NativeGetVortexCeilingRange1420ddab0(const FAirControlParams& Params, float Level, float& OutMinZ, float& OutCenterZ, float& OutMaxZ) const;
+	bool NativeHasSurfaceWater1420e5490() const;
+	bool NativeIsInVortex1420e53e0() const;
+	void NativePhysCustomMode5_1420e9390(float deltaTime, int32 Iterations);
+	void NativePhysCustomMode6_1420e8700(float deltaTime, int32 Iterations);
+	void NativePhysCustomMode7_1420e9010(float deltaTime, int32 Iterations);
+	void NativePhysCustomMode8_1420ea420(float deltaTime, int32 Iterations);
+	void NativePhysCustomMode10_1420e9ae0(float deltaTime, int32 Iterations);
+	void NativeResetCapsuleLocation1420ecae0();
+	void NativeResetFallingStartedZ1420edbc0();
+	void NativeSetGravityCeilingRelation1420edc00(int32 NewRelation);
+	bool NativeShouldUseSkyTubeActiveAirParams1420ef2b0() const;
+	bool NativeTryEnterSurfaceSwimming1420d9940();
+	void NativeUpdateParachuteRotation1420f5ff0();
+	void NativeWaterSplineUpdate1420f6bb0();
+	virtual void OnRegister() override;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual float GetGravityZ() const override;
+	virtual bool IsInWater() const override;
+	virtual void HandleImpact(const FHitResult& Hit, float TimeSlice, const FVector& MoveDelta) override;
+	virtual void UpdateComponentVelocity() override;
+	virtual FVector ComputeSlideVector(const FVector& Delta, const float Time, const FVector& Normal, const FHitResult& Hit) const override;
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+	virtual bool IsFalling() const override;
+	virtual void SetMovementMode(EMovementMode NewMovementMode, uint8 NewCustomMode) override;
+	virtual void OnMovementModeChanged(EMovementMode PreviousMovementMode, uint8 PreviousCustomMode) override;
+	virtual bool ShouldCatchAir(const FFindFloorResult& OldFloor, const FFindFloorResult& NewFloor) override;
+	virtual void HandleWalkingOffLedge(const FVector& PreviousFloorImpactNormal, const FVector& PreviousFloorContactNormal, const FVector& PreviousLocation, float TimeDelta) override;
+	virtual void Launch(const FVector& LaunchVel) override;
+	virtual bool HandlePendingLaunch() override;
+	virtual void JumpOff(AActor* MovementBaseActor) override;
+	virtual FRotator ComputeOrientToMovementRotation(const FRotator& CurrentRotation, float DeltaTime, FRotator& DeltaRotation) const override;
+	virtual void NotifyJumpApex() override;
+	virtual FVector NewFallVelocity(const FVector& InitialVelocity, const FVector& Gravity, float DeltaTime) const override;
+	virtual float ImmersionDepth() const override;
+	virtual void CalcVelocity(float DeltaTime, float Friction, bool bFluid, float BrakingDeceleration) override;
+	virtual float GetMinAnalogSpeed() const override;
+	virtual float GetMaxBrakingDeceleration() const override;
+	virtual bool CanStepUp(const FHitResult& Hit) const override;
+	virtual void ApplyAccumulatedForces(float DeltaSeconds) override;
+	virtual void UpdateCharacterStateBeforeMovement(float DeltaSeconds) override;
+	virtual void UpdateCharacterStateAfterMovement(float DeltaSeconds) override;
+	virtual FVector GetFallingLateralAcceleration(float DeltaTime) override;
+	virtual bool ShouldLimitAirControl(float DeltaTime, const FVector& FallAcceleration) const override;
+	virtual void ProcessLanded(const FHitResult& Hit, float remainingTime, int32 Iterations) override;
+	virtual void SetNavWalkingPhysics(bool bEnable) override;
+	virtual bool CanCrouchInCurrentState() const override;
+	virtual void PhysicsRotation(float DeltaTime) override;
+	virtual float VisualizeMovement() const override;
+	virtual void PhysCustom(float deltaTime, int32 Iterations) override;
+	virtual FVector HandleSlopeBoosting(const FVector& SlideResult, const FVector& Delta, const float Time, const FVector& Normal, const FHitResult& Hit) const override;
+	virtual bool IsValidLandingSpot(const FVector& CapsuleLocation, const FHitResult& Hit) const override;
+	virtual FVector ConstrainInputAcceleration(const FVector& InputAcceleration) const override;
+	virtual FVector ScaleInputAcceleration(const FVector& InputAcceleration) const override;
 };
 
