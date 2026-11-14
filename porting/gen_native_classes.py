@@ -6208,6 +6208,9 @@ def render_struct_header(model, source_label):
     native = net.get("kind") == "native"
     includes = list(model.get("includes", []))
     includes.extend(_pickaxe_vfx_policy.struct_includes(model))
+    includes.extend(_pawn_stats_native_row_policy.struct_includes(model))
+    includes.extend(_pawn_stats_derived_rows_policy.struct_includes(model))
+    includes = list(dict.fromkeys(includes))
     if name == "FFortItemList":
         includes.append("Misc/Crc.h")
     if delta and NET_SERIALIZATION_HEADER not in includes + [model.get("parent_include")]:

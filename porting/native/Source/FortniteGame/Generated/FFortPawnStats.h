@@ -6,6 +6,10 @@
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
 #include "EFortControlRecoveryBehavior.h"
+#include "Engine/CurveTable.h"
+#include "Curves/RealCurve.h"
+#include "Serialization/Archive.h"
+#include "SharedFortGameLog.h"
 
 class AFortPawn;
 class UCurveTable;

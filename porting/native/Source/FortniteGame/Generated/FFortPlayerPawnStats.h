@@ -5,6 +5,10 @@
 
 #include "CoreMinimal.h"
 #include "FFortPawnStats.h"
+#include "AFortPawn.h"
+#include "UFortAbilitySystemComponent.h"
+#include "GameplayTagContainer.h"
+#include "FortNativeGameplayTagsRuntime.h"
 
 #include "FFortPlayerPawnStats.generated.h"
 
@@ -67,9 +71,13 @@ struct FFortPlayerPawnStats : public FFortPawnStats
 		if (FallingDamageTable == nullptr || Row.IsNone())
 		{
 		    if (bPersonalVehicle)
+		    {
 		        UE_LOG(LogFort, Warning, TEXT("No falling damage table and/or personal vehicle table row name specified."));
+		    }
 		    else
+		    {
 		        UE_LOG(LogFort, Warning, TEXT("No falling damage table and/or table row name specified."));
+		    }
 		    return 0.0f;
 		}
 		static const FString Context(TEXT("FallingDamageTable Lookup"));
@@ -77,9 +85,13 @@ struct FFortPlayerPawnStats : public FFortPawnStats
 		if (Curve)
 		    return Curve->Eval(Value, 0.0f);
 		if (bPersonalVehicle)
+		{
 		    UE_LOG(LogFort, Warning, TEXT("Falling curve for the personal vehicle not found in falling damage table: %s"), *Row.ToString());
+		}
 		else
+		{
 		    UE_LOG(LogFort, Warning, TEXT("Falling curve not found in falling damage table: %s"), *Row.ToString());
+		}
 		return 0.0f;
 	}
 

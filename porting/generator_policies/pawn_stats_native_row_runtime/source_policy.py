@@ -10,6 +10,10 @@ INCLUDES = ['Engine/DataTable.h', 'Engine/CurveTable.h', 'Curves/RealCurve.h',
             'Serialization/Archive.h', 'EFortControlRecoveryBehavior.h', 'SharedFortGameLog.h']
 
 
+def struct_includes(model):
+    return INCLUDES if model['cpp_name'] == 'FFortPawnStats' else []
+
+
 def validate(info):
     rec = info.rec
     digest = hashlib.sha256(json.dumps(rec['properties'], sort_keys=True, separators=(',', ':')).encode()).hexdigest()

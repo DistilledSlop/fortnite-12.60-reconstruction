@@ -50,11 +50,17 @@ def apply_struct(info, model):
     for m, (name, ctype, offset) in zip(model['members'], fields):
         if m['ctype'] != ctype or m['decl'] != '%s %s;' % (ctype, name) or m.get('bitfield') or m['offset'] != offset:
             raise ValueError(info.cpp_name + ' field changed: ' + name)
-    includes = ['FFortPawnStats.h']
-    if info.cpp_name == 'FFortPlayerPawnStats':
-        includes += ['AFortPawn.h', 'UFortAbilitySystemComponent.h', 'GameplayTagContainer.h', 'FortNativeGameplayTagsRuntime.h']
-    model['includes'] = list(dict.fromkeys(model.get('includes', []) + includes))
+    model['includes'] = list(dict.fromkeys(model.get('includes', []) + struct_includes(model)))
     return model
+
+
+def struct_includes(model):
+    if model['cpp_name'] not in CONTRACTS:
+        return []
+    includes = ['FFortPawnStats.h']
+    if model['cpp_name'] == 'FFortPlayerPawnStats':
+        includes += ['AFortPawn.h', 'UFortAbilitySystemComponent.h', 'GameplayTagContainer.h', 'FortNativeGameplayTagsRuntime.h']
+    return includes
 
 
 def declarations(model):
