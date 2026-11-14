@@ -2481,6 +2481,18 @@ _athena_playlist_selection_spec = _common_activation_import.spec_from_file_locat
     "athena_playlist_selection_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "athena_playlist_selection_runtime", "source_policy.py"))
 _athena_playlist_selection_policy = _common_activation_import.module_from_spec(_athena_playlist_selection_spec)
 _athena_playlist_selection_spec.loader.exec_module(_athena_playlist_selection_policy)
+_air_selector_admission_spec = _common_activation_import.spec_from_file_location(
+    "air_selector_admission_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "air_selector_admission_runtime", "source_policy.py"))
+_air_selector_admission_policy = _common_activation_import.module_from_spec(_air_selector_admission_spec)
+_air_selector_admission_spec.loader.exec_module(_air_selector_admission_policy)
+_movement_max_acceleration_spec = _common_activation_import.spec_from_file_location(
+    "movement_max_acceleration_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "movement_max_acceleration_runtime", "source_policy.py"))
+_movement_max_acceleration_policy = _common_activation_import.module_from_spec(_movement_max_acceleration_spec)
+_movement_max_acceleration_spec.loader.exec_module(_movement_max_acceleration_policy)
+_athena_playerstate_constructor_spec = _common_activation_import.spec_from_file_location(
+    "athena_playerstate_constructor_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "athena_playerstate_constructor_runtime", "source_policy.py"))
+_athena_playerstate_constructor_policy = _common_activation_import.module_from_spec(_athena_playerstate_constructor_spec)
+_athena_playerstate_constructor_spec.loader.exec_module(_athena_playerstate_constructor_policy)
 _replicated_building_defaults_spec = _common_activation_import.spec_from_file_location(
     "replicated_building_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "replicated_building_defaults_runtime", "source_policy.py"))
 _replicated_building_defaults_policy = _common_activation_import.module_from_spec(_replicated_building_defaults_spec)
@@ -2890,6 +2902,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _athena_mode_policy.apply(model, block, owner_fns)
     model = _pickaxe_vfx_policy.apply(model)
     model = _pawn_aim_rotation_policy.apply(model)
+    model = _movement_max_acceleration_policy.apply(model)
     model = _mutator_owner_policy.apply(model, block, owner_fns)
     model = _replay_spectator216_policy.apply(model, block, owner_fns)
     model = _controller_analytics_policy.apply(model, block, owner_fns)
@@ -4479,6 +4492,7 @@ def promote(args):
     listed = set(class_list)
     _remote_view_replication_policy.validate_required_classes(listed)
     _athena_playlist_selection_policy.validate_required_classes(listed)
+    _air_selector_admission_policy.validate_required_classes(listed)
     name_to_block = {v: k for k, v in names.items()}
     registry = ModuleRegistry(args.engine_root, PROJECT_NATIVE_DIR, UPROJECT_DEFAULT)
     blocklist = load_blocklist(args.blocklist)
@@ -4934,6 +4948,9 @@ def promote(args):
         header, cpp = _building_foundation_constructor_policy.finalize(model, header, cpp)
         header, cpp = _fort_game_session_class_policy.finalize(model, header, cpp)
         header, cpp = _athena_playlist_selection_policy.finalize(model, header, cpp)
+        header, cpp = _air_selector_admission_policy.finalize(model, header, cpp)
+        header, cpp = _movement_max_acceleration_policy.finalize(model, header, cpp)
+        header, cpp = _athena_playerstate_constructor_policy.finalize(model, header, cpp)
         header, cpp = _pawn_hand_socket_policy.finalize(model, header, cpp)
         header, cpp = _replicated_building_defaults_policy.finalize(model, header, cpp)
         header, cpp = _playlist_storm_defaults_policy.finalize(model, header, cpp)

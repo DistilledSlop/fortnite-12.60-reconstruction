@@ -1776,6 +1776,21 @@ namespace FortAthenaMatchFlow
                             Air.LateralFriction.Value, Air.MaxLateralSpeed.Value, Air.TerminalVelocity.Value,
                             Air.UpwardTerminalVelocity.Value, Air.GravityScalar.Value,
                             Air.CustomGravityCeiling.Value, Air.CustomGravityCeilingWidth.Value);
+                        // Blueprint defaults use Value as a multiplier; the curve supplies the authored magnitude.
+                        const FScalableFloat* Values[] = {&Air.MaxAcceleration, &Air.LateralFriction,
+                            &Air.MaxLateralSpeed, &Air.TerminalVelocity, &Air.UpwardTerminalVelocity,
+                            &Air.GravityScalar, &Air.CustomGravityCeiling, &Air.CustomGravityCeilingWidth};
+                        const TCHAR* Fields[] = {TEXT("acceleration"), TEXT("friction"), TEXT("lateralSpeed"),
+                            TEXT("terminal"), TEXT("upwardTerminal"), TEXT("gravity"), TEXT("ceiling"), TEXT("ceilingWidth")};
+                        const float Level = Sample->GetAirControlLevel();
+                        for (int32 FieldIndex = 0; FieldIndex < UE_ARRAY_COUNT(Values); ++FieldIndex)
+                        {
+                            const FScalableFloat& Value = *Values[FieldIndex];
+                            UE_LOG(LogTemp, Display, TEXT("Movement air curve: pawn=%s sample=%s params=%s field=%s level=%.9g multiplier=%.9g table=%s row=%s evaluated=%.9g"),
+                                *Pawn->GetName(), Labels[Index], AirLabels[AirIndex], Fields[FieldIndex], Level,
+                                Value.Value, *GetPathNameSafe(Value.Curve.CurveTable), *Value.Curve.RowName.ToString(),
+                                Value.GetValueAtLevel(Level, nullptr));
+                        }
                     }
                 }
             }

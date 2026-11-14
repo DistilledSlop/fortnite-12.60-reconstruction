@@ -47,6 +47,8 @@ class FORTNITEGAME_API AFortPlayerStateAthena : public AFortPlayerStateZone, pub
 	GENERATED_BODY()
 
 public:
+	AFortPlayerStateAthena(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 74, flags 0x40000000000020
 	UPROPERTY(Replicated)
 	int32 PersonalLobbyAction;

@@ -1,0 +1,30 @@
+[
+  {
+    "class": "UFortMovementComp_Character",
+    "function": "GetAirControlLevel",
+    "kind": "helper",
+    "signature": "float GetAirControlLevel() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/generator_policies/movement_max_acceleration_runtime/GetAirControlLevel.inc",
+    "address": "0x1420e2690",
+    "status": "ported",
+    "confidence": "high",
+    "access": "public",
+    "notes": "Original mode 9 balloon level helper; uses PawnOwner, not CharacterOwner."
+  },
+  {
+    "class": "UFortMovementComp_Character",
+    "function": "GetMaxAcceleration",
+    "kind": "helper",
+    "signature": "float GetMaxAcceleration() const",
+    "signature_status": "proposed",
+    "virtual": true,
+    "override": true,
+    "access": "public",
+    "inc_path": "porting/generator_policies/movement_max_acceleration_runtime/GetMaxAcceleration.inc",
+    "address": "0x1420e1760",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Full original base override; requires air selector admission and pawn movement style virtual policy."
+  }
+]

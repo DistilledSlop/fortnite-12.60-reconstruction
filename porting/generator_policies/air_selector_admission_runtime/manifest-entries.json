@@ -1,0 +1,88 @@
+[
+  {
+    "class": "UFortMovementComp_Character",
+    "function": "GetAirControlParams",
+    "kind": "helper",
+    "signature": "const FAirControlParams& GetAirControlParams() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/generator_policies/air_selector_admission_runtime/GetAirControlParams.inc",
+    "address": "0x1420df7e0",
+    "status": "ported",
+    "confidence": "high",
+    "access": "public"
+  },
+  {
+    "class": "UFortMovementComp_Character",
+    "function": "NativeAirAcceleration",
+    "kind": "helper",
+    "signature": "const FVector& NativeAirAcceleration() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/generator_policies/air_selector_admission_runtime/NativeAirAcceleration.inc",
+    "address": "0x1420e4740",
+    "status": "ported",
+    "confidence": "high",
+    "access": "public"
+  },
+  {
+    "class": "UFortMovementComp_Character",
+    "function": "NativeAirDirection_1420e4740",
+    "kind": "helper",
+    "signature": "bool NativeAirDirection_1420e4740() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/generator_policies/air_selector_admission_runtime/NativeAirDirection_1420e4740.inc",
+    "address": "0x1420e4740",
+    "status": "ported",
+    "confidence": "high",
+    "access": "public"
+  },
+  {
+    "class": "UFortMovementComp_Character",
+    "function": "NativeAirDirection_1420e4ab0",
+    "kind": "helper",
+    "signature": "bool NativeAirDirection_1420e4ab0() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/generator_policies/air_selector_admission_runtime/NativeAirDirection_1420e4ab0.inc",
+    "address": "0x1420e4ab0",
+    "status": "ported",
+    "confidence": "high",
+    "access": "public"
+  },
+  {
+    "class": "UFortMovementComp_Character",
+    "function": "NativeAirForward_1420e2860",
+    "kind": "helper",
+    "signature": "FVector NativeAirForward_1420e2860() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/generator_policies/air_selector_admission_runtime/NativeAirForward_1420e2860.inc",
+    "address": "0x1420e2860",
+    "status": "ported",
+    "confidence": "high",
+    "access": "public"
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "NativeHasSkydiveLeader_1419dd2d0",
+    "kind": "helper",
+    "signature": "bool NativeHasSkydiveLeader_1419dd2d0() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/generator_policies/air_selector_admission_runtime/NativeHasSkydiveLeader_1419dd2d0.inc",
+    "address": "0x1419dd2d0",
+    "status": "ported",
+    "confidence": "high",
+    "access": "public",
+    "virtual": true
+  },
+  {
+    "class": "UFortMovementComp_Character",
+    "function": "NativeAirborneFlag",
+    "kind": "member_field",
+    "signature": "uint8 NativeAirborneFlag",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x1dfe",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1420e85a0",
+    "notes": "Whole original unreflected byte shared with future PhysCustom; no explicit initializer."
+  }
+]

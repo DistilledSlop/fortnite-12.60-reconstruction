@@ -2060,6 +2060,13 @@ FString* AFortPlayerControllerAthena::NativeGetPlayerName1444ac7a0(APlayerState*
 	// CONFIDENCE: MEDIUM
 }
 
+bool AFortPlayerControllerAthena::NativeHasSkydiveLeader_1419dd2d0() const
+{
+	// CONFIDENCE: high
+	// Original AFortPlayerControllerAthena virtual +0x2190 -> 0x1419dd2d0.
+	return SkydiveLeader != nullptr && SkydiveLeader != PlayerState;
+}
+
 void AFortPlayerControllerAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -230,6 +230,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x1d48): not a UPROPERTY, not replicated.
 	FVector NativeRecoveredFVector_0x1d48;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1dfe): not a UPROPERTY, not replicated.
+	uint8 NativeAirborneFlag;
+
 	// table index 4, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FVector CustomFallingAcceleration;
@@ -273,5 +276,12 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	bool NativeHasSkyTube_1420e5300() const;
 	bool NativeVortexOrSkyTube_1420d9730() const;
+	const FAirControlParams& GetAirControlParams() const;
+	const FVector& NativeAirAcceleration() const;
+	bool NativeAirDirection_1420e4740() const;
+	bool NativeAirDirection_1420e4ab0() const;
+	FVector NativeAirForward_1420e2860() const;
+	float GetAirControlLevel() const;
+	virtual float GetMaxAcceleration() const override;
 };
 

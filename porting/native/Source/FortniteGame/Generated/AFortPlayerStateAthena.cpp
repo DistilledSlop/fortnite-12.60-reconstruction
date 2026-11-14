@@ -970,3 +970,26 @@ void AFortPlayerStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 	DOREPLIFETIME_CONDITION(AFortPlayerStateAthena, PersonalLobbyAction, COND_OwnerOnly);
 }
 
+
+AFortPlayerStateAthena::AFortPlayerStateAthena(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    // Reflected-field projection of original constructor 0x141a2e060; see policy evidence.
+    static_assert(TIsSame<decltype(bSkipReplicatedStats), bool>::Value, "player-state field type changed");
+    static_assert(TIsSame<decltype(NetUpdateFrequency), float>::Value, "actor field type changed");
+    SeasonLevelUIDisplay = 0;
+    bResurrectionChipDisabled = false;
+    bResurrectingNow = false;
+    RebootCounter = 0;
+    bHoldsRebootVanLock = false;
+    bPreserveSquad = false;
+    SecondsAlive = 0;
+    TimeOfPawnCreation = 0;
+    SetShouldUpdateReplicatedPing(false);
+    bSkipReplicatedStats = true;
+    NetUpdateFrequency = 1.0f;
+    bIsAnAthenaGameParticipant = true;
+    PersonalLobbyAction = 0;
+    MatchAbandonState = static_cast<EMatchAbandonState>(0);
+    TeamScore = -1;
+}

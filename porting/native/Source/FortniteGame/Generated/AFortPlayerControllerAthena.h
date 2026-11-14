@@ -1448,5 +1448,6 @@ public:
 	static void NativeHashTableFindIndex1407bda90(void* Table, int32& OutIndex, uint64 Key);
 	static void NativeSetControllerFlagBit0141a5b620(UObject* Context, uint8 Value);
 	static FString* NativeGetPlayerName1444ac7a0(APlayerState* PlayerStateObject, FString* OutName);
+	virtual bool NativeHasSkydiveLeader_1419dd2d0() const;
 };
 
