@@ -256,22 +256,34 @@ static uintptr_t find_manager(void) {
  * A thread created during enumeration is also visited before enumeration ends.
  */
 typedef LONG (NTAPI *NextThreadFn)(HANDLE,HANDLE,ACCESS_MASK,ULONG,ULONG,PHANDLE);
+static WCHAR freeze_failure[160];
 static int freeze_other_threads(HANDLE handles[MAX_THREADS],DWORD *number) {
     NextThreadFn next=(NextThreadFn)(uintptr_t)GetProcAddress(GetModuleHandleW(L"ntdll.dll"),"NtGetNextThread");
     HANDLE cursor=NULL,thread=NULL;DWORD self=GetCurrentThreadId();LONG code;
-    *number=0;if(!next)return 0;
+    *number=0;freeze_failure[0]=0;
+    if(!next){swprintf(freeze_failure,160,L"NtGetNextThread is not exported");return 0;}
     while((code=next(GetCurrentProcess(),cursor,THREAD_SUSPEND_RESUME|THREAD_QUERY_LIMITED_INFORMATION,0,0,&thread))>=0) {
         /* Keep cursor handles alive until all threads have been resumed. */
         if(GetThreadId(thread)==self) {
             /* Own worker is the sole unsuspended thread; retain its handle too. */
-            if(*number==MAX_THREADS){CloseHandle(thread);goto fail;}
+            if(*number==MAX_THREADS){CloseHandle(thread);swprintf(freeze_failure,160,L"more than %d threads",MAX_THREADS);goto fail;}
             handles[(*number)++]=thread;cursor=thread;continue;
         }
-        if(*number==MAX_THREADS){CloseHandle(thread);goto fail;}
-        if(SuspendThread(thread)==(DWORD)-1){CloseHandle(thread);goto fail;}
+        if(*number==MAX_THREADS){CloseHandle(thread);swprintf(freeze_failure,160,L"more than %d threads",MAX_THREADS);goto fail;}
+        if(SuspendThread(thread)==(DWORD)-1) {
+            DWORD error=GetLastError(),exit_code=0;
+            /* A thread that has already exited cannot run the patched code: skip it. Any other
+             * thread that cannot be suspended is a real failure and the patch must not proceed. */
+            if(GetExitCodeThread(thread,&exit_code) && exit_code!=STILL_ACTIVE) {
+                handles[(*number)++]=thread;cursor=thread;continue;
+            }
+            swprintf(freeze_failure,160,L"SuspendThread failed for thread %lu (error %lu, %lu threads suspended before it)",
+                     (unsigned long)GetThreadId(thread),(unsigned long)error,(unsigned long)*number);
+            CloseHandle(thread);goto fail;
+        }
         handles[(*number)++]=thread;cursor=thread;
     }
-    if((ULONG)code!=0x8000001aUL)goto fail; /* STATUS_NO_MORE_ENTRIES */
+    if((ULONG)code!=0x8000001aUL){swprintf(freeze_failure,160,L"thread enumeration ended with status 0x%08lx",(unsigned long)code);goto fail;}
     return 1;
  fail:
     for(DWORD i=0;i<*number;i++) {
@@ -466,7 +478,7 @@ static int install_dns(void) {
 static int appes_diagnostic(void) {
     static const BYTE expected[2][6]={{0x0f,0x84,0x7b,0x03,0,0},{0xe9,0x91,0xbb,0x83,0,0x90}};
     static const BYTE replacement[2][6]={{0xe9,0x7c,0x03,0,0,0x90},{0xc3,0x90,0x90,0x90,0x90,0x90}};
-    static int reported_mismatch,reported_freeze;
+    static int reported_mismatch;static WCHAR reported_freeze[160];
     void *addresses[2]={AT(0x142121984ULL),AT(0x142120970ULL)};
     DWORD protection[2]={0,0},ignored;HANDLE threads[MAX_THREADS];DWORD number=0;int ok=0,writable=0;
     if(!bytes_equal(addresses[0],expected[0],6)||!bytes_equal(addresses[1],expected[1],6)) {
@@ -482,7 +494,12 @@ static int appes_diagnostic(void) {
     }
     writable=1;
     if(!freeze_other_threads(threads,&number)) {
-        if(!reported_freeze){reported_freeze=1;status(L"local AppES pending: could not suspend game threads");}
+        if(wcscmp(reported_freeze,freeze_failure)) {
+            WCHAR message[240];
+            wcscpy(reported_freeze,freeze_failure);
+            swprintf(message,240,L"local AppES pending: could not suspend game threads: %ls",freeze_failure);
+            status(message);
+        }
         goto restore;
     }
     /* bytes_equal calls VirtualQuery, which can take a memory-manager lock: use memcmp here. The range
