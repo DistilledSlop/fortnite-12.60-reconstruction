@@ -1,0 +1,31 @@
+[
+  {
+    "class": "UFortGameInstance",
+    "function": "NativeGatherWorldProfiles",
+    "kind": "helper",
+    "signature": "void NativeGatherWorldProfiles(TArray<UFortMcpProfileWorld*>& OutProfiles, bool bInitialPlayersOnly)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141e5b710",
+    "inc_path": "porting/generator_policies/world_profile_gate_runtime/NativeGatherWorldProfiles.proposed.inc",
+    "includes": [],
+    "notes": "Complete gather helper; does not wire the unresolved world query completion gate."
+  },
+  {
+    "class": "AFortGameMode",
+    "function": "NativeGetTheaterSlot",
+    "kind": "helper",
+    "signature": "int32 NativeGetTheaterSlot()",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141949e30",
+    "virtual": true,
+    "inc_path": "porting/generator_policies/world_profile_gate_runtime/NativeGetTheaterSlot.proposed.inc",
+    "includes": [],
+    "notes": "Original +0x978 shared by base and Athena. Athena inherits this target."
+  }
+]

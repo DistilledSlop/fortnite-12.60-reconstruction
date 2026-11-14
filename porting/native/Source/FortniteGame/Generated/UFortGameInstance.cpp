@@ -6,6 +6,8 @@
 #include "UFortAssetManager.h"
 #include "UFortClientEventInterface.h"
 #include "UFortGameInstance.h"
+#include "UFortMcpProfileWorld.h"
+#include "UFortRegisteredPlayerInfo.h"
 #include "UObject/Object.h"
 #include "UObject/UnrealType.h"
 
@@ -191,6 +193,26 @@ bool UFortGameInstance::NativeIsGameMode141ed8de0(const UObject* ContextObject, 
 	// CONFIDENCE: HIGH
 	// 0x141ed8de0 compares the same context lookup and fallback as 0x141ed4e30.
 	return NativeGetGameMode141ed4e30(ContextObject) == GameMode;
+}
+
+void UFortGameInstance::NativeGatherWorldProfiles(TArray<UFortMcpProfileWorld*>& OutProfiles, bool bInitialPlayersOnly)
+{
+	// CONFIDENCE: HIGH
+	// 0x141e5b710. UFortGameInstance member; proposed signature:
+	// void NativeGatherWorldProfiles(TArray<UFortMcpProfileWorld*>& OutProfiles, bool bInitialPlayersOnly)
+	// The false branch assumes each registered player is non-null, as the original does.
+	OutProfiles.Empty();
+	for (UFortRegisteredPlayerInfo* Player : RegisteredPlayers)
+	{
+	    if (!bInitialPlayersOnly ||
+	        (Player && !Player->IsUnreachable() && !Player->IsPendingKill() && Player->bIsInitialPlayer))
+	    {
+	        if (Player->WorldProfile)
+	        {
+	            OutProfiles.Add(Player->WorldProfile);
+	        }
+	    }
+	}
 }
 
 // 141e60900: ordinary field iteration includes superclasses and deprecated fields.

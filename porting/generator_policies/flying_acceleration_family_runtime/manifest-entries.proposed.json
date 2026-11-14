@@ -1,0 +1,69 @@
+[
+  {
+    "class": "AFortPawn",
+    "function": "NativeGetPawnStats141a07b70",
+    "kind": "helper",
+    "signature": "const FFortPawnStats* NativeGetPawnStats141a07b70() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/generator_policies/flying_acceleration_family_runtime/GetPawnStats.inc",
+    "address": "0x141a07b70",
+    "status": "ported",
+    "confidence": "high"
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeGetFlyingAcceleration14231a880",
+    "kind": "helper",
+    "signature": "float NativeGetFlyingAcceleration14231a880() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/generator_policies/flying_acceleration_family_runtime/AFortPawn_GetFlyingAcceleration.inc",
+    "address": "0x14231a880",
+    "status": "ported",
+    "confidence": "high",
+    "virtual": true
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeGetFlyingAcceleration14231a880",
+    "kind": "helper",
+    "signature": "float NativeGetFlyingAcceleration14231a880() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/generator_policies/flying_acceleration_family_runtime/AFortPlayerPawn_GetFlyingAcceleration.inc",
+    "address": "0x14231a8b0",
+    "status": "ported",
+    "confidence": "high",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "class": "AFortPlayerPawnAthena",
+    "function": "NativeGetFlyingAcceleration14231a880",
+    "kind": "helper",
+    "signature": "float NativeGetFlyingAcceleration14231a880() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/generator_policies/flying_acceleration_family_runtime/AFortPlayerPawnAthena_GetFlyingAcceleration.inc",
+    "address": "0x141a12f90",
+    "status": "ported",
+    "confidence": "high",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "class": "UFortMovementComp_CharacterAthena",
+    "function": "GetMaxAcceleration",
+    "kind": "helper",
+    "signature": "float GetMaxAcceleration() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/generator_policies/flying_acceleration_family_runtime/GetMaxAcceleration.inc",
+    "address": "0x1419d5300",
+    "status": "ported",
+    "confidence": "high",
+    "virtual": true,
+    "override": true
+  }
+]

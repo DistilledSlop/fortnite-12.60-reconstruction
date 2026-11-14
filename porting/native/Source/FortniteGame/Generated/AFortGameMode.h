@@ -260,5 +260,6 @@ public:
 	virtual void SetCurrentPlaylistId(int32 PlaylistId);
 	virtual void SetCurrentPlaylistName(FName PlaylistName);
 	virtual void NativeSetCurrentPlaylistName(FName PlaylistName);
+	virtual int32 NativeGetTheaterSlot();
 };
 

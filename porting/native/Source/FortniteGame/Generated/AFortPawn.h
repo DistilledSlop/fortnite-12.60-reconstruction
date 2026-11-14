@@ -31,6 +31,7 @@
 #include "FFortConversationSentence.h"
 #include "FFortPawnEquippedWeaponSignature.h"
 #include "FFortPawnHitSignature.h"
+#include "FFortPawnStats.h"
 #include "FFortPawnUnEquippedWeaponSignature.h"
 #include "FFortPawnVocalChord.h"
 #include "FFortPickupEntryData.h"
@@ -1203,5 +1204,7 @@ public:
 	static UAnimInstance* NativeGetMeshAnimInstance144114bd0(USkeletalMeshComponent* MeshComp);
 	virtual uint8* NativeGetCurrentMovementStyle14231a980(uint8* OutValue) const;
 	static float NativeSelectMeleeReticleAngle14269eaa0(UObject* Context, bool bPrimary);
+	const FFortPawnStats* NativeGetPawnStats141a07b70() const;
+	virtual float NativeGetFlyingAcceleration14231a880() const;
 };
 

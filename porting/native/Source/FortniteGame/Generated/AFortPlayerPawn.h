@@ -2099,6 +2099,7 @@ public:
 	virtual FRotator GetBaseAimRotation() const override;
 	virtual void PreReplication(IRepChangedPropertyTracker& ChangedPropertyTracker) override;
 	virtual void PreReplicationForReplay(IRepChangedPropertyTracker& ChangedPropertyTracker) override;
+	virtual float NativeGetFlyingAcceleration14231a880() const override;
 protected:
 	void NativeUpdateAccelerationPack1423442e0();
 	void NativeUpdateRemoteViewData142344420();

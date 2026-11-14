@@ -25,6 +25,7 @@
 #include "Animation/AnimInstance.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "EFortCustomMovement.h"
+#include "FFortPawnStats.h"
 #include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -36,6 +37,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "SkeletalMeshComponentBudgeted.h"
 #include "UFortAbilitySystemComponent.h"
+#include "UFortAdvancedMovementSet.h"
 #include "UFortFootstepAudioBank.h"
 #include "UFortGlobals.h"
 #include "UFortKismetLibrary.h"
@@ -1944,6 +1946,15 @@ void AFortPlayerPawn::PreReplicationForReplay(IRepChangedPropertyTracker& Change
 	    NativeUpdateAccelerationPack1423442e0();
 	    NativeUpdateRemoteViewData142344420();
 	}
+}
+
+float AFortPlayerPawn::NativeGetFlyingAcceleration14231a880() const
+{
+	// CONFIDENCE: HIGH
+	// Original AFortPlayerPawn primary virtual +0x968, 0x14231a8b0.
+	if (AdvancedMovementSet)
+	    return AdvancedMovementSet->MaxAccelerationFlying.GetCurrentValue();
+	return NativeGetPawnStats141a07b70()->MaxAccelerationFlying;
 }
 
 void AFortPlayerPawn::NativeUpdateAccelerationPack1423442e0()

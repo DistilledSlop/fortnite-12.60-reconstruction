@@ -14,12 +14,14 @@
 #include "EFortDamageZone.h"
 #include "Engine/World.h"
 #include "FFortActiveMontageDecisionWindow.h"
+#include "FFortPawnStats.h"
 #include "GameplayTagContainer.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "UCreativeQuestComponent.h"
 #include "UFortAbilitySystemComponent.h"
+#include "UFortAdvancedMovementSet.h"
 #include "UFortAnimNotifyState_AbilityDecisionWindow.h"
 #include "UFortControlResistanceSet.h"
 #include "UFortHealthSet.h"
@@ -1085,6 +1087,25 @@ float AFortPawn::NativeSelectMeleeReticleAngle14269eaa0(UObject* Context, bool b
 	// CONFIDENCE: HIGH
 	const uint8* Raw = reinterpret_cast<const uint8*>(Context);
 	return bPrimary ? *reinterpret_cast<const float*>(Raw + 0x480) : *reinterpret_cast<const float*>(Raw + 0x484);
+}
+
+const FFortPawnStats* AFortPawn::NativeGetPawnStats141a07b70() const
+{
+	// CONFIDENCE: HIGH
+	// Original AFortPawn::GetPawnStats, 0x141a07b70.
+	if (const FFortPawnStats* Row = PawnStatHandle.GetRow<FFortPawnStats>(TEXT("AFortPawn::GetPawnStats")))
+	    return Row;
+	static FFortPawnStats DefaultPawnStats;
+	return &DefaultPawnStats;
+}
+
+float AFortPawn::NativeGetFlyingAcceleration14231a880() const
+{
+	// CONFIDENCE: HIGH
+	// Original AFortPawn primary virtual +0x968, 0x14231a880.
+	if (AdvancedMovementSet)
+	    return AdvancedMovementSet->MaxAccelerationFlying.GetCurrentValue();
+	return NativeGetPawnStats141a07b70()->MaxAccelerationFlying;
 }
 
 void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

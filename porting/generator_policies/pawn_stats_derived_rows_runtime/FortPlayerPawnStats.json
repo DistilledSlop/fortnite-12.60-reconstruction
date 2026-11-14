@@ -1,0 +1,32 @@
+[
+  [
+    "MaxJumpTime",
+    "float",
+    168
+  ],
+  [
+    "MaxStamina",
+    "float",
+    172
+  ],
+  [
+    "StaminaRegenRate",
+    "float",
+    176
+  ],
+  [
+    "StaminaRegenDelay",
+    "float",
+    180
+  ],
+  [
+    "SprintingStaminaExpenditureRate",
+    "float",
+    184
+  ],
+  [
+    "PersonalVehicleFallingDamageTableRow",
+    "FName",
+    188
+  ]
+]

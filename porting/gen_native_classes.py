@@ -2493,6 +2493,22 @@ _athena_playerstate_constructor_spec = _common_activation_import.spec_from_file_
     "athena_playerstate_constructor_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "athena_playerstate_constructor_runtime", "source_policy.py"))
 _athena_playerstate_constructor_policy = _common_activation_import.module_from_spec(_athena_playerstate_constructor_spec)
 _athena_playerstate_constructor_spec.loader.exec_module(_athena_playerstate_constructor_policy)
+_pawn_stats_native_row_spec = _common_activation_import.spec_from_file_location(
+    "pawn_stats_native_row_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "pawn_stats_native_row_runtime", "source_policy.py"))
+_pawn_stats_native_row_policy = _common_activation_import.module_from_spec(_pawn_stats_native_row_spec)
+_pawn_stats_native_row_spec.loader.exec_module(_pawn_stats_native_row_policy)
+_pawn_stats_derived_rows_spec = _common_activation_import.spec_from_file_location(
+    "pawn_stats_derived_rows_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "pawn_stats_derived_rows_runtime", "source_policy.py"))
+_pawn_stats_derived_rows_policy = _common_activation_import.module_from_spec(_pawn_stats_derived_rows_spec)
+_pawn_stats_derived_rows_spec.loader.exec_module(_pawn_stats_derived_rows_policy)
+_flying_acceleration_family_spec = _common_activation_import.spec_from_file_location(
+    "flying_acceleration_family_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "flying_acceleration_family_runtime", "source_policy.py"))
+_flying_acceleration_family_policy = _common_activation_import.module_from_spec(_flying_acceleration_family_spec)
+_flying_acceleration_family_spec.loader.exec_module(_flying_acceleration_family_policy)
+_world_profile_gate_spec = _common_activation_import.spec_from_file_location(
+    "world_profile_gate_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "world_profile_gate_runtime", "source_policy.py"))
+_world_profile_gate_policy = _common_activation_import.module_from_spec(_world_profile_gate_spec)
+_world_profile_gate_spec.loader.exec_module(_world_profile_gate_policy)
 _replicated_building_defaults_spec = _common_activation_import.spec_from_file_location(
     "replicated_building_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "replicated_building_defaults_runtime", "source_policy.py"))
 _replicated_building_defaults_policy = _common_activation_import.module_from_spec(_replicated_building_defaults_spec)
@@ -2903,6 +2919,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _pickaxe_vfx_policy.apply(model)
     model = _pawn_aim_rotation_policy.apply(model)
     model = _movement_max_acceleration_policy.apply(model)
+    model = _flying_acceleration_family_policy.apply(model)
     model = _mutator_owner_policy.apply(model, block, owner_fns)
     model = _replay_spectator216_policy.apply(model, block, owner_fns)
     model = _controller_analytics_policy.apply(model, block, owner_fns)
@@ -4493,6 +4510,8 @@ def promote(args):
     _remote_view_replication_policy.validate_required_classes(listed)
     _athena_playlist_selection_policy.validate_required_classes(listed)
     _air_selector_admission_policy.validate_required_classes(listed)
+    _flying_acceleration_family_policy.validate_required_classes(listed)
+    _world_profile_gate_policy.validate_required_classes(listed)
     name_to_block = {v: k for k, v in names.items()}
     registry = ModuleRegistry(args.engine_root, PROJECT_NATIVE_DIR, UPROJECT_DEFAULT)
     blocklist = load_blocklist(args.blocklist)
@@ -4945,12 +4964,14 @@ def promote(args):
         header, cpp = _world_manager_defaults_policy.finalize(model, header, cpp)
         header, cpp = _movement_air_control_defaults_policy.finalize(model, header, cpp)
         header, cpp = _athena_movement_constructor_policy.finalize(model, header, cpp)
+        header, cpp = _flying_acceleration_family_policy.finalize(model, header, cpp)
         header, cpp = _building_foundation_constructor_policy.finalize(model, header, cpp)
         header, cpp = _fort_game_session_class_policy.finalize(model, header, cpp)
         header, cpp = _athena_playlist_selection_policy.finalize(model, header, cpp)
         header, cpp = _air_selector_admission_policy.finalize(model, header, cpp)
         header, cpp = _movement_max_acceleration_policy.finalize(model, header, cpp)
         header, cpp = _athena_playerstate_constructor_policy.finalize(model, header, cpp)
+        header, cpp = _world_profile_gate_policy.finalize(model, header, cpp)
         header, cpp = _pawn_hand_socket_policy.finalize(model, header, cpp)
         header, cpp = _replicated_building_defaults_policy.finalize(model, header, cpp)
         header, cpp = _playlist_storm_defaults_policy.finalize(model, header, cpp)
@@ -5018,6 +5039,8 @@ def promote(args):
                     seeds.setdefault(info.fn, set()).add("")
     _native_checkpoint3058_policy.add_roots(gate, seeds)
     _athena_loot_policy.add_roots(gate, seeds)
+    _pawn_stats_native_row_policy.add_roots(gate, seeds)
+    _pawn_stats_derived_rows_policy.add_roots(gate, seeds)
     _server_baseline_policy.add_roots(gate, seeds)
     _common_input_policy.add_roots(gate, seeds)
     # Native anim-node structs that only Animation Blueprint generated classes reference (so no promoted class
@@ -5881,6 +5904,8 @@ class TypeGate:
             model = _native_checkpoint2040_policy.apply_struct(info, model)
             model = _native_checkpoint3058_policy.apply_struct(info, model)
             model = _athena_loot_policy.apply_struct(info, model)
+            model = _pawn_stats_native_row_policy.apply_struct(info, model)
+            model = _pawn_stats_derived_rows_policy.apply_struct(info, model)
             model = _maps_fog_policy.apply_struct(info, model)
             model = _maps_wind_handle_policy.apply_struct(info, model)
             model = _maps_wind_break_policy.apply_struct(info, model)
@@ -6246,6 +6271,8 @@ def render_struct_header(model, source_label):
     lines.extend(_common_input_policy.declarations(model))
     lines.extend(_input_platform_policy.declarations(model))
     lines.extend(_athena_loot_policy.declarations(model))
+    lines.extend(_pawn_stats_native_row_policy.declarations(model))
+    lines.extend(_pawn_stats_derived_rows_policy.declarations(model))
     if delta:
         item = net["item"]
         lines.append("\t// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable %s, traits %s): the"
@@ -6275,6 +6302,8 @@ def render_struct_header(model, source_label):
         lines.append(postlude)
     lines.extend(_confirmation_policy.footer(model))
     lines.extend(_athena_loot_policy.footer(model))
+    lines.extend(_pawn_stats_native_row_policy.footer(model))
+    lines.extend(_pawn_stats_derived_rows_policy.footer(model))
     lines.extend(_maps_wind_building_policy.postamble(model))
     lines.extend(_ui_root_layout_policy.postamble(model))
     lines.extend(native_serializer_traits(name))

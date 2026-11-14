@@ -1,0 +1,9 @@
+{
+  "fn": "0x142a1ade0",
+  "package": "/Script/FortniteGame",
+  "size": 168,
+  "align": 8,
+  "super_fn": "0x1446f29a0",
+  "ops_vtable": "0x146488020",
+  "properties_sha256": "841b768e9ac52c61490df95cbbf287b84816dc88ebce7e924bb18bb38abdab3f"
+}

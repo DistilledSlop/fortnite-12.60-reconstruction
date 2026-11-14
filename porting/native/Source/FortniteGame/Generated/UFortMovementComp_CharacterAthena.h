@@ -16,6 +16,8 @@ class FORTNITEGAME_API UFortMovementComp_CharacterAthena : public UFortMovementC
 	GENERATED_BODY()
 
 public:
+	// Native original +0x1e74; distinct from reflected MaxAccelerationFlying.
+	float MaxAccelerationFlyingMultiplier;
 	UFortMovementComp_CharacterAthena(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	// table index 3, flags 0x10000000000015
@@ -34,5 +36,9 @@ public:
 	UPROPERTY()
 	float MaxAccelerationFlying;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual float GetMaxAcceleration() const override;
 };
 

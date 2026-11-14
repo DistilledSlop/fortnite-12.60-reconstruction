@@ -48,6 +48,8 @@
 #include "GameplayTagContainer.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/CurveTable.h"
+#include "Engine/DataTable.h"
+#include "FFortPawnStats.h"
 #include "Engine/World.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
@@ -1748,6 +1750,13 @@ namespace FortAthenaMatchFlow
             const UFortMovementComp_CharacterAthena* Movement = Cast<UFortMovementComp_CharacterAthena>(Pawn->GetCharacterMovement());
             if (Movement)
             {
+                const FFortPawnStats* Stats = Pawn->NativeGetPawnStats141a07b70();
+                UE_LOG(LogTemp, Display, TEXT("Pawn stats defaults: pawn=%s table=%s row=%s rowStruct=%s health=%.9g walkSpeed=%.9g rowFlyingAcceleration=%.9g pawnFlyingAcceleration=%.9g movementAcceleration=%.9g"),
+                    *Pawn->GetName(), *GetPathNameSafe(Pawn->PawnStatHandle.DataTable),
+                    *Pawn->PawnStatHandle.RowName.ToString(),
+                    *GetNameSafe(Pawn->PawnStatHandle.DataTable ? Pawn->PawnStatHandle.DataTable->GetRowStruct() : nullptr),
+                    Stats->MaximumHealth, Stats->SpeedWalk, Stats->MaxAccelerationFlying,
+                    Pawn->NativeGetFlyingAcceleration14231a880(), Movement->GetMaxAcceleration());
                 const UFortMovementComp_CharacterAthena* Samples[] = {Movement,
                     Cast<UFortMovementComp_CharacterAthena>(Movement->GetArchetype()),
                     Movement->GetClass()->GetDefaultObject<UFortMovementComp_CharacterAthena>()};

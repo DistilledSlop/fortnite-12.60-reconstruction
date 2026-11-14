@@ -1,0 +1,63 @@
+{
+  "status": "complete_source_proposal_not_activated",
+  "row": "FFortPawnStats",
+  "original_size": "0xa8",
+  "reflected_fields": 37,
+  "constructor": [
+    "0x1423002f0",
+    "0x142a16dd0"
+  ],
+  "post_serialize": "0x1427a2230",
+  "native_copy": "0x142a17020",
+  "falling_eval": "0x14231b6e0",
+  "falling_threshold": "0x142321b50",
+  "curve_lookup": "0x140fd9cb0",
+  "bool_setter": {
+    "address": "0x1407462a0",
+    "bytes": "c681a400000001c3",
+    "meaning": "native full-byte bool at0xa4; kind_raw0x2c hasNativeBool0x20"
+  },
+  "enum": {
+    "name": "EFortControlRecoveryBehavior",
+    "underlying": "uint8",
+    "values": {
+      "DefaultControl": 0,
+      "LimitedControl": 1,
+      "ChainControl": 2
+    }
+  },
+  "row_vtable": {
+    "address": "0x146115858",
+    "slots": {
+      "0x0": "0x142301730 (destructor)",
+      "0x8": "0x1406801c0 (inherited OnPostDataImport no-op)",
+      "0x10": "0x14231b6e0 (AFortPawn context,float input)",
+      "0x18": "0x142321b50 (no args)",
+      "0x20": "0x1406964e0 (AFortPawn context,float input; ORIGINAL return0.0f)"
+    }
+  },
+  "native_callers": {
+    "0x14235cae0": "incoming RCX pawn retained in RBX; GetPawnStats uses RCX; RBX goes to RDX and inputXMM1 goes to XMM2 forrowvirtual+10",
+    "0x141a0bb84": "GetPawnStats thenRSI->RDX andXMM6->XMM2, rowvirtual+10",
+    "0x141a0bbb8": "GetPawnStats thenRSI->RDX andpawnfloat+1550->XMM2, rowvirtual+20",
+    "0x1423053fd": "GetPawnStats thenRDI->RDX, XMM7->XMM2, rowvirtual+10"
+  },
+  "engine_apis": {
+    "0x140fd9cb0": "UCurveTable::FindCurve(FName,const FString&,bool)",
+    "curve+0x8": "FIndexedCurve::GetNumKeys",
+    "curve+0x18": "FIndexedCurve::GetKeyTime",
+    "curve+0x48": "FRealCurve::GetKeyValue",
+    "curve+0x88": "FRealCurve::Eval"
+  },
+  "warning_category": "LogFort; global1481348e0/1481348e4, corroboratedquickbar_refresh110_runtime/native-evidence.json",
+  "remaining_body_blockers": [],
+  "verification": "Pinned identityvalidated andisolatedheadergenerated; globalgeneration/UHT/build/runtimependingrootintegration",
+  "integration": {
+    "import": "source_policy.py as_pawn_stats_native_row_policy",
+    "roots": "_pawn_stats_native_row_policy.add_roots(gate,seeds) alongsideathena_loot roots",
+    "struct_model": "model=_pawn_stats_native_row_policy.apply_struct(info,model) alongsideathena_loot apply_struct",
+    "struct_declarations": "lines.extend(_pawn_stats_native_row_policy.declarations(model))",
+    "struct_footer": "lines.extend(_pawn_stats_native_row_policy.footer(model))",
+    "lookup_helper_owner": "flying_acceleration_family_runtime; use NativeGetPawnStats141a07b70() const as the single admitted lookup helper"
+  }
+}
