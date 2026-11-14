@@ -312,7 +312,9 @@ Two consequences:
 - **Mid-flight late join** is still derived from code only. The mechanism is firmer than before: the engine runs
   an on-change notify when the received value differs from the shadow state (`RepLayout.cpp` line 2964 **[E]**),
   and the timestamp's default is not a live flight time. The `3 * N` catch-up itself was not measured. Closing it
-  needs one run in which a client connects after flight start.
+  would need a run that receives initial aircraft state after flight start. This is an optional replication edge
+  case, not a requirement to support joining after departure. Normal match acceptance should use both players
+  admitted before flight and compare their bus positions, including reversed join order.
 - **Writer scans are pattern scans.** A store through a computed pointer, a block copy, or code that was still
   packed in the capture would not be seen. A live data breakpoint on +0x2e8 and +0x2ec during a flight would
   close this.
