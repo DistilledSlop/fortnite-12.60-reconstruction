@@ -154,6 +154,15 @@ namespace FortHarvest
         {
             if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")) || GTargetDataHandle.IsValid())
                 return;
+            // The generated ABuildingSMActor constructor does not set the original native defaults, and cooked blueprints only
+            // serialize values that differ from them. Without this every harvestable prop reads bAllowResourceDrop=0 and
+            // MaxResourcesToSpawn=0 (no materials ever). Original CDO: drops allowed, MaxResourcesToSpawn -1 (uncapped).
+            // Must run before any blueprint subclass loads so their CDOs inherit it.
+            if (ABuildingSMActor* Default = GetMutableDefault<ABuildingSMActor>())
+            {
+                Default->bAllowResourceDrop = true;
+                Default->MaxResourcesToSpawn = -1;
+            }
             GTargetDataHandle = UAbilitySystemComponent::FortServerTargetDataReceived.AddStatic(&OnTargetData);
             UE_LOG(LogFortHarvest, Display, TEXT("Harvest: listening for melee target data"));
         }

@@ -182,6 +182,7 @@ namespace FortAthenaMatchFlowPrivate
         int32 FoundationBlockingMeshes = 0;
         int32 FoundationNoCollisionMeshes = 0;
         bool bFoundationSweepProbeDone = false;
+        bool bServerReadyAnnounced = false;
         // Foundation level naming: plain package name (matches the original client) versus the unique fallback.
     };
 
@@ -1447,6 +1448,11 @@ namespace FortAthenaMatchFlowPrivate
             State().LastFoundationFinalizeTime = World->GetTimeSeconds();
             UE_LOG(LogTemp, Display, TEXT("MatchFlow: finalized %d foundation stream(s); pending=%d"),
                 FinalizedCount, State().PendingFoundationStreams.Num());
+            if (State().PendingFoundationStreams.Num() == 0 && !State().bServerReadyAnnounced)
+            {
+                State().bServerReadyAnnounced = true;
+                UE_LOG(LogTemp, Display, TEXT("MatchFlow: ===== SERVER READY: all foundation levels loaded, world is complete - you can join now ====="));
+            }
         }
     }
 
@@ -2454,13 +2460,13 @@ namespace FortAthenaMatchFlow
                 ShowCorrections->Set(1);
             if (UCharacterMovementComponent* CMC = Pawn->GetCharacterMovement())
             {
-                UE_LOG(LogTemp, Display, TEXT("MovementConstants: maxStep=%.2f walkableFloorZ=%.3f walkableAngle=%.2f groundFriction=%.2f brakingFriction=%.2f brakingDecelWalking=%.1f maxAccel=%.1f gravityScale=%.3f gravityZ=%.1f jumpZ=%.1f maxWalk=%.1f perchRadius=%.1f perchAdd=%.1f ledgeCheckThreshold=%.2f capsuleR=%.2f capsuleHH=%.2f useSeparateBrakingFriction=%d"),
+                UE_LOG(LogTemp, Display, TEXT("MovementConstants: maxStep=%.2f walkableFloorZ=%.3f walkableAngle=%.2f groundFriction=%.2f brakingFriction=%.2f brakingDecelWalking=%.1f maxAccel=%.1f gravityScale=%.3f gravityZ=%.1f jumpZ=%.1f maxWalk=%.1f perchRadius=%.1f perchAdd=%.1f ledgeCheckThreshold=%.2f capsuleR=%.2f capsuleHH=%.2f useSeparateBrakingFriction=%d maxSimTimeStep=%.3f maxSimIterations=%d alwaysCheckFloor=%d"),
                     CMC->MaxStepHeight, CMC->GetWalkableFloorZ(), CMC->GetWalkableFloorAngle(), CMC->GroundFriction, CMC->BrakingFriction,
                     CMC->BrakingDecelerationWalking, CMC->GetMaxAcceleration(), CMC->GravityScale, CMC->GetGravityZ(), CMC->JumpZVelocity,
                     CMC->MaxWalkSpeed, CMC->PerchRadiusThreshold, CMC->PerchAdditionalHeight, CMC->LedgeCheckThreshold,
                     Pawn->GetCapsuleComponent() ? Pawn->GetCapsuleComponent()->GetUnscaledCapsuleRadius() : -1.f,
                     Pawn->GetCapsuleComponent() ? Pawn->GetCapsuleComponent()->GetUnscaledCapsuleHalfHeight() : -1.f,
-                    CMC->bUseSeparateBrakingFriction ? 1 : 0);
+                    CMC->bUseSeparateBrakingFriction ? 1 : 0, CMC->MaxSimulationTimeStep, CMC->MaxSimulationIterations, CMC->bAlwaysCheckFloor ? 1 : 0);
             }
             // Once per second for 10 minutes: which movement style the server is in and why (sprint question).
             struct FSprintProbe { FTimerHandle Handle; int32 Samples = 0; };
