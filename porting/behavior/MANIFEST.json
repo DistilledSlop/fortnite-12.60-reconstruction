@@ -95795,5 +95795,45 @@
     "confidence": "high",
     "status": "ported",
     "notes": "Constructor-confirmed original table override; shared constant body already known elsewhere, not new distinct-address credit. See pawn_tag_interface_runtime/JUMP_EVIDENCE.md."
+  },
+  {
+    "class": "AFortWorldManager",
+    "function": "NativeResolveSelectedLevel",
+    "kind": "helper",
+    "signature": "FName NativeResolveSelectedLevel(FName SelectedBuilding, ABuildingFoundation* Foundation)",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141f89870",
+    "inc_path": "porting/behavior/AFortWorldManager/NativeResolveSelectedLevel.inc",
+    "notes": "Complete original record append/resolver under original initialized-foundation state. NativeInstanceId_0xea0 must be produced by full original postinitialization, which remains unported. No new caller or lifecycle hook; no streaming repair claim. UE build/runtime pending. See generator_policies/foundation_detail_streaming_runtime/native-evidence.json."
+  },
+  {
+    "class": "UFortZoneRecord",
+    "function": "NativeAddSavedLevel",
+    "kind": "helper",
+    "signature": "FFortLevelRecord* NativeAddSavedLevel(FName RequestedPackage, ABuildingFoundation* BoundActor)",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141fba350",
+    "inc_path": "porting/behavior/UFortZoneRecord/NativeAddSavedLevel.inc",
+    "notes": "Complete original record append/resolver under original initialized-foundation state. NativeInstanceId_0xea0 must be produced by full original postinitialization, which remains unported. No new caller or lifecycle hook; no streaming repair claim. UE build/runtime pending. See generator_policies/foundation_detail_streaming_runtime/native-evidence.json.",
+    "includes": [
+      "Engine/Level.h"
+    ]
+  },
+  {
+    "class": "ABuildingFoundation",
+    "function": "NativeInstanceId_0xea0",
+    "kind": "member_field",
+    "signature": "uint32 NativeInstanceId_0xea0",
+    "offset": "0xea0",
+    "access": "public",
+    "status": "ported",
+    "notes": "Complete original record append/resolver under original initialized-foundation state. NativeInstanceId_0xea0 must be produced by full original postinitialization, which remains unported. No new caller or lifecycle hook; no streaming repair claim. UE build/runtime pending. See generator_policies/foundation_detail_streaming_runtime/native-evidence.json.",
+    "confidence": "high"
   }
 ]

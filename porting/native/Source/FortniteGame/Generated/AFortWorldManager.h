@@ -278,5 +278,6 @@ public:
 	bool NativeHasUsedBuilding(FName BuildingName) const;
 	void NativeRecordUsedBuilding(FName BuildingName);
 	static FName NativeSourceName(FName SelectedInstance);
+	FName NativeResolveSelectedLevel(FName SelectedBuilding, ABuildingFoundation* Foundation);
 };
 

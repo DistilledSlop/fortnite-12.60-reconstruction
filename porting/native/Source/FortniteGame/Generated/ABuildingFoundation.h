@@ -199,6 +199,9 @@ public:
 	UPROPERTY(Transient)
 	FTransform DynamicFoundationTransform;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xea0): not a UPROPERTY, not replicated.
+	uint32 NativeInstanceId_0xea0;
+
 	UFUNCTION(BlueprintCallable)
 	bool DoesBuildingFoundationContainActor(AActor* Actor) const;
 

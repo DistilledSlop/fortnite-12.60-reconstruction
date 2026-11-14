@@ -1,0 +1,34 @@
+// CONFIDENCE: HIGH; source-complete under native initialization preconditions.
+// Original 0x141fba350. NativeInstanceId_0xea0 must be assigned by the
+// original foundation initialization before any bound record is appended.
+const int32 NewIndex = SavedLevels.AddDefaulted();
+FFortLevelRecord& Record = SavedLevels[NewIndex];
+Record.ParentLevelIndex = INDEX_NONE;
+Record.BoundActorGuid = FGuid();
+Record.PackageName = NAME_None;
+Record.SavedActors.Reset();
+Record.X_Loc = INDEX_NONE;
+Record.Y_Loc = INDEX_NONE;
+Record.Rotation = 0;
+++NumSavedLevels;
+if (!BoundActor)
+{
+    Record.PackageName = RequestedPackage;
+    return &Record;
+}
+Record.PackageName = FName(*FString::Printf(TEXT("/Temp%s_%08x"),
+    *RequestedPackage.ToString(), BoundActor->NativeInstanceId_0xea0));
+if (ULevel* ParentLevel = BoundActor->GetLevel())
+{
+    const FName ParentName = ParentLevel->GetFName();
+    for (int32 Index = 0; Index < SavedLevels.Num(); ++Index)
+    {
+        if (SavedLevels[Index].PackageName == ParentName)
+        {
+            Record.ParentLevelIndex = Index;
+            Record.BoundActorGuid = BoundActor->MyGuid;
+            break;
+        }
+    }
+}
+return &Record;

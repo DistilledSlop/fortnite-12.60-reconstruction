@@ -1,0 +1,97 @@
+{
+  "status": "recovered entry; closure incomplete; not approved for runtime integration",
+  "scope": "One server foundation selection and initialization entry, and its mandatory dependencies. No LOD overrides.",
+  "entry": {
+    "address": "0x141be83f0",
+    "original_name": "ABuildingFoundation::SelectAndSetupMyBuildingLevel",
+    "name_evidence": "Original diagnostic string in body: ABuildingFoundation::SelectAndSetupMyBuildingLevel - Cannot get WorldManager!!",
+    "capture": "porting/generated/agents/near-lod-streaming-diagnosis/capture/_adhoc/0x141be83f0__141be83f0.c",
+    "behavior": [
+      "Calls 0x141bebba0, apparently a selection gate; its decompiler return type is unresolved and must be checked in assembly before translation.",
+      "Skips client HLOD-managed selection when global streaming mode is active and role is not authority.",
+      "Resolves WorldManager via 0x141f88460.",
+      "Queries persisted foundation selection via WorldManager 0x141f8a060; if found, modifies foundation, assigns LevelToStream, converts name through 0x141fca500, records selected building via 0x141f800e0.",
+      "Otherwise calls foundation virtual +0xec0 (SelectBuildingLevel, original 0x141be60c0). Empty chosen name returns immediately.",
+      "WorldManager 0x141f89870 resolves chosen building into level name using CurrentZoneRecord. Compares resolved name to existing LevelToStream and checks used-building membership via 0x141f8f0b0; otherwise modifies foundation, assigns LevelToStream, records chosen building.",
+      "Calls foundation streaming routine 0x141bed450(this, false)."
+    ]
+  },
+  "critical_dependencies": [
+    {
+      "address": "0x141f89870",
+      "behavior": "Returns NAME_None immediately if WorldManager.CurrentWorldRecord is null; resolves chosen level using CurrentZoneRecord and 0x141fba350 otherwise.",
+      "risk": "Current EnsureWorldManager spawns native AFortWorldManager and assigns it to GameState; native constructor creates only a scene component. No recovered record setup is present in that path. Adding only a LevelToStream writer cannot reproduce the original resolution."
+    },
+    {
+      "address": "0x141be60c0",
+      "behavior": "Assembles candidates from foundation building set and AdditionalWorlds, filters via virtual +0xed8, chooses sole candidate or weighted/random candidate with WorldManager state.",
+      "risk": "AdditionalWorlds[0] is not a faithful universal selection replacement."
+    },
+    {
+      "address": "0x141bed450",
+      "behavior": "Creates ULevelStreaming for selected LevelToStream, configures package and foundation transform, hooks OnLevelStreamedIn/OnLevelShown, stores LevelStreamInfo, adds streaming object to world, handles existing stream reload.",
+      "risk": "Do not set server readiness before actual level load callback."
+    },
+    {
+      "address": "0x141be3f50",
+      "name": "ABuildingFoundation::OnLevelStreamedIn",
+      "behavior": "Checks LevelStreamInfo loaded state, then on authority and dynamic-foundation/streaming-mode condition calls Modify and sets bServerStreamedInLevel. Large further actor initialization remains in this callback."
+    }
+  ],
+  "lifecycle": {
+    "initialization": "0x141bd5a70: initializes Unknown FoundationEnabledState to Enabled except DynamicFoundationType==3, which becomes Disabled; mirrors DynamicFoundationRepData.EnabledState. Athena path defers normal selection. This is a large virtual lifecycle function, not a complete recovered integration snippet.",
+    "selection_caller": "0x141be71d0: virtual +0x828 verified ABuildingFoundation primary vtable; invokes base141c17ac0 whose diagnostic proves ABuildingSMActor::PostUpdate(), then conditionally SelectAndSetupMyBuildingLevel and marks processed. Earlier WorldReady interpretation superseded; do not wire +828 as WorldReady.",
+    "conditional_caller": "0x141bd8da0: checks conditional flags, obtains game mode, conditionally SelectAndSetupMyBuildingLevel. Called by WorldManager 0x141f9cca0 and 0x141fa0210."
+  },
+  "verified_original_fields": {
+    "AdditionalWorlds": "0xb40",
+    "FoundationEnabledState": "0xb6a; Enabled=1, Disabled=2",
+    "LevelToStream": "0xba0",
+    "LevelStreamInfo": "0xda0",
+    "bServerStreamedInLevel": "0xb68 mask 0x02, verified by original reflected setter 0x14273efd0",
+    "WorldManager.CurrentWorldRecord": "0x6b0",
+    "WorldManager.CurrentZoneRecord": "0x6b8"
+  },
+  "prior_work_status": {
+    "standalone_timing_helper": "porting/behavior/maps_foundation_streaming_runtime/native_stream_next/start_streaming.h translates only 0x141be5e90. Its evidence records successful standalone tests and explicitly says not wired into generated game runtime. No maps_foundation_streaming runtime manifest entries found.",
+    "world_ready": "Existing MANIFEST entries for AFortWorldSettings::NativeDispatchWorldReady and NativeRegisterActorForWorldReady are ported helpers, but their own notes explicitly say original driver and interface providers are not connected.",
+    "server_native": "No writes to LevelToStream or bServerStreamedInLevel were found in current porting .cpp/.py sources; only replication registration. Original client OnRep bodies still exist in original client, so server OnRep stubs alone are not causality evidence."
+  },
+  "next_bounded_closure": [
+    "Confirm the +0x828 lifecycle semantic hook and signature from foundation interface/vtable constructor evidence.",
+    "Recover and wire WorldManager record initialization for Athena; the exact typed record append/resolver are now source-admitted with the original initialization precondition.",
+    "Verify selection gate 0x141bebba0 machine-code return; raw decompiler currently renders void despite caller testing AL.",
+    "Translate entry only after record binding and mandatory streaming callback behavior are supplied; do not mark a partial callback adapter or raw offset transcription ported."
+  ],
+  "validation": "Read-only source/reflection/byte-reference analysis and Ghidra decompilation only. No native source, generator, manifest, content, build, server input or runtime state changes. Ghidra read-only open/close reports project index bookkeeping changes; no analysis was saved.",
+  "record_closure_research": "porting/generated/agents/foundation-record-closure/recovery.json",
+  "record_lifecycle_typed_correction": {
+    "class": "AFortGameMode verified class getter1428ea8f0",
+    "fields": {
+      "CurrentWUID": "FString +320; Num+328",
+      "CurrentZoneInstanceId": "FString +370; Num+378",
+      "ZoneIndex": "int32 +384",
+      "FortGameSession": "pointer +3d8"
+    },
+    "meaning": "141f8e5b0 checks CurrentZoneInstanceId FString.Num<2 (empty) to create a default new world record; 141f8f1c0 checks CurrentWUID FString.Num<2 (empty) to bypass profile readiness. Earlier settings-mode interpretation is superseded.",
+    "remaining": "Exact Athena lifecycle caller, subsequent141f97d00 behavior, package prefix and actor native instance-ID/GUID producers remain open."
+  },
+  "record_append_source_admission": {
+    "status": "Complete unused record append/resolver algorithms admitted under original typed initialization preconditions; producer and streaming lifecycle remain incomplete; no gameplay repair",
+    "bodies": {
+      "0x141fba350": "UFortZoneRecord::NativeAddSavedLevel",
+      "0x141f89870": "AFortWorldManager::NativeResolveSelectedLevel"
+    },
+    "typed_bound_actor": "null or ABuildingFoundation; original raw actor dereferences foundation-only native instance ID at +0xea0",
+    "prefix": "Normal initialized process prefix /Temp from original initializer1402dad00; no other count writer in original xrefs",
+    "instance_id": "uint32 NativeInstanceId_0xea0; exact producer141be6cf0 after141be1e60, before basepostinit141c17840; not produced by these helpers and no replacement inserted",
+    "other_fields": "Existing reflected MyGuid +288, original WorldTileFoundation NativeTileX/Y +ee4/ee8 and NumRotations +ee0",
+    "evidence": [
+      "porting/generated/agents/foundation-record-closure/captures/0x141fba350.c",
+      "porting/generated/agents/record-lifecycle110/capture/_adhoc/0x1402dad00__1402dad00.c",
+      "porting/generated/agents/record-lifecycle110/prefix-refs.json",
+      "porting/generated/agents/zone-record264/REPORT.md"
+    ],
+    "validation": "Generation accepts6022 entries, zero rejected;174 selfchecks passed. Two original function bodies plus one member field added. UE build/runtime pending in next coherent batch."
+  }
+}

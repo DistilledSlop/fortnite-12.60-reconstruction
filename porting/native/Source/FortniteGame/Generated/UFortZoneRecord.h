@@ -6,8 +6,11 @@
 #include "CoreMinimal.h"
 #include "UFortGenericRecord.h"
 
+#include "Engine/Level.h"
 #include "FFortLevelRecord.h"
 #include "FStatManagerPeriodRecord.h"
+
+class ABuildingFoundation;
 
 #include "UFortZoneRecord.generated.h"
 
@@ -53,5 +56,9 @@ public:
 	UPROPERTY(Transient)
 	bool bNeedsFullActorSave;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	FFortLevelRecord* NativeAddSavedLevel(FName RequestedPackage, ABuildingFoundation* BoundActor);
 };
 
