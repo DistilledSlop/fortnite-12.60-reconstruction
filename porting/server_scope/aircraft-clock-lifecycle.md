@@ -6,8 +6,8 @@ It explains the bus desync measured in `porting/generated/runs/20261113-movement
 
 ## 1. Diagnosis
 
-**The gap is not a protocol defect in the reconstructed server. It is the original client's own design reacting
-to frames longer than 0.4 s on the software renderer.**
+**The measured gap is well explained by the original client's clock design reacting to frames longer than
+0.4 s. Both clients used software rendering, but the source of the long frames was not isolated.**
 
 1. The original client never reads the server clock to position the bus. It adds its local world
    `DeltaSeconds` to `FlightElapsedTime` every frame and places the bus at
@@ -21,10 +21,10 @@ to frames longer than 0.4 s on the software renderer.**
    recovered all of it by 38.5 s. Client 2 had recovered only 8.01 s when the server destroyed the bus, so it was
    still 7.4 s (about 550 m) behind. The 603 m peak is the moment the two deficits differed most (section 4).
 5. The measured deficit of each client equals its discarded time minus its bounded correction to within 0.11 s
-   across the whole flight. Nothing is left over for a second cause in this run.
+   across the whole flight. This leaves little unexplained by that accounting, within its sampling limits.
 
-The reconstructed server's authority path matches the original function for clock domain, timestamp cadence,
-thresholds and end-of-flight handling (section 3). No missing server behavior was found in the clock path.
+The reconstructed server's authority path matches the reviewed original function for clock domain, timestamp cadence,
+thresholds and end-of-flight handling (section 3). The reviewed clock path revealed no missing server behavior.
 
 What is *not* established is in section 8. The main open items are a real mid-flight late join, which was
 reasoned from code but not measured, and whether the original server did anything outside the aircraft class.
@@ -194,7 +194,7 @@ continuing desync. Only the 122 pairs up to destruction are valid, which is what
 | End: strict `Now > FlightEndTime`, delegates, game mode destroys actor | same (`AFortGameModeAthena::OnAircraftFlightEnded`) | match; both client buses froze at 41.6 s server elapsed **[M]** |
 | No replicated position for the bus | none sent | match |
 
-**Missing server behavior in the clock path: none found.** **Incorrect clock domain: none found.**
+**No missing server behavior or incorrect clock domain was found in the reviewed clock path.**
 
 Known gaps that are real but do not enter the bus clock:
 
@@ -218,9 +218,10 @@ Known gaps that are real but do not enter the bus clock:
 | Elapsed-to-world slope while behind | not 1.33 | exactly 1.33 | 1.33 |
 | A client that stops losing time converges | may not | converges at 0.33 s/s | client 1 converged at 38.5 s |
 
-Both clients ran on `llvmpipe` through DXVK with four rasterizer threads **[M]**. The slowdown is the cause; the
-original client's unforgiving clock design is why it shows up as hundreds of metres. On hardware that holds
-frames under 0.4 s the same server would produce a gap bounded by latency plus single hitches.
+Both clients ran on `llvmpipe` through DXVK with four rasterizer threads **[M]**. The measured lost game time
+and bounded correction explain the gap; the cause of the long frames was not isolated (section 8). With frames
+under 0.4 s and no other source of clock error, the model predicts much smaller gaps, subject to latency and
+individual hitches **[I]**.
 
 No snapping, faster smoothing or position replication is supported by the original code, and none is proposed.
 The smoothing value is a client global, so the server cannot change it either.
@@ -236,27 +237,32 @@ last 10 s of warmup. At server flight elapsed 12 s, suspend client 2 from outsid
 (`kill -STOP`, then `kill -CONT`). Leave client 1 untouched. 12 s is after the phase-change hitches and leaves
 enough flight to watch the recovery.
 
-**Expected if the diagnosis is right.**
+**Expected if the diagnosis is right.** Compare the paused client's changes with its pre-stop baseline and the
+untouched client. The following magnitudes assume Wine includes the whole pause in the next frame delta; that
+behavior has not been tested here:
 
-1. On client 2 `RealTimeSeconds` jumps by about 5.0 s in one frame and `TimeSeconds` by 0.4 s: 4.6 s discarded.
-2. After the next timestamp, client 2's drift is 4.6 s more negative than its value just before the stop.
-3. Client 2's elapsed then rises at 1.33 times its world time, and the injected 4.6 s is repaid in
-   `4.6 / 0.33 = 13.9 s` of client-2 game time, provided its frames stay under 0.4 s.
-4. The gap attributable to the injection is `4.6 * 7500 = 34,500 cm` (345 m) at the stop and shrinks by
-   `0.33 * 7500 = 2,475 cm` per game second.
-5. Client 1's deficit is unaffected by the stop.
-6. For both clients and at every sample, `deficit - (discarded - corrected)` stays within the latency band,
-   about ±0.3 s.
+1. Client 2's `RealTimeSeconds` advances by about 5.0 s while `TimeSeconds` advances by 0.4 s, adding about
+   4.6 s of discarded time. Frame boundaries and unrelated hitches can change the observed increment.
+2. After a fresh timestamp arrives, drift reflects the increased deficit. `OnRep` overwrites pending drift, so
+   its difference from the pre-stop value also includes prior drift evolution and timestamp delivery delay.
+3. While drift is negative and correction remains saturated, client 2's elapsed rises at 1.33 times its own
+   world time. An incremental 4.6 s deficit takes about `4.6 / 0.33 = 13.9 s` of client game time to repay,
+   assuming no further discarded time and no other changes to the baseline.
+4. The incremental position deficit reaches approximately `4.6 * 7500 = 34,500 cm` (345 m) relative to the
+   no-pause trajectory. Under the same assumptions it then shrinks at `0.33 * 7500 = 2,475 cm` per client game
+   second. Existing drift and movement of the control client affect the observed pairwise gap.
+5. The untouched client's own clock and deficit provide a control, though normal movement and independent
+   hitches continue during the pause.
+6. Compare `deficit - (discarded - corrected)` against the pre-stop residual and sampling uncertainty. A growing
+   residual, a persistent unexpected correction slope, or irregular timestamp delivery warrants investigation;
+   none alone identifies a protocol or server defect.
 
-**Expected if there is a protocol or server defect instead.** Any of: a residual in item 6 that grows; client 1
-moving when client 2 is stopped; client 2's drift after resume not reflecting the 4.6 s; a recovery slope other
-than 0.33; timestamps arriving late or unevenly on one client only.
-
-**Why this one.** It needs no fast renderer. The background slowdown is subtracted by the accounting in item 6,
-and the injected hitch gives a step input with exact predicted size, slope and duration.
+**Why this one.** It introduces a known external interruption and tests its effect on the accounting and recovery
+slope. Background hitches, asynchronous samples and timestamp delivery remain confounders, so compare increments
+and repeat if needed rather than treating the nominal numbers as exact.
 
 **Risks.** A 5 s stop is far below the connection timeout **[E]** but this was not tried under Wine. If the
-client drops, repeat with 3 s (2.6 s discarded, 195 m, 7.9 s to repay).
+client drops, repeat with 3 s (nominally 2.6 s discarded, 195 m, 7.9 s to repay under the same assumptions).
 
 ## 8. Remaining uncertainty
 
