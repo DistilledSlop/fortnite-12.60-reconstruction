@@ -25,6 +25,7 @@
 #include "FFortCosmeticModification.h"
 #include "FFortEffectDistanceQuality.h"
 #include "FFortGameplayAbilityBehaviorDistanceData.h"
+#include "FFortRangedWeaponStats.h"
 #include "FMaterialInterfaceArray.h"
 #include "FOnLocalAmmoChanged.h"
 #include "FOnLocalReloadCancelled.h"
@@ -1152,5 +1153,6 @@ public:
 	virtual bool NativeCanReload828(bool bCheckExtra, FGameplayTagContainer* FailureTags);
 	bool NativeSupportsCharge1426a5af0();
 	bool NativeIsAutomatic1426a5ab0();
+	virtual FFortRangedWeaponStats* NativeGetRangedWeaponStats6B0() const;
 };
 

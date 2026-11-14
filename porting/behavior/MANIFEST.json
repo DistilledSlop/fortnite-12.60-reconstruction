@@ -95095,5 +95095,41 @@
       "Engine/World.h"
     ],
     "notes": "Complete original body; dispatch/call evidence in porting/generator_policies/bot_inventory_queries_runtime/RELOAD_EVIDENCE.md. Build/runtime pending. "
+  },
+  {
+    "function": "NativeGetRangedWeaponStats6B0",
+    "kind": "helper",
+    "signature": "FFortRangedWeaponStats* NativeGetRangedWeaponStats6B0() const",
+    "access": "public",
+    "virtual": true,
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x140680300",
+    "inc_path": "porting/behavior/AFortWeapon/NativeGetRangedWeaponStats6B0.inc",
+    "includes": [
+      "Engine/DataTable.h"
+    ],
+    "notes": "Original virtual +0x6b0, distinct from +0x6a8. Complete typed FortRangedWeaponStats row query; borrowed override must contain actual ranged row under original precondition. Evidence: generator_policies/weapon_targeting_runtime/RANGED_STATS_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortWeapon",
+    "override": false
+  },
+  {
+    "function": "NativeGetRangedWeaponStats6B0",
+    "kind": "helper",
+    "signature": "FFortRangedWeaponStats* NativeGetRangedWeaponStats6B0() const",
+    "access": "public",
+    "virtual": true,
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1426cf820",
+    "inc_path": "porting/behavior/AFortWeaponRanged/NativeGetRangedWeaponStats6B0.inc",
+    "includes": [
+      "Engine/DataTable.h"
+    ],
+    "notes": "Original virtual +0x6b0, distinct from +0x6a8. Complete typed FortRangedWeaponStats row query; borrowed override must contain actual ranged row under original precondition. Evidence: generator_policies/weapon_targeting_runtime/RANGED_STATS_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortWeaponRanged",
+    "override": true
   }
 ]

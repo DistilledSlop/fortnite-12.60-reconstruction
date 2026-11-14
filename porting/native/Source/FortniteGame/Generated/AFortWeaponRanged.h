@@ -14,6 +14,7 @@
 #include "FFortBaseWeaponStats.h"
 #include "FFortBulletPatternEntry.h"
 #include "FFortEffectDistanceQuality.h"
+#include "FFortRangedWeaponStats.h"
 #include "FOnOverheatValueChanged.h"
 #include "FOnProjectileSpawned.h"
 #include "FortWeaponTargetingNative.h"
@@ -516,5 +517,6 @@ public:
 	virtual bool NativeCanReload828(bool bCheckExtra, FGameplayTagContainer* FailureTags) override;
 	bool NativeHasFirstShotAccuracy1426d2660();
 	bool NativeOwnerIsMoving1426d6940();
+	virtual FFortRangedWeaponStats* NativeGetRangedWeaponStats6B0() const override;
 };
 

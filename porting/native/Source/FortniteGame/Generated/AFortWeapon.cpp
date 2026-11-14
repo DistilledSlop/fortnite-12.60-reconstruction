@@ -19,6 +19,7 @@
 #include "Engine/EngineTypes.h"
 #include "Engine/World.h"
 #include "FFortBaseWeaponStats.h"
+#include "FFortRangedWeaponStats.h"
 #include "FWeaponHudData.h"
 #include "FortNativeGameplayTagsRuntime.h"
 #include "FortWeaponTargetingNative.h"
@@ -1100,6 +1101,13 @@ bool AFortWeapon::NativeIsAutomatic1426a5ab0()
 	// CONFIDENCE: HIGH
 	// Original 0x1426a5ab0; complete ordered leaf.
 	return WeaponData && WeaponData->NativeGetTriggerType() == EFortWeaponTriggerType::Automatic;
+}
+
+FFortRangedWeaponStats* AFortWeapon::NativeGetRangedWeaponStats6B0() const
+{
+	// CONFIDENCE: HIGH
+	// Original 0x140680300, primary weapon vtable +0x6b0.
+	return nullptr;
 }
 
 void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
