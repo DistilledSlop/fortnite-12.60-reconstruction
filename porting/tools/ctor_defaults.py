@@ -82,18 +82,73 @@ def scan_ctor(ctor_va, limit=0x3000):
     regconst = {}
     xmmconst = {}
     stores = []
+    # Register -> (this displacement, width, known-zero bits, known-one bits).
+    # Only a complete load/modify/store back to the same this location is evidence.
+    rmw = {}
     for ins in insns(ctor_va, limit):
         m, ops = ins.mnemonic, ins.operands
         if m == 'ret' or m == 'int3':
             break
         if m == 'jmp' and ops and ops[0].type == x86.X86_OP_IMM and not (ctor_va <= ops[0].imm < ctor_va + limit):
             break  # tail call out of the body
+        if ins.group(capstone.CS_GRP_JUMP) or m == 'call':
+            rmw.clear()  # The linear scan cannot establish a common path across control flow.
         if m == 'call':
             alias -= VOLATILE
             for r in list(regconst):
                 if REG_FAMILY.get(r, r) in VOLATILE: regconst.pop(r)
             xmmconst = {k: v for k, v in xmmconst.items() if k in ('xmm6', 'xmm7', 'xmm8', 'xmm9', 'xmm10', 'xmm11', 'xmm12', 'xmm13', 'xmm14', 'xmm15')}
             continue
+        # Track partial bit knowledge without treating the untouched bits as zero. All
+        # register widths must match exactly, including high-byte aliases such as ah.
+        # Unmodelled instructions can have implicit memory effects (e.g. stos).
+        if m not in ('mov', 'and', 'or', 'cmp', 'test', 'lea', 'nop', 'xor'):
+            rmw.clear()
+        writes = {REG_FAMILY.get(ins.reg_name(r), ins.reg_name(r)) for r in ins.regs_access()[1]}
+        if writes & alias:
+            rmw.clear()
+        dst_reg = ins.reg_name(ops[0].reg) if ops and ops[0].type == x86.X86_OP_REG else None
+        update = None
+        if len(ops) == 2 and dst_reg and ops[0].size in (1, 2, 4, 8):
+            src = ops[1]
+            if (m == 'mov' and src.type == x86.X86_OP_MEM and src.size == ops[0].size
+                    and src.mem.index == 0 and ins.reg_name(src.mem.base) in alias):
+                update = (src.mem.disp, src.size, 0, 0)
+            elif (m in ('and', 'or') and src.type == x86.X86_OP_IMM and dst_reg in rmw
+                  and rmw[dst_reg][1] == ops[0].size):
+                disp, width, zeros, ones = rmw[dst_reg]
+                mask = src.imm & ((1 << (8 * width)) - 1)
+                if m == 'and':
+                    zeros, ones = zeros | (~mask & ((1 << (8 * width)) - 1)), ones & mask
+                else:
+                    zeros, ones = zeros & ~mask, ones | mask
+                update = (disp, width, zeros, ones)
+        if len(ops) == 2 and ops[0].type == x86.X86_OP_MEM and ops[0].access & capstone.CS_AC_WRITE:
+            mem = ops[0].mem
+            base = ins.reg_name(mem.base)
+            same_this = mem.index == 0 and base in alias
+            if m == 'mov' and same_this and ops[1].type == x86.X86_OP_REG:
+                src_reg = ins.reg_name(ops[1].reg)
+                candidate = rmw.get(src_reg)
+                if candidate and candidate[:2] == (mem.disp, ops[0].size) and ops[1].size == ops[0].size:
+                    disp, width, zeros, ones = candidate
+                    if zeros: stores.append((disp, width, 'and', ~zeros & ((1 << (width * 8)) - 1), ins.address))
+                    if ones: stores.append((disp, width, 'or', ones, ins.address))
+            # An intervening write to the source invalidates it; an unknown address
+            # may alias it. Proven disjoint this-relative writes are harmless.
+            for reg, (disp, width, _, _) in list(rmw.items()):
+                if not same_this or (mem.disp < disp + width and disp < mem.disp + ops[0].size):
+                    rmw.pop(reg)
+        # Other explicit memory writes, including one-operand instructions, may
+        # change the loaded value. Do not attempt to model their effects.
+        if not (len(ops) == 2 and ops[0].type == x86.X86_OP_MEM):
+            if any(op.type == x86.X86_OP_MEM and op.access & capstone.CS_AC_WRITE for op in ops):
+                rmw.clear()
+        for reg in list(rmw):
+            if REG_FAMILY.get(reg, reg) in writes:
+                rmw.pop(reg)
+        if update is not None:
+            rmw[dst_reg] = update
         if len(ops) == 2 and ops[0].type == x86.X86_OP_REG:
             dst = ins.reg_name(ops[0].reg)
             # Forget overlapping subregisters too: eax/ax/al writes invalidate a saved rax constant or alias.
@@ -196,6 +251,14 @@ def resolve(cls, stores, props, bools):
     out = {}
     for disp, size, kind, val, addr in stores:
         if kind in ('or', 'and'):
+            # A masked write changes only some bits. Without a complete value for
+            # the full storage region it cannot establish an ordinary scalar, and
+            # an earlier scalar value may no longer be valid (also for partial
+            # overlaps). Packed bools can still be resolved individually below.
+            for off, p in plain.items():
+                width = SIZES[p.get('storage_kind', p['kind'])]
+                if off < disp + size and disp < off + width:
+                    out.pop(p['name'], None)
             for b in bits:
                 if disp <= b['offset'] < disp + size:
                     mask = b['mask'] << ((b['offset'] - disp) * 8)
