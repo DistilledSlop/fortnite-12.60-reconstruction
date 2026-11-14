@@ -95215,5 +95215,76 @@
     "confidence": "high",
     "notes": "Original142698e98 OR dword[900],40. Unreflected bit separate from initialized bit0 and pending destroy bit5; use shared member in all future recovered consumers. Evidence and source limits: generator_policies/weapon_targeting_runtime/CHARGE_STATE_EVIDENCE.md.",
     "includes": []
+  },
+  {
+    "function": "NativePersistentFXTimer3D0",
+    "kind": "member_field",
+    "signature": "FTimerHandle NativePersistentFXTimer3D0",
+    "offset": "0x3d0",
+    "address": "0x14268d9b0",
+    "includes": [
+      "TimerManager.h"
+    ],
+    "notes": "Original ctor initializes handle zero; FTimerHandle default invalid. Source evidence: generator_policies/weapon_targeting_runtime/FIRE_FX_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortWeapon",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high"
+  },
+  {
+    "function": "NativeFireFXTimerB18",
+    "kind": "member_field",
+    "signature": "FTimerHandle NativeFireFXTimerB18",
+    "offset": "0xb18",
+    "address": "0x14268d9b0",
+    "includes": [
+      "TimerManager.h"
+    ],
+    "notes": "Original ctor initializes handle zero; FTimerHandle default invalid. Source evidence: generator_policies/weapon_targeting_runtime/FIRE_FX_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortWeapon",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high"
+  },
+  {
+    "function": "NativeStopFireFX690",
+    "kind": "helper",
+    "signature": "void NativeStopFireFX690()",
+    "virtual": true,
+    "address": "0x1426b60f0",
+    "inc_path": "porting/behavior/reload_fx236_runtime/AFortWeapon/NativeStopFireFX690.inc",
+    "includes": [
+      "Components/AudioComponent.h",
+      "Components/SceneComponent.h",
+      "Engine/World.h",
+      "TimerManager.h",
+      "GameFramework/Pawn.h",
+      "FortWeaponStopSoundNative.h"
+    ],
+    "notes": "Complete +690 audio cleanup; companion helper and handles required. Source evidence: generator_policies/weapon_targeting_runtime/FIRE_FX_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortWeapon",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high"
+  },
+  {
+    "function": "NativeAbilityEnd758",
+    "kind": "helper",
+    "signature": "void NativeAbilityEnd758()",
+    "virtual": true,
+    "address": "0x142693270",
+    "inc_path": "porting/behavior/reload_fx236_runtime/AFortWeapon/NativeAbilityEnd758.inc",
+    "includes": [
+      "Abilities/GameplayAbility.h"
+    ],
+    "notes": "Complete +758 direct end-ability then dynamic +690. Source evidence: generator_policies/weapon_targeting_runtime/FIRE_FX_EVIDENCE.md. Build/runtime pending.",
+    "class": "AFortWeapon",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high"
   }
 ]

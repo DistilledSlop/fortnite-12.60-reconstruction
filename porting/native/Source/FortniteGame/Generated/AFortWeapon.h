@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "Abilities/GameplayAbility.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
 #include "Components/AudioComponent.h"
@@ -38,8 +39,10 @@
 #include "FWeaponEventDelegate.h"
 #include "FWeaponHudData.h"
 #include "FortNativeGameplayTagsRuntime.h"
+#include "FortWeaponStopSoundNative.h"
 #include "FortWeaponTargetingNative.h"
 #include "GameFramework/Controller.h"
+#include "GameFramework/Pawn.h"
 #include "GameplayAbilitySpec.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectAggregator.h"
@@ -196,6 +199,9 @@ public:
 	// table index 157, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_EquippedWeaponDestroyWrapper)
 	uint8 EquippedWeaponDestroyWrapperRepCounter;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x3d0): not a UPROPERTY, not replicated.
+	FTimerHandle NativePersistentFXTimer3D0;
 
 	// table index 156, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -757,6 +763,9 @@ public:
 	UPROPERTY()
 	UAnimMontage* UnableToPerformActionMontageOverride;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xb18): not a UPROPERTY, not replicated.
+	FTimerHandle NativeFireFXTimerB18;
+
 	// table index 6, flags 0x40000000002000
 	UPROPERTY(Transient)
 	ACustomItemWrapModifier* ItemWrapModifier;
@@ -1164,5 +1173,7 @@ public:
 	void NativeStartCharge142698da0();
 	void NativeSetChargeState1426b21a0(uint8 NewState);
 	void NativeNotifyChargeState1426933f0(uint8 OldState, uint8 NewState);
+	virtual void NativeStopFireFX690();
+	virtual void NativeAbilityEnd758();
 };
 

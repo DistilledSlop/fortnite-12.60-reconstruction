@@ -7,6 +7,7 @@
 #include "AFortPlayerControllerSpectating.h"
 #include "AFortPlayerPawn.h"
 #include "AFortRemoteControlledPawnAthena.h"
+#include "Abilities/GameplayAbility.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
 #include "AttributeSet.h"
@@ -22,8 +23,10 @@
 #include "FFortRangedWeaponStats.h"
 #include "FWeaponHudData.h"
 #include "FortNativeGameplayTagsRuntime.h"
+#include "FortWeaponStopSoundNative.h"
 #include "FortWeaponTargetingNative.h"
 #include "GameFramework/Controller.h"
+#include "GameFramework/Pawn.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectAggregator.h"
 #include "GameplayEffectTypes.h"
@@ -1183,6 +1186,73 @@ void AFortWeapon::NativeNotifyChargeState1426933f0(uint8 OldState, uint8 NewStat
 	    OnReachedMaxChargeForCurAmmo();
 	}
 	if (OldState != 0 && NewState == 0) OnEndCharge();
+}
+
+void AFortWeapon::NativeStopFireFX690()
+{
+	// CONFIDENCE: HIGH
+	// 0x1426b60f0, virtual +0x690. The timer delegate calls this virtual again.
+	if (GetLocalRole() == ROLE_Authority)
+	    return;
+	UWorld* World = GetWorld();
+	if (!bIsPlayingFireFX)
+	    return;
+	if (bFireFXTriggered)
+	{
+	    const float Minimum = MinimumTimeForPersistentFX;
+	    if (Minimum > 0.0f && World)
+	    {
+	        const float Elapsed = World->GetTimeSeconds() - PersistentFXStartTime;
+	        // COMISS elapsed,minimum; JNC cleanup: unordered elapsed schedules as well.
+	        if (!(Elapsed >= Minimum))
+	        {
+	            FTimerDelegate Delegate = FTimerDelegate::CreateUObject(this, &AFortWeapon::NativeStopFireFX690);
+	            World->GetTimerManager().SetTimer(NativePersistentFXTimer3D0, Delegate, Minimum - Elapsed, false, -1.0f);
+	            return;
+	        }
+	    }
+	}
+	for (int32 Index = 0; Index < 3; ++Index)
+	{
+	    USoundBase* Sound = nullptr;
+	    if (Index == 0)
+	    {
+	        APawn* Pawn = GetInstigator();
+	        AFortPlayerController* PC = Pawn ? Cast<AFortPlayerController>(Pawn->GetController()) : nullptr;
+	        if (PC && PC->IsLocalController() && PrimaryFireStopSound1P)
+	            Sound = PrimaryFireStopSound1P;
+	    }
+	    if (!Sound)
+	        Sound = PrimaryFireStopSound[Index];
+	    if (Sound)
+	    {
+	        const FVector Location = GetRootComponent() ? GetRootComponent()->GetRelativeLocation() : FVector::ZeroVector;
+	        FortWeaponNative::PlayStopSound(GetWorld(), Sound, Location);
+	    }
+	}
+	for (UAudioComponent* Audio : FireAudioChannels)
+	    if (Audio)
+	        Audio->FadeOut(PrimaryFireSoundFadeOutTime, 0.0f, EAudioFaderCurve::Linear);
+	if (World)
+	    World->GetTimerManager().ClearTimer(NativeFireFXTimerB18);
+	NativeFireFXTimerB18.Invalidate();
+	bIsPlayingFireFX = false;
+	if (bFireFXTriggered)
+	{
+	    bFireFXTriggered = false;
+	    OnStopWeaponFireFX();
+	}
+}
+
+void AFortWeapon::NativeAbilityEnd758()
+{
+	// CONFIDENCE: HIGH
+	// Original 0x142693270, virtual +0x758.
+	if (ActiveAbility)
+	{
+	    ActiveAbility->UGameplayAbility::K2_EndAbility();
+	}
+	NativeStopFireFX690();
 }
 
 void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
