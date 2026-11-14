@@ -94029,5 +94029,306 @@
       "GameFramework/PhysicsVolume.h"
     ],
     "notes": "Complete original override at primary slot890 for both constructor-proven Fort movement tables. Raises braking only for slippery walking inside deep/shallow water; ordinary dry walking forwards unchanged. Preserves comparison NaN behavior. Source generation/combined UE build/runtime and wider movement lifecycle remain unaccepted."
+  },
+  {
+    "class": "UFortWeaponItemDefinition",
+    "function": "NativeScaledClipSize142669d00",
+    "kind": "helper",
+    "signature": "int32 NativeScaledClipSize142669d00(const FFortBaseWeaponStats& Stats, float Level)",
+    "access": "public",
+    "signature_status": "verified",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x142669d00",
+    "inc_path": "porting/behavior/weapon_capacity_runtime/UFortWeaponItemDefinition_NativeScaledClipSize142669d00.inc",
+    "static": true,
+    "includes": [
+      "Math/UnrealMathSSE.h"
+    ]
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeGetWeaponLevel140696560",
+    "kind": "helper",
+    "signature": "int32 NativeGetWeaponLevel140696560() const",
+    "access": "public",
+    "signature_status": "verified",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x140696560",
+    "inc_path": "porting/behavior/weapon_capacity_runtime/AFortWeapon_NativeGetWeaponLevel140696560.inc",
+    "virtual": true
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeBeginStatCacheScope14268e3b0",
+    "kind": "helper",
+    "signature": "AFortWeapon*& NativeBeginStatCacheScope14268e3b0(AFortWeapon*& ScopeWeapon, AFortWeapon* Weapon)",
+    "access": "public",
+    "signature_status": "verified",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x14268e3b0",
+    "inc_path": "porting/behavior/weapon_capacity_runtime/AFortWeapon_NativeBeginStatCacheScope14268e3b0.inc",
+    "static": true
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeEndStatCacheScope14268e500",
+    "kind": "helper",
+    "signature": "void NativeEndStatCacheScope14268e500(AFortWeapon*& ScopeWeapon)",
+    "access": "public",
+    "signature_status": "verified",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x14268e500",
+    "inc_path": "porting/behavior/weapon_capacity_runtime/AFortWeapon_NativeEndStatCacheScope14268e500.inc",
+    "static": true
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeInvalidateStatCaches1426afa80",
+    "kind": "helper",
+    "signature": "void NativeInvalidateStatCaches1426afa80()",
+    "access": "public",
+    "signature_status": "verified",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1426afa80",
+    "inc_path": "porting/behavior/weapon_capacity_runtime/AFortWeapon_NativeInvalidateStatCaches1426afa80.inc",
+    "virtual": true
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeGetWeaponSkillLevel1426a1160",
+    "kind": "helper",
+    "signature": "int32 NativeGetWeaponSkillLevel1426a1160(IAbilitySystemInterface* PawnInterface)",
+    "access": "public",
+    "signature_status": "verified",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1426a1160",
+    "inc_path": "porting/behavior/weapon_capacity_runtime/AFortWeapon_NativeGetWeaponSkillLevel1426a1160.inc",
+    "virtual": true,
+    "includes": [
+      "AbilitySystemInterface.h",
+      "GameplayEffect.h",
+      "GameplayEffectAggregator.h",
+      "UObject/UnrealType.h",
+      "Math/UnrealMathSSE.h"
+    ],
+    "notes": "Primary +0x920 all23 constructors. Capture WeaponSkill from UFortDamageSet with original clamp/rounding and scoped native cache. Include UFortDamageSet via type inference."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeGetBulletsPerClip14269b000",
+    "kind": "helper",
+    "signature": "int32 NativeGetBulletsPerClip14269b000()",
+    "access": "public",
+    "signature_status": "verified",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x14269b000",
+    "inc_path": "porting/behavior/weapon_capacity_runtime/AFortWeapon_NativeGetBulletsPerClip14269b000.inc",
+    "includes": [
+      "AbilitySystemInterface.h",
+      "GameplayEffect.h",
+      "GameplayEffectAggregator.h",
+      "UObject/UnrealType.h",
+      "Math/UnrealMathSSE.h"
+    ],
+    "notes": "Original helper, not reflected. Uses +920 RETURN as float Level argument to142669d00; cached decompile omitted second XMM argument. Preserve scoped cache state and ranged +6a8 override."
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "NativeGetWeaponStats",
+    "kind": "helper",
+    "signature": "FFortBaseWeaponStats* NativeGetWeaponStats() const",
+    "access": "public",
+    "virtual": true,
+    "signature_status": "verified",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1426d0610",
+    "inc_path": "porting/behavior/weapon_capacity_runtime/AFortWeaponRanged_NativeGetWeaponStats.inc",
+    "includes": [
+      "Engine/DataTable.h"
+    ],
+    "notes": "Primary +0x6a8 on all ten constructor-proven ranged classes. Uses existing reflected bUseAthenaRecoil and borrowed native override row."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeStatCacheScopeDepth201",
+    "kind": "member_field",
+    "signature": "int32 NativeStatCacheScopeDepth201",
+    "access": "public",
+    "offset": "0x338",
+    "default": "0",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Native shared stat-cache state; original AFortWeapon constructor stores zero at338, -1 at340/344, true at34c."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "bNativeWeaponSkillCached201",
+    "kind": "member_field",
+    "signature": "bool bNativeWeaponSkillCached201",
+    "access": "public",
+    "offset": "0x33d",
+    "default": "false",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Native shared stat-cache state; original AFortWeapon constructor stores zero at338, -1 at340/344, true at34c."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "bNativeClipSizeCached201",
+    "kind": "member_field",
+    "signature": "bool bNativeClipSizeCached201",
+    "access": "public",
+    "offset": "0x33e",
+    "default": "false",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Native shared stat-cache state; original AFortWeapon constructor stores zero at338, -1 at340/344, true at34c."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "bNativeThirdStatCached201",
+    "kind": "member_field",
+    "signature": "bool bNativeThirdStatCached201",
+    "access": "public",
+    "offset": "0x33f",
+    "default": "false",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Native shared stat-cache state; original AFortWeapon constructor stores zero at338, -1 at340/344, true at34c."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeCachedWeaponSkill201",
+    "kind": "member_field",
+    "signature": "int32 NativeCachedWeaponSkill201",
+    "access": "public",
+    "offset": "0x340",
+    "default": "-1",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Native shared stat-cache state; original AFortWeapon constructor stores zero at338, -1 at340/344, true at34c."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeCachedClipSize201",
+    "kind": "member_field",
+    "signature": "int32 NativeCachedClipSize201",
+    "access": "public",
+    "offset": "0x344",
+    "default": "-1",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Native shared stat-cache state; original AFortWeapon constructor stores zero at338, -1 at340/344, true at34c."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "bNativeAllowStatCaching201",
+    "kind": "member_field",
+    "signature": "bool bNativeAllowStatCaching201",
+    "access": "public",
+    "offset": "0x34c",
+    "default": "true",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Native shared stat-cache state; original AFortWeapon constructor stores zero at338, -1 at340/344, true at34c."
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "NativeOverrideWeaponStats201",
+    "kind": "member_field",
+    "signature": "FFortBaseWeaponStats* NativeOverrideWeaponStats201",
+    "access": "public",
+    "offset": "0xe00",
+    "default": "nullptr",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Native shared state identity and constructor default proven in original image; broader class lifecycle remains incomplete. Borrowed row pointer is not owned or GC-managed."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeIsFiring708",
+    "signature": "bool NativeIsFiring708() const",
+    "address": "0x1426a5c50",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/weapon_firing_runtime/AFortWeapon.NativeIsFiring708.inc",
+    "confidence": "HIGH",
+    "status": "ported",
+    "virtual": true,
+    "notes": "Complete body; producer lifecycle and runtime validation remain open."
+  },
+  {
+    "class": "AFortDecoTool",
+    "function": "NativeIsFiring708",
+    "signature": "bool NativeIsFiring708() const",
+    "address": "0x1426a5c40",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/weapon_firing_runtime/AFortDecoTool.NativeIsFiring708.inc",
+    "confidence": "HIGH",
+    "status": "ported",
+    "virtual": true,
+    "notes": "Complete body; producer lifecycle and runtime validation remain open.",
+    "override": true
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "NativeIsFiring708",
+    "signature": "bool NativeIsFiring708() const",
+    "address": "0x1426d24d0",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/weapon_firing_runtime/AFortWeaponRanged.NativeIsFiring708.inc",
+    "confidence": "HIGH",
+    "status": "ported",
+    "virtual": true,
+    "notes": "Complete body; producer lifecycle and runtime validation remain open.",
+    "override": true,
+    "includes": [
+      "TimerManager.h"
+    ]
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "NativeFiringTimerD88",
+    "signature": "FTimerHandle NativeFiringTimerD88",
+    "address": "0x1426bd2a0",
+    "kind": "member_field",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "HIGH",
+    "status": "ported",
+    "notes": "Native constructor initializes invalid handle; timer producer lifecycle remains open.",
+    "offset": "0xd88",
+    "includes": [
+      "TimerManager.h"
+    ]
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "NativeFiringTimerD90",
+    "signature": "FTimerHandle NativeFiringTimerD90",
+    "address": "0x1426bd2a0",
+    "kind": "member_field",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "HIGH",
+    "status": "ported",
+    "notes": "Native constructor initializes invalid handle; timer producer lifecycle remains open.",
+    "offset": "0xd90",
+    "includes": [
+      "TimerManager.h"
+    ]
   }
 ]

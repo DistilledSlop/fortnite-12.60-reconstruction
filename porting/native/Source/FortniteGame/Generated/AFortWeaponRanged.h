@@ -8,8 +8,10 @@
 
 #include "EFortAbilityTargetingSource.h"
 #include "EFortWeaponOverheatState.h"
+#include "Engine/DataTable.h"
 #include "Engine/EngineTypes.h"
 #include "Engine/Scene.h"
+#include "FFortBaseWeaponStats.h"
 #include "FFortBulletPatternEntry.h"
 #include "FFortEffectDistanceQuality.h"
 #include "FOnOverheatValueChanged.h"
@@ -238,6 +240,12 @@ public:
 	UPROPERTY()
 	TArray<FFortBulletPatternEntry> BulletPattern;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xd88): not a UPROPERTY, not replicated.
+	FTimerHandle NativeFiringTimerD88;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xd90): not a UPROPERTY, not replicated.
+	FTimerHandle NativeFiringTimerD90;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0xda0): not a UPROPERTY, not replicated.
 	FTimerHandle NativeFirstShotAccuracyTimer;
 
@@ -263,6 +271,9 @@ public:
 	// table index 22, flags 0x40000000004000
 	UPROPERTY(Config)
 	float FirstShotAccuracyMinWaitTime;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xe00): not a UPROPERTY, not replicated.
+	FFortBaseWeaponStats* NativeOverrideWeaponStats201 = nullptr;
 
 	// table index 21, flags 0x20080000000001
 	UPROPERTY()
@@ -493,5 +504,7 @@ public:
 	void NativeClearFirstShotAccuracy1426ddc90();
 	void NativeMarkFirstShotAccuracy1426dd430();
 	bool NativeUsesFirstShotAccuracy1426cfa80();
+	virtual FFortBaseWeaponStats* NativeGetWeaponStats() const;
+	virtual bool NativeIsFiring708() const override;
 };
 

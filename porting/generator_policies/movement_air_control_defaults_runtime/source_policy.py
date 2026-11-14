@@ -147,9 +147,17 @@ def finalize(model, header, cpp):
     if depth:
         raise ValueError(CLASS + ': unterminated constructor')
     # Includes initializer list: any use could change constructor ordering or state.
-    if any(re.search(r'\b' + field + r'\b', cpp[match.start():end - 1]) for field, _ in FIELDS):
+    inherited = ('NetworkMaxSmoothUpdateDistance', 'NetworkNoSmoothUpdateDistance',
+                 'bProjectNavMeshWalking')
+    if any(re.search(r'\b' + field + r'\b', cpp[match.start():end - 1])
+           for field in tuple(field for field, _ in FIELDS) + inherited):
         raise ValueError(CLASS + ': competing constructor field use')
-    body = '\n    // Original base constructor 0x1420d4700 air-control projection.\n'
+    body = '\n    // Original base constructor 0x1420d4700: partial reflected-field projection.\n'
+    body += '    bProjectNavMeshWalking = true; // 0x1420d4bc6, bit0x40 only\n'
+    body += '    static_assert(TIsSame<decltype(NetworkMaxSmoothUpdateDistance), float>::Value, "movement smoothing field type changed");\n'
+    body += '    static_assert(TIsSame<decltype(NetworkNoSmoothUpdateDistance), float>::Value, "movement smoothing field type changed");\n'
+    body += '    NetworkMaxSmoothUpdateDistance = 512.0f; // 0x1420d4c58\n'
+    body += '    NetworkNoSmoothUpdateDistance = 768.0f; // 0x1420d4c62\n'
     for member in MEMBERS:
         body += '    static_assert(TIsSame<decltype(FAirControlParams::%s), FScalableFloat>::Value, "air-control member type changed");\n' % member
     for field, member, value, address in WRITES:

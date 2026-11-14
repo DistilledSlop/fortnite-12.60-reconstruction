@@ -15,6 +15,7 @@
 #include "FortAssets.h"
 #include "FortDelayedObjectLoader.h"
 #include "GameplayTagContainer.h"
+#include "Math/UnrealMathSSE.h"
 #include "Math/Vector2D.h"
 
 class AFortWeapon;
@@ -308,5 +309,6 @@ public:
 	static int32 NativeAmmoCostForCharge(const FFortBaseWeaponStats& Stats, float ChargeFraction);
 	virtual FText GetDisplayName(bool bBaseName) const;
 	bool NativeAllowTargetingDuringReload142684ac0() const;
+	static int32 NativeScaledClipSize142669d00(const FFortBaseWeaponStats& Stats, float Level);
 };
 

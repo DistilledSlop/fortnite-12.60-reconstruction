@@ -2482,6 +2482,10 @@ _athena_playlist_selection_spec = _common_activation_import.spec_from_file_locat
     "athena_playlist_selection_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "athena_playlist_selection_runtime", "source_policy.py"))
 _athena_playlist_selection_policy = _common_activation_import.module_from_spec(_athena_playlist_selection_spec)
 _athena_playlist_selection_spec.loader.exec_module(_athena_playlist_selection_policy)
+_ability_spec_handle_bridge_spec = _common_activation_import.spec_from_file_location(
+    "ability_spec_handle_bridge_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "ability_spec_handle_bridge_runtime", "source_policy.py"))
+_ability_spec_handle_bridge_policy = _common_activation_import.module_from_spec(_ability_spec_handle_bridge_spec)
+_ability_spec_handle_bridge_spec.loader.exec_module(_ability_spec_handle_bridge_policy)
 _air_selector_admission_spec = _common_activation_import.spec_from_file_location(
     "air_selector_admission_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "air_selector_admission_runtime", "source_policy.py"))
 _air_selector_admission_policy = _common_activation_import.module_from_spec(_air_selector_admission_spec)
@@ -3890,6 +3894,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     if rep:
         lines.append("\tvirtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;")
     lines.extend(render_helper_declarations(model))
+    lines.extend(_ability_spec_handle_bridge_policy.declarations(model))
     lines.extend(_maps_visibility_policy.declarations(model))
     lines.extend(_controller_analytics_policy.class_declarations(model["name"]))
     if model.get("source_context_phases"):
@@ -4584,6 +4589,7 @@ def promote(args):
     _remote_view_replication_policy.validate_required_classes(listed)
     _athena_playlist_selection_policy.validate_required_classes(listed)
     _air_selector_admission_policy.validate_required_classes(listed)
+    _ability_spec_handle_bridge_policy.validate_required_classes(listed)
     _flying_acceleration_family_policy.validate_required_classes(listed)
     _world_profile_gate_policy.validate_required_classes(listed)
     name_to_block = {v: k for k, v in names.items()}
@@ -5091,6 +5097,7 @@ def promote(args):
                                      (_action_receivers_policy.definitions(model), cpp)):
                 if output.count(fragment) != 1:
                     raise ValueError('action widget runtime fragment missing or duplicated')
+        _ability_spec_handle_bridge_policy.validate_rendered(model, header, cpp)
         if re.search(r"TODO_", header + cpp):
             raise SystemExit("%s: unresolved TODO token reached the output" % name)
         class_outputs.append((name, module, header, cpp))

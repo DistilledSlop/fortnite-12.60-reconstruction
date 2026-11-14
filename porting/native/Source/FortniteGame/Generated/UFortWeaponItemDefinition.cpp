@@ -6,6 +6,7 @@
 #include "FFortBaseWeaponStats.h"
 #include "FortAssets.h"
 #include "FortDelayedObjectLoader.h"
+#include "Math/UnrealMathSSE.h"
 #include "UFortAlterationItemDefinition.h"
 #include "UFortGameplayAbility.h"
 #include "UFortWorldItemDefinition.h"
@@ -413,5 +414,15 @@ bool UFortWeaponItemDefinition::NativeAllowTargetingDuringReload142684ac0() cons
 	// CONFIDENCE: HIGH. Complete original body.
 	// Original 0x142684ac0: read byte +0x9a7, mask0x04, pinned bool_bits.
 	return bAllowTargetingDuringReload;
+}
+
+int32 UFortWeaponItemDefinition::NativeScaledClipSize142669d00(const FFortBaseWeaponStats& Stats, float Level)
+{
+	// CONFIDENCE: HIGH. Complete original 0x142669d00; explicit borrowed stat row binding.
+	// Intrinsics preserve MAXSS unordered behavior, operation order and CVTTSS2SI overflow.
+	__m128 Delta = _mm_sub_ss(_mm_set_ss(Level), _mm_set_ss(static_cast<float>(Stats.BaseLevel)));
+	Delta = _mm_max_ss(Delta, _mm_setzero_ps());
+	const __m128 Scale = _mm_add_ss(_mm_mul_ss(Delta, _mm_set_ss(Stats.ClipScale)), _mm_set_ss(1.0f));
+	return _mm_cvttss_si32(_mm_mul_ss(Scale, _mm_set_ss(static_cast<float>(Stats.ClipSize))));
 }
 

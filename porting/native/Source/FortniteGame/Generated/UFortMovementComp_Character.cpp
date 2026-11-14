@@ -523,7 +523,12 @@ UFortMovementComp_Character::UFortMovementComp_Character(const FObjectInitialize
     : Super(ObjectInitializer)
 {
 
-    // Original base constructor 0x1420d4700 air-control projection.
+    // Original base constructor 0x1420d4700: partial reflected-field projection.
+    bProjectNavMeshWalking = true; // 0x1420d4bc6, bit0x40 only
+    static_assert(TIsSame<decltype(NetworkMaxSmoothUpdateDistance), float>::Value, "movement smoothing field type changed");
+    static_assert(TIsSame<decltype(NetworkNoSmoothUpdateDistance), float>::Value, "movement smoothing field type changed");
+    NetworkMaxSmoothUpdateDistance = 512.0f; // 0x1420d4c58
+    NetworkNoSmoothUpdateDistance = 768.0f; // 0x1420d4c62
     static_assert(TIsSame<decltype(FAirControlParams::MaxAcceleration), FScalableFloat>::Value, "air-control member type changed");
     static_assert(TIsSame<decltype(FAirControlParams::LateralFriction), FScalableFloat>::Value, "air-control member type changed");
     static_assert(TIsSame<decltype(FAirControlParams::MaxLateralSpeed), FScalableFloat>::Value, "air-control member type changed");

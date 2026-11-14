@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 
 #include "AbilitySystemComponent.h"
+#include "AbilitySystemInterface.h"
 #include "Components/AudioComponent.h"
 #include "Components/SceneComponent.h"
 #include "EFortItemType.h"
@@ -43,6 +44,7 @@
 #include "GameplayEffectAggregator.h"
 #include "Math/Color.h"
 #include "Math/TransformNonVectorized.h"
+#include "Math/UnrealMathSSE.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
 #include "SharedFortGameLog.h"
@@ -141,6 +143,27 @@ public:
 	// table index 165, flags 0x10000000004000
 	UPROPERTY(Config)
 	bool bUseAttributeCaching;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x338): not a UPROPERTY, not replicated.
+	int32 NativeStatCacheScopeDepth201 = 0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x33d): not a UPROPERTY, not replicated.
+	bool bNativeWeaponSkillCached201 = false;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x33e): not a UPROPERTY, not replicated.
+	bool bNativeClipSizeCached201 = false;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x33f): not a UPROPERTY, not replicated.
+	bool bNativeThirdStatCached201 = false;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x340): not a UPROPERTY, not replicated.
+	int32 NativeCachedWeaponSkill201 = -1;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x344): not a UPROPERTY, not replicated.
+	int32 NativeCachedClipSize201 = -1;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x34c): not a UPROPERTY, not replicated.
+	bool bNativeAllowStatCaching201 = true;
 
 	// table index 164, flags 0x10000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ReplicatedWeaponData, Transient)
@@ -1114,5 +1137,12 @@ public:
 	AController* NativeResolveController1426a07c0();
 	virtual void NativeSetTargeting1426b3730(bool bNewTargeting);
 	void NativeClearNeedsToBeCocked1426afaa0();
+	virtual int32 NativeGetWeaponLevel140696560() const;
+	static AFortWeapon*& NativeBeginStatCacheScope14268e3b0(AFortWeapon*& ScopeWeapon, AFortWeapon* Weapon);
+	static void NativeEndStatCacheScope14268e500(AFortWeapon*& ScopeWeapon);
+	virtual void NativeInvalidateStatCaches1426afa80();
+	virtual int32 NativeGetWeaponSkillLevel1426a1160(IAbilitySystemInterface* PawnInterface);
+	int32 NativeGetBulletsPerClip14269b000();
+	virtual bool NativeIsFiring708() const;
 };
 

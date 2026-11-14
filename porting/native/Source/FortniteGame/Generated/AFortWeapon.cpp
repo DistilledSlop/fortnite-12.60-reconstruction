@@ -7,6 +7,7 @@
 #include "AFortPlayerPawn.h"
 #include "AFortRemoteControlledPawnAthena.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystemInterface.h"
 #include "AttributeSet.h"
 #include "Components/AudioComponent.h"
 #include "Components/SceneComponent.h"
@@ -25,10 +26,12 @@
 #include "GameplayEffectAggregator.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
+#include "Math/UnrealMathSSE.h"
 #include "Math/Vector.h"
 #include "SharedFortGameLog.h"
 #include "SkeletalMeshComponentBudgeted.h"
 #include "TimerManager.h"
+#include "UFortDamageSet.h"
 #include "UFortGameplayAbility.h"
 #include "UFortWeaponAttrSet.h"
 #include "UFortWeaponItemDefinition.h"
@@ -680,7 +683,7 @@ bool AFortWeapon::NativeIsReloadAbilityActive830() const
 	// CONFIDENCE: HIGH. Original1426a5d60; current spec handle is read after IsActive.
 	UFortGameplayAbility* Ability = ActiveAbility;
 	return Ability && Ability->IsActive()
-	    && ActiveAbility->GetCurrentAbilitySpecHandle() == ReloadAbilitySpecHandle;
+	    && ActiveAbility->NativeCurrentSpecHandle() == ReloadAbilitySpecHandle;
 }
 
 bool AFortWeapon::NativeAllowsADSInAirA80() const
@@ -810,6 +813,149 @@ void AFortWeapon::NativeClearNeedsToBeCocked1426afaa0()
 	    TimerManager.ClearTimer(NativeCockingTimerB38);
 	}
 	UE_LOG(LogFort, Log, TEXT("Needs to be cocked cleared"));
+}
+
+int32 AFortWeapon::NativeGetWeaponLevel140696560() const
+{
+	// CONFIDENCE: HIGH. Complete original +0x918 target, all 23 constructor-proven classes.
+	return WeaponLevel;
+}
+
+AFortWeapon*& AFortWeapon::NativeBeginStatCacheScope14268e3b0(AFortWeapon*& ScopeWeapon, AFortWeapon* Weapon)
+{
+	// CONFIDENCE: HIGH. ScopeWeapon is the actual one-pointer scope storage (reference return preserves this address).
+	// A disabled/null input leaves that storage unchanged, matching the native constructor helper.
+	if (Weapon && Weapon->bNativeAllowStatCaching201)
+	{
+	    ScopeWeapon = Weapon;
+	    Weapon->NativeStatCacheScopeDepth201 = static_cast<int32>(
+	        static_cast<uint32>(Weapon->NativeStatCacheScopeDepth201) + 1u);
+	}
+	return ScopeWeapon;
+}
+
+void AFortWeapon::NativeEndStatCacheScope14268e500(AFortWeapon*& ScopeWeapon)
+{
+	// CONFIDENCE: HIGH. Native scope destructor; clear all query caches at the outermost scope exit.
+	if (ScopeWeapon)
+	{
+	    ScopeWeapon->NativeStatCacheScopeDepth201 = static_cast<int32>(
+	        static_cast<uint32>(ScopeWeapon->NativeStatCacheScopeDepth201) - 1u);
+	    if (ScopeWeapon->NativeStatCacheScopeDepth201 == 0)
+	        ScopeWeapon->NativeInvalidateStatCaches1426afa80();
+	    ScopeWeapon = nullptr;
+	}
+}
+
+void AFortWeapon::NativeInvalidateStatCaches1426afa80()
+{
+	// CONFIDENCE: HIGH. All 23 constructor-proven primary +0x910 targets.
+	bNativeWeaponSkillCached201 = false;
+	bNativeClipSizeCached201 = false;
+	bNativeThirdStatCached201 = false;
+}
+
+int32 AFortWeapon::NativeGetWeaponSkillLevel1426a1160(IAbilitySystemInterface* PawnInterface)
+{
+	// CONFIDENCE: HIGH. Complete body; shared native state is declared in field proposals.
+	if (bNativeWeaponSkillCached201)
+	    return NativeCachedWeaponSkill201;
+	int32 Level = NativeGetWeaponLevel140696560();
+	if (PawnInterface)
+	{
+	    if (UAbilitySystemComponent* OwnerASC = PawnInterface->GetAbilitySystemComponent())
+	    {
+	        FGameplayTagContainer WeaponTags;
+	        if (WeaponData)
+	            WeaponData->GetOwnedGameplayTags(WeaponTags);
+	        FGameplayTagContainer SourceTags;
+	        OwnerASC->GetOwnedGameplayTags(SourceTags);
+	        SourceTags.AppendTags(WeaponTags);
+	        FAggregatorEvaluateParameters Parameters;
+	        Parameters.SourceTags = &SourceTags;
+	        if (const UFortDamageSet* DamageSet = OwnerASC->GetSet<UFortDamageSet>())
+	        {
+	            float Skill;
+	            {
+	                static FProperty* SkillProperty = FindFieldChecked<FProperty>(
+	                    UFortDamageSet::StaticClass(), FName(TEXT("WeaponSkill")));
+	                static const FGameplayEffectAttributeCaptureDefinition Definition(
+	                    FGameplayAttribute(SkillProperty), EGameplayEffectAttributeCaptureSource::Source, true);
+	                FGameplayEffectAttributeCaptureSpec Spec(Definition);
+	                OwnerASC->CaptureAttributeForGameplayEffect(Spec);
+	                Skill = 0.0f;
+	                Spec.AttemptCalculateAttributeMagnitude(Parameters, Skill);
+	                // Original COMISS/JNC clamps unordered input to Minimum.
+	                if (!_mm_comige_ss(_mm_set_ss(Skill), _mm_set_ss(DamageSet->WeaponSkill.Minimum)))
+	                    Skill = DamageSet->WeaponSkill.Minimum;
+	                else if (_mm_comige_ss(_mm_set_ss(Skill), _mm_set_ss(DamageSet->WeaponSkill.Maximum)))
+	                    Skill = DamageSet->WeaponSkill.Maximum;
+	            }
+	            const __m128 V = _mm_set_ss(Skill);
+	            const int32 Rounded = _mm_cvtss_si32(_mm_sub_ss(_mm_add_ss(V, V), _mm_set_ss(0.5f))) >> 1;
+	            if (Rounded <= Level)
+	                Level = Rounded;
+	        }
+	    }
+	}
+	if (NativeStatCacheScopeDepth201 > 0)
+	{
+	    NativeCachedWeaponSkill201 = Level;
+	    bNativeWeaponSkillCached201 = true;
+	}
+	return Level;
+}
+
+int32 AFortWeapon::NativeGetBulletsPerClip14269b000()
+{
+	// CONFIDENCE: HIGH. Complete body; shared native state is declared in field proposals.
+	if (bNativeClipSizeCached201)
+	    return NativeCachedClipSize201;
+	const FFortBaseWeaponStats* Stats = NativeGetWeaponStats();
+	if (!Stats)
+	    return 0;
+	AFortPawn* Pawn = Cast<AFortPawn>(GetInstigator());
+	IAbilitySystemInterface* PawnInterface = Pawn;
+	UAbilitySystemComponent* OwnerASC = PawnInterface ? PawnInterface->GetAbilitySystemComponent() : nullptr;
+	// Both the side effects and return matter: original XMM1 carries this level to 142669d00.
+	const int32 Level = NativeGetWeaponSkillLevel1426a1160(PawnInterface);
+	const int32 BaseClipSize = UFortWeaponItemDefinition::NativeScaledClipSize142669d00(*Stats, static_cast<float>(Level));
+	if (!OwnerASC)
+	    return _mm_cvttss_si32(_mm_set_ss(static_cast<float>(BaseClipSize)));
+	static FProperty* ClipProperty = FindFieldChecked<FProperty>(
+	    UFortWeaponAttrSet::StaticClass(), FName(TEXT("WeaponAmmoClipSize")));
+	static const FGameplayEffectAttributeCaptureDefinition Definition(
+	    FGameplayAttribute(ClipProperty), EGameplayEffectAttributeCaptureSource::Source, true);
+	FGameplayEffectAttributeCaptureSpec Spec(Definition);
+	OwnerASC->CaptureAttributeForGameplayEffect(Spec);
+	FGameplayTagContainer WeaponTags;
+	if (WeaponData)
+	    WeaponData->GetOwnedGameplayTags(WeaponTags);
+	FGameplayTagContainer SourceTags;
+	OwnerASC->GetOwnedGameplayTags(SourceTags);
+	SourceTags.AppendTags(WeaponTags);
+	FAggregatorEvaluateParameters Parameters;
+	Parameters.SourceTags = &SourceTags;
+	float ClipSize = 0.0f;
+	Spec.AttemptCalculateAttributeMagnitudeWithBase(Parameters, static_cast<float>(BaseClipSize), ClipSize);
+	const auto Round = [](float Value) {
+	    return _mm_cvtss_si32(_mm_sub_ss(_mm_mul_ss(_mm_set_ss(Value), _mm_set_ss(2.0f)), _mm_set_ss(0.5f))) >> 1;
+	};
+	if (NativeStatCacheScopeDepth201 > 0)
+	{
+	    bNativeClipSizeCached201 = true;
+	    NativeCachedClipSize201 = Round(ClipSize);
+	}
+	return Round(ClipSize);
+}
+
+bool AFortWeapon::NativeIsFiring708() const
+{
+	// CONFIDENCE: HIGH. Complete recovered predicate.
+	// Original 0x1426a5c50. Preserve the second ActiveAbility read after IsActive.
+	UFortGameplayAbility* Ability = ActiveAbility;
+	return Ability && Ability->IsActive()
+	    && ActiveAbility->NativeCurrentSpecHandle() != ReloadAbilitySpecHandle;
 }
 
 void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

@@ -352,5 +352,8 @@ public:
 	static float NativeAtan2Approx142bbd380(float Y, float X);
 	static float NativeFmod142bc0d80(float X, float Y);
 	static void NativeGrowElementArray140a671f0(uint8* ArrayStorage);
+public:
+	// Synthetic access bridge for the inherited engine field.
+	FGameplayAbilitySpecHandle NativeCurrentSpecHandle() const { return CurrentSpecHandle; }
 };
 

@@ -1,0 +1,7 @@
+# Weapon capacity and shared stat caches
+
+Complete bodies: capacity `14269b000`, effective skill level `1426a1160`, weapon level `140696560`, scaled clip size `142669d00`, ranged stats `1426d0610`, cache scope begin/end `14268e3b0`/`14268e500`, and invalidation `1426afa80`. Constructor-proven dispatch covers 23 weapon classes. Standard captures `e9468a5bc7dc4a699f0c83288af4dfb6` and `e5e1dc61ae674f7492a42bb0e3435ae0`, plus the original flat image, resolve the missing second argument in cached capacity decompilation: virtual +920 returns the integer level passed as float in XMM1 to the scaled clip helper.
+
+Preserve ASC capture/tag order, source snapshot attributes, original clamp comparisons and SSE rounding, cache invalidation on the outermost scope exit, and the borrowed ranged stats pointer. Base constructor `14268d9b0` initializes depth and three flags to zero, both cached integers to -1, and caching enabled. Ranged constructor `1426bd2a0` initializes its override row pointer to null. A disabled/null cache begin leaves the actual caller-owned pointer storage unchanged; its reference return preserves the scope address.
+
+The full proposal and independently reviewed evidence are in ignored `generated/agents/weapon-capacity201/` and `capacity-review203/`. Broader scope callers, changes to caching enablement, the third cached query, and override-row replacement remain open class lifecycle work. These bodies do not establish complete reload behavior or runtime movement parity. Build and runtime acceptance are pending.

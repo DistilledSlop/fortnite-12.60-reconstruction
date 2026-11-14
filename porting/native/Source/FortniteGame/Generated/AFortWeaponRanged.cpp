@@ -3,11 +3,15 @@
 #include "AFortPawn.h"
 #include "AFortPlayerPawn.h"
 #include "AFortPlayerPawnAthena.h"
+#include "AFortWeapon.h"
+#include "Engine/DataTable.h"
+#include "FFortBaseWeaponStats.h"
 #include "FortWeaponTargetingNative.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Pawn.h"
 #include "TimerManager.h"
 #include "UFortGlobals.h"
+#include "UFortWeaponItemDefinition.h"
 #include "UFortWeaponRangedItemDefinition.h"
 #include "Net/UnrealNetwork.h"
 
@@ -254,6 +258,30 @@ bool AFortWeaponRanged::NativeUsesFirstShotAccuracy1426cfa80()
 	        && !UFortGlobals::IsFirstShotAccuracyDisabled();
 	}
 	return RangedData && RangedData->ShouldUsePerfectAimWhenTargetingMinSpread();
+}
+
+FFortBaseWeaponStats* AFortWeaponRanged::NativeGetWeaponStats() const
+{
+	// CONFIDENCE: HIGH. Complete body; shared native state is declared in field proposals.
+	if (!WeaponData)
+	    return nullptr;
+	if (bUseAthenaRecoil && NativeOverrideWeaponStats201)
+	    return NativeOverrideWeaponStats201;
+	return WeaponData->WeaponStatHandle.GetRow<FFortBaseWeaponStats>(
+	    TEXT("UFortWeaponItemDefinition::GetWeaponStats"));
+}
+
+bool AFortWeaponRanged::NativeIsFiring708() const
+{
+	// CONFIDENCE: HIGH. Complete recovered predicate.
+	// Original 0x1426d24d0. One timer manager lookup, with short-circuit queries.
+	if (AFortWeapon::NativeIsFiring708())
+	{
+	    return true;
+	}
+	const FTimerManager& TimerManager = GetWorldTimerManager();
+	return TimerManager.IsTimerActive(NativeFiringTimerD88)
+	    || TimerManager.IsTimerActive(NativeFiringTimerD90);
 }
 
 void AFortWeaponRanged::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
