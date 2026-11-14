@@ -207,11 +207,11 @@ public:
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
-	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition);
-	virtual AFortInventory* NativeQuickBarInventory();
-	virtual AFortWeapon* NativeQuickBarHeldWeapon();
-	virtual bool NativeInventoryOwnerHasInventory();
-	virtual UFortItem* NativeFindItemA0(UFortItemDefinition* Definition, bool bInStorageVault);
-	virtual int32 NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems);
+	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition) override;
+	virtual AFortInventory* NativeQuickBarInventory() override;
+	virtual AFortWeapon* NativeQuickBarHeldWeapon() override;
+	virtual bool NativeInventoryOwnerHasInventory() override;
+	virtual UFortItem* NativeFindItemA0(UFortItemDefinition* Definition, bool bInStorageVault) override;
+	virtual int32 NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems) override;
 };
 

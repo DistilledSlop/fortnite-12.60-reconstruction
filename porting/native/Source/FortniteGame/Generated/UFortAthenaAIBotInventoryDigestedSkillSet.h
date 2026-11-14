@@ -7,7 +7,10 @@
 #include "UFortAthenaAIBotDigestedSkillSet.h"
 
 #include "FDigestedBotEquipWeaponInfo.h"
+#include "FortAthenaBotsLog.h"
 #include "GameplayTagContainer.h"
+
+class UFortItemDefinition;
 
 #include "UFortAthenaAIBotInventoryDigestedSkillSet.generated.h"
 
@@ -45,5 +48,10 @@ public:
 	UPROPERTY(Transient)
 	FGameplayTagContainer CheckLoadedAmmoForInfiniteAmmoCheats;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	bool NativeGetInfiniteAmmoCheatEnabled1418a1010(const UFortItemDefinition* Definition) const;
+	bool NativeGetCheckLoadedAmmoForInfiniteAmmoCheat1418a0720(const UFortItemDefinition* Definition) const;
 };
 

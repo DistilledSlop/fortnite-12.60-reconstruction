@@ -10,6 +10,7 @@
 #include "AFortWeapon.h"
 #include "Components/SceneComponent.h"
 #include "Containers/UnrealString.h"
+#include "ControllerTick225b.h"
 #include "Delegates/Delegate.h"
 #include "EVolumeState.h"
 #include "Engine/World.h"
@@ -2098,6 +2099,20 @@ bool AFortPlayerControllerAthena::NativeCanPerformAction15f0(const FGameplayTag&
 	    }
 	}
 	return AFortPlayerController::NativeCanPerformAction15f0(ActionTag);
+}
+
+void AFortPlayerControllerAthena::NativeControllerVirtual1d10()
+{
+	// CONFIDENCE: HIGH
+	//14211f770. NativeControllerTick225b.h + Engine/World.h + AFortGameStateAthena.h.
+	if (bNativeControllerVirtual1d10Started) return;
+	UWorld* World = GetWorld();
+	if (!World) return;
+	AFortGameStateAthena* AthenaState = Cast<AFortGameStateAthena>(World->GetGameState());
+	if (!AthenaState || static_cast<uint8>(AthenaState->GamePhase) < 3) return;
+	bNativeControllerVirtual1d10Started = true;
+	FControllerState225b& NativeState = NativeControllerState141ca4780();
+	NativeStartControllerTickable1420fe440(NativeState, this);
 }
 
 void AFortPlayerControllerAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

@@ -13,6 +13,7 @@
 #include "Math/Rotator.h"
 #include "UFortAbilitySystemComponent.h"
 #include "UFortAccountItem.h"
+#include "UFortInventoryOwnerInterface.h"
 #include "UFortItem.h"
 #include "UFortItemDefinition.h"
 #include "UFortMovementComp_AIChar.h"
@@ -603,6 +604,14 @@ bool AFortAIPawn::NativeInventoryOwnerHasInventory()
 	AFortInventory* ItemInventory = Inventory;
 	// Identical body: AFortAIPawn 0x1422dcd90 and AFortAthenaAIBotController 0x1416a0ae0.
 	return Inventory && ItemInventory->HasActorBegunPlay();
+}
+
+IFortInventoryOwnerInterface* AFortAIPawn::NativeGetInventoryOwnerInterfaceBD8()
+{
+	// CONFIDENCE: HIGH
+	// Original 0x1422d2b50.
+	// AFortAIPawn::NativeGetInventoryOwnerInterfaceBD8, 0x1422d2b50
+	return static_cast<IFortInventoryOwnerInterface*>(this);
 }
 
 void AFortAIPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

@@ -1,0 +1,24 @@
+{
+  "windows": [
+    {
+      "begin": "0x141a49680",
+      "length": 8,
+      "sha256": "dbb6731e20756f2a2893f6f650ea8e29a778b9e0fb0d928c37e5ba36d9bff6ba"
+    },
+    {
+      "begin": "0x14027bd20",
+      "length": 120,
+      "sha256": "23d70db82a1b271031c7e8cfd04784f8d511afe0e45842610e8a60b0ab685aa3"
+    },
+    {
+      "begin": "0x14168362b",
+      "length": 12,
+      "sha256": "87a753a1f6bf0ba41dd998b855e2e95057d710d5838df171347f9013ff6f4fed"
+    },
+    {
+      "begin": "0x14027d860",
+      "length": 100,
+      "sha256": "da0c806866f83a1fa952f3af114e31163b444b1dfb117fec00557c5e348efd96"
+    }
+  ]
+}

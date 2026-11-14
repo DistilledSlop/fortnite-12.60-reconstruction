@@ -8,6 +8,7 @@
 
 #include "AttributeSet.h"
 #include "Containers/UnrealString.h"
+#include "ControllerTick225b.h"
 #include "Delegates/Delegate.h"
 #include "EDeathCause.h"
 #include "EEndOfMatchReason.h"
@@ -131,6 +132,11 @@ class FORTNITEGAME_API AFortPlayerControllerAthena : public AFortPlayerControlle
 
 public:
     AFortPlayerControllerAthena(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+private:
+	// Non-reflected field (behaviour kind "member_field", offset 0x2a71): not a UPROPERTY, not replicated.
+	bool bNativeControllerVirtual1d10Started = false;
+public:
 
 	// table index 171, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -1452,5 +1458,6 @@ public:
 	static FString* NativeGetPlayerName1444ac7a0(APlayerState* PlayerStateObject, FString* OutName);
 	virtual bool NativeHasSkydiveLeader_1419dd2d0() const;
 	virtual bool NativeCanPerformAction15f0(const FGameplayTag& ActionTag) override;
+	virtual void NativeControllerVirtual1d10() override;
 };
 

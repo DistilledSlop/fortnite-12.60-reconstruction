@@ -9,6 +9,7 @@
 #include "FortWeaponTargetingNative.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Pawn.h"
+#include "GameplayTagContainer.h"
 #include "TimerManager.h"
 #include "UFortGlobals.h"
 #include "UFortWeaponItemDefinition.h"
@@ -282,6 +283,18 @@ bool AFortWeaponRanged::NativeIsFiring708() const
 	const FTimerManager& TimerManager = GetWorldTimerManager();
 	return TimerManager.IsTimerActive(NativeFiringTimerD88)
 	    || TimerManager.IsTimerActive(NativeFiringTimerD90);
+}
+
+bool AFortWeaponRanged::NativeCanReload828(bool bCheckExtra, FGameplayTagContainer* FailureTags)
+{
+	// CONFIDENCE: HIGH
+	// Original 0x1426c49c0; +0x828 virtual override.
+	const UFortWeaponRangedItemDefinition* RangedData = Cast<UFortWeaponRangedItemDefinition>(WeaponData);
+	if (RangedData && RangedData->DoNotAllowDoublePump() && NativeNeedsToBeCocked)
+	{
+	    return false;
+	}
+	return AFortWeapon::NativeCanReload828(bCheckExtra, FailureTags);
 }
 
 void AFortWeaponRanged::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

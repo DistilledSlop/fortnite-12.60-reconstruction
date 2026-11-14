@@ -1,0 +1,49 @@
+{
+  "windows": [
+    {
+      "begin": "0x141ca4780",
+      "length": 80,
+      "sha256": "fca1ca66804418ae9aab14ede96514310b5e7a1f18e36a3b06ef5f1b9629240c"
+    },
+    {
+      "begin": "0x1420fe440",
+      "length": 90,
+      "sha256": "7c39fe9027476159b465ac21952185b37892b4f30ece645e893bee6c863f9da8"
+    },
+    {
+      "begin": "0x1420ff840",
+      "length": 100,
+      "sha256": "647c9b67d2787f37171c9c9e4acec14a9ca10ba829165ce1f2b9cc66f228e6bf"
+    },
+    {
+      "begin": "0x1420fa620",
+      "length": 90,
+      "sha256": "17125905c81e48246af80a79a5b98b042ab6af797a4cadc1e6677b0e65ca4703"
+    },
+    {
+      "begin": "0x1420fe100",
+      "length": 90,
+      "sha256": "63332c489edd525854b3514e7f35b303a6e810df01fd53bf3644d98053dac3d5"
+    },
+    {
+      "begin": "0x142111870",
+      "length": 40,
+      "sha256": "d56e2fe0f9f703b4c2237724a2112bdd6ae3455176f7b6df238c4598965cf5e6"
+    },
+    {
+      "begin": "0x1420fa070",
+      "length": 40,
+      "sha256": "46915063db1153d989d88c668774ae3b8ec69500a3e9ab55b7a1f967a77b1142"
+    },
+    {
+      "begin": "0x141c981f0",
+      "length": 100,
+      "sha256": "151fb442c984c3fad33b44ca5f30b05fa21953dda5b6726b5131cfd223b0d96e"
+    },
+    {
+      "begin": "0x14211f770",
+      "length": 80,
+      "sha256": "22c8053d1a008a3c48e8ddd43a7de9de87ab1d5b546f34b694902e5081471612"
+    }
+  ]
+}

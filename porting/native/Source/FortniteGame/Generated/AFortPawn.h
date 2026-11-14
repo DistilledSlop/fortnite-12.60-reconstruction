@@ -67,6 +67,7 @@
 #include "Math/Vector.h"
 #include "Styling/SlateBrush.h"
 #include "UFortAbilitySystemInterface.h"
+#include "UFortInventoryOwnerInterface.h"
 #include "UFortTeamActorInterface.h"
 #include "UObject/Object.h"
 #include "WorldCollision.h"
@@ -1234,5 +1235,6 @@ public:
 	virtual void NativeStopAction142353960(const FGameplayTag& ActionTag);
 	virtual bool NativeCanPerformAction14230c260(const FGameplayTag& ActionTag) const;
 	static bool NativeTestActionOnComponent1415ee070(UFortAbilitySystemComponent* Component, const FGameplayTag& ActionTag);
+	virtual IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterfaceBD8();
 };
 

@@ -19,6 +19,7 @@
 #include "FortWeaponTargetingNative.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Pawn.h"
+#include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
@@ -506,5 +507,6 @@ public:
 	bool NativeUsesFirstShotAccuracy1426cfa80();
 	virtual FFortBaseWeaponStats* NativeGetWeaponStats() const;
 	virtual bool NativeIsFiring708() const override;
+	virtual bool NativeCanReload828(bool bCheckExtra, FGameplayTagContainer* FailureTags) override;
 };
 

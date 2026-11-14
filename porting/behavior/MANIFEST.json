@@ -33062,7 +33062,8 @@
     "address": "0x141a49670",
     "confidence": "high",
     "status": "ported",
-    "notes": "Assigned inventory-owner interface contract; argument unused. See README."
+    "notes": "Assigned inventory-owner interface contract; argument unused. See README.",
+    "override": true
   },
   {
     "class": "AFortPlayerControllerAthena",
@@ -33191,7 +33192,8 @@
     "confidence": "high",
     "status": "ported",
     "notes": "Assigned inventory-owner interface contract; argument unused. See README.",
-    "class": "ADeployableBasePlot"
+    "class": "ADeployableBasePlot",
+    "override": true
   },
   {
     "function": "NativeHasInfiniteAmmo",
@@ -33205,7 +33207,8 @@
     "confidence": "high",
     "status": "ported",
     "notes": "Assigned inventory-owner interface contract; argument unused. See README.",
-    "class": "AFortAIPawn"
+    "class": "AFortAIPawn",
+    "override": true
   },
   {
     "class": "UFortWorldItem",
@@ -43080,7 +43083,8 @@
     "inc_path": "porting/behavior/ADeployableBasePlot/NativeQuickBarInventory.inc",
     "address": "0x141125710",
     "confidence": "high",
-    "status": "ported"
+    "status": "ported",
+    "override": true
   },
   {
     "class": "ADeployableBasePlot",
@@ -43093,7 +43097,8 @@
     "inc_path": "porting/behavior/ADeployableBasePlot/NativeQuickBarHeldWeapon.inc",
     "address": "0x140680300",
     "confidence": "high",
-    "status": "ported"
+    "status": "ported",
+    "override": true
   },
   {
     "class": "AFortAIPawn",
@@ -43106,7 +43111,8 @@
     "inc_path": "porting/behavior/AFortAIPawn/NativeQuickBarInventory.inc",
     "address": "0x1422d9b80",
     "confidence": "high",
-    "status": "ported"
+    "status": "ported",
+    "override": true
   },
   {
     "class": "AFortAIPawn",
@@ -43119,7 +43125,8 @@
     "inc_path": "porting/behavior/AFortAIPawn/NativeQuickBarHeldWeapon.inc",
     "address": "0x1422c8740",
     "confidence": "high",
-    "status": "ported"
+    "status": "ported",
+    "override": true
   },
   {
     "class": "AFortPlayerController",
@@ -43132,7 +43139,8 @@
     "inc_path": "porting/behavior/AFortPlayerController/NativeQuickBarInventory.inc",
     "address": "0x142388170",
     "confidence": "high",
-    "status": "ported"
+    "status": "ported",
+    "override": true
   },
   {
     "class": "AFortPlayerController",
@@ -43145,7 +43153,8 @@
     "inc_path": "porting/behavior/AFortPlayerController/NativeQuickBarHeldWeapon.inc",
     "address": "0x1419d37c0",
     "confidence": "high",
-    "status": "ported"
+    "status": "ported",
+    "override": true
   },
   {
     "class": "UFortItem",
@@ -94473,8 +94482,9 @@
     "inc_path": "porting/behavior/AFortPlayerController/NativeFindItemA0.inc",
     "status": "ported",
     "confidence": "high",
-    "notes": "Complete concrete original body. Shared IFortInventoryOwnerInterface extension and bot infinite-ammo implementation remain pending; preserves virtual dispatch. Build pending.",
-    "virtual": true
+    "notes": "Complete concrete original body bound to the same IFortInventoryOwnerInterface; preserves actual inventory/profile dispatch and original defaults. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
   },
   {
     "class": "AFortPlayerController",
@@ -94487,8 +94497,9 @@
     "inc_path": "porting/behavior/AFortPlayerController/NativeFindAllItemsA8.inc",
     "status": "ported",
     "confidence": "high",
-    "notes": "Complete concrete original body. Shared IFortInventoryOwnerInterface extension and bot infinite-ammo implementation remain pending; preserves virtual dispatch. Build pending.",
-    "virtual": true
+    "notes": "Complete concrete original body bound to the same IFortInventoryOwnerInterface; preserves actual inventory/profile dispatch and original defaults. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
   },
   {
     "class": "AFortAIPawn",
@@ -94501,8 +94512,9 @@
     "inc_path": "porting/behavior/AFortAIPawn/NativeFindItemA0.inc",
     "status": "ported",
     "confidence": "high",
-    "notes": "Complete concrete original body. Shared IFortInventoryOwnerInterface extension and bot infinite-ammo implementation remain pending; preserves virtual dispatch. Build pending.",
-    "virtual": true
+    "notes": "Complete concrete original body bound to the same IFortInventoryOwnerInterface; preserves actual inventory/profile dispatch and original defaults. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
   },
   {
     "class": "AFortAIPawn",
@@ -94515,8 +94527,9 @@
     "inc_path": "porting/behavior/AFortAIPawn/NativeFindAllItemsA8.inc",
     "status": "ported",
     "confidence": "high",
-    "notes": "Complete concrete original body. Shared IFortInventoryOwnerInterface extension and bot infinite-ammo implementation remain pending; preserves virtual dispatch. Build pending.",
-    "virtual": true
+    "notes": "Complete concrete original body bound to the same IFortInventoryOwnerInterface; preserves actual inventory/profile dispatch and original defaults. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
   },
   {
     "class": "ADeployableBasePlot",
@@ -94529,8 +94542,9 @@
     "inc_path": "porting/behavior/ADeployableBasePlot/NativeInventoryOwnerHasInventory.inc",
     "status": "ported",
     "confidence": "high",
-    "notes": "Complete concrete original body. Shared IFortInventoryOwnerInterface extension and bot infinite-ammo implementation remain pending; preserves virtual dispatch. Build pending.",
-    "virtual": true
+    "notes": "Complete concrete original body bound to the same IFortInventoryOwnerInterface; preserves actual inventory/profile dispatch and original defaults. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
   },
   {
     "class": "ADeployableBasePlot",
@@ -94543,8 +94557,9 @@
     "inc_path": "porting/behavior/ADeployableBasePlot/NativeFindItemA0.inc",
     "status": "ported",
     "confidence": "high",
-    "notes": "Complete concrete original body. Shared IFortInventoryOwnerInterface extension and bot infinite-ammo implementation remain pending; preserves virtual dispatch. Build pending.",
-    "virtual": true
+    "notes": "Complete concrete original body bound to the same IFortInventoryOwnerInterface; preserves actual inventory/profile dispatch and original defaults. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
   },
   {
     "class": "ADeployableBasePlot",
@@ -94557,8 +94572,9 @@
     "inc_path": "porting/behavior/ADeployableBasePlot/NativeFindAllItemsA8.inc",
     "status": "ported",
     "confidence": "high",
-    "notes": "Complete concrete original body. Shared IFortInventoryOwnerInterface extension and bot infinite-ammo implementation remain pending; preserves virtual dispatch. Build pending.",
-    "virtual": true
+    "notes": "Complete concrete original body bound to the same IFortInventoryOwnerInterface; preserves actual inventory/profile dispatch and original defaults. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
   },
   {
     "class": "AFortAthenaAIBotController",
@@ -94571,8 +94587,9 @@
     "inc_path": "porting/behavior/AFortAthenaAIBotController/NativeFindItemA0.inc",
     "status": "ported",
     "confidence": "high",
-    "notes": "Complete concrete original body. Shared IFortInventoryOwnerInterface extension and bot infinite-ammo implementation remain pending; preserves virtual dispatch. Build pending.",
-    "virtual": true
+    "notes": "Complete concrete original body bound to the same IFortInventoryOwnerInterface; preserves actual inventory/profile dispatch and original defaults. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
   },
   {
     "class": "AFortAthenaAIBotController",
@@ -94585,8 +94602,9 @@
     "inc_path": "porting/behavior/AFortAthenaAIBotController/NativeFindAllItemsA8.inc",
     "status": "ported",
     "confidence": "high",
-    "notes": "Complete concrete original body. Shared IFortInventoryOwnerInterface extension and bot infinite-ammo implementation remain pending; preserves virtual dispatch. Build pending.",
-    "virtual": true
+    "notes": "Complete concrete original body bound to the same IFortInventoryOwnerInterface; preserves actual inventory/profile dispatch and original defaults. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
   },
   {
     "class": "AFortPlayerController",
@@ -94599,8 +94617,9 @@
     "inc_path": "porting/behavior/AFortPlayerController/NativeInventoryOwnerHasInventory.inc",
     "status": "ported",
     "confidence": "high",
-    "notes": "Complete concrete original body. Shared IFortInventoryOwnerInterface extension and bot infinite-ammo implementation remain pending; preserves virtual dispatch. Build pending.",
-    "virtual": true
+    "notes": "Complete concrete original body bound to the same IFortInventoryOwnerInterface; preserves actual inventory/profile dispatch and original defaults. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
   },
   {
     "class": "AFortAIPawn",
@@ -94613,8 +94632,9 @@
     "inc_path": "porting/behavior/AFortAIPawn/NativeInventoryOwnerHasInventory.inc",
     "status": "ported",
     "confidence": "high",
-    "notes": "Complete concrete original body. Shared IFortInventoryOwnerInterface extension and bot infinite-ammo implementation remain pending; preserves virtual dispatch. Build pending.",
-    "virtual": true
+    "notes": "Complete concrete original body bound to the same IFortInventoryOwnerInterface; preserves actual inventory/profile dispatch and original defaults. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
   },
   {
     "class": "AFortAthenaAIBotController",
@@ -94627,8 +94647,9 @@
     "inc_path": "porting/behavior/AFortAthenaAIBotController/NativeInventoryOwnerHasInventory.inc",
     "status": "ported",
     "confidence": "high",
-    "notes": "Complete concrete original body. Shared IFortInventoryOwnerInterface extension and bot infinite-ammo implementation remain pending; preserves virtual dispatch. Build pending.",
-    "virtual": true
+    "notes": "Complete concrete original body bound to the same IFortInventoryOwnerInterface; preserves actual inventory/profile dispatch and original defaults. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
   },
   {
     "class": "AFortAthenaAIBotController",
@@ -94641,8 +94662,9 @@
     "inc_path": "porting/behavior/AFortAthenaAIBotController/NativeQuickBarInventory.inc",
     "status": "ported",
     "confidence": "high",
-    "notes": "Complete concrete original body. Shared IFortInventoryOwnerInterface extension and bot infinite-ammo implementation remain pending; preserves virtual dispatch. Build pending.",
-    "virtual": true
+    "notes": "Complete concrete original body bound to the same IFortInventoryOwnerInterface; preserves actual inventory/profile dispatch and original defaults. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
   },
   {
     "class": "AFortAthenaAIBotController",
@@ -94655,7 +94677,267 @@
     "inc_path": "porting/behavior/AFortAthenaAIBotController/NativeQuickBarHeldWeapon.inc",
     "status": "ported",
     "confidence": "high",
-    "notes": "Complete concrete original body. Shared IFortInventoryOwnerInterface extension and bot infinite-ammo implementation remain pending; preserves virtual dispatch. Build pending.",
+    "notes": "Complete concrete original body bound to the same IFortInventoryOwnerInterface; preserves actual inventory/profile dispatch and original defaults. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "class": "UFortAthenaAIBotInventoryDigestedSkillSet",
+    "function": "NativeGetInfiniteAmmoCheatEnabled1418a1010",
+    "address": "0x1418a1010",
+    "kind": "helper",
+    "signature": "bool NativeGetInfiniteAmmoCheatEnabled1418a1010(const UFortItemDefinition* Definition) const",
+    "signature_status": "verified",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/UFortAthenaAIBotInventoryDigestedSkillSet/NativeGetInfiniteAmmoCheatEnabled1418a1010.inc",
+    "notes": "Complete original body; shared native state and actual dispatch. Broader producer/runtime lifecycle remains open. Build pending.",
+    "includes": [
+      "FortAthenaBotsLog.h"
+    ]
+  },
+  {
+    "class": "UFortAthenaAIBotInventoryDigestedSkillSet",
+    "function": "NativeGetCheckLoadedAmmoForInfiniteAmmoCheat1418a0720",
+    "address": "0x1418a0720",
+    "kind": "helper",
+    "signature": "bool NativeGetCheckLoadedAmmoForInfiniteAmmoCheat1418a0720(const UFortItemDefinition* Definition) const",
+    "signature_status": "verified",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/UFortAthenaAIBotInventoryDigestedSkillSet/NativeGetCheckLoadedAmmoForInfiniteAmmoCheat1418a0720.inc",
+    "notes": "Complete original body; shared native state and actual dispatch. Broader producer/runtime lifecycle remains open. Build pending.",
+    "includes": [
+      "FortAthenaBotsLog.h"
+    ]
+  },
+  {
+    "class": "AFortAthenaAIBotController",
+    "function": "NativeCachedGamePhase",
+    "kind": "member_field",
+    "signature": "EAthenaGamePhase NativeCachedGamePhase",
+    "access": "public",
+    "offset": "0x8f8",
+    "default": "EAthenaGamePhase::None",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Actual notified-phase byte; constructor141683060 stores zero at14168362b. OnGamePhaseChanged1416a2b00 producer includes additional callback and is not claimed complete."
+  },
+  {
+    "class": "AFortAthenaAIBotController",
+    "function": "NativeReadPhoebeInfiniteAmmo141a49680",
+    "address": "0x141a49680",
+    "kind": "helper",
+    "signature": "bool NativeReadPhoebeInfiniteAmmo141a49680()",
+    "signature_status": "verified",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortAthenaAIBotController/NativeReadPhoebeInfiniteAmmo141a49680.inc",
+    "notes": "Complete original body; shared native state and actual dispatch. Broader producer/runtime lifecycle remains open. Build pending.",
+    "includes": [
+      "PhoebeInfiniteAmmoCVar.h"
+    ],
+    "static": true
+  },
+  {
+    "class": "AFortAthenaAIBotController",
+    "function": "NativeHasInfiniteAmmo",
+    "address": "0x14169e1e0",
+    "kind": "helper",
+    "signature": "bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition)",
+    "signature_status": "verified",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortAthenaAIBotController/NativeHasInfiniteAmmo.inc",
+    "notes": "Complete original body; shared native state and actual dispatch. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeGetInventoryOwnerInterfaceBD8",
+    "address": "0x14231e6b0",
+    "kind": "helper",
+    "signature": "IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterfaceBD8()",
+    "signature_status": "verified",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortPawn/NativeGetInventoryOwnerInterfaceBD8.inc",
+    "notes": "Complete original body and same typed inventory-owner dispatch. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": false
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "NativeGetInventoryOwnerInterfaceBD8",
+    "address": "0x1422d2b50",
+    "kind": "helper",
+    "signature": "IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterfaceBD8()",
+    "signature_status": "verified",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortAIPawn/NativeGetInventoryOwnerInterfaceBD8.inc",
+    "notes": "Complete original body and same typed inventory-owner dispatch. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeGetInventoryOwnerInterfaceBD8",
+    "address": "0x141946e10",
+    "kind": "helper",
+    "signature": "IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterfaceBD8()",
+    "signature_status": "verified",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortPlayerPawn/NativeGetInventoryOwnerInterfaceBD8.inc",
+    "notes": "Complete original body and same typed inventory-owner dispatch. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "NativeGetInventoryOwnerInterfaceBD8",
+    "address": "0x141946e10",
+    "kind": "helper",
+    "signature": "IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterfaceBD8()",
+    "signature_status": "verified",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortCharacterVehicle/NativeGetInventoryOwnerInterfaceBD8.inc",
+    "notes": "Complete original body and same typed inventory-owner dispatch. Broader producer/runtime lifecycle remains open. Build pending.",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeGetInventoryOwnerInterface14269c8f0",
+    "address": "0x14269c8f0",
+    "kind": "helper",
+    "signature": "IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterface14269c8f0()",
+    "signature_status": "verified",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortWeapon/NativeGetInventoryOwnerInterface14269c8f0.inc",
+    "notes": "Complete original body and same typed inventory-owner dispatch. Broader producer/runtime lifecycle remains open. Build pending."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeGetReserveAmmo7D8",
+    "address": "0x14269ed80",
+    "kind": "helper",
+    "signature": "int32 NativeGetReserveAmmo7D8()",
+    "signature_status": "verified",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortWeapon/NativeGetReserveAmmo7D8.inc",
+    "notes": "Complete original body and same typed inventory-owner dispatch. Broader producer/runtime lifecycle remains open. Build pending.",
     "virtual": true
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeControllerVirtual1d10",
+    "address": "0x1406801c0",
+    "kind": "helper",
+    "signature": "void NativeControllerVirtual1d10()",
+    "signature_status": "verified",
+    "virtual": true,
+    "override": false,
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPlayerController/NativeControllerVirtual1d10.inc",
+    "status": "ported",
+    "confidence": "high",
+    "includes": [
+      "ControllerTick225b.h"
+    ],
+    "notes": "Complete controller callback with shared singleton/tickable/latch effects. Camera setup reset producer and other mask consumers remain broader lifecycle work. Build pending."
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "NativeControllerVirtual1d10",
+    "address": "0x14211f770",
+    "kind": "helper",
+    "signature": "void NativeControllerVirtual1d10()",
+    "signature_status": "verified",
+    "virtual": true,
+    "override": true,
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPlayerControllerAthena/NativeControllerVirtual1d10.inc",
+    "status": "ported",
+    "confidence": "high",
+    "includes": [
+      "ControllerTick225b.h"
+    ],
+    "notes": "Complete controller callback with shared singleton/tickable/latch effects. Camera setup reset producer and other mask consumers remain broader lifecycle work. Build pending."
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "bNativeControllerVirtual1d10Started",
+    "kind": "member_field",
+    "signature": "bool bNativeControllerVirtual1d10Started",
+    "offset": "0x2a71",
+    "default": "false",
+    "access": "private",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Original2a70 mask100, byte2a71 bit0; zero UObject allocation and constructor-preserved state. One-shot set by original callback."
+  },
+  {
+    "class": "AFortPlayerCameraZone",
+    "function": "NativeControllerTargets225b",
+    "kind": "member_field",
+    "signature": "FControllerCameraTargets225b NativeControllerTargets225b",
+    "offset": "0x2d91",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "includes": [
+      "ControllerTick225b.h"
+    ],
+    "notes": "Partial owned representation of actual camera bytes2d91/2da3/2db5/2dc7, each original constructor default4e. All future writers must use this same storage; no binary layout claim or duplicate map."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeCanReload828",
+    "address": "0x1426930a0",
+    "kind": "helper",
+    "signature": "bool NativeCanReload828(bool bCheckExtra, FGameplayTagContainer* FailureTags)",
+    "signature_status": "verified",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortWeapon/NativeCanReload828.inc",
+    "virtual": true,
+    "includes": [
+      "FortNativeGameplayTagsRuntime.h",
+      "Engine/World.h"
+    ],
+    "notes": "Original +0x828 predicate, including optional failure tags and virtual dispatch. Broader weapon lifecycle and runtime verification pending."
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "NativeCanReload828",
+    "address": "0x1426c49c0",
+    "kind": "helper",
+    "signature": "bool NativeCanReload828(bool bCheckExtra, FGameplayTagContainer* FailureTags)",
+    "signature_status": "verified",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortWeaponRanged/NativeCanReload828.inc",
+    "virtual": true,
+    "override": true,
+    "includes": [],
+    "notes": "Original ranged +0x828 gate, then nonvirtual base call. Cock-state producer lifecycle remains separate; native state field/default already integrated."
   }
 ]

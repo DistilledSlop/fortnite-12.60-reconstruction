@@ -1,0 +1,11 @@
+# Bot inventory ammo contracts
+
+Reader141a49680 reads the shared bool behind original CVar `Phoebe.InfiniteAmmo`. Registrar14027bd20 registers a bool reference, flags0, exact help text, and original PE initialized data establishes true. Runtime console mutation remains supported; no hardcoded true query substitutes for shared state. Evidence: bot-flag227 identity/registrar, initialized PE byte at raw78c17a1, and generation-pinned original windows. The shared LogAthenaBots category has default Log/compile All, from registrar14027d860.
+
+The actual controller byte8f8 is last-notified EAthenaGamePhase. Constructor141683060 stores zero at14168362b, so None is the native default. OnGamePhaseChanged1416a2b00 calls141681fc0 before storing the new phase; that complete producer is not implemented, and Warmup tracking is not yet live. This query lift does not claim otherwise.
+
+Skill predicates1418a1010/1418a0720 use actual InfiniteAmmoCheats/CheckLoadedAmmoForInfiniteAmmoCheats containers, virtual GetOwnedGameplayTags and exact tag matching. Null input logs Error in the shared category and returns false/true respectively; original assembly contains no assertion. Complete helper capture d5933bf6936a4d3a8eb3a8949cb1c604.
+
+Bot infinite-ammo14169e1e0 retains all short circuits, virtual item type/lookup/loaded-ammo/stack/ammo-definition calls, skill pointer reload and fallback to the existing Athena game-state rule. The fourth actual inventory-interface provider is installed using class identity1462d4250 and inherited typed storage; its distinct implementation is not replaced by the pawn/plot false leaf.
+
+The same interface now exposes presence and single/all-item queries for all four providers. Base pawn BD8 retains the original fatal path; AI and player/vehicle branches return the actual interface through ordinary C++ adjustment. Weapon owner resolver14269c8f0 and reserve14269ed80 retain all fallback and unsigned wrap semantics. Evidence: reload-inventory209, inventory-getters223 and bot-ammo226 cached original bodies/tables. Shared RET and reused virtual targets receive no additional distinct-address credit. Independent source review230 found no material caller mismatch. Generation passes; UE build/runtime pending. Profile calls retain their original installed-backend precondition; its lifecycle remains incomplete.

@@ -2734,6 +2734,14 @@ _movement_style_spec = _common_activation_import.spec_from_file_location(
     "movement_style_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "movement_style_runtime", "support.py"))
 _movement_style_policy = _common_activation_import.module_from_spec(_movement_style_spec)
 _movement_style_spec.loader.exec_module(_movement_style_policy)
+_bot_inventory_spec = _common_activation_import.spec_from_file_location(
+    "bot_inventory_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "bot_inventory_queries_runtime", "source_policy.py"))
+_bot_inventory_policy = _common_activation_import.module_from_spec(_bot_inventory_spec)
+_bot_inventory_spec.loader.exec_module(_bot_inventory_policy)
+_controller_tick_spec = _common_activation_import.spec_from_file_location(
+    "controller_tick_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "controller_tick_runtime", "source_policy.py"))
+_controller_tick_policy = _common_activation_import.module_from_spec(_controller_tick_spec)
+_controller_tick_spec.loader.exec_module(_controller_tick_policy)
 _fort_do_jump_spec = _common_activation_import.spec_from_file_location(
     "fort_do_jump_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "fort_do_jump_runtime", "support.py"))
 _fort_do_jump_policy = _common_activation_import.module_from_spec(_fort_do_jump_spec)
@@ -4705,6 +4713,12 @@ def promote(args):
     if 'UFortMovementComp_CharacterAthena' in listed:
         asset_diagnostic_sources = asset_diagnostic_sources or {}
         asset_diagnostic_sources.update(_athena_movement_constructor_policy.sources())
+    if 'AFortAthenaAIBotController' in listed:
+        asset_diagnostic_sources = asset_diagnostic_sources or {}
+        asset_diagnostic_sources.update(_bot_inventory_policy.sources())
+    if 'AFortPlayerCameraZone' in listed:
+        asset_diagnostic_sources = asset_diagnostic_sources or {}
+        asset_diagnostic_sources.update(_controller_tick_policy.sources())
     if 'AFortWeapon' in listed:
         asset_diagnostic_sources = asset_diagnostic_sources or {}
         asset_diagnostic_sources.update(_weapon_targeting_policy.sources())

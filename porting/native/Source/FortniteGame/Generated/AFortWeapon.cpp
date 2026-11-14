@@ -35,6 +35,8 @@
 #include "UFortAmmoItemDefinition.h"
 #include "UFortDamageSet.h"
 #include "UFortGameplayAbility.h"
+#include "UFortInventoryOwnerInterface.h"
+#include "UFortItem.h"
 #include "UFortWeaponAttrSet.h"
 #include "UFortWeaponItemDefinition.h"
 #include "UFortWorldItemDefinition.h"
@@ -975,6 +977,113 @@ bool AFortWeapon::NativeUsesAmmo820() const
 	}
 	UFortAmmoItemDefinition* Ammo = Cast<UFortAmmoItemDefinition>(AmmoDefinition);
 	return !Ammo || Ammo->bIsConsumed;
+}
+
+IFortInventoryOwnerInterface* AFortWeapon::NativeGetInventoryOwnerInterface14269c8f0()
+{
+	// CONFIDENCE: HIGH
+	// Original 0x14269c8f0.
+	if (AFortPlayerController* Controller = Cast<AFortPlayerController>(NativeResolveController1426a07c0()))
+	{
+	    return static_cast<IFortInventoryOwnerInterface*>(Controller);
+	}
+	if (AFortPawn* Pawn = Cast<AFortPawn>(GetInstigator()))
+	{
+	    return Pawn->NativeGetInventoryOwnerInterfaceBD8();
+	}
+	return nullptr;
+}
+
+int32 AFortWeapon::NativeGetReserveAmmo7D8()
+{
+	// CONFIDENCE: HIGH
+	// Original 0x14269ed80.
+	IFortInventoryOwnerInterface* Owner = NativeGetInventoryOwnerInterface14269c8f0();
+	if (!Owner || !WeaponData)
+	{
+	    const uint32 Wrapped = uint32(MAX_int32) - uint32(GetMagazineAmmoCount());
+	    int32 Result;
+	    FMemory::Memcpy(&Result, &Wrapped, sizeof(Result));
+	    return Result;
+	}
+	UFortWorldItemDefinition* AmmoDefinition = WeaponData->GetAmmoWorldItemDefinitionNative();
+	if (!NativeUsesAmmo820() || Owner->NativeHasInfiniteAmmo(WeaponData))
+	{
+	    return MAX_int32;
+	}
+	if (!AmmoDefinition)
+	{
+	    return 0;
+	}
+	if (AmmoDefinition->NativeAllowsMultipleStacks380())
+	{
+	    TArray<UFortItem*> Items;
+	    Owner->NativeFindAllItemsA8(AmmoDefinition, Items);
+	    uint32 Sum = 0;
+	    for (UFortItem* Item : Items)
+	    {
+	        if (Item)
+	        {
+	            Sum += uint32(Item->GetNumInStack());
+	        }
+	    }
+	    int32 Result;
+	    FMemory::Memcpy(&Result, &Sum, sizeof(Result));
+	    return Result;
+	}
+	UFortItem* Item = Owner->NativeFindItemA0(AmmoDefinition, false);
+	return Item ? Item->GetNumInStack() : 0;
+}
+
+bool AFortWeapon::NativeCanReload828(bool bCheckExtra, FGameplayTagContainer* FailureTags)
+{
+	// CONFIDENCE: HIGH
+	// Original 0x1426930a0; +0x828 virtual.
+	AFortPawn* Pawn = Cast<AFortPawn>(GetInstigator());
+	const int32 Capacity = NativeGetBulletsPerClip14269b000();
+	if (!WeaponData || !WeaponData->GetAmmoWorldItemDefinitionNative() || Capacity < 1)
+	{
+	    return false;
+	}
+	const auto Fail = [FailureTags](uint32 Offset) -> bool
+	{
+	    if (FailureTags)
+	    {
+	        FailureTags->AddTag(FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(Offset));
+	    }
+	    return false;
+	};
+	if (NativeIsReloadAbilityActive830())
+	{
+	    return Fail(0x9b8);
+	}
+	if (!Pawn)
+	{
+	    return false;
+	}
+	if (!Pawn->NativeCanPerformAction14230c260(
+	        FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x6d0)))
+	{
+	    return Fail(0x9c0);
+	}
+	if (NativeGetReserveAmmo7D8() < 1)
+	{
+	    return Fail(0x9c8);
+	}
+	if (GetMagazineAmmoCount() >= Capacity && GetLocalMagazineAmmoCount() >= Capacity)
+	{
+	    return Fail(0x9d0);
+	}
+	const float PreviousReloadTime = LastSuccessfulReloadTime;
+	if (!((GetWorld()->TimeSeconds - PreviousReloadTime) * CustomTimeDilation > 0.4f))
+	{
+	    return false;
+	}
+	if (bCheckExtra && NativeIsFiring708())
+	{
+	    return Fail(0x9d8);
+	}
+	return true;
 }
 
 void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

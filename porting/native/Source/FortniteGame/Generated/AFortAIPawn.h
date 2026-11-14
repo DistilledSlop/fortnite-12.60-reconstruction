@@ -1048,16 +1048,17 @@ public:
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
-	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition);
-	virtual AFortInventory* NativeQuickBarInventory();
-	virtual AFortWeapon* NativeQuickBarHeldWeapon();
+	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition) override;
+	virtual AFortInventory* NativeQuickBarInventory() override;
+	virtual AFortWeapon* NativeQuickBarHeldWeapon() override;
 	virtual uint8 NativeGetTeam163();
 	static int32 NativeParseTrailingUnderscoreNumber142cd4550(const char* Str, int32* IndexInOut);
 	static int32 NativeFNameNumberSuffix142cd4630(const uint16* Text, int32* InOutLength);
 	static float NativeGetDifficultyLevel141e9b630(UObject* Context);
 	static void NativeReserveBitArray140690880(uint8* BitArray, int32 Number);
-	virtual UFortItem* NativeFindItemA0(UFortItemDefinition* Definition, bool bInStorageVault);
-	virtual int32 NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems);
-	virtual bool NativeInventoryOwnerHasInventory();
+	virtual UFortItem* NativeFindItemA0(UFortItemDefinition* Definition, bool bInStorageVault) override;
+	virtual int32 NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems) override;
+	virtual bool NativeInventoryOwnerHasInventory() override;
+	virtual IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterfaceBD8() override;
 };
 

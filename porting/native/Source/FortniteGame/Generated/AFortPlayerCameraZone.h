@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortPlayerCameraBase.h"
 
+#include "ControllerTick225b.h"
+
 #include "AFortPlayerCameraZone.generated.h"
 
 UCLASS(config=Engine, transient)
@@ -15,6 +17,9 @@ class FORTNITEGAME_API AFortPlayerCameraZone : public AFortPlayerCameraBase
 
 public:
     AFortPlayerCameraZone(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2d91): not a UPROPERTY, not replicated.
+	FControllerCameraTargets225b NativeControllerTargets225b;
 
 };
 

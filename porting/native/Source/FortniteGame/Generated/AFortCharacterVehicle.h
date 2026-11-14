@@ -16,6 +16,7 @@
 #include "Math/Color.h"
 #include "Math/Vector2D.h"
 #include "Styling/SlateBrush.h"
+#include "UFortInventoryOwnerInterface.h"
 #include "UFortVehicleInterface.h"
 
 class AFortPawn;
@@ -345,5 +346,6 @@ public:
 	virtual bool NativeSeatPredicate_0568(uint8 SeatIndex) override;
 	AFortPlayerController* NativeGetLastController141947020() const;
 	virtual bool NativeCanPerformAction14230c260(const FGameplayTag& ActionTag) const override;
+	virtual IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterfaceBD8() override;
 };
 

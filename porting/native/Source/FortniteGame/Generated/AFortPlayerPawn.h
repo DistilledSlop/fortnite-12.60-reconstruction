@@ -78,6 +78,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "Styling/SlateBrush.h"
 #include "UFortArmoredInterface.h"
+#include "UFortInventoryOwnerInterface.h"
 #include "UFortVehicleInterface.h"
 #include "UObject/Object.h"
 
@@ -2156,6 +2157,7 @@ public:
 	void NativeApplyTargeting1423304f0(bool bNewTargeting);
 	void NativeSetTargeting14234f020(bool bNewTargeting);
 	void NativeOnWeaponTargeting1423336c0(bool bNewTargeting);
+	virtual IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterfaceBD8() override;
 protected:
 	void NativeUpdateAccelerationPack1423442e0();
 	void NativeUpdateRemoteViewData142344420();

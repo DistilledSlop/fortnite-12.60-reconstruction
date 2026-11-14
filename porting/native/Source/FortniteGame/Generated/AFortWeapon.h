@@ -42,6 +42,7 @@
 #include "GameplayAbilitySpec.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectAggregator.h"
+#include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/TransformNonVectorized.h"
 #include "Math/UnrealMathSSE.h"
@@ -49,6 +50,7 @@
 #include "Misc/Guid.h"
 #include "SharedFortGameLog.h"
 #include "TimerManager.h"
+#include "UFortInventoryOwnerInterface.h"
 #include "UObject/UnrealType.h"
 
 class ACustomItemWrapModifier;
@@ -1145,5 +1147,8 @@ public:
 	int32 NativeGetBulletsPerClip14269b000();
 	virtual bool NativeIsFiring708() const;
 	virtual bool NativeUsesAmmo820() const;
+	IFortInventoryOwnerInterface* NativeGetInventoryOwnerInterface14269c8f0();
+	virtual int32 NativeGetReserveAmmo7D8();
+	virtual bool NativeCanReload828(bool bCheckExtra, FGameplayTagContainer* FailureTags);
 };
 

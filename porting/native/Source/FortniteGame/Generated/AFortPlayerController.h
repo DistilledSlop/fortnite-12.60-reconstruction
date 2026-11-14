@@ -8,6 +8,7 @@
 
 #include "AnalyticsEventAttribute.h"
 #include "AttributeSet.h"
+#include "ControllerTick225b.h"
 #include "CoreGlobals.h"
 #include "EAthenaCustomizationCategory.h"
 #include "EFortBuildPreviewMarkerOptionalAdjustment.h"
@@ -2024,7 +2025,7 @@ public:
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
-	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition);
+	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition) override;
 	virtual TSharedPtr<FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe>& NativeGetAnalyticsProvider();
 	static TArray<FAnalyticsEventAttribute> NativeAppendAthenaLoadAttributes(TArray<FAnalyticsEventAttribute> Attributes, const UWorld* World);
 	static void NativeAppendCoreLoadAttributes(TArray<FAnalyticsEventAttribute>& Attributes, const UWorld* World);
@@ -2032,8 +2033,8 @@ public:
 	static void NativeRecordCoreSynchronousLoad(AFortPlayerController* Controller, const FString& Path);
 	static void NativeRecordAthenaAsynchronousLoad(AFortPlayerController* Controller, const FString& Path);
 	static void NativeRecordCoreAsynchronousLoad(AFortPlayerController* Controller, const FString& Path);
-	virtual AFortInventory* NativeQuickBarInventory();
-	virtual AFortWeapon* NativeQuickBarHeldWeapon();
+	virtual AFortInventory* NativeQuickBarInventory() override;
+	virtual AFortWeapon* NativeQuickBarHeldWeapon() override;
 	static void NativeRecordQuickBarSlotItem(AFortPlayerController* Controller, UFortItem* Item, EFortQuickBars Bar, int32 PreviousSlot, int32 NewSlot, UFortItem* ReplacedItem);
 	virtual uint8 NativeGetTeam163();
 	virtual UFortItem* NativeFindItemByGuid(const FGuid& ItemGuid);
@@ -2045,9 +2046,10 @@ public:
 	virtual void NativeStartMovementCancellableAction1423b8b70();
 	virtual void NativeEndMovementCancellableAction142378db0();
 	virtual bool NativeCanPerformAction15f0(const FGameplayTag& ActionTag);
-	virtual UFortItem* NativeFindItemA0(UFortItemDefinition* Definition, bool bInStorageVault);
-	virtual int32 NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems);
-	virtual bool NativeInventoryOwnerHasInventory();
+	virtual UFortItem* NativeFindItemA0(UFortItemDefinition* Definition, bool bInStorageVault) override;
+	virtual int32 NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems) override;
+	virtual bool NativeInventoryOwnerHasInventory() override;
+	virtual void NativeControllerVirtual1d10();
 public:
     TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
 	int32 GetNativeStatValue(FName Name, EStatRecordingPeriod Period) const;

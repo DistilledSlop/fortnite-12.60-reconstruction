@@ -11,6 +11,7 @@
 #include "AFortUIZone.h"
 #include "AFortWeapon.h"
 #include "AnalyticsEventAttribute.h"
+#include "ControllerTick225b.h"
 #include "CoreGlobals.h"
 #include "EFortQuickBars.h"
 #include "EItemProfileType.h"
@@ -2343,6 +2344,12 @@ bool AFortPlayerController::NativeInventoryOwnerHasInventory()
 	// Original 0x1406801d0. Concrete body; shared interface binding is tracked separately.
 	// AFortPlayerController interface +0x10 = 0x1406801d0.
 	return true;
+}
+
+void AFortPlayerController::NativeControllerVirtual1d10()
+{
+	// CONFIDENCE: HIGH
+	// 0x1406801c0: RET. Deliberately empty base virtual.
 }
 
 void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

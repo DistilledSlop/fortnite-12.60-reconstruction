@@ -8,6 +8,7 @@
 
 #include "AttributeSet.h"
 #include "EAlertLevel.h"
+#include "EAthenaGamePhase.h"
 #include "EReachLocationValidationMode.h"
 #include "FAlertLevelInfo.h"
 #include "FBotDelayedStimulus.h"
@@ -21,6 +22,8 @@
 #include "FOnAlertLevelChangedEvent.h"
 #include "FOnStealthMeterChangedEvent.h"
 #include "Math/Vector.h"
+#include "PhoebeInfiniteAmmoCVar.h"
+#include "UFortInventoryOwnerInterface.h"
 #include "UFortTeamActorInterface.h"
 
 class AActor;
@@ -56,6 +59,7 @@ class UFortInteractContextInfo;
 class UFortItem;
 class UFortItemDefinition;
 class UFortServerBotManagerAthena;
+class UFortWeaponItemDefinition;
 class UFortWorldItem;
 class UPrimitiveComponent;
 class UStatManager;
@@ -63,7 +67,7 @@ class UStatManager;
 #include "AFortAthenaAIBotController.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortAthenaAIBotController : public AAIController, public IFortTeamActorInterface
+class FORTNITEGAME_API AFortAthenaAIBotController : public AAIController, public IFortTeamActorInterface, public IFortInventoryOwnerInterface
 {
 	GENERATED_BODY()
 
@@ -309,6 +313,9 @@ public:
 	UPROPERTY(Transient)
 	UFortAthenaMutator_SpawningPolicyData* PolicyDataSpawner;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x8f8): not a UPROPERTY, not replicated.
+	EAthenaGamePhase NativeCachedGamePhase = EAthenaGamePhase::None;
+
 	// table index 8, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UFortControllerComponent_Telemetry* FortControllerComponent_Telemetry;
@@ -374,10 +381,12 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual uint8 NativeGetTeam163();
-	virtual UFortItem* NativeFindItemA0(UFortItemDefinition* Definition, bool bInStorageVault);
-	virtual int32 NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems);
-	virtual bool NativeInventoryOwnerHasInventory();
-	virtual AFortInventory* NativeQuickBarInventory();
-	virtual AFortWeapon* NativeQuickBarHeldWeapon();
+	virtual UFortItem* NativeFindItemA0(UFortItemDefinition* Definition, bool bInStorageVault) override;
+	virtual int32 NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems) override;
+	virtual bool NativeInventoryOwnerHasInventory() override;
+	virtual AFortInventory* NativeQuickBarInventory() override;
+	virtual AFortWeapon* NativeQuickBarHeldWeapon() override;
+	static bool NativeReadPhoebeInfiniteAmmo141a49680();
+	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition) override;
 };
 
