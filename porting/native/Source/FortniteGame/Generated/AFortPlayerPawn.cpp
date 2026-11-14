@@ -2414,6 +2414,67 @@ void AFortPlayerPawn::NativeTickWaterSprintBoostTime14235bf50(float DeltaSeconds
 	}
 }
 
+void AFortPlayerPawn::NativeApplyTargeting1423304f0(bool bNewTargeting)
+{
+	// CONFIDENCE: HIGH. Original1423304f0; style refresh and action reconciliation are unconditional.
+	const auto& NativeTags = FFortNativeGameplayTagsRuntime::Get();
+	if (bool(bIsTargeting) != bNewTargeting)
+	{
+	    bIsTargeting = bNewTargeting;
+	    if (AbilitySystemComponent)
+	    {
+	        AbilitySystemComponent->SetTagMapCount(NativeTags.GetTagAtOriginalOffset(0x638), bIsTargeting ? 1 : 0);
+	    }
+	    if (AFortAthenaVehicle* Vehicle = Cast<AFortAthenaVehicle>(VehicleStateLocal.Vehicle))
+	    {
+	        Vehicle->NativeOnTargetingChanged_d70(this, VehicleStateLocal.SeatIndex, bool(bIsTargeting));
+	    }
+	}
+	NativeUpdateMovementStyle14235bbf0();
+	const FGameplayTag& AimAction = NativeTags.GetTagAtOriginalOffset(0x768);
+	const bool bActive = HasNativeAction(AimAction);
+	if (bNewTargeting)
+	{
+	    if (!bActive)
+	    {
+	        NativeStartAction142353060(AimAction);
+	    }
+	}
+	else if (bActive)
+	{
+	    NativeStopAction142353960(AimAction);
+	}
+}
+
+void AFortPlayerPawn::NativeSetTargeting14234f020(bool bNewTargeting)
+{
+	// CONFIDENCE: HIGH. Original14234f020; local-control query follows targeting callbacks.
+	if (GetLocalRole() != ROLE_SimulatedProxy)
+	{
+	    NativeApplyTargeting1423304f0(bNewTargeting);
+	    if (IsLocallyControlled())
+	    {
+	        NativeTargetingChanged15f0.Broadcast(bNewTargeting);
+	    }
+	}
+}
+
+void AFortPlayerPawn::NativeOnWeaponTargeting1423336c0(bool bNewTargeting)
+{
+	// CONFIDENCE: HIGH. Original1423336c0; role and local-control queries are intentionally repeated.
+	if (GetLocalRole() != ROLE_SimulatedProxy)
+	{
+	    if (IsLocallyControlled() && GetLocalRole() != ROLE_SimulatedProxy)
+	    {
+	        NativeApplyTargeting1423304f0(bNewTargeting);
+	        if (IsLocallyControlled())
+	        {
+	            NativeTargetingChanged15f0.Broadcast(bNewTargeting);
+	        }
+	    }
+	}
+}
+
 void AFortPlayerPawn::NativeUpdateAccelerationPack1423442e0()
 {
 	// CONFIDENCE: high

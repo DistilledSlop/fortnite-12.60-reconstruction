@@ -32,7 +32,6 @@ class FORTNITEGAME_API UFortMovementComp_Character : public UCharacterMovementCo
 	GENERATED_BODY()
 
 public:
-	virtual void UpdateFromCompressedFlags(uint8 Flags) override;
 	UFortMovementComp_Character(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	// table index 52, flags 0x10000000000005
@@ -303,5 +302,6 @@ public:
 	virtual bool DoJump(bool bReplayingMoves) override;
 	void NativeAddMoveCombiningBlocker1420ebf70(FName AbilityName);
 	void NativeRemoveMoveCombiningBlocker1420eaed0(FName AbilityName);
+	virtual void UpdateFromCompressedFlags(uint8 Flags) override;
 };
 

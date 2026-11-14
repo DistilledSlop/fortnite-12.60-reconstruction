@@ -53,5 +53,6 @@ public:
 	virtual float GetMaxAcceleration() const override;
 	static bool NativeCanJumpInternalEvent1440739b0(ACharacter* Owner);
 	virtual bool DoJump(bool bReplayingMoves) override;
+	virtual void UpdateFromCompressedFlags(uint8 Flags) override;
 };
 

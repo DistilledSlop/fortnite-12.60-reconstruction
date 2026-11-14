@@ -93707,5 +93707,91 @@
     "confidence": "HIGH",
     "status": "ported",
     "notes": "Complete original primary virtual2090 body; repeated pawn queries retained. Original bit29 independently mapped to PendingKill by reflected IsValid144773740. Replay delegate/context lifecycle and build/runtime remain open."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeApplyTargeting1423304f0",
+    "kind": "helper",
+    "signature": "void NativeApplyTargeting1423304f0(bool bNewTargeting)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPlayerPawn/NativeApplyTargeting1423304f0.inc",
+    "address": "0x1423304f0",
+    "confidence": "HIGH",
+    "status": "ported",
+    "includes": [
+      "FortNativeGameplayTagsRuntime.h"
+    ],
+    "notes": "Complete original body: explicit tag count, virtual vehicle callback, unconditional movement style refresh and virtual native action reconciliation. Full ASC660 block/cancel, weapon callbacks and input class lifecycle remain unaccepted; build/runtime pending."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeSetTargeting14234f020",
+    "kind": "helper",
+    "signature": "void NativeSetTargeting14234f020(bool bNewTargeting)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPlayerPawn/NativeSetTargeting14234f020.inc",
+    "address": "0x14234f020",
+    "confidence": "HIGH",
+    "status": "ported",
+    "notes": "Complete original body. Full input/jump, ASC block/cancel, saved-move and ability lifecycle remain unaccepted. Combined UE build/runtime pending."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeOnWeaponTargeting1423336c0",
+    "kind": "helper",
+    "signature": "void NativeOnWeaponTargeting1423336c0(bool bNewTargeting)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPlayerPawn/NativeOnWeaponTargeting1423336c0.inc",
+    "address": "0x1423336c0",
+    "confidence": "HIGH",
+    "status": "ported",
+    "notes": "Complete original body. Full input/jump, ASC block/cancel, saved-move and ability lifecycle remain unaccepted. Combined UE build/runtime pending."
+  },
+  {
+    "class": "UFortMovementComp_Character",
+    "function": "UpdateFromCompressedFlags",
+    "kind": "helper",
+    "signature": "void UpdateFromCompressedFlags(uint8 Flags)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortMovementComp_Character/UpdateFromCompressedFlags.inc",
+    "address": "0x1420f4c90",
+    "confidence": "HIGH",
+    "status": "ported",
+    "notes": "Complete original body. Full input/jump, ASC block/cancel, saved-move and ability lifecycle remain unaccepted. Combined UE build/runtime pending.",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "class": "UFortMovementComp_CharacterAthena",
+    "function": "UpdateFromCompressedFlags",
+    "kind": "helper",
+    "signature": "void UpdateFromCompressedFlags(uint8 Flags)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortMovementComp_CharacterAthena/UpdateFromCompressedFlags.inc",
+    "address": "0x141a02b20",
+    "confidence": "HIGH",
+    "status": "ported",
+    "notes": "Complete original body. Full input/jump, ASC block/cancel, saved-move and ability lifecycle remain unaccepted. Combined UE build/runtime pending.",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeTargetingChanged15f0",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, bool> NativeTargetingChanged15f0",
+    "access": "public",
+    "offset": "0x15f0",
+    "status": "ported",
+    "confidence": "HIGH",
+    "notes": "Original AFortPlayerPawn constructor 1422fe830 initializes the three-word native multicast at +15f0; destructor 141931710 destroys it using the same helper as the native bool multicast at +1608. Broadcast 1406934e0 passes a bool and uses native multicast reverse iteration, lock, and compaction.",
+    "includes": [
+      "FortMovementStyleNative.h"
+    ]
   }
 ]

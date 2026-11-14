@@ -682,6 +682,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_PossessedProp, Transient)
 	ABuildingGameplayActorPlayerPropAttachment* PossessedProp;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x15f0): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, bool> NativeTargetingChanged15f0;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x1608): not a UPROPERTY, not replicated.
 	TMulticastDelegate<void, bool> NativePersonalVehicleStyleChanged1608;
 
@@ -2151,6 +2154,9 @@ public:
 	virtual bool NativeAllowsADSWhileNotOnGround10B0() const;
 	void NativeEndWaterSprintBoost142314570();
 	void NativeTickWaterSprintBoostTime14235bf50(float DeltaSeconds);
+	void NativeApplyTargeting1423304f0(bool bNewTargeting);
+	void NativeSetTargeting14234f020(bool bNewTargeting);
+	void NativeOnWeaponTargeting1423336c0(bool bNewTargeting);
 protected:
 	void NativeUpdateAccelerationPack1423442e0();
 	void NativeUpdateRemoteViewData142344420();
