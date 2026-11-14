@@ -2482,6 +2482,10 @@ _athena_playlist_selection_spec = _common_activation_import.spec_from_file_locat
     "athena_playlist_selection_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "athena_playlist_selection_runtime", "source_policy.py"))
 _athena_playlist_selection_policy = _common_activation_import.module_from_spec(_athena_playlist_selection_spec)
 _athena_playlist_selection_spec.loader.exec_module(_athena_playlist_selection_policy)
+_inventory_query_defaults_spec = _common_activation_import.spec_from_file_location(
+    "inventory_query_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "inventory_query_defaults_runtime", "source_policy.py"))
+_inventory_query_defaults_policy = _common_activation_import.module_from_spec(_inventory_query_defaults_spec)
+_inventory_query_defaults_spec.loader.exec_module(_inventory_query_defaults_policy)
 _ability_spec_handle_bridge_spec = _common_activation_import.spec_from_file_location(
     "ability_spec_handle_bridge_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "ability_spec_handle_bridge_runtime", "source_policy.py"))
 _ability_spec_handle_bridge_policy = _common_activation_import.module_from_spec(_ability_spec_handle_bridge_spec)
@@ -5097,6 +5101,7 @@ def promote(args):
                                      (_action_receivers_policy.definitions(model), cpp)):
                 if output.count(fragment) != 1:
                     raise ValueError('action widget runtime fragment missing or duplicated')
+        header, cpp = _inventory_query_defaults_policy.finalize(model, header, cpp)
         _ability_spec_handle_bridge_policy.validate_rendered(model, header, cpp)
         if re.search(r"TODO_", header + cpp):
             raise SystemExit("%s: unresolved TODO token reached the output" % name)

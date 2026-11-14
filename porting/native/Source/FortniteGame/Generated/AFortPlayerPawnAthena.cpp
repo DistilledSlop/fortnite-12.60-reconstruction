@@ -268,7 +268,7 @@ void AFortPlayerPawnAthena::NativeSetMaxAccelerationFlying141a24e80(float Value)
 	    Movement->MaxAccelerationFlying = Value;
 }
 
-bool AFortPlayerPawnAthena::NativeCanPerformAction14230c260(const FGameplayTag& ActionTag)
+bool AFortPlayerPawnAthena::NativeCanPerformAction14230c260(const FGameplayTag& ActionTag) const
 {
 	// CONFIDENCE: HIGH. Complete original body; class lifecycle acceptance remains separate.
 	const bool bBaseAllowed = AFortPlayerPawn::NativeCanPerformAction14230c260(ActionTag);
@@ -318,7 +318,7 @@ bool AFortPlayerPawnAthena::NativeAllowsADSWhileNotOnGround10B0() const
 	{
 	    return bOriginalAllow;
 	}
-	AFortPlayerState* StateForQuery = Cast<AFortPlayerState>(PlayerState);
+	AFortPlayerState* StateForQuery = Cast<AFortPlayerState>(GetPlayerState());
 	if (State->NativeEvaluateADSMutators141989680(StateForQuery))
 	{
 	    return true;

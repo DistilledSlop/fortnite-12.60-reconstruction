@@ -37,3 +37,9 @@ UFortWorldItemDefinition* UFortWorldItemDefinition::GetAmmoWorldItemDefinitionNa
 	return nullptr;
 }
 
+
+UFortWorldItemDefinition::UFortWorldItemDefinition(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    bAllowMultipleStacks = true;
+}

@@ -344,6 +344,6 @@ public:
 	virtual float NativeGetMovementSpeed14231ab10(uint8 Style) const override;
 	virtual bool NativeSeatPredicate_0568(uint8 SeatIndex) override;
 	AFortPlayerController* NativeGetLastController141947020() const;
-	virtual bool NativeCanPerformAction14230c260(const FGameplayTag& ActionTag) override;
+	virtual bool NativeCanPerformAction14230c260(const FGameplayTag& ActionTag) const override;
 };
 

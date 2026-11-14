@@ -13,8 +13,8 @@ if (Audio && !Audio->IsRegistered())
     Audio->AutoAttachRotationRule = EAttachmentRule::KeepRelative;
     Audio->AutoAttachScaleRule = EAttachmentRule::KeepRelative;
     Audio->RegisterComponent(); // 0x1440c2bb0 owner->GetWorld, RegisterComponentWithWorld
-    if (ItemWrapModifier)
+    if (ACustomItemWrapModifier* Modifier = ItemWrapModifier)
     {
-        ItemWrapModifier->NotifyAudioComponentAdded(Audio); // 0x14277bcf0 ProcessEvent
+        Modifier->NotifyAudioComponentAdded(Audio); // 0x14277bcf0 ProcessEvent
     }
 }

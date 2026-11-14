@@ -23,6 +23,8 @@ class FORTNITEGAME_API UFortAmmoItemDefinition : public UFortWorldItemDefinition
 	GENERATED_BODY()
 
 public:
+	UFortAmmoItemDefinition(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 8, flags 0x10000000000015
 	UPROPERTY()
 	FSlateBrush ClipIconBrush;

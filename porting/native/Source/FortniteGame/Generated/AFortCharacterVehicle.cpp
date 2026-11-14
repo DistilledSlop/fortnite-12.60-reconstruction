@@ -178,7 +178,7 @@ AFortPlayerController* AFortCharacterVehicle::NativeGetLastController141947020()
 	return LastController.Get();
 }
 
-bool AFortCharacterVehicle::NativeCanPerformAction14230c260(const FGameplayTag& ActionTag)
+bool AFortCharacterVehicle::NativeCanPerformAction14230c260(const FGameplayTag& ActionTag) const
 {
 	// CONFIDENCE: HIGH. Complete shared action-gate body.
 	// Original 0x141937350. The vehicle uses its replicated override ASC directly.

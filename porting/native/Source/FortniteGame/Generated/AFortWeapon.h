@@ -1144,5 +1144,6 @@ public:
 	virtual int32 NativeGetWeaponSkillLevel1426a1160(IAbilitySystemInterface* PawnInterface);
 	int32 NativeGetBulletsPerClip14269b000();
 	virtual bool NativeIsFiring708() const;
+	virtual bool NativeUsesAmmo820() const;
 };
 

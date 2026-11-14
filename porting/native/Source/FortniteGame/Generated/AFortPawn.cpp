@@ -1348,7 +1348,7 @@ void AFortPawn::NativeStopAction142353960(const FGameplayTag& ActionTag)
 	}
 }
 
-bool AFortPawn::NativeCanPerformAction14230c260(const FGameplayTag& ActionTag)
+bool AFortPawn::NativeCanPerformAction14230c260(const FGameplayTag& ActionTag) const
 {
 	// CONFIDENCE: HIGH. Complete shared action-gate body.
 	// Original 0x14230c260. The component is the reflected AFortPawn field, not the interface getter.

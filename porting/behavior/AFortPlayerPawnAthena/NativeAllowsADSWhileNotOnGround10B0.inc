@@ -11,7 +11,7 @@ if (!State)
 {
     return bOriginalAllow;
 }
-AFortPlayerState* StateForQuery = Cast<AFortPlayerState>(PlayerState);
+AFortPlayerState* StateForQuery = Cast<AFortPlayerState>(GetPlayerState());
 if (State->NativeEvaluateADSMutators141989680(StateForQuery))
 {
     return true;

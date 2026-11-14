@@ -45,6 +45,8 @@ class FORTNITEGAME_API UFortItemDefinition : public UMcpItemDefinitionBase, publ
 	GENERATED_BODY()
 
 public:
+	UFortItemDefinition(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 45, flags 0x10000010080000
 	UPROPERTY()
 	FFortOnItemDefinitionCountChangedDelegate OnItemCountChanged;
@@ -278,5 +280,6 @@ public:
 	virtual TSoftObjectPtr<USkeletalMesh> GetPreviewSkeletalMeshNative() const;
 	virtual TSoftObjectPtr<UStaticMesh> GetPreviewStaticMeshNative() const;
 	virtual TSoftClassPtr<AActor> GetPreviewPrefabNative() const;
+	virtual bool NativeAllowsMultipleStacks380() const;
 };
 

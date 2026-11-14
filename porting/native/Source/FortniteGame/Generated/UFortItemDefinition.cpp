@@ -397,3 +397,15 @@ TSoftClassPtr<AActor> UFortItemDefinition::GetPreviewPrefabNative() const
 	return TSoftClassPtr<AActor>();
 }
 
+bool UFortItemDefinition::NativeAllowsMultipleStacks380() const
+{
+	// CONFIDENCE: HIGH. Original 0x14202a5f0, definition virtual +0x380.
+	return bAllowMultipleStacks;
+}
+
+
+UFortItemDefinition::UFortItemDefinition(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    bAllowMultipleStacks = true;
+}

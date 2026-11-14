@@ -74,5 +74,6 @@ public:
 	void NativeNotifyInventoryChanged();
 	void NativeUpdateEntry(FFortItemEntry& Entry);
 	virtual UFortWorldItem* NativeFindItemByGuid(const FGuid& ItemGuid);
+	int32 NativeFindAllWorldItems(UFortItemDefinition* ItemDefinition, TArray<UFortItem*>& OutItems, bool bIncludeGifted) const;
 };
 

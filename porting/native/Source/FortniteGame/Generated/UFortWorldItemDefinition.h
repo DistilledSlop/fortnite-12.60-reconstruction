@@ -28,6 +28,8 @@ class FORTNITEGAME_API UFortWorldItemDefinition : public UFortItemDefinition
 	GENERATED_BODY()
 
 public:
+	UFortWorldItemDefinition(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 59, flags 0x10000000010015
 	UPROPERTY()
 	FGameplayTagContainer RequiredEquipTags;

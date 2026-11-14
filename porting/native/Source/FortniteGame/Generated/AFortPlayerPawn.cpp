@@ -2344,7 +2344,7 @@ void AFortPlayerPawn::NativeSetPendingSkydiveLaunch14234e8b0(bool bPending)
 	}
 
 	bIsSkydivingFromBus = false;
-	if (AFortPlayerStateZone* FortState = Cast<AFortPlayerStateZone>(PlayerState))
+	if (AFortPlayerStateZone* FortState = Cast<AFortPlayerStateZone>(GetPlayerState()))
 	{
 	    FortState->NativeSetHasEverSkydivedFromBus1424293c0(true);
 	    FortState->NativeSetHasEverSkydivedFromBusAndLanded1424293d0(true);

@@ -2,6 +2,7 @@
 #include "AFortInventory.h"
 #include "FFortItemEntry.h"
 #include "Misc/Guid.h"
+#include "UFortItem.h"
 #include "UFortItemDefinition.h"
 #include "UFortWorldItem.h"
 #include "Net/UnrealNetwork.h"
@@ -84,6 +85,24 @@ UFortWorldItem* AFortInventory::NativeFindItemByGuid(const FGuid& ItemGuid)
 	    }
 	}
 	return nullptr;
+}
+
+int32 AFortInventory::NativeFindAllWorldItems(UFortItemDefinition* ItemDefinition, TArray<UFortItem*>& OutItems, bool bIncludeGifted) const
+{
+	// CONFIDENCE: HIGH. Complete original inventory query.
+	// Original 0x142006b20. Appends; does not clear OutItems.
+	int32 Added = 0;
+	for (int32 Index = 0; Index < Inventory.ItemInstances.Num(); ++Index)
+	{
+	    UFortWorldItem* Item = Inventory.ItemInstances[Index];
+	    if (Item && Item->GetItemDefinitionBP() == ItemDefinition &&
+	        (bIncludeGifted || !Item->NativeWasGifted()))
+	    {
+	        OutItems.Add(Item);
+	        ++Added;
+	    }
+	}
+	return Added;
 }
 
 void AFortInventory::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
