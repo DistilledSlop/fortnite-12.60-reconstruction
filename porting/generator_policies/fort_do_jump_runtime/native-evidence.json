@@ -1,0 +1,94 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "source_windows": [
+    {
+      "address": "0x1420dc080",
+      "length": 415,
+      "sha256": "29dfae5b340c2d8351fb7e7a89852f6b1908c88c9defdea00a4df741491eee5d"
+    },
+    {
+      "address": "0x1420da5d0",
+      "length": 456,
+      "sha256": "6f75e7ab7a74f04ba4e4480a4addab62f461a3abb27670bc8378a6f461a8e1c3"
+    },
+    {
+      "address": "0x1458093ad",
+      "length": 6,
+      "sha256": "7d6008122b4ae57d117f37f2a5625db1e60ffbf155759df3748920f595d82592"
+    },
+    {
+      "address": "0x1459c03a4",
+      "length": 4,
+      "sha256": "0f2f3591427956b004ca17393783192e0f81858c06bb5496aa2cea004f1ee863"
+    },
+    {
+      "address": "0x1459a3d10",
+      "length": 4,
+      "sha256": "6d58692645c9d1cfaf13541cbd258f86193ef63c2f1d38f6bbca9617372d7bd6"
+    },
+    {
+      "address": "0x1478c51b8",
+      "length": 4,
+      "sha256": "8502957747a29907927566be940a9b39fee0a15dd471ba428eb9eedd15aa80e7"
+    },
+    {
+      "address": "0x1459a86f8",
+      "length": 4,
+      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+    },
+    {
+      "address": "0x1459c03a0",
+      "length": 4,
+      "sha256": "b2c6a8c83803ff33154c42757d93d1a39e827f2745b79e92eb09bd4db3aa8e7a"
+    },
+    {
+      "address": "0x148218638",
+      "length": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "address": "0x1459a86f0",
+      "length": 4,
+      "sha256": "d99e58435243d9fef9c88273b8d553b4fba4d0baf8009d29eae74fa99e0d9f57"
+    },
+    {
+      "address": "0x1459a979c",
+      "length": 4,
+      "sha256": "c68830a25204a09f8e77aada6bc5807f607cccaaa0ebb2a7122d317584478a8b"
+    },
+    {
+      "address": "0x145a179f4",
+      "length": 4,
+      "sha256": "7b7fb542bc7a640001d150facc7e8affb20ed83acd8232693299cbdbe53f1d28"
+    }
+  ],
+  "typed_mappings": {
+    "CurrentFloor": {
+      "class": "UCharacterMovementComponent",
+      "offset": "0x2f0"
+    },
+    "ImpactNormal": {
+      "struct": "FHitResult",
+      "offset": "0x34",
+      "within_find_floor_result": "0xc"
+    },
+    "UpdatedComponent": {
+      "class": "UMovementComponent",
+      "offset": "0xb0"
+    },
+    "FallingStartedZ": {
+      "class": "UFortMovementComp_Character",
+      "offset": "0x1d00"
+    },
+    "SlipperySlopeParams": {
+      "class": "AFortPlayerPawn",
+      "offset": "0x22f8"
+    },
+    "SlopeLaunchVerticalVelocityBoostMultiplierJumping": {
+      "struct": "FSlipperySlopeParams",
+      "offset": "0x140"
+    }
+  },
+  "native_byte_scope": "Plain shared uint8 at original1dfd, save/set/restore. No invented explicit numeric constructor initializer; constructor and saved-move lifecycle recovery remain separate.",
+  "oracle": "Original-code helper oracle:266200 identical XYZ and scalable call/order/field/level comparisons with GCC15 and UEClang9; artifacts jump-adjustment136. Full Athena jump path and gameplay acceptance remain open."
+}

@@ -56,8 +56,15 @@ def validate_model(model):
             matches = [f for f in model.get('fields', []) if f.get('name') == fn]
             if len(matches) != 1 or any(matches[0].get(k) != v for k, v in {'type':'uint8','decl':'uint8 NativeAirborneFlag;', 'access':'public', 'default':None, 'offset':0x1dfe}.items()):
                 raise ValueError(tag + ': native byte changed')
-            # Do not allow another native field at the same original byte.
-            if any(f.get('name') != fn and isinstance(f.get('offset'), int) and 0x1df0 <= f['offset'] <= 0x1dfe for f in model.get('fields', [])):
+            # Keep the conservative neighborhood guard, allowing only the separately
+            # recovered full jump byte at 1dfd. It does not overlap this byte at 1dfe.
+            jump_byte = {'name':'NativeDoJumpFlag1dfd', 'type':'uint8',
+                         'decl':'uint8 NativeDoJumpFlag1dfd;', 'access':'public',
+                         'default':None, 'offset':0x1dfd}
+            if any(f.get('name') != fn and isinstance(f.get('offset'), int)
+                   and 0x1df0 <= f['offset'] <= 0x1dfe
+                   and any(f.get(k) != v for k, v in jump_byte.items())
+                   for f in model.get('fields', [])):
                 raise ValueError(tag + ': competing native byte')
             if any(isinstance(m.get('offset'), int) and 0x1df0 <= m['offset'] <= 0x1dfe for m in model.get('members_decl_order', [])):
                 raise ValueError(tag + ': reflected byte collision')

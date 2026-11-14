@@ -92169,5 +92169,52 @@
     "includes": [
       "FortMovementStyleNative.h"
     ]
+  },
+  {
+    "function": "NativeDoJumpFlag1dfd",
+    "kind": "member_field",
+    "signature": "uint8 NativeDoJumpFlag1dfd",
+    "offset": "0x1dfd",
+    "confidence": "high",
+    "status": "ported",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x1420dc080",
+    "notes": "Shared full byte saved/set/restored by base and Athena DoJump. No explicit initializer; original component constructor/lifecycle completeness is independently open.",
+    "class": "UFortMovementComp_Character"
+  },
+  {
+    "function": "NativeComputeSlipperyJump1420da5d0",
+    "kind": "helper",
+    "signature": "FVector NativeComputeSlipperyJump1420da5d0(const FVector& InVelocity, const FVector& FloorImpactNormal, AFortPlayerPawn& Player) const",
+    "confidence": "high",
+    "status": "ported",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x1420da5d0",
+    "inc_path": "porting/generator_policies/fort_do_jump_runtime/NativeComputeSlipperyJump1420da5d0.inc",
+    "includes": [
+      "FortJumpMathNative.h"
+    ],
+    "class": "UFortMovementComp_Character"
+  },
+  {
+    "function": "DoJump",
+    "kind": "helper",
+    "signature": "bool DoJump(bool bReplayingMoves)",
+    "virtual": true,
+    "override": true,
+    "confidence": "high",
+    "status": "ported",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x1420dc080",
+    "inc_path": "porting/behavior/fort_do_jump_runtime/DoJump.inc",
+    "includes": [
+      "FortJumpMathNative.h",
+      "Components/SceneComponent.h"
+    ],
+    "notes": "Complete base Fort override only; Athena override1419cd830 and saved-move lifecycle remain independently incomplete. No full Athena jump/parity claim.",
+    "class": "UFortMovementComp_Character"
   }
 ]

@@ -8,15 +8,18 @@
 
 #include "AttributeSet.h"
 #include "Components/PrimitiveComponent.h"
+#include "Components/SceneComponent.h"
 #include "EFortAILODLevel.h"
 #include "Engine/NetSerialization.h"
 #include "FAirControlParams.h"
 #include "FWaterControlParams.h"
 #include "FWaterJumpParams.h"
 #include "FWaterSprintBoostParams.h"
+#include "FortJumpMathNative.h"
 #include "Math/Vector.h"
 
 class AFortPawn;
+class AFortPlayerPawn;
 class UCurveFloat;
 
 #include "UFortMovementComp_Character.generated.h"
@@ -233,6 +236,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x1d48): not a UPROPERTY, not replicated.
 	FVector NativeRecoveredFVector_0x1d48;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1dfd): not a UPROPERTY, not replicated.
+	uint8 NativeDoJumpFlag1dfd;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x1dfe): not a UPROPERTY, not replicated.
 	uint8 NativeAirborneFlag;
 
@@ -288,5 +294,7 @@ public:
 	virtual float GetMaxAcceleration() const override;
 	virtual void ServerMove_Implementation(float TimeStamp, FVector_NetQuantize10 InAccel, FVector_NetQuantize100 ClientLoc, uint8 CompressedMoveFlags, uint8 ClientRoll, uint32 View, UPrimitiveComponent* ClientMovementBase, FName ClientBaseBoneName, uint8 ClientMovementMode) override;
 	virtual float GetMaxSpeed() const override;
+	FVector NativeComputeSlipperyJump1420da5d0(const FVector& InVelocity, const FVector& FloorImpactNormal, AFortPlayerPawn& Player) const;
+	virtual bool DoJump(bool bReplayingMoves) override;
 };
 
