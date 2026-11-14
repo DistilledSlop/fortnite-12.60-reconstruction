@@ -373,9 +373,10 @@ index 97ac0488b..b03154cf1 100644
  		{
 diff --git a/Engine/Source/Runtime/Engine/Private/PhysicsEngine/FortniteLegacyChaosCookedData.h b/Engine/Source/Runtime/Engine/Private/PhysicsEngine/FortniteLegacyChaosCookedData.h
 new file mode 100644
+index 000000000..93beb2dc0
 --- /dev/null
 +++ b/Engine/Source/Runtime/Engine/Private/PhysicsEngine/FortniteLegacyChaosCookedData.h
-@@ -0,0 +1,266 @@
+@@ -0,0 +1,273 @@
 +#pragma once
 +#include "CoreMinimal.h"
 +
@@ -414,7 +415,7 @@ new file mode 100644
 +    static constexpr int64 MaxAllocation = 256LL * 1024 * 1024;
 +    struct FEntry { uint8 Type = 0; TSharedPtr<FConvex> Convex; TSharedPtr<FTriangleMesh> Mesh; };
 +    TMap<int32, FEntry> Objects;
-+    struct FNode { int32 A, B; bool Leaf; };
++    struct FNode { int32 A, B; bool Leaf; bool EmptyA, EmptyB; };
 +    bool Fail(const TCHAR* Why)
 +    {
 +        if (Error.IsEmpty()) Error = FString::Printf(TEXT("Original Chaos at byte %lld: %s"), (long long)Offset, Why);
@@ -462,10 +463,16 @@ new file mode 100644
 +    {
 +        float X,Y,Z; if (!Float(X) || !Float(Y) || !Float(Z)) return false; V = FVector(X,Y,Z); return true;
 +    }
-+    bool Bounds()
++    bool Bounds(bool* Empty = nullptr)
 +    {
 +        FVector Min,Max; if (!Vec(Min) || !Vec(Max)) return false;
-+        return Min.X <= Max.X && Min.Y <= Max.Y && Min.Z <= Max.Z ? true : Fail(TEXT("inverted bounds"));
++        // Chaos TAABB's default/empty state is (+FLT_MAX, -FLT_MAX).
++        const float Limit = 3.4028234663852886e38f;
++        const bool IsEmpty = Min.X == Limit && Min.Y == Limit && Min.Z == Limit &&
++            Max.X == -Limit && Max.Y == -Limit && Max.Z == -Limit;
++        if (Empty) *Empty = IsEmpty;
++        return (Empty && IsEmpty) || (Min.X <= Max.X && Min.Y <= Max.Y && Min.Z <= Max.Z)
++            ? true : Fail(TEXT("inverted bounds"));
 +    }
 +    bool Vectors(TArray<FVector>& A)
 +    {
@@ -509,15 +516,16 @@ new file mode 100644
 +    }
 +    bool Tree(int32 Triangles)
 +    {
-+        if (!Bounds()) return false;
++        bool EmptyTreeBounds; if (!Bounds(&EmptyTreeBounds)) return false;
 +        int32 N; if (!Count(N,60,sizeof(FNode))) return false;
 +        TArray<FNode> Nodes; Nodes.SetNum(N);
 +        for (FNode& Node : Nodes)
-+            if (!Bounds() || !Bounds() || !I32(Node.A) || !I32(Node.B) || !Bool(Node.Leaf)) return false;
++            if (!Bounds(&Node.EmptyA) || !Bounds(&Node.EmptyB) || !I32(Node.A) || !I32(Node.B) || !Bool(Node.Leaf)) return false;
 +        int32 Leaves; if (!Count(Leaves,4)) return false;
 +        for (int32 I=0; I<Leaves; ++I) if (!Payloads(Triangles)) return false;
 +        for (const FNode& Node : Nodes)
 +        {
++            if (!Node.Leaf && (Node.EmptyA || Node.EmptyB)) return Fail(TEXT("empty internal BVH child bounds"));
 +            const int32 Limit = Node.Leaf ? Leaves : N;
 +            if (Node.A < -1 || Node.A >= Limit || Node.B < -1 || Node.B >= Limit)
 +                return Fail(TEXT("BVH child index out of range"));
@@ -644,6 +652,7 @@ new file mode 100644
 +}
 diff --git a/Engine/Source/Runtime/PhysicsCore/Public/FortniteLegacyPhysXFaceMap.h b/Engine/Source/Runtime/PhysicsCore/Public/FortniteLegacyPhysXFaceMap.h
 new file mode 100644
+index 000000000..fefcd47df
 --- /dev/null
 +++ b/Engine/Source/Runtime/PhysicsCore/Public/FortniteLegacyPhysXFaceMap.h
 @@ -0,0 +1,21 @@
@@ -670,6 +679,7 @@ new file mode 100644
 +#endif
 diff --git a/Engine/Source/Runtime/PhysicsCore/Private/FortniteLegacyPhysXFaceMap.cpp b/Engine/Source/Runtime/PhysicsCore/Private/FortniteLegacyPhysXFaceMap.cpp
 new file mode 100644
+index 000000000..5da6c999d
 --- /dev/null
 +++ b/Engine/Source/Runtime/PhysicsCore/Private/FortniteLegacyPhysXFaceMap.cpp
 @@ -0,0 +1,83 @@

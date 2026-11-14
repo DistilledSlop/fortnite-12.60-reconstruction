@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Standalone parser differential/synthetic/malformed tests; assets stay ignored."""
-import argparse, json, pathlib, struct, subprocess, math, sys
+import argparse, json, pathlib, struct, subprocess, math, sys, hashlib
 
 if not __debug__:
  raise SystemExit('This validation uses assertions; run without Python -O.')
@@ -95,6 +95,29 @@ for label,data in [
  ('negative face remap',oil[:-4]+pack('ii',1,-2)),
  ('invalid BVH map key',withmap.replace(pack('Ii2i6i',1,2,0,1,0,-1,-1,-1,0,-1),pack('Ii2i6i',1,2,0,0,0,-1,-1,-1,0,-1))),
 ]:reject(label,data)
+# Empty Chaos acceleration bounds occur in original nonempty triangle meshes.
+empty_bvh_fixtures = [
+ ('Environments/BuildingGuides/Meshes/PBW_BG_WindowSide.uexp', 1121, 4029,
+  'f0544ab2bbbb3d074682779d0eb9fbdc8a247a8a570abbb1770beb29bd62061d', 837, 1225, 1281),
+ ('Packages/DS_Fortnight/SM/Mesh/S_SpiralStaircaseTest.uexp', 1289, 21729,
+  'a041d4e8d9820f93109e8c9370878aa9bcec717073d9aa2cb310d72dab48d6fe', 4965, 5593, 5649),
+]
+sentinel = pack('6I', *[0x7f7fffff]*3, *[0xff7fffff]*3)
+for path, start, size, digest, tree, leaf, flag in empty_bvh_fixtures:
+ payload = (STAGE/path).read_bytes()[start:start+size]
+ assert hashlib.sha256(payload).hexdigest() == digest, path
+ assert payload[tree:tree+24] == sentinel and payload[leaf:leaf+24] == sentinel
+ assert struct.unpack_from('<I', payload, flag)[0] == 1
+ parsed = execute(path+' empty BVH bounds', payload)
+ assert parsed['meshes'] and sum(len(m['triangles']) for m in parsed['meshes'] if m) > 0
+ for label, offset in [('tree', tree), ('leaf', leaf)]:
+  bad = bytearray(payload); bad[offset] ^= 1
+  assert 'inverted bounds' in execute(path+' near-sentinel '+label, bad, False)
+ bad = bytearray(payload); bad[tree-24:tree] = sentinel
+ assert 'inverted bounds' in execute(path+' sentinel mesh bounds', bad, False)
+ bad = change(payload, flag, 'I', 0)
+ assert 'empty internal BVH child bounds' in execute(path+' sentinel internal child', bad, False)
+
 # Every proper prefix of each real fixture must fail, without changing Out.
 for label,data in [('sidewalk',side),('oilrig',oil)]:
  for n in range(len(data)):execute(label+' truncated at '+str(n),data[:n],False)
