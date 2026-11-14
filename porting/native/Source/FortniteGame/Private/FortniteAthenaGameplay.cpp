@@ -3,6 +3,8 @@
 #include "FortAthenaRegisteredSession.h"
 #include "UObject/ConstructorHelpers.h"
 #include "FortAthenaInventoryFlow.h"
+#include "FortAthenaLoot.h"
+#include "FortAthenaLootSearch.h"
 #include "FortAthenaHealth.h"
 #include "FortAthenaBuilding.h"
 #include "FortAthenaMatchFlow.h"
@@ -263,6 +265,8 @@ void AFortGameModeAthena::StartPlay()
     Super::StartPlay();
     FortAthenaRegisteredSession::Start(this);
     FortAthenaInventory::InstallRpcOverrides();
+    FortAthenaLoot::InstallRpcOverrides();
+    FortAthenaLootSearch::InstallRpcOverrides();
     FortAthenaBuilding::InstallRpcOverrides();
     FortAthenaBuilding::PrepareBuildableClasses(GetGameState<AFortGameStateAthena>());
     if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteNoHealth")))

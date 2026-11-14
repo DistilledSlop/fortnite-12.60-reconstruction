@@ -21,6 +21,9 @@
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaHealth.h"
 #include "FortAthenaFallDamage.h"
+#include "FortAthenaEmote.h"
+#include "FortAthenaLootWorld.h"
+#include "FortAthenaMiscRpcs.h"
 #include "FortAthenaEndGame.h"
 #include "Engine/LevelStreaming.h"
 #include "Engine/LevelStreamingDynamic.h"
@@ -600,7 +603,7 @@ namespace FortAthenaMatchFlowPrivate
             return false;
         }
         S.Playlist = Playlist;
-        if (FParse::Param(FCommandLine::Get(), TEXT("FortniteLootDataProbe")))
+        if (FParse::Param(FCommandLine::Get(), TEXT("FortniteLootDataProbe")) || FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")))
             FortAthenaLootData::Initialize(GameMode, Playlist);
         GameState->CurrentPlaylistInfo.BasePlaylist = Playlist;
         GameState->CurrentPlaylistInfo.OverridePlaylist = nullptr;
@@ -1886,6 +1889,7 @@ namespace FortAthenaMatchFlowPrivate
         FortAthenaInventory::Tick(World);
         FortAthenaEndGame::Tick(GameMode, Delta);
         FinalizeVisibleFoundationStreams(World);
+        FortAthenaLootWorld::Tick(GameMode);
         RunFoundationSweepProbe(World);
 
         // HandleMatchHasStarted -> StartWarmupPhase. inferred: deferred until RequiredPlayers have joined (the original
@@ -2013,6 +2017,7 @@ namespace FortAthenaMatchFlow
                 {
                     DisableBackgroundCollision(InWorld);
                     StreamFoundationsInLevel(InWorld, InLevel);
+                    FortAthenaLootWorld::OnLevelAdded(State().GameMode.Get(), InLevel);
                 }
             });
         }
@@ -2694,4 +2699,6 @@ void FortAthenaMatchFlow::InstallRpcOverrides()
     bInstalled = true;
     Rebind(UFortControllerComponent_Aircraft::StaticClass(), TEXT("ServerAttemptAircraftJump"), &ExecServerAttemptAircraftJumpOverride);
     Rebind(AFortPlayerController::StaticClass(), TEXT("ServerReadyToStartMatch"), &ExecServerReadyToStartMatchOverride);
+    FortAthenaEmote::InstallRpcOverrides();
+    FortAthenaMiscRpcs::InstallRpcOverrides();
 }

@@ -44,10 +44,17 @@ AFortPickupAthena* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVec
 	return Pickup;
 }
 
+namespace FortAthenaLootTransfer
+{
+	void InstallRpcOverrides();
+	bool HandlePickup(AFortPlayerPawn* Pawn, AFortPickup* Pickup,
+		float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound);
+}
+
 namespace
 {
-	// stand-in: immediate collection; original pickup flight, sound, slot/swap and interaction
-	// validation are not recovered. Multi-item pickups remain unsupported; partial grants preserve the world remainder.
+	// Delegates to FortAthenaLootTransfer for full pickup validation, stacking,
+	// quickbar slot replication (DelayedQuickBarActions), swap, and flight replication.
 	void ExecServerHandlePickup(UObject* Context, FFrame& Stack, RESULT_DECL)
 	{
 		P_GET_OBJECT(AFortPickup, Pickup);
@@ -56,50 +63,7 @@ namespace
 		P_GET_UBOOL(bPlayPickupSound);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		AFortPlayerPawn* Pawn = Cast<AFortPlayerPawn>(Context);
-		AFortPlayerController* Controller = Pawn ? Cast<AFortPlayerController>(Pawn->GetController()) : nullptr;
-		AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
-		if (FortAthenaLoot::IsEnabled() && Pawn && Pawn->HasAuthority() && Inventory && IsValid(Pickup)
-			&& Pickup->GetWorld() == Pawn->GetWorld() && !Pickup->bPickedUp
-			&& Pickup->MultiItemPickupEntries.Num() == 0
-			// stand-in: conservative range until original server pickup validation is recovered.
-			&& FVector::DistSquared(Pawn->GetActorLocation(), Pickup->GetActorLocation()) <= FMath::Square(300.0f))
-		{
-			FFortItemEntry& Entry = Pickup->PrimaryPickupItemEntry;
-			UFortItemDefinition* Definition = Entry.ItemDefinition;
-			int32 GrantCount = Definition ? FMath::Max(0, Entry.Count) : 0;
-			if (GrantCount > 0 && Definition->IsStackable())
-			{
-				const int32 MaxStack = Definition->NativeGetMaxStackSize(nullptr);
-				// Bound a new entry to one stack. GiveItem can first fill an existing stack;
-				// the remaining request still cannot create an oversized new entry.
-				GrantCount = FMath::Min(GrantCount, FMath::Max(0, MaxStack));
-				if (!Definition->bAllowMultipleStacks)
-				{
-					if (UFortWorldItem* Existing = Inventory->NativeFindWorldItemByDefinition(Definition, true))
-						GrantCount = FMath::Min(GrantCount, FMath::Max(0, MaxStack - Existing->ItemEntry.Count));
-				}
-			}
-			if (GrantCount > 0)
-			{
-				Pickup->bPickedUp = true;
-				int32 AcceptedCount = 0;
-				FortAthenaInventory::GiveItem(Controller, Definition, GrantCount, Entry.Level, Entry.LoadedAmmo, &AcceptedCount);
-				// Consume exactly the amount committed to inventory; a returned item alone
-				// does not establish that its existing stack accepted the entire request.
-				check(AcceptedCount >= 0 && AcceptedCount <= GrantCount);
-				Entry.Count -= AcceptedCount;
-				if (Entry.Count == 0)
-					Pickup->Destroy();
-				else
-				{
-					Pickup->bPickedUp = false;
-					if (AcceptedCount > 0)
-						Pickup->ForceNetUpdate();
-				}
-			}
-
-		}
+		FortAthenaLootTransfer::HandlePickup(Cast<AFortPlayerPawn>(Context), Pickup, FlyTime, StartDirection, bPlayPickupSound);
 		P_NATIVE_END;
 	}
 }
@@ -108,15 +72,5 @@ void FortAthenaLoot::InstallRpcOverrides()
 {
 	if (!IsEnabled())
 		return;
-	static bool bInstalled = false;
-	if (bInstalled)
-		return;
-	if (UFunction* Function = AFortPlayerPawn::StaticClass()->FindFunctionByName(TEXT("ServerHandlePickup")))
-	{
-		Function->SetNativeFunc(&ExecServerHandlePickup);
-		bInstalled = true;
-		UE_LOG(LogTemp, Display, TEXT("Loot: ServerHandlePickup rebound (limited immediate collection)"));
-	}
-	else
-		UE_LOG(LogTemp, Warning, TEXT("Loot: ServerHandlePickup UFunction missing"));
+	FortAthenaLootTransfer::InstallRpcOverrides();
 }

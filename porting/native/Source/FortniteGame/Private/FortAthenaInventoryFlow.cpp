@@ -54,6 +54,7 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "UObject/UObjectGlobals.h"
+#include "FortAthenaLootTransfer.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFortInventoryFlow, Log, All);
 
@@ -519,6 +520,7 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 
 	UE_LOG(LogTemp, Display, TEXT("Inventory: granted %d x %s guid=%s level=%d to %s"),
 		Count, *Definition->GetName(), *Entry.ItemGuid.ToString(), Level, *Controller->GetName());
+	FortAthenaLootTransfer::OnItemGranted(Controller, Item);  // quickbar slot (replicated through DelayedQuickBarActions)
 	return Item;
 }
 
@@ -554,6 +556,7 @@ int32 FortAthenaInventory::RemoveItem(AFortPlayerController* Controller, const F
 				if (Weapon && Weapon->ItemEntryGuid == ItemGuid)
 					FortAthenaCombatEquip::RemoveWeapon(Weapon);
 		}
+		FortAthenaLootTransfer::OnItemRemoved(Controller, ItemGuid);
 		Inventory->Inventory.NativeEntriesByGuid.Remove(ItemGuid);
 		for (int32 Index = 0; Index < Inventory->Inventory.ReplicatedEntries.Num(); ++Index)
 		{
@@ -691,6 +694,8 @@ void FortAthenaInventory::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayer
 		UE_LOG(LogTemp, Display, TEXT("Inventory: setup for %s: %d items in the world inventory (%d starting items)"),
 			*Controller->GetName(), Inventory->Inventory.ItemInstances.Num(), Starting);
 	}
+
+	FortAthenaLootTransfer::SetupPlayerQuickBars(Controller);
 
 	// Equip the pickaxe (the original client then shows it as the held item; slot 0 of the primary quickbar).
 	AFortPawn* Pawn = GetControllerPawn(Controller);
