@@ -2,7 +2,25 @@
 
 This is deliberately not the complete original constructor; see EVIDENCE.md.
 """
+import hashlib
+import json
 import re
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+
+
+def sources():
+    evidence = json.loads((HERE / 'native-evidence.json').read_text())
+    for source, key in [('image', 'source_windows'), ('pe', 'pe_windows')]:
+        with Path(evidence[source]).open('rb') as stream:
+            for window in evidence[key]:
+                stream.seek(int(window['offset'], 0))
+                data = stream.read(window['length'])
+                if hashlib.sha256(data).hexdigest() != window['sha256']:
+                    raise ValueError('Athena dual-move evidence changed: ' + window['address'])
+    return {name: (HERE / name).read_text() for name in
+            ('FortAthenaMovementNative.h', 'FortAthenaMovementNative.cpp')}
 
 CLASS = 'UFortMovementComp_CharacterAthena'
 OWN = ('TArray<FAthenaJumpPenalty> JumpPenalties;', 'float JumpPenaltyResetTime;',
@@ -18,6 +36,13 @@ def finalize(model, header, cpp):
         return header, cpp
     if model.get('parent') != 'UFortMovementComp_Character':
         raise ValueError(CLASS + ': unexpected parent')
+    include = '#include "FortAthenaMovementNative.h"'
+    if include in cpp:
+        raise ValueError(CLASS + ': competing dual-move support include')
+    cpp = cpp.replace('#include "' + CLASS + '.h"',
+                      '#include "' + CLASS + '.h"\n' + include, 1)
+    if cpp.count(include) != 1:
+        raise ValueError(CLASS + ': missing generated class include')
     for declaration in OWN:
         field = re.search(r'\b(\w+)\s*;$', declaration).group(1)
         members = [m for m in model.get('members_decl_order', []) if m.get('name') == field]
@@ -70,6 +95,7 @@ def finalize(model, header, cpp):
     NetworkSkipSkyDivingCollisionForPawnLOD = 2;
     MinTimeBetweenTimeStampResets = 1200.0f;
     BrakingSubStepTime = 1.0f / 60.0f;
+    bEnableServerDualMoveScopedMovementUpdates = NativeServerDualMoveScopedUpdates1478c2860();
     MaxAccelerationFlying = 1000.0f;
 '''
     return header, cpp[:end - 1] + body + cpp[end - 1:]

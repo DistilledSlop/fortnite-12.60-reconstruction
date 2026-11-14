@@ -4692,6 +4692,9 @@ def promote(args):
     _kismet_geometry_policy.validate()
     _pawn_cues_policy.validate()
     asset_diagnostic_sources = _asset_diagnostic_policy.sources() if 'UFortAssetManager' in listed else None
+    if 'UFortMovementComp_CharacterAthena' in listed:
+        asset_diagnostic_sources = asset_diagnostic_sources or {}
+        asset_diagnostic_sources.update(_athena_movement_constructor_policy.sources())
     if 'AFortWeapon' in listed:
         asset_diagnostic_sources = asset_diagnostic_sources or {}
         asset_diagnostic_sources.update(_weapon_targeting_policy.sources())
