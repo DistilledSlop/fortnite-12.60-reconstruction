@@ -138,6 +138,66 @@ PYBUILDINGS
         fi
         cp "$char_registry" "$porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Config/AthenaCharacterRegistry.json" || exit 1
     fi
+    # Stage the recovered collision profiles alongside committed native settings.
+    # The helper checks that the native bytes match HEAD and fails closed on a
+    # missing or incomplete recovered config before replacing the target.
+    native_engine_config="$porting/native/Config/DefaultEngine.ini"
+    original_engine_config="${FN_ORIGINAL_ENGINE_CONFIG:-$porting/generated/DefaultEngine.ini}"
+    staged_engine_config="$porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Config/DefaultEngine.ini"
+    config_evidence="${log%.log}-config"
+    source_commit=$(git -C "$porting" rev-parse --verify 'HEAD^{commit}') || exit 1
+    if [[ ! -f $original_engine_config || ! -f $native_engine_config ]]; then
+        echo 'Required original or native DefaultEngine.ini missing; refusing stage' >&2
+        exit 1
+    fi
+    staged_game_config="$porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Config/DefaultGame.ini"
+    config_dir=$(dirname -- "$staged_engine_config")
+    mkdir -p "$config_dir" || exit 1
+    config_work=$(mktemp -d "$config_dir/.config-stage.XXXXXX") || exit 1
+    trap 'rm -rf -- "$config_work"' EXIT
+    mkdir -p "$config_work/engine" "$config_work/game" || exit 1
+    if [[ -L $staged_engine_config || -L $staged_game_config || ! -f $staged_game_config ]]; then
+        echo 'Invalid staged config target; refusing stage' >&2
+        exit 1
+    fi
+    if [[ -e $staged_engine_config ]]; then
+        cp -p -- "$staged_engine_config" "$config_work/engine.before" || exit 1
+        cp -p -- "$staged_engine_config" "$config_work/engine/DefaultEngine.ini" || exit 1
+    else
+        cp -p -- "$native_engine_config" "$config_work/engine/DefaultEngine.ini" || exit 1
+    fi
+    cp -p -- "$staged_game_config" "$config_work/game.before" || exit 1
+    cp -p -- "$staged_game_config" "$config_work/game/DefaultGame.ini" || exit 1
+    python3 -I "$porting/frontend/stage_native_config.py" \
+        --source "$native_engine_config" --target "$config_work/engine/DefaultEngine.ini" \
+        --out "$config_evidence" --source-commit "$source_commit" --receipt-target "$staged_engine_config" \
+        --original-config "$original_engine_config" || exit 1
+    python3 -I "$porting/tools/stage_attribute_defaults.py" \
+        --original "${FN_ORIGINAL_GAME_CONFIG:-/mnt/vibrato/fortnite-extracted-full/FortniteGame/Config/DefaultGame.ini}" \
+        --target "$config_work/game/DefaultGame.ini" \
+        --out "${log%.log}-attribute-defaults" --receipt-target "$staged_game_config" \
+        --content-root "${FN_COOKED_GAME_ROOT:-/mnt/vibrato/fortnite-extracted-full/FortniteGame}/Content" || exit 1
+    # Check both snapshots before replacement and restore the first if the second
+    # replacement fails. Prepared files are on the target filesystem.
+    python3 -I - "$config_work" "$staged_engine_config" "$staged_game_config" <<'PYCONFIG' || exit 1
+import os, pathlib, sys
+work, engine, game = map(pathlib.Path, sys.argv[1:])
+engine_before, game_before = work / 'engine.before', work / 'game.before'
+for target, before in ((engine, engine_before), (game, game_before)):
+    if target.is_symlink() or target.exists() != before.exists() or (before.exists() and target.read_bytes() != before.read_bytes()):
+        raise SystemExit('staged config changed during preparation')
+os.replace(work / 'engine/DefaultEngine.ini', engine)
+try:
+    os.replace(work / 'game/DefaultGame.ini', game)
+except BaseException:
+    if engine_before.exists():
+        os.replace(engine_before, engine)
+    else:
+        engine.unlink(missing_ok=True)
+    raise
+PYCONFIG
+    rm -rf -- "$config_work"
+    trap - EXIT
     # Replacing the directory entry leaves any running server on its existing
     # executable inode and avoids cp's ETXTBSY failure against a live binary.
     staged_binary="$porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Binaries/Linux/FortniteLinuxServer"
