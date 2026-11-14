@@ -2446,6 +2446,33 @@ namespace FortAthenaMatchFlow
 
         if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeMovementDefaults")))
         {
+            // Once per second for 10 minutes: which movement style the server is in and why (sprint question).
+            struct FSprintProbe { FTimerHandle Handle; int32 Samples = 0; };
+            const TSharedRef<FSprintProbe> SprintProbe = MakeShared<FSprintProbe>();
+            const TWeakObjectPtr<AFortPlayerPawn> WeakPawn(Pawn);
+            FTimerDelegate SprintDelegate;
+            SprintDelegate.BindLambda([SprintProbe, WeakPawn]()
+            {
+                AFortPlayerPawn* P = WeakPawn.Get();
+                UWorld* W = P ? P->GetWorld() : nullptr;
+                if (!P || !W || ++SprintProbe->Samples > 600)
+                {
+                    if (W)
+                        W->GetTimerManager().ClearTimer(SprintProbe->Handle);
+                    return;
+                }
+                const UFortMovementSet* Set = P->MovementSet;
+                const UCharacterMovementComponent* Move = P->GetCharacterMovement();
+                uint8 Style = 255;
+                P->NativeGetCurrentMovementStyle14231a980(&Style);
+                UE_LOG(LogTemp, Display, TEXT("SprintProbe: t=%.1f style=%d sprintBit=%d sprintTag=%d requireTag=%d maxSpeed=%.1f groundSpeed=%.1f run=%.1f sprint=%.1f walk=%.1f mode=%d"),
+                    W->GetTimeSeconds(), Style, P->NativeSprintState1062Bit0 ? 1 : 0, P->NativeSprintTagGate14232cb50() ? 1 : 0,
+                    NativeRequireSprintTag1478de49c() ? 1 : 0, Move ? Move->GetMaxSpeed() : -1.0f,
+                    Move ? Move->Velocity.Size2D() : -1.0f, Set ? Set->RunSpeed.GetCurrentValue() : -1.0f,
+                    Set ? Set->SprintSpeed.GetCurrentValue() : -1.0f, Set ? Set->WalkSpeed.GetCurrentValue() : -1.0f,
+                    Move ? static_cast<int32>(Move->MovementMode) : -1);
+            });
+            GameMode->GetWorld()->GetTimerManager().SetTimer(SprintProbe->Handle, SprintDelegate, 1.0f, true);
             if (const UFortHealthSet* Health = Pawn->HealthSet)
             {
                 UE_LOG(LogTemp, Display, TEXT("Health attributes: pawn=%s current=%.9g base=%.9g unclampedCurrent=%.9g unclampedBase=%.9g min=%.9g max=%.9g maxHealth=%.9g synced=%d"),
