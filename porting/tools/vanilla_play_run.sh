@@ -33,6 +33,8 @@ else
     unset FN_NETWORK_TRACE_PATH
 fi
 export FN_SHOTS_DIR="$out/shots"
+export FN_CLIENT_RUN_LOG="$out/client-run.out"
+export FN_XVFB_ERROR_LOG="$out/xvfb.log"
 # Override for targeted diagnostics, e.g. LogNetTraffic Verbose.
 export FN_SERVER_LOG_CMDS="${FN_SERVER_LOG_CMDS:-LogHandshake Log, LogNet Log, LogNetTraffic Warning, PacketHandlerLog Log}"
 # This script's own output is kept in the run folder too (callers need not redirect it anywhere else).
