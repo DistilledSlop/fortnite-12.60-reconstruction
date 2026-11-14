@@ -121,6 +121,13 @@ fi
 
 read -r -a extra_args <<< "${FN_SERVER_ARGS:--FortniteSkipUnconvertedLegacyShaderMaps -FortniteTolerateNeedLoadDependencies -FortniteSkipEngineClassNetChecksum -FortniteStartingWood=500 -FortniteBlueprintPawn -FortniteNoServerAnimDecode -FortniteInventoryAbilities -FortniteWarmupSeconds=90 -FortniteProbeMovementDefaults -FortniteNetworkTrace=$log_dir/network-rpc.jsonl}"
 
+# Game server output goes to gameserver.log and, by default, also to this terminal (FN_SERVER_STDOUT=0 for file only).
+if [[ ${FN_SERVER_STDOUT:-1} == 1 ]]; then
+    exec 3> >(tee "$log_dir/gameserver.log")
+else
+    exec 3> "$log_dir/gameserver.log"
+fi
+
 FORTNITE_GAMESERVER_URL="http://127.0.0.1:$gs_http_port" \
 FORTNITE_GAMESERVER_SECRET="$gs_secret" \
 FORTNITE_GAMESERVER_ADDRESS="$gameserver_address" \
@@ -140,7 +147,7 @@ FORTNITE_GAMESERVER_CAPACITY="$gameserver_capacity" \
     -log \
     "-LogCmds=$server_log_cmds" \
     "${extra_args[@]}" \
-    > "$log_dir/gameserver.log" 2>&1 &
+    >&3 2>&1 &
 gameserver_pid=$!
 unset gs_secret
 
