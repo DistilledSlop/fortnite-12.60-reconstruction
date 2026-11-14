@@ -95547,5 +95547,26 @@
     ],
     "notes": "Complete original algorithm; evidence: generator_policies/weapon_targeting_runtime/RELOAD_ACTIONS_EVIDENCE.md. Build/runtime pending.",
     "class": "AFortWeaponRanged"
+  },
+  {
+    "class": "UFortAbilitySystemComponent",
+    "function": "ApplyAbilityBlockAndCancelTags",
+    "kind": "helper",
+    "signature": "void ApplyAbilityBlockAndCancelTags(const FGameplayTagContainer& AbilityTags, UGameplayAbility* RequestingAbility, bool bEnableBlockTags, const FGameplayTagContainer& BlockTags, bool bExecuteCancelTags, const FGameplayTagContainer& CancelTags)",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": true,
+    "override": true,
+    "inc_path": "porting/behavior/UFortAbilitySystemComponent/ApplyAbilityBlockAndCancelTags.inc",
+    "address": "0x1415e9850",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/Controller.h",
+      "Abilities/GameplayAbilityTypes.h",
+      "FortNativeGameplayTagsRuntime.h",
+      "GameplayTagContainer.h"
+    ],
+    "notes": "Complete original 1415e9850 override, independently reviewed against assembly and tag matching helper. Ranged targeting prerequisite integrated in c93f9707. See generator_policies/weapon_targeting_runtime/ASC_CANCELLATION_EVIDENCE.md. UE build/runtime pending."
   }
 ]

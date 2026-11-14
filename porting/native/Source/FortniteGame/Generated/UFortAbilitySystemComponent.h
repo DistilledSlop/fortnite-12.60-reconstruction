@@ -14,6 +14,7 @@
 #include "FReplicatedMontagePair.h"
 #include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/Controller.h"
 #include "GameplayTagContainer.h"
 #include "HAL/Platform.h"
 #include "SharedFortGameLog.h"
@@ -93,5 +94,6 @@ public:
 	virtual void HandleChangeAbilityCanBeCanceled(const FGameplayTagContainer& AbilityTags, UGameplayAbility* RequestingAbility, bool bCanBeCanceled) override;
 	void NativeStartAction14160f8c0(const FGameplayTag& ActionTag);
 	void NativeStopAction14160fd30(const FGameplayTag& ActionTag);
+	virtual void ApplyAbilityBlockAndCancelTags(const FGameplayTagContainer& AbilityTags, UGameplayAbility* RequestingAbility, bool bEnableBlockTags, const FGameplayTagContainer& BlockTags, bool bExecuteCancelTags, const FGameplayTagContainer& CancelTags) override;
 };
 
