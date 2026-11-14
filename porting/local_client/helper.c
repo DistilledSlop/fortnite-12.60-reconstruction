@@ -466,29 +466,44 @@ static int install_dns(void) {
 static int appes_diagnostic(void) {
     static const BYTE expected[2][6]={{0x0f,0x84,0x7b,0x03,0,0},{0xe9,0x91,0xbb,0x83,0,0x90}};
     static const BYTE replacement[2][6]={{0xe9,0x7c,0x03,0,0,0x90},{0xc3,0x90,0x90,0x90,0x90,0x90}};
+    static int reported_mismatch,reported_freeze;
     void *addresses[2]={AT(0x142121984ULL),AT(0x142120970ULL)};
-    DWORD protection[2],ignored;HANDLE threads[MAX_THREADS];DWORD number=0;int ok=0;
-    if(!bytes_equal(addresses[0],expected[0],6)||!bytes_equal(addresses[1],expected[1],6))return 0;
-    if(!freeze_other_threads(threads,&number))return 0;
-    if(!bytes_equal(addresses[0],expected[0],6)||!bytes_equal(addresses[1],expected[1],6))goto done;
-    if(!VirtualProtect(addresses[0],6,PAGE_EXECUTE_READWRITE,&protection[0]))goto done;
-    if(!VirtualProtect(addresses[1],6,PAGE_EXECUTE_READWRITE,&protection[1])) {
-        VirtualProtect(addresses[0],6,protection[0],&ignored);goto done;
+    DWORD protection[2]={0,0},ignored;HANDLE threads[MAX_THREADS];DWORD number=0;int ok=0,writable=0;
+    if(!bytes_equal(addresses[0],expected[0],6)||!bytes_equal(addresses[1],expected[1],6)) {
+        if(!reported_mismatch){reported_mismatch=1;status(L"local AppES pending: original bytes not present yet");}
+        return 0;
     }
+    /* Change page protection while every game thread is still running. A suspended game thread can
+     * hold a loader, heap or virtual-memory lock, so no call that might take one may run while the
+     * threads are frozen. Only memory reads, the 12 byte stores and the instruction-cache flush do. */
+    if(!VirtualProtect(addresses[0],6,PAGE_EXECUTE_READWRITE,&protection[0]))return 0;
+    if(!VirtualProtect(addresses[1],6,PAGE_EXECUTE_READWRITE,&protection[1])) {
+        VirtualProtect(addresses[0],6,protection[0],&ignored);return 0;
+    }
+    writable=1;
+    if(!freeze_other_threads(threads,&number)) {
+        if(!reported_freeze){reported_freeze=1;status(L"local AppES pending: could not suspend game threads");}
+        goto restore;
+    }
+    /* bytes_equal calls VirtualQuery, which can take a memory-manager lock: use memcmp here. The range
+     * was validated and made writable above and cannot change protection while threads are frozen. */
+    if(memcmp(addresses[0],expected[0],6)||memcmp(addresses[1],expected[1],6))goto done;
     memcpy(addresses[0],replacement[0],6);memcpy(addresses[1],replacement[1],6);
-    ok=bytes_equal(addresses[0],replacement[0],6)&&bytes_equal(addresses[1],replacement[1],6);
+    ok=!memcmp(addresses[0],replacement[0],6)&&!memcmp(addresses[1],replacement[1],6);
     if(!ok){memcpy(addresses[0],expected[0],6);memcpy(addresses[1],expected[1],6);}
-    {
-        BOOL flush0=FlushInstructionCache(GetCurrentProcess(),addresses[0],6);
-        BOOL flush1=FlushInstructionCache(GetCurrentProcess(),addresses[1],6);
+    /* Failed instruction synchronization cannot be retried as a successful pair. Fail closed instead
+     * of running partially patched code. */
+    if(!FlushInstructionCache(GetCurrentProcess(),addresses[0],6)||
+       !FlushInstructionCache(GetCurrentProcess(),addresses[1],6))TerminateProcess(GetCurrentProcess(),5);
+ done:
+    resume_threads(threads,number);
+ restore:
+    if(writable) {
         BOOL restore0=VirtualProtect(addresses[0],6,protection[0],&ignored);
         BOOL restore1=VirtualProtect(addresses[1],6,protection[1],&ignored);
-        /* Failed instruction/protection synchronization cannot be retried as a
-         * successful pair. Fail closed instead of running partially patched code. */
-        if(!flush0||!flush1||!restore0||!restore1)TerminateProcess(GetCurrentProcess(),5);
+        if(!restore0||!restore1)TerminateProcess(GetCurrentProcess(),5);
     }
- done:
-    resume_threads(threads,number);return ok;
+    return ok;
 }
 
 /* AppES code must stay intact through protected startup callbacks. Require
