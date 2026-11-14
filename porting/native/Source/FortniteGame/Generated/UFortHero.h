@@ -13,6 +13,7 @@
 class UCustomCharacterPart;
 class UFortAbilityKit;
 class UFortHeroSpecialization;
+class UFortHeroType;
 
 #include "UFortHero.generated.h"
 
@@ -75,5 +76,7 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static int32 NativeGetHeroLevel1407c1f50(UFortHero* Hero);
+	UFortHeroType* NativeGetHeroType1417e4200() const;
+	virtual int32 GetLevel() const override;
 };
 

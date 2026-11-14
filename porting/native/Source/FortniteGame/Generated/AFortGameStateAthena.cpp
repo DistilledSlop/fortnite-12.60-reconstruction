@@ -13,7 +13,9 @@
 #include "AFortVolumeManager.h"
 #include "EAthenaGamePhase.h"
 #include "EFriendlyFireType.h"
+#include "Engine/DataTable.h"
 #include "Engine/World.h"
+#include "FFortPlayerPawnStats.h"
 #include "FPlayersLeft.h"
 #include "FTotalPlayers.h"
 #include "FortAthenaCVarQueriesRuntime.h"
@@ -1068,6 +1070,24 @@ int32 AFortGameStateAthena::NativeGetHardcodedChangelistNumber142ba3400()
 	// Returns the constant 0xCB2E4E (13315662). Callers: OnRep_ServerChangelistNumber body 0x1419a7530 (two entries).
 	// CONFIDENCE: HIGH
 	return 13315662; // 0xCB2E4E
+}
+
+FFortPlayerPawnStats* AFortGameStateAthena::GetPlaylistHeroStats(const FName& RowName) const
+{
+	// Original address: 0x1419964f0.
+	// CONFIDENCE: HIGH
+	// 0x1419964f0. The current playlist accessor preserves override-before-base.
+	UFortPlaylistAthena* Playlist = GetCurrentPlaylistAthena();
+	if (Playlist == nullptr)
+	{
+	    return nullptr;
+	}
+	UDataTable* Table = Playlist->HeroStats.LoadSynchronous();
+	if (Table == nullptr)
+	{
+	    return nullptr;
+	}
+	return Table->FindRow<FFortPlayerPawnStats>(RowName, TEXT("AFortGameStateAthena::GetPlaylistHeroStats"), true);
 }
 
 void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

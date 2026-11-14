@@ -2514,6 +2514,22 @@ _flying_acceleration_family_spec = _common_activation_import.spec_from_file_loca
     "flying_acceleration_family_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "flying_acceleration_family_runtime", "source_policy.py"))
 _flying_acceleration_family_policy = _common_activation_import.module_from_spec(_flying_acceleration_family_spec)
 _flying_acceleration_family_spec.loader.exec_module(_flying_acceleration_family_policy)
+_movement_servermove_spec = _common_activation_import.spec_from_file_location(
+    "movement_servermove_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "movement_servermove_runtime", "source_policy.py"))
+_movement_servermove_policy = _common_activation_import.module_from_spec(_movement_servermove_spec)
+_movement_servermove_spec.loader.exec_module(_movement_servermove_policy)
+_hero_attribute_defaults_spec = _common_activation_import.spec_from_file_location(
+    "hero_attribute_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "hero_attribute_defaults_runtime", "source_policy.py"))
+_hero_attribute_defaults_policy = _common_activation_import.module_from_spec(_hero_attribute_defaults_spec)
+_hero_attribute_defaults_spec.loader.exec_module(_hero_attribute_defaults_policy)
+_native_stat_query_spec = _common_activation_import.spec_from_file_location(
+    "native_stat_query_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "native_stat_query_runtime", "source_policy.py"))
+_native_stat_query_policy = _common_activation_import.module_from_spec(_native_stat_query_spec)
+_native_stat_query_spec.loader.exec_module(_native_stat_query_policy)
+_hero_item_spec = _common_activation_import.spec_from_file_location(
+    "hero_item_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "hero_item_runtime", "source_policy.py"))
+_hero_item_policy = _common_activation_import.module_from_spec(_hero_item_spec)
+_hero_item_spec.loader.exec_module(_hero_item_policy)
 _world_profile_gate_spec = _common_activation_import.spec_from_file_location(
     "world_profile_gate_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "world_profile_gate_runtime", "source_policy.py"))
 _world_profile_gate_policy = _common_activation_import.module_from_spec(_world_profile_gate_spec)
@@ -2929,6 +2945,9 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _pawn_aim_rotation_policy.apply(model)
     model = _movement_max_acceleration_policy.apply(model)
     model = _flying_acceleration_family_policy.apply(model)
+    model = _movement_servermove_policy.apply(model)
+    model = _hero_attribute_defaults_policy.apply(model)
+    model = _hero_item_policy.apply(model)
     model = _mutator_owner_policy.apply(model, block, owner_fns)
     model = _replay_spectator216_policy.apply(model, block, owner_fns)
     model = _controller_analytics_policy.apply(model, block, owner_fns)
@@ -4992,6 +5011,7 @@ def promote(args):
         header, cpp = _native_instance_sentinels_policy.finalize(model, header, cpp)
         header, cpp = _aircraft_tick_policy.finalize(model, header, cpp)
         header, cpp = _aircraft_exit_bridge_policy.finalize(model, header, cpp)
+        header, cpp = _native_stat_query_policy.finalize(model, header, cpp)
         _input_cache_policy.validate_rendered(model, header, cpp)
         _action_slate_policy.validate_rendered(model, header, cpp)
         if model.get('common_action_widget_icon_runtime'):

@@ -2155,3 +2155,10 @@ AFortPlayerController::AFortPlayerController(const FObjectInitializer& ObjectIni
 {
     OverriddenBackpackSize = -1; // Original store 0x1423661a8.
 }
+
+#include "UStatManager.h"
+
+int32 AFortPlayerController::GetNativeStatValue(FName Name, EStatRecordingPeriod Period) const
+{
+    return StatManager ? StatManager->GetNativeStatValue(Name, Period) : 0;
+}

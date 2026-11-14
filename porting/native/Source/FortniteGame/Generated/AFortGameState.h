@@ -11,6 +11,7 @@
 #include "FAppliedHomebaseData.h"
 #include "FBuildingContainerDebugInfo.h"
 #include "FEndOfDayRecap.h"
+#include "FFortPlayerPawnStats.h"
 #include "FGameStateLootInfo.h"
 #include "FOnPoiManagerReplicated.h"
 #include "FOnTimeHitInfo.h"
@@ -348,5 +349,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static bool NativeGameStateRefHasFlag1442dd540(AFortGameState* GameState);
+	virtual FFortPlayerPawnStats* GetPlaylistHeroStats(const FName& RowName) const;
 };
 

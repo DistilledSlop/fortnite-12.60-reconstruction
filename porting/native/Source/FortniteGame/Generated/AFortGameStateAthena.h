@@ -16,12 +16,14 @@
 #include "EFortPlaylistType.h"
 #include "EFriendlyFireType.h"
 #include "ESafeZoneStartUp.h"
+#include "Engine/DataTable.h"
 #include "Engine/NetSerialization.h"
 #include "Engine/World.h"
 #include "FAircraftFlightInfo.h"
 #include "FAthenaStreamIdOverride.h"
 #include "FCosmeticUsageReport.h"
 #include "FDynamicLandData.h"
+#include "FFortPlayerPawnStats.h"
 #include "FFortWinnerPlayerData.h"
 #include "FGameMemberInfoArray.h"
 #include "FGameplayMutatorEventData.h"
@@ -1179,5 +1181,6 @@ public:
 	bool NativeAllowsFriendlyFire163(const FGameplayTagContainer& Tags, AFortPawn* Pawn);
 	static void NativeByteArrayGrowSlack14069e940(void* Array);
 	static int32 NativeGetHardcodedChangelistNumber142ba3400();
+	virtual FFortPlayerPawnStats* GetPlaylistHeroStats(const FName& RowName) const override;
 };
 

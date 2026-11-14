@@ -1,0 +1,98 @@
+[
+  {
+    "class": "UFortAbilitySystemGlobals",
+    "function": "AllocAttributeSetInitter",
+    "kind": "helper",
+    "signature": "void AllocAttributeSetInitter()",
+    "signature_status": "proposed",
+    "virtual": true,
+    "override": true,
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x1415e96c0",
+    "inc_path": "porting/generator_policies/hero_attribute_defaults_runtime/AllocAttributeSetInitter.inc",
+    "notes": "Complete recovered allocator/loader for the native Fort attribute initter; exact body and required support checked by hero_attribute_defaults_runtime policy. Build pending coherent batch."
+  },
+  {
+    "class": "UFortAbilitySystemGlobals",
+    "function": "InitAttributeDefaults",
+    "kind": "helper",
+    "signature": "void InitAttributeDefaults()",
+    "signature_status": "proposed",
+    "virtual": true,
+    "override": true,
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141601360",
+    "inc_path": "porting/generator_policies/hero_attribute_defaults_runtime/InitAttributeDefaults.inc",
+    "notes": "Complete recovered allocator/loader for the native Fort attribute initter; exact body and required support checked by hero_attribute_defaults_runtime policy. Build pending coherent batch."
+  },
+  {
+    "class": "AFortGameState",
+    "function": "GetPlaylistHeroStats",
+    "kind": "helper",
+    "signature": "FFortPlayerPawnStats* GetPlaylistHeroStats(const FName& RowName) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/hero_legacy_stat_selection71_runtime/AFortGameState.GetPlaylistHeroStats.inc",
+    "notes": "Original GameState vtable 0x145fffdf8 + 0x8d0 points to xor eax,eax; ret; Athena overrides.",
+    "address": "0x140680300",
+    "virtual": true,
+    "override": false
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "GetPlaylistHeroStats",
+    "kind": "helper",
+    "signature": "FFortPlayerPawnStats* GetPlaylistHeroStats(const FName& RowName) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x1419964f0",
+    "inc_path": "porting/behavior/hero_legacy_stat_selection71_runtime/AFortGameStateAthena.GetPlaylistHeroStats.inc",
+    "includes": [
+      "Engine/DataTable.h"
+    ],
+    "notes": "Override playlist takes priority; load HeroStats synchronously and FindRow<FFortPlayerPawnStats>. Original shared FindRow helper is 0x14197c610.",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "class": "UFortHeroType",
+    "function": "GetHeroLegacyStats",
+    "kind": "helper",
+    "signature": "FFortPlayerPawnStats* GetHeroLegacyStats() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x142512330",
+    "inc_path": "porting/behavior/hero_legacy_stat_selection71_runtime/UFortHeroType.GetHeroLegacyStats.inc",
+    "includes": [
+      "Engine/DataTable.h"
+    ],
+    "notes": "Uses LegacyStatHandle.GetRow<FFortPlayerPawnStats> including missing-table warning.",
+    "virtual": false,
+    "override": false
+  },
+  {
+    "class": "UFortHeroType",
+    "function": "GetAttributeInitKey",
+    "kind": "helper",
+    "signature": "const FFortAttributeInitializationKey& GetAttributeInitKey() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x142510410",
+    "inc_path": "porting/behavior/hero_legacy_stat_selection71_runtime/UFortHeroType.GetAttributeInitKey.inc",
+    "notes": "Returns member address; const qualification is inferred.",
+    "virtual": false,
+    "override": false
+  }
+]

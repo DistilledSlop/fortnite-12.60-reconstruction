@@ -1,0 +1,47 @@
+[
+  {
+    "class": "UFortPersistableItem",
+    "function": "GetItemDefinitionBP",
+    "kind": "helper",
+    "signature": "UFortItemDefinition* GetItemDefinitionBP() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "override": true,
+    "inc_path": "porting/behavior/homebase_leaf77_runtime/PersistableGetItemDefinitionBP.inc",
+    "address": "0x14070f440",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Original slot +0x3e8 returns inherited ItemDefinition; complete definition header enables derived-to-base pointer conversion. Native build and runtime pending."
+  },
+  {
+    "class": "UFortHero",
+    "function": "NativeGetHeroType1417e4200",
+    "kind": "helper",
+    "signature": "UFortHeroType* NativeGetHeroType1417e4200() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/homebase_leaf77_runtime/HeroGetHeroType.inc",
+    "address": "0x1417e4200",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Virtual definition getter followed by checked UFortHeroType cast; requires UFortPersistableItem override. Native build and runtime pending.",
+    "virtual": false,
+    "override": false
+  },
+  {
+    "class": "UFortHero",
+    "function": "GetLevel",
+    "kind": "helper",
+    "signature": "int32 GetLevel() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "override": true,
+    "inc_path": "porting/behavior/homebase_leaf77_runtime/HeroGetLevel.inc",
+    "address": "0x142513250",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Original slot +0x268. Reads inherited level and existing NativeRecoveredInt32_0x228 clamp; negative disables clamp. Native build and runtime pending."
+  }
+]

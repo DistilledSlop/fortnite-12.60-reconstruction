@@ -8,6 +8,7 @@
 
 #include "Engine/DataTable.h"
 #include "FFortAttributeInitializationKey.h"
+#include "FFortPlayerPawnStats.h"
 #include "FGameplayEffectApplicationInfo.h"
 #include "GameplayTagContainer.h"
 
@@ -119,5 +120,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FText GetSubType() const;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	FFortPlayerPawnStats* GetHeroLegacyStats() const;
+	const FFortAttributeInitializationKey& GetAttributeInitKey() const;
 };
 

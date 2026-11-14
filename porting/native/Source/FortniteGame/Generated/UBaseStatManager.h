@@ -5,6 +5,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
+#include "EStatRecordingPeriod.h"
 
 class AController;
 class UStat;
@@ -29,5 +30,8 @@ public:
 	UPROPERTY()
 	AController* Controller;
 
+	// Original non-reflected map. Its values are not GC references.
+	TMap<FName, UStat*> NativeStatsByName;
+	int32 GetNativeStatValue(FName Name, EStatRecordingPeriod Period) const;
 };
 

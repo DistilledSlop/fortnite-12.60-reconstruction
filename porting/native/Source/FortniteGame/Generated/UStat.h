@@ -28,5 +28,8 @@ public:
 	UPROPERTY()
 	int32 AbsoluteMaxValue;
 
+	UStat(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	// Original non-reflected period values; initial seven entries are zero.
+	TArray<double> NativePeriodValues;
 };
 

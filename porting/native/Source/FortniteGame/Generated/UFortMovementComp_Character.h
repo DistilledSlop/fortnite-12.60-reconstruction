@@ -7,7 +7,9 @@
 #include "GameFramework/CharacterMovementComponent.h"
 
 #include "AttributeSet.h"
+#include "Components/PrimitiveComponent.h"
 #include "EFortAILODLevel.h"
+#include "Engine/NetSerialization.h"
 #include "FAirControlParams.h"
 #include "FWaterControlParams.h"
 #include "FWaterJumpParams.h"
@@ -283,5 +285,6 @@ public:
 	FVector NativeAirForward_1420e2860() const;
 	float GetAirControlLevel() const;
 	virtual float GetMaxAcceleration() const override;
+	virtual void ServerMove_Implementation(float TimeStamp, FVector_NetQuantize10 InAccel, FVector_NetQuantize100 ClientLoc, uint8 CompressedMoveFlags, uint8 ClientRoll, uint32 View, UPrimitiveComponent* ClientMovementBase, FName ClientBaseBoneName, uint8 ClientMovementMode) override;
 };
 

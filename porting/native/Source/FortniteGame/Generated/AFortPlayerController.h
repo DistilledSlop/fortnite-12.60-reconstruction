@@ -145,6 +145,7 @@ class USoundMix;
 class UStatManager;
 class UUserWidget;
 
+#include "EStatRecordingPeriod.h"
 #include "AFortPlayerController.generated.h"
 
 UCLASS(config=Game)
@@ -2036,5 +2037,6 @@ public:
 	static bool NativeCanToggleFullscreenMap142607f40(UObject* Controller);
 public:
     TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
+	int32 GetNativeStatValue(FName Name, EStatRecordingPeriod Period) const;
 };
 
