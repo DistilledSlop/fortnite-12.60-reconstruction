@@ -22,3 +22,11 @@ Original reflection offsets and bool masks come from `fortnite_game_reflection.j
 | 0x141bce570 | inherited bCanBeSavedInCreativeVolume = false (AND 0xfb at 0x3e4) |
 
 Additional original constructor operations are deliberately unresolved or outside this projection. They include initialization of reflected containers, names, text, `LandIcon` (including nonzero values), `StreamingData`, `DynamicFoundationRepData` and `DynamicFoundationTransform`; a series of non-reflected fields and bit writes at 0xb69/0xd30/0xed8; a value loaded from a global into 0xb80; a function call on the existing StaticMeshComponent followed by a component bit change; a global/material lookup assigned to HLODMergeBaseFlattenMaterial; another helper and global counter increment. These operations and any corresponding side effects are not reconstructed here. In particular, this policy does not reset `RootComponent`, attach components, or replace the existing default-subobject constructor. Zero bytes in unrelated, non-reflected storage are not mapped to guessed field names.
+
+AFortWorldSettings constructor `0x141fa4800` also explicitly initializes reflected
+`SplineHLODIndex` at +0x3cc to -1 (`0x141fa4edd`). This policy projects that single
+field as an in-class CDO initializer; serialized package values override it.
+It does not claim the rest of that constructor. The default is required by the
+foundation proxy visibility path `0x141bea280`, which compares streamed HLOD actor
+levels to `SplineHLODIndex + 1`. Original code bytes are pinned by the world-manager
+lifecycle evidence windows.

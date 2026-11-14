@@ -48,6 +48,10 @@ inline float Origin(int32 Dimension, int32 TileEdge)
 }
 }
 ''',
+        'FortFoundationViewSignificance.h': Path(__file__).with_name('FortFoundationViewSignificance.h.in').read_text(),
+        'FortFoundationViewSignificance.cpp': Path(__file__).with_name('FortFoundationViewSignificance.cpp.in').read_text(),
+        'FortFoundationStreamingTiming.h': Path(__file__).with_name('FortFoundationStreamingTiming.h.in').read_text(),
+        'FortFoundationStreamingTiming.cpp': Path(__file__).with_name('FortFoundationStreamingTiming.cpp.in').read_text(),
         'FortFoundationCandidateNative.h': Path(__file__).with_name('FortFoundationCandidateNative.h.in').read_text(),
         'FortBuildingFoundationRuntime.h': Path(__file__).with_name('FortBuildingFoundationRuntime.h.in').read_text(),
         'FortBuildingFoundationRuntime.cpp': Path(__file__).with_name('FortBuildingFoundationRuntime.cpp.in').read_text(),
@@ -57,7 +61,8 @@ inline float Origin(int32 Dimension, int32 TileEdge)
 def validate(ctx, snippets_by_class):
     for name in ('AFortWorldManager', 'AFortGameState', 'AFortGameStateZone',
                  'AWorldTileFoundation', 'UBuildingStructuralSupportSystem',
-                 'ABuildingFoundation', 'AFortWorldSettings', 'UBuildingGroup'):
+                 'ABuildingFoundation', 'AFortWorldSettings', 'UBuildingGroup', 'UFortSignificanceManager',
+                 'AFortHLODSMActor'):
         if ctx['class_pkg'].get(name) != '/Script/FortniteGame':
             raise ValueError('world-manager lifecycle class changed: ' + name)
     fields = {
@@ -67,6 +72,8 @@ def validate(ctx, snippets_by_class):
             ('TSet<FName> NativeUsedBuildingNames_0x758', 0x758),
         ('AWorldTileFoundation', 'NativeTileX_0xee4'): ('int32 NativeTileX_0xee4', 0xee4),
         ('AWorldTileFoundation', 'NativeTileY_0xee8'): ('int32 NativeTileY_0xee8', 0xee8),
+        ('ABuildingFoundation', 'NativeStreamingTiming_0xdf8'):
+            ('FFoundationStreamingTiming NativeStreamingTiming_0xdf8', 0xdf8),
         ('ABuildingFoundation', 'NativeCachedBuildingGroup'):
             ('UBuildingGroup* NativeCachedBuildingGroup', 0xd98),
         ('AWorldTileFoundation', 'NativeTilePackage_0xeec'):

@@ -10,12 +10,15 @@
 #include "EBuildingFoundationType.h"
 #include "EDynamicFoundationEnabledState.h"
 #include "EDynamicFoundationType.h"
+#include "Engine/LODActor.h"
 #include "Engine/Level.h"
+#include "Engine/LevelStreaming.h"
 #include "Engine/World.h"
 #include "FBuildingFoundationStreamingData.h"
 #include "FDynamicBuildingFoundationRepData.h"
 #include "FortBuildingFoundationRuntime.h"
 #include "FortFoundationCandidateNative.h"
+#include "FortFoundationStreamingTiming.h"
 #include "FortWorldManagerNative.h"
 #include "GameplayTagContainer.h"
 #include "Math/Box.h"
@@ -200,6 +203,9 @@ public:
 	UPROPERTY(Transient)
 	ULevelStreaming* LevelStreamInfo;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xdf8): not a UPROPERTY, not replicated.
+	FFoundationStreamingTiming NativeStreamingTiming_0xdf8;
+
 	// table index 1, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_DynamicFoundationRepData)
 	FDynamicBuildingFoundationRepData DynamicFoundationRepData;
@@ -256,5 +262,8 @@ public:
 	virtual void NativeFilterBuildingCandidates(TArray<FFoundationNativeCandidate>& Candidates);
 	virtual FName NativePickBuildingPackage(FFoundationNativeRandomSequence* Sequence);
 	virtual FRotator NativeGetBuildingRotation();
+	static void NativeSetRecordProxyVisibility(FBuildingFoundationStreamingData& Record, bool bVisible);
+	void NativeSetProxyVisibility(bool bVisible, bool bIncludeStreamingRecords);
+	void NativeStartStreamingTiming();
 };
 

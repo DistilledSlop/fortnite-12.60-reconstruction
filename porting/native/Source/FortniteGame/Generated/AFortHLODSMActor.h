@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortStaticMeshActor.h"
 
+#include "Components/StaticMeshComponent.h"
 #include "FImposterBatch.h"
 #include "Math/Vector.h"
 
@@ -44,5 +45,9 @@ public:
 	UPROPERTY()
 	AFortHLODSMActor* ParentHLOD;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	void NativeSetFoundationProxyVisibility(bool bVisible);
 };
 

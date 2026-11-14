@@ -205,6 +205,76 @@
       "address": "0x141fa4e4b",
       "length": 50,
       "sha256": "d0cb72fc0660eba41cb70cf6c3a45283f63dd9dca85b4a619a0bd6ea9dde7216"
+    },
+    {
+      "address": "0x141bea280",
+      "length": 954,
+      "sha256": "31eef8ba3b371cc3955fe08d5dbc67b4e3c6e27c3a33b9c5966e5bb3011861a1"
+    },
+    {
+      "address": "0x141bd0cb0",
+      "length": 293,
+      "sha256": "34cbac4d49401a31527725f9ad6f09c64fffbda39662b26220132ea9ce4bd63a"
+    },
+    {
+      "address": "0x1419afaa0",
+      "length": 53,
+      "sha256": "fe80325506d1efd2eb27ed8fce5228173e6a1d61f657263af42cef290815e5f7"
+    },
+    {
+      "address": "0x141d394f0",
+      "length": 1007,
+      "sha256": "8d7633a0af4b6eac4e85b58d036520beba7c2d70977b3e2c0d5aa42fa660d1d7"
+    },
+    {
+      "address": "0x141d398d0",
+      "length": 67,
+      "sha256": "c62a73201709fc02a82a4bbc8c6736c5be3e26c4a5eeed823fdda399e8d00ff4"
+    },
+    {
+      "address": "0x141d39910",
+      "length": 346,
+      "sha256": "5f0f9a3d0e4f3ea2a6b0c3825e5250e029d1ec386d9a7886105b47f86d8ea704"
+    },
+    {
+      "address": "0x141d39a60",
+      "length": 893,
+      "sha256": "b46f854e0862c702da3d3161cb9050cdb7d57d4c74aaed3ad6175ea6130dacd7"
+    },
+    {
+      "address": "0x141be5e90",
+      "length": 137,
+      "sha256": "63a4a91059a07f69d2b742b4a30ecf989f17d28bb8eb69cab28e5b5e24a661b9"
+    },
+    {
+      "address": "0x141fa4edd",
+      "length": 10,
+      "sha256": "e077619fc9e826f3cbdfa0e73098c52cefb7e400de90e69b509163eafacf67ee"
+    },
+    {
+      "address": "0x141bce33f",
+      "length": 64,
+      "sha256": "e9f68f2e9702e856ca1a9d1240b0584d1d9ddf6daf96578c821259ec3b122c06"
+    },
+    {
+      "address": "0x147c31c40",
+      "length": 52,
+      "sha256": "2a88cd3534da1eebad487caa8416d8d5ba3de049d6fbd736352f3219d9f97559"
+    },
+    {
+      "address": "0x1478c2fec",
+      "length": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "address": "0x1402cb1d0",
+      "length": 80,
+      "sha256": "c1b5365b1ab2cf083f15b640e1df112e16773889d391ff9991256b22cfacc364"
+    },
+    {
+      "address": "0x142cc3eb0",
+      "length": 48,
+      "sha256": "5d2b325a370752a8cb1fea1896291b0857ff77120506cd8abab5c03542277e5c"
     }
   ],
   "fields": {
@@ -377,5 +447,35 @@
     "constructor": "141fa4800:141fa4e4b/e52 zero native TArray+820/+828;141fa4e75 zero initialized byte+818. TArray owned by UObject native field lifetime; default false backed by original explicit store.",
     "evidence": "generated/agents/foundation-streaminit120 and foundation-initialize273",
     "runtime": "No new lifecycle caller; full initializer and gate still unconnected. UE build/runtime pending."
+  },
+  "foundation_proxy_visibility": {
+    "bodies": [
+      "0x141bea280",
+      "0x141bd0cb0",
+      "0x1419afaa0"
+    ],
+    "effects": "Original visibility propagation, render-state dirtiness, root plus direct-child streaming records, stable null HLOD compaction, authored HLOD-level selection and Engine dither transition. No new caller.",
+    "default": "AFortWorldSettings +3cc SplineHLODIndex=-1 at141fa4edd; scoped constructor field projection preserves serialized overrides.",
+    "review": "generated/agents/foundation-proxy-review283; Engine APIs checked against original callees. UE build/runtime pending."
+  },
+  "foundation_view_significance": {
+    "bodies": [
+      "0x141d394f0",
+      "0x141d398d0",
+      "0x141d39910"
+    ],
+    "cached_chunk": "0x141d39a60 belongs to full callback, not counted separately",
+    "contracts": "Unreflected static class helpers use semantic input records, explicit live configuration references and one shared cache. No reinterpret_cast of Engine manager, view, or managed-info objects. No invented initial values, lifecycle adapter or registration.",
+    "arithmetic": "All four transform lanes and either quaternion sign; original ordered/unordered comparisons, two SSE rsqrt refinements, stale-cache branches, exact scaled load square. Clang FP contraction disabled in support source.",
+    "review": "generated/agents/foundation-significance-review281; complete algorithms under documented typed-state preconditions. UE build/runtime pending."
+  },
+  "foundation_streaming_timing": {
+    "body": "0x141be5e90",
+    "record": "Native per-foundation +df8 record, meaningful constructor stores141bce33f..36f: three double zeros, two float zeros, three byte zeros, FColor::Black; padding+23 untouched. Native typed field owns record.",
+    "counter": "Process-shared non-atomic uint32 1478c2fec; source PE image default0, increment141be5ee6, reader1425a1a48. No reset found; no claim all indirect references resolved.",
+    "color": "147c31c54 is FColor::Yellow (packedffffff00), not frame counter/opaque marker. Start writes Yellow on both branches.",
+    "csv": "142cc3eb0 matches FCsvProfiler::RecordCustomStat(name,category,int32,ECsvCustomStatOp). Category148130578 initialized Fort enabled=true by1402cb1d0. Uses canonical SharedFortCsv, Accumulate1, BuildingStartedStreaming.",
+    "clock": "Windows FPlatformTime::Seconds already includes2^24. Unix source portability mapping uses selected Engine FPlatformTime::Seconds plus2^24, never a mixed Cycles64 clock. Finish/shown must use this same helper. Not a bitwise Windows-clock claim.",
+    "runtime": "No new caller. Full streaming callbacks and telemetry lifecycle remain unresolved. UE build/runtime pending."
   }
 }

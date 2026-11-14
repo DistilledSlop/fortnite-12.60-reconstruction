@@ -30,6 +30,16 @@ ASSIGNMENTS = (
 
 
 def finalize(model, header, cpp):
+    if model['name'] == 'AFortWorldSettings':
+        # Original 141fa4edd: MOV dword ptr [RBX+3cc],ffffffff.
+        declaration = 'int32 SplineHLODIndex;'
+        members = [m for m in model.get('members_decl_order', []) if m.get('name') == 'SplineHLODIndex']
+        if (model.get('parent') != 'AWorldSettings' or len(members) != 1
+                or members[0].get('decl', '').strip() != declaration
+                or header.count(declaration) != 1):
+            raise ValueError('AFortWorldSettings: SplineHLODIndex declaration changed')
+        # A native CDO initializer; authored serialized values still override it.
+        return header.replace(declaration, 'int32 SplineHLODIndex = -1;', 1), cpp
     if model['name'] != CLASS:
         return header, cpp
     if model.get('parent') != 'ABuildingSMActor':

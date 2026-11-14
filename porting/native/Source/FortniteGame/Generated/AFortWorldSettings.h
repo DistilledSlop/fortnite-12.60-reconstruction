@@ -100,7 +100,7 @@ public:
 
 	// table index 36, flags 0x10000000000001
 	UPROPERTY()
-	int32 SplineHLODIndex;
+	int32 SplineHLODIndex = -1;
 
 	// table index 35, flags 0x20080000000001
 	UPROPERTY()

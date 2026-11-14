@@ -96193,5 +96193,135 @@
     "status": "ported",
     "confidence": "high",
     "notes": "Complete original per-world-settings streaming cache helper. Constructor141fa4800 explicitly zeroes initialized byte+818 and owned TArray+820; per-instance native fields preserve ownership and UE copy/destruction. No new initializer/streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json."
+  },
+  {
+    "function": "NativeSetFoundationProxyVisibility",
+    "kind": "helper",
+    "signature": "void NativeSetFoundationProxyVisibility(bool bVisible)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1419afaa0",
+    "inc_path": "porting/behavior/AFortHLODSMActor/NativeSetFoundationProxyVisibility.inc",
+    "notes": "Complete original proxy visibility algorithm and actual Engine effects; direct child records only. AFortWorldSettings constructor SplineHLODIndex=-1 projected separately. No new streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "AFortHLODSMActor",
+    "includes": [
+      "Components/StaticMeshComponent.h"
+    ]
+  },
+  {
+    "function": "NativeSetRecordProxyVisibility",
+    "kind": "helper",
+    "signature": "void NativeSetRecordProxyVisibility(FBuildingFoundationStreamingData& Record, bool bVisible)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141bd0cb0",
+    "inc_path": "porting/behavior/ABuildingFoundation/NativeSetRecordProxyVisibility.inc",
+    "notes": "Complete original proxy visibility algorithm and actual Engine effects; direct child records only. AFortWorldSettings constructor SplineHLODIndex=-1 projected separately. No new streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "ABuildingFoundation",
+    "static": true
+  },
+  {
+    "function": "NativeSetProxyVisibility",
+    "kind": "helper",
+    "signature": "void NativeSetProxyVisibility(bool bVisible, bool bIncludeStreamingRecords)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141bea280",
+    "inc_path": "porting/behavior/ABuildingFoundation/NativeSetProxyVisibility.inc",
+    "notes": "Complete original proxy visibility algorithm and actual Engine effects; direct child records only. AFortWorldSettings constructor SplineHLODIndex=-1 projected separately. No new streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "ABuildingFoundation",
+    "includes": [
+      "Engine/LODActor.h",
+      "Engine/Level.h",
+      "Engine/LevelStreaming.h",
+      "Engine/World.h"
+    ]
+  },
+  {
+    "function": "NativeProduceFoundationViews",
+    "kind": "helper",
+    "signature": "void NativeProduceFoundationViews(const FFortFoundationViewState& State, const FFortFoundationViewManager& Manager)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141d394f0",
+    "inc_path": "porting/behavior/UFortSignificanceManager/NativeProduceFoundationViews.inc",
+    "notes": "Complete original algorithm under explicit typed native input/state preconditions, compiled shared implementation FortFoundationViewSignificance.cpp. Live state references and shared cache must be supplied by native owner. No reinterpretation of Engine manager/view/managed-info objects, registration adapter, global defaults or newly connected lifecycle caller. Source reviewed against original SSE/NaN semantics; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "UFortSignificanceManager",
+    "includes": [
+      "FortFoundationViewSignificance.h"
+    ],
+    "static": true
+  },
+  {
+    "function": "NativeFoundationSignificance",
+    "kind": "helper",
+    "signature": "float NativeFoundationSignificance(const FFortFoundationViewState& State, const FFortFoundationViewBounds& Bounds, const FFortFoundationViewTransform& View)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141d398d0",
+    "inc_path": "porting/behavior/UFortSignificanceManager/NativeFoundationSignificance.inc",
+    "notes": "Complete original algorithm under explicit typed native input/state preconditions, compiled shared implementation FortFoundationViewSignificance.cpp. Live state references and shared cache must be supplied by native owner. No reinterpretation of Engine manager/view/managed-info objects, registration adapter, global defaults or newly connected lifecycle caller. Source reviewed against original SSE/NaN semantics; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "UFortSignificanceManager",
+    "includes": [
+      "FortFoundationViewSignificance.h"
+    ],
+    "static": true
+  },
+  {
+    "function": "NativeFoundationSignificanceUncached",
+    "kind": "helper",
+    "signature": "float NativeFoundationSignificanceUncached(const FFortFoundationViewState& State, const FFortFoundationViewBounds& Bounds, const FFortFoundationViewTransform& View)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141d39910",
+    "inc_path": "porting/behavior/UFortSignificanceManager/NativeFoundationSignificanceUncached.inc",
+    "notes": "Complete original algorithm under explicit typed native input/state preconditions, compiled shared implementation FortFoundationViewSignificance.cpp. Live state references and shared cache must be supplied by native owner. No reinterpretation of Engine manager/view/managed-info objects, registration adapter, global defaults or newly connected lifecycle caller. Source reviewed against original SSE/NaN semantics; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "UFortSignificanceManager",
+    "includes": [
+      "FortFoundationViewSignificance.h"
+    ],
+    "static": true
+  },
+  {
+    "function": "NativeStartStreamingTiming",
+    "kind": "helper",
+    "signature": "void NativeStartStreamingTiming()",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141be5e90",
+    "inc_path": "porting/behavior/ABuildingFoundation/NativeStartStreamingTiming.inc",
+    "notes": "Complete original start-timing body with native per-foundation record constructor, shared zero-initialized started count, actual Fort CSV category and Yellow color. Uses a documented consistent Engine clock mapping for Linux; finish/shown must share that clock. No new streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "ABuildingFoundation",
+    "includes": [
+      "FortFoundationStreamingTiming.h"
+    ]
+  },
+  {
+    "class": "ABuildingFoundation",
+    "function": "NativeStreamingTiming_0xdf8",
+    "kind": "member_field",
+    "signature": "FFoundationStreamingTiming NativeStreamingTiming_0xdf8",
+    "offset": "0xdf8",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "includes": [
+      "FortFoundationStreamingTiming.h"
+    ],
+    "notes": "Original constructor141bce060 initializes all meaningful record fields; typed native record constructor preserves those values and leaves padding untouched. See world_manager_lifecycle_runtime/native-evidence.json. UE build/runtime pending."
   }
 ]

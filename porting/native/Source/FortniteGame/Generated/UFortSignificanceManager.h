@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "SignificanceManager.h"
 
+#include "FortFoundationViewSignificance.h"
+
 #include "UFortSignificanceManager.generated.h"
 
 UCLASS(config=Engine, defaultconfig)
@@ -14,5 +16,11 @@ class FORTNITEGAME_API UFortSignificanceManager : public USignificanceManager
 	GENERATED_BODY()
 
 public:
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeProduceFoundationViews(const FFortFoundationViewState& State, const FFortFoundationViewManager& Manager);
+	static float NativeFoundationSignificance(const FFortFoundationViewState& State, const FFortFoundationViewBounds& Bounds, const FFortFoundationViewTransform& View);
+	static float NativeFoundationSignificanceUncached(const FFortFoundationViewState& State, const FFortFoundationViewBounds& Bounds, const FFortFoundationViewTransform& View);
 };
 
