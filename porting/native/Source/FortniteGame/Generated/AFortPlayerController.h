@@ -2045,6 +2045,9 @@ public:
 	virtual void NativeStartMovementCancellableAction1423b8b70();
 	virtual void NativeEndMovementCancellableAction142378db0();
 	virtual bool NativeCanPerformAction15f0(const FGameplayTag& ActionTag);
+	virtual UFortItem* NativeFindItemA0(UFortItemDefinition* Definition, bool bInStorageVault);
+	virtual int32 NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems);
+	virtual bool NativeInventoryOwnerHasInventory();
 public:
     TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
 	int32 GetNativeStatValue(FName Name, EStatRecordingPeriod Period) const;

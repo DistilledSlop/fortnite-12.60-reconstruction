@@ -53,6 +53,8 @@ class UFortAthenaNpcPatrollingComponent;
 class UFortBotNameSettings;
 class UFortControllerComponent_Telemetry;
 class UFortInteractContextInfo;
+class UFortItem;
+class UFortItemDefinition;
 class UFortServerBotManagerAthena;
 class UFortWorldItem;
 class UPrimitiveComponent;
@@ -372,5 +374,10 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual uint8 NativeGetTeam163();
+	virtual UFortItem* NativeFindItemA0(UFortItemDefinition* Definition, bool bInStorageVault);
+	virtual int32 NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems);
+	virtual bool NativeInventoryOwnerHasInventory();
+	virtual AFortInventory* NativeQuickBarInventory();
+	virtual AFortWeapon* NativeQuickBarHeldWeapon();
 };
 

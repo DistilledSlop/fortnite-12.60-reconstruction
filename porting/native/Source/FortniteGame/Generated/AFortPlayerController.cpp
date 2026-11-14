@@ -13,12 +13,15 @@
 #include "AnalyticsEventAttribute.h"
 #include "CoreGlobals.h"
 #include "EFortQuickBars.h"
+#include "EItemProfileType.h"
 #include "ELockOnState.h"
 #include "Engine/World.h"
 #include "FortNativeAnalyticsProvider.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameplayTagContainer.h"
 #include "SharedFortGameLog.h"
+#include "UFortAccountItem.h"
+#include "UFortAccountItemDefinition.h"
 #include "UFortAssetManager.h"
 #include "UFortControllerComponent_Aircraft.h"
 #include "UFortGameData.h"
@@ -26,9 +29,16 @@
 #include "UFortItem.h"
 #include "UFortItemDefinition.h"
 #include "UFortLocalPlayer.h"
+#include "UFortMcpProfile.h"
+#include "UFortMcpProfileAthena.h"
+#include "UFortMcpProfileCampaign.h"
+#include "UFortMcpProfileCommonCore.h"
+#include "UFortMcpProfileWorld.h"
 #include "UFortRegisteredPlayerInfo.h"
+#include "UFortTokenType.h"
 #include "UFortWeaponItemDefinition.h"
 #include "UFortWorldItem.h"
+#include "UFortWorldItemDefinition.h"
 #include "ULevelSaveBaseComponent.h"
 #include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"
@@ -2201,6 +2211,138 @@ bool AFortPlayerController::NativeCanPerformAction15f0(const FGameplayTag& Actio
 	    }
 	}
 	return false;
+}
+
+UFortItem* AFortPlayerController::NativeFindItemA0(UFortItemDefinition* Definition, bool bInStorageVault)
+{
+	// CONFIDENCE: HIGH
+	// Original 0x14237aa80. Concrete body; shared interface binding is tracked separately.
+	UFortItem* Result = nullptr;
+	UFortWorldItemDefinition* WorldDefinition = Cast<UFortWorldItemDefinition>(Definition);
+	if (WorldDefinition)
+	{
+	    AFortInventory* SelectedInventory = bInStorageVault ? OutpostInventory : WorldInventory;
+	    if (SelectedInventory)
+	    {
+	        Result = static_cast<UFortWorldItem*>(SelectedInventory->NativeFindWorldItemByDefinition(Definition, false));
+	    }
+	    else
+	    {
+	        UFortRegisteredPlayerInfo* PlayerInfo = MyPlayerInfo;
+	        UFortMcpProfileWorld* Profile = PlayerInfo
+	            ? (bInStorageVault ? PlayerInfo->OutpostProfile : PlayerInfo->WorldProfile)
+	            : nullptr;
+	        if (Profile)
+	        {
+	            TArray<UFortItem*> Items;
+	            {
+	                // The string is destroyed before selecting Items[0], then the
+	                // complete temporary array is destroyed before final fallback.
+	                const FString Key = Definition->NativeGetProfileKey();
+	                const FMcpProfileItemArray* Group = Profile->NativeFindItemsByTemplateKey(Key);
+	                if (Group)
+	                {
+	                    if (Group->Num() > 0)
+	                    {
+	                        Items.Reserve(Group->Num());
+	                    }
+	                    for (const FMcpProfileItemPtr& Record : *Group)
+	                    {
+	                        // Original dereferences the record without a null test.
+	                        UFortItem* Item = Cast<UFortItem>(Record->ItemObject);
+	                        if (Item && Item->GetItemDefinitionBP())
+	                        {
+	                            Items.Add(Item);
+	                        }
+	                    }
+	                }
+	            }
+	            if (Items.Num() > 0)
+	            {
+	                Result = Items[0];
+	            }
+	        }
+	    }
+	}
+	else if (Cast<UFortAccountItemDefinition>(Definition))
+	{
+	    UFortMcpProfile* Profile = nullptr;
+	    UFortTokenType* Token = Cast<UFortTokenType>(Definition);
+	    if (!Token)
+	    {
+	        Profile = static_cast<UFortMcpProfileCampaign*>(MainMcpProfile);
+	    }
+	    else
+	    {
+	        switch (Token->ProfileType)
+	        {
+	        case EItemProfileType::Common: Profile = static_cast<UFortMcpProfileCommonCore*>(CommonCoreMcpProfile); break;
+	        case EItemProfileType::Campaign: Profile = static_cast<UFortMcpProfileCampaign*>(MainMcpProfile); break;
+	        case EItemProfileType::Athena: Profile = static_cast<UFortMcpProfileAthena*>(AthenaProfile); break;
+	        default: break;
+	        }
+	    }
+	    // Query key even if profile is null; both are owned original temporaries.
+	    const FString Key = Definition->NativeGetProfileKey();
+	    {
+	        TArray<UFortAccountItem*> Items;
+	        if (Profile)
+	        {
+	            Profile->NativeFindAccountItems1421c1800(Key, Items);
+	            if (Items.Num() > 0)
+	            {
+	                Result = Items[0];
+	            }
+	        }
+	    }
+	}
+	if (Result)
+	{
+	    return Result;
+	}
+	return ViewTargetInventory && WorldDefinition
+	    ? static_cast<UFortWorldItem*>(ViewTargetInventory->NativeFindWorldItemByDefinition(WorldDefinition, false))
+	    : nullptr;
+}
+
+int32 AFortPlayerController::NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems)
+{
+	// CONFIDENCE: HIGH
+	// Original 0x14237b1d0. Concrete body; shared interface binding is tracked separately.
+	// Original PC interface +0xa8, 0x14237b1d0; implementation receives controller this.
+	OutItems.Empty();
+	if (Cast<UFortWorldItemDefinition>(Definition))
+	{
+	    AFortInventory* ItemInventory = WorldInventory;
+	    if (ItemInventory)
+	    {
+	        ItemInventory->NativeFindAllWorldItems(Definition, OutItems, false);
+	        return OutItems.Num();
+	    }
+	    UFortRegisteredPlayerInfo* PlayerInfo = MyPlayerInfo;
+	    if (PlayerInfo && PlayerInfo->WorldProfile)
+	    {
+	        UFortMcpProfileWorld* Profile = PlayerInfo->WorldProfile;
+	        const FString ProfileKey = Definition->NativeGetProfileKey();
+	        Profile->NativeFindProfileItems(ProfileKey, OutItems);
+	    }
+	}
+	else if (MainMcpProfile)
+	{
+	    // Original dereferences Definition even when it is null on this branch.
+	    const FString ProfileKey = Definition->NativeGetProfileKey();
+	    UFortMcpProfileCampaign* Profile = MainMcpProfile;
+	    Profile->NativeFindProfileItems(ProfileKey, OutItems);
+	}
+	return OutItems.Num();
+}
+
+bool AFortPlayerController::NativeInventoryOwnerHasInventory()
+{
+	// CONFIDENCE: HIGH
+	// Original 0x1406801d0. Concrete body; shared interface binding is tracked separately.
+	// AFortPlayerController interface +0x10 = 0x1406801d0.
+	return true;
 }
 
 void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

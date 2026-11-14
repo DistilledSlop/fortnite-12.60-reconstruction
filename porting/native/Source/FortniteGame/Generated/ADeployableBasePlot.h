@@ -26,6 +26,8 @@ class AFortPlayerStart;
 class AFortWeapon;
 class UBoxComponent;
 class UFortDeployableBaseRecord;
+class UFortItem;
+class UFortItemDefinition;
 class UFortWeaponItemDefinition;
 class UGameplayEffect;
 class UPrimitiveComponent;
@@ -208,5 +210,8 @@ public:
 	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition);
 	virtual AFortInventory* NativeQuickBarInventory();
 	virtual AFortWeapon* NativeQuickBarHeldWeapon();
+	virtual bool NativeInventoryOwnerHasInventory();
+	virtual UFortItem* NativeFindItemA0(UFortItemDefinition* Definition, bool bInStorageVault);
+	virtual int32 NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems);
 };
 

@@ -569,6 +569,42 @@ void AFortAIPawn::NativeReserveBitArray140690880(uint8* BitArray, int32 Number)
 	reinterpret_cast<TBitArray<FDefaultBitArrayAllocator>*>(BitArray)->Reserve(Number);
 }
 
+UFortItem* AFortAIPawn::NativeFindItemA0(UFortItemDefinition* Definition, bool bInStorageVault)
+{
+	// CONFIDENCE: HIGH
+	// Original 0x1422c5d10. Concrete body; shared interface binding is tracked separately.
+	// AFortAIPawn inventory-owner +0xa0, original 0x1422c5d10.
+	(void)bInStorageVault;
+	UFortWorldItemDefinition* WorldDefinition = Cast<UFortWorldItemDefinition>(Definition);
+	AFortInventory* ItemInventory = Inventory;
+	return ItemInventory && WorldDefinition
+	    ? static_cast<UFortWorldItem*>(ItemInventory->NativeFindWorldItemByDefinition(WorldDefinition, false))
+	    : nullptr;
+}
+
+int32 AFortAIPawn::NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems)
+{
+	// CONFIDENCE: HIGH
+	// Original 0x1422c5e80. Concrete body; shared interface binding is tracked separately.
+	// AFortAIPawn inventory-owner +0xa8, original 0x1422c5e80.
+	OutItems.Empty();
+	AFortInventory* ItemInventory = Inventory;
+	if (ItemInventory)
+	{
+	    ItemInventory->NativeFindAllWorldItems(Definition, OutItems, false);
+	}
+	return OutItems.Num();
+}
+
+bool AFortAIPawn::NativeInventoryOwnerHasInventory()
+{
+	// CONFIDENCE: HIGH
+	// Original 0x1422dcd90. Concrete body; shared interface binding is tracked separately.
+	AFortInventory* ItemInventory = Inventory;
+	// Identical body: AFortAIPawn 0x1422dcd90 and AFortAthenaAIBotController 0x1416a0ae0.
+	return Inventory && ItemInventory->HasActorBegunPlay();
+}
+
 void AFortAIPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -4,7 +4,11 @@
 #include "AFortWeapon.h"
 #include "Components/BoxComponent.h"
 #include "Components/SceneComponent.h"
+#include "UFortItem.h"
+#include "UFortItemDefinition.h"
 #include "UFortWeaponItemDefinition.h"
+#include "UFortWorldItem.h"
+#include "UFortWorldItemDefinition.h"
 #include "Net/UnrealNetwork.h"
 
 AFortPlayerStart* ADeployableBasePlot::GetPlayerStart()
@@ -76,6 +80,39 @@ AFortWeapon* ADeployableBasePlot::NativeQuickBarHeldWeapon()
 {
 	// CONFIDENCE: high
 	return nullptr;
+}
+
+bool ADeployableBasePlot::NativeInventoryOwnerHasInventory()
+{
+	// CONFIDENCE: HIGH
+	// Original 0x141663080. Concrete body; shared interface binding is tracked separately.
+	// ADeployableBasePlot inventory-owner +0x10, original 0x141663080.
+	return PlotInventory != nullptr;
+}
+
+UFortItem* ADeployableBasePlot::NativeFindItemA0(UFortItemDefinition* Definition, bool bInStorageVault)
+{
+	// CONFIDENCE: HIGH
+	// Original 0x141c37980. Concrete body; shared interface binding is tracked separately.
+	// ADeployableBasePlot inventory-owner +0xa0, original 0x141c37980.
+	(void)bInStorageVault;
+	if (!NativeInventoryOwnerHasInventory())
+	{
+	    return nullptr;
+	}
+	UFortWorldItemDefinition* WorldDefinition = Cast<UFortWorldItemDefinition>(Definition);
+	AFortInventory* ItemInventory = PlotInventory;
+	return static_cast<UFortWorldItem*>(ItemInventory->NativeFindWorldItemByDefinition(WorldDefinition, false));
+}
+
+int32 ADeployableBasePlot::NativeFindAllItemsA8(UFortItemDefinition* Definition, TArray<UFortItem*>& OutItems)
+{
+	// CONFIDENCE: HIGH
+	// Original 0x140680300. Concrete body; shared interface binding is tracked separately.
+	// ADeployableBasePlot inventory-owner +0xa8, original 0x140680300.
+	(void)Definition;
+	(void)OutItems;
+	return 0;
 }
 
 void ADeployableBasePlot::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
