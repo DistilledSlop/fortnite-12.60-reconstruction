@@ -2145,7 +2145,6 @@ public:
 	bool NativeSprintTagGate14232cb50() const;
 	bool NativeCanCloseParachute142331a80();
 	void NativeSetParachuteRequest14234bc70(int32 Request);
-	virtual bool NativeCanPerformAction14230c260(const FGameplayTag& ActionTag);
 	virtual bool NativeCanDeployParachute14230bcb0();
 	virtual bool CanCrouch() const override;
 	UFortControllerComponent_SkydiveFeedback* NativeControllerFeedback1423240e0();

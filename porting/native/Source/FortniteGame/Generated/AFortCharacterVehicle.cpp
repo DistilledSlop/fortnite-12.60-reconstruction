@@ -3,6 +3,7 @@
 #include "AFortPlayerController.h"
 #include "AFortPlayerStateZone.h"
 #include "GameFramework/Pawn.h"
+#include "GameplayTagContainer.h"
 #include "UFortVehicleInterface.h"
 #include "UFortVehicleSeatComponent.h"
 #include "../../../../behavior/movement_speed64_runtime/MovementSpeedMath.h"
@@ -175,6 +176,13 @@ AFortPlayerController* AFortCharacterVehicle::NativeGetLastController141947020()
 {
 	// CONFIDENCE: HIGH. Original141947020 tail-calls weak Get at reflected LastController.
 	return LastController.Get();
+}
+
+bool AFortCharacterVehicle::NativeCanPerformAction14230c260(const FGameplayTag& ActionTag)
+{
+	// CONFIDENCE: HIGH. Complete shared action-gate body.
+	// Original 0x141937350. The vehicle uses its replicated override ASC directly.
+	return OverrideAbilitySystemComponent && NativeTestActionOnComponent1415ee070(OverrideAbilitySystemComponent, ActionTag);
 }
 
 void AFortCharacterVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

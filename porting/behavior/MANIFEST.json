@@ -92778,19 +92778,6 @@
     "override": true
   },
   {
-    "class": "AFortPlayerPawn",
-    "function": "NativeCanPerformAction14230c260",
-    "kind": "helper",
-    "signature": "bool NativeCanPerformAction14230c260(const FGameplayTag& ActionTag)",
-    "signature_status": "proposed",
-    "access": "public",
-    "status": "ported",
-    "confidence": "HIGH",
-    "address": "0x14230c260",
-    "inc_path": "porting/behavior/AFortPlayerPawn/NativeCanPerformAction14230c260.inc",
-    "virtual": true
-  },
-  {
     "class": "AFortPlayerPawnAthena",
     "function": "NativeCanPerformAction14230c260",
     "kind": "helper",
@@ -94330,5 +94317,45 @@
     "includes": [
       "TimerManager.h"
     ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeCanPerformAction14230c260",
+    "kind": "helper",
+    "signature": "bool NativeCanPerformAction14230c260(const FGameplayTag& ActionTag)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x14230c260",
+    "inc_path": "porting/behavior/AFortPawn/NativeCanPerformAction14230c260.inc",
+    "virtual": true
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeTestActionOnComponent1415ee070",
+    "kind": "helper",
+    "signature": "bool NativeTestActionOnComponent1415ee070(UFortAbilitySystemComponent* Component, const FGameplayTag& ActionTag)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1415ee070",
+    "inc_path": "porting/behavior/AFortPawn/NativeTestActionOnComponent1415ee070.inc",
+    "static": true
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "NativeCanPerformAction14230c260",
+    "kind": "helper",
+    "signature": "bool NativeCanPerformAction14230c260(const FGameplayTag& ActionTag)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141937350",
+    "inc_path": "porting/behavior/AFortCharacterVehicle/NativeCanPerformAction14230c260.inc",
+    "virtual": true,
+    "override": true
   }
 ]

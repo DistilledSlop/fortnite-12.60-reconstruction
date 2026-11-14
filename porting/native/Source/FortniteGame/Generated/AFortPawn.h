@@ -1232,5 +1232,7 @@ public:
 	ENetMode NativeNetMode143f7a920() const;
 	virtual void NativeStartAction142353060(const FGameplayTag& ActionTag);
 	virtual void NativeStopAction142353960(const FGameplayTag& ActionTag);
+	virtual bool NativeCanPerformAction14230c260(const FGameplayTag& ActionTag);
+	static bool NativeTestActionOnComponent1415ee070(UFortAbilitySystemComponent* Component, const FGameplayTag& ActionTag);
 };
 

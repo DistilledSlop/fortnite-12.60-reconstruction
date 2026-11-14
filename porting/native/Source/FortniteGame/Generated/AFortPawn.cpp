@@ -1348,6 +1348,24 @@ void AFortPawn::NativeStopAction142353960(const FGameplayTag& ActionTag)
 	}
 }
 
+bool AFortPawn::NativeCanPerformAction14230c260(const FGameplayTag& ActionTag)
+{
+	// CONFIDENCE: HIGH. Complete shared action-gate body.
+	// Original 0x14230c260. The component is the reflected AFortPawn field, not the interface getter.
+	return AbilitySystemComponent && NativeTestActionOnComponent1415ee070(AbilitySystemComponent, ActionTag);
+}
+
+bool AFortPawn::NativeTestActionOnComponent1415ee070(UFortAbilitySystemComponent* Component, const FGameplayTag& ActionTag)
+{
+	// CONFIDENCE: HIGH. Complete shared action-gate body.
+	// Original 0x1415ee070, shared by the pawn and character vehicle entry points.
+	// The static container is intentionally shared across both call sites and reentry.
+	static FGameplayTagContainer ActionTags;
+	ActionTags.Reset();
+	ActionTags.AddTag(ActionTag);
+	return !Component->AreAbilityTagsBlocked(ActionTags);
+}
+
 void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
