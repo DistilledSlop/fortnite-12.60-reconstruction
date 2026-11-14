@@ -88,6 +88,7 @@ server's first. The client is one step "behind" on gravity, so it is 22 cm highe
 step 2, and both jumps in the run were corrected on every airborne move. The first jump shows the same pattern
 (+71.3 = 630 x 0.1133).
 
+**Update: the cause is identified in section 9** (jump-hold with gravity disabled, 0.25 s). The original note follows.
 I could not identify the exact client code that produces the gravity-free step. The two stock explanations are ruled
 out: the client's engine constructor leaves "apply gravity while jumping" on (checked in the disassembly at
 `0x144094c88` to `0x14409500b`), and no player pawn Blueprint sets a jump hold time. It therefore comes from Fortnite
@@ -274,6 +275,9 @@ How one override is added (the six existing ones all follow this):
    `movement_max_acceleration_runtime` is the model to copy.
 5. Regenerate, then `tools/build_server.sh --stage`. Do not edit files under `Generated/` by hand.
 
+First apply section 9 (pawn constructor writes and `GetJumpMaxHoldTime`); it is small and fixes the measured jump
+and sub-step mismatches. Then the overrides below.
+
 Order of work. Slots 125, 126, 139, 169, 197, 218 and 274 are confirmed; confirm every other name against its body.
 
 | Order | Original | Function | Notes |
@@ -390,11 +394,86 @@ work; none of them is written down here because none of them is known yet:
 5. **Which meshes, if any, load without collision.** The server never had building levels loaded, so this has not
    been observed either way. Five collision payload shapes are rejected by the loader; whether any building mesh
    uses them is unknown until the levels are streamed in.
-6. **The source of the gravity-free first jump step.** Step 3 gives the debugger procedure; the answer is unknown.
+6. ~~The source of the gravity-free first jump step.~~ Found; see section 9.
 7. **The trace summariser.** Step 1 specifies it; the script used for this report was throwaway and is not in the
    repository.
 8. **Client-side saved-move behaviour.** Fortnite has its own saved-move type and extra compressed flags. The server
    decodes the flags it knows about; whether every flag the client sets is handled has not been audited.
+
+## 9. Resolved: the jump and sub-step mismatches (pawn constructor writes)
+
+Both rig mismatches (sections 2.4 and 2.5) have one source. The original pawn constructors reach through the pawn's
+`CharacterMovement` pointer (pawn `+0x280`) and reconfigure the movement component. The server's constructor-default
+recovery only collected writes to the object's own fields, so every one of these was missed, and the Blueprint does
+not carry them either (a cooked Blueprint only stores values that differ from the client's native defaults).
+
+Writes found by disassembling the three constructors in the dumped image. Later constructors win:
+
+| Constructor | Field | Value | Stock UE 4.25 |
+|---|---|---|---|
+| `AFortPawn` `0x1422fce30` | `MaxWalkSpeed` | 300 | 600 |
+| | `JumpZVelocity` | 980 | 420 |
+| | `AirControl` | 0.9 | 0.05 |
+| | `DefaultLandMovementMode`, `DefaultWaterMovementMode` (bytes `+0x388`, `+0x389`) | 5 | 1, 4 (verify the field names) |
+| | `bRequestedMoveUseAcceleration` | false | true |
+| `AFortPlayerPawn` `0x1422fe830` | `CrouchedHalfHeight` | 50 | 40 |
+| | `MaxWalkSpeed` | 450 | |
+| | `MinAnalogWalkSpeed` | 200 | 0 |
+| | `PerchRadiusThreshold` | 16 | 0 |
+| | `bAlwaysCheckFloor` | true | true |
+| | `bEnablePhysicsInteraction` | false | true |
+| | **`bApplyGravityWhileJumping`** (`0x1422ffab2`) | **false** | true |
+| | `MaxSimulationIterations` | 4 | 8 |
+| | `MaxSimulationTimeStep` | 0.1 | 0.05 |
+| | `bUseRVOAvoidance`, `AvoidanceWeight` | true, 1 | false, 0.5 |
+| | `bUseControllerDesiredRotation` | true | false |
+| | `bAllowPhysicsRotationDuringAnimRootMotion` | true | false |
+| `AFortPlayerPawnAthena` `0x141a08ef0` | **`MaxSimulationIterations`** | **2** | 8 |
+| | **`MaxSimulationTimeStep`** | **0.5** | 0.05 |
+| | `NetworkSmoothingMode` | 1 (linear) | 2 |
+| | `bAlwaysCheckFloor` | false | true |
+| | `bUseRVOAvoidance` | false | |
+| | `bUseControllerDesiredRotation` | true | |
+
+Three writes are not decoded: byte `+0xf0` (bit 8 cleared by `AFortPawn`, bit 1 set by Athena) and dword `+0x1ec`
+(written from a register by both player constructors).
+
+The jump itself needs one more piece. The engine sets "jump force time remaining" from the virtual
+`GetJumpMaxHoldTime()`. `AFortPlayerPawn` overrides it (`0x14231ed20`, pawn vtable `+0x848`; the base `AFortPawn`
+uses the stock one):
+
+- swimming (custom mode 10): a scalable float from the water jump parameters;
+- if pawn flag `+0x1061` bit `0x20` is set: 0;
+- otherwise `FFortPlayerPawnStats.MaxJumpTime`, evaluated through the `JumpHeight` attribute of `UFortMovementSet`
+  when the pawn has a movement set.
+
+`MaxJumpTime` is **0.25 s** in every row of `CharacterAttributesPlayer`, including `PlayerLoadout_AthenaPlayer`
+(read from the cooked table; `JumpZVelocity` 600, `SpeedRun` 410, `SpeedSprint` 550 in the same row).
+
+What this means:
+
+- **Jump.** On the client, gravity is switched off while jump is held, for up to 0.25 s, with the pawn rising at a
+  constant 630 cm/s. A full hold adds up to 157 cm to the 71 cm ballistic jump; a quick 80 ms tap adds about 50 cm.
+  On the server the hold time is 0 and gravity always applies, so the server's jump is always the 71 cm one. This is
+  independent of frame rate, which is why jumping was wrong on a high-framerate client too. It reproduces section
+  2.4 exactly: the rig's tap lasted one 0.125 s frame, hence one gravity-free step of 630 x 0.125 = 78.75 cm.
+- **Sub-steps.** With a 0.5 s step limit the client simulates a whole move in one step. The server splits anything
+  over 0.05 s. That is the 3.84 to 3.89 cm error per accelerating move in section 2.5 (one step covers 11.77 cm,
+  three sub-steps cover 7.85 cm). At 20 moves per second a move is 0.05 s, so on a fast client this one is small.
+- **Others.** `PerchRadiusThreshold`, `bAlwaysCheckFloor`, `MinAnalogWalkSpeed` and `AirControl` change ledge,
+  floor-check, analog-stick and air-steering results and have not been measured.
+
+The fix, to do before anything else in Step 3:
+
+1. Apply the table above on the server. These are constructor defaults, so they belong in the generator's
+   constructor path for the three pawn classes (`GetCharacterMovement()->Field = Value;` in the same order), through a
+   policy in `porting/generator_policies/` like `athena_movement_constructor_runtime`. Extend
+   `tools/ctor_defaults.py` to follow writes through a loaded component pointer so other classes get the same
+   treatment; this pattern is unlikely to be unique to pawns.
+2. Add `virtual float GetJumpMaxHoldTime() const override` to `AFortPlayerPawn` from `0x14231ed20`. The server
+   already has `FFortPlayerPawnStats.MaxJumpTime` and the `JumpHeight` attribute. Nothing else is needed for release
+   handling: the engine clears the remaining force time when the jump flag in the client's moves goes false.
+3. Check with the stationary-jump rig case from section 2.4: both sides must gain 78.75 cm in the first 0.125 s step.
 
 ## Appendix: original movement overrides
 
