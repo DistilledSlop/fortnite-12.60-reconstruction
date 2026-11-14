@@ -138,8 +138,15 @@ PYBUILDINGS
         fi
         cp "$char_registry" "$porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Config/AthenaCharacterRegistry.json" || exit 1
     fi
-    cp "$porting/native/Binaries/Linux/FortniteLinuxServer" \
-       "$porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Binaries/Linux/FortniteLinuxServer"
+    # Replacing the directory entry leaves any running server on its existing
+    # executable inode and avoids cp's ETXTBSY failure against a live binary.
+    staged_binary="$porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Binaries/Linux/FortniteLinuxServer"
+    staged_binary_tmp=$(mktemp "${staged_binary}.XXXXXX") || exit 1
+    if ! install -m 755 "$porting/native/Binaries/Linux/FortniteLinuxServer" "$staged_binary_tmp" \
+        || ! mv -fT "$staged_binary_tmp" "$staged_binary"; then
+        rm -f "$staged_binary_tmp"
+        exit 1
+    fi
     cp "$porting/native/Config/OriginalDefaults.json" \
        "$porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Config/OriginalDefaults.json"
     mkdir -p "$porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Config/Linux"
