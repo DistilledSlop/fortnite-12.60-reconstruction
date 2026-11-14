@@ -1,0 +1,129 @@
+[
+  {
+    "function": "GetPlaylistManagerNative",
+    "kind": "helper",
+    "signature": "UFortPlaylistManager* GetPlaylistManagerNative()",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141e628f0",
+    "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/AFortGameMode.GetPlaylistManagerNative.inc",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "Complete recovered playlist selection family; admitted together under source_policy.py guards.",
+    "class": "AFortGameMode"
+  },
+  {
+    "function": "SetCurrentPlaylistId",
+    "kind": "helper",
+    "signature": "void SetCurrentPlaylistId(int32 PlaylistId)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141e7e9e0",
+    "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/AFortGameMode.SetCurrentPlaylistId.inc",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "Complete recovered playlist selection family; admitted together under source_policy.py guards.",
+    "class": "AFortGameMode",
+    "virtual": true
+  },
+  {
+    "function": "SetCurrentPlaylistName",
+    "kind": "helper",
+    "signature": "void SetCurrentPlaylistName(FName PlaylistName)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141e7ea80",
+    "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/AFortGameMode.SetCurrentPlaylistName.inc",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "Complete recovered playlist selection family; admitted together under source_policy.py guards.",
+    "class": "AFortGameMode",
+    "virtual": true
+  },
+  {
+    "function": "NativeSetCurrentPlaylistName",
+    "kind": "helper",
+    "signature": "void NativeSetCurrentPlaylistName(FName PlaylistName)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141e7ead0",
+    "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/AFortGameMode.NativeSetCurrentPlaylistName.inc",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "Complete recovered playlist selection family; admitted together under source_policy.py guards.",
+    "class": "AFortGameMode",
+    "virtual": true
+  },
+  {
+    "function": "SetCurrentPlaylistId",
+    "kind": "helper",
+    "signature": "void SetCurrentPlaylistId(int32 PlaylistId)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141963c70",
+    "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/AFortGameModeAthena.SetCurrentPlaylistId.inc",
+    "includes": [],
+    "notes": "Complete recovered playlist selection family; admitted together under source_policy.py guards.",
+    "class": "AFortGameModeAthena",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "function": "SetCurrentPlaylistName",
+    "kind": "helper",
+    "signature": "void SetCurrentPlaylistName(FName PlaylistName)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141963da0",
+    "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/AFortGameModeAthena.SetCurrentPlaylistName.inc",
+    "includes": [],
+    "notes": "Complete recovered playlist selection family; admitted together under source_policy.py guards.",
+    "class": "AFortGameModeAthena",
+    "virtual": true,
+    "override": true
+  },
+  {
+    "function": "GetPlaylistByIdNative",
+    "kind": "helper",
+    "signature": "UFortPlaylistAthena* GetPlaylistByIdNative(int32 PlaylistId)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141f2b1f0",
+    "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/UFortPlaylistManager.GetPlaylistByIdNative.inc",
+    "includes": [],
+    "notes": "Complete recovered playlist selection family; admitted together under source_policy.py guards.",
+    "class": "UFortPlaylistManager"
+  },
+  {
+    "function": "GetPlaylistByNameNative",
+    "kind": "helper",
+    "signature": "UFortPlaylistAthena* GetPlaylistByNameNative(FName PlaylistName)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141f34f00",
+    "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/UFortPlaylistManager.GetPlaylistByNameNative.inc",
+    "includes": [],
+    "notes": "Complete recovered playlist selection family; admitted together under source_policy.py guards.",
+    "class": "UFortPlaylistManager"
+  }
+]

@@ -7,6 +7,7 @@
 #include "AFortGameModeBase.h"
 
 #include "EFortGameplayState.h"
+#include "Engine/World.h"
 #include "FCumulativeFrameTimeWithoutSleepLimits.h"
 #include "FQuickBarData.h"
 #include "GameplayTagContainer.h"
@@ -20,6 +21,7 @@ class AFortTimeOfDayManager;
 class APawn;
 class UFortAwardItemDefinition;
 class UFortGameDeathPenalty;
+class UFortPlaylistManager;
 class UFortSharedMissionLists;
 class UMatchHeartbeatManager;
 
@@ -254,5 +256,9 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual TSubclassOf<AFortTimeOfDayManager> GetTimeOfDayManagerClassNative();
 	virtual FGameplayTagContainer* GetGameContextTagsNative();
+	UFortPlaylistManager* GetPlaylistManagerNative();
+	virtual void SetCurrentPlaylistId(int32 PlaylistId);
+	virtual void SetCurrentPlaylistName(FName PlaylistName);
+	virtual void NativeSetCurrentPlaylistName(FName PlaylistName);
 };
 

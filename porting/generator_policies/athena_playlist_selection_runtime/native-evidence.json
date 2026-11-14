@@ -1,0 +1,99 @@
+{
+  "status": "complete proposal; real helper admission/rendering passed with in-memory entry overlay; full promotion/UE build pending root integration",
+  "original_image_base": "0x140000000",
+  "bodies": [
+    {
+      "class": "AFortGameMode",
+      "function": "GetPlaylistManagerNative",
+      "address": "0x141e628f0",
+      "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/AFortGameMode.GetPlaylistManagerNative.inc"
+    },
+    {
+      "class": "AFortGameMode",
+      "function": "SetCurrentPlaylistId",
+      "address": "0x141e7e9e0",
+      "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/AFortGameMode.SetCurrentPlaylistId.inc"
+    },
+    {
+      "class": "AFortGameMode",
+      "function": "SetCurrentPlaylistName",
+      "address": "0x141e7ea80",
+      "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/AFortGameMode.SetCurrentPlaylistName.inc"
+    },
+    {
+      "class": "AFortGameMode",
+      "function": "NativeSetCurrentPlaylistName",
+      "address": "0x141e7ead0",
+      "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/AFortGameMode.NativeSetCurrentPlaylistName.inc"
+    },
+    {
+      "class": "AFortGameModeAthena",
+      "function": "SetCurrentPlaylistId",
+      "address": "0x141963c70",
+      "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/AFortGameModeAthena.SetCurrentPlaylistId.inc"
+    },
+    {
+      "class": "AFortGameModeAthena",
+      "function": "SetCurrentPlaylistName",
+      "address": "0x141963da0",
+      "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/AFortGameModeAthena.SetCurrentPlaylistName.inc"
+    },
+    {
+      "class": "UFortPlaylistManager",
+      "function": "GetPlaylistByIdNative",
+      "address": "0x141f2b1f0",
+      "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/UFortPlaylistManager.GetPlaylistByIdNative.inc"
+    },
+    {
+      "class": "UFortPlaylistManager",
+      "function": "GetPlaylistByNameNative",
+      "address": "0x141f34f00",
+      "inc_path": "porting/generator_policies/athena_playlist_selection_runtime/UFortPlaylistManager.GetPlaylistByNameNative.inc"
+    }
+  ],
+  "vtable_slots": {
+    "AFortGameMode": {
+      "vtable": "0x145fedcb0",
+      "0x910": "0x141e7e9e0",
+      "0x918": "0x141e7ea80",
+      "0x920": "0x141e7ead0"
+    },
+    "AFortGameModeAthena": {
+      "vtable": "0x145dfb470",
+      "0x910": "0x141963c70",
+      "0x918": "0x141963da0",
+      "0x920": "0x141e7ead0"
+    },
+    "AFortGameModeZone": {
+      "vtable": "0x145fff0f0",
+      "0x910": "0x141e7e9e0",
+      "0x918": "0x141e7ea80",
+      "0x920": "0x141e7ead0"
+    }
+  },
+  "typed_fields": {
+    "AFortGameMode::CurrentPlaylistId": "0x340",
+    "AFortGameMode::CurrentPlaylistName": "0x344",
+    "UFortGameInstance::PlaylistManager": "0x990",
+    "UFortPlaylistManager::AthenaPlaylists": "0x28",
+    "UFortPlaylist::PlaylistId": "0x30",
+    "UFortPlaylist::PlaylistName": "0x34"
+  },
+  "transitive_primitives": {
+    "0x143f76130": "AActor::GetGameInstance via virtual GetWorld +0x150, reads world+0x188",
+    "0x1446939f0": "UWorld net mode equals 3 (NM_Client)",
+    "0x142cd8ed0": "FName comparison index equals EName table entry; called with NAME_None=0 and separate number==0 test",
+    "0x142ce9f90": "FName::ToString",
+    "0x142c54b70": "logging with severities Error=2 Warning=3 Log=5",
+    "0x142bee710": "FString storage release"
+  },
+  "blocker": "UFortPlaylistManager initializer 0x141f3b670 is not implemented here; correct manager ownership/population/lifecycle and complete InitGame remain necessary before runtime activation. Original playlist assets supply typed IDs/names; these setters neither hardcode nor load assets.",
+  "raw_capture_root": "porting/generated/agents/athena-playlist-setters5",
+  "log_category_symbol": "0x1481348e4 (unresolved); proposal uses LogFortPlaylistSelection",
+  "checks": [
+    "6 Python admission/renderer guard tests passed",
+    "C++14 actual-inc behavioral harness compiled and passed",
+    "Actual generator full-context in-memory proposal overlay: all 3 target models accepted and finalized; required includes validated"
+  ],
+  "production_edits": false
+}

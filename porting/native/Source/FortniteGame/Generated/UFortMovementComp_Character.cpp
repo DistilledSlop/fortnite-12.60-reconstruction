@@ -64,3 +64,94 @@ bool UFortMovementComp_Character::NativeVortexOrSkyTube_1420d9730() const
 	return Pawn && (Pawn->bIsInVortex || Pawn->CurrentSkyTube != nullptr);
 }
 
+
+UFortMovementComp_Character::UFortMovementComp_Character(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+
+    // Original base constructor 0x1420d4700 air-control projection.
+    static_assert(TIsSame<decltype(FAirControlParams::MaxAcceleration), FScalableFloat>::Value, "air-control member type changed");
+    static_assert(TIsSame<decltype(FAirControlParams::LateralFriction), FScalableFloat>::Value, "air-control member type changed");
+    static_assert(TIsSame<decltype(FAirControlParams::MaxLateralSpeed), FScalableFloat>::Value, "air-control member type changed");
+    static_assert(TIsSame<decltype(FAirControlParams::TerminalVelocity), FScalableFloat>::Value, "air-control member type changed");
+    static_assert(TIsSame<decltype(FAirControlParams::UpwardTerminalVelocity), FScalableFloat>::Value, "air-control member type changed");
+    static_assert(TIsSame<decltype(FAirControlParams::GravityScalar), FScalableFloat>::Value, "air-control member type changed");
+    static_assert(TIsSame<decltype(FAirControlParams::CustomGravityCeiling), FScalableFloat>::Value, "air-control member type changed");
+    static_assert(TIsSame<decltype(FAirControlParams::CustomGravityCeilingWidth), FScalableFloat>::Value, "air-control member type changed");
+    SkydivingControlParamsPassive.MaxAcceleration = FScalableFloat(4096.0f); // 0x1420d4ddb
+    SkydivingControlParamsPassive.LateralFriction = FScalableFloat(0.8f); // 0x1420d4e03
+    SkydivingControlParamsPassive.MaxLateralSpeed = FScalableFloat(1200.0f); // 0x1420d4e1a
+    SkydivingControlParamsPassive.TerminalVelocity = FScalableFloat(1200.0f); // 0x1420d4e29
+    SkydivingControlParamsPassive.GravityScalar = FScalableFloat(1.0f); // 0x1420d4dea
+    SkydivingControlParamsActive.MaxAcceleration = FScalableFloat(4096.0f); // 0x1420d4e39
+    SkydivingControlParamsActive.LateralFriction = FScalableFloat(1.5f); // 0x1420d4e5f
+    SkydivingControlParamsActive.MaxLateralSpeed = FScalableFloat(2400.0f); // 0x1420d4e76
+    SkydivingControlParamsActive.TerminalVelocity = FScalableFloat(6000.0f); // 0x1420d4e8a
+    SkydivingControlParamsActive.GravityScalar = FScalableFloat(1.0f); // 0x1420d4e48
+    ParachuteControlParamsSkydive.MaxAcceleration = FScalableFloat(2048.0f); // 0x1420d4cab
+    ParachuteControlParamsSkydive.LateralFriction = FScalableFloat(1.2f); // 0x1420d4ce3
+    ParachuteControlParamsSkydive.MaxLateralSpeed = FScalableFloat(2000.0f); // 0x1420d4cfc
+    ParachuteControlParamsSkydive.TerminalVelocity = FScalableFloat(500.0f); // 0x1420d4d15
+    ParachuteControlParamsSkydive.GravityScalar = FScalableFloat(1.0f); // 0x1420d4cca
+    ParachuteControlParamsJump.MaxAcceleration = FScalableFloat(2048.0f); // 0x1420d4d25
+    ParachuteControlParamsJump.LateralFriction = FScalableFloat(1.3f); // 0x1420d4d4b
+    ParachuteControlParamsJump.MaxLateralSpeed = FScalableFloat(800.0f); // 0x1420d4d64
+    ParachuteControlParamsJump.TerminalVelocity = FScalableFloat(500.0f); // 0x1420d4d74
+    ParachuteControlParamsJump.GravityScalar = FScalableFloat(1.0f); // 0x1420d4d34
+    ParachuteControlParamsGliderRedeploy.MaxAcceleration = FScalableFloat(2048.0f); // 0x1420d4d84
+    ParachuteControlParamsGliderRedeploy.LateralFriction = FScalableFloat(1.3f); // 0x1420d4da2
+    ParachuteControlParamsGliderRedeploy.MaxLateralSpeed = FScalableFloat(800.0f); // 0x1420d4db2
+    ParachuteControlParamsGliderRedeploy.TerminalVelocity = FScalableFloat(500.0f); // 0x1420d4dc2
+    ParachuteControlParamsGliderRedeploy.GravityScalar = FScalableFloat(1.0f); // 0x1420d4d93
+    BalloonControlParams.UpwardTerminalVelocity = FScalableFloat(2000.0f); // 0x1420d4ec7
+    BalloonControlParams.CustomGravityCeiling = FScalableFloat(16000.0f); // 0x1420d4e9e
+    BalloonControlParams.CustomGravityCeilingWidth = FScalableFloat(1000.0f); // 0x1420d4eb7
+    FloatingControlParams.MaxAcceleration = FScalableFloat(4096.0f); // 0x1420d4ed7
+    FloatingControlParams.LateralFriction = FScalableFloat(0.2f); // 0x1420d4efa
+    FloatingControlParams.MaxLateralSpeed = FScalableFloat(400.0f); // 0x1420d4f13
+    FloatingControlParams.TerminalVelocity = FScalableFloat(800.0f); // 0x1420d4f23
+    FloatingControlParams.UpwardTerminalVelocity = FScalableFloat(800.0f); // 0x1420d4f33
+    FloatingControlParams.GravityScalar = FScalableFloat(0.0f); // 0x1420d4ee6
+    VortexSkydivingControlParamsPassive.MaxAcceleration = FScalableFloat(4096.0f); // 0x1420d4f43
+    VortexSkydivingControlParamsPassive.LateralFriction = FScalableFloat(0.8f); // 0x1420d4f67
+    VortexSkydivingControlParamsPassive.MaxLateralSpeed = FScalableFloat(1200.0f); // 0x1420d4f7b
+    VortexSkydivingControlParamsPassive.TerminalVelocity = FScalableFloat(800.0f); // 0x1420d4f8b
+    VortexSkydivingControlParamsPassive.UpwardTerminalVelocity = FScalableFloat(1500.0f); // 0x1420d4fa4
+    VortexSkydivingControlParamsPassive.GravityScalar = FScalableFloat(-0.4f); // 0x1420d4f57
+    VortexSkydivingControlParamsActive.MaxAcceleration = FScalableFloat(4096.0f); // 0x1420d4fb4
+    VortexSkydivingControlParamsActive.LateralFriction = FScalableFloat(1.5f); // 0x1420d4fd7
+    VortexSkydivingControlParamsActive.MaxLateralSpeed = FScalableFloat(2400.0f); // 0x1420d4fe6
+    VortexSkydivingControlParamsActive.TerminalVelocity = FScalableFloat(1000.0f); // 0x1420d4ff6
+    VortexSkydivingControlParamsActive.UpwardTerminalVelocity = FScalableFloat(1500.0f); // 0x1420d5006
+    VortexSkydivingControlParamsActive.GravityScalar = FScalableFloat(-0.05f); // 0x1420d4fc8
+    VortexSkydivingControlParamsActiveUpward.MaxAcceleration = FScalableFloat(4096.0f); // 0x1420d5016
+    VortexSkydivingControlParamsActiveUpward.LateralFriction = FScalableFloat(1.5f); // 0x1420d5039
+    VortexSkydivingControlParamsActiveUpward.MaxLateralSpeed = FScalableFloat(2400.0f); // 0x1420d5048
+    VortexSkydivingControlParamsActiveUpward.TerminalVelocity = FScalableFloat(1000.0f); // 0x1420d5058
+    VortexSkydivingControlParamsActiveUpward.UpwardTerminalVelocity = FScalableFloat(1500.0f); // 0x1420d5068
+    VortexSkydivingControlParamsActiveUpward.GravityScalar = FScalableFloat(-0.25f); // 0x1420d502a
+    VortexParachuteControlParams.MaxAcceleration = FScalableFloat(2048.0f); // 0x1420d5078
+    VortexParachuteControlParams.LateralFriction = FScalableFloat(1.2f); // 0x1420d509c
+    VortexParachuteControlParams.MaxLateralSpeed = FScalableFloat(2000.0f); // 0x1420d50ac
+    VortexParachuteControlParams.TerminalVelocity = FScalableFloat(500.0f); // 0x1420d50c5
+    VortexParachuteControlParams.UpwardTerminalVelocity = FScalableFloat(2000.0f); // 0x1420d50d5
+    VortexParachuteControlParams.GravityScalar = FScalableFloat(-1.5f); // 0x1420d508c
+    SkyTubeSkydivingControlParamsPassive.MaxAcceleration = FScalableFloat(4096.0f); // 0x1420d50e5
+    SkyTubeSkydivingControlParamsPassive.LateralFriction = FScalableFloat(0.8f); // 0x1420d5108
+    SkyTubeSkydivingControlParamsPassive.MaxLateralSpeed = FScalableFloat(1500.0f); // 0x1420d5118
+    SkyTubeSkydivingControlParamsPassive.TerminalVelocity = FScalableFloat(250.0f); // 0x1420d5131
+    SkyTubeSkydivingControlParamsPassive.UpwardTerminalVelocity = FScalableFloat(250.0f); // 0x1420d5141
+    SkyTubeSkydivingControlParamsPassive.GravityScalar = FScalableFloat(0.0f); // 0x1420d50f4
+    SkyTubeSkydivingControlParamsActive.MaxAcceleration = FScalableFloat(4096.0f); // 0x1420d5151
+    SkyTubeSkydivingControlParamsActive.LateralFriction = FScalableFloat(0.6f); // 0x1420d517c
+    SkyTubeSkydivingControlParamsActive.MaxLateralSpeed = FScalableFloat(1500.0f); // 0x1420d518c
+    SkyTubeSkydivingControlParamsActive.TerminalVelocity = FScalableFloat(1200.0f); // 0x1420d51a3
+    SkyTubeSkydivingControlParamsActive.UpwardTerminalVelocity = FScalableFloat(1200.0f); // 0x1420d51b2
+    SkyTubeSkydivingControlParamsActive.GravityScalar = FScalableFloat(0.75f); // 0x1420d5165
+    SkyTubeSkydivingControlParamsActiveUpward.MaxAcceleration = FScalableFloat(4096.0f); // 0x1420d51c2
+    SkyTubeSkydivingControlParamsActiveUpward.LateralFriction = FScalableFloat(0.6f); // 0x1420d51e5
+    SkyTubeSkydivingControlParamsActiveUpward.MaxLateralSpeed = FScalableFloat(1500.0f); // 0x1420d51f5
+    SkyTubeSkydivingControlParamsActiveUpward.TerminalVelocity = FScalableFloat(1200.0f); // 0x1420d5204
+    SkyTubeSkydivingControlParamsActiveUpward.UpwardTerminalVelocity = FScalableFloat(1200.0f); // 0x1420d5213
+    SkyTubeSkydivingControlParamsActiveUpward.GravityScalar = FScalableFloat(-0.75f); // 0x1420d51d6
+}

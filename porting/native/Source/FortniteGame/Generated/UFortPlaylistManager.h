@@ -20,5 +20,10 @@ public:
 	UPROPERTY(Transient)
 	TArray<UFortPlaylistAthena*> AthenaPlaylists;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	UFortPlaylistAthena* GetPlaylistByIdNative(int32 PlaylistId);
+	UFortPlaylistAthena* GetPlaylistByNameNative(FName PlaylistName);
 };
 

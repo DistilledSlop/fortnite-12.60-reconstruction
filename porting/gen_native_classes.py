@@ -2465,6 +2465,10 @@ _athena_movement_constructor_spec = _common_activation_import.spec_from_file_loc
     "athena_movement_constructor_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "athena_movement_constructor_runtime", "source_policy.py"))
 _athena_movement_constructor_policy = _common_activation_import.module_from_spec(_athena_movement_constructor_spec)
 _athena_movement_constructor_spec.loader.exec_module(_athena_movement_constructor_policy)
+_movement_air_control_defaults_spec = _common_activation_import.spec_from_file_location(
+    "movement_air_control_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "movement_air_control_defaults_runtime", "source_policy.py"))
+_movement_air_control_defaults_policy = _common_activation_import.module_from_spec(_movement_air_control_defaults_spec)
+_movement_air_control_defaults_spec.loader.exec_module(_movement_air_control_defaults_policy)
 _building_foundation_constructor_spec = _common_activation_import.spec_from_file_location(
     "building_foundation_constructor_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "building_foundation_constructor_runtime", "source_policy.py"))
 _building_foundation_constructor_policy = _common_activation_import.module_from_spec(_building_foundation_constructor_spec)
@@ -2473,6 +2477,10 @@ _fort_game_session_class_spec = _common_activation_import.spec_from_file_locatio
     "fort_game_session_class_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "fort_game_session_class_runtime", "source_policy.py"))
 _fort_game_session_class_policy = _common_activation_import.module_from_spec(_fort_game_session_class_spec)
 _fort_game_session_class_spec.loader.exec_module(_fort_game_session_class_policy)
+_athena_playlist_selection_spec = _common_activation_import.spec_from_file_location(
+    "athena_playlist_selection_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "athena_playlist_selection_runtime", "source_policy.py"))
+_athena_playlist_selection_policy = _common_activation_import.module_from_spec(_athena_playlist_selection_spec)
+_athena_playlist_selection_spec.loader.exec_module(_athena_playlist_selection_policy)
 _replicated_building_defaults_spec = _common_activation_import.spec_from_file_location(
     "replicated_building_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "replicated_building_defaults_runtime", "source_policy.py"))
 _replicated_building_defaults_policy = _common_activation_import.module_from_spec(_replicated_building_defaults_spec)
@@ -4470,6 +4478,7 @@ def promote(args):
         raise SystemExit("duplicate entries in %s" % args.class_list)
     listed = set(class_list)
     _remote_view_replication_policy.validate_required_classes(listed)
+    _athena_playlist_selection_policy.validate_required_classes(listed)
     name_to_block = {v: k for k, v in names.items()}
     registry = ModuleRegistry(args.engine_root, PROJECT_NATIVE_DIR, UPROJECT_DEFAULT)
     blocklist = load_blocklist(args.blocklist)
@@ -4920,9 +4929,11 @@ def promote(args):
         cpp = render_promoted_cpp(model, source_label)
         header, cpp = _default_subobjects_policy.finalize(model, header, cpp)
         header, cpp = _world_manager_defaults_policy.finalize(model, header, cpp)
+        header, cpp = _movement_air_control_defaults_policy.finalize(model, header, cpp)
         header, cpp = _athena_movement_constructor_policy.finalize(model, header, cpp)
         header, cpp = _building_foundation_constructor_policy.finalize(model, header, cpp)
         header, cpp = _fort_game_session_class_policy.finalize(model, header, cpp)
+        header, cpp = _athena_playlist_selection_policy.finalize(model, header, cpp)
         header, cpp = _pawn_hand_socket_policy.finalize(model, header, cpp)
         header, cpp = _replicated_building_defaults_policy.finalize(model, header, cpp)
         header, cpp = _playlist_storm_defaults_policy.finalize(model, header, cpp)
@@ -6206,7 +6217,9 @@ def render_struct_header(model, source_label):
     lines.extend(_maps_fog_policy.declarations(model))
     lines.extend(_maps_wind_handle_policy.declarations(model))
     lines.extend(_zone_instance_details_defaults_policy.declarations(model))
-    lines.extend(_air_control_params_policy.declarations(model))
+    air_control_declarations = _air_control_params_policy.declarations(model)
+    _movement_air_control_defaults_policy.validate_struct(model, air_control_declarations)
+    lines.extend(air_control_declarations)
     lines.extend(_maps_wind_make_policy.declarations(model))
     lines.extend(_common_activation_policy.struct_declarations(model))
     lines.extend(_quickbar_refresh_policy.declarations(model))

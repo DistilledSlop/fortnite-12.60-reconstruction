@@ -21,6 +21,7 @@
 #include "LandscapeProxy.h"
 
 #include "AFortGameModeAthena.h"
+#include "AFortGameSession.h"
 #include "AFortGameStateAthena.h"
 #include "AFortAthenaMapInfo.h"
 #include "AFortAthenaAircraft.h"
@@ -1742,6 +1743,8 @@ namespace FortAthenaMatchFlow
 
         if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeMovementDefaults")))
         {
+            UE_LOG(LogTemp, Display, TEXT("Session defaults: engineSession=%s fortSessionAlias=%s"),
+                *GetNameSafe(GameMode->GameSession), *GetNameSafe(GameMode->FortGameSession));
             const UFortMovementComp_CharacterAthena* Movement = Cast<UFortMovementComp_CharacterAthena>(Pawn->GetCharacterMovement());
             if (Movement)
             {
@@ -1760,6 +1763,20 @@ namespace FortAthenaMatchFlow
                         Sample->NetworkSimulatedSmoothLocationTime, Sample->NetworkSmoothingVisibilityThreshold,
                         Sample->NetworkSkipSkyDivingCollisionForPawnLOD, Sample->MinTimeBetweenTimeStampResets,
                         Sample->BrakingSubStepTime, Sample->MaxAccelerationFlying);
+                    const FAirControlParams* AirSamples[] = {&Sample->SkydivingControlParamsPassive,
+                        &Sample->SkydivingControlParamsActive, &Sample->ParachuteControlParamsSkydive,
+                        &Sample->ParachuteControlParamsJump, &Sample->ParachuteControlParamsGliderRedeploy};
+                    const TCHAR* AirLabels[] = {TEXT("skydive-passive"), TEXT("skydive-active"),
+                        TEXT("parachute-skydive"), TEXT("parachute-jump"), TEXT("parachute-redeploy")};
+                    for (int32 AirIndex = 0; AirIndex < UE_ARRAY_COUNT(AirSamples); ++AirIndex)
+                    {
+                        const FAirControlParams& Air = *AirSamples[AirIndex];
+                        UE_LOG(LogTemp, Display, TEXT("Movement air defaults: pawn=%s sample=%s params=%s acceleration=%.9g friction=%.9g lateralSpeed=%.9g terminal=%.9g upwardTerminal=%.9g gravity=%.9g ceiling=%.9g ceilingWidth=%.9g"),
+                            *Pawn->GetName(), Labels[Index], AirLabels[AirIndex], Air.MaxAcceleration.Value,
+                            Air.LateralFriction.Value, Air.MaxLateralSpeed.Value, Air.TerminalVelocity.Value,
+                            Air.UpwardTerminalVelocity.Value, Air.GravityScalar.Value,
+                            Air.CustomGravityCeiling.Value, Air.CustomGravityCeilingWidth.Value);
+                    }
                 }
             }
         }
