@@ -501,7 +501,7 @@ void UFortMovementComp_Character::UpdateFromCompressedFlags(uint8 Flags)
             static_cast<uint8>(Pawn->CurrentMovementStyle.GetValue()), static_cast<int32>(MovementMode), CustomMovementMode, GetMaxSpeed(), *Velocity.ToString());
         if (ASC)
         {
-            for (const FGameplayAbilitySpec& Spec : ASC->GetActivatableAbilities().Items)
+            for (const FGameplayAbilitySpec& Spec : ASC->GetActivatableAbilities())
             {
                 if (Spec.Ability && Spec.Ability->IsA<UFortGameplayAbility_Sprint>())
                     UE_LOG(LogTemp, Display, TEXT("ServerGroundSprintProbe: sprintSpec=%s class=%s active=%d"),
