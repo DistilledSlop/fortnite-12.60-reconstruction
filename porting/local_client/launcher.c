@@ -5,8 +5,6 @@
 #define _UNICODE
 #endif
 #define WIN32_LEAN_AND_MEAN
-#include <winsock2.h>
-#include <ws2tcpip.h>
 #include <windows.h>
 #include <tlhelp32.h>
 #include <commdlg.h>
@@ -17,10 +15,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#ifndef SIO_UDP_CONNRESET
-#define SIO_UDP_CONNRESET _WSAIOW(IOC_VENDOR, 12)
-#endif
 
 /* All paths in the configuration are relative to the launcher directory. */
 #define CAP 32768
@@ -128,233 +122,6 @@ static int parse_server_target(const wchar_t *spec, wchar_t *ip_out, unsigned sh
     if (!*udp_explicit) *udp_port = 7777;
     return 1;
 }
-
-typedef struct {
-    SOCKET client;
-    struct sockaddr_in target;
-} TcpRelayArgs;
-
-static volatile LONG proxy_stop;
-static volatile LONG proxy_sessions;
-static int wsa_ready;
-static SOCKET tcp_listen_sock = INVALID_SOCKET, udp_listen_sock = INVALID_SOCKET;
-static struct sockaddr_in tcp_target_addr, udp_target_addr;
-static HANDLE tcp_accept_handle, udp_relay_handle;
-
-static int send_all(SOCKET s, const char *buf, int len) {
-    int off = 0;
-    while (off < len) {
-        int n = send(s, buf + off, len - off, 0);
-        if (n <= 0) return 0;
-        off += n;
-    }
-    return 1;
-}
-static DWORD WINAPI tcp_session_thread(LPVOID param) {
-    TcpRelayArgs *args = (TcpRelayArgs *)param;
-    SOCKET client = args->client, upstream = INVALID_SOCKET;
-    struct sockaddr_in target = args->target;
-    char buf[16384];
-    int nodelay = 1, client_eof = 0, upstream_eof = 0;
-    HeapFree(GetProcessHeap(), 0, args);
-    InterlockedIncrement(&proxy_sessions);
-    setsockopt(client, IPPROTO_TCP, TCP_NODELAY, (const char *)&nodelay, sizeof(nodelay));
-    upstream = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    if (upstream == INVALID_SOCKET) goto done;
-    setsockopt(upstream, IPPROTO_TCP, TCP_NODELAY, (const char *)&nodelay, sizeof(nodelay));
-    if (connect(upstream, (const struct sockaddr *)&target, sizeof(target)) != 0) goto done;
-    while (!InterlockedCompareExchange(&proxy_stop, 0, 0) && !(client_eof && upstream_eof)) {
-        fd_set rfds; struct timeval tv = {0, 250000};
-        int ready_fds;
-        FD_ZERO(&rfds);
-        if (!client_eof) FD_SET(client, &rfds);
-        if (!upstream_eof) FD_SET(upstream, &rfds);
-        ready_fds = select(0, &rfds, NULL, NULL, &tv);
-        if (ready_fds == SOCKET_ERROR) break;
-        if (ready_fds == 0) continue;
-        if (!client_eof && FD_ISSET(client, &rfds)) {
-            int n = recv(client, buf, sizeof(buf), 0);
-            if (n <= 0) { client_eof = 1; shutdown(upstream, SD_SEND); }
-            else if (!send_all(upstream, buf, n)) break;
-        }
-        if (!upstream_eof && FD_ISSET(upstream, &rfds)) {
-            int n = recv(upstream, buf, sizeof(buf), 0);
-            if (n <= 0) { upstream_eof = 1; shutdown(client, SD_SEND); }
-            else if (!send_all(client, buf, n)) break;
-        }
-    }
-done:
-    if (upstream != INVALID_SOCKET) closesocket(upstream);
-    closesocket(client);
-    InterlockedDecrement(&proxy_sessions);
-    return 0;
-}
-static DWORD WINAPI tcp_accept_thread(LPVOID unused) {
-    (void)unused;
-    while (!InterlockedCompareExchange(&proxy_stop, 0, 0)) {
-        SOCKET c = accept(tcp_listen_sock, NULL, NULL);
-        TcpRelayArgs *args; HANDLE th;
-        if (c == INVALID_SOCKET) break;
-        args = (TcpRelayArgs *)HeapAlloc(GetProcessHeap(), 0, sizeof(TcpRelayArgs));
-        if (!args) { closesocket(c); continue; }
-        args->client = c;
-        args->target = tcp_target_addr;
-        th = CreateThread(NULL, 0, tcp_session_thread, args, 0, NULL);
-        if (th) CloseHandle(th);
-        else { HeapFree(GetProcessHeap(), 0, args); closesocket(c); }
-    }
-    return 0;
-}
-#define MAX_UDP_CLIENTS 64
-typedef struct {
-    int active;
-    struct sockaddr_in client;
-    SOCKET upstream;
-    ULONGLONG last_seen;
-} UdpSlot;
-static DWORD WINAPI udp_relay_thread(LPVOID unused) {
-    UdpSlot slots[MAX_UDP_CLIENTS];
-    char buf[65536];
-    int i;
-    (void)unused;
-    ZeroMemory(slots, sizeof(slots));
-    while (!InterlockedCompareExchange(&proxy_stop, 0, 0)) {
-        fd_set rfds; struct timeval tv = {0, 250000};
-        int ready_fds;
-        ULONGLONG now = GetTickCount64();
-        FD_ZERO(&rfds);
-        FD_SET(udp_listen_sock, &rfds);
-        for (i = 0; i < MAX_UDP_CLIENTS; ++i) {
-            if (slots[i].active) {
-                if (now - slots[i].last_seen > 120000) {
-                    closesocket(slots[i].upstream);
-                    slots[i].active = 0;
-                } else {
-                    FD_SET(slots[i].upstream, &rfds);
-                }
-            }
-        }
-        ready_fds = select(0, &rfds, NULL, NULL, &tv);
-        if (ready_fds == SOCKET_ERROR) break;
-        if (ready_fds == 0) continue;
-        if (FD_ISSET(udp_listen_sock, &rfds)) {
-            struct sockaddr_in src; int srclen = sizeof(src);
-            int n = recvfrom(udp_listen_sock, buf, sizeof(buf), 0, (struct sockaddr *)&src, &srclen);
-            if (n > 0) {
-                int match = -1, empty = -1, oldest = 0;
-                for (i = 0; i < MAX_UDP_CLIENTS; ++i) {
-                    if (slots[i].active) {
-                        if (slots[i].client.sin_addr.s_addr == src.sin_addr.s_addr &&
-                            slots[i].client.sin_port == src.sin_port) { match = i; break; }
-                        if (slots[i].last_seen < slots[oldest].last_seen) oldest = i;
-                    } else if (empty < 0) empty = i;
-                }
-                if (match < 0) {
-                    int idx = empty >= 0 ? empty : oldest;
-                    BOOL reset_off = FALSE; DWORD bytes_ret = 0;
-                    if (slots[idx].active) { closesocket(slots[idx].upstream); slots[idx].active = 0; }
-                    slots[idx].upstream = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-                    if (slots[idx].upstream != INVALID_SOCKET) {
-                        WSAIoctl(slots[idx].upstream, SIO_UDP_CONNRESET, &reset_off, sizeof(reset_off), NULL, 0, &bytes_ret, NULL, NULL);
-                        if (connect(slots[idx].upstream, (const struct sockaddr *)&udp_target_addr, sizeof(udp_target_addr)) == 0) {
-                            slots[idx].client = src;
-                            slots[idx].active = 1;
-                            match = idx;
-                        } else {
-                            closesocket(slots[idx].upstream);
-                        }
-                    }
-                }
-                if (match >= 0) {
-                    slots[match].last_seen = now;
-                    send(slots[match].upstream, buf, n, 0);
-                }
-            }
-        }
-        for (i = 0; i < MAX_UDP_CLIENTS; ++i) {
-            if (slots[i].active && FD_ISSET(slots[i].upstream, &rfds)) {
-                int n = recv(slots[i].upstream, buf, sizeof(buf), 0);
-                if (n > 0) {
-                    slots[i].last_seen = now;
-                    sendto(udp_listen_sock, buf, n, 0, (const struct sockaddr *)&slots[i].client, sizeof(slots[i].client));
-                }
-            }
-        }
-    }
-    for (i = 0; i < MAX_UDP_CLIENTS; ++i) if (slots[i].active) closesocket(slots[i].upstream);
-    return 0;
-}
-static void stop_proxies(void) {
-    int wait_ms = 0;
-    InterlockedExchange(&proxy_stop, 1);
-    if (tcp_listen_sock != INVALID_SOCKET) { closesocket(tcp_listen_sock); tcp_listen_sock = INVALID_SOCKET; }
-    if (udp_listen_sock != INVALID_SOCKET) { closesocket(udp_listen_sock); udp_listen_sock = INVALID_SOCKET; }
-    if (tcp_accept_handle) { WaitForSingleObject(tcp_accept_handle, 2000); CloseHandle(tcp_accept_handle); tcp_accept_handle = NULL; }
-    if (udp_relay_handle) { WaitForSingleObject(udp_relay_handle, 2000); CloseHandle(udp_relay_handle); udp_relay_handle = NULL; }
-    while (InterlockedCompareExchange(&proxy_sessions, 0, 0) > 0 && wait_ms < 600) {
-        Sleep(25); wait_ms += 25;
-    }
-    if (wsa_ready) { WSACleanup(); wsa_ready = 0; }
-}
-static int start_proxies(const wchar_t *target_ip_w, unsigned short tcp_port, unsigned short udp_port) {
-    WSADATA wsa;
-    struct sockaddr_in local;
-    char ip_utf8[64];
-    struct in_addr addr;
-    int reuse = 1;
-    InterlockedExchange(&proxy_stop, 0);
-    if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) { status(L"Could not initialize Winsock for local proxy."); return 0; }
-    wsa_ready = 1;
-    if (!WideCharToMultiByte(CP_UTF8, 0, target_ip_w, -1, ip_utf8, sizeof(ip_utf8), NULL, NULL) ||
-        InetPtonA(AF_INET, ip_utf8, &addr) != 1) {
-        status(L"Server address must be a valid IPv4 address.");
-        stop_proxies();
-        return 0;
-    }
-    ZeroMemory(&tcp_target_addr, sizeof(tcp_target_addr));
-    tcp_target_addr.sin_family = AF_INET;
-    tcp_target_addr.sin_addr = addr;
-    tcp_target_addr.sin_port = htons(tcp_port);
-    tcp_listen_sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    if (tcp_listen_sock == INVALID_SOCKET) { status(L"Could not create local TCP proxy socket."); stop_proxies(); return 0; }
-    setsockopt(tcp_listen_sock, SOL_SOCKET, SO_REUSEADDR, (const char *)&reuse, sizeof(reuse));
-    ZeroMemory(&local, sizeof(local));
-    local.sin_family = AF_INET;
-    local.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
-    local.sin_port = htons(443);
-    if (bind(tcp_listen_sock, (const struct sockaddr *)&local, sizeof(local)) != 0 ||
-        listen(tcp_listen_sock, SOMAXCONN) != 0) {
-        wchar_t msg[160];
-        swprintf(msg, 160, L"Could not bind local TCP proxy on 127.0.0.1:443 (WSA error %d).", WSAGetLastError());
-        status(msg);
-        stop_proxies();
-        return 0;
-    }
-    tcp_accept_handle = CreateThread(NULL, 0, tcp_accept_thread, NULL, 0, NULL);
-    if (!tcp_accept_handle) { status(L"Could not start local TCP proxy thread."); stop_proxies(); return 0; }
-    if (udp_port) {
-        BOOL reset_off = FALSE; DWORD bytes_ret = 0;
-        ZeroMemory(&udp_target_addr, sizeof(udp_target_addr));
-        udp_target_addr.sin_family = AF_INET;
-        udp_target_addr.sin_addr = addr;
-        udp_target_addr.sin_port = htons(udp_port);
-        udp_listen_sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-        if (udp_listen_sock == INVALID_SOCKET) { status(L"Could not create local UDP proxy socket."); stop_proxies(); return 0; }
-        setsockopt(udp_listen_sock, SOL_SOCKET, SO_REUSEADDR, (const char *)&reuse, sizeof(reuse));
-        WSAIoctl(udp_listen_sock, SIO_UDP_CONNRESET, &reset_off, sizeof(reset_off), NULL, 0, &bytes_ret, NULL, NULL);
-        local.sin_port = htons(7777);
-        if (bind(udp_listen_sock, (const struct sockaddr *)&local, sizeof(local)) != 0) {
-            wchar_t msg[160];
-            swprintf(msg, 160, L"Could not bind local UDP proxy on 127.0.0.1:7777 (WSA error %d).", WSAGetLastError());
-            status(msg);
-            stop_proxies();
-            return 0;
-        }
-        udp_relay_handle = CreateThread(NULL, 0, udp_relay_thread, NULL, 0, NULL);
-        if (!udp_relay_handle) { status(L"Could not start local UDP proxy thread."); stop_proxies(); return 0; }
-    }
-    return 1;
-}
 /* Quote one Windows argv element following CommandLineToArgvW/CRT rules. */
 static int append_arg(wchar_t *dst, size_t cap, const wchar_t *arg) {
     size_t len = wcslen(dst), slashes = 0; const wchar_t *p;
@@ -456,7 +223,7 @@ done:
 static int launch(void) {
     DWORD n, type, exitcode, wait, create_error; wchar_t *slash; wchar_t password[128], game_directory[CAP];
     wchar_t ready_name[128], failed_name[128], client_log[CAP], session_id[33], session_arg[64]; GUID session_guid; HANDLE ready = NULL, failed = NULL, waits[3]; BOOL created;
-    wchar_t target_ip[64], proxy_game_str[16]; unsigned short tcp_port = 0, udp_port = 0; int udp_explicit = 0, proxy_active = 0;
+    wchar_t target_ip[64], proxy_game_str[16], backend_port_str[16], game_port_str[16]; unsigned short tcp_port = 0, udp_port = 0; int udp_explicit = 0;
     STARTUPINFOW si; PROCESS_INFORMATION pi;
     static const wchar_t *args[] = { L"-nobe", L"-noeac", L"-NOEPICPORTAL", L"-epicapp=Fortnite", L"-epicenv=Prod", L"-epiclocale=en-us", L"-skippatchcheck", L"-fromfl=none", L"-AUTH_LOGIN=unused", L"-AUTH_TYPE=exchangecode" };
     size_t i;
@@ -483,18 +250,15 @@ static int launch(void) {
     slash = wcsrchr(game_directory, L'\\');
     if (!slash) { status(L"Game executable directory is invalid."); return 1; }
     *slash = 0;
-    if (tcp_port) {
-        status(L"Starting local proxy…");
-        if (!start_proxies(target_ip, tcp_port, udp_port)) return 1;
-        proxy_active = 1;
-    }
-    if (!SetEnvironmentVariableW(L"FN_LOCAL_CA_CERT", cert) || !SetEnvironmentVariableW(L"FN_LOCAL_SERVER", proxy_active ? L"127.0.0.1" : target_ip) || !SetEnvironmentVariableW(L"FN_LOCAL_ACCOUNT", account) || !SetEnvironmentVariableW(L"FN_LOCAL_HELPER_LOG", log_path)) { error(L"Setting child environment"); if (proxy_active) stop_proxies(); return 1; }
+    if (tcp_port) swprintf(backend_port_str, 16, L"%u", (unsigned)tcp_port); else backend_port_str[0] = 0;
+    if (tcp_port && udp_port) swprintf(game_port_str, 16, L"%u", (unsigned)udp_port); else game_port_str[0] = 0;
+    if (!SetEnvironmentVariableW(L"FN_LOCAL_CA_CERT", cert) || !SetEnvironmentVariableW(L"FN_LOCAL_SERVER", target_ip) || !SetEnvironmentVariableW(L"FN_LOCAL_ACCOUNT", account) || !SetEnvironmentVariableW(L"FN_LOCAL_HELPER_LOG", log_path)) { error(L"Setting child environment"); return 1; }
     {
         HMODULE helper; BOOL prepared = FALSE; DWORD failure = ERROR_GEN_FAILURE;
         typedef BOOL (WINAPI *prepare_fn)(LPCWSTR);
         prepare_fn prepare;
         status(L"Preparing secure connection…");
-        if (!SetEnvironmentVariableW(L"FN_LOCAL_PREPARE_ONLY", L"1")) { error(L"Preparing certificate"); if (proxy_active) stop_proxies(); return 1; }
+        if (!SetEnvironmentVariableW(L"FN_LOCAL_PREPARE_ONLY", L"1")) { error(L"Preparing certificate"); return 1; }
         helper = LoadLibraryW(dll);
         if (helper) {
             prepare = (prepare_fn)(void *)GetProcAddress(helper, "ProjectChronoPrepareCertificate");
@@ -502,17 +266,17 @@ static int launch(void) {
             failure = GetLastError();
             FreeLibrary(helper);
         } else failure = GetLastError();
-        if (!SetEnvironmentVariableW(L"FN_LOCAL_PREPARE_ONLY", NULL)) { error(L"Clearing certificate preparation mode"); if (proxy_active) stop_proxies(); return 1; }
-        if (!prepared) { SetLastError(failure); error(L"Preparing certificate"); if (proxy_active) stop_proxies(); return 1; }
+        if (!SetEnvironmentVariableW(L"FN_LOCAL_PREPARE_ONLY", NULL)) { error(L"Clearing certificate preparation mode"); return 1; }
+        if (!prepared) { SetLastError(failure); error(L"Preparing certificate"); return 1; }
     }
     if (FAILED(SHGetFolderPathW(NULL, CSIDL_LOCAL_APPDATA, NULL, SHGFP_TYPE_CURRENT, client_log))) {
-        status(L"Could not locate the client log directory."); if (proxy_active) stop_proxies(); return 1;
+        status(L"Could not locate the client log directory."); return 1;
     }
     if (wcslen(client_log) + wcslen(L"\\FortniteGame\\Saved\\Logs\\FortniteGame.log") >= CAP) {
-        status(L"Client log path is too long."); if (proxy_active) stop_proxies(); return 1;
+        status(L"Client log path is too long."); return 1;
     }
     wcscat(client_log, L"\\FortniteGame\\Saved\\Logs\\FortniteGame.log");
-    if (FAILED(CoCreateGuid(&session_guid))) { status(L"Could not create a unique session ID."); if (proxy_active) stop_proxies(); return 1; }
+    if (FAILED(CoCreateGuid(&session_guid))) { status(L"Could not create a unique session ID."); return 1; }
     swprintf(session_id, 33, L"%08lX%04X%04X%02X%02X%02X%02X%02X%02X%02X%02X",
         (unsigned long)session_guid.Data1, (unsigned)session_guid.Data2, (unsigned)session_guid.Data3,
         (unsigned)session_guid.Data4[0], (unsigned)session_guid.Data4[1],
@@ -539,7 +303,9 @@ static int launch(void) {
     if (!failed || GetLastError() == ERROR_ALREADY_EXISTS) { status(L"Could not create unique helper failure event."); goto event_failure; }
     if (!SetEnvironmentVariableW(L"FN_LOCAL_READY_EVENT", ready_name) || !SetEnvironmentVariableW(L"FN_LOCAL_FAILED_EVENT", failed_name) ||
         !SetEnvironmentVariableW(L"FN_LOCAL_CLIENT_LOG", client_log) ||
-        !SetEnvironmentVariableW(L"FN_LOCAL_SESSION_ID", session_id)) {
+        !SetEnvironmentVariableW(L"FN_LOCAL_SESSION_ID", session_id) ||
+        !SetEnvironmentVariableW(L"FN_LOCAL_BACKEND_PORT", backend_port_str[0] ? backend_port_str : NULL) ||
+        !SetEnvironmentVariableW(L"FN_LOCAL_GAME_PORT", game_port_str[0] ? game_port_str : NULL)) {
         error(L"Setting helper event environment"); goto event_failure;
     }
     status(L"Starting game process…");
@@ -549,6 +315,8 @@ static int launch(void) {
     SetEnvironmentVariableW(L"FN_LOCAL_FAILED_EVENT", NULL);
     SetEnvironmentVariableW(L"FN_LOCAL_CLIENT_LOG", NULL);
     SetEnvironmentVariableW(L"FN_LOCAL_SESSION_ID", NULL);
+    SetEnvironmentVariableW(L"FN_LOCAL_BACKEND_PORT", NULL);
+    SetEnvironmentVariableW(L"FN_LOCAL_GAME_PORT", NULL);
     if (!created) { SetLastError(create_error); error(L"Starting game"); goto event_failure; }
     if (ResumeThread(pi.hThread) == (DWORD)-1) { error(L"Starting game thread"); goto child_failure; }
     status(L"Loading local helper…");
@@ -579,20 +347,19 @@ child_failure:
 child_done:
     CloseHandle(pi.hThread); CloseHandle(pi.hProcess);
     CloseHandle(failed); CloseHandle(ready);
-    if (proxy_active) stop_proxies();
     return (int)exitcode;
 command_failure:
     status(L"Game command line is too long.");
-    if (proxy_active) stop_proxies();
     return 1;
 event_failure:
     SetEnvironmentVariableW(L"FN_LOCAL_READY_EVENT", NULL);
     SetEnvironmentVariableW(L"FN_LOCAL_FAILED_EVENT", NULL);
     SetEnvironmentVariableW(L"FN_LOCAL_CLIENT_LOG", NULL);
     SetEnvironmentVariableW(L"FN_LOCAL_SESSION_ID", NULL);
+    SetEnvironmentVariableW(L"FN_LOCAL_BACKEND_PORT", NULL);
+    SetEnvironmentVariableW(L"FN_LOCAL_GAME_PORT", NULL);
     if (failed) CloseHandle(failed);
     if (ready) CloseHandle(ready);
-    if (proxy_active) stop_proxies();
     return 1;
 }
 

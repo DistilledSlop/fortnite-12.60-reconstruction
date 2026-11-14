@@ -22,6 +22,9 @@
 static uintptr_t image_base;
 static WCHAR log_path[32768];
 static char local_server[INET_ADDRSTRLEN];
+static uint32_t local_ip_be;
+static uint16_t backend_port, game_port;
+static volatile LONG udp_rewrote_loopback;
 static BYTE local_digest[32];
 static const WCHAR *domains[6] = {L".ol.epicgames.net",L".ol.epicgames.com",
     L".on.epicgames.net",L".on.epicgames.com",L".ak.epicgames.com",L".fortnite.qq.com"};
@@ -313,10 +316,17 @@ static int update_pins(uintptr_t manager,int *changed) {
     resume_threads(threads,number);return result;
 }
 
-/* Evidence: original main-module IAT1458fd910 = WS2_32.dll!getaddrinfo.
- * Runtime import-name validation is mandatory; no speculative fallback hook. */
+/* Evidence: original main-module IAT1458fd910 = WS2_32.dll!getaddrinfo;
+ * ordinal 4 (1458fd808) = connect, ordinal 17 (1458fd820) = recvfrom,
+ * ordinal 20 (1458fd8d0) = sendto. Runtime validation is mandatory. */
 typedef int (WSAAPI *GetAddrInfoFn)(PCSTR,PCSTR,const ADDRINFOA *,PADDRINFOA *);
+typedef int (WSAAPI *ConnectFn)(SOCKET,const struct sockaddr *,int);
+typedef int (WSAAPI *SendToFn)(SOCKET,const char *,int,int,const struct sockaddr *,int);
+typedef int (WSAAPI *RecvFromFn)(SOCKET,char *,int,int,struct sockaddr *,int *);
 static GetAddrInfoFn real_getaddrinfo;
+static ConnectFn real_connect;
+static SendToFn real_sendto;
+static RecvFromFn real_recvfrom;
 static int epic_service(const char *host) {
     static const char *suffixes[]={".ol.epicgames.net",".ol.epicgames.com",
         ".on.epicgames.net",".on.epicgames.com",".ak.epicgames.com",".fortnite.qq.com"};
@@ -327,14 +337,78 @@ static int epic_service(const char *host) {
 static int WSAAPI local_getaddrinfo(PCSTR node,PCSTR service,const ADDRINFOA *hints,PADDRINFOA *result) {
     return real_getaddrinfo(epic_service(node)?local_server:node,service,hints,result);
 }
+static int WSAAPI local_connect(SOCKET s,const struct sockaddr *name,int namelen) {
+    if(name && namelen>=(int)sizeof(struct sockaddr_in) && name->sa_family==AF_INET) {
+        const struct sockaddr_in *in=(const struct sockaddr_in *)name;
+        if(backend_port && in->sin_addr.s_addr==local_ip_be && in->sin_port==htons(443)) {
+            struct sockaddr_in rw=*in; rw.sin_port=htons(backend_port);
+            return real_connect(s,(const struct sockaddr *)&rw,sizeof(rw));
+        }
+        if(game_port && in->sin_addr.s_addr==htonl(INADDR_LOOPBACK) && in->sin_port==htons(7777)) {
+            struct sockaddr_in rw=*in; rw.sin_addr.s_addr=local_ip_be; rw.sin_port=htons(game_port);
+            InterlockedExchange(&udp_rewrote_loopback,1);
+            return real_connect(s,(const struct sockaddr *)&rw,sizeof(rw));
+        }
+        if(game_port && game_port!=7777 && in->sin_addr.s_addr==local_ip_be && in->sin_port==htons(7777)) {
+            struct sockaddr_in rw=*in; rw.sin_port=htons(game_port);
+            return real_connect(s,(const struct sockaddr *)&rw,sizeof(rw));
+        }
+    }
+    return real_connect(s,name,namelen);
+}
+static int WSAAPI local_sendto(SOCKET s,const char *buf,int len,int flags,const struct sockaddr *to,int tolen) {
+    if(game_port && to && tolen>=(int)sizeof(struct sockaddr_in) && to->sa_family==AF_INET) {
+        const struct sockaddr_in *in=(const struct sockaddr_in *)to;
+        if(in->sin_addr.s_addr==htonl(INADDR_LOOPBACK) && in->sin_port==htons(7777)) {
+            struct sockaddr_in rw=*in; rw.sin_addr.s_addr=local_ip_be; rw.sin_port=htons(game_port);
+            InterlockedExchange(&udp_rewrote_loopback,1);
+            return real_sendto(s,buf,len,flags,(const struct sockaddr *)&rw,sizeof(rw));
+        }
+        if(game_port!=7777 && in->sin_addr.s_addr==local_ip_be && in->sin_port==htons(7777)) {
+            struct sockaddr_in rw=*in; rw.sin_port=htons(game_port);
+            return real_sendto(s,buf,len,flags,(const struct sockaddr *)&rw,sizeof(rw));
+        }
+    }
+    return real_sendto(s,buf,len,flags,to,tolen);
+}
+static int WSAAPI local_recvfrom(SOCKET s,char *buf,int len,int flags,struct sockaddr *from,int *fromlen) {
+    int r=real_recvfrom(s,buf,len,flags,from,fromlen);
+    if(r>=0 && game_port && from && fromlen && *fromlen>=(int)sizeof(struct sockaddr_in) && from->sa_family==AF_INET) {
+        struct sockaddr_in *in=(struct sockaddr_in *)from;
+        if(in->sin_addr.s_addr==local_ip_be && in->sin_port==htons(game_port)) {
+            if(InterlockedCompareExchange(&udp_rewrote_loopback,0,0)) {
+                in->sin_addr.s_addr=htonl(INADDR_LOOPBACK);
+                in->sin_port=htons(7777);
+            } else if(game_port!=7777) {
+                in->sin_port=htons(7777);
+            }
+        }
+    }
+    return r;
+}
+static int patch_iat_slot(void **slot,void *expected,void *replacement) {
+    DWORD previous,ignored;
+    if(!VirtualProtect(slot,sizeof(void *),PAGE_READWRITE,&previous))return 0;
+    if(InterlockedCompareExchangePointer(slot,replacement,expected)!=expected) {
+        VirtualProtect(slot,sizeof(void *),previous,&ignored);return 0;
+    }
+    if(!VirtualProtect(slot,sizeof(void *),previous,&ignored))return 0;
+    return 1;
+}
 static int image_rva(DWORD rva,SIZE_T size) {return rva<IMAGE_SIZE && size<=IMAGE_SIZE-rva && range_ok((void *)(image_base+rva),size,0);}
 static int install_dns(void) {
     IMAGE_DOS_HEADER *dos=(IMAGE_DOS_HEADER *)image_base;
     IMAGE_NT_HEADERS64 *nt=(IMAGE_NT_HEADERS64 *)(image_base+dos->e_lfanew);
     IMAGE_DATA_DIRECTORY imports=nt->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT];
-    HMODULE winsock=GetModuleHandleW(L"ws2_32.dll");void **slot=NULL;DWORD previous;
+    HMODULE winsock=GetModuleHandleW(L"ws2_32.dll");
+    void **slot=NULL,**slot_connect=NULL,**slot_recvfrom=NULL,**slot_sendto=NULL;
+    int need_ports=(backend_port!=0 || game_port!=0);
     GetAddrInfoFn expected=(GetAddrInfoFn)(uintptr_t)GetProcAddress(winsock,"getaddrinfo");
+    ConnectFn exp_connect=need_ports?(ConnectFn)(uintptr_t)GetProcAddress(winsock,"connect"):NULL;
+    RecvFromFn exp_recvfrom=need_ports?(RecvFromFn)(uintptr_t)GetProcAddress(winsock,"recvfrom"):NULL;
+    SendToFn exp_sendto=need_ports?(SendToFn)(uintptr_t)GetProcAddress(winsock,"sendto"):NULL;
     if(!expected||!image_rva(imports.VirtualAddress,imports.Size))return 0;
+    if(need_ports && (!exp_connect||!exp_recvfrom||!exp_sendto))return 0;
     for(SIZE_T i=0;i<imports.Size/sizeof(IMAGE_IMPORT_DESCRIPTOR);i++) {
         IMAGE_IMPORT_DESCRIPTOR *d=(IMAGE_IMPORT_DESCRIPTOR *)(image_base+imports.VirtualAddress)+i;
         if(!d->Name)break;
@@ -346,7 +420,21 @@ static int install_dns(void) {
             if(!image_rva(nr,8)||!image_rva(tr,8))return 0;
             name=(IMAGE_THUNK_DATA64 *)(image_base+nr);target=(IMAGE_THUNK_DATA64 *)(image_base+tr);
             name_rva=name->u1.AddressOfData;if(!name_rva)break;
-            if(IMAGE_SNAP_BY_ORDINAL64(name_rva))continue;
+            if(IMAGE_SNAP_BY_ORDINAL64(name_rva)) {
+                if(!need_ports)continue;
+                ULONGLONG ord=IMAGE_ORDINAL64(name_rva);
+                if(ord==4) {
+                    if(slot_connect||tr!=0x58fd808||target->u1.Function!=(ULONGLONG)(uintptr_t)exp_connect)return 0;
+                    slot_connect=(void **)&target->u1.Function;
+                } else if(ord==17) {
+                    if(slot_recvfrom||tr!=0x58fd820||target->u1.Function!=(ULONGLONG)(uintptr_t)exp_recvfrom)return 0;
+                    slot_recvfrom=(void **)&target->u1.Function;
+                } else if(ord==20) {
+                    if(slot_sendto||tr!=0x58fd8d0||target->u1.Function!=(ULONGLONG)(uintptr_t)exp_sendto)return 0;
+                    slot_sendto=(void **)&target->u1.Function;
+                }
+                continue;
+            }
             if(name_rva>0xffffffff||!image_rva((DWORD)name_rva,64))return 0;
             if(!strncmp((char *)(image_base+(DWORD)name_rva+2),"getaddrinfo",12)) {
                 if(slot||tr!=0x58fd910||target->u1.Function!=(ULONGLONG)(uintptr_t)expected)return 0;
@@ -355,12 +443,21 @@ static int install_dns(void) {
         }
     }
     if(!slot)return 0;
+    if(need_ports && (!slot_connect||!slot_recvfrom||!slot_sendto))return 0;
     real_getaddrinfo=expected;
-    if(!VirtualProtect(slot,sizeof(void *),PAGE_READWRITE,&previous))return 0;
-    if(InterlockedCompareExchangePointer(slot,(void *)(uintptr_t)local_getaddrinfo,(void *)(uintptr_t)expected)!=(void *)(uintptr_t)expected) {
-        DWORD ignored;VirtualProtect(slot,sizeof(void *),previous,&ignored);return 0;
+    if(!patch_iat_slot(slot,(void *)expected,(void *)local_getaddrinfo))return 0;
+    if(need_ports) {
+        real_connect=exp_connect; real_recvfrom=exp_recvfrom; real_sendto=exp_sendto;
+        if(!patch_iat_slot(slot_connect,(void *)exp_connect,(void *)local_connect) ||
+           !patch_iat_slot(slot_recvfrom,(void *)exp_recvfrom,(void *)local_recvfrom) ||
+           !patch_iat_slot(slot_sendto,(void *)exp_sendto,(void *)local_sendto)) {
+            patch_iat_slot(slot,(void *)local_getaddrinfo,(void *)expected);
+            patch_iat_slot(slot_connect,(void *)local_connect,(void *)exp_connect);
+            patch_iat_slot(slot_recvfrom,(void *)local_recvfrom,(void *)exp_recvfrom);
+            patch_iat_slot(slot_sendto,(void *)local_sendto,(void *)exp_sendto);
+            return 0;
+        }
     }
-    {DWORD ignored;if(!VirtualProtect(slot,sizeof(void *),previous,&ignored))return 0;}
     return 1;
 }
 
@@ -475,6 +572,23 @@ static int patch_oodle_min_size(void) {
     return 0;
 }
 
+static int parse_helper_port(const WCHAR *name,uint16_t *out) {
+    WCHAR buf[16]={0};
+    DWORD len=GetEnvironmentVariableW(name,buf,16);
+    unsigned long value=0;
+    *out=0;
+    if(!len) return GetLastError()==ERROR_ENVVAR_NOT_FOUND;
+    if(len>=16) return 0;
+    for(unsigned i=0;buf[i];i++) {
+        if(buf[i]<L'0'||buf[i]>L'9') return 0;
+        value=value*10+(unsigned long)(buf[i]-L'0');
+        if(value>65535) return 0;
+    }
+    if(!value) return 0;
+    *out=(uint16_t)value;
+    return 1;
+}
+
 static DWORD WINAPI helper_run(LPVOID ignored) {
     WCHAR ca_path[32768]={0},server[64]={0},account[256]={0};IN_ADDR ip;ULONGLONG deadline;
     WCHAR client_log[32768]={0},session[33]={0};char session_marker[80];
@@ -489,9 +603,12 @@ static DWORD WINAPI helper_run(LPVOID ignored) {
     DWORD account_length=GetEnvironmentVariableW(L"FN_LOCAL_ACCOUNT",account,256);
     if(session_length!=32||!client_log_length||client_log_length>=32768||!ca_length||ca_length>=32768||!server_length||server_length>=64||!account_length||account_length>=256||
        InetPtonW(AF_INET,server,&ip)!=1 || !(ip.S_un.S_addr) ||
+       !parse_helper_port(L"FN_LOCAL_BACKEND_PORT",&backend_port) ||
+       !parse_helper_port(L"FN_LOCAL_GAME_PORT",&game_port) ||
        !((ca_path[0]&&ca_path[1]==L':')||(ca_path[0]==L'\\'&&ca_path[1]==L'\\'))) {
         status(L"local helper rejected: explicit local configuration required");return 1;
     }
+    local_ip_be=ip.S_un.S_addr;
     for(unsigned i=0;i<32;i++)if(!((session[i]>=L'0'&&session[i]<=L'9') ||
                                  (session[i]>=L'A'&&session[i]<=L'F'))) {
         status(L"local helper rejected: invalid launch session token");return 1;
@@ -507,7 +624,18 @@ static DWORD WINAPI helper_run(LPVOID ignored) {
     status(L"patched local mode: public CA enrolled in CurrentUser ROOT; TLS verification retained");
     deadline=GetTickCount64()+180000;
     do {
-        if(!dns) {dns=install_dns();if(dns)status(L"local DNS: guarded main-module getaddrinfo redirect installed");}
+        if(!dns) {
+            dns=install_dns();
+            if(dns) {
+                if(backend_port||game_port) {
+                    WCHAR msg[160];
+                    swprintf(msg,160,L"local DNS/port redirect installed (backend=%u, game=%u)",(unsigned)backend_port,(unsigned)game_port);
+                    status(msg);
+                } else {
+                    status(L"local DNS: guarded main-module getaddrinfo redirect installed");
+                }
+            }
+        }
         if(!oodle && patch_oodle_min_size()>0) {
             oodle=1;status(L"local Oodle: net.OodleMinSizeForCompression set to 100000");
         }
