@@ -122,8 +122,17 @@ fi
 read -r -a extra_args <<< "${FN_SERVER_ARGS:--FortniteSkipUnconvertedLegacyShaderMaps -FortniteTolerateNeedLoadDependencies -FortniteSkipEngineClassNetChecksum -FortniteStartingWood=500 -FortniteBlueprintPawn -FortniteNoServerAnimDecode -FortniteInventoryAbilities -FortniteWarmupSeconds=90 -FortniteProbeMovementDefaults -FortniteNetworkTrace=$log_dir/network-rpc.jsonl}"
 
 # Game server output goes to gameserver.log and, by default, also to this terminal (FN_SERVER_STDOUT=0 for file only).
+# The terminal copy hides the known-harmless missing-package flood (the server stage deliberately omits materials,
+# textures, HLOD and audio, so every reference logs "Couldn't find file ... will hitch streaming"); the file keeps
+# everything. FN_SERVER_STDOUT_HIDE overrides the ERE (empty string shows everything).
+stdout_hide=${FN_SERVER_STDOUT_HIDE-'LogStreaming: Error: (This will hitch streaming|Couldn.t find file for package|Found [0-9]+ dependent packages| +/(Game|Engine|Script|Water)/)'}
+if [[ -n $stdout_hide ]]; then
+    stdout_filter=(grep --line-buffered -vE "$stdout_hide")
+else
+    stdout_filter=(cat)
+fi
 if [[ ${FN_SERVER_STDOUT:-1} == 1 ]]; then
-    exec 3> >(tee "$log_dir/gameserver.log")
+    exec 3> >(tee "$log_dir/gameserver.log" | "${stdout_filter[@]}")
 else
     exec 3> "$log_dir/gameserver.log"
 fi
