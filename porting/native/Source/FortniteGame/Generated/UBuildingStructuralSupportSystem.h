@@ -51,24 +51,6 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x384): not a UPROPERTY, not replicated.
 	FBox NativeWorldBounds_0x384 = FBox(ForceInit);
 
-	// Non-reflected field (behaviour kind "member_field", offset 0x384): not a UPROPERTY, not replicated.
-	float NativeRecoveredFloat_0x384;
-
-	// Non-reflected field (behaviour kind "member_field", offset 0x388): not a UPROPERTY, not replicated.
-	float NativeRecoveredFloat_0x388;
-
-	// Non-reflected field (behaviour kind "member_field", offset 0x38c): not a UPROPERTY, not replicated.
-	float NativeRecoveredFloat_0x38c;
-
-	// Non-reflected field (behaviour kind "member_field", offset 0x390): not a UPROPERTY, not replicated.
-	float NativeRecoveredFloat_0x390;
-
-	// Non-reflected field (behaviour kind "member_field", offset 0x394): not a UPROPERTY, not replicated.
-	float NativeRecoveredFloat_0x394;
-
-	// Non-reflected field (behaviour kind "member_field", offset 0x398): not a UPROPERTY, not replicated.
-	float NativeRecoveredFloat_0x398;
-
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	AFortNavigationGraph* NavGraph;

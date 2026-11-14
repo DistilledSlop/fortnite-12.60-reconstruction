@@ -8,12 +8,12 @@ const float Epsilon = 9.999999747378752e-05f;
 const float X = WorldLoc.X;
 const float Y = WorldLoc.Y;
 const float Z = WorldLoc.Z;
-const bool bXLowOk = (X > NativeRecoveredFloat_0x384) || !(FMath::Abs(X - NativeRecoveredFloat_0x384) > Epsilon);
-const bool bXHighOk = !(X > NativeRecoveredFloat_0x390) || !(FMath::Abs(X - NativeRecoveredFloat_0x390) > Epsilon);
-const bool bYLowOk = (Y > NativeRecoveredFloat_0x388) || !(FMath::Abs(Y - NativeRecoveredFloat_0x388) > Epsilon);
-const bool bYHighOk = !(Y > NativeRecoveredFloat_0x394) || !(FMath::Abs(Y - NativeRecoveredFloat_0x394) > Epsilon);
-const bool bZLowOk = (Z > NativeRecoveredFloat_0x38c) || !(FMath::Abs(Z - NativeRecoveredFloat_0x38c) > Epsilon);
-const bool bZHighOk = !(Z > NativeRecoveredFloat_0x398) || !(FMath::Abs(Z - NativeRecoveredFloat_0x398) > Epsilon);
+const bool bXLowOk = (X > NativeWorldBounds_0x384.Min.X) || !(FMath::Abs(X - NativeWorldBounds_0x384.Min.X) > Epsilon);
+const bool bXHighOk = !(X > NativeWorldBounds_0x384.Max.X) || !(FMath::Abs(X - NativeWorldBounds_0x384.Max.X) > Epsilon);
+const bool bYLowOk = (Y > NativeWorldBounds_0x384.Min.Y) || !(FMath::Abs(Y - NativeWorldBounds_0x384.Min.Y) > Epsilon);
+const bool bYHighOk = !(Y > NativeWorldBounds_0x384.Max.Y) || !(FMath::Abs(Y - NativeWorldBounds_0x384.Max.Y) > Epsilon);
+const bool bZLowOk = (Z > NativeWorldBounds_0x384.Min.Z) || !(FMath::Abs(Z - NativeWorldBounds_0x384.Min.Z) > Epsilon);
+const bool bZHighOk = !(Z > NativeWorldBounds_0x384.Max.Z) || !(FMath::Abs(Z - NativeWorldBounds_0x384.Max.Z) > Epsilon);
 if (!(bXLowOk && bXHighOk && bYLowOk && bYHighOk && bZLowOk && bZHighOk))
 {
     return false;
