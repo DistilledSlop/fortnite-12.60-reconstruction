@@ -436,6 +436,23 @@ bool InitializeBuildingHealth(ABuildingActor* Building)
 		return false;
 	}
 
+	// Initialize once per actor: re-running this on every hit reset Health back to full (damage never accumulated).
+	static TSet<TWeakObjectPtr<ABuildingActor>> InitializedBuildings;
+	if (InitializedBuildings.Contains(Building))
+	{
+		return true;
+	}
+	if (InitializedBuildings.Num() > 20000)
+	{
+		for (auto It = InitializedBuildings.CreateIterator(); It; ++It)
+		{
+			if (!It->IsValid())
+			{
+				It.RemoveCurrent();
+			}
+		}
+	}
+
 	EnsureBuildingAttributeDataLoaded();
 
 	const float MaxHealth = GetBuildingMaxHealth(Building);
@@ -444,6 +461,7 @@ bool InitializeBuildingHealth(ABuildingActor* Building)
 		return false;
 	}
 
+	InitializedBuildings.Add(Building);
 	Building->MaxHealthInitializationValue = MaxHealth;
 	const float InitialPct = ResolveInitialHealthPct(Building);
 	const float InitialHealth = FMath::Clamp(MaxHealth * InitialPct, 0.0f, MaxHealth);
@@ -554,6 +572,9 @@ bool ApplyBuildingDamage(
 			? FMath::RoundToInt(ResourcePool)
 			: FMath::FloorToInt(((MaxHealth - NewHealth) / MaxHealth) * ResourcePool);
 		const int32 GrantedAmount = FMath::Max(0, NextTotal - PrevTotal);
+		UE_LOG(LogFortHarvestBuilding, Display, TEXT("Building: %s resource type=%d pool=%.1f curve=%d row=%s max=%d granted=%d (old=%.0f new=%.0f)"),
+			*Building->GetName(), static_cast<int32>(ResType), ResourcePool, bUsedCurve ? 1 : 0,
+			*Building->BuildingResourceAmountOverride.RowName.ToString(), Building->MaxResourcesToSpawn, GrantedAmount, OldHealth, NewHealth);
 
 		if (GrantedAmount > 0)
 		{
@@ -581,6 +602,13 @@ bool ApplyBuildingDamage(
 		{
 			UE_LOG(LogFortHarvestBuilding, Verbose, TEXT("Building: %s had no BuildingResourceAmountOverride curve"), *Building->GetName());
 		}
+	}
+
+	else if (PC)
+	{
+		UE_LOG(LogFortHarvestBuilding, Display, TEXT("Building: %s no resource grant (type=%d allowDrop=%d canGen=%d maxSpawn=%d)"),
+			*Building->GetName(), static_cast<int32>(ResType), Building->bAllowResourceDrop ? 1 : 0,
+			Building->BlueprintCanAttemptGenerateResources(DamageTags, Instigator) ? 1 : 0, Building->MaxResourcesToSpawn);
 	}
 
 	// 4. Weak spot progression or destruction cleanup.
