@@ -11,6 +11,9 @@ SEASON12_LEVEL_OFFER = "350050574100C333CB9ACA8D1CEF9BF6"
 def cosmetic_attributes(template):
     variants = ([{"channel": "Material", "active": "Mat1", "owned": ["Mat1", "Mat2"]}]
                 if template.casefold() in INITIAL_MATERIAL_STYLES else [])
+    if template.casefold() == "athenacharacter:cid_701_athena_commando_m_bananaagent":
+        # CID_701's cooked Progressive channel marks Stage1 default and unlocked.
+        variants = [{"channel": "Progressive", "active": "Stage1", "owned": ["Stage1"]}]
     return {"item_seen": False, "favorite": False, "variants": variants}
 
 

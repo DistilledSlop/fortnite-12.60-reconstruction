@@ -57,7 +57,7 @@ class QuestTests(unittest.TestCase):
     def test_variants_and_rollback(self):
         self.grant(PAID[1])
         char = 'AthenaCharacter:CID_701_Athena_Commando_M_BananaAgent'
-        self.assertEqual(self.item(char)['attributes']['variants'], [])
+        self.assertEqual(self.item(char)['attributes']['variants'], [{'channel':'Progressive','active':'Stage1','owned':['Stage1']}])
         self.grant(PAID[34]); self.grant(PAID[77])
         self.assertEqual(self.item(char)['attributes']['variants'], [{'channel':'Progressive','active':'Stage1','owned':['Stage1','Stage2','Stage3']}])
         self.assertIsNone(self.item('CosmeticVariantToken:VTID_560_BananaAgent_StyleB'))

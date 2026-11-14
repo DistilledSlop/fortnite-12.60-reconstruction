@@ -423,7 +423,18 @@ class QuestService:
 
     def _consume_peely_variants(self, tx, items, character):
         character_id, character_item = character
+        # Repair older grants before consuming the separately earned style tokens.
         variants = copy.deepcopy(character_item['attributes'].get('variants', []))
+        if not isinstance(variants, list):
+            raise _invalid('Invalid owned variant data.')
+        entry = next((v for v in variants if isinstance(v, dict) and v.get('channel') == 'Progressive'), None)
+        if entry is None:
+            variants.append({'channel': 'Progressive', 'active': 'Stage1', 'owned': ['Stage1']})
+        else:
+            if not isinstance(entry.get('owned'), list) or not isinstance(entry.get('active'), str):
+                raise _invalid('Invalid owned variant data.')
+            if 'Stage1' not in entry['owned']:
+                entry['owned'].append('Stage1')
         for token_id, token in items:
             stage = TOKENS.get(token['templateId'].casefold())
             if stage is None:
