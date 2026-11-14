@@ -1,0 +1,7 @@
+# AFortGameMode session-class override
+
+The recovered constructor-installed vtable for `AFortGameMode` has slot +0x698 at `0x141e60820`. This getter calls the `AFortGameSession` reflected class accessor `0x142908180` and writes it to the hidden `TSubclassOf` return storage. Athena's getter at `0x1419467e0` forwards to the same base getter. The local engine declaration is `virtual TSubclassOf<AGameSession> GetGameSessionClass() const`, so the policy emits that exact return type and const override. `AFortGameSession.h` is included in the implementation for the complete class and `StaticClass()`. See `porting/generated/agents/game-session-class-default/report.md` for the vtable and engine correspondence.
+
+This recovers the getter alone. Engine `InitGame` uses the virtual getter to spawn a session; the original Fort `InitGame` subsequently casts and binds a separate `FortGameSession` alias. That method and its derived implementations contain additional unrecovered behavior. This policy does not implement that alias, spawn a session, or recover the lifecycle. Activation can change live session spawn and callbacks and requires lifecycle review.
+
+Integration requires loading this `source_policy.py` alongside the existing `importlib` policy imports in `porting/gen_native_classes.py` and calling `finalize(model, header, cpp)` after header and cpp rendering alongside other finalize policies. The policy is intentionally not activated here.

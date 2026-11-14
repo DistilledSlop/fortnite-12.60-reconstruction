@@ -31,6 +31,8 @@ class FORTNITEGAME_API AFortGameMode : public AFortGameModeBase
 	GENERATED_BODY()
 
 public:
+	virtual TSubclassOf<AGameSession> GetGameSessionClass() const override;
+
 	// table index 63, flags 0x10000000002000
 	UPROPERTY(Transient)
 	uint8 bDisableCloudStorage : 1;

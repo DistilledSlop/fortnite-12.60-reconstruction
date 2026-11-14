@@ -2469,6 +2469,10 @@ _building_foundation_constructor_spec = _common_activation_import.spec_from_file
     "building_foundation_constructor_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "building_foundation_constructor_runtime", "source_policy.py"))
 _building_foundation_constructor_policy = _common_activation_import.module_from_spec(_building_foundation_constructor_spec)
 _building_foundation_constructor_spec.loader.exec_module(_building_foundation_constructor_policy)
+_fort_game_session_class_spec = _common_activation_import.spec_from_file_location(
+    "fort_game_session_class_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "fort_game_session_class_runtime", "source_policy.py"))
+_fort_game_session_class_policy = _common_activation_import.module_from_spec(_fort_game_session_class_spec)
+_fort_game_session_class_spec.loader.exec_module(_fort_game_session_class_policy)
 _replicated_building_defaults_spec = _common_activation_import.spec_from_file_location(
     "replicated_building_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "replicated_building_defaults_runtime", "source_policy.py"))
 _replicated_building_defaults_policy = _common_activation_import.module_from_spec(_replicated_building_defaults_spec)
@@ -4918,6 +4922,7 @@ def promote(args):
         header, cpp = _world_manager_defaults_policy.finalize(model, header, cpp)
         header, cpp = _athena_movement_constructor_policy.finalize(model, header, cpp)
         header, cpp = _building_foundation_constructor_policy.finalize(model, header, cpp)
+        header, cpp = _fort_game_session_class_policy.finalize(model, header, cpp)
         header, cpp = _pawn_hand_socket_policy.finalize(model, header, cpp)
         header, cpp = _replicated_building_defaults_policy.finalize(model, header, cpp)
         header, cpp = _playlist_storm_defaults_policy.finalize(model, header, cpp)
