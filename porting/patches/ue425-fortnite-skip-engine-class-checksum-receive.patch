@@ -1,0 +1,19 @@
+diff --git a/Engine/Source/Runtime/Engine/Private/PackageMapClient.cpp b/Engine/Source/Runtime/Engine/Private/PackageMapClient.cpp
+--- a/Engine/Source/Runtime/Engine/Private/PackageMapClient.cpp
++++ b/Engine/Source/Runtime/Engine/Private/PackageMapClient.cpp
+@@ -992,7 +992,14 @@
+ 			{
+ 				const uint32 CompareNetworkChecksum = GuidCache->GetNetworkChecksum( Object );
+ 
+-				if (CompareNetworkChecksum != NetworkChecksum )
++				// Fortnite original client: GetNetworkChecksum returns 0 ("not checked") for engine classes when
++				// -FortniteSkipEngineClassNetChecksum is set, because the shipping client's engine class layouts differ from stock
++				// 4.25. The client still sends its own real checksum for such objects (for example a building's
++				// StaticMeshComponent0 in a hit target), so a 0 here is not a mismatch.
++				static const bool bFortniteSkipEngineClassChecksumReceive = FParse::Param( FCommandLine::Get(), TEXT( "FortniteSkipEngineClassNetChecksum" ) );
++				const bool bSkippedEngineClass = bFortniteSkipEngineClassChecksumReceive && CompareNetworkChecksum == 0;
++
++				if (!bSkippedEngineClass && CompareNetworkChecksum != NetworkChecksum )
+ 				{
+ 					FString ErrorStr = FString::Printf(TEXT("UPackageMapClient::InternalLoadObject: Default object package network checksum mismatch! PathName: %s, ObjOuter: %s, GUID1: %u, GUID2: %u "), *PathName, ObjOuter != NULL ? *ObjOuter->GetPathName() : TEXT("NULL"), CompareNetworkChecksum, NetworkChecksum);
+ 					UE_LOG( LogNetPackageMap, Error, TEXT("%s"), *ErrorStr);
