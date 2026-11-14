@@ -1213,9 +1213,27 @@ namespace FortAthenaMatchFlowPrivate
     // While a pawn is skydiving the server takes the client's position and movement mode (both CMC flags set in
     // OnPlayerRestarted). Normal server authority returns once the mirrored mode is no longer custom and the pawn is on
     // the ground.
-    void RestoreMovementAuthority(UCharacterMovementComponent* Movement)
+    // stand-in: the server has no building collision and lacks most original movement overrides, so its own simulation
+    // disagrees with the original client (porting/notes/MOVEMENT_AUTHORITY_REPORT.md). By default the server therefore
+    // takes the client's position and movement mode for all movement. -FortniteServerMovementAuthority restores server
+    // authority outside skydiving; acceptance runs that measure corrections must pass it.
+    bool UseServerMovementAuthority()
+    {
+        static const bool bEnabled = FParse::Param(FCommandLine::Get(), TEXT("FortniteServerMovementAuthority"));
+        return bEnabled;
+    }
+
+    void AcceptClientMovement(UCharacterMovementComponent* Movement)
     {
         if (!Movement)
+            return;
+        Movement->bIgnoreClientMovementErrorChecksAndCorrection = true;
+        Movement->bServerAcceptClientAuthoritativePosition = true;
+    }
+
+    void RestoreMovementAuthority(UCharacterMovementComponent* Movement)
+    {
+        if (!Movement || !UseServerMovementAuthority())
             return;
         Movement->bIgnoreClientMovementErrorChecksAndCorrection = false;
         Movement->bServerAcceptClientAuthoritativePosition = false;
@@ -2137,6 +2155,9 @@ namespace FortAthenaMatchFlow
 
     void OnPlayerRestarted(AFortGameModeAthena* GameMode, AController* Controller)
     {
+        if (!UseServerMovementAuthority())
+            if (const ACharacter* Character = Controller ? Cast<ACharacter>(Controller->GetPawn()) : nullptr)
+                AcceptClientMovement(Character->GetCharacterMovement());
         FMatchFlowState& S = State();
         if (!S.bActive || !GameMode || !Controller)
             return;

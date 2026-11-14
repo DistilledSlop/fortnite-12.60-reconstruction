@@ -1,6 +1,6 @@
 # Movement authority report: slow walking, jump glitches, falling through floors and walls
 
-Date: 2026-11-14. Investigation only; no source, config or running server was changed.
+Date: 2026-11-14. The only code change is the client-authority default described in section 4, Step 0.
 
 ## 1. Short answer
 
@@ -181,59 +181,130 @@ server's movement network settings (they are the original file's values).
 
 ## 4. How to fix it
 
-### Step 1. Make the problem measurable (do this first, about an hour)
+File and function names below are in `porting/native/Source/FortniteGame/` unless a full path is given.
+`MatchFlow.cpp` means `Private/FortAthenaMatchFlow.cpp`.
 
-1. Start the live server (`porting/run_chrono_server.sh`) with the same diagnostics the rig uses:
-   `-FortniteProbeMovementDefaults`, `-FortniteNetworkTrace=<file>`, and
-   `LogNetPlayerMovement VeryVerbose` in `-LogCmds`. Play one minute: walk on open ground, jump while running, walk
-   into a building, walk up a ramp. That gives the first real high-framerate trace.
-2. Summarise it with the same three numbers per 5 s bucket used here: moves received, good acks, corrections; plus
-   the error vector and both movement modes for every corrected move.
-3. Add to the rig's action list: a jump while holding W, a walk off a ledge, and a run up a ramp. Record the rig's
-   move interval in the acceptance checkpoint and mark a run invalid if it exceeds 0.05 s while moving.
-4. Acceptance target for every later step: on open terrain, zero corrections in a 60 s session of walking, sprinting
-   and moving jumps from your client.
+### Step 0. Client authority for all movement (done 2026-11-14, built, needs a server restart)
 
-### Step 2. Give the server building collision (fixes floors and walls)
+The server already trusted the client during skydiving, because skydive physics was never ported. That stand-in set
+two engine flags on the pawn's movement component at bus exit and cleared them at landing:
+`bIgnoreClientMovementErrorChecksAndCorrection` (no corrections are generated) and
+`bServerAcceptClientAuthoritativePosition` (after each move the server sets its pawn to the client's position,
+movement mode and floor).
 
-1. Load the foundation sub-levels on the server, including nested children, at the authored transforms. The recovered
-   foundation selection, level-record and streaming-cache functions (commits `bdf9d2d8`, `b419a651`, `04db8f45`) are
-   the right entry point; what is missing is the lifecycle that actually streams the selected levels in and makes
-   them visible on a dedicated server.
-2. Confirm collision, not just loading: for the known contact at `(182272, -174016, -2944)` the server must return a
-   blocking hit on `S_Cave_Inner_Middle` with normal `(-1, 0, 0)`. The earlier probe loaded 679 meshes and still had
-   no usable contact, and five collision payloads are rejected as malformed, so check that the cooked collision
-   bodies are actually installed for the loaded meshes.
-3. Acceptance: repeat sections 2.2 and 2.3. The server floor must be the mesh, the server must stop at the wall, and
-   the standing 20.95 cm error must be gone.
+This is now the default for all movement:
 
-### Step 3. Port the original movement functions (fixes jumping and airborne behaviour)
+- `MatchFlow.cpp`: new `UseServerMovementAuthority()` (true only with `-FortniteServerMovementAuthority`) and
+  `AcceptClientMovement()`. `OnPlayerRestarted` calls `AcceptClientMovement` for every player pawn.
+  `RestoreMovementAuthority` (the landing hand-back) does nothing unless the flag is given.
+- Effect: no corrections are sent. Walking, jumping, floors and walls behave exactly as the client simulates them.
+- Sync: other players and all server gameplay (storm, pickups, damage, building) use the position the client
+  reported, so everyone sees the same thing. It does not desynchronise. What is lost is cheat protection (a modified
+  client could move anywhere), and server-side fall detection now follows the client's movement mode.
+- Every acceptance run in Steps 1 to 3 must pass `-FortniteServerMovementAuthority`, otherwise it measures nothing.
 
-Port from the appendix in this order, building and running the Step 1 test after each group rather than after each
-function:
+### Step 1. Make the problem measurable
 
-1. Airborne group: `0x1420e0430`, `0x1420e5a40`, `0x1420e5200`, `0x1419c2ad0` (Athena jump permission),
-   `0x1420eb9b0` / `0x1419ec080` (landing), `0x1420e00f0`, `0x1420efc20`, `0x1420ee220` (air control),
-   `0x1420eee30`, `0x1420e3b30` (ledge / catch air).
-2. Ground velocity group: `0x1420d9260`, `0x1420da7a0`, `0x1420ecb40` / `0x1419efe30`, `0x1420e1980` /
-   `0x1419d5340`, `0x1420e20f0`, `0x1420f48b0` / `0x1419fff40`, `0x1420f4810` / `0x1419fff00`.
-3. Mode group: `0x1420edf10`, `0x1420e6e30`, `0x1420e85a0`.
-4. Collision response: `0x1420e2d80`, `0x1420da1d0`, `0x1419dfce0`.
-5. `TickComponent`: `0x1420f0970`, `0x1419fdef0`.
-6. Server-side networking slots 299 to 310.
+1. Live server: `porting/run_chrono_server.sh` builds its arguments from `FN_SERVER_ARGS` (line 122) and
+   `-LogCmds` from `server_log_cmds` (line 141). Start it with the existing defaults plus
+   `-FortniteServerMovementAuthority -FortniteProbeMovementDefaults -FortniteNetworkTrace=<run dir>/network-rpc.jsonl`
+   and add `LogNetPlayerMovement VeryVerbose` to the log commands. The pair trace needs the engine patch
+   `porting/patches/ue425-fortnite-movement-pair-trace.patch`, which is already applied in the engine checkout.
+2. Add a summariser at `porting/tools/movement_pairs.py` (the throwaway version used for this report parsed
+   `FortMovementPair` lines and joined them to `network-rpc.jsonl` by time). Output per 5 s bucket: moves, good acks,
+   full and short corrections; per corrected move: timestamp gap, physics delta, both modes, error vector, floor
+   component. Note the server log is UTC and the RPC trace is Unix time.
+3. Rig (`tools/vanilla_play_run.sh`, `FN_ACTIONS`): add `hold,w,4` overlapping a `key,space` (moving jump), a walk
+   off the spawn-island ledge at X 180750 to 181030 (section 2.2), and a ramp. Write the median move interval while
+   moving into `acceptance-checkpoint.json` and fail the run if it is above 0.06 s.
+4. Target for every later step, with the authority flag on: zero corrections in 60 s of walking, sprinting and moving
+   jumps on open terrain from a real client.
 
-While doing group 1, find the source of the gravity-free first jump step (section 2.4): break on the client's
-falling-physics function `0x1440bc140` during a jump and read the character's jump-force time (`+0x328`) and the
-movement flag byte (`+0x1f0`). If the force time is non-zero, find what writes it.
+### Step 2. Building collision on the server
 
-### Step 4. Optional stopgap so the game is playable meanwhile
+What exists: `ABuildingFoundation` (`Generated/ABuildingFoundation.cpp`) has the recovered selection functions
+(`NativeSelectBuildingLevel`, `NativePickBuildingPackage`, `NativeGetBuildingRotation`, `NativeCanSelectBuildingLevel`,
+`NativeIsFoundationAndParentsEnabled`) and the replicated fields `AdditionalWorlds`, `LevelToStream`,
+`bServerStreamedInLevel`, `LevelStreamInfo`. `OnRep_LevelToStream` and `OnRep_ServerStreamedInLevel` are empty.
+The only code that loads a foundation level is the diagnostic `StartFoundationCollisionCausalityProbe`
+(`MatchFlow.cpp`), which loads `AdditionalWorlds[0]` of one named actor with
+`ULevelStreamingDynamic::LoadLevelInstance` and refuses anything else.
 
-Unreal has a supported "trust the client" switch: `ClientAuthorativePosition=true` under
-`[/Script/Engine.GameNetworkManager]` in the server's `DefaultGame.ini` (currently `false`), together with setting
-`bIgnoreClientMovementErrorChecksAndCorrection` on the player's movement component. With both, the server stops
-sending corrections and adopts the client's position each move, so walking, jumping, floors and walls behave as the
-client simulates them. It removes cheat protection and hides the real bugs, so it should sit behind a launch flag and
-be off in every acceptance run. It is a workaround, not the fix.
+What to build:
+
+1. A server-side foundation streaming pass, run once when the match world is ready (same place the match flow
+   starts), then again for each level that becomes visible:
+   - iterate `TActorIterator<ABuildingFoundation>`; skip when `!NativeIsFoundationAndParentsEnabled()`;
+   - package = `NativeSelectBuildingLevel(...)` when `NativeCanSelectBuildingLevel()`, else `AdditionalWorlds[0]`
+     when there is exactly one;
+   - `LoadLevelInstance(World, Package, ActorLocation, ActorRotation + NativeGetBuildingRotation(), bOk)`, set
+     `SetShouldBeLoaded(true)` / `SetShouldBeVisible(true)`, store the result in `LevelStreamInfo`;
+   - on the level's `OnLevelShown`, set `bServerStreamedInLevel = true` and `LevelToStream`, then run the same pass
+     over the foundations inside the newly shown level. That recursion is what the probe lacks and what reaches
+     `Apollo_7x12_BusPort_b` (child of `LF_7x12_Parent2_2` inside `Apollo_POI_LobbyIsland_b`).
+   - Keep one instance per foundation; key by `NativeComputeFoundationInstanceId`.
+2. Replace the pass with the original lifecycle as it is recovered (the functions that call the selector and write
+   `LevelToStream`); the pass above is a stand-in and must be marked as one.
+3. Collision bodies. Loading is not enough: the earlier probe loaded 679 meshes with 672 physics states and still
+   had no usable contact. For each loaded `UStaticMeshComponent` check `GetBodySetup()->AggGeom` element counts and
+   that the cooked convex data was accepted (engine patch `ue425-fortnite-legacy-chaos-collision.patch`; five
+   payload shapes are still rejected as malformed). The reference mesh is `S_Cave_Inner_Middle`: three convex
+   elements with 13, 13 and 12 vertices.
+4. Acceptance, using the existing `-FortniteProbeFoundationColumn=X=182250,Y=-174016,Z=-2950`: a capsule sweep in
+   +X must hit `S_Athena_Foundation_Straight66.StaticMeshComponent0` at about `(182272, -174016, -2944)` with normal
+   `(-1, 0, 0)`. Then repeat sections 2.2 and 2.3 with the authority flag on.
+
+### Step 3. Port the original movement functions
+
+How one override is added (the six existing ones all follow this):
+
+1. Capture the body: put the address in a JSON list and run
+   `python3 /opt/fortnite/local-model-package/scripts/evidence.py capture --input <file>`.
+2. Write the typed body as `porting/behavior/UFortMovementComp_Character/<Function>.inc` (or `..._CharacterAthena/`).
+   Raw offsets become named members; `evidence.py field-offset <Class> <offset>` names them.
+3. Add a `porting/behavior/MANIFEST.json` entry in the same shape as the existing `ApplyVelocityBraking` one:
+   `"kind": "helper", "virtual": true, "override": true, "access": "public"`, the engine signature, `"address"`,
+   `"inc_path"`, `"status": "ported"`.
+4. If the body needs new native state, checks on other classes or extra includes, add a
+   `porting/generator_policies/<name>_runtime/source_policy.py` with `apply(model)` and `finalize(model, header, cpp)`
+   and register it in `gen_native_classes.py` next to `athena_movement_constructor_policy` (about line 2466).
+   `movement_max_acceleration_runtime` is the model to copy.
+5. Regenerate, then `tools/build_server.sh --stage`. Do not edit files under `Generated/` by hand.
+
+Order of work. Slots 125, 126, 139, 169, 197, 218 and 274 are confirmed; confirm every other name against its body.
+
+| Order | Original | Function | Notes |
+|---|---|---|---|
+| 1 | `0x1420e5200` | `IsFalling` | Body is already written: `generator_policies/airborne_movement_runtime/IsFalling.inc`. Copy to `behavior/UFortMovementComp_Character/` and add the proposed manifest entry beside it. |
+| 2 | `0x1420e0430` | `GetGravityZ` | `Super::GetGravityZ()` x pawn virtual `+0x928` (`0x14231c490`, reads `GravityZScale`) x for player pawns `0x142325690` (second movement-set attribute at set `+0x198`); in custom modes 3, 4, 5, 9, 12 also x `GetAirControlParams().GravityScalar.GetValueAtLevel(GetAirControlLevel())`. `GetAirControlParams` and `GetAirControlLevel` already exist on the server. |
+| 3 | `0x1420e5a40` | `NewFallVelocity` | Ordinary falling forwards to stock (`0x1440b85c0`); custom modes use lateral friction, terminal and upward-terminal speeds from the air-control block and cache velocity at original `+0x1e0c`. Needs the shared byte `+0x1dfe` (already `NativeDoJumpFlag1dfd`) and the cached vector as typed members. |
+| 4 | `0x1420e85a0` | `PhysCustom` | Dispatch specimen exists (`PhysCustom.blocked.inc`). Modes 3, 4, 9, 12 run stock `PhysFalling` with the flag byte set; that part can ship first. Modes 5, 6, 7, 8, 10 need handlers `0x1420e9390`, `0x1420e8700`, `0x1420e9010`, `0x1420ea420`, `0x1420e9ae0`. Once 3 and 4 work, delete the skydive stand-in in `MatchFlow.cpp`. |
+| 5 | `0x1419c2ad0` | Athena `CanAttemptJump` | 22 decompiled lines. |
+| 6 | `0x1420eb9b0`, `0x1419ec080` | `ProcessLanded` (Fort, Athena) | 201 lines; fall-damage and landing state. |
+| 7 | `0x1420e00f0`, `0x1420efc20`, `0x1420ee220` | air control (slots 230, 231, 237) | Never compared at runtime: the rig only jumps standing still. |
+| 8 | `0x1420eee30`, `0x1420e3b30` | catch-air and walking-off-ledge (188, 189) | |
+| 9 | `0x1420d9260` | `CalcVelocity` | 84 lines, mode-dependent. |
+| 10 | `0x1420da7a0`, `0x1420ecb40`, `0x1419efe30` | constrain / scale input acceleration | 83 and 198 lines. |
+| 11 | `0x1420e1980`, `0x1419d5340`, `0x1420e20f0` | braking deceleration, minimum analog speed | |
+| 12 | `0x1420f48b0`, `0x1419fff40`, `0x1420f4810`, `0x1419fff00` | state update before / after movement | |
+| 13 | `0x1420edf10`, `0x1420e6e30` | `SetMovementMode`, `OnMovementModeChanged` | 415 lines; caches acceleration and velocity when leaving a custom mode. |
+| 14 | `0x1420e2d80`, `0x1420da1d0`, `0x1419dfce0` | `HandleImpact`, `ComputeSlideVector`, Athena move-component | |
+| 15 | `0x1420f0970`, `0x1419fdef0` | `TickComponent` | 189 and 18 lines. |
+| 16 | slots 299 to 310 | server prediction data, client adjustment | Only the server-side ones. |
+
+Two existing server bodies should be re-checked while doing this: Athena `GetMaxSpeed` (`0x1419d53d0`) applies
+`JumpPenalties[index].MovementScalar` while the penalty timer is running and a pawn multiplier at `+0x2e28`; the
+server only has the Fort-level `GetMaxSpeed`. That is a direct candidate for a wrong ground speed after jumping.
+
+For the gravity-free first jump step (section 2.4): attach to the client as the collision-hit259 run did, hardware
+breakpoint on the client's falling physics `0x1440bc140`, and on the first hit after a jump read character
+`+0x328` (jump force time remaining), `+0x330` (jump max hold time) and movement component byte `+0x1f0` bit 1.
+If `+0x328` is non-zero, set a write watchpoint on it to find the writer.
+
+### Step 4. Turn server authority back on
+
+When Step 1's target is met with `-FortniteServerMovementAuthority`, invert the default in
+`UseServerMovementAuthority()` and delete `AcceptClientMovement` together with the skydive stand-in.
 
 ## 5. What is and is not established
 
