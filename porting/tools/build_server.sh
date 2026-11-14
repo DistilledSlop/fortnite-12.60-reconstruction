@@ -21,6 +21,9 @@ if ((status != 0 || errors > 0)); then
 fi
 echo "Build OK ($(tail -1 "$log"))"
 if [[ ${1:-} == --stage ]]; then
+    python3 -I "$porting/tools/stage_original_plugin_content.py" \
+        --extracted "${FN_EXTRACTED_ROOT:-/mnt/vibrato/fortnite-extracted-full}" \
+        --stage "$porting/generated/linux-stage/LinuxNoEditor/FortniteLinux" || exit 1
     python3 "$porting/tools/stage_gameplay_tags.py" \
         --src-game "${FN_COOKED_GAME_ROOT:-/mnt/vibrato/fortnite-extracted-full/FortniteGame}" \
         --dst-stage "$porting/generated/linux-stage/LinuxNoEditor/FortniteLinux" || exit 1

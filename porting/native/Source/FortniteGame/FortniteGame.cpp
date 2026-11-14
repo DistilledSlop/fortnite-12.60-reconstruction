@@ -200,12 +200,60 @@ static void BindNetworkEncryptionDelegate()
 
 extern void InitializeFortAthenaGameStateClass();
 
+// The original game features include explicitly loaded content plugins. Their
+// roots are recovered from the extracted descriptors during server staging.
+static void RegisterOriginalPluginMounts()
+{
+    TArray<FString> Lines;
+    const FString Manifest = FPaths::Combine(FPaths::ProjectConfigDir(), TEXT("OriginalPluginMounts.txt"));
+    if (!FFileHelper::LoadFileToStringArray(Lines, *Manifest))
+    {
+        UE_LOG(LogFortniteNet, Warning, TEXT("Original plugin mount manifest unavailable: %s"), *Manifest);
+        return;
+    }
+    if (Lines.Num() == 0)
+    {
+        UE_LOG(LogFortniteNet, Fatal, TEXT("Empty original plugin mount manifest: %s"), *Manifest);
+    }
+    TSet<FString> Seen;
+    for (const FString& Line : Lines)
+    {
+        FString Name, Relative;
+        bool bValid = Line.Split(TEXT("|"), &Name, &Relative) && !Name.IsEmpty()
+            && Relative.StartsWith(TEXT("OriginalPluginContent/")) && !Relative.EndsWith(TEXT("/"));
+        for (TCHAR C : Name)
+        {
+            bValid &= (C >= 'A' && C <= 'Z') || (C >= 'a' && C <= 'z') || (C >= '0' && C <= '9') || C == '_';
+        }
+        for (TCHAR C : Relative)
+        {
+            bValid &= (C >= 'A' && C <= 'Z') || (C >= 'a' && C <= 'z') || (C >= '0' && C <= '9') || C == '_' || C == '/';
+        }
+        bValid &= !Relative.Contains(TEXT("//")) && !Seen.Contains(Name);
+        const FString Directory = FPaths::Combine(FPaths::ProjectDir(), Relative);
+        bValid &= FPaths::DirectoryExists(Directory);
+        if (!bValid)
+        {
+            UE_LOG(LogFortniteNet, Fatal, TEXT("Invalid original plugin mount manifest entry: %s"), *Line);
+        }
+        Seen.Add(Name);
+        const FString Root = FString::Printf(TEXT("/%s/"), *Name);
+        // Preserve roots already registered by the engine's plugin manager.
+        if (!FPackageName::IsValidLongPackageName(Root + TEXT("MountProbe")))
+        {
+            FPackageName::RegisterMountPoint(Root, Directory + TEXT("/"));
+            UE_LOG(LogFortniteNet, Log, TEXT("Registered original plugin mount %s -> %s"), *Root, *Directory);
+        }
+    }
+}
+
 class FFortniteGameModule : public FDefaultGameModuleImpl
 {
 public:
     virtual void StartupModule() override
     {
         FDefaultGameModuleImpl::StartupModule();
+        RegisterOriginalPluginMounts();
         // Separate engine callback broadcasts before the core callback that finalizes tags.
         // Loading table assets in module StartupModule can recurse through pending CDO loads.
         PRAGMA_DISABLE_DEPRECATION_WARNINGS
