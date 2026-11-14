@@ -12,7 +12,7 @@ import struct
 from pathlib import Path
 import time
 
-from probe_athena_phase import snapshot
+from probe_athena_phase import finite, snapshot
 from probe_equipment_pose import component, req
 
 LIMITATIONS = [
@@ -39,6 +39,15 @@ def capture(pid):
             if aircraft is None:
                 continue
             actor = int(aircraft['object']['address'], 16)
+            # Original reflection block 0x1462e4f90; FlightInfo struct
+            # 0x1479873f0. See generated/agents/paired-phase-sampler/offset-evidence.json.
+            aircraft['flight_timing'] = {
+                'flight_start_time': finite(mem, actor + 0x2d0, 'flight start time'),
+                'replicated_flight_timestamp': finite(mem, actor + 0x2e4, 'replicated flight timestamp'),
+                'flight_elapsed_time': finite(mem, actor + 0x2e8, 'flight elapsed time'),
+                'client_flight_timer_drift': finite(mem, actor + 0x2ec, 'client flight timer drift'),
+                'flight_speed': finite(mem, actor + 0x2a8 + 0x18, 'flight speed'),
+            }
             root = req(mem, actor + 0x130, '<Q', 'aircraft root')
             if not root:
                 aircraft['root'] = None
