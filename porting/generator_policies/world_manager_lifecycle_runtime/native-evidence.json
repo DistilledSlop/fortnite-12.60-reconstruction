@@ -95,6 +95,116 @@
       "address": "0x141738f90",
       "length": 103,
       "sha256": "70be6c5aedc30536b2995d24c307e14ba15e19e8d8aa59b35662199e267d4c1a"
+    },
+    {
+      "address": "0x141fbf660",
+      "length": 32,
+      "sha256": "8a57dc3c0891ff7ba4b881d6000e67d39b1bd86deb0df51e795b26a8c0cd7fd2"
+    },
+    {
+      "address": "0x141f8a060",
+      "length": 32,
+      "sha256": "5c0f8f37dee5c5c9b818bc02f4add8b478490869bec88f43e7058bf2e76bdc3e"
+    },
+    {
+      "address": "0x1446939f0",
+      "length": 32,
+      "sha256": "835f8c024e300cc7cc1616ed757057e36a275a38301516d351ef5649c075d6f0"
+    },
+    {
+      "address": "0x141fbc430",
+      "length": 32,
+      "sha256": "da9c671b4cbb1ea13b115435d8c1661c70566db7c8657147d8c3d54791b6562a"
+    },
+    {
+      "address": "0x141ed2b70",
+      "length": 32,
+      "sha256": "b085061dcd4c64607e3ec953ceda9cb83331c8bf63f0baca8ffa44e233860988"
+    },
+    {
+      "address": "0x141bdca70",
+      "length": 32,
+      "sha256": "f7d6104e1b4c47830ae062f820bd591640d394faca6b7aec8e0f1761e93818aa"
+    },
+    {
+      "address": "0x141be5f10",
+      "length": 32,
+      "sha256": "55f4148c1cdea10b7f18579a9a87977d9cc8da4c7c636e3c43cb59dd7e2dd088"
+    },
+    {
+      "address": "0x141be60c0",
+      "length": 32,
+      "sha256": "60b93c3cefdba9cc60286b90b59f26673bf156438fb62266af8d5bb41cc4162c"
+    },
+    {
+      "address": "0x141ed80a0",
+      "length": 32,
+      "sha256": "0340a8ca81f3e91ec684b3756b320e6ce3909535d6809dfdd0924759cea43210"
+    },
+    {
+      "address": "0x142eda0f0",
+      "length": 32,
+      "sha256": "5ea43b4688b15f53b86e0da3cd1a549b1ea747cc3268f6b08aa21c3d266557c0"
+    },
+    {
+      "address": "0x141bdd6e0",
+      "length": 32,
+      "sha256": "6a3c461f4fae0fdee33964df31e15ef67e69d36ef00b0636be7a0b2a0a3c18e0"
+    },
+    {
+      "address": "0x1426cce00",
+      "length": 32,
+      "sha256": "ceac6a4aec58de375190842112f288add8e0f882a1aa6355c98f85f2caa27c5f"
+    },
+    {
+      "address": "0x1417e3f70",
+      "length": 32,
+      "sha256": "33313d27a92da990648af26819546635f74610bb0b5c94aa886341ec7d6adeed"
+    },
+    {
+      "address": "0x1426cc820",
+      "length": 32,
+      "sha256": "e840bd3a3fc3edcf1d1a2e95d210b77a1ddaee5c6b260235a7ee16a9911ebdcd"
+    },
+    {
+      "address": "0x141be60b0",
+      "length": 32,
+      "sha256": "27c66e1c1f1835d1e8a5d36f2863e26cba67f4a45975baae5ee48d5a1fc936ef"
+    },
+    {
+      "address": "0x1406801c0",
+      "length": 32,
+      "sha256": "d7d4bcc7351b8f4260fdc882f581069163d9d2a7390c44c054e77f3c345ee9cc"
+    },
+    {
+      "address": "0x141fbb310",
+      "length": 32,
+      "sha256": "dd5260180b16f49a8512e46a1111e178ffb60cf80c3a8d2ddc6375130ff2d48e"
+    },
+    {
+      "address": "0x141fbc250",
+      "length": 32,
+      "sha256": "dd8f82f78113cdc18045b0a44cf580d3dac4a8b2b0c5d84ffa9828743554714d"
+    },
+    {
+      "address": "0x141fc6bf0",
+      "length": 32,
+      "sha256": "a16c5a0ad428cd48029ab1d230fd61d4d4dda95a80d73dd1117f5a0d69052cca"
+    },
+    {
+      "address": "0x141fc2c80",
+      "length": 32,
+      "sha256": "718b4847f0047054b0dbce95e48096c2bae3128b2141b708d79395d3654db5a4"
+    },
+    {
+      "address": "0x141fc2cb0",
+      "length": 32,
+      "sha256": "dd0db4b9b6f632dddfc5842489c994eec4ff0b974617710f1a24f6b1a7b11093"
+    },
+    {
+      "address": "0x141fa4e4b",
+      "length": 50,
+      "sha256": "d0cb72fc0660eba41cb70cf6c3a45283f63dd9dca85b4a619a0bd6ea9dde7216"
     }
   ],
   "fields": {
@@ -136,5 +246,136 @@
       "0x141738f90": "UAthenaNavSystem::NativeMarkBuildingFoundationDirty; nonnull foundation argument, actual root transform or original identity, flags3=Geometry|DynamicModifier"
     },
     "runtime": "No new caller; UE build/runtime pending. Missing stream root, callbacks and initialization remain explicit dependencies."
+  },
+  "saved_level_lookup": {
+    "bodies": {
+      "0x141fbf660": "UFortZoneRecord::NativeFindActorLevelRecord; first package match, optional index set to -1 on failure, borrowed mutable record pointer",
+      "0x141f8a060": "AFortWorldManager::NativeQueryPersistedFoundationPackage; valid world record and foundation, PIE exclusion, valid guid or tile, parent record then first matching child by tile XY or guid"
+    },
+    "predicate": "0x1446939f0 reads world byte0x11a ==3; Engine EWorldType::PIE==3",
+    "preconditions": "CurrentZoneRecord paired with CurrentWorldRecord by native lifecycle; no added fallback. No new caller; UE build/runtime pending."
+  },
+  "cull_distance_math": {
+    "bodies": {
+      "0x141fbc430": "AFortWorldSettings::NativeCullDistanceForSize141fbc430; exact ordered clamp comparisons and logf formula, live settings or UFortGlobals singleton",
+      "0x141ed2b70": "UFortGlobals::NativeDefaultCullDistance141ed2b70; average live min and max distance"
+    },
+    "evidence": "local-model-package/captures/85af581843274703bf64d7d262c4fc59; proposal generated/agents/building-cull268",
+    "runtime": "Independent helpers only; building component cull updates, global multicast and game-state virtuals remain unresolved. UE build/runtime pending."
+  },
+  "foundation_selection": {
+    "status": "Full candidate builder, cached group resolver, selector, package virtual family and rotation virtual family; no streaming entry point installed",
+    "dispatch": [
+      {
+        "class": "ABuildingFoundation",
+        "vtable": "0x145f0e530",
+        "constructor_or_wrapper": "0x141bce060",
+        "slots": {
+          "0xeb8": "0x141be5f10",
+          "0xec0": "0x141bdd6e0",
+          "0xec8": "0x1417e3f70",
+          "0xed8": "0x1406801c0"
+        }
+      },
+      {
+        "class": "AAthenaBuildingFoundationObjective",
+        "vtable": "0x145dc7af0",
+        "constructor_or_wrapper": "0x1427188b0",
+        "slots": {
+          "0xeb8": "0x141be5f10",
+          "0xec0": "0x141bdd6e0",
+          "0xec8": "0x1417e3f70",
+          "0xed8": "0x1406801c0"
+        }
+      },
+      {
+        "class": "ABuildingFoundation3x3",
+        "vtable": "0x145f0e530",
+        "constructor_or_wrapper": "0x141bcdcd0",
+        "slots": {
+          "0xeb8": "0x141be5f10",
+          "0xec0": "0x141bdd6e0",
+          "0xec8": "0x1417e3f70",
+          "0xed8": "0x1406801c0"
+        }
+      },
+      {
+        "class": "ABuildingFoundation5x10",
+        "vtable": "0x145f0e530",
+        "constructor_or_wrapper": "0x141bcde00",
+        "slots": {
+          "0xeb8": "0x141be5f10",
+          "0xec0": "0x141bdd6e0",
+          "0xec8": "0x1417e3f70",
+          "0xed8": "0x1406801c0"
+        }
+      },
+      {
+        "class": "ABuildingFoundation5x5",
+        "vtable": "0x145f0e530",
+        "constructor_or_wrapper": "0x141bcdf30",
+        "slots": {
+          "0xeb8": "0x141be5f10",
+          "0xec0": "0x141bdd6e0",
+          "0xec8": "0x1417e3f70",
+          "0xed8": "0x1406801c0"
+        }
+      },
+      {
+        "class": "ABuildingFoundationMayday",
+        "vtable": "0x14625cdb0",
+        "constructor_or_wrapper": "0x14273dc30",
+        "slots": {
+          "0xeb8": "0x141be60b0",
+          "0xec0": "0x141bdd6e0",
+          "0xec8": "0x1417e3f70",
+          "0xed8": "0x1406801c0"
+        }
+      },
+      {
+        "class": "ABuildingFoundationSlab",
+        "vtable": "0x145f67ab0",
+        "constructor_or_wrapper": "0x141c58140",
+        "slots": {
+          "0xeb8": "0x141be5f10",
+          "0xec0": "0x141bdd6e0",
+          "0xec8": "0x1417e3f70",
+          "0xed8": "0x1406801c0"
+        }
+      },
+      {
+        "class": "AWorldTileFoundation",
+        "vtable": "0x146222da0",
+        "constructor_or_wrapper": "0x1426be270",
+        "slots": {
+          "0xeb8": "0x141be5f10",
+          "0xec0": "0x1426cce00",
+          "0xec8": "0x1426cc820",
+          "0xed8": "0x1406801c0"
+        }
+      }
+    ],
+    "shared_types": "FortFoundationCandidateNative.h; native sequence TArray<float>+0,index+10,count+14; count independent of TArray.Num. Original candidate stride38 world+0,name+28,weight+30. No replacement lifecycle/default random generator.",
+    "conversion": "141ed80a0 = soft path ToString, truncate first dot if present; preserve undotted strings. Does not use GetLongPackageName.",
+    "algorithm": "Build filtered group candidates, append nonempty additional worlds, virtual filter, singleton/nonrandom handling, clone original, backwards used/nonpositive filtering, original current-first-element comparison, original-clone uniform fallback or retained uniform/weighted draw. One sequence draw per randomized choice, no alternate random source.",
+    "fields": {
+      "ABuildingFoundation+d98": "UBuildingGroup* native cached group; original lifecycle/cache precondition",
+      "AWorldTileFoundation+eec": "FName selected tile package; original tile producer lifecycle remains pending"
+    },
+    "rotation_api": "1417e3f70 matches Engine AActor::GetActorRotation -> root GetComponentRotation -> WorldRotationCache.NormalizedQuatToRotator, zero without root. WorldTile overrides unsigned NumRotations*90 yaw.",
+    "evidence": "generated/agents/foundation-selection-gate/select-building-level, foundation-candidates269, foundation-virtual270; original source hashes checked during generation",
+    "runtime": "UE build/runtime pending. No newly connected caller. Startup, postinitialization and full streaming callbacks still required."
+  },
+  "foundation_streaming_cache": {
+    "bodies": {
+      "0x141fbb310": "Deep-copy authored records, rebase child indices by destination length at source-append start",
+      "0x141fbc250": "Build once: persistent settings plus loaded AlwaysLoaded levels with authored bAllowBuildingStreamingData and nonempty records",
+      "0x141fc6bf0": "Build then report nonempty aggregate",
+      "0x141fc2c80": "Build then unchecked record access; borrowed reference",
+      "0x141fc2cb0": "Build then ordered exact-name and inclusive one-unit XYZ location match; NaNs reject"
+    },
+    "constructor": "141fa4800:141fa4e4b/e52 zero native TArray+820/+828;141fa4e75 zero initialized byte+818. TArray owned by UObject native field lifetime; default false backed by original explicit store.",
+    "evidence": "generated/agents/foundation-streaminit120 and foundation-initialize273",
+    "runtime": "No new lifecycle caller; full initializer and gate still unconnected. UE build/runtime pending."
   }
 }

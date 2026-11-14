@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "ABuildingFoundation.h"
 
+#include "FortFoundationCandidateNative.h"
+#include "Math/Rotator.h"
+
 #include "AWorldTileFoundation.generated.h"
 
 UCLASS(config=Game)
@@ -24,6 +27,14 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0xee8): not a UPROPERTY, not replicated.
 	int32 NativeTileY_0xee8;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xeec): not a UPROPERTY, not replicated.
+	FName NativeTilePackage_0xeec;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	FName NativePickBuildingPackage(FFoundationNativeRandomSequence* Sequence) override;
+	FRotator NativeGetBuildingRotation() override;
 };
 

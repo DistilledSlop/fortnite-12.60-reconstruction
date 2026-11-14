@@ -10,17 +10,21 @@
 #include "EBuildingFoundationType.h"
 #include "EDynamicFoundationEnabledState.h"
 #include "EDynamicFoundationType.h"
+#include "Engine/Level.h"
 #include "Engine/World.h"
 #include "FBuildingFoundationStreamingData.h"
 #include "FDynamicBuildingFoundationRepData.h"
 #include "FortBuildingFoundationRuntime.h"
+#include "FortFoundationCandidateNative.h"
 #include "FortWorldManagerNative.h"
 #include "GameplayTagContainer.h"
 #include "Math/Box.h"
 #include "Math/IntPoint.h"
+#include "Math/Rotator.h"
 #include "Math/TransformNonVectorized.h"
 #include "Math/Vector.h"
 #include "Misc/Crc.h"
+#include "SharedFortGameLog.h"
 #include "Styling/SlateBrush.h"
 
 class AActor;
@@ -189,6 +193,9 @@ public:
 	UPROPERTY()
 	UMaterialInterface* HLODMergeBaseFlattenMaterial;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xd98): not a UPROPERTY, not replicated.
+	UBuildingGroup* NativeCachedBuildingGroup;
+
 	// table index 2, flags 0x20080000002000
 	UPROPERTY(Transient)
 	ULevelStreaming* LevelStreamInfo;
@@ -244,5 +251,10 @@ public:
 	static uint32 NativeComputeFoundationInstanceId(const FVector& Location, const FString& ActorName);
 	const FBox& NativeGetFoundationBounds() const;
 	void NativeNotifyNavigationBoundsDirty();
+	virtual UBuildingGroup* NativeResolveBuildingGroup(FFoundationNativeRandomSequence* Sequence);
+	FName NativeSelectBuildingLevel(FFoundationNativeRandomSequence* Sequence);
+	virtual void NativeFilterBuildingCandidates(TArray<FFoundationNativeCandidate>& Candidates);
+	virtual FName NativePickBuildingPackage(FFoundationNativeRandomSequence* Sequence);
+	virtual FRotator NativeGetBuildingRotation();
 };
 

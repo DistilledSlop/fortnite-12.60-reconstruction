@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/WorldSettings.h"
 
+#include "Engine/Level.h"
+#include "Engine/LevelStreaming.h"
+#include "Engine/LevelStreamingAlwaysLoaded.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "FBuildingFoundationStreamingData.h"
@@ -18,6 +21,7 @@
 #include "Styling/SlateBrush.h"
 
 class AActor;
+class ABuildingFoundation;
 class AFortMusicManager;
 class AFortTimeOfDayManager;
 class AFortVehicleManager;
@@ -234,6 +238,12 @@ public:
 	UPROPERTY(Transient)
 	UFortLevelOverlayManager* LevelOverlayManager;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x818): not a UPROPERTY, not replicated.
+	bool NativeFoundationStreamingCacheInitialized_0x818 = false;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x820): not a UPROPERTY, not replicated.
+	TArray<FBuildingFoundationStreamingData> NativeFoundationStreamingRecords_0x820;
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
@@ -241,5 +251,11 @@ public:
 	AFortTimeOfDayManager* NativeRefreshTimeOfDayManager();
 	void NativeRegisterActorForWorldReady(AActor* Actor);
 	void NativeDispatchWorldReady();
+	static float NativeCullDistanceForSize141fbc430(const AFortWorldSettings* WorldSettings, float ObjectSize);
+	void NativeAppendFoundationStreamingRecords(const AFortWorldSettings& Source);
+	void NativeBuildFoundationStreamingCache();
+	bool NativeHasFoundationStreamingRecords();
+	FBuildingFoundationStreamingData& NativeGetFoundationStreamingRecord(int32 Index);
+	FBuildingFoundationStreamingData* NativeFindFoundationStreamingRecord(const ABuildingFoundation& Foundation, const FVector& Location);
 };
 

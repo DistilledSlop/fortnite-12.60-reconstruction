@@ -722,5 +722,6 @@ public:
 	static int32 NativeCompareWideStringsNoCase142bcf940(const uint16* LeftChars, const uint16* RightChars, uint64 MaxCount);
 	static const uint16* NativeFindWideSubstringNoCase141e12980(const uint16* SearchChars, const uint16* PatternChars);
 	static void NativeEmptySparseArray140fd9650(void* SparseArrayStorage, int32 ExpectedNumElements);
+	static float NativeDefaultCullDistance141ed2b70();
 };
 

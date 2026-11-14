@@ -48,6 +48,7 @@ inline float Origin(int32 Dimension, int32 TileEdge)
 }
 }
 ''',
+        'FortFoundationCandidateNative.h': Path(__file__).with_name('FortFoundationCandidateNative.h.in').read_text(),
         'FortBuildingFoundationRuntime.h': Path(__file__).with_name('FortBuildingFoundationRuntime.h.in').read_text(),
         'FortBuildingFoundationRuntime.cpp': Path(__file__).with_name('FortBuildingFoundationRuntime.cpp.in').read_text(),
     }
@@ -55,7 +56,8 @@ inline float Origin(int32 Dimension, int32 TileEdge)
 
 def validate(ctx, snippets_by_class):
     for name in ('AFortWorldManager', 'AFortGameState', 'AFortGameStateZone',
-                 'AWorldTileFoundation', 'UBuildingStructuralSupportSystem'):
+                 'AWorldTileFoundation', 'UBuildingStructuralSupportSystem',
+                 'ABuildingFoundation', 'AFortWorldSettings', 'UBuildingGroup'):
         if ctx['class_pkg'].get(name) != '/Script/FortniteGame':
             raise ValueError('world-manager lifecycle class changed: ' + name)
     fields = {
@@ -65,6 +67,14 @@ def validate(ctx, snippets_by_class):
             ('TSet<FName> NativeUsedBuildingNames_0x758', 0x758),
         ('AWorldTileFoundation', 'NativeTileX_0xee4'): ('int32 NativeTileX_0xee4', 0xee4),
         ('AWorldTileFoundation', 'NativeTileY_0xee8'): ('int32 NativeTileY_0xee8', 0xee8),
+        ('ABuildingFoundation', 'NativeCachedBuildingGroup'):
+            ('UBuildingGroup* NativeCachedBuildingGroup', 0xd98),
+        ('AWorldTileFoundation', 'NativeTilePackage_0xeec'):
+            ('FName NativeTilePackage_0xeec', 0xeec),
+        ('AFortWorldSettings', 'NativeFoundationStreamingCacheInitialized_0x818'):
+            ('bool NativeFoundationStreamingCacheInitialized_0x818', 0x818),
+        ('AFortWorldSettings', 'NativeFoundationStreamingRecords_0x820'):
+            ('TArray<FBuildingFoundationStreamingData> NativeFoundationStreamingRecords_0x820', 0x820),
     }
     for (owner, name), (signature, offset) in fields.items():
         entries = [e for e in snippets_by_class.get(owner, []) if e.get('function') == name]
@@ -72,3 +82,7 @@ def validate(ctx, snippets_by_class):
                 or entries[0].get('signature') != signature
                 or int(str(entries[0].get('offset')), 0) != offset):
             raise ValueError('world-manager lifecycle native field changed: ' + owner + '::' + name)
+    cache_flag = next(e for e in snippets_by_class['AFortWorldSettings']
+                      if e.get('function') == 'NativeFoundationStreamingCacheInitialized_0x818')
+    if cache_flag.get('default') != 'false':
+        raise ValueError('foundation cache constructor default changed')

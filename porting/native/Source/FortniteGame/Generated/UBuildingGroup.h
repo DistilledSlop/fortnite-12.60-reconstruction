@@ -8,6 +8,7 @@
 
 #include "EBuildingFoundationType.h"
 #include "FFortMapData.h"
+#include "FortFoundationCandidateNative.h"
 #include "GameplayTagContainer.h"
 
 #include "UBuildingGroup.generated.h"
@@ -38,5 +39,9 @@ public:
 	UPROPERTY()
 	TArray<FFortMapData> BuildingLevelData;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	void NativeBuildCandidates(TArray<FFoundationNativeCandidate>& OutCandidates, const FGameplayTagQuery& Filter);
 };
 

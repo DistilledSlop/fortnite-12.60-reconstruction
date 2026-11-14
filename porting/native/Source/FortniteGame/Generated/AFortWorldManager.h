@@ -279,5 +279,6 @@ public:
 	void NativeRecordUsedBuilding(FName BuildingName);
 	static FName NativeSourceName(FName SelectedInstance);
 	FName NativeResolveSelectedLevel(FName SelectedBuilding, ABuildingFoundation* Foundation);
+	FName NativeQueryPersistedFoundationPackage(ABuildingFoundation* Foundation);
 };
 

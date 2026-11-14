@@ -95885,5 +95885,313 @@
     ],
     "notes": "Complete original bounds/navigation helper, with exact original console-variable producer and backing state supplied in world_manager_lifecycle_runtime support. No new lifecycle caller; UE build/runtime pending.",
     "class": "UAthenaNavSystem"
+  },
+  {
+    "function": "NativeFindActorLevelRecord",
+    "signature": "FFortLevelRecord* NativeFindActorLevelRecord(const AActor* Actor, int32* OutIndex)",
+    "address": "0x141fbf660",
+    "includes": [
+      "Engine/Level.h"
+    ],
+    "class": "UFortZoneRecord",
+    "kind": "helper",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/UFortZoneRecord/NativeFindActorLevelRecord.inc",
+    "notes": "Complete original saved-level lookup under native record lifecycle preconditions. No new lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json."
+  },
+  {
+    "function": "NativeQueryPersistedFoundationPackage",
+    "signature": "FName NativeQueryPersistedFoundationPackage(ABuildingFoundation* Foundation)",
+    "address": "0x141f8a060",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "class": "AFortWorldManager",
+    "kind": "helper",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortWorldManager/NativeQueryPersistedFoundationPackage.inc",
+    "notes": "Complete original saved-level lookup under native record lifecycle preconditions. No new lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json."
+  },
+  {
+    "kind": "helper",
+    "class": "AFortWorldSettings",
+    "function": "NativeCullDistanceForSize141fbc430",
+    "signature": "float NativeCullDistanceForSize141fbc430(const AFortWorldSettings* WorldSettings, float ObjectSize)",
+    "signature_status": "proposed",
+    "address": "0x141fbc430",
+    "static": true,
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/AFortWorldSettings/NativeCullDistanceForSize141fbc430.inc",
+    "notes": "Complete independent original helper using live globals/settings; does not install incomplete building cull lifecycle. UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json."
+  },
+  {
+    "kind": "helper",
+    "class": "UFortGlobals",
+    "function": "NativeDefaultCullDistance141ed2b70",
+    "signature": "float NativeDefaultCullDistance141ed2b70()",
+    "signature_status": "proposed",
+    "address": "0x141ed2b70",
+    "static": true,
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/UFortGlobals/NativeDefaultCullDistance141ed2b70.inc",
+    "notes": "Complete independent original helper using live globals/settings; does not install incomplete building cull lifecycle. UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json."
+  },
+  {
+    "function": "NativeBuildCandidates",
+    "kind": "helper",
+    "signature": "void NativeBuildCandidates(TArray<FFoundationNativeCandidate>& OutCandidates, const FGameplayTagQuery& Filter)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141bdca70",
+    "inc_path": "porting/behavior/UBuildingGroup/NativeBuildCandidates.inc",
+    "notes": "Complete original foundation selection algorithm under actual native cache/sequence/tile lifecycle preconditions. Native virtual family audited across all reflected foundation subclasses; Mayday jumps to base, WorldTile preserves its distinct package and rotation overrides. No new streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "UBuildingGroup",
+    "includes": [
+      "FortFoundationCandidateNative.h"
+    ]
+  },
+  {
+    "function": "NativeResolveBuildingGroup",
+    "kind": "helper",
+    "signature": "UBuildingGroup* NativeResolveBuildingGroup(FFoundationNativeRandomSequence* Sequence)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141be5f10",
+    "inc_path": "porting/behavior/ABuildingFoundation/NativeResolveBuildingGroup.inc",
+    "notes": "Complete original foundation selection algorithm under actual native cache/sequence/tile lifecycle preconditions. Native virtual family audited across all reflected foundation subclasses; Mayday jumps to base, WorldTile preserves its distinct package and rotation overrides. No new streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "ABuildingFoundation",
+    "virtual": true,
+    "includes": [
+      "FortFoundationCandidateNative.h"
+    ]
+  },
+  {
+    "function": "NativeSelectBuildingLevel",
+    "kind": "helper",
+    "signature": "FName NativeSelectBuildingLevel(FFoundationNativeRandomSequence* Sequence)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141be60c0",
+    "inc_path": "porting/behavior/ABuildingFoundation/NativeSelectBuildingLevel.inc",
+    "notes": "Complete original foundation selection algorithm under actual native cache/sequence/tile lifecycle preconditions. Native virtual family audited across all reflected foundation subclasses; Mayday jumps to base, WorldTile preserves its distinct package and rotation overrides. No new streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "ABuildingFoundation",
+    "includes": [
+      "FortFoundationCandidateNative.h",
+      "Engine/Level.h",
+      "SharedFortGameLog.h"
+    ]
+  },
+  {
+    "function": "NativeFilterBuildingCandidates",
+    "kind": "helper",
+    "signature": "void NativeFilterBuildingCandidates(TArray<FFoundationNativeCandidate>& Candidates)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1406801c0",
+    "inc_path": "porting/behavior/ABuildingFoundation/NativeFilterBuildingCandidates.inc",
+    "notes": "Complete original foundation selection algorithm under actual native cache/sequence/tile lifecycle preconditions. Native virtual family audited across all reflected foundation subclasses; Mayday jumps to base, WorldTile preserves its distinct package and rotation overrides. No new streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "ABuildingFoundation",
+    "virtual": true,
+    "includes": [
+      "FortFoundationCandidateNative.h"
+    ]
+  },
+  {
+    "function": "NativePickBuildingPackage",
+    "kind": "helper",
+    "signature": "FName NativePickBuildingPackage(FFoundationNativeRandomSequence* Sequence)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141bdd6e0",
+    "inc_path": "porting/behavior/ABuildingFoundation/NativePickBuildingPackage.inc",
+    "notes": "Complete original foundation selection algorithm under actual native cache/sequence/tile lifecycle preconditions. Native virtual family audited across all reflected foundation subclasses; Mayday jumps to base, WorldTile preserves its distinct package and rotation overrides. No new streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "ABuildingFoundation",
+    "virtual": true,
+    "includes": [
+      "FortFoundationCandidateNative.h",
+      "Engine/Level.h",
+      "SharedFortGameLog.h"
+    ]
+  },
+  {
+    "function": "NativePickBuildingPackage",
+    "kind": "helper",
+    "signature": "FName NativePickBuildingPackage(FFoundationNativeRandomSequence* Sequence)",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1426cce00",
+    "inc_path": "porting/behavior/AWorldTileFoundation/NativePickBuildingPackage.inc",
+    "notes": "Complete original foundation selection algorithm under actual native cache/sequence/tile lifecycle preconditions. Native virtual family audited across all reflected foundation subclasses; Mayday jumps to base, WorldTile preserves its distinct package and rotation overrides. No new streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "AWorldTileFoundation",
+    "override": true,
+    "includes": [
+      "FortFoundationCandidateNative.h"
+    ]
+  },
+  {
+    "function": "NativeGetBuildingRotation",
+    "kind": "helper",
+    "signature": "FRotator NativeGetBuildingRotation()",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1417e3f70",
+    "inc_path": "porting/behavior/ABuildingFoundation/NativeGetBuildingRotation.inc",
+    "notes": "Complete original foundation selection algorithm under actual native cache/sequence/tile lifecycle preconditions. Native virtual family audited across all reflected foundation subclasses; Mayday jumps to base, WorldTile preserves its distinct package and rotation overrides. No new streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "ABuildingFoundation",
+    "virtual": true
+  },
+  {
+    "function": "NativeGetBuildingRotation",
+    "kind": "helper",
+    "signature": "FRotator NativeGetBuildingRotation()",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1426cc820",
+    "inc_path": "porting/behavior/AWorldTileFoundation/NativeGetBuildingRotation.inc",
+    "notes": "Complete original foundation selection algorithm under actual native cache/sequence/tile lifecycle preconditions. Native virtual family audited across all reflected foundation subclasses; Mayday jumps to base, WorldTile preserves its distinct package and rotation overrides. No new streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "AWorldTileFoundation",
+    "override": true
+  },
+  {
+    "function": "NativeCachedBuildingGroup",
+    "kind": "member_field",
+    "signature": "UBuildingGroup* NativeCachedBuildingGroup",
+    "offset": "0xd98",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Complete original foundation selection algorithm under actual native cache/sequence/tile lifecycle preconditions. Native virtual family audited across all reflected foundation subclasses; Mayday jumps to base, WorldTile preserves its distinct package and rotation overrides. No new streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "ABuildingFoundation"
+  },
+  {
+    "function": "NativeTilePackage_0xeec",
+    "kind": "member_field",
+    "signature": "FName NativeTilePackage_0xeec",
+    "offset": "0xeec",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Complete original foundation selection algorithm under actual native cache/sequence/tile lifecycle preconditions. Native virtual family audited across all reflected foundation subclasses; Mayday jumps to base, WorldTile preserves its distinct package and rotation overrides. No new streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "class": "AWorldTileFoundation"
+  },
+  {
+    "class": "AFortWorldSettings",
+    "function": "NativeAppendFoundationStreamingRecords",
+    "kind": "helper",
+    "signature": "void NativeAppendFoundationStreamingRecords(const AFortWorldSettings& Source)",
+    "address": "0x141fbb310",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortWorldSettings/NativeAppendFoundationStreamingRecords.inc",
+    "notes": "Complete original per-world-settings streaming cache helper. Constructor141fa4800 explicitly zeroes initialized byte+818 and owned TArray+820; per-instance native fields preserve ownership and UE copy/destruction. No new initializer/streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json."
+  },
+  {
+    "class": "AFortWorldSettings",
+    "function": "NativeBuildFoundationStreamingCache",
+    "kind": "helper",
+    "signature": "void NativeBuildFoundationStreamingCache()",
+    "address": "0x141fbc250",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortWorldSettings/NativeBuildFoundationStreamingCache.inc",
+    "notes": "Complete original per-world-settings streaming cache helper. Constructor141fa4800 explicitly zeroes initialized byte+818 and owned TArray+820; per-instance native fields preserve ownership and UE copy/destruction. No new initializer/streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "includes": [
+      "Engine/Level.h",
+      "Engine/LevelStreaming.h",
+      "Engine/LevelStreamingAlwaysLoaded.h",
+      "Engine/World.h"
+    ]
+  },
+  {
+    "class": "AFortWorldSettings",
+    "function": "NativeHasFoundationStreamingRecords",
+    "kind": "helper",
+    "signature": "bool NativeHasFoundationStreamingRecords()",
+    "address": "0x141fc6bf0",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortWorldSettings/NativeHasFoundationStreamingRecords.inc",
+    "notes": "Complete original per-world-settings streaming cache helper. Constructor141fa4800 explicitly zeroes initialized byte+818 and owned TArray+820; per-instance native fields preserve ownership and UE copy/destruction. No new initializer/streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json."
+  },
+  {
+    "class": "AFortWorldSettings",
+    "function": "NativeGetFoundationStreamingRecord",
+    "kind": "helper",
+    "signature": "FBuildingFoundationStreamingData& NativeGetFoundationStreamingRecord(int32 Index)",
+    "address": "0x141fc2c80",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortWorldSettings/NativeGetFoundationStreamingRecord.inc",
+    "notes": "Complete original per-world-settings streaming cache helper. Constructor141fa4800 explicitly zeroes initialized byte+818 and owned TArray+820; per-instance native fields preserve ownership and UE copy/destruction. No new initializer/streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json."
+  },
+  {
+    "class": "AFortWorldSettings",
+    "function": "NativeFindFoundationStreamingRecord",
+    "kind": "helper",
+    "signature": "FBuildingFoundationStreamingData* NativeFindFoundationStreamingRecord(const ABuildingFoundation& Foundation, const FVector& Location)",
+    "address": "0x141fc2cb0",
+    "signature_status": "proposed",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "inc_path": "porting/behavior/AFortWorldSettings/NativeFindFoundationStreamingRecord.inc",
+    "notes": "Complete original per-world-settings streaming cache helper. Constructor141fa4800 explicitly zeroes initialized byte+818 and owned TArray+820; per-instance native fields preserve ownership and UE copy/destruction. No new initializer/streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json."
+  },
+  {
+    "class": "AFortWorldSettings",
+    "function": "NativeFoundationStreamingCacheInitialized_0x818",
+    "kind": "member_field",
+    "signature": "bool NativeFoundationStreamingCacheInitialized_0x818",
+    "offset": "0x818",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Complete original per-world-settings streaming cache helper. Constructor141fa4800 explicitly zeroes initialized byte+818 and owned TArray+820; per-instance native fields preserve ownership and UE copy/destruction. No new initializer/streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json.",
+    "default": "false"
+  },
+  {
+    "class": "AFortWorldSettings",
+    "function": "NativeFoundationStreamingRecords_0x820",
+    "kind": "member_field",
+    "signature": "TArray<FBuildingFoundationStreamingData> NativeFoundationStreamingRecords_0x820",
+    "offset": "0x820",
+    "access": "public",
+    "status": "ported",
+    "confidence": "high",
+    "notes": "Complete original per-world-settings streaming cache helper. Constructor141fa4800 explicitly zeroes initialized byte+818 and owned TArray+820; per-instance native fields preserve ownership and UE copy/destruction. No new initializer/streaming lifecycle caller; UE build/runtime pending. See world_manager_lifecycle_runtime/native-evidence.json."
   }
 ]

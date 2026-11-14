@@ -5,14 +5,19 @@
 #include "Containers/StringConv.h"
 #include "EDynamicFoundationEnabledState.h"
 #include "EDynamicFoundationType.h"
+#include "Engine/Level.h"
 #include "Engine/LevelStreaming.h"
 #include "Engine/World.h"
 #include "FortBuildingFoundationRuntime.h"
+#include "FortFoundationCandidateNative.h"
 #include "FortWorldManagerNative.h"
 #include "Math/Box.h"
+#include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Misc/Crc.h"
+#include "SharedFortGameLog.h"
 #include "UAthenaNavSystem.h"
+#include "UBuildingGroup.h"
 #include "Net/UnrealNetwork.h"
 
 bool ABuildingFoundation::DoesBuildingFoundationContainActor(AActor* Actor) const
@@ -166,6 +171,164 @@ void ABuildingFoundation::NativeNotifyNavigationBoundsDirty()
 	        }
 	    }
 	}
+}
+
+UBuildingGroup* ABuildingFoundation::NativeResolveBuildingGroup(FFoundationNativeRandomSequence* Sequence)
+{
+	// CONFIDENCE: HIGH; complete original algorithm under native state preconditions.
+	// 0x141be5f10; Sequence is a required native caller precondition.
+	if (NativeCachedBuildingGroup != nullptr)
+	{
+	    UBuildingGroup* Group = NativeCachedBuildingGroup;
+	    while (Group->FallbackGroup != nullptr && Group->BuildingLevelData.Num() <= 0 &&
+	           Group->FoundationType == FoundationType)
+	    {
+	        Group = Group->FallbackGroup;
+	    }
+	    if (Group->BuildingLevelData.Num() > 0 && Group->FoundationType == FoundationType)
+	    {
+	        if (Group != NativeCachedBuildingGroup)
+	            NativeCachedBuildingGroup = Group;
+	        return Group;
+	    }
+	}
+
+	TArray<UBuildingGroup*> EligibleGroups;
+	for (int32 Index = BuildingGroups.Num() - 1; Index >= 0; --Index)
+	{
+	    UBuildingGroup* Group = BuildingGroups[Index];
+	    if (Group != nullptr && Group->BuildingLevelData.Num() > 0 &&
+	        Group->FoundationType == FoundationType)
+	    {
+	        EligibleGroups.Add(Group);
+	    }
+	}
+	if (EligibleGroups.Num() == 0)
+	    return nullptr;
+
+	const int32 Index = static_cast<int32>((static_cast<float>(EligibleGroups.Num()) - 0.00001f) * Sequence->Next());
+	NativeCachedBuildingGroup = EligibleGroups.GetData()[Index];
+	return NativeCachedBuildingGroup;
+}
+
+FName ABuildingFoundation::NativeSelectBuildingLevel(FFoundationNativeRandomSequence* Sequence)
+{
+	// CONFIDENCE: HIGH. Original 0x141be60c0; native sequence lifecycle is required.
+	TArray<FFoundationNativeCandidate> Candidates;
+	if (Sequence)
+	{
+	    NativeCachedBuildingGroup = NativeResolveBuildingGroup(Sequence);
+	    if (NativeCachedBuildingGroup)
+	    {
+	        TArray<FFoundationNativeCandidate> GroupCandidates;
+	        NativeCachedBuildingGroup->NativeBuildCandidates(GroupCandidates, BuildingGroupFilter);
+	        Candidates.Reserve(GroupCandidates.Num() + AdditionalWorlds.Num());
+	        Candidates.Append(GroupCandidates);
+	    }
+	}
+	Candidates.Reserve(Candidates.Num() + AdditionalWorlds.Num());
+	for (const TSoftObjectPtr<UWorld>& World : AdditionalWorlds)
+	{
+	    const FString WorldString = NativeFoundationWorldString_141ed80a0(World);
+	    if (!WorldString.IsEmpty())
+	    {
+	        FFoundationNativeCandidate& Candidate = Candidates.Emplace_GetRef();
+	        Candidate.BuildingWorld = World;
+	        Candidate.PackageName = FName(*WorldString);
+	        Candidate.SelectionWeight = 1.0f;
+	    }
+	}
+	NativeFilterBuildingCandidates(Candidates);
+	if (Candidates.Num() == 0)
+	{
+	    if (UE_LOG_ACTIVE(LogFortWorld, Log))
+	    {
+	        const FString GroupName = BuildingGroups.Num() > 0 && BuildingGroups[0]
+	            ? BuildingGroups[0]->GetPathName() : FString(TEXT("?"));
+	        UE_LOG(LogFortWorld, Log, TEXT("BUILDING ERROR! (%s.%s) could not select a building!  No more buildings found to use! (Name: %s, filter: %s) "),
+	            *GetLevel()->GetFName().ToString(), *GetFName().ToString(),
+	            *GroupName, *BuildingGroupFilter.GetDescription());
+	    }
+	    return NAME_None;
+	}
+	if (Candidates.Num() == 1)
+	    return Candidates[0].PackageName;
+	if (!Sequence)
+	    return NAME_None;
+
+	const TArray<FFoundationNativeCandidate> OriginalCandidates = Candidates;
+	float TotalWeight = 0.0f;
+	bool bSameWeights = true;
+	if (AFortWorldManager* Manager = AFortWorldManager::NativeResolveWorldManager(GetWorld()))
+	{
+	    for (int32 Index = Candidates.Num() - 1; Index >= 0; --Index)
+	    {
+	        const float Weight = Candidates[Index].SelectionWeight;
+	        if (Weight <= 0.0f || Manager->NativeHasUsedBuilding(Candidates[Index].PackageName))
+	        {
+	            Candidates.RemoveAt(Index);
+	        }
+	        else
+	        {
+	            // Compare with the current first element, even before it is filtered.
+	            if (Weight != Candidates[0].SelectionWeight)
+	                bSameWeights = false;
+	            TotalWeight += Weight;
+	        }
+	    }
+	}
+	if (Candidates.Num() == 0 || TotalWeight <= 0.0f)
+	{
+	    const int32 Index = int32((float(OriginalCandidates.Num()) - 0.00001f) * Sequence->Next());
+	    return OriginalCandidates.GetData()[Index].PackageName;
+	}
+	if (bSameWeights)
+	{
+	    const int32 Index = int32((float(Candidates.Num()) - 0.00001f) * Sequence->Next());
+	    return Candidates.GetData()[Index].PackageName;
+	}
+	float RemainingWeight = Sequence->Next() * TotalWeight;
+	int32 Index = 0;
+	while (Index < Candidates.Num() - 1)
+	{
+	    if (RemainingWeight < Candidates[Index].SelectionWeight)
+	        break;
+	    RemainingWeight -= Candidates[Index].SelectionWeight;
+	    ++Index;
+	}
+	return Candidates.GetData()[Index].PackageName;
+}
+
+void ABuildingFoundation::NativeFilterBuildingCandidates(TArray<FFoundationNativeCandidate>& Candidates)
+{
+	// CONFIDENCE: HIGH. Original 0x1406801c0 is an empty native virtual hook.
+	// Every reflected native foundation subclass uses the same empty implementation.
+}
+
+FName ABuildingFoundation::NativePickBuildingPackage(FFoundationNativeRandomSequence* Sequence)
+{
+	// CONFIDENCE: HIGH. Original 0x141bdd6e0; forwards the native sequence unchanged.
+	if (!LevelToStream.IsNone())
+	    return LevelToStream;
+	const FName Selected = NativeSelectBuildingLevel(Sequence);
+	if (Selected.IsNone())
+	{
+	    UE_LOG(LogFortWorld, Log, TEXT("%s.%s UNABLE to pick building to stream!"),
+	        *GetLevel()->GetFName().ToString(), *GetFName().ToString());
+	}
+	else
+	{
+	    UE_LOG(LogFortWorld, Verbose, TEXT("%s.%s picked %s to stream!"),
+	        *GetLevel()->GetFName().ToString(), *GetFName().ToString(), *Selected.ToString());
+	}
+	return Selected;
+}
+
+FRotator ABuildingFoundation::NativeGetBuildingRotation()
+{
+	// CONFIDENCE: HIGH. Original 0x1417e3f70 is the Actor root rotation accessor.
+	// Engine GetActorRotation uses the same cached normalized quaternion conversion.
+	return GetActorRotation();
 }
 
 void ABuildingFoundation::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
