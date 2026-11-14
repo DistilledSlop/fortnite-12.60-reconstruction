@@ -174,6 +174,11 @@ namespace FortAthenaMatchFlowPrivate
         TSet<uint32> StreamedFoundationIds;
         TArray<FPendingFoundationStream> PendingFoundationStreams;
         bool bFoundationStreamingHooked = false;
+        // Collision census over streamed foundations (pawn-blocking static meshes) and the one-shot wall sweep probe.
+        float LastFoundationFinalizeTime = -1.0f;
+        int32 FoundationBlockingMeshes = 0;
+        int32 FoundationNoCollisionMeshes = 0;
+        bool bFoundationSweepProbeDone = false;
     };
 
     FMatchFlowState& State()
@@ -1365,8 +1370,12 @@ namespace FortAthenaMatchFlowPrivate
             ULevel* LoadedLevel = Streaming->GetLoadedLevel();
             if (LoadedLevel)
             {
+                // Collision census. A mesh counts as lacking collision only if it blocks pawns and has neither simple
+                // shapes nor (for complex-as-simple) a created triangle mesh. An empty AggGeom alone is not a defect:
+                // impostors, decals and grass legitimately have none, and complex-as-simple meshes use triangle meshes.
                 int32 TotalMeshes = 0;
-                int32 EmptyAggGeomMeshes = 0;
+                int32 BlockingMeshes = 0;
+                int32 NoCollisionMeshes = 0;
                 for (AActor* Actor : LoadedLevel->Actors)
                 {
                     if (!Actor)
@@ -1375,24 +1384,38 @@ namespace FortAthenaMatchFlowPrivate
                     for (UStaticMeshComponent* Comp : Meshes)
                     {
                         ++TotalMeshes;
+                        if (Comp->GetCollisionEnabled() == ECollisionEnabled::NoCollision ||
+                            Comp->GetCollisionResponseToChannel(ECC_Pawn) != ECR_Block)
+                            continue;
                         UStaticMesh* Mesh = Comp->GetStaticMesh();
                         UBodySetup* Body = Mesh ? Mesh->BodySetup : nullptr;
-                        if (Body && Body->AggGeom.GetElementCount() == 0)
+                        if (!Body)
+                            continue;
+                        ++BlockingMeshes;
+                        const bool bHasSimple = Body->AggGeom.GetElementCount() > 0;
+                        bool bHasTriMesh = false;
+#if WITH_PHYSX
+                        bHasTriMesh = Body->TriMeshes.Num() > 0;
+#endif
+                        const bool bComplexAsSimple = Body->CollisionTraceFlag == CTF_UseComplexAsSimple;
+                        if (!bHasSimple && !(bComplexAsSimple && bHasTriMesh))
                         {
-                            ++EmptyAggGeomMeshes;
-                            if (EmptyAggGeomMeshes <= 10)
+                            ++NoCollisionMeshes;
+                            if (NoCollisionMeshes <= 8)
                             {
-                                UE_LOG(LogTemp, Display, TEXT("MatchFlow: foundation empty AggGeom level=%s actor=%s mesh=%s traceFlag=%d"),
+                                UE_LOG(LogTemp, Display, TEXT("MatchFlow: foundation blocking mesh without collision level=%s actor=%s mesh=%s traceFlag=%d triMeshes=%d"),
                                     *Entry.PackageName.ToString(), *Actor->GetName(), *GetNameSafe(Mesh),
-                                    static_cast<int32>(Body->CollisionTraceFlag));
+                                    static_cast<int32>(Body->CollisionTraceFlag), bHasTriMesh ? 1 : 0);
                             }
                         }
                     }
                 }
-                if (EmptyAggGeomMeshes > 0)
+                State().FoundationBlockingMeshes += BlockingMeshes;
+                State().FoundationNoCollisionMeshes += NoCollisionMeshes;
+                if (NoCollisionMeshes > 0)
                 {
-                    UE_LOG(LogTemp, Display, TEXT("MatchFlow: foundation %s loaded meshes=%d emptyAggGeom=%d"),
-                        *Entry.PackageName.ToString(), TotalMeshes, EmptyAggGeomMeshes);
+                    UE_LOG(LogTemp, Display, TEXT("MatchFlow: foundation %s meshes=%d pawnBlocking=%d noCollision=%d"),
+                        *Entry.PackageName.ToString(), TotalMeshes, BlockingMeshes, NoCollisionMeshes);
                 }
                 StreamFoundationsInLevel(World, LoadedLevel);
             }
@@ -1402,8 +1425,50 @@ namespace FortAthenaMatchFlowPrivate
             State().PendingFoundationStreams.Append(MoveTemp(Remaining));
         if (FinalizedCount > 0)
         {
+            State().LastFoundationFinalizeTime = World->GetTimeSeconds();
             UE_LOG(LogTemp, Display, TEXT("MatchFlow: finalized %d foundation stream(s); pending=%d"),
                 FinalizedCount, State().PendingFoundationStreams.Num());
+        }
+    }
+
+    // Diagnostic (-FortniteProbeFoundationSweep=X=..,Y=..,Z=..): once every queued foundation stream has become visible and
+    // stayed settled for 5 s, sweep a pawn-sized capsule +X and down from that point and log what it hits, plus the
+    // census totals. This is the building-collision acceptance check from MOVEMENT_AUTHORITY_REPORT.md section 4, step 2.
+    void RunFoundationSweepProbe(UWorld* World)
+    {
+        FMatchFlowState& S = State();
+        FString Requested;
+        if (!World || S.bFoundationSweepProbeDone || S.LastFoundationFinalizeTime < 0.0f ||
+            S.PendingFoundationStreams.Num() != 0 || World->GetTimeSeconds() - S.LastFoundationFinalizeTime < 5.0f ||
+            !FParse::Value(FCommandLine::Get(), TEXT("FortniteProbeFoundationSweep="), Requested, false))
+            return;
+        S.bFoundationSweepProbeDone = true;
+        FVector Start;
+        if (!Start.InitFromString(Requested))
+        {
+            UE_LOG(LogTemp, Warning, TEXT("FoundationSweepProbe: invalid point '%s' (expected X=..,Y=..,Z=..)"), *Requested);
+            return;
+        }
+        UE_LOG(LogTemp, Display, TEXT("FoundationSweepProbe: census pawnBlockingMeshes=%d withoutCollision=%d streamedFoundations=%d"),
+            S.FoundationBlockingMeshes, S.FoundationNoCollisionMeshes, S.StreamedFoundationIds.Num());
+        struct FSweep { const TCHAR* Name; FVector From; FVector To; };
+        const FSweep Sweeps[] = {
+            { TEXT("+X"), Start, Start + FVector(600.0f, 0.0f, 0.0f) },
+            { TEXT("-X"), Start, Start - FVector(600.0f, 0.0f, 0.0f) },
+            { TEXT("down"), Start + FVector(0.0f, 0.0f, 600.0f), Start - FVector(0.0f, 0.0f, 600.0f) },
+        };
+        for (const FSweep& Sweep : Sweeps)
+        {
+            for (int32 Complex = 0; Complex < 2; ++Complex)
+            {
+                FCollisionQueryParams Params(SCENE_QUERY_STAT(FoundationSweepProbe), Complex != 0);
+                FHitResult Hit;
+                const bool bHit = World->SweepSingleByChannel(Hit, Sweep.From, Sweep.To, FQuat::Identity, ECC_Pawn,
+                    FCollisionShape::MakeCapsule(42.0f, 96.0f), Params);
+                UE_LOG(LogTemp, Display, TEXT("FoundationSweepProbe: dir=%s complex=%d hit=%d startPenetrating=%d location=%s impact=%s normal=%s actor=%s component=%s"),
+                    Sweep.Name, Complex, bHit, Hit.bStartPenetrating, *Hit.Location.ToString(), *Hit.ImpactPoint.ToString(),
+                    *Hit.ImpactNormal.ToString(), *GetPathNameSafe(Hit.GetActor()), *GetPathNameSafe(Hit.GetComponent()));
+            }
         }
     }
 
@@ -1795,6 +1860,7 @@ namespace FortAthenaMatchFlowPrivate
         FortAthenaInventory::Tick(World);
         FortAthenaEndGame::Tick(GameMode, Delta);
         FinalizeVisibleFoundationStreams(World);
+        RunFoundationSweepProbe(World);
 
         // HandleMatchHasStarted -> StartWarmupPhase. inferred: deferred until RequiredPlayers have joined (the original
         // waits for the match to start; with no player the countdown would end in the "all players disconnected" branch).
