@@ -171,6 +171,16 @@ namespace
 		return 1.0f;
 	}
 
+	// Level-placed harvestable prop: has a resource type and a resource-rate curve row and was not built by a player.
+	// The cooked data never carries bAllowResourceDrop / bAllowWeakSpots / MaxResourcesToSpawn for these (they match the native
+	// defaults, which the generated module does not reproduce for bit fields), so the original server's eligibility flags are
+	// not readable from the actor. Harvesting is allowed for every such prop.
+	bool IsLevelHarvestable(const ABuildingSMActor* Building)
+	{
+		return Building && !Building->bPlayerPlaced && Building->ResourceType.GetValue() != EFortResourceType::None
+			&& !Building->BuildingResourceAmountOverride.RowName.IsNone();
+	}
+
 	UFortBuildingActorSet* EnsureBuildingAttributeSet(ABuildingActor* Building)
 	{
 		if (!Building)
@@ -190,7 +200,8 @@ namespace
 			UFortAbilitySystemComponent* ASC = NewObject<UFortAbilitySystemComponent>(Building, TEXT("AbilitySystemComponent"));
 			if (ASC)
 			{
-				ASC->SetNetAddressable();
+				// Created only on the server after the actor was already replicated, so it must replicate as a dynamic subobject,
+				// not as a stably named component (SetNetAddressable would make the client look for a component it never created).
 				ASC->SetIsReplicated(true);
 				ASC->RegisterComponent();
 				ASC->InitAbilityActorInfo(Building, Building);
@@ -290,7 +301,7 @@ namespace
 			}
 		}
 
-		if (Building->MaxResourcesToSpawn >= 0)
+		if (Building->MaxResourcesToSpawn > 0)
 		{
 			Pool = FMath::Min(Pool, static_cast<float>(Building->MaxResourcesToSpawn));
 		}
@@ -304,7 +315,7 @@ namespace
 		const FHitResult& Hit,
 		bool bWeakSpotHit)
 	{
-		if (!PC || !Building || !Building->bAllowWeakSpots || Building->bDestroyed)
+		if (!PC || !Building || !(Building->bAllowWeakSpots || IsLevelHarvestable(Building)) || Building->bDestroyed)
 		{
 			return;
 		}
@@ -501,6 +512,7 @@ void ForceBuildingHealth(ABuildingActor* Building, float NewHealth)
 		}
 	}
 
+	Building->FlushNetDormancy(); // level props are DORM_Initial / 1 Hz: push the new health and attribute set to clients now
 	Building->ForceNetUpdate();
 }
 
@@ -558,9 +570,8 @@ bool ApplyBuildingDamage(
 	// 3. Resource calculation, inventory grant (999 stack cap + pickup overflow), and client feedback RPC.
 	AFortPlayerController* PC = Cast<AFortPlayerController>(Instigator);
 	const EFortResourceType::Type ResType = Building->ResourceType.GetValue();
-	if (PC && ResType != EFortResourceType::None && Building->bAllowResourceDrop
-		&& Building->BlueprintCanAttemptGenerateResources(DamageTags, Instigator)
-		&& Building->MaxResourcesToSpawn != 0)
+	if (PC && ResType != EFortResourceType::None && (Building->bAllowResourceDrop || IsLevelHarvestable(Building))
+		&& Building->BlueprintCanAttemptGenerateResources(DamageTags, Instigator))
 	{
 		bool bUsedCurve = false;
 		const float ResourcePool = EvaluateResourcePoolTotal(Building, bUsedCurve);
