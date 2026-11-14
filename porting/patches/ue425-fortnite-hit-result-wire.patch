@@ -1,0 +1,65 @@
+diff --git a/Engine/Source/Runtime/Engine/Classes/Engine/EngineTypes.h b/Engine/Source/Runtime/Engine/Classes/Engine/EngineTypes.h
+index 4af07d4f2..232a6e78f 100644
+--- a/Engine/Source/Runtime/Engine/Classes/Engine/EngineTypes.h
++++ b/Engine/Source/Runtime/Engine/Classes/Engine/EngineTypes.h
+@@ -2016,6 +2016,10 @@ struct ENGINE_API FHitResult
+ 	UPROPERTY()
+ 	int32 Item;
+ 
++	/** Original Fortnite hit primitive element, carried by its eight-flag hit wire format. */
++	UPROPERTY()
++	uint8 ElementIndex;
++
+ 	/**
+ 	 * Physical material that was hit.
+ 	 * @note Must set bReturnPhysicalMaterial on the swept PrimitiveComponent or in the query params for this to be returned.
+diff --git a/Engine/Source/Runtime/Engine/Private/Collision/Collision.cpp b/Engine/Source/Runtime/Engine/Private/Collision/Collision.cpp
+index b986d3d7c..6c21729ba 100644
+--- a/Engine/Source/Runtime/Engine/Private/Collision/Collision.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Collision/Collision.cpp
+@@ -5,6 +5,8 @@
+ =============================================================================*/
+ 
+ #include "Collision.h"
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
+ #include "HAL/IConsoleManager.h"
+ #include "UObject/UObjectHash.h"
+ #include "UObject/UObjectIterator.h"
+@@ -41,6 +43,8 @@ FHitResult::FHitResult(class AActor* InActor, class UPrimitiveComponent* InCompo
+ 
+ bool FHitResult::NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess)
+ {
++	// Original 12.60 serializer 0x144082490 uses eight flags and an element byte.
++	static const bool bOriginalFortnite = FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient"));
+ 	// Most of the time the vectors are the same values, use that as an optimization
+ 	bool bImpactPointEqualsLocation = 0, bImpactNormalEqualsNormal = 0;
+ 
+@@ -58,7 +62,7 @@ bool FHitResult::NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSu
+ 
+ 	// pack bitfield with flags
+ 	uint8 Flags = (bBlockingHit << 0) | (bStartPenetrating << 1) | (bImpactPointEqualsLocation << 2) | (bImpactNormalEqualsNormal << 3) | (bInvalidItem << 4) | (bInvalidFaceIndex << 5) | (bNoPenetrationDepth << 6);
+-	Ar.SerializeBits(&Flags, 7); 
++	Ar.SerializeBits(&Flags, bOriginalFortnite ? 8 : 7);
+ 	bBlockingHit = (Flags & (1 << 0)) ? 1 : 0;
+ 	bStartPenetrating = (Flags & (1 << 1)) ? 1 : 0;
+ 	bImpactPointEqualsLocation = (Flags & (1 << 2)) ? 1 : 0;
+@@ -137,6 +141,18 @@ bool FHitResult::NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSu
+ 	{
+ 		FaceIndex = INDEX_NONE;
+ 	}
++	if (bOriginalFortnite)
++	{
++		// Original saving always leaves bit 7 clear; loading also supports its invalid sentinel.
++		if ((Flags & 0x80) == 0)
++		{
++			Ar << ElementIndex;
++		}
++		else if (Ar.IsLoading())
++		{
++			ElementIndex = MAX_uint8;
++		}
++	}
+ 	
+ 
+ 	return true;

@@ -8,8 +8,8 @@
 #include "Serialization/BitWriter.h"
 
 // Deliberately limited reference codec, shared by writer and reader. This is NOT a
-// network GUID/name parity claim: primitive target framing and payload use production
-// serializers; the three null object slots and NAME_None each use an explicit one-bit
+// network GUID/name parity claim: only the vector codecs use production
+// serializers; framing and hit field order are independently encoded; the three null object slots and NAME_None each use an explicit one-bit
 // zero marker. The adapter fails closed for any non-null reference or non-None name.
 // This avoids FArchive's fatal weak-object operator and its no-op UObject/FName operators.
 // The live client test exercises real UPackageMap GUID/name handling.
@@ -53,6 +53,40 @@ public:
 using FNullTargetDataWriter = TNullTargetDataArchive<FBitWriter>;
 using FNullTargetDataReader = TNullTargetDataArchive<FBitReader>;
 
+// Independent recovered-original writer: NEVER call FHitResult::NetSerialize here.
+// 0x144082490 uses eight flag bits and an ElementIndex byte after FaceIndex.
+// The original writer always clears bit7; ForceOmitElement exercises its reader-only branch.
+static bool WriteOriginalHitFixture(FNullTargetDataWriter& Ar, FHitResult& Hit, bool ForceOmitElement)
+{
+    const bool SamePoint = Hit.ImpactPoint == Hit.Location;
+    const bool SameNormal = Hit.ImpactNormal == Hit.Normal;
+    const bool InvalidItem = Hit.Item == INDEX_NONE;
+    const bool InvalidFace = Hit.FaceIndex == INDEX_NONE;
+    const bool NoDepth = Hit.PenetrationDepth == 0.0f;
+    uint8 Flags = (Hit.bBlockingHit << 0) | (Hit.bStartPenetrating << 1)
+        | (SamePoint << 2) | (SameNormal << 3) | (InvalidItem << 4)
+        | (InvalidFace << 5) | (NoDepth << 6) | (ForceOmitElement << 7);
+    Ar.SerializeBits(&Flags, 8);
+    Ar << Hit.Time;
+    bool AllSuccess = true, FieldSuccess = false;
+    Hit.Location.NetSerialize(Ar, nullptr, FieldSuccess); AllSuccess &= FieldSuccess;
+    Hit.Normal.NetSerialize(Ar, nullptr, FieldSuccess); AllSuccess &= FieldSuccess;
+    if (!SamePoint) { Hit.ImpactPoint.NetSerialize(Ar, nullptr, FieldSuccess); AllSuccess &= FieldSuccess; }
+    if (!SameNormal) { Hit.ImpactNormal.NetSerialize(Ar, nullptr, FieldSuccess); AllSuccess &= FieldSuccess; }
+    Hit.TraceStart.NetSerialize(Ar, nullptr, FieldSuccess); AllSuccess &= FieldSuccess;
+    Hit.TraceEnd.NetSerialize(Ar, nullptr, FieldSuccess); AllSuccess &= FieldSuccess;
+    if (!NoDepth) Ar << Hit.PenetrationDepth;
+    if (!InvalidItem) Ar << Hit.Item;
+    FArchive& References = Ar;
+    References << Hit.PhysMaterial;
+    References << Hit.Actor;
+    References << Hit.Component;
+    References << Hit.BoneName;
+    if (!InvalidFace) Ar << Hit.FaceIndex;
+    if (!ForceOmitElement) Ar << Hit.ElementIndex;
+    return AllSuccess && !Ar.IsError();
+}
+
 static bool TargetDataProbeFailure(int32 Line)
 {
     UE_LOG(LogTemp, Error, TEXT("Target-data wire probe failed at line %d"), Line);
@@ -74,9 +108,12 @@ bool RunHarvestTargetDataWireProbe()
     for (int32 I = 0; I < Cache.Num(); ++I)
         if (!Cache[I] || Cache[I]->GetName() != Expected[I]) return TargetDataProbeFailure(__LINE__);
 
-    // Build an independent original-client fixture, bypassing custom serializers on the write side.
+    // Independently write original handle framing, hit layout, and custom trailers.
+    // Requires original-client codec mode and reflected uint8 FHitResult::ElementIndex.
     for (uint8 Index : {uint8(0), uint8(4), uint8(5)})
+    for (int32 Variant = 0; Variant < (Index == 4 ? 1 : 3); ++Variant)
     {
+        UE_LOG(LogTemp, Display, TEXT("Target-data wire fixture index=%u variant=%d"), Index, Variant);
         FNullTargetDataWriter Writer(8192, true);
         uint8 UniqueId = 73, Count = 1;
         Writer << UniqueId << Count;
@@ -93,8 +130,26 @@ bool RunHarvestTargetDataWireProbe()
         Stock.HitResult.ImpactPoint = Stock.HitResult.Location;
         Stock.HitResult.Normal = FVector::UpVector;
         Stock.HitResult.ImpactNormal = Stock.HitResult.Normal;
+        Stock.HitResult.Item = INDEX_NONE;
+        Stock.HitResult.FaceIndex = INDEX_NONE;
+        Stock.HitResult.ElementIndex = 17;
+        if (Variant == 1)
+        {
+            Stock.HitResult.bStartPenetrating = true;
+            Stock.HitResult.ImpactPoint = FVector(8, 24, 56);
+            Stock.HitResult.ImpactNormal = FVector::ForwardVector;
+            Stock.HitResult.TraceStart = FVector(1, 2, 3);
+            Stock.HitResult.TraceEnd = FVector(4, 5, 6);
+            Stock.HitResult.PenetrationDepth = 2.5f;
+            Stock.HitResult.Item = 7;
+            Stock.HitResult.FaceIndex = 11;
+            // Faithful original writer sends this byte, even when value is 255.
+            Stock.HitResult.ElementIndex = 255;
+        }
+        const bool ForceOmitElement = Variant == 2;
+        if (ForceOmitElement) Stock.HitResult.ElementIndex = 255;
         if (Index == 0 || Index == 5)
-            Stock.NetSerialize(Writer, nullptr, Success);
+            if (!WriteOriginalHitFixture(Writer, Stock.HitResult, ForceOmitElement)) return TargetDataProbeFailure(__LINE__);
         int32 Technique = -19, Cartridge = 0x12345678, Weapon = -23456;
         if (Index == 4) Writer << Technique;
         if (Index == 5) Writer << Cartridge << Weapon;
@@ -121,7 +176,15 @@ bool RunHarvestTargetDataWireProbe()
         if (Index != 4)
         {
             const FHitResult* Hit = Data->GetHitResult();
-            if (!Hit || !Hit->bBlockingHit || Hit->Time != Stock.HitResult.Time || Hit->Location != Stock.HitResult.Location)
+            const FHitResult& Want = Stock.HitResult;
+            if (!Hit || !Hit->bBlockingHit || Hit->Time != Want.Time || Hit->Location != Want.Location
+                || Hit->bStartPenetrating != Want.bStartPenetrating
+                || Hit->ImpactPoint != Want.ImpactPoint || Hit->Normal != Want.Normal
+                || Hit->ImpactNormal != Want.ImpactNormal || Hit->TraceStart != Want.TraceStart
+                || Hit->TraceEnd != Want.TraceEnd || Hit->PenetrationDepth != Want.PenetrationDepth
+                || Hit->Item != Want.Item || Hit->FaceIndex != Want.FaceIndex
+                || Hit->ElementIndex != Want.ElementIndex || !Hit->BoneName.IsNone()
+                || Hit->PhysMaterial.Get() || Hit->Actor.Get() || Hit->Component.Get())
                 return TargetDataProbeFailure(__LINE__);
         }
         uint32 LoadedMarker = 0;
