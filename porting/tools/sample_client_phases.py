@@ -13,12 +13,12 @@ from pathlib import Path
 import time
 
 from probe_athena_phase import finite, snapshot
-from probe_equipment_pose import component, req
+from probe_equipment_pose import component, discover_context, obj, pawn_actor, req
 
 LIMITATIONS = [
     'Client and component reads are sequential, not an atomic game tick.',
     'Clock and distance differences describe sequential measurements, not causality or acceptance.',
-    'Aircraft root components are read after the validated phase snapshot; actor lifetime may change between reads.',
+    'Aircraft root components and world settings are read after the validated phase snapshot; reads are not atomic.',
 ]
 
 
@@ -31,10 +31,80 @@ def process_identity(pid):
     return fields[19]  # starttime, field 22
 
 
-def capture(pid):
+# WorldSettings reflected offsets and original StaticClass cache provenance:
+# porting/generated/agents/flight-frame-clamp/REPORT.md.
+SETTINGS_CLASS = 0x148365c30
+SETTINGS_FIELDS = {'time_dilation': 0x2e0, 'matinee_time_dilation': 0x2e4,
+                   'demo_play_time_dilation': 0x2e8, 'min_global_time_dilation': 0x2ec,
+                   'max_global_time_dilation': 0x2f0, 'min_undilated_frame_time': 0x2f4,
+                   'max_undilated_frame_time': 0x2f8}
+
+
+def settings_capture(mem, world, level, cached):
+    base = req(mem, SETTINGS_CLASS, '<Q', 'WorldSettings class cache')
+    if not base:
+        raise RuntimeError('WorldSettings class unavailable')
+    # Cache the array slot, not only the actor: each later sample verifies actual
+    # level membership without another whole-level scan. Reacquire on changes.
+    if cached and cached[:3] == (world, level, base):
+        _, _, _, offset, index, actor = cached
+        array = req(mem, level + offset, '<Qii', 'settings level array')
+        data, count, capacity = array
+        if (0 <= index < count <= capacity <= 200000 and data and
+                req(mem, data + 8 * index, '<Q', 'settings array entry') == actor and
+                pawn_actor(mem, actor, level, base)):
+            pass
+        else:
+            cached = None
+    else:
+        cached = None
+    if not cached:
+        matches = {}
+        for offset in (0x98, 0xa8):
+            data, count, capacity = req(mem, level + offset, '<Qii', 'settings level array')
+            if not (0 <= count <= capacity <= 200000 and (data or count == 0)):
+                raise RuntimeError('invalid settings level array')
+            entries = req(mem, data, '<' + str(count) + 'Q', 'settings level entries') if count else []
+            if count == 1:
+                entries = [entries]
+            for index, actor in enumerate(entries):
+                if actor and pawn_actor(mem, actor, level, base):
+                    matches[actor] = (offset, index)
+        if len(matches) != 1:
+            raise RuntimeError(f'expected one WorldSettings actor, found {len(matches)}')
+        actor, (offset, index) = next(iter(matches.items()))
+        cached = (world, level, base, offset, index, actor)
+    data, count, capacity = req(mem, level + offset, '<Qii', 'settings level array recheck')
+    if not (0 <= index < count <= capacity <= 200000 and data and
+            req(mem, data + 8 * index, '<Q', 'settings array entry recheck') == actor and
+            pawn_actor(mem, actor, level, base)):
+        raise RuntimeError('WorldSettings actor changed during capture')
+    result = {'object': obj(mem, actor)}
+    result.update({name: finite(mem, actor + off, name) for name, off in SETTINGS_FIELDS.items()})
+    if (req(mem, SETTINGS_CLASS, '<Q', 'WorldSettings class recheck') != base or
+            req(mem, level + offset, '<Qii', 'settings array final recheck') != [data, count, capacity] or
+            req(mem, data + 8 * index, '<Q', 'settings entry final recheck') != actor or
+            not pawn_actor(mem, actor, level, base)):
+        raise RuntimeError('WorldSettings actor changed during capture')
+    return result, cached
+
+
+def capture(pid, settings_cache):
     result = snapshot(pid, None)
     mem = os.open(f'/proc/{pid}/mem', os.O_RDONLY)
     try:
+        world, level = int(result['world'], 16), int(result['level'], 16)
+        # Original reflected UGameplayStatics getters: exec 0x14470f9c0 ->
+        # 0x1442165e0 reads +0x548; exec 0x1447100a0 -> 0x144217e80
+        # reads +0x550. See generated/agents/phase-frame-sampler/REPORT.md.
+        result['world_real_time_seconds'] = finite(mem, world + 0x548, 'world real time')
+        result['world_delta_time_seconds'] = finite(mem, world + 0x550, 'world delta time')
+        result['world_settings'], cached = settings_capture(mem, world, level, settings_cache.get(pid))
+        context = discover_context(pid)
+        if (context['world'] != world or context['level'] != level or
+                context['pc'] != int(result['controller'], 16)):
+            raise RuntimeError('world or controller changed after phase snapshot')
+        settings_cache[pid] = cached
         for aircraft in result['aircraft']:
             if aircraft is None:
                 continue
@@ -102,6 +172,7 @@ def main():
     deadline = start + args.seconds
     distances, clocks = [], []
     last_errors, last_report = {}, {}
+    settings_cache = {}
     captured = 0
     stopped = 'duration elapsed'
     with os.fdopen(fd, 'w', encoding='utf-8', buffering=1) as out:
@@ -126,7 +197,7 @@ def main():
                 try:
                     if process_identity(pid) != identities[pid]:
                         raise ProcessLookupError(f'process {pid} identity changed')
-                    client = capture(pid)
+                    client = capture(pid, settings_cache)
                     if process_identity(pid) != identities[pid]:
                         raise ProcessLookupError(f'process {pid} identity changed during capture')
                     clients.append(client)
