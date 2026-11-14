@@ -325,6 +325,8 @@ def main():
                         help="with --stub: HTTP(S) origin for local lobby image URLs")
     parser.add_argument("--local-matchmaking-ws-port", type=int,
                         help="with --stub: serve an additional plaintext WebSocket listener on loopback (0 chooses a port)")
+    parser.add_argument("--local-gameserver-http-port", type=int,
+                        help="with --stub: serve an additional plaintext HTTP listener on loopback for local game server registration")
     parser.add_argument("--local-qos-port", type=int, metavar="PORT",
                         help="with --stub: serve a candidate loopback QoS hotfix and UDP echo (0 chooses a port)")
     parser.add_argument("--quest-event-start", action="append", type=quest_event_start, default=[],
@@ -334,6 +336,8 @@ def main():
         parser.error("duplicate quest event start tag")
     if args.local_matchmaking_ws_port is not None and (not args.stub or args.matchmaking_ws_origin):
         parser.error("--local-matchmaking-ws-port requires --stub and no --matchmaking-ws-origin")
+    if args.local_gameserver_http_port is not None and not args.stub:
+        parser.error("--local-gameserver-http-port requires --stub")
     if args.local_qos_port is not None and (not args.stub or not 0 <= args.local_qos_port <= 65535):
         parser.error("--local-qos-port requires --stub and a port between 0 and 65535")
     args.record.parent.mkdir(parents=True, exist_ok=True)
@@ -381,6 +385,12 @@ def main():
         stub.DEFAULT.matchmaking.websocket_origin = f"ws://127.0.0.1:{ws_server.server_port}"
         threading.Thread(target=ws_server.serve_forever, daemon=True).start()
         print(f"Local matchmaking WebSocket on 127.0.0.1:{ws_server.server_port}", flush=True)
+    gs_http_server = None
+    if args.local_gameserver_http_port is not None:
+        gs_http_server = ThreadingHTTPServer(("127.0.0.1", args.local_gameserver_http_port),
+                                             make_handler(routes, args.record, stub, args.wallet_trace))
+        threading.Thread(target=gs_http_server.serve_forever, daemon=True).start()
+        print(f"Local gameserver HTTP on 127.0.0.1:{gs_http_server.server_port}", flush=True)
     if args.tls_cert:
         import ssl
         context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
@@ -402,6 +412,9 @@ def main():
             qos_stop.set()
             qos_thread.join()
             qos_socket.close()
+        if gs_http_server is not None:
+            gs_http_server.shutdown()
+            gs_http_server.server_close()
         if ws_server is not None:
             ws_server.shutdown()
             ws_server.server_close()

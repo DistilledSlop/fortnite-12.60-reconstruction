@@ -456,11 +456,30 @@ static int frontend_in_log(FrontendLog *reader,const WCHAR *path,const char *ses
     return 0;
 }
 
+/* Keep the 12.60 client from Oodle-compressing UDP packets >= 19 bytes.
+ * Matches porting/server/patch_oodle_min_size.py: 0x1480EB2F0 holds
+ * TConsoleVariableData<int32>* (two shadowed ints, game and render thread).
+ * Return 2 if newly written, 1 if already 100000, 0 if not ready/unexpected.
+ */
+static int patch_oodle_min_size(void) {
+    uintptr_t data=0;int32_t values[2]={0,0};
+    if(!safe_read(AT(0x1480eb2f0ULL),&data,sizeof(data),0))return 0;
+    if(data<0x10000||(data&3)||!safe_read((const void *)data,values,sizeof(values),1))return 0;
+    if(values[0]==100000 && values[1]==100000)return 1;
+    if(values[0]>=0 && values[0]<1000 && values[1]>=0 && values[1]<1000) {
+        InterlockedExchange((volatile LONG *)data,100000);
+        InterlockedExchange((volatile LONG *)data+1,100000);
+        if(!safe_read((const void *)data,values,sizeof(values),1))return 0;
+        return (values[0]==100000 && values[1]==100000)?2:0;
+    }
+    return 0;
+}
+
 static DWORD WINAPI helper_run(LPVOID ignored) {
     WCHAR ca_path[32768]={0},server[64]={0},account[256]={0};IN_ADDR ip;ULONGLONG deadline;
     WCHAR client_log[32768]={0},session[33]={0};char session_marker[80];
     static FrontendLog reader={.file=INVALID_HANDLE_VALUE};
-    int dns=0,appes=0,pins=0,changed=0,frontend=0;(void)ignored;
+    int dns=0,appes=0,pins=0,oodle=0,changed=0,frontend=0;(void)ignored;
 
     if(GetEnvironmentVariableW(L"FN_LOCAL_HELPER_LOG",log_path,32768)>=32768)log_path[0]=0;
     DWORD client_log_length=GetEnvironmentVariableW(L"FN_LOCAL_CLIENT_LOG",client_log,32768);
@@ -489,6 +508,9 @@ static DWORD WINAPI helper_run(LPVOID ignored) {
     deadline=GetTickCount64()+180000;
     do {
         if(!dns) {dns=install_dns();if(dns)status(L"local DNS: guarded main-module getaddrinfo redirect installed");}
+        if(!oodle && patch_oodle_min_size()>0) {
+            oodle=1;status(L"local Oodle: net.OodleMinSizeForCompression set to 100000");
+        }
         if(!frontend) {
             frontend=frontend_in_log(&reader,client_log,session_marker);
             if(frontend<0) {
@@ -508,7 +530,7 @@ static DWORD WINAPI helper_run(LPVOID ignored) {
                 pins=1;status(changed?L"local TLS: six domain pins updated; verification enabled":L"local TLS: six local pins already present; verification enabled");
             }
         }
-        if(dns&&appes&&pins){status(L"patched local helper ready");return 0;}
+        if(dns&&appes&&pins&&oodle){status(L"patched local helper ready");return 0;}
         Sleep(250);
     }while(GetTickCount64()<deadline);
     if(reader.file!=INVALID_HANDLE_VALUE)CloseHandle(reader.file);
@@ -516,6 +538,7 @@ static DWORD WINAPI helper_run(LPVOID ignored) {
     if(!pins)status(L"local TLS pins pending: manager or original signatures unavailable");
     if(!dns)status(L"local DNS pending: original getaddrinfo import binding not proven");
     if(!appes)status(L"local AppES diagnostic pending: original signatures unavailable");
+    if(!oodle)status(L"local Oodle pending: net.OodleMinSizeForCompression pointer unavailable");
     status(L"local helper incomplete; no readiness claimed");return 1;
 }
 
@@ -530,7 +553,10 @@ static DWORD WINAPI helper_worker(LPVOID ignored) {
     DWORD ready_length=GetEnvironmentVariableW(L"FN_LOCAL_READY_EVENT",ready_name,260);
     DWORD failed_length=GetEnvironmentVariableW(L"FN_LOCAL_FAILED_EVENT",failed_name,260);
     HANDLE ready=NULL,failed=NULL;
-    if(!ready_length && !failed_length)return result;
+    if(!ready_length && !failed_length) {
+        if(result==0)for(;;){Sleep(500);if(patch_oodle_min_size()==2)status(L"local Oodle: net.OodleMinSizeForCompression re-applied");}
+        return result;
+    }
     if(ready_length && ready_length<260)
         ready=OpenEventW(EVENT_MODIFY_STATE,FALSE,ready_name);
     if(failed_length && failed_length<260)
@@ -554,6 +580,7 @@ static DWORD WINAPI helper_worker(LPVOID ignored) {
         result=1;
     }
     CloseHandle(ready);CloseHandle(failed);
+    if(result==0)for(;;){Sleep(500);if(patch_oodle_min_size()==2)status(L"local Oodle: net.OodleMinSizeForCompression re-applied");}
     return result;
 }
 
