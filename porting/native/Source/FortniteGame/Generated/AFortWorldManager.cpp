@@ -239,4 +239,32 @@ AFortWorldManager::AFortWorldManager(const FObjectInitializer& ObjectInitializer
 {
     USceneComponent* NativeDefaultSubobject0 = CreateDefaultSubobject<USceneComponent>(TEXT("MySceneComponent"));
     (void)NativeDefaultSubobject0;
+    // Recovered original constructor defaults; map serialization can override these.
+    CurrentZoneIndex = -1;
+    DangerPlayerSpawnExclusionRadius = 512.0f;
+    FinalNumChosenBuildingFoundations = -1;
+    MaxConsecutiveFails = 20;
+    MaxTiles = 16;
+    NumNonAutoconstructedTiles = 4;
+    ObjectivePlayerSpawnExclusionRadius = 512.0f;
+    SaveFrequency_Seconds = 60;
+    TileEdgeSize = 25;
+    VerticalCellNumOffsetFromOrigin = -20;
+    X_Size = 10;
+    Y_Size = 10;
+    Z_StructuralGrid_Size = 60;
+    NetDormancy = static_cast<ENetDormancy>(2);
+    NetPriority = 3.0f;
+    SetRemoteRoleForBackwardsCompat(static_cast<ENetRole>(1));
+    bAlwaysRelevant = true;
+    bReplayRewindable = true;
+    bReplicates = true;
+    bSavingEnabled = true;
+    bStreamInBuildings = true;
+    bConstructTileWorld = false;
+    bUseSimMaps = false;
+    InitialGlobalWind.WindIntensity = -9.99999975e-05f;
+    InitialGlobalWind.WindHeading = 45.0f;
+    FriendlyPlayerSpawnExtent = FVector(2000.0f, 2000.0f, 1000.0f);
+    PadPlayerSpawnExtent = FVector(1000.0f, 1000.0f, 500.0f);
 }

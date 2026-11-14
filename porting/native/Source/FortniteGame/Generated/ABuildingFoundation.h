@@ -230,5 +230,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	bool NativeIsDynamicFoundationOrParent() const;
 	bool NativeIsFoundationAndParentsEnabled() const;
+	bool NativeCanSelectBuildingLevel() const;
 };
 
