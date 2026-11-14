@@ -12,14 +12,15 @@
 // original code (unread formula, unported callee, or a test convenience). Unknowns are logged once with UE_LOG.
 // Everything is inactive unless -FortniteOriginalClient is set.
 
+#include "FortAthenaMatchFlow.h"
 #include "HAL/IConsoleManager.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "FortAthenaMatchFlow.h"
 #include "EngineUtils.h"
 #include "FortniteAthenaGameplay.h"
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaHealth.h"
+#include "FortAthenaFallDamage.h"
 #include "FortAthenaEndGame.h"
 #include "Engine/LevelStreaming.h"
 #include "Engine/LevelStreamingDynamic.h"
@@ -1920,6 +1921,7 @@ namespace FortAthenaMatchFlowPrivate
         // Steps 7-8 (supply drop list, storm cap 0x1419797b0, 0x1419783c0, mutator ticks) not ported.
         TickAircraft(GameMode, GameState);
         TickSkydivers(World);
+        FortAthenaFallDamage::Tick(World);
 
         if (S.LastStatusTime < 0.0f || WorldTime - S.LastStatusTime >= 5.0f)
         {

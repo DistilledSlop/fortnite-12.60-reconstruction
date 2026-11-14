@@ -619,7 +619,12 @@ void FortAthenaHealth::ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, co
 	FAthenaBatchedDamageGameplayCues_NonShared NonSharedCues{};
 	NonSharedCues.HitActor = VictimPawn;
 
-	VictimPawn->NetMulticast_Athena_BatchedDamageCues(SharedCues, NonSharedCues);
+	// Environmental damage (storm, falling) has no instigator or causer. The original applies it through a gameplay effect
+	// without the weapon hit cue; sending the batched hit cue here played a gunshot-like sound on the client.
+	if (InstigatedBy || DamageCauser)
+	{
+		VictimPawn->NetMulticast_Athena_BatchedDamageCues(SharedCues, NonSharedCues);
+	}
 
 	UE_LOG(LogFortHealth, Display, TEXT("Health: Damage %.1f applied to %s (Shield: -%.1f, Health: -%.1f) -> Health: %.1f, Shield: %.1f"),
 		DamageAmount, *VictimPawn->GetName(), ShieldDamage, HealthDamage, NewHealth, VictimPawn->GetShield());
