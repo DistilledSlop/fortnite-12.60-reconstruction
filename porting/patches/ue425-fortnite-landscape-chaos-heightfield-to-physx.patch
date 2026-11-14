@@ -1,13 +1,77 @@
 diff --git a/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp b/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp
-index fc917c46c..e58e420c4 100644
+index fc917c46c..03ccb1fc9 100644
 --- a/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp
 +++ b/Engine/Source/Runtime/Landscape/Private/LandscapeCollision.cpp
-@@ -569,6 +569,63 @@ void ULandscapeHeightfieldCollisionComponent::ApplyWorldOffset(const FVector& In
+@@ -3,6 +3,10 @@
+ #include "CoreMinimal.h"
+ #include "GenericPlatform/GenericPlatformStackWalk.h"
+ #include "Misc/Guid.h"
++#include "Misc/FileHelper.h"
++#include "Misc/Paths.h"
++#include "Misc/ScopeLock.h"
++#include "HAL/FileManager.h"
+ #include "Stats/Stats.h"
+ #include "Serialization/BufferArchive.h"
+ #include "Misc/FeedbackContext.h"
+@@ -569,6 +573,116 @@ void ULandscapeHeightfieldCollisionComponent::ApplyWorldOffset(const FVector& In
  	}
  }
  
 +#if WITH_PHYSX && PHYSICS_INTERFACE_PHYSX
 +#include "cooking/PxCooking.h"
++
++// Capture a bounded sample of the original cooked stream for offline layout analysis.
++// CookedCollisionData is an opaque byte array here; it carries no FArchive version context.
++static void FortniteDumpLandscapeHeightfield(const TArray<uint8>& Blob, const FString& ComponentPath,
++	int32 FullQuads, int32 SimpleQuads, int32 MaterialCount)
++{
++	FString Directory;
++	if (!FParse::Value(FCommandLine::Get(), TEXT("FortniteDumpLandscapeHeightfield="), Directory))
++		return;
++	static FCriticalSection Lock;
++	static TSet<FIntPoint> SavedLayouts;
++	static bool bDumpDisabled = false;
++	FScopeLock Guard(&Lock);
++	if (bDumpDisabled)
++		return;
++	if (Directory.IsEmpty() || FPaths::IsRelative(Directory))
++	{
++		UE_LOG(LogLandscape, Warning, TEXT("FortniteDumpLandscapeHeightfield requires an absolute output directory"));
++		bDumpDisabled = true;
++		return;
++	}
++	const FIntPoint Layout(FullQuads, SimpleQuads);
++	if (SavedLayouts.Num() >= 4 || SavedLayouts.Contains(Layout))
++		return;
++	if (!IFileManager::Get().MakeDirectory(*Directory, true))
++	{
++		UE_LOG(LogLandscape, Warning, TEXT("Could not create landscape dump directory %s"), *Directory);
++		bDumpDisabled = true;
++		return;
++	}
++	const FString Stem = FString::Printf(TEXT("landscape_%d_%d_%s"), FullQuads, SimpleQuads,
++		*FGuid::NewGuid().ToString(EGuidFormats::Digits));
++	const FString BlobPath = FPaths::Combine(Directory, Stem + TEXT(".bin"));
++	const FString MetaPath = FPaths::Combine(Directory, Stem + TEXT(".txt"));
++	const FString Metadata = FString::Printf(
++		TEXT("component=%s\nfull_quads=%d\nsimple_quads=%d\nbytes=%d\nphysical_material_count=%d\narchive_custom_versions=unavailable_at_opaque_cooked_byte_array\n"),
++		*ComponentPath, FullQuads, SimpleQuads, Blob.Num(), MaterialCount);
++	if (!FFileHelper::SaveArrayToFile(Blob, *BlobPath))
++	{
++		UE_LOG(LogLandscape, Warning, TEXT("Could not save landscape blob %s"), *BlobPath);
++		bDumpDisabled = true;
++		return;
++	}
++	if (!FFileHelper::SaveStringToFile(Metadata, *MetaPath))
++	{
++		IFileManager::Get().Delete(*BlobPath);
++		UE_LOG(LogLandscape, Warning, TEXT("Could not save landscape metadata %s"), *MetaPath);
++		bDumpDisabled = true;
++		return;
++	}
++	SavedLayouts.Add(Layout);
++	UE_LOG(LogLandscape, Display, TEXT("Saved landscape heightfield sample %s (%d bytes)"), *BlobPath, Blob.Num());
++}
 +// Fortnite server: Windows-cooked landscape collision is Chaos THeightField data (uint16 heights, row-major),
 +// which PhysX cannot read. Rebuild a PhysX heightfield with the same orientation ConvertHeightfieldDataForPhysx uses.
 +static PxHeightField* FortniteBuildPhysXHeightfieldFromChaosBlob(const TArray<uint8>& Blob, const int32 N, const bool bIsMirrored)
@@ -66,8 +130,12 @@ index fc917c46c..e58e420c4 100644
  void ULandscapeHeightfieldCollisionComponent::CreateCollisionObject()
  {
  #if WITH_CHAOS
-@@ -627,10 +684,24 @@ void ULandscapeHeightfieldCollisionComponent::CreateCollisionObject()
+@@ -625,12 +739,28 @@ void ULandscapeHeightfieldCollisionComponent::CreateCollisionObject()
+ #if WITH_PHYSX && PHYSICS_INTERFACE_PHYSX
+ 				// Create heightfield shape
  				{
++					FortniteDumpLandscapeHeightfield(CookedCollisionData, GetPathName(), CollisionSizeQuads,
++						SimpleCollisionSizeQuads, CookedPhysicalMaterials.Num());
  					FPhysXInputStream HeightFieldStream(CookedCollisionData.GetData(), CookedCollisionData.Num());
  					HeightfieldRef->RBHeightfield = GPhysXSDK->createHeightField(HeightFieldStream);
 -					if (SimpleCollisionSizeQuads > 0)

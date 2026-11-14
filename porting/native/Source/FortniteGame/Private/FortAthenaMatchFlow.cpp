@@ -47,6 +47,7 @@
 #include "GameplayEffect.h"
 #include "GameplayTagContainer.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Engine/CurveTable.h"
 #include "Engine/DataTable.h"
 #include "FFortPawnStats.h"
@@ -1735,6 +1736,81 @@ namespace FortAthenaMatchFlow
         Pawn->SetActorLocationAndRotation(DropLocation, FRotator(0.0f, Player->ExitRotation.Yaw, 0.0f), false, nullptr, ETeleportType::TeleportPhysics);
     }
 
+    // Read-only, bounded samples for comparing server contact with the original client.
+    void StartGroundContactProbe(AFortPlayerPawn* Pawn)
+    {
+        UWorld* World = Pawn ? Pawn->GetWorld() : nullptr;
+        if (!World)
+            return;
+        struct FProbeTimer
+        {
+            FTimerHandle Handle;
+            int32 Samples = 0;
+        };
+        const TSharedRef<FProbeTimer> Probe = MakeShared<FProbeTimer>();
+        const TWeakObjectPtr<AFortPlayerPawn> WeakPawn(Pawn);
+        const TWeakObjectPtr<UWorld> WeakWorld(World);
+        FTimerDelegate Delegate = FTimerDelegate::CreateLambda([Probe, WeakPawn, WeakWorld]()
+        {
+            UWorld* SampleWorld = WeakWorld.Get();
+            AFortPlayerPawn* SamplePawn = WeakPawn.Get();
+            if (!SampleWorld)
+                return; // World teardown destroys its timer manager.
+            if (!SamplePawn || ++Probe->Samples > 60)
+            {
+                SampleWorld->GetTimerManager().ClearTimer(Probe->Handle);
+                return;
+            }
+            const UCharacterMovementComponent* Movement = SamplePawn->GetCharacterMovement();
+            const UCapsuleComponent* Capsule = SamplePawn->GetCapsuleComponent();
+            if (!Movement || !Capsule)
+            {
+                UE_LOG(LogTemp, Display, TEXT("GroundContact: sample=%d pawn=%s missing movement or capsule"),
+                    Probe->Samples, *GetNameSafe(SamplePawn));
+                SampleWorld->GetTimerManager().ClearTimer(Probe->Handle);
+                return;
+            }
+            const FVector Position = SamplePawn->GetActorLocation();
+            const FVector Velocity = Movement->Velocity;
+            FVector Direction(Velocity.X, Velocity.Y, 0.0f);
+            if (!Direction.Normalize())
+            {
+                Direction = SamplePawn->GetActorForwardVector();
+                Direction.Z = 0.0f;
+                Direction.Normalize();
+            }
+            // Shrink by 1 cm so a level floor is unlikely to mask a forward wall hit.
+            // This is a diagnostic query only; the movement component is not modified.
+            const float Radius = FMath::Max(0.1f, Capsule->GetScaledCapsuleRadius() - 1.0f);
+            const float HalfHeight = FMath::Max(Radius, Capsule->GetScaledCapsuleHalfHeight() - 1.0f);
+            FCollisionQueryParams Params(SCENE_QUERY_STAT(FortniteGroundContact), false, SamplePawn);
+            const FCollisionResponseParams Responses(Capsule->GetCollisionResponseToChannels());
+            FHitResult Wall;
+            const FVector Start = Capsule->GetComponentLocation();
+            const bool bWall = SampleWorld->SweepSingleByChannel(Wall, Start, Start + Direction * 100.0f,
+                Capsule->GetComponentQuat(), Capsule->GetCollisionObjectType(),
+                FCollisionShape::MakeCapsule(Radius, HalfHeight), Params, Responses);
+            const FFindFloorResult& Floor = Movement->CurrentFloor;
+            const FHitResult& FloorHit = Floor.HitResult;
+            const UPrimitiveComponent* FloorComponent = FloorHit.GetComponent();
+            const UPrimitiveComponent* WallComponent = Wall.GetComponent();
+            UE_LOG(LogTemp, Display, TEXT("GroundContact: sample=%d time=%.3f pawn=%s pos=%s velocity=%s maxSpeed=%.3f maxAccel=%.3f capsuleRadius=%.3f capsuleHalfHeight=%.3f scaledRadius=%.3f scaledHalfHeight=%.3f scale=%s profile=%s collisionEnabled=%d objectChannel=%d worldStaticResponse=%d floorBlocking=%d floorWalkable=%d floorDist=%.3f floorLineDist=%.3f floorImpact=%s floorActor=%s floorComponent=%s floorClass=%s wallBlocking=%d wallStartPenetrating=%d wallDistance=%.3f wallImpact=%s wallActor=%s wallComponent=%s wallClass=%s direction=%s"),
+                Probe->Samples, SampleWorld->GetTimeSeconds(), *GetNameSafe(SamplePawn), *Position.ToString(), *Velocity.ToString(),
+                Movement->GetMaxSpeed(), Movement->GetMaxAcceleration(), Capsule->GetUnscaledCapsuleRadius(),
+                Capsule->GetUnscaledCapsuleHalfHeight(), Capsule->GetScaledCapsuleRadius(), Capsule->GetScaledCapsuleHalfHeight(),
+                *Capsule->GetComponentScale().ToString(), *Capsule->GetCollisionProfileName().ToString(),
+                static_cast<int32>(Capsule->GetCollisionEnabled()), static_cast<int32>(Capsule->GetCollisionObjectType()),
+                static_cast<int32>(Capsule->GetCollisionResponseToChannel(ECC_WorldStatic)), Floor.bBlockingHit, Floor.bWalkableFloor,
+                Floor.FloorDist, Floor.LineDist, *FloorHit.ImpactPoint.ToString(), *GetNameSafe(FloorHit.GetActor()),
+                *GetNameSafe(FloorComponent), *GetNameSafe(FloorComponent ? FloorComponent->GetClass() : nullptr),
+                bWall, Wall.bStartPenetrating, Wall.Distance, *Wall.ImpactPoint.ToString(), *GetNameSafe(Wall.GetActor()),
+                *GetNameSafe(WallComponent), *GetNameSafe(WallComponent ? WallComponent->GetClass() : nullptr), *Direction.ToString());
+            if (Probe->Samples == 60)
+                SampleWorld->GetTimerManager().ClearTimer(Probe->Handle);
+        });
+        World->GetTimerManager().SetTimer(Probe->Handle, Delegate, 1.0f, true);
+    }
+
     void OnPlayerRestarted(AFortGameModeAthena* GameMode, AController* Controller)
     {
         FMatchFlowState& S = State();
@@ -1744,6 +1820,9 @@ namespace FortAthenaMatchFlow
         AFortPlayerPawn* Pawn = Cast<AFortPlayerPawn>(Controller->GetPawn());
         if (!GameState || !Pawn)
             return;
+
+        if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeGroundContact")))
+            StartGroundContactProbe(Pawn);
 
         if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeMovementDefaults")))
         {

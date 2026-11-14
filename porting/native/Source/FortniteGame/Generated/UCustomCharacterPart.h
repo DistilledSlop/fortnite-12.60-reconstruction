@@ -29,6 +29,8 @@ class FORTNITEGAME_API UCustomCharacterPart : public UPrimaryDataAsset
 	GENERATED_BODY()
 
 public:
+	UCustomCharacterPart(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 28, flags 0x10010000000015
 	UPROPERTY()
 	TEnumAsByte<EFortCustomGender::Type> GenderPermitted;

@@ -29,3 +29,12 @@ bool UFortAccountItem::IsRefundable() const
 	return false;
 }
 
+
+UFortAccountItem::UFortAccountItem(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    // Narrow reflected projection of original constructor 0x141ffb050.
+    Quantity = 1;
+    level = 1;
+    bIsLocalOnlyItem = true;
+}

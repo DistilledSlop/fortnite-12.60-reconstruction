@@ -4,8 +4,9 @@ import unittest
 from pathlib import Path
 from stage_attribute_defaults import stage
 
+NETWORK = b'[/Script/Engine.GameNetworkManager]\r\nTotalNetBandwidth=200000\r\nMaxDynamicBandwidth=40000\r\nMinDynamicBandwidth=20000\r\nClientAuthorativePosition=false\r\nClientErrorUpdateRateLimit=0.015f\r\nMAXCLIENTUPDATEINTERVAL=0.35f\r\nMaxClientForcedUpdateDuration=0.60f\r\nServerForcedUpdateHitchThreshold=0.150f\r\nServerForcedUpdateHitchCooldown=0.100f\r\nMaxMoveDeltaTime=0.125f\r\nClientNetSendMoveDeltaTime=0.05\r\nClientNetSendMoveDeltaTimeThrottled=0.066\r\nClientNetSendMoveDeltaTimeStationary=0.0833\r\nClientNetSendMoveThrottleAtNetSpeed=10000\r\nClientNetSendMoveThrottleOverPlayerCount=24\r\nbMovementTimeDiscrepancyDetection=true\r\nbMovementTimeDiscrepancyResolution=true\r\nMovementTimeDiscrepancyMaxTimeMargin=0.25f\r\nMovementTimeDiscrepancyMinTimeMargin=-0.25f\r\nMovementTimeDiscrepancyResolutionRate=1.0f\r\nMovementTimeDiscrepancyDriftAllowance=0.10f\r\nbMovementTimeDiscrepancyForceCorrectionsDuringResolution=true\r\nClientNetCamUpdateDeltaTime=0.066\r\nBadPingThreshold=200\r\nSeverePingThreshold=500\r\nBadPacketLossThreshold=0.05\r\nSeverePacketLossThreshold=0.15\r\n\r\n'
 TABLES = [f'/Game/Test/Table{i}.Table{i}'.encode() for i in range(11)]
-SOURCE = (b'[/Script/GameplayAbilities.AbilitySystemGlobals]\n'
+SOURCE = (NETWORK + b'[/Script/GameplayAbilities.AbilitySystemGlobals]\n'
           + b''.join(b'+GlobalAttributeSetDefaultsTableNames=' + p + b'\n' for p in TABLES)
           + b'[/Script/FortniteGame.FortAbilitySystemGlobals]\n'
           + b''.join(b'+BROnlyAttributeSetDefaultsToExclude=' + p + b'\n' for p in TABLES[:3])
@@ -41,6 +42,8 @@ class TestStage(unittest.TestCase):
         self.assertIn(b'[/script/fortnitegame.fortglobals]\nbBROnly=True', data)
         self.assertNotIn(b'[/script/fortnitegame.fortabilitysystemglobals]\nbBROnly=True', data)
         self.assertEqual(receipt['exclusion_count'], 3)
+        self.assertEqual(receipt['network_section_key_count'], 27)
+        self.assertIn(NETWORK, data)
         self.assertIn('--strict', self.commands[0])
         self.assertEqual(self.commands[0][-11:], [p.split(b'.')[0].decode() for p in TABLES])
         self.out = self.root / 'evidence2'
@@ -57,6 +60,29 @@ class TestStage(unittest.TestCase):
         def fail(cmd, check): raise subprocess.CalledProcessError(1, cmd)
         with self.assertRaises(subprocess.CalledProcessError): self.run_stage(fail)
         self.assertEqual(self.target.read_bytes(), TARGET)
+        self.assertFalse(self.out.exists())
+
+    def test_network_source_validation_and_target_preservation(self):
+        for bad in (SOURCE.replace(NETWORK, b''),
+                    SOURCE.replace(NETWORK, NETWORK + NETWORK),
+                    SOURCE.replace(b'MaxMoveDeltaTime=0.125f', b'MaxMoveDeltaTime=0.250f'),
+                    SOURCE.replace(b'MaxMoveDeltaTime=0.125f', b'MaxMoveDeltaTime=0.125f\r\nMaxMoveDeltaTime=0.125f')):
+            self.source.write_bytes(bad)
+            with self.assertRaises(ValueError):
+                self.run_stage()
+            self.assertEqual(self.target.read_bytes(), TARGET)
+            self.assertFalse(self.out.exists())
+        self.source.write_bytes(SOURCE)
+        target = TARGET + b'[/Script/Engine.GameNetworkManager]\nOld=remove\n[Adjacent]\nKeep=yes\n'
+        self.target.write_bytes(target)
+        self.run_stage()
+        result = self.target.read_bytes()
+        self.assertIn(NETWORK + b'[Adjacent]\nKeep=yes\n', result)
+        self.assertNotIn(b'Old=remove', result)
+        self.out = self.root / 'duplicate'
+        self.target.write_bytes(target + b'[/Script/Engine.GameNetworkManager]\n')
+        with self.assertRaises(ValueError):
+            self.run_stage()
         self.assertFalse(self.out.exists())
 
     def test_existing_content_mismatch_fails_before_config_replacement(self):

@@ -4,7 +4,7 @@ import subprocess
 import tempfile
 import unittest
 
-from stage_native_config import collision_section, digest, stage, staged_config
+from stage_native_config import collision_section, digest, physics_section, stage, staged_config
 
 CONFIG = b"""[/Script/EngineSettings.GameMapsSettings]
 GameInstanceClass=/Script/FortniteGame.FortGameInstance
@@ -14,6 +14,9 @@ LocalPlayerClassName=/Script/FortniteGame.FortLocalPlayer
 """
 COLLISION = b'[/Script/Engine.CollisionProfile]\r\n+Profiles=(Name="FortPawnCapsule")\r\n-Profiles=(Name="Old")\r\n+Profiles=(Name="FortBuildingMesh")\r\n+DefaultChannelResponses=(Name="FCC_Test")\r\n'
 
+PHYSICS = (b"[/Script/Engine.PhysicsSettings]\r\nContactOffsetMultiplier=0.010000\r\n"
+           b"MinContactOffset=0.000100\r\nMaxContactOffset=1.000000\r\n"
+           b"+PhysicalSurfaces=(Type=SurfaceType1,Name=Test)\r\n")
 
 
 class StageTest(unittest.TestCase):
@@ -36,7 +39,7 @@ class StageTest(unittest.TestCase):
         self.target.parent.mkdir()
         self.target.write_bytes(b"old staged bytes\n")
         self.original = self.root / "original.ini"
-        self.original.write_bytes(CONFIG + b"; private unrelated config omitted from receipt\n" + COLLISION + b"[Unrelated]\nsecret=value\n")
+        self.original.write_bytes(CONFIG + b"; private unrelated config omitted from receipt\n" + COLLISION + PHYSICS + b"[Unrelated]\nsecret=value\n")
         self.out = self.root / "evidence"
 
     def git(self, *args):
@@ -55,15 +58,18 @@ class StageTest(unittest.TestCase):
         self.assertEqual(receipt["after_sha256"], digest(self.target.read_bytes()))
         self.assertEqual(receipt["source_sha256"], receipt["committed_source_sha256"])
         self.assertTrue(receipt["original_settings_validated"])
+        self.assertEqual(receipt["physics_section_sha256"], digest(PHYSICS))
+        self.assertEqual(receipt["physics_section_entry_count"], 4)
+        self.assertEqual(receipt["physics_section_key_count"], 4)
         self.assertNotIn("private unrelated", json.dumps(receipt))
 
     def test_rejections_leave_target_intact(self):
         for case in ("dirty", "bad_original", "duplicate_original", "missing_collision", "incomplete_collision", "duplicate_collision", "missing_original", "existing_out", "missing_target", "same_target"):
             with self.subTest(case=case):
                 self.source.write_bytes(CONFIG + (b"; dirty\n" if case == "dirty" else b""))
-                self.original.write_bytes(CONFIG.replace(b"FortLocalPlayer", b"Wrong") if case == "bad_original" else CONFIG + (b"LocalPlayerClassName=/Script/FortniteGame.FortLocalPlayer\n" if case == "duplicate_original" else b"") + (b"" if case == "missing_collision" else COLLISION) + (COLLISION if case == "duplicate_collision" else b""))
+                self.original.write_bytes(CONFIG.replace(b"FortLocalPlayer", b"Wrong") if case == "bad_original" else CONFIG + (b"LocalPlayerClassName=/Script/FortniteGame.FortLocalPlayer\n" if case == "duplicate_original" else b"") + (b"" if case == "missing_collision" else COLLISION) + (COLLISION if case == "duplicate_collision" else b"") + PHYSICS)
                 if case == "incomplete_collision":
-                    self.original.write_bytes(CONFIG + COLLISION.replace(b"FortBuildingMesh", b"Other"))
+                    self.original.write_bytes(CONFIG + COLLISION.replace(b"FortBuildingMesh", b"Other") + PHYSICS)
                 if case == "existing_out":
                     self.out.mkdir()
                 if case == "missing_target":
@@ -78,12 +84,29 @@ class StageTest(unittest.TestCase):
                     self.out.rmdir()
 
     def test_collision_section_is_verbatim_and_unique(self):
-        original = CONFIG + COLLISION + b"[Other]\n+Profiles=excluded\n"
+        original = CONFIG + COLLISION + PHYSICS + b"[Other]\n+Profiles=excluded\n"
         self.assertEqual(collision_section(original), COLLISION)
         result = staged_config(CONFIG, original)
-        self.assertEqual(result, CONFIG.rstrip(b"\r\n") + b"\n\n" + COLLISION)
+        self.assertEqual(result, CONFIG.rstrip(b"\r\n") + b"\n\n" + PHYSICS + b"\n" + COLLISION)
         with self.assertRaises(ValueError):
             staged_config(CONFIG + COLLISION, original)
+
+    def test_physics_section_validation_and_preservation(self):
+        original = CONFIG + COLLISION + PHYSICS + b"[Other]\nUnrelated=yes\n"
+        self.assertEqual(physics_section(original), (PHYSICS, 4, 4))
+        for invalid in (original.replace(PHYSICS, b""),
+                        original.replace(PHYSICS, PHYSICS + PHYSICS),
+                        original.replace(b"MinContactOffset=0.000100", b"MinContactOffset=2"),
+                        original.replace(b"MinContactOffset=0.000100", b"MinContactOffset=0.000100\r\n+MinContactOffset=2"),
+                        original.replace(b"MinContactOffset=0.000100", b"MinContactOffset=0.000100\r\nMinContactOffset=0.000100")):
+            with self.assertRaises(ValueError):
+                staged_config(CONFIG, invalid)
+        native = CONFIG + b"[/Script/Engine.PhysicsSettings]\nOld=remove\n[Neighbor]\nKeep=yes\n"
+        result = staged_config(native, original)
+        self.assertIn(PHYSICS + b"[Neighbor]\nKeep=yes\n", result)
+        self.assertNotIn(b"Old=remove", result)
+        with self.assertRaises(ValueError):
+            staged_config(native + b"[/Script/Engine.PhysicsSettings]\n", original)
 
     def test_bad_committed_settings_rejected(self):
         self.source.write_bytes(CONFIG.replace(b"FortGameInstance", b"Wrong"))

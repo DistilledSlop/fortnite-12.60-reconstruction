@@ -19,6 +19,8 @@ SECTIONS = {
 }
 HEADER = re.compile(rb'^\s*\[([^\]\r\n]+)\]\s*$')
 ENTRY = re.compile(rb'^\s*([+.!-]?)([A-Za-z0-9_]+)\s*=\s*(.*?)\s*$')
+NETWORK_SECTION = b'/script/engine.gamenetworkmanager'
+NETWORK_SHA256 = '3dad29d886e50244a72d986322821316bcad40ed7fb6517df69a76c03f2cba9b'
 OBJECT = re.compile(rb'^(/Game/[A-Za-z0-9_/]+)\.([A-Za-z0-9_]+)$')
 
 
@@ -53,6 +55,63 @@ def selected(data):
             raise ValueError('invalid attribute table object path')
         packages.append(match.group(1).decode('ascii'))
     return result, packages
+
+
+def network_section(data):
+    sections = []
+    current = None
+    for line in data.splitlines(keepends=True):
+        match = HEADER.match(line.rstrip(b'\r\n'))
+        if match:
+            if current is not None:
+                sections.append(b''.join(current))
+                current = None
+            if match.group(1).strip().lower() == NETWORK_SECTION:
+                current = [line]
+        elif current is not None:
+            current.append(line)
+    if current is not None:
+        sections.append(b''.join(current))
+    if len(sections) != 1:
+        raise ValueError('original GameNetworkManager section must be unique')
+    section = sections[0]
+    keys = []
+    for line in section.splitlines()[1:]:
+        if not line.strip():
+            continue
+        match = ENTRY.fullmatch(line)
+        if not match or match.group(1):
+            raise ValueError('invalid original GameNetworkManager entry')
+        keys.append(match.group(2).lower())
+    if len(keys) != len(set(keys)):
+        raise ValueError('duplicate original GameNetworkManager key')
+    if hashlib.sha256(section).hexdigest() != NETWORK_SHA256:
+        raise ValueError('original GameNetworkManager section changed')
+    return section, keys
+
+
+def merge_network(target, section):
+    lines = target.splitlines(keepends=True)
+    output = []
+    skipping = False
+    seen = False
+    for line in lines:
+        match = HEADER.match(line.rstrip(b'\r\n'))
+        if match:
+            skipping = match.group(1).strip().lower() == NETWORK_SECTION
+            if skipping:
+                if seen:
+                    raise ValueError('duplicate target GameNetworkManager section')
+                seen = True
+                output.append(section)
+                continue
+        if not skipping:
+            output.append(line)
+    if not seen:
+        if output and not output[-1].endswith(b'\n'):
+            output.append(b'\n')
+        output.append(section)
+    return b''.join(output)
 
 
 def merge(target, entries):
@@ -97,8 +156,9 @@ def stage(original, target, out, content_root, stager, runner=subprocess.run, co
         raise ValueError('target must be an existing regular file and evidence must not exist')
     source = original.read_bytes()
     entries, packages = selected(source)
+    network, network_keys = network_section(source)
     before = target.read_bytes()
-    after = merge(before, entries)
+    after = merge_network(merge(before, entries), network)
     # Resolve the complete selected closure in isolation first. The shared content
     # stager skips existing files, so never let stale stage files mask mismatches.
     destination = Path(content_destination) if content_destination is not None else Path(__file__).resolve().parent.parent / 'generated/linux-stage/LinuxNoEditor/FortniteLinux/Content'
@@ -153,7 +213,10 @@ def stage(original, target, out, content_root, stager, runner=subprocess.run, co
                'after_sha256': hashlib.sha256(after).hexdigest(),
                'table_packages': packages, 'table_count': len(packages),
                'exclusion_count': len(entries[b'bronlyattributesetdefaultstoexclude']),
-               'br_only_present': bool(entries[b'bbronly'])}
+               'br_only_present': bool(entries[b'bbronly']),
+               'network_section_sha256': hashlib.sha256(network).hexdigest(),
+               'network_section_key_count': len(network_keys),
+               'network_section_keys': [key.decode('ascii') for key in network_keys]}
     (out / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
     return receipt
 

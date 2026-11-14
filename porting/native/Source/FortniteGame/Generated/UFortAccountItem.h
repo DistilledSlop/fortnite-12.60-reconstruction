@@ -16,6 +16,8 @@ class FORTNITEGAME_API UFortAccountItem : public UFortPersistableItem
 	GENERATED_BODY()
 
 public:
+	UFortAccountItem(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 7, flags 0x20080000000014
 	UPROPERTY()
 	int32 level;

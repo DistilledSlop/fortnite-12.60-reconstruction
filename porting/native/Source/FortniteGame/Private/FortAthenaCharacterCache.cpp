@@ -276,7 +276,8 @@ namespace FortAthenaCharacterCache
                 const EFortCustomBodyType::Type Perm = Parts[Slot]->BodyTypesPermitted.GetValue();
                 if (Perm == EFortCustomBodyType::NONE || Perm >= EFortCustomBodyType::Deprecated)
                 {
-                    OutError = TEXT("character part has invalid BodyTypesPermitted");
+                    OutError = FString::Printf(TEXT("character part %s has invalid BodyTypesPermitted=%d"),
+                        *Parts[Slot]->GetPathName(), static_cast<int32>(Perm));
                     return false;
                 }
                 const int32 PermInt = static_cast<int32>(Perm);

@@ -43,6 +43,7 @@ def settings(data):
     return {f"[{section}] {key}": value for (section, key), value in found.items()}
 
 
+PHYSICS_HEADER = b"/script/engine.physicssettings"
 COLLISION_HEADER = b"/script/engine.collisionprofile"
 SECTION = re.compile(rb"(?m)^[ \t]*\[([^\]\r\n]+)\][ \t]*(?:\r?\n|$)")
 
@@ -64,13 +65,65 @@ def collision_section(data):
     return section
 
 
+def physics_section(data):
+    """Copy the complete original section after validating its critical offsets."""
+    headers = list(SECTION.finditer(data))
+    matches = [i for i, match in enumerate(headers)
+               if match.group(1).strip().lower() == PHYSICS_HEADER]
+    if len(matches) != 1:
+        raise ValueError("recovered config must have exactly one PhysicsSettings section")
+    i = matches[0]
+    section = data[headers[i].start():headers[i + 1].start() if i + 1 < len(headers) else len(data)]
+    expected = {b"contactoffsetmultiplier": b"0.010000", b"mincontactoffset": b"0.000100",
+                b"maxcontactoffset": b"1.000000"}
+    scalars = {}
+    keys = []
+    for line in section.splitlines()[1:]:
+        line = line.strip()
+        if not line or line.startswith((b";", b"#")):
+            continue
+        match = re.fullmatch(rb"([+.!-]?)([A-Za-z0-9_]+)[ \t]*=[ \t]*(.*)", line)
+        if not match:
+            raise ValueError("invalid recovered PhysicsSettings entry")
+        op, key, value = match.groups()
+        key = key.lower()
+        keys.append(key)
+        if key in expected and op:
+            raise ValueError("unsupported PhysicsSettings contact offset operator")
+        if not op:
+            if key in scalars:
+                raise ValueError("duplicate recovered PhysicsSettings key: " + key.decode())
+            scalars[key] = value.strip()
+    if any(scalars.get(key) != value for key, value in expected.items()):
+        raise ValueError("recovered PhysicsSettings contact offsets missing or incorrect")
+    return section, len(keys), len(set(keys))
+
+
+def replace_physics(native, section):
+    headers = list(SECTION.finditer(native))
+    matches = [i for i, match in enumerate(headers)
+               if match.group(1).strip().lower() == PHYSICS_HEADER]
+    if len(matches) > 1:
+        raise ValueError("native config has duplicate PhysicsSettings sections")
+    if matches:
+        i = matches[0]
+        end = headers[i + 1].start() if i + 1 < len(headers) else len(native)
+        suffix = native[end:]
+        separator = b"\n" if suffix and not section.endswith(b"\n") else b""
+        return native[:headers[i].start()] + section + separator + suffix
+    return native.rstrip(b"\r\n") + b"\n\n" + section
+
+
 def staged_config(native, original):
     if any(m.group(1).strip().lower() == COLLISION_HEADER for m in SECTION.finditer(native)):
         raise ValueError("native config already contains a CollisionProfile section")
     section = collision_section(original)
+    physics, _, _ = physics_section(original)
+    native = replace_physics(native, physics)
     # Keep source entries and operators byte-for-byte; adding a separator does not
     # change the contents or array operations of either section.
-    return native.rstrip(b"\r\n") + b"\n\n" + section
+    separator = b"\n" if native.endswith(b"\n") else b"\n\n"
+    return native + separator + section
 
 
 def git(repo, *args):
@@ -128,6 +181,7 @@ def stage(source, target, out, source_commit, original_config=None, receipt_targ
     after = target.read_bytes()
     if after != staged:
         raise ValueError("staged config verification failed")
+    physics, physics_entries, physics_keys = physics_section(original)
     receipt = {
         "schema": "native-config-stage-v1",
         "source": str(source), "target": str(Path(receipt_target).resolve() if receipt_target else target), "backup": str(backup),
@@ -140,6 +194,9 @@ def stage(source, target, out, source_commit, original_config=None, receipt_targ
         "original_config_path": str(Path(original_config).resolve()) if original_config is not None else None,
         "original_settings_validated": True,
         "collision_section_sha256": digest(collision_section(original)),
+        "physics_section_sha256": digest(physics),
+        "physics_section_entry_count": physics_entries,
+        "physics_section_key_count": physics_keys,
         "scope": "config bytes only; effective runtime classes are not verified",
     }
     (out / "receipt.json").write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
