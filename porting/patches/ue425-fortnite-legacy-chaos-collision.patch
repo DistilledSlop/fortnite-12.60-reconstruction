@@ -30,7 +30,7 @@ index b6ca9aaea..b1378db78 100644
  	// #TODO MRMesh for some reason needs to be able to call this - that case needs fixed to correctly use the create meshes flow
  	friend class UMRMeshComponent;
 diff --git a/Engine/Source/Runtime/Engine/Private/PhysicsEngine/BodySetup.cpp b/Engine/Source/Runtime/Engine/Private/PhysicsEngine/BodySetup.cpp
-index 3ac4364e7..dfdb79fc5 100644
+index 3ac4364e7..b0e710c23 100644
 --- a/Engine/Source/Runtime/Engine/Private/PhysicsEngine/BodySetup.cpp
 +++ b/Engine/Source/Runtime/Engine/Private/PhysicsEngine/BodySetup.cpp
 @@ -20,6 +20,8 @@
@@ -42,16 +42,17 @@ index 3ac4364e7..dfdb79fc5 100644
  #include "Components/SplineMeshComponent.h"
  #include "ChaosCheck.h"
  #include "Chaos/Convex.h"
-@@ -37,6 +39,8 @@
+@@ -37,6 +39,9 @@
  	#include "IPhysXCookingModule.h"
  	#include "IPhysXCooking.h"
  	#include "PhysicsEngine/PhysDerivedData.h"
-+	#include "FortniteLegacyChaosCookedData.h"
++	#include "FortniteCollisionCache.h"
++#include "FortniteLegacyChaosCookedData.h"
 +	#include "FortniteLegacyPhysXFaceMap.h"
  #endif
  
  #include "Physics/PhysicsInterfaceUtils.h"
-@@ -193,6 +197,14 @@ UBodySetup::UBodySetup(const FObjectInitializer& ObjectInitializer)
+@@ -193,6 +198,14 @@ UBodySetup::UBodySetup(const FObjectInitializer& ObjectInitializer)
  #endif
  }
  
@@ -66,7 +67,7 @@ index 3ac4364e7..dfdb79fc5 100644
  void UBodySetup::CopyBodyPropertiesFrom(const UBodySetup* FromSetup)
  {
  	AggGeom = FromSetup->AggGeom;
-@@ -440,12 +452,26 @@ void UBodySetup::CreatePhysicsMeshes()
+@@ -440,12 +453,26 @@ void UBodySetup::CreatePhysicsMeshes()
  	// Find or create cooked physics data
  	static FName PhysicsFormatName(FPlatformProperties::GetPhysicsFormat());
  
@@ -95,7 +96,7 @@ index 3ac4364e7..dfdb79fc5 100644
  	}
  
  	if (FormatData)
-@@ -458,7 +484,26 @@ void UBodySetup::CreatePhysicsMeshes()
+@@ -458,7 +485,26 @@ void UBodySetup::CreatePhysicsMeshes()
  	}
  	else
  	{
@@ -123,7 +124,7 @@ index 3ac4364e7..dfdb79fc5 100644
  		{
  #if WITH_PHYSX  && PHYSICS_INTERFACE_PHYSX
  			bClearMeshes = !RuntimeCookPhysics_PhysX();
-@@ -478,6 +523,147 @@ void UBodySetup::CreatePhysicsMeshes()
+@@ -478,6 +524,111 @@ void UBodySetup::CreatePhysicsMeshes()
  }
  
  #if WITH_PHYSX && PHYSICS_INTERFACE_PHYSX
@@ -134,44 +135,45 @@ index 3ac4364e7..dfdb79fc5 100644
 +	{
 +		return Fail(TEXT("cooked bulk is empty or already locked"));
 +	}
-+	FortniteLegacyChaos::FData Data;
++
++	// Parse + PhysX cooking happen once per distinct payload and are cached on disk (FortniteCollisionCache);
++	// here we only turn cached cooked buffers into PhysX objects.
++	TSharedPtr<const FortniteCollisionCache::FBlob> Blob;
 +	{
 +		const int64 Size = Bulk.GetBulkDataSize();
 +		const uint8* Bytes = static_cast<const uint8*>(Bulk.LockReadOnly());
-+		const bool bRead = Bytes && FortniteLegacyChaos::Read(Bytes, Size, Data, Error);
++		const bool bAcquired = Bytes && FortniteCollisionCache::Acquire(Bytes, Size, Blob, Error);
 +		Bulk.Unlock(); // FinishCreatingPhysicsMeshes can flush this bulk.
-+		if (!bRead)
++		if (!bAcquired || !Blob.IsValid())
 +		{
 +			if (Error.IsEmpty()) Error = TEXT("unable to lock cooked bulk");
 +			return false;
 +		}
++	}
++	if (!Blob->bOk)
++	{
++		Error = Blob->Error;
++		return false;
 +	}
 +
 +	const bool bSimple = GetCollisionTraceFlag() != CTF_UseComplexAsSimple;
 +	const int32 NumConvex = bSimple ? AggGeom.ConvexElems.Num() : 0;
 +	// Original 14444e0d0 installs the first N objects and releases extras. The
 +	// sidewalk has ONE element and TWO identical cooked hulls, not two elements.
-+	if (Data.Convexes.Num() < NumConvex)
++	if (Blob->Convexes.Num() < NumConvex)
 +		return Fail(TEXT("fewer cooked convexes than aggregate elements"));
 +	if (NumConvex && !bGenerateNonMirroredCollision && !bGenerateMirroredCollision)
 +		return Fail(TEXT("convex elements have no enabled PhysX output"));
 +	for (int32 I = 0; I < NumConvex; ++I)
 +	{
-+		if (!Data.Convexes[I].IsValid() || !Data.Convexes[I]->bDoCollide)
++		const FortniteCollisionCache::FConvexBlob& C = Blob->Convexes[I];
++		if (!C.bDoCollide)
 +			return Fail(TEXT("missing or disabled aggregate convex"));
++		if ((bGenerateNonMirroredCollision && !C.bNormalOk) || (bGenerateMirroredCollision && !C.bMirroredOk))
++			return Fail(TEXT("convex cooking failed"));
 +	}
-+
-+	if (!IsRuntimeCookingEnabled())
-+		return Fail(TEXT("RuntimePhysXCooking is unavailable"));
-+	IPhysXCookingModule* Module = GetPhysXCookingModule();
-+	IPhysXCooking* Cooking = Module ? Module->GetPhysXCooking() : nullptr;
-+	if (!Cooking || !Cooking->GetCooking())
-+		return Fail(TEXT("PhysX cooking interface is unavailable"));
-+	const FName Format(FPlatformProperties::GetPhysicsFormat());
-+	TArray<FName> SupportedFormats;
-+	Cooking->GetSupportedFormats(SupportedFormats);
-+	if (!SupportedFormats.Contains(Format))
-+		return Fail(TEXT("active PhysX cooking format is unsupported"));
++	if (!GPhysXSDK)
++		return Fail(TEXT("PhysX SDK is unavailable"));
 +
 +	struct FTemporaryMeshes
 +	{
@@ -189,89 +191,52 @@ index 3ac4364e7..dfdb79fc5 100644
 +	{
 +		// Cooked hulls already contain element-to-body transforms. Stock PhysX
 +		// shapes also use body-space hulls; do not transform these vertices again.
-+		const TArray<FVector>& Vertices = Data.Convexes[I]->Vertices;
++		const FortniteCollisionCache::FConvexBlob& C = Blob->Convexes[I];
 +		if (bGenerateNonMirroredCollision)
 +		{
-+			PxConvexMesh*& Mesh = Temp.Normal.AddDefaulted_GetRef();
-+			// Stock UE accepts SucceededWithInflation (near-degenerate hulls, e.g. the flat sliver hulls of road spline meshes);
-+			// rejecting it dropped the whole body's collision.
-+			const EPhysXCookingResult CookResult = Cooking->CreateConvex(Format, EPhysXMeshCookFlags::Default, Vertices, Mesh);
-+			if (CookResult == EPhysXCookingResult::Failed || !Mesh)
-+				return Fail(TEXT("convex cooking failed"));
++			FPhysXInputStream Stream(C.Normal.GetData(), C.Normal.Num());
++			PxConvexMesh* Mesh = GPhysXSDK->createConvexMesh(Stream);
++			Temp.Normal.Add(Mesh);
++			if (!Mesh) return Fail(TEXT("cached convex mesh could not be created"));
 +		}
 +		if (bGenerateMirroredCollision)
 +		{
-+			TArray<FVector> MirroredVertices = Vertices;
-+			for (FVector& V : MirroredVertices) V.X = -V.X;
-+			PxConvexMesh*& Mesh = Temp.Mirrored.AddDefaulted_GetRef();
-+			const EPhysXCookingResult MirroredCookResult = Cooking->CreateConvex(Format, EPhysXMeshCookFlags::Default, MirroredVertices, Mesh);
-+			if (MirroredCookResult == EPhysXCookingResult::Failed || !Mesh)
-+				return Fail(TEXT("mirrored convex cooking failed"));
++			FPhysXInputStream Stream(C.Mirrored.GetData(), C.Mirrored.Num());
++			PxConvexMesh* Mesh = GPhysXSDK->createConvexMesh(Stream);
++			Temp.Mirrored.Add(Mesh);
++			if (!Mesh) return Fail(TEXT("cached mirrored convex mesh could not be created"));
 +		}
 +	}
 +
-+	TArray<TArray<int32>> ExternalFaces;
-+	for (const auto& Source : Data.TriangleMeshes)
++	for (const FortniteCollisionCache::FTriangleBlob& Tri : Blob->Triangles)
 +	{
-+		if (!Source.IsValid()) continue; // Original shared-pointer arrays can contain nulls.
-+		if (!Source->bDoCollide) return Fail(TEXT("disabled cooked triangle mesh"));
-+		const int32 NumTriangles = Source->Triangles.Num();
-+		if (!NumTriangles || !Source->Vertices.Num())
-+			return Fail(TEXT("empty cooked triangle mesh"));
-+		TArray<FTriIndices> Indices;
-+		Indices.Reserve(NumTriangles);
-+		for (const FIntVector& Index : Source->Triangles)
-+		{
-+			FTriIndices& Tri = Indices.AddDefaulted_GetRef();
-+			Tri.v0 = Index.X; Tri.v1 = Index.Y; Tri.v2 = Index.Z;
-+		}
-+		// These indices are already physics winding, rather than render indices.
-+		// Preserve their order, materials and an explicit cook-to-input remap.
-+		EPhysXMeshCookFlags Flags = GetRuntimeOnlyCookOptimizationFlags();
-+		Flags &= ~EPhysXMeshCookFlags::SuppressFaceRemapTable;
-+		PxTriangleMesh*& Mesh = Temp.Triangles.AddDefaulted_GetRef();
-+		if (!Cooking->CreateTriMesh(Format, Flags, Source->Vertices, Indices,
-+			Source->MaterialIndices, false, Mesh) || !Mesh || !Mesh->getNbTriangles())
-+			return Fail(TEXT("triangle mesh cooking failed"));
-+		const PxU32* Remap = Mesh->getTrianglesRemap();
-+		if (!Remap || Mesh->getNbTriangles() > static_cast<PxU32>(NumTriangles))
-+			return Fail(TEXT("triangle cook omitted or invalidated its face remap"));
-+		TBitArray<> Seen(false, NumTriangles);
-+		TArray<int32>& Faces = ExternalFaces.AddDefaulted_GetRef();
-+		Faces.Reserve(Mesh->getNbTriangles());
-+		for (PxU32 I = 0; I < Mesh->getNbTriangles(); ++I)
-+		{
-+			const PxU32 Input = Remap[I];
-+			if (Input >= static_cast<PxU32>(NumTriangles) || Seen[Input])
-+				return Fail(TEXT("triangle cook returned an invalid or repeated input face"));
-+			Seen[Input] = true;
-+			if (Source->MaterialIndices.Num() && Mesh->getTriangleMaterialIndex(I) != Source->MaterialIndices[Input])
-+				return Fail(TEXT("triangle cook changed material correspondence"));
-+			// Chaos returns INDEX_NONE when no external-face map is present.
-+			Faces.Add(Source->ExternalFaceIndexMap.Num() ? Source->ExternalFaceIndexMap[Input] : INDEX_NONE);
-+		}
++		FPhysXInputStream Stream(Tri.Cooked.GetData(), Tri.Cooked.Num());
++		PxTriangleMesh* Mesh = GPhysXSDK->createTriangleMesh(Stream);
++		Temp.Triangles.Add(Mesh);
++		if (!Mesh || !Mesh->getNbTriangles() || Mesh->getNbTriangles() != static_cast<PxU32>(Tri.Faces.Num()))
++			return Fail(TEXT("cached triangle mesh could not be created"));
 +	}
 +	// Nothing is published until every mesh and mapping is ready. Failed
 +	// registration releases temporary meshes and removes their maps before free.
 +	for (int32 I = 0; I < Temp.Triangles.Num(); ++I)
-+		if (!RegisterFortniteLegacyTriangleFaceMap(*Temp.Triangles[I], ExternalFaces[I], Error)) return false;
++		if (!RegisterFortniteLegacyTriangleFaceMap(*Temp.Triangles[I], Blob->Triangles[I].Faces, Error)) return false;
 +
 +	FinishCreatingPhysicsMeshes_PhysX(Temp.Normal, Temp.Mirrored, Temp.Triangles);
 +	Temp.Transfer();
-+	UVInfo.IndexBuffer = MoveTemp(Data.UVIndices);
-+	UVInfo.VertPositions = MoveTemp(Data.UVPositions);
-+	UVInfo.VertUVs = MoveTemp(Data.UVChannels);
-+	FaceRemap = MoveTemp(Data.FaceRemap);
++	UVInfo.IndexBuffer = Blob->UVIndices;
++	UVInfo.VertPositions = Blob->UVPositions;
++	UVInfo.VertUVs = Blob->UVChannels;
++	FaceRemap = Blob->FaceRemap;
 +	bFailedToCreatePhysicsMeshes = false;
 +	UE_LOG(LogPhysics, Verbose, TEXT("Installed original Chaos collision for %s: %d convex elements, %d triangle meshes"),
-+		*GetPathName(), NumConvex, TriMeshes.Num());
++		*GetPathName(), NumConvex, Blob->Triangles.Num());
 +	return true;
 +}
 +
  bool UBodySetup::RuntimeCookPhysics_PhysX()
  {
  	FPhysXCookHelper CookHelper(GetPhysXCookingModule());
-@@ -941,6 +1127,7 @@ void UBodySetup::InvalidatePhysicsData()
+@@ -941,6 +1092,7 @@ void UBodySetup::InvalidatePhysicsData()
  	if (!bSharedCookedData)
  	{
  		CookedFormatData.FlushData();
@@ -279,7 +244,7 @@ index 3ac4364e7..dfdb79fc5 100644
  	}
  #if WITH_EDITOR
  	CookedFormatDataRuntimeOnlyOptimization.FlushData();
-@@ -983,6 +1170,16 @@ void UBodySetup::Serialize(FArchive& Ar)
+@@ -983,6 +1135,16 @@ void UBodySetup::Serialize(FArchive& Ar)
  	Ar << bCooked;
  
  	bool bDuplicating = (Ar.GetPortFlags() & PPF_Duplicate) != 0;
@@ -296,7 +261,7 @@ index 3ac4364e7..dfdb79fc5 100644
  
  	if (bCooked)
  	{
-@@ -1284,11 +1481,17 @@ bool UBodySetup::CalcUVAtLocation(const FVector& BodySpaceLocation, int32 FaceIn
+@@ -1284,11 +1446,17 @@ bool UBodySetup::CalcUVAtLocation(const FVector& BodySpaceLocation, int32 FaceIn
  {
  	bool bSuccess = false;
  
@@ -780,4 +745,448 @@ index 000000000..5da6c999d
 +        : static_cast<uint32>(INDEX_NONE);
 +    return true;
 +}
++#endif
+diff --git a/Engine/Source/Runtime/Engine/Private/PhysicsEngine/FortniteCollisionCache.h b/Engine/Source/Runtime/Engine/Private/PhysicsEngine/FortniteCollisionCache.h
+new file mode 100644
+index 000000000..6a88d5509
+--- /dev/null
++++ b/Engine/Source/Runtime/Engine/Private/PhysicsEngine/FortniteCollisionCache.h
+@@ -0,0 +1,49 @@
++// Persistent cache of PhysX-cooked data derived from original Fortnite (Chaos) cooked collision payloads.
++// The original payload is parsed and cooked by PhysX once; afterwards a body only creates PhysX objects from the cached
++// cooked buffers. Keyed by SHA1 of the exact payload bytes, so it is valid for every body that embeds the same payload.
++#pragma once
++
++#include "CoreMinimal.h"
++
++#if WITH_PHYSX && PHYSICS_INTERFACE_PHYSX
++
++namespace FortniteCollisionCache
++{
++	struct FConvexBlob
++	{
++		bool bDoCollide = false;      // false: null/disabled element in the original payload
++		bool bNormalOk = false;       // cooked successfully (inflation accepted)
++		bool bMirroredOk = false;
++		TArray<uint8> Normal;
++		TArray<uint8> Mirrored;
++	};
++
++	struct FTriangleBlob
++	{
++		TArray<uint8> Cooked;
++		TArray<int32> Faces;          // per PhysX internal face: external face index (INDEX_NONE allowed)
++	};
++
++	struct FBlob
++	{
++		bool bOk = false;             // false: deterministic failure, Error says why
++		FString Error;
++		TArray<FConvexBlob> Convexes;
++		TArray<FTriangleBlob> Triangles;
++		TArray<int32> UVIndices;
++		TArray<FVector> UVPositions;
++		TArray<TArray<FVector2D>> UVChannels;
++		TArray<int32> FaceRemap;
++	};
++
++	// Thread-safe. Returns false only when the result could not be determined (cooking unavailable); Error is set then.
++	// Otherwise OutBlob is set and OutBlob->bOk tells whether the payload is usable.
++	ENGINE_API bool Acquire(const uint8* Bytes, int64 Size, TSharedPtr<const FBlob>& OutBlob, FString& OutError);
++
++	// Parallel bake of every inline original payload found in the .uexp files under ContentDir.
++	ENGINE_API void BakeContent(const FString& ContentDir);
++
++	ENGINE_API void LogStats(const TCHAR* Context);
++}
++
++#endif
+diff --git a/Engine/Source/Runtime/Engine/Private/PhysicsEngine/FortniteCollisionCache.cpp b/Engine/Source/Runtime/Engine/Private/PhysicsEngine/FortniteCollisionCache.cpp
+new file mode 100644
+index 000000000..0e7cf8cef
+--- /dev/null
++++ b/Engine/Source/Runtime/Engine/Private/PhysicsEngine/FortniteCollisionCache.cpp
+@@ -0,0 +1,383 @@
++// Copyright Epic Games, Inc. All Rights Reserved.
++#include "FortniteCollisionCache.h"
++
++#if WITH_PHYSX && PHYSICS_INTERFACE_PHYSX
++
++#include "Async/ParallelFor.h"
++#include "HAL/FileManager.h"
++#include "HAL/PlatformProperties.h"
++#include "HAL/PlatformTime.h"
++#include "Misc/CommandLine.h"
++#include "Misc/DelayedAutoRegister.h"
++#include "Misc/FileHelper.h"
++#include "Misc/Guid.h"
++#include "Misc/Parse.h"
++#include "Misc/Paths.h"
++#include "Misc/SecureHash.h"
++#include "Serialization/MemoryReader.h"
++#include "Serialization/MemoryWriter.h"
++#include "PhysicsPublicCore.h"
++#include "IPhysXCookingModule.h"
++#include "IPhysXCooking.h"
++#include "Interface_CollisionDataProviderCore.h"
++#include "PhysXPublic.h"
++#include "PhysicsEngine/PhysXSupport.h"
++#include "FortniteLegacyChaosCookedData.h"
++
++DEFINE_LOG_CATEGORY_STATIC(LogFortniteCollisionCache, Log, All);
++
++namespace FortniteCollisionCache
++{
++namespace
++{
++	constexpr uint32 Magic = 0x31434346; // 'FCC1'
++	constexpr int32 FormatVersion = 1;   // bump when the blob layout or the cooking recipe here changes
++
++	FThreadSafeCounter GHits, GMisses, GNegative, GCookFailed, GWritten;
++	FThreadSafeCounter64 GCookMicros, GLoadMicros;
++	// PhysX object creation from a stream is used concurrently by stock UE async cooking, but is serialized here to be safe.
++	FCriticalSection GPhysXCreateLock;
++
++	const FString& CacheDir()
++	{
++		static const FString Dir = []()
++		{
++			FString Override;
++			if (FParse::Value(FCommandLine::Get(), TEXT("-FortniteCollisionCache="), Override) && !Override.IsEmpty())
++			{
++				return FPaths::ConvertRelativePathToFull(Override);
++			}
++			return FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("FortniteCollisionCache"));
++		}();
++		return Dir;
++	}
++
++	FString KeyFor(const uint8* Bytes, int64 Size)
++	{
++		uint8 Hash[20];
++		FSHA1::HashBuffer(Bytes, static_cast<uint32>(Size), Hash);
++		return BytesToHex(Hash, 20);
++	}
++
++	FString PathFor(const FString& Key)
++	{
++		return CacheDir() / Key.Left(2) / (Key + TEXT(".fcc"));
++	}
++
++	bool IsDisabled()
++	{
++		static const bool bDisabled = FParse::Param(FCommandLine::Get(), TEXT("FortniteNoCollisionCache"));
++		return bDisabled;
++	}
++
++	void Serialize(FArchive& Ar, FBlob& B)
++	{
++		Ar << B.bOk << B.Error;
++		int32 NumConvex = B.Convexes.Num();
++		Ar << NumConvex;
++		if (Ar.IsLoading()) B.Convexes.SetNum(NumConvex);
++		for (FConvexBlob& C : B.Convexes)
++		{
++			Ar << C.bDoCollide << C.bNormalOk << C.bMirroredOk << C.Normal << C.Mirrored;
++		}
++		int32 NumTri = B.Triangles.Num();
++		Ar << NumTri;
++		if (Ar.IsLoading()) B.Triangles.SetNum(NumTri);
++		for (FTriangleBlob& T : B.Triangles)
++		{
++			Ar << T.Cooked << T.Faces;
++		}
++		Ar << B.UVIndices << B.UVPositions << B.UVChannels << B.FaceRemap;
++	}
++
++	bool TryLoad(const FString& Path, uint16 CookVersion, TSharedPtr<FBlob>& Out)
++	{
++		TArray<uint8> Bytes;
++		if (!FFileHelper::LoadFileToArray(Bytes, *Path, FILEREAD_Silent) || Bytes.Num() < 16)
++		{
++			return false;
++		}
++		FMemoryReader Ar(Bytes);
++		uint32 FileMagic = 0; int32 Version = 0; uint32 Cook = 0; uint32 Crc = 0;
++		Ar << FileMagic << Version << Cook << Crc;
++		if (FileMagic != Magic || Version != FormatVersion || Cook != CookVersion)
++		{
++			return false;
++		}
++		const int32 BodyOffset = static_cast<int32>(Ar.Tell());
++		if (FCrc::MemCrc32(Bytes.GetData() + BodyOffset, Bytes.Num() - BodyOffset) != Crc)
++		{
++			return false;
++		}
++		TSharedPtr<FBlob> Blob = MakeShared<FBlob>();
++		Serialize(Ar, *Blob);
++		if (Ar.IsError())
++		{
++			return false;
++		}
++		Out = Blob;
++		return true;
++	}
++
++	void Save(const FString& Path, uint16 CookVersion, FBlob& Blob)
++	{
++		TArray<uint8> Body;
++		{
++			FMemoryWriter BodyAr(Body);
++			Serialize(BodyAr, Blob);
++		}
++		TArray<uint8> File;
++		{
++			FMemoryWriter Ar(File);
++			uint32 FileMagic = Magic; int32 Version = FormatVersion; uint32 Cook = CookVersion;
++			uint32 Crc = FCrc::MemCrc32(Body.GetData(), Body.Num());
++			Ar << FileMagic << Version << Cook << Crc;
++			Ar.Serialize(Body.GetData(), Body.Num());
++		}
++		const FString Temp = Path + TEXT(".tmp") + FGuid::NewGuid().ToString(EGuidFormats::Digits);
++		if (FFileHelper::SaveArrayToFile(File, *Temp))
++		{
++			if (IFileManager::Get().Move(*Path, *Temp, true, true))
++			{
++				GWritten.Increment();
++			}
++			else
++			{
++				IFileManager::Get().Delete(*Temp);
++			}
++		}
++	}
++
++	IPhysXCooking* GetCooking(FName& OutFormat, FString& OutError)
++	{
++		IPhysXCookingModule* Module = GetPhysXCookingModule();
++		IPhysXCooking* Cooking = Module ? Module->GetPhysXCooking() : nullptr;
++		if (!Cooking || !Cooking->GetCooking())
++		{
++			OutError = TEXT("PhysX cooking interface is unavailable");
++			return nullptr;
++		}
++		OutFormat = FName(FPlatformProperties::GetPhysicsFormat());
++		TArray<FName> Supported;
++		Cooking->GetSupportedFormats(Supported);
++		if (!Supported.Contains(OutFormat))
++		{
++			OutError = TEXT("active PhysX cooking format is unsupported");
++			return nullptr;
++		}
++		return Cooking;
++	}
++
++	// Parse + cook a payload. Returns false when cooking is unavailable (nothing to cache).
++	bool Cook(const uint8* Bytes, int64 Size, IPhysXCooking* Cooking, FName Format, FBlob& Blob, FString& OutError)
++	{
++		FortniteLegacyChaos::FData Data;
++		FString ParseError;
++		if (!FortniteLegacyChaos::Read(Bytes, Size, Data, ParseError))
++		{
++			Blob.bOk = false;
++			Blob.Error = ParseError.IsEmpty() ? TEXT("unable to parse original Chaos payload") : ParseError;
++			return true;
++		}
++
++		Blob.Convexes.SetNum(Data.Convexes.Num());
++		for (int32 I = 0; I < Data.Convexes.Num(); ++I)
++		{
++			FConvexBlob& Out = Blob.Convexes[I];
++			const auto& Source = Data.Convexes[I];
++			if (!Source.IsValid() || !Source->bDoCollide) continue;
++			Out.bDoCollide = true;
++			// Stock UE accepts SucceededWithInflation (near-degenerate hulls); only a hard failure drops the hull.
++			Out.bNormalOk = Cooking->CookConvex(Format, EPhysXMeshCookFlags::Default, Source->Vertices, Out.Normal) != EPhysXCookingResult::Failed && Out.Normal.Num() > 0;
++			TArray<FVector> Mirrored = Source->Vertices;
++			for (FVector& V : Mirrored) V.X = -V.X;
++			Out.bMirroredOk = Cooking->CookConvex(Format, EPhysXMeshCookFlags::Default, Mirrored, Out.Mirrored) != EPhysXCookingResult::Failed && Out.Mirrored.Num() > 0;
++		}
++
++		for (const auto& Source : Data.TriangleMeshes)
++		{
++			if (!Source.IsValid()) continue; // original arrays can contain nulls
++			if (!Source->bDoCollide) { Blob.bOk = false; Blob.Error = TEXT("disabled cooked triangle mesh"); return true; }
++			const int32 NumTriangles = Source->Triangles.Num();
++			if (!NumTriangles || !Source->Vertices.Num()) { Blob.bOk = false; Blob.Error = TEXT("empty cooked triangle mesh"); return true; }
++			TArray<FTriIndices> Indices;
++			Indices.Reserve(NumTriangles);
++			for (const FIntVector& Index : Source->Triangles)
++			{
++				FTriIndices& Tri = Indices.AddDefaulted_GetRef();
++				Tri.v0 = Index.X; Tri.v1 = Index.Y; Tri.v2 = Index.Z;
++			}
++			FTriangleBlob& Out = Blob.Triangles.AddDefaulted_GetRef();
++			// Indices are already physics winding. The face remap table must be kept (never suppressed).
++			if (!Cooking->CookTriMesh(Format, EPhysXMeshCookFlags::Default, Source->Vertices, Indices, Source->MaterialIndices, false, Out.Cooked) || !Out.Cooked.Num())
++			{
++				Blob.bOk = false; Blob.Error = TEXT("triangle mesh cooking failed"); return true;
++			}
++			// Validate the cooked mesh once, here, and derive the per-face external map.
++			PxTriangleMesh* Mesh = nullptr;
++			{
++				FScopeLock Lock(&GPhysXCreateLock);
++				FPhysXInputStream Stream(Out.Cooked.GetData(), Out.Cooked.Num());
++				Mesh = GPhysXSDK ? GPhysXSDK->createTriangleMesh(Stream) : nullptr;
++			}
++			if (!Mesh || !Mesh->getNbTriangles()) { if (Mesh) Mesh->release(); Blob.bOk = false; Blob.Error = TEXT("cooked triangle mesh could not be created"); return true; }
++			const PxU32* Remap = Mesh->getTrianglesRemap();
++			FString Why;
++			if (!Remap || Mesh->getNbTriangles() > static_cast<PxU32>(NumTriangles))
++			{
++				Why = TEXT("triangle cook omitted or invalidated its face remap");
++			}
++			else
++			{
++				TBitArray<> Seen(false, NumTriangles);
++				Out.Faces.Reserve(Mesh->getNbTriangles());
++				for (PxU32 I = 0; I < Mesh->getNbTriangles() && Why.IsEmpty(); ++I)
++				{
++					const PxU32 Input = Remap[I];
++					if (Input >= static_cast<PxU32>(NumTriangles) || Seen[Input])
++					{
++						Why = TEXT("triangle cook returned an invalid or repeated input face");
++					}
++					else if (Source->MaterialIndices.Num() && Mesh->getTriangleMaterialIndex(I) != Source->MaterialIndices[Input])
++					{
++						Why = TEXT("triangle cook changed material correspondence");
++					}
++					else
++					{
++						Seen[Input] = true;
++						Out.Faces.Add(Source->ExternalFaceIndexMap.Num() ? Source->ExternalFaceIndexMap[Input] : INDEX_NONE);
++					}
++				}
++			}
++			{
++				FScopeLock Lock(&GPhysXCreateLock);
++				Mesh->release();
++			}
++			if (!Why.IsEmpty()) { Blob.bOk = false; Blob.Error = Why; return true; }
++		}
++
++		Blob.UVIndices = MoveTemp(Data.UVIndices);
++		Blob.UVPositions = MoveTemp(Data.UVPositions);
++		Blob.UVChannels = MoveTemp(Data.UVChannels);
++		Blob.FaceRemap = MoveTemp(Data.FaceRemap);
++		Blob.bOk = true;
++		return true;
++	}
++}
++
++bool Acquire(const uint8* Bytes, int64 Size, TSharedPtr<const FBlob>& OutBlob, FString& OutError)
++{
++	FName Format;
++	IPhysXCooking* Cooking = GetCooking(Format, OutError);
++	const uint16 CookVersion = Cooking ? Cooking->GetVersion(Format) : 0;
++
++	const bool bUseCache = !IsDisabled() && Cooking;
++	FString Path;
++	if (bUseCache)
++	{
++		Path = PathFor(KeyFor(Bytes, Size));
++		const double Start = FPlatformTime::Seconds();
++		TSharedPtr<FBlob> Loaded;
++		if (TryLoad(Path, CookVersion, Loaded))
++		{
++			GLoadMicros.Add(static_cast<int64>((FPlatformTime::Seconds() - Start) * 1e6));
++			GHits.Increment();
++			if (!Loaded->bOk) GNegative.Increment();
++			OutBlob = Loaded;
++			return true;
++		}
++	}
++	if (!Cooking)
++	{
++		return false;
++	}
++
++	const double Start = FPlatformTime::Seconds();
++	TSharedPtr<FBlob> Blob = MakeShared<FBlob>();
++	if (!Cook(Bytes, Size, Cooking, Format, *Blob, OutError))
++	{
++		return false;
++	}
++	GCookMicros.Add(static_cast<int64>((FPlatformTime::Seconds() - Start) * 1e6));
++	GMisses.Increment();
++	if (!Blob->bOk) GCookFailed.Increment();
++	if (bUseCache)
++	{
++		Save(Path, CookVersion, *Blob);
++	}
++	OutBlob = Blob;
++	return true;
++}
++
++void LogStats(const TCHAR* Context)
++{
++	UE_LOG(LogFortniteCollisionCache, Display, TEXT("FortniteCollisionCache[%s]: hits=%d (negative=%d, load %.2fs) misses=%d (cook %.2fs, unusable=%d) written=%d dir=%s"),
++		Context, GHits.GetValue(), GNegative.GetValue(), GLoadMicros.GetValue() / 1e6, GMisses.GetValue(), GCookMicros.GetValue() / 1e6,
++		GCookFailed.GetValue(), GWritten.GetValue(), *CacheDir());
++}
++
++void BakeContent(const FString& ContentDir)
++{
++	const double Start = FPlatformTime::Seconds();
++	TArray<FString> Files;
++	IFileManager::Get().FindFilesRecursive(Files, *ContentDir, TEXT("*.uexp"), true, false);
++	UE_LOG(LogFortniteCollisionCache, Display, TEXT("FortniteCollisionCache: baking %d .uexp files under %s into %s"), Files.Num(), *ContentDir, *CacheDir());
++
++	FThreadSafeCounter Payloads, Scanned, Failed;
++	ParallelFor(Files.Num(), [&](int32 Index)
++	{
++		const FString& File = Files[Index];
++		const int64 FileSize = IFileManager::Get().FileSize(*File);
++		if (FileSize < 64 || FileSize > (1LL << 30)) return;
++		// Header size of the companion .uasset/.umap: original bulk offsets are relative to the combined package.
++		int64 HeaderSize = IFileManager::Get().FileSize(*FPaths::ChangeExtension(File, TEXT("uasset")));
++		if (HeaderSize < 0) HeaderSize = IFileManager::Get().FileSize(*FPaths::ChangeExtension(File, TEXT("umap")));
++		if (HeaderSize < 0) return;
++		TArray<uint8> Bytes;
++		if (!FFileHelper::LoadFileToArray(Bytes, *File, FILEREAD_Silent)) return;
++		Scanned.Increment();
++		const int64 N = Bytes.Num();
++		for (int64 H = 0; H + 24 <= N; ++H)
++		{
++			if (Bytes[H] != 0x48 || Bytes[H + 1] || Bytes[H + 2] || Bytes[H + 3]) continue;
++			uint32 Count0, Count1; int64 Offset;
++			FMemory::Memcpy(&Count0, &Bytes[H + 4], 4);
++			FMemory::Memcpy(&Count1, &Bytes[H + 8], 4);
++			FMemory::Memcpy(&Offset, &Bytes[H + 12], 8);
++			if (Count0 != Count1 || Count0 < 32 || H + 20 + static_cast<int64>(Count0) > N || Offset != HeaderSize + H + 20) continue;
++			if (Bytes[H + 20] != 4 || Bytes[H + 21] || Bytes[H + 22] || Bytes[H + 23]) continue;
++			TSharedPtr<const FBlob> Blob; FString Error;
++			// Parse failures of false-positive signatures must not be cached, so check parse first only via Acquire's own
++			// result: Acquire caches negatives, which is harmless (keyed by exact bytes) and avoids re-parsing at load.
++			if (Acquire(&Bytes[H + 20], Count0, Blob, Error))
++			{
++				Payloads.Increment();
++				if (Blob.IsValid() && !Blob->bOk) Failed.Increment();
++			}
++			H += 20 + Count0 - 1;
++		}
++	}, EParallelForFlags::None);
++
++	UE_LOG(LogFortniteCollisionCache, Display, TEXT("FortniteCollisionCache: bake scanned %d files, %d payloads (%d unusable) in %.1fs"),
++		Scanned.GetValue(), Payloads.GetValue(), Failed.GetValue(), FPlatformTime::Seconds() - Start);
++	LogStats(TEXT("bake"));
++}
++
++// -FortniteBakeCollision: bake all staged collision payloads in parallel right after engine init, then exit.
++static FDelayedAutoRegisterHelper GBakeOnStartup(EDelayedRegisterRunPhase::EndOfEngineInit, []()
++{
++	if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteBakeCollision")))
++	{
++		return;
++	}
++	FString Dir;
++	if (!FParse::Value(FCommandLine::Get(), TEXT("-FortniteBakeCollisionDir="), Dir) || Dir.IsEmpty())
++	{
++		Dir = FPaths::ProjectContentDir();
++	}
++	BakeContent(FPaths::ConvertRelativePathToFull(Dir));
++	FPlatformMisc::RequestExitWithStatus(false, 0);
++});
++}
++
 +#endif

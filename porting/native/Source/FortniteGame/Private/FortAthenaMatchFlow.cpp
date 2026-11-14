@@ -12,6 +12,9 @@
 // original code (unread formula, unported callee, or a test convenience). Unknowns are logged once with UE_LOG.
 // Everything is inactive unless -FortniteOriginalClient is set.
 
+#include "HAL/IConsoleManager.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "FortAthenaMatchFlow.h"
 #include "EngineUtils.h"
 #include "FortniteAthenaGameplay.h"
@@ -2446,6 +2449,19 @@ namespace FortAthenaMatchFlow
 
         if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeMovementDefaults")))
         {
+            // Log every server rejection of client movement (error, client/server location, velocity) from the engine.
+            if (IConsoleVariable* ShowCorrections = IConsoleManager::Get().FindConsoleVariable(TEXT("p.NetShowCorrections")))
+                ShowCorrections->Set(1);
+            if (UCharacterMovementComponent* CMC = Pawn->GetCharacterMovement())
+            {
+                UE_LOG(LogTemp, Display, TEXT("MovementConstants: maxStep=%.2f walkableFloorZ=%.3f walkableAngle=%.2f groundFriction=%.2f brakingFriction=%.2f brakingDecelWalking=%.1f maxAccel=%.1f gravityScale=%.3f gravityZ=%.1f jumpZ=%.1f maxWalk=%.1f perchRadius=%.1f perchAdd=%.1f ledgeCheckThreshold=%.2f capsuleR=%.2f capsuleHH=%.2f useSeparateBrakingFriction=%d"),
+                    CMC->MaxStepHeight, CMC->GetWalkableFloorZ(), CMC->GetWalkableFloorAngle(), CMC->GroundFriction, CMC->BrakingFriction,
+                    CMC->BrakingDecelerationWalking, CMC->GetMaxAcceleration(), CMC->GravityScale, CMC->GetGravityZ(), CMC->JumpZVelocity,
+                    CMC->MaxWalkSpeed, CMC->PerchRadiusThreshold, CMC->PerchAdditionalHeight, CMC->LedgeCheckThreshold,
+                    Pawn->GetCapsuleComponent() ? Pawn->GetCapsuleComponent()->GetUnscaledCapsuleRadius() : -1.f,
+                    Pawn->GetCapsuleComponent() ? Pawn->GetCapsuleComponent()->GetUnscaledCapsuleHalfHeight() : -1.f,
+                    CMC->bUseSeparateBrakingFriction ? 1 : 0);
+            }
             // Once per second for 10 minutes: which movement style the server is in and why (sprint question).
             struct FSprintProbe { FTimerHandle Handle; int32 Samples = 0; };
             const TSharedRef<FSprintProbe> SprintProbe = MakeShared<FSprintProbe>();
