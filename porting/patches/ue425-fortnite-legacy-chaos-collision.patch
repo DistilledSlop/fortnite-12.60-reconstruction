@@ -30,7 +30,7 @@ index b6ca9aaea..b1378db78 100644
  	// #TODO MRMesh for some reason needs to be able to call this - that case needs fixed to correctly use the create meshes flow
  	friend class UMRMeshComponent;
 diff --git a/Engine/Source/Runtime/Engine/Private/PhysicsEngine/BodySetup.cpp b/Engine/Source/Runtime/Engine/Private/PhysicsEngine/BodySetup.cpp
-index 3ac4364e7..d9a02aad4 100644
+index 3ac4364e7..dfdb79fc5 100644
 --- a/Engine/Source/Runtime/Engine/Private/PhysicsEngine/BodySetup.cpp
 +++ b/Engine/Source/Runtime/Engine/Private/PhysicsEngine/BodySetup.cpp
 @@ -20,6 +20,8 @@
@@ -123,7 +123,7 @@ index 3ac4364e7..d9a02aad4 100644
  		{
  #if WITH_PHYSX  && PHYSICS_INTERFACE_PHYSX
  			bClearMeshes = !RuntimeCookPhysics_PhysX();
-@@ -478,6 +523,145 @@ void UBodySetup::CreatePhysicsMeshes()
+@@ -478,6 +523,147 @@ void UBodySetup::CreatePhysicsMeshes()
  }
  
  #if WITH_PHYSX && PHYSICS_INTERFACE_PHYSX
@@ -193,18 +193,20 @@ index 3ac4364e7..d9a02aad4 100644
 +		if (bGenerateNonMirroredCollision)
 +		{
 +			PxConvexMesh*& Mesh = Temp.Normal.AddDefaulted_GetRef();
-+			if (Cooking->CreateConvex(Format, EPhysXMeshCookFlags::Default, Vertices, Mesh)
-+				!= EPhysXCookingResult::Succeeded || !Mesh)
-+				return Fail(TEXT("convex cooking failed or required hull inflation"));
++			// Stock UE accepts SucceededWithInflation (near-degenerate hulls, e.g. the flat sliver hulls of road spline meshes);
++			// rejecting it dropped the whole body's collision.
++			const EPhysXCookingResult CookResult = Cooking->CreateConvex(Format, EPhysXMeshCookFlags::Default, Vertices, Mesh);
++			if (CookResult == EPhysXCookingResult::Failed || !Mesh)
++				return Fail(TEXT("convex cooking failed"));
 +		}
 +		if (bGenerateMirroredCollision)
 +		{
 +			TArray<FVector> MirroredVertices = Vertices;
 +			for (FVector& V : MirroredVertices) V.X = -V.X;
 +			PxConvexMesh*& Mesh = Temp.Mirrored.AddDefaulted_GetRef();
-+			if (Cooking->CreateConvex(Format, EPhysXMeshCookFlags::Default, MirroredVertices, Mesh)
-+				!= EPhysXCookingResult::Succeeded || !Mesh)
-+				return Fail(TEXT("mirrored convex cooking failed or required hull inflation"));
++			const EPhysXCookingResult MirroredCookResult = Cooking->CreateConvex(Format, EPhysXMeshCookFlags::Default, MirroredVertices, Mesh);
++			if (MirroredCookResult == EPhysXCookingResult::Failed || !Mesh)
++				return Fail(TEXT("mirrored convex cooking failed"));
 +		}
 +	}
 +
@@ -269,7 +271,7 @@ index 3ac4364e7..d9a02aad4 100644
  bool UBodySetup::RuntimeCookPhysics_PhysX()
  {
  	FPhysXCookHelper CookHelper(GetPhysXCookingModule());
-@@ -941,6 +1125,7 @@ void UBodySetup::InvalidatePhysicsData()
+@@ -941,6 +1127,7 @@ void UBodySetup::InvalidatePhysicsData()
  	if (!bSharedCookedData)
  	{
  		CookedFormatData.FlushData();
@@ -277,7 +279,7 @@ index 3ac4364e7..d9a02aad4 100644
  	}
  #if WITH_EDITOR
  	CookedFormatDataRuntimeOnlyOptimization.FlushData();
-@@ -983,6 +1168,16 @@ void UBodySetup::Serialize(FArchive& Ar)
+@@ -983,6 +1170,16 @@ void UBodySetup::Serialize(FArchive& Ar)
  	Ar << bCooked;
  
  	bool bDuplicating = (Ar.GetPortFlags() & PPF_Duplicate) != 0;
@@ -294,7 +296,7 @@ index 3ac4364e7..d9a02aad4 100644
  
  	if (bCooked)
  	{
-@@ -1284,11 +1479,17 @@ bool UBodySetup::CalcUVAtLocation(const FVector& BodySpaceLocation, int32 FaceIn
+@@ -1284,11 +1481,17 @@ bool UBodySetup::CalcUVAtLocation(const FVector& BodySpaceLocation, int32 FaceIn
  {
  	bool bSuccess = false;
  
