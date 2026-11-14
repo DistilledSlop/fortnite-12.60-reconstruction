@@ -38,3 +38,11 @@ void UFortCharacterAttrSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 	DOREPLIFETIME(UFortCharacterAttrSet, Fortitude);
 }
 
+
+UFortCharacterAttrSet::UFortCharacterAttrSet(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    // Reflected projection of original constructor 0x141b886d0.
+    MaxCharacterLevel.SetBaseValue(32767.0f);
+    MaxCharacterLevel.SetCurrentValue(32767.0f);
+}

@@ -2530,6 +2530,18 @@ _hero_item_spec = _common_activation_import.spec_from_file_location(
     "hero_item_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "hero_item_runtime", "source_policy.py"))
 _hero_item_policy = _common_activation_import.module_from_spec(_hero_item_spec)
 _hero_item_spec.loader.exec_module(_hero_item_policy)
+_base_movement_speed_spec = _common_activation_import.spec_from_file_location(
+    "base_movement_speed_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "base_movement_speed80_runtime", "source_policy.py"))
+_base_movement_speed_policy = _common_activation_import.module_from_spec(_base_movement_speed_spec)
+_base_movement_speed_spec.loader.exec_module(_base_movement_speed_policy)
+_character_set_ctor_spec = _common_activation_import.spec_from_file_location(
+    "character_set_ctor_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "character_set_ctor88_runtime", "source_policy.py"))
+_character_set_ctor_policy = _common_activation_import.module_from_spec(_character_set_ctor_spec)
+_character_set_ctor_spec.loader.exec_module(_character_set_ctor_policy)
+_attribute_limit_spec = _common_activation_import.spec_from_file_location(
+    "attribute_limit_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "attribute_limit_runtime", "source_policy.py"))
+_attribute_limit_policy = _common_activation_import.module_from_spec(_attribute_limit_spec)
+_attribute_limit_spec.loader.exec_module(_attribute_limit_policy)
 _world_profile_gate_spec = _common_activation_import.spec_from_file_location(
     "world_profile_gate_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "world_profile_gate_runtime", "source_policy.py"))
 _world_profile_gate_policy = _common_activation_import.module_from_spec(_world_profile_gate_spec)
@@ -2944,10 +2956,12 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _pickaxe_vfx_policy.apply(model)
     model = _pawn_aim_rotation_policy.apply(model)
     model = _movement_max_acceleration_policy.apply(model)
+    model = _base_movement_speed_policy.apply(model)
     model = _flying_acceleration_family_policy.apply(model)
     model = _movement_servermove_policy.apply(model)
     model = _hero_attribute_defaults_policy.apply(model)
     model = _hero_item_policy.apply(model)
+    model = _attribute_limit_policy.apply(model)
     model = _mutator_owner_policy.apply(model, block, owner_fns)
     model = _replay_spectator216_policy.apply(model, block, owner_fns)
     model = _controller_analytics_policy.apply(model, block, owner_fns)
@@ -4998,6 +5012,9 @@ def promote(args):
         header, cpp = _athena_playlist_selection_policy.finalize(model, header, cpp)
         header, cpp = _air_selector_admission_policy.finalize(model, header, cpp)
         header, cpp = _movement_max_acceleration_policy.finalize(model, header, cpp)
+        header, cpp = _base_movement_speed_policy.finalize(model, header, cpp)
+        header, cpp = _hero_item_policy.finalize(model, header, cpp)
+        header, cpp = _character_set_ctor_policy.finalize(model, header, cpp)
         header, cpp = _athena_playerstate_constructor_policy.finalize(model, header, cpp)
         header, cpp = _world_profile_gate_policy.finalize(model, header, cpp)
         header, cpp = _movement_attribute_defaults_policy.finalize(model, header, cpp)
@@ -6335,6 +6352,7 @@ def render_struct_header(model, source_label):
     lines.extend(_pawn_stats_derived_rows_policy.declarations(model))
     attribute_declarations = _fort_attribute_data_policy.declarations(model)
     _movement_attribute_defaults_policy.validate_struct(model, attribute_declarations)
+    _character_set_ctor_policy.validate_struct(model, attribute_declarations)
     lines.extend(attribute_declarations)
     if delta:
         item = net["item"]

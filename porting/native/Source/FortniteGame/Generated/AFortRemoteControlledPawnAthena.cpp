@@ -2,6 +2,7 @@
 #include "AFortRemoteControlledPawnAthena.h"
 #include "APhysicsObject.h"
 #include "UFortRemoteControlPawnSet.h"
+#include "../../../../behavior/movement_speed64_runtime/MovementSpeedMath.h"
 #include "Net/UnrealNetwork.h"
 
 float AFortRemoteControlledPawnAthena::GetFuseLength() const
@@ -91,6 +92,14 @@ uint8 AFortRemoteControlledPawnAthena::NativeGetTeam163()
 	// CONFIDENCE: high
 	// 0x142442e50, IFortTeamActorInterface byte slot 0x28.
 	return static_cast<uint8>(RCTeam);
+}
+
+float AFortRemoteControlledPawnAthena::NativeGetMovementSpeed14231ab10(uint8 Style) const
+{
+	// CONFIDENCE: high
+	// Original 0x14243fb10. Style is unused by this override.
+	if (!RemoteControlPawnSet) return 100.0f;
+	return bCurrentlyDelayingLaunch ? RemoteControlPawnSet->LaunchSpeed.GetCurrentValue() : RemoteControlPawnSet->MaxSpeed.GetCurrentValue();
 }
 
 void AFortRemoteControlledPawnAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

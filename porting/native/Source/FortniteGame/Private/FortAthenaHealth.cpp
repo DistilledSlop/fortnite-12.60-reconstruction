@@ -47,6 +47,17 @@
 #include "FortNativeGameplayTagsRuntime.h"
 #include "UFortAbilitySet.h"
 #include "UFortAbilitySystemComponent.h"
+#include "UFortAbilitySystemComponentAthena.h"
+#include "UFortCharacterAttrSet.h"
+#include "UFortPlayerAttrSet.h"
+#include "UFortHero.h"
+#include "UFortHeroType.h"
+#include "UFortRegisteredPlayerInfo.h"
+#include "FortAttributeSetInitter.h"
+#include "FortPlayerStatFallback.h"
+#include "AbilitySystemGlobals.h"
+#include "GameplayEffectAggregator.h"
+#include "UObject/StrongObjectPtr.h"
 #include "UFortAdvancedMovementSet.h"
 #include "UFortControlResistanceSet.h"
 #include "UFortDamageSet.h"
@@ -221,6 +232,87 @@ namespace
 		ASC->AddAttributeSetSubobject(Set);
 		return Set;
 	}
+
+	void InitializeAthenaHeroAttributes(AFortPlayerStateAthena& PlayerState,
+		AFortPlayerControllerAthena& Controller, AFortGameModeAthena& Mode,
+		UFortAbilitySystemComponent& ASC)
+	{
+		// ASC survives replacement pawns. Do not refill health/stamina on repeated
+		// SetupPlayer calls (including ServerResetAbilitySystemComponent).
+		static TSet<TWeakObjectPtr<UFortAbilitySystemComponent>> InitializedASCs;
+		for (auto It = InitializedASCs.CreateIterator(); It; ++It)
+			if (!It->IsValid()) { It.RemoveCurrent(); }
+		if (InitializedASCs.Contains(&ASC)) { return; }
+		UFortHeroType* HeroType = PlayerState.HeroType;
+		AFortGameStateAthena* State = Mode.GetGameState<AFortGameStateAthena>();
+		if (!HeroType || !State)
+		{
+			UE_LOG(LogFortHealth, Warning, TEXT("Attributes: awaiting selected HeroType/GameState for %s"), *PlayerState.GetName());
+			return;
+		}
+		// The actual item factory uses the inherited level and native clamp defaults.
+		// Keep it rooted across synchronous curve/table loads even without registered info.
+		TStrongObjectPtr<UFortHero> Hero(HeroType->NativeCreateTemporaryHero142017d90(1));
+		if (!Hero.IsValid()) { return; }
+		if (Controller.MyPlayerInfo)
+			Controller.MyPlayerInfo->TempAthenaMenuHeroInstance = Hero.Get();
+
+		const FFortAttributeInitializationKey& Key = HeroType->GetAttributeInitKey();
+		TSet<FProperty*> InitializedProperties;
+		const FFortPlayerPawnStats* Stats = nullptr;
+		{
+			// Athena-specific server recreation of the original homebase attribute
+			// phase only. Campaign/team effects and zone clamp effects remain separate.
+			FScopedAggregatorOnDirtyBatch Batch;
+			if (const UFortCharacterAttrSet* CharacterSet = ASC.GetSet<UFortCharacterAttrSet>())
+			{
+				static FProperty* LevelProperty = FindFPropertyChecked<FProperty>(
+					UFortCharacterAttrSet::StaticClass(), TEXT("MaxCharacterLevel"));
+				FGameplayEffectAttributeCaptureSpec Capture(FGameplayEffectAttributeCaptureDefinition(
+					FGameplayAttribute(LevelProperty), EGameplayEffectAttributeCaptureSource::Target, false));
+				ASC.CaptureAttributeForGameplayEffect(Capture);
+				FAggregatorEvaluateParameters Evaluation;
+				float EvaluatedLevel = 0.0f;
+				Capture.AttemptCalculateAttributeMagnitude(Evaluation, EvaluatedLevel);
+				const FFortGameplayAttributeData& Attribute = CharacterSet->MaxCharacterLevel;
+				if (Attribute.Minimum <= EvaluatedLevel)
+				{
+					if (Attribute.Maximum <= EvaluatedLevel) { EvaluatedLevel = Attribute.Maximum; }
+				}
+				else { EvaluatedLevel = Attribute.Minimum; }
+				Hero->NativeRecoveredInt32_0x228 = static_cast<int32>(EvaluatedLevel);
+			}
+			if (!Key.AttributeInitCategory.IsNone())
+			{
+				const FAttributeSetInitter* Initter = UAbilitySystemGlobals::Get().GetAttributeSetInitter();
+				if (Initter)
+					static_cast<const FFortAttributeSetInitter*>(Initter)->InitAttributeSetDefaults(
+						&ASC, Key, static_cast<float>(Hero->GetLevel()), false, true, InitializedProperties);
+			}
+			else
+			{
+				UE_LOG(LogFortHealth, Warning, TEXT("Attributes: no initialization category for %s"), *HeroType->GetName());
+			}
+			Stats = State->GetPlaylistHeroStats(HeroType->LegacyStatHandle.RowName);
+			if (!Stats) { Stats = HeroType->GetHeroLegacyStats(); }
+			if (Stats) { FortPlayerStatFallback::ApplyForPlayerState(PlayerState, *Stats, InitializedProperties); }
+		}
+		if (Stats || InitializedProperties.Num() != 0) { InitializedASCs.Add(&ASC); }
+		else
+		{
+			UE_LOG(LogFortHealth, Warning, TEXT("Attributes: no hero curves or legacy stats resolved for %s"), *HeroType->GetName());
+		}
+		const UFortMovementSet& Movement = *PlayerState.AttributeSets.MovementSet;
+		UE_LOG(LogFortHealth, Display,
+			TEXT("Attributes: player=%s hero=%s key=%s/%s level=%d clamp=%d ASC=%s initialized=%d legacy=%d walk=%.2f run=%.2f sprint=%.2f backward=%.3f multiplier=%.3f"),
+			*PlayerState.GetName(), *HeroType->GetName(), *Key.AttributeInitCategory.ToString(),
+			*Key.AttributeInitSubCategory.ToString(), Hero->GetLevel(), Hero->NativeRecoveredInt32_0x228,
+			*ASC.GetClass()->GetName(), InitializedProperties.Num(), Stats != nullptr,
+			Movement.WalkSpeed.GetCurrentValue(), Movement.RunSpeed.GetCurrentValue(),
+			Movement.SprintSpeed.GetCurrentValue(), Movement.BackwardSpeedMultiplier.GetCurrentValue(),
+			Movement.SpeedMultiplier.GetCurrentValue());
+	}
+
 }
 
 void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller)
@@ -241,7 +333,7 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 	UFortAbilitySystemComponent* ASC = PlayerState->AbilitySystemComponent;
 	if (!ASC)
 	{
-		ASC = NewObject<UFortAbilitySystemComponent>(PlayerState, TEXT("AbilitySystemComponent"), RF_DefaultSubObject);  // see AddNamedSet
+		ASC = NewObject<UFortAbilitySystemComponentAthena>(PlayerState, TEXT("AbilitySystemComponent"), RF_DefaultSubObject);  // see AddNamedSet
 		ASC->SetNetAddressable();
 		ASC->SetIsReplicated(true);
 		ASC->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
@@ -269,6 +361,48 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 		Pawn->HealthSet = HealthSet;
 		Pawn->bHealthSynced = 1;
 
+	}
+
+	// Ensure combat and movement attribute sets exist on PlayerState/ASC.
+	UFortDamageSet* DamageSet = AddNamedSet<UFortDamageSet>(ASC, PlayerState, TEXT("DamageSet"));
+	if (DamageSet)
+	{
+		PlayerState->AttributeSets.DamageSet = DamageSet;
+		Pawn->DamageSet = DamageSet;
+	}
+
+	UFortControlResistanceSet* ControlSet = AddNamedSet<UFortControlResistanceSet>(ASC, PlayerState, TEXT("ControlResistanceSet"));
+	if (ControlSet)
+	{
+		PlayerState->AttributeSets.ControlResistanceSet = ControlSet;
+		Pawn->ControlResistanceSet = ControlSet;
+	}
+
+	UFortMovementSet* MovementSet = AddNamedSet<UFortMovementSet>(ASC, PlayerState, TEXT("MovementSet"));
+	if (MovementSet)
+	{
+		PlayerState->AttributeSets.MovementSet = MovementSet;
+		Pawn->MovementSet = MovementSet;
+	}
+
+	UFortAdvancedMovementSet* AdvMovementSet = AddNamedSet<UFortAdvancedMovementSet>(ASC, PlayerState, TEXT("AdvancedMovementSet"));
+	if (AdvMovementSet)
+	{
+		PlayerState->AttributeSets.AdvancedMovementSet = AdvMovementSet;
+		Pawn->AdvancedMovementSet = AdvMovementSet;
+	}
+
+	// These are part of the original PlayerState attribute family. Character level
+	// must use its native constructor value, not a synthetic Athena level.
+	PlayerState->AttributeSets.CharacterAttrSet = AddNamedSet<UFortCharacterAttrSet>(ASC, PlayerState, TEXT("CharacterAttrSet"));
+	PlayerState->AttributeSets.PlayerAttrSet = AddNamedSet<UFortPlayerAttrSet>(ASC, PlayerState, TEXT("PlayerAttrSet"));
+
+	InitializeAthenaHeroAttributes(*PlayerState, *Controller, *GameMode, *ASC);
+
+	// Retain the existing server health bootstrap only when neither hero curves nor
+	// legacy stats supplied usable health. Successful original initialization owns it.
+	if (HealthSet)
+	{
 		// Initialize default health/shield values if uninitialized (<= 0).
 		if (HealthSet->MaxHealth.GetCurrentValue() <= 0.0f)
 		{
@@ -296,41 +430,15 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 		}
 	}
 
-	// Ensure combat and movement attribute sets exist on PlayerState/ASC.
-	UFortDamageSet* DamageSet = AddNamedSet<UFortDamageSet>(ASC, PlayerState, TEXT("DamageSet"));
-	if (DamageSet)
-	{
-		PlayerState->AttributeSets.DamageSet = DamageSet;
-		Pawn->DamageSet = DamageSet;
-	}
-
-	UFortControlResistanceSet* ControlSet = AddNamedSet<UFortControlResistanceSet>(ASC, PlayerState, TEXT("ControlResistanceSet"));
-	if (ControlSet)
-	{
-		PlayerState->AttributeSets.ControlResistanceSet = ControlSet;
-	}
-
-	UFortMovementSet* MovementSet = AddNamedSet<UFortMovementSet>(ASC, PlayerState, TEXT("MovementSet"));
-	if (MovementSet)
-	{
-		PlayerState->AttributeSets.MovementSet = MovementSet;
-	}
-
-	UFortAdvancedMovementSet* AdvMovementSet = AddNamedSet<UFortAdvancedMovementSet>(ASC, PlayerState, TEXT("AdvancedMovementSet"));
-	if (AdvMovementSet)
-	{
-		PlayerState->AttributeSets.AdvancedMovementSet = AdvMovementSet;
-	}
-
-	// Initialize replicated movement speeds for the client-side proxy.
+	// Publish the same values that authoritative movement now reads from GAS.
 	if (AFortPlayerPawnAthena* AthenaPawn = Cast<AFortPlayerPawnAthena>(Pawn))
 	{
-		AthenaPawn->AttributeReplicationProxy.WalkSpeed = 400.0f;
-		AthenaPawn->AttributeReplicationProxy.RunSpeed = 500.0f;
-		AthenaPawn->AttributeReplicationProxy.SprintSpeed = 900.0f;
-		AthenaPawn->AttributeReplicationProxy.FlySpeed = 600.0f;
-		AthenaPawn->AttributeReplicationProxy.CrouchedRunSpeed = 300.0f;
-		AthenaPawn->AttributeReplicationProxy.CrouchedSprintSpeed = 350.0f;
+		AthenaPawn->AttributeReplicationProxy.WalkSpeed = MovementSet->WalkSpeed.GetCurrentValue();
+		AthenaPawn->AttributeReplicationProxy.RunSpeed = MovementSet->RunSpeed.GetCurrentValue();
+		AthenaPawn->AttributeReplicationProxy.SprintSpeed = MovementSet->SprintSpeed.GetCurrentValue();
+		AthenaPawn->AttributeReplicationProxy.FlySpeed = MovementSet->FlySpeed.GetCurrentValue();
+		AthenaPawn->AttributeReplicationProxy.CrouchedRunSpeed = MovementSet->CrouchedRunSpeed.GetCurrentValue();
+		AthenaPawn->AttributeReplicationProxy.CrouchedSprintSpeed = MovementSet->CrouchedSprintSpeed.GetCurrentValue();
 		AthenaPawn->OnRep_AttributeProxy();
 	}
 

@@ -16,6 +16,8 @@ class FORTNITEGAME_API UFortCharacterAttrSet : public UFortAttributeSet
 	GENERATED_BODY()
 
 public:
+	UFortCharacterAttrSet(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 4, flags 0x40000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_Fortitude)
 	FFortGameplayAttributeData Fortitude;

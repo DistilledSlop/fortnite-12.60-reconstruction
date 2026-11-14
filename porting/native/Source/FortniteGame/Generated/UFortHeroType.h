@@ -17,6 +17,7 @@ class UAnimMontage;
 class UAthenaBackpackItemDefinition;
 class UAthenaCharacterItemDefinition;
 class UFortFeedbackBank;
+class UFortHero;
 class UFortHeroGameplayDefinition;
 class UFortHeroSpecialization;
 class UFortMontageLookupTable;
@@ -125,5 +126,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	FFortPlayerPawnStats* GetHeroLegacyStats() const;
 	const FFortAttributeInitializationKey& GetAttributeInitKey() const;
+	UFortHero* NativeCreateTemporaryHero142017d90(int32 InQuantity);
 };
 

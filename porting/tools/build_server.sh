@@ -137,6 +137,16 @@ PYBUILDINGS
             exit 1
         fi
         cp "$char_registry" "$porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Config/AthenaCharacterRegistry.json" || exit 1
+        # Character definitions and their specializations/parts are dynamic roots.
+        # Use the pinned 12.60 export-class census; never follow arbitrary soft paths.
+        character_census="${FN_CHARACTER_CLASS_CENSUS:-/mnt/vibrato/fortnite-asset-pipeline/export-classes.tsv}"
+        if [[ ! -f $character_census ]]; then
+            echo 'Pinned character export-class census missing; refusing stage' >&2
+            exit 1
+        fi
+        python3 -I "$porting/tools/stage_character_content.py" \
+            --manifest "$char_registry" --census "$character_census" \
+            --src "${FN_COOKED_GAME_ROOT:-/mnt/vibrato/fortnite-extracted-full/FortniteGame}/Content" || exit 1
     fi
     # Stage the recovered collision profiles alongside committed native settings.
     # The helper checks that the native bytes match HEAD and fails closed on a

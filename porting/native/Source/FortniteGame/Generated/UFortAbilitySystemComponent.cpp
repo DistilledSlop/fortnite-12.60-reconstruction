@@ -2,6 +2,8 @@
 #include "UFortAbilitySystemComponent.h"
 #include "Abilities/GameplayAbility.h"
 #include "Abilities/GameplayAbilityTypes.h"
+#include "AttributeSet.h"
+#include "FFortGameplayAttributeData.h"
 #include "GameplayAbilitySpec.h"
 #include "GameplayTagContainer.h"
 #include "HAL/Platform.h"
@@ -243,6 +245,30 @@ const FGameplayAbilityRepAnimMontage& UFortAbilitySystemComponent::NativeRepAnim
 	// Original 0x1406ccd10 returns UAbilitySystemComponent +0x728.
 	// Expose inherited protected state; do not update or recompute it here.
 	return RepAnimMontageInfo;
+}
+
+void UFortAbilitySystemComponent::NativeSetAttributeMaximum14160c540(const FGameplayAttribute& Attribute, float Value)
+{
+	// Original address: 0x14160c540.
+	// CONFIDENCE: HIGH
+	if (!FGameplayAttribute::IsGameplayAttributeDataProperty(Attribute.GetUProperty()))
+	    return;
+	const UAttributeSet* Set = GetAttributeSubobject(Attribute.GetAttributeSetClass());
+	FGameplayAttributeData* Data = Attribute.GetGameplayAttributeData(const_cast<UAttributeSet*>(Set));
+	if (Data)
+	    static_cast<FFortGameplayAttributeData*>(Data)->NativeSetMaximum141bc4c50(Value);
+}
+
+void UFortAbilitySystemComponent::NativeSetAttributeMinimum14160c5b0(const FGameplayAttribute& Attribute, float Value)
+{
+	// Original address: 0x14160c5b0.
+	// CONFIDENCE: HIGH
+	if (!FGameplayAttribute::IsGameplayAttributeDataProperty(Attribute.GetUProperty()))
+	    return;
+	const UAttributeSet* Set = GetAttributeSubobject(Attribute.GetAttributeSetClass());
+	FGameplayAttributeData* Data = Attribute.GetGameplayAttributeData(const_cast<UAttributeSet*>(Set));
+	if (Data)
+	    static_cast<FFortGameplayAttributeData*>(Data)->NativeSetMinimum141bc4cc0(Value);
 }
 
 void UFortAbilitySystemComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

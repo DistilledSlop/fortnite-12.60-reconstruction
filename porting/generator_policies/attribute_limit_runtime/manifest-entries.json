@@ -1,0 +1,38 @@
+[
+  {
+    "class": "UFortAbilitySystemComponent",
+    "function": "NativeSetAttributeMaximum14160c540",
+    "kind": "helper",
+    "signature": "void NativeSetAttributeMaximum14160c540(const FGameplayAttribute& Attribute, float Value)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": false,
+    "override": false,
+    "includes": [
+      "AttributeSet.h"
+    ],
+    "inc_path": "porting/generator_policies/attribute_limit_runtime/NativeSetAttributeMaximum14160c540.inc",
+    "address": "0x14160c540",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Complete original gameplay-data type gate, first spawned set resolution and Fort limit setter. Built original-byte comparisons cover IEEE rounding, NaN, signed zero and DAZ/FTZ. Native build pending next coherent batch."
+  },
+  {
+    "class": "UFortAbilitySystemComponent",
+    "function": "NativeSetAttributeMinimum14160c5b0",
+    "kind": "helper",
+    "signature": "void NativeSetAttributeMinimum14160c5b0(const FGameplayAttribute& Attribute, float Value)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": false,
+    "override": false,
+    "includes": [
+      "AttributeSet.h"
+    ],
+    "inc_path": "porting/generator_policies/attribute_limit_runtime/NativeSetAttributeMinimum14160c5b0.inc",
+    "address": "0x14160c5b0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Complete original gameplay-data type gate, first spawned set resolution and Fort limit setter. Built original-byte comparisons cover IEEE rounding, NaN, signed zero and DAZ/FTZ. Native build pending next coherent batch."
+  }
+]

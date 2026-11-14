@@ -43,5 +43,20 @@
     "confidence": "high",
     "status": "ported",
     "notes": "Original slot +0x268. Reads inherited level and existing NativeRecoveredInt32_0x228 clamp; negative disables clamp. Native build and runtime pending."
+  },
+  {
+    "class": "UFortHeroType",
+    "function": "NativeCreateTemporaryHero142017d90",
+    "kind": "helper",
+    "signature": "UFortHero* NativeCreateTemporaryHero142017d90(int32 InQuantity)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": false,
+    "override": false,
+    "inc_path": "porting/behavior/athena_hero_setup85_runtime/CreateTemporaryHero.inc",
+    "address": "0x142017d90",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Complete factory specialization for original FortHeroType class slot +0x280 returning FortHero. Uses recovered inherited CDO level and original hero constructor clamp."
   }
 ]

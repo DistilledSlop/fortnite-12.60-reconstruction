@@ -7,7 +7,7 @@ FIELDS = ('WalkSpeed', 'RunSpeed', 'SprintSpeed', 'FlySpeed', 'CrouchedRunSpeed'
           'CrouchedSprintSpeed', 'BackwardSpeedMultiplier', 'JumpHeight',
           'GravityZScale', 'VehicleGravityZScale', 'SpeedMultiplier')
 ONES = ('BackwardSpeedMultiplier', 'GravityZScale', 'VehicleGravityZScale', 'SpeedMultiplier')
-STRUCT_DECL_HASH = '28e2ea849d389a55c441e862bf65d812cf492518c6ac63f64179b15ee70d9a7c'
+STRUCT_DECL_HASH = '406a2160591e7dd7d563506182885b9ca8ce7194f3e8cc020bea271b25e545bc'
 
 
 def validate_struct(model, declarations):

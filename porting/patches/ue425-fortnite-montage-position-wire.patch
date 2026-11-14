@@ -1,0 +1,24 @@
+--- a/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Private/GameplayAbilityTypes.cpp
++++ b/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Private/GameplayAbilityTypes.cpp
+@@ -388,17 +388,10 @@
+ 		SectionIdToPlay = 0;
+ 		SkipPositionCorrection = false;
+ 
+-		if (Ar.IsSaving())
+-		{
+-			uint32 PackedPosition = static_cast<uint32>(Position * 100.0f);
+-			Ar.SerializeIntPacked(PackedPosition);
+-		}
+-		else if (Ar.IsLoading())
+-		{
+-			uint32 PackedPosition = 0;
+-			Ar.SerializeIntPacked(PackedPosition);
+-			Position = static_cast<float>(PackedPosition) / 100.0f;
+-		}
++		// Fortnite 12.60 FGameplayAbilityRepAnimMontage::NetSerialize
++		// (0x14071ada0, position branch 0x14071adf1..0x14071ae3f)
++		// writes a full float, before the four flags and montage reference.
++		Ar << Position;
+ 	}
+ 	else
+ 	{

@@ -1,0 +1,34 @@
+{
+  "AFortPawn": [
+    "../../../../behavior/movement_speed64_runtime/MovementSpeedMath.h",
+    "Components/SceneComponent.h",
+    "FFortPawnStats.h",
+    "UFortAdvancedMovementSet.h",
+    "UFortMovementSet.h"
+  ],
+  "AFortPlayerPawn": [
+    "../../../../behavior/movement_speed64_runtime/MovementSpeedMath.h",
+    "Components/SceneComponent.h",
+    "Curves/CurveFloat.h",
+    "FFortPawnStats.h",
+    "UFortMovementComp_Character.h",
+    "UFortMovementSet.h"
+  ],
+  "AFortCharacterVehicle": [
+    "../../../../behavior/movement_speed64_runtime/MovementSpeedMath.h",
+    "UFortOstrichSet.h"
+  ],
+  "AFortRemoteControlledPawnAthena": [
+    "../../../../behavior/movement_speed64_runtime/MovementSpeedMath.h",
+    "UFortRemoteControlPawnSet.h"
+  ],
+  "UFortMovementComp_Character": [
+    "../../../../behavior/movement_speed64_runtime/MovementSpeedMath.h",
+    "AFortPawn.h",
+    "AFortPlayerPawn.h",
+    "AWaterVolume_Deep.h",
+    "AWaterVolume_Shallow.h",
+    "Components/SceneComponent.h",
+    "GameFramework/PhysicsVolume.h"
+  ]
+}

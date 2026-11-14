@@ -23,6 +23,8 @@ class FORTNITEGAME_API UFortHero : public UFortWorker
 	GENERATED_BODY()
 
 public:
+	UFortHero(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 17, flags 0x10000000000014
 	UPROPERTY()
 	FString hero_name;

@@ -7,6 +7,7 @@
 #include "AbilitySystemComponent.h"
 
 #include "Abilities/GameplayAbilityTypes.h"
+#include "AttributeSet.h"
 #include "EFortSharedAnimationState.h"
 #include "FGameplayAbilityRepSharedAnim.h"
 #include "FPersonalVehicleBlockingChanged.h"
@@ -83,5 +84,7 @@ public:
 	static UObject* NativeGetOutermostObject142ec9ca0(UObject* Context);
 	static uint32 NativeDecodeUtf8Codepoint140c08400(const uint8** Cursor, uint32 Remaining);
 	const FGameplayAbilityRepAnimMontage& NativeRepAnimMontageInfo1406ccd10() const;
+	void NativeSetAttributeMaximum14160c540(const FGameplayAttribute& Attribute, float Value);
+	void NativeSetAttributeMinimum14160c5b0(const FGameplayAttribute& Attribute, float Value);
 };
 

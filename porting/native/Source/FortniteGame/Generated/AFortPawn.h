@@ -1206,5 +1206,7 @@ public:
 	static float NativeSelectMeleeReticleAngle14269eaa0(UObject* Context, bool bPrimary);
 	const FFortPawnStats* NativeGetPawnStats141a07b70() const;
 	virtual float NativeGetFlyingAcceleration14231a880() const;
+	virtual float NativeGetMovementSpeed14231ab10(uint8 Style) const;
+	virtual float NativeGetJumpHorizontalVelocityOverride14231a7c0() const;
 };
 

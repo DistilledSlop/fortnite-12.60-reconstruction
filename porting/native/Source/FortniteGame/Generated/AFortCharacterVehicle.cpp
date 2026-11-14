@@ -4,6 +4,8 @@
 #include "GameFramework/Pawn.h"
 #include "UFortVehicleInterface.h"
 #include "UFortVehicleSeatComponent.h"
+#include "../../../../behavior/movement_speed64_runtime/MovementSpeedMath.h"
+#include "UFortOstrichSet.h"
 #include "Net/UnrealNetwork.h"
 
 bool AFortCharacterVehicle::AllowInteractionBetweenFortVolume() const
@@ -149,6 +151,16 @@ bool AFortCharacterVehicle::NativeSeatPredicate_00C8(uint8 SeatIndex)
 	// CONFIDENCE: HIGH. Recovered original pawn/vehicle virtual family.
 	// Original IFortVehicleInterface byte +0xc8 -> 0x1406801d0; SeatIndex ignored.
 	return true;
+}
+
+float AFortCharacterVehicle::NativeGetMovementSpeed14231ab10(uint8 Style) const
+{
+	// CONFIDENCE: high
+	// Original 0x141945ff0. 100 is the explicit original return.
+	if (!OstrichSet) return 100.0f;
+	if (Style == 0) return OstrichSet->WalkSpeed.GetCurrentValue();
+	if (Style == 3) return OstrichSet->SprintSpeed.GetCurrentValue();
+	return 100.0f;
 }
 
 void AFortCharacterVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

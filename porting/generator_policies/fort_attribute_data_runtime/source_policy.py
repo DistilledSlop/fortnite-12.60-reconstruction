@@ -70,6 +70,7 @@ def declarations(model):
         lines += ['\tvirtual void %s(float NewValue) override' % name, '\t{']
         lines += ['\t\t' + s if s else '' for s in (HERE / (name + '.inc')).read_text().splitlines()]
         lines += ['\t}', '']
+    lines += ['\t' + line if line else '' for line in (HERE.parent / 'attribute_limit_runtime' / 'AttributeLimitMethods.inc').read_text().splitlines()]
     lines += [
         'private:',
         '\t// Bit tests preserve unordered handling even when target compiler assumes finite comparisons.',

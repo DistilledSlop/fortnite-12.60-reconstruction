@@ -286,5 +286,6 @@ public:
 	float GetAirControlLevel() const;
 	virtual float GetMaxAcceleration() const override;
 	virtual void ServerMove_Implementation(float TimeStamp, FVector_NetQuantize10 InAccel, FVector_NetQuantize100 ClientLoc, uint8 CompressedMoveFlags, uint8 ClientRoll, uint32 View, UPrimitiveComponent* ClientMovementBase, FName ClientBaseBoneName, uint8 ClientMovementMode) override;
+	virtual float GetMaxSpeed() const override;
 };
 
