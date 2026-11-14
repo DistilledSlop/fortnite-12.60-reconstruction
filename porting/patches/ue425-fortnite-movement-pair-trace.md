@@ -23,3 +23,21 @@ disagreement. The trace is diagnostic support, with no original-body credit.
 
 Engine diff whitespace and reverse-application checks passed. UE compilation and
 runtime verification remain pending.
+
+The companion `LogFoundationSpawnColumn` probe in FortAthenaMatchFlow.cpp is
+gated by both existing foundation/ground-contact flags. Once the requested
+foundation becomes visible, it enumerates static meshes in that exact loaded
+ULevel whose calculated bounds intersect the original spawn column. It excludes
+actual ALODActor instances, logs up to 128 candidates and the omitted count,
+full transforms/bounds, profile/pawn response, BodySetup trace flag and shape
+counts, then performs simple/complex component-targeted center-line traces.
+The 42 cm footprint matches the existing fixed capsule sweep. No collision
+settings change. Bounds may include empty space or aggregate instance bounds; a
+center-line miss cannot exclude collision elsewhere in the capsule footprint.
+Direct traces test component geometry rather than world profile filtering.
+Original-client transform/contact comparison remains independent work.
+
+Checkpoint213's existing simple and complex spawn sweeps hit only landscape
+although the loaded level has 672 mesh physics states and 664 pawn-blocking
+profiles. Its nearest-mesh output never identifies the actual floor component;
+those counts alone cannot distinguish geometry, placement or profile defects.

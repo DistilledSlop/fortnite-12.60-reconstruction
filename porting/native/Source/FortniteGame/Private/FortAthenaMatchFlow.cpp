@@ -20,6 +20,7 @@
 #include "Engine/LevelStreaming.h"
 #include "Engine/LevelStreamingDynamic.h"
 #include "Engine/Level.h"
+#include "Engine/LODActor.h"
 #include "ABuildingFoundation.h"
 #include "Misc/PackageName.h"
 #include "LandscapeProxy.h"
@@ -1746,6 +1747,65 @@ namespace FortAthenaMatchFlow
     void LogGroundContactLevels(UWorld* World);
 
     // Diagnostic only: bypasses Fortnite foundation lifecycle to test collision causality.
+    // Opt-in query geometry diagnosis only; direct component traces bypass world profile filtering.
+    void LogFoundationSpawnColumn(ULevel* LoadedLevel, const FVector& Spawn, float Radius)
+    {
+        if (!LoadedLevel) return;
+        const FVector Start = Spawn + FVector(0.0f, 0.0f, 1000.0f);
+        const FVector End = Spawn - FVector(0.0f, 0.0f, 1000.0f);
+        int32 Candidates = 0, Logged = 0, ExcludedLODActors = 0;
+        UE_LOG(LogTemp, Display, TEXT("FoundationSpawnColumn: level=%s spawn=%s radius=%.3f start=%s end=%s limit=128"),
+            *GetPathNameSafe(LoadedLevel), *Spawn.ToString(), Radius, *Start.ToString(), *End.ToString());
+        for (AActor* Actor : LoadedLevel->Actors)
+        {
+            if (!Actor) continue;
+            if (Actor->IsA<ALODActor>()) { ++ExcludedLODActors; continue; }
+            TInlineComponentArray<UStaticMeshComponent*> Components(Actor);
+            for (UStaticMeshComponent* Component : Components)
+            {
+                if (!Component || !Component->GetStaticMesh()) continue;
+                const FBoxSphereBounds Calculated = Component->CalcBounds(Component->GetComponentTransform());
+                const FBox Box = Calculated.GetBox();
+                if (Box.Max.X < Spawn.X - Radius || Box.Min.X > Spawn.X + Radius ||
+                    Box.Max.Y < Spawn.Y - Radius || Box.Min.Y > Spawn.Y + Radius ||
+                    Box.Max.Z < End.Z || Box.Min.Z > Start.Z) continue;
+                ++Candidates;
+                if (Logged >= 128) continue;
+                ++Logged;
+                const UBodySetup* Body = Component->GetBodySetup();
+                int32 PhysXTriangles = 0, ChaosTriangles = 0;
+    #if WITH_PHYSX
+                if (Body) PhysXTriangles = Body->TriMeshes.Num();
+    #endif
+    #if WITH_CHAOS
+                if (Body) ChaosTriangles = Body->ChaosTriMeshes.Num();
+    #endif
+                UE_LOG(LogTemp, Display, TEXT("FoundationSpawnColumn: actor=%s component=%s actorTransform=%s componentTransform=%s boundsOrigin=%s boundsExtent=%s cachedOrigin=%s cachedExtent=%s registered=%d actorCollision=%d visible=%d physicsState=%d collisionEnabled=%d profile=%s objectChannel=%d pawnResponse=%d mesh=%s body=%s traceFlag=%d convex=%d spheres=%d boxes=%d capsules=%d physxTriMeshes=%d chaosTriMeshes=%d"),
+                    *GetPathNameSafe(Actor), *GetPathNameSafe(Component), *Actor->GetActorTransform().ToString(),
+                    *Component->GetComponentTransform().ToString(), *Calculated.Origin.ToString(),
+                    *Calculated.BoxExtent.ToString(), *Component->Bounds.Origin.ToString(), *Component->Bounds.BoxExtent.ToString(),
+                    Component->IsRegistered(), Actor->GetActorEnableCollision(), Component->IsVisible(), Component->IsPhysicsStateCreated(),
+                    static_cast<int32>(Component->GetCollisionEnabled()), *Component->GetCollisionProfileName().ToString(),
+                    static_cast<int32>(Component->GetCollisionObjectType()), static_cast<int32>(Component->GetCollisionResponseToChannel(ECC_Pawn)),
+                    *GetPathNameSafe(Component->GetStaticMesh()), *GetPathNameSafe(Body), Body ? static_cast<int32>(Body->GetCollisionTraceFlag()) : -1,
+                    Body ? Body->AggGeom.ConvexElems.Num() : -1, Body ? Body->AggGeom.SphereElems.Num() : -1,
+                    Body ? Body->AggGeom.BoxElems.Num() : -1, Body ? Body->AggGeom.SphylElems.Num() : -1,
+                    PhysXTriangles, ChaosTriangles);
+                for (int32 Complex = 0; Complex < 2; ++Complex)
+                {
+                    FCollisionQueryParams Params(SCENE_QUERY_STAT(FoundationSpawnColumn), Complex != 0);
+                    FHitResult Hit;
+                    const bool bHit = Component->LineTraceComponent(Hit, Start, End, Params);
+                    UE_LOG(LogTemp, Display, TEXT("FoundationSpawnColumnTrace: component=%s complex=%d hit=%d startPenetrating=%d impact=%s normal=%s"),
+                        *GetPathNameSafe(Component), Complex, bHit, Hit.bStartPenetrating,
+                        *Hit.ImpactPoint.ToString(), *Hit.ImpactNormal.ToString());
+                }
+            }
+        }
+        UE_LOG(LogTemp, Display, TEXT("FoundationSpawnColumn: candidates=%d logged=%d omitted=%d excludedLODActors=%d"),
+            Candidates, Logged, Candidates - Logged, ExcludedLODActors);
+    }
+
     void StartFoundationCollisionCausalityProbe(UWorld* World, const AFortPlayerPawn* Pawn)
     {
         FString RequestedName;
@@ -1839,6 +1899,11 @@ namespace FortAthenaMatchFlow
                 }
                 UE_LOG(LogTemp, Display, TEXT("FoundationCollisionProbe: loaded meshes=%d physicsStates=%d pawnBlockingMeshes=%d spawn=%s"),
                     Meshes, PhysicsStates, PawnBlockingMeshes, *SpawnLocation.ToString());
+                if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeGroundContact")))
+                {
+                    // Match the existing fixed 42 cm sweep footprint below.
+                    LogFoundationSpawnColumn(Level->GetLoadedLevel(), SpawnLocation, 42.0f);
+                }
                 for (int32 Complex = 0; Complex < 2; ++Complex)
                 {
                     FCollisionQueryParams Params(SCENE_QUERY_STAT(FoundationCollisionProbe), Complex != 0);
