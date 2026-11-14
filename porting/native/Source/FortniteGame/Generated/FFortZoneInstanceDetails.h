@@ -49,5 +49,8 @@ struct FFortZoneInstanceDetails : public FFortZoneInstanceInfo
 	UPROPERTY()
 	int32 TileIndex;
 
+	// Native 0x141f7dbe0; typed members default-construct to empty/null.
+	FFortZoneInstanceDetails() : TileIndex(INDEX_NONE) {}
+
 };
 

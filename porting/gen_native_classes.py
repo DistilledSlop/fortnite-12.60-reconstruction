@@ -2453,6 +2453,10 @@ _default_subobjects_spec = _common_activation_import.spec_from_file_location(
     "native_default_subobjects_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "native_default_subobjects", "source_policy.py"))
 _default_subobjects_policy = _common_activation_import.module_from_spec(_default_subobjects_spec)
 _default_subobjects_spec.loader.exec_module(_default_subobjects_policy)
+_zone_instance_details_defaults_spec = _common_activation_import.spec_from_file_location(
+    "zone_instance_details_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "zone_instance_details_defaults_runtime", "source_policy.py"))
+_zone_instance_details_defaults_policy = _common_activation_import.module_from_spec(_zone_instance_details_defaults_spec)
+_zone_instance_details_defaults_spec.loader.exec_module(_zone_instance_details_defaults_policy)
 _world_manager_defaults_spec = _common_activation_import.spec_from_file_location(
     "world_manager_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "world_manager_defaults_runtime", "source_policy.py"))
 _world_manager_defaults_policy = _common_activation_import.module_from_spec(_world_manager_defaults_spec)
@@ -6186,6 +6190,7 @@ def render_struct_header(model, source_label):
     lines.extend(native_serializer_declarations(name))
     lines.extend(_maps_fog_policy.declarations(model))
     lines.extend(_maps_wind_handle_policy.declarations(model))
+    lines.extend(_zone_instance_details_defaults_policy.declarations(model))
     lines.extend(_air_control_params_policy.declarations(model))
     lines.extend(_maps_wind_make_policy.declarations(model))
     lines.extend(_common_activation_policy.struct_declarations(model))
