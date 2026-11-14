@@ -108,4 +108,3 @@ static_assert(STRUCT_OFFSET(FFortPlayerPawnStats, StaminaRegenRate) == 176, "paw
 static_assert(STRUCT_OFFSET(FFortPlayerPawnStats, StaminaRegenDelay) == 180, "pawn stats field drift");
 static_assert(STRUCT_OFFSET(FFortPlayerPawnStats, SprintingStaminaExpenditureRate) == 184, "pawn stats field drift");
 static_assert(STRUCT_OFFSET(FFortPlayerPawnStats, PersonalVehicleFallingDamageTableRow) == 188, "pawn stats field drift");
-

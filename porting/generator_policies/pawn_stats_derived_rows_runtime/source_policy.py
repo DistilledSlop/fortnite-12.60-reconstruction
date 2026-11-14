@@ -87,4 +87,4 @@ def footer(model):
             'static_assert(sizeof(%s) == %d, "pawn stats row size drift");' % (name, CONTRACTS[name][1]),
             'static_assert(alignof(%s) == 8, "pawn stats row alignment drift");' % name] + [
             'static_assert(STRUCT_OFFSET(%s, %s) == %d, "pawn stats field drift");' % (name, field, offset)
-            for field, _, offset in FIELDS[name]] + ['']
+            for field, _, offset in FIELDS[name]]

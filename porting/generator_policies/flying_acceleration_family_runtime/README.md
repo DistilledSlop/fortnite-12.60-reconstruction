@@ -1,6 +1,6 @@
 # Flying acceleration virtual family
 
-This family is admitted by the production generator and manifest with the complete `pawn_stats_native_row_runtime` generated `FFortPawnStats.h` policy and the integrated `movement_max_acceleration_runtime` parent override. Integration schedules and validates the row header, the five entries, calls `apply(model)` after splice, and calls `finalize(model, header, cpp)` after the Athena movement constructor projection. Do not authorize a stale source-tree header or only an incomplete row declaration.
+The production generator and manifest admit this family together with the complete base and derived pawn-stat row policies. The generator validates the row headers and five helper entries, calls `apply(model)` after splicing, and calls `finalize(model, header, cpp)` after the Athena movement constructor projection. Build and runtime acceptance are tracked on the canonical wiki.
 
 Original `UFortMovementComp_CharacterAthena::GetMaxAcceleration` 0x1419d5300 calls the owner's primary virtual +0x968 in flying mode without a null check and multiplies its float return by a distinct native +0x1e74 float. Other modes call the parent implementation. Constructor 0x1419b9480 stores 1.0 to that multiplier; reflected `MaxAccelerationFlying` at +0x1e64 is a separate 1000.0 default. The multiplier remains a writable native instance field: other lifecycle writes are not proven absent. This proposal restores only its confirmed constructor initialization, not PhysCustom or other writers.
 

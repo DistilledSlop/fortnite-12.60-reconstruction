@@ -121,4 +121,3 @@ static_assert(STRUCT_OFFSET(FFortAIPawnStats, ControlResistanceScalingTable) == 
 static_assert(STRUCT_OFFSET(FFortAIPawnStats, ControlResistanceScalingTableRow) == 232, "pawn stats field drift");
 static_assert(STRUCT_OFFSET(FFortAIPawnStats, DifficultyRatingTable) == 240, "pawn stats field drift");
 static_assert(STRUCT_OFFSET(FFortAIPawnStats, DifficultyRatingTableRow) == 248, "pawn stats field drift");
-

@@ -303,4 +303,3 @@ static_assert(STRUCT_OFFSET(FFortPawnStats, KnockbackMultiplier) == 156, "pawn s
 static_assert(STRUCT_OFFSET(FFortPawnStats, KnockbackThreshold) == 160, "pawn stats field drift");
 static_assert(STRUCT_OFFSET(FFortPawnStats, bAllowChainStun) == 164, "pawn stats field drift");
 static_assert(STRUCT_OFFSET(FFortPawnStats, ControlRecoveryBehavior) == 165, "pawn stats field drift");
-

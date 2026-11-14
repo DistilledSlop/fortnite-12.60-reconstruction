@@ -101,7 +101,7 @@ def footer(model):
         'static_assert(sizeof(FFortPawnStats) == 168, "pawn stats row size drift");',
         'static_assert(alignof(FFortPawnStats) == 8, "pawn stats row alignment drift");',
     ] + ['static_assert(STRUCT_OFFSET(FFortPawnStats, %s) == %d, "pawn stats field drift");' % (name, offset)
-         for name, _, offset in FIELDS] + ['']
+         for name, _, offset in FIELDS]
 
 
 def render_isolated(info):
