@@ -14,5 +14,6 @@ class FORTNITEGAME_API UFortGameplayAbility_Sprint : public UFortGameplayAbility
 	GENERATED_BODY()
 
 public:
+	UFortGameplayAbility_Sprint(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 };
 

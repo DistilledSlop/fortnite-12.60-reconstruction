@@ -458,3 +458,55 @@ UFortMovementComp_Character::UFortMovementComp_Character(const FObjectInitialize
     SkyTubeSkydivingControlParamsActiveUpward.UpwardTerminalVelocity = FScalableFloat(1200.0f); // 0x1420d5213
     SkyTubeSkydivingControlParamsActiveUpward.GravityScalar = FScalableFloat(-0.75f); // 0x1420d51d6
 }
+
+#include "AFortPlayerPawn.h"
+#include "UFortAbilitySystemComponent.h"
+#include "UFortGameplayAbility_Sprint.h"
+#include "FortNativeGameplayTagsRuntime.h"
+#include "Engine/World.h"
+#include "Misc/CommandLine.h"
+#include "Misc/Parse.h"
+
+// Diagnostic integration only. Original full input/jump/ability recovery remains open.
+void UFortMovementComp_Character::UpdateFromCompressedFlags(uint8 Flags)
+{
+    Super::UpdateFromCompressedFlags(Flags);
+    if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeServerGroundSprint"))) return;
+    UWorld* World = GetWorld();
+    AFortPlayerPawn* Pawn = Cast<AFortPlayerPawn>(CharacterOwner);
+    if (!World || World->GetNetMode() != NM_DedicatedServer || !Pawn ||
+        !Pawn->HasAuthority() || Pawn->IsLocallyControlled()) return;
+
+    const uint8 PreviousStyle = static_cast<uint8>(Pawn->CurrentMovementStyle.GetValue());
+    // Decode even while airborne so release/landing does not retain old input.
+    Pawn->NativeSprintState1062Bit0 = (Flags & 0x40) != 0;
+    if (IsMovingOnGround() && ((PreviousStyle == 3) != Pawn->NativeSprintState1062Bit0))
+        Pawn->NativeUpdateMovementStyle14235bbf0();
+
+    struct FObservation { float NextTime = 0.0f; int32 LastTagCount = -1; int32 LastInput = -1; };
+    static TMap<TWeakObjectPtr<UFortMovementComp_Character>, FObservation> Observations;
+    for (auto It = Observations.CreateIterator(); It; ++It)
+        if (!It.Key().IsValid()) It.RemoveCurrent();
+    FObservation& Observation = Observations.FindOrAdd(TWeakObjectPtr<UFortMovementComp_Character>(this));
+    UFortAbilitySystemComponent* ASC = Pawn->AbilitySystemComponent;
+    const int32 TagCount = ASC ? ASC->GetTagCount(FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x690)) : 0;
+    const int32 Input = Pawn->NativeSprintState1062Bit0 ? 1 : 0;
+    if (World->GetTimeSeconds() >= Observation.NextTime || TagCount != Observation.LastTagCount || Input != Observation.LastInput)
+    {
+        Observation.NextTime = World->GetTimeSeconds() + 0.25f;
+        Observation.LastTagCount = TagCount;
+        Observation.LastInput = Input;
+        UE_LOG(LogTemp, Display, TEXT("ServerGroundSprintProbe: time=%.3f flags=%u sprintInput=%d tagCount=%d previousStyle=%u style=%u mode=%d customMode=%d maxSpeed=%.3f velocity=%s"),
+            World->GetTimeSeconds(), Flags, Input, TagCount, PreviousStyle,
+            static_cast<uint8>(Pawn->CurrentMovementStyle.GetValue()), static_cast<int32>(MovementMode), CustomMovementMode, GetMaxSpeed(), *Velocity.ToString());
+        if (ASC)
+        {
+            for (const FGameplayAbilitySpec& Spec : ASC->GetActivatableAbilities().Items)
+            {
+                if (Spec.Ability && Spec.Ability->IsA<UFortGameplayAbility_Sprint>())
+                    UE_LOG(LogTemp, Display, TEXT("ServerGroundSprintProbe: sprintSpec=%s class=%s active=%d"),
+                        *Spec.Handle.ToString(), *Spec.Ability->GetClass()->GetPathName(), Spec.IsActive() ? 1 : 0);
+            }
+        }
+    }
+}

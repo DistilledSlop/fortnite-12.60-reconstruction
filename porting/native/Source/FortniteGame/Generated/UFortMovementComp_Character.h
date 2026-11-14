@@ -27,6 +27,7 @@ class FORTNITEGAME_API UFortMovementComp_Character : public UCharacterMovementCo
 	GENERATED_BODY()
 
 public:
+	virtual void UpdateFromCompressedFlags(uint8 Flags) override;
 	UFortMovementComp_Character(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	// table index 52, flags 0x10000000000005

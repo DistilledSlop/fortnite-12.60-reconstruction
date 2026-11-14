@@ -1,0 +1,21 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "source_windows": [
+    {
+      "address": "0x141615d90",
+      "length": 32,
+      "sha256": "4e1734f0b7d1d7ba6453434e08633af2d46b1151fd2c21c957fac9df34a87d78"
+    },
+    {
+      "address": "0x1415e6db0",
+      "length": 32,
+      "sha256": "cc291622242b97ffc9a7790a03fe68f78973aae8012ea1751acda250bc2b6c57"
+    },
+    {
+      "address": "0x1428fba80",
+      "length": 32,
+      "sha256": "bd244ceeb6cea465389100f843d130dffa32a93fcfebf7f95a63dd1a8e64c7e7"
+    }
+  ],
+  "scope": "Complete own Sprint constructor data assignments after Super; superclass and activation overrides remain independently incomplete. Diagnostic bridge has no original body credit."
+}

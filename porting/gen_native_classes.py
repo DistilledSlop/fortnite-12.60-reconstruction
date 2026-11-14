@@ -2510,6 +2510,10 @@ _movement_attribute_defaults_spec = _common_activation_import.spec_from_file_loc
     "movement_attribute_defaults_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "movement_attribute_defaults_runtime", "source_policy.py"))
 _movement_attribute_defaults_policy = _common_activation_import.module_from_spec(_movement_attribute_defaults_spec)
 _movement_attribute_defaults_spec.loader.exec_module(_movement_attribute_defaults_policy)
+_server_ground_sprint_spec = _common_activation_import.spec_from_file_location(
+    "server_ground_sprint_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "server_ground_sprint_runtime", "source_policy.py"))
+_server_ground_sprint_policy = _common_activation_import.module_from_spec(_server_ground_sprint_spec)
+_server_ground_sprint_spec.loader.exec_module(_server_ground_sprint_policy)
 _flying_acceleration_family_spec = _common_activation_import.spec_from_file_location(
     "flying_acceleration_family_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "flying_acceleration_family_runtime", "source_policy.py"))
 _flying_acceleration_family_policy = _common_activation_import.module_from_spec(_flying_acceleration_family_spec)
@@ -5049,6 +5053,7 @@ def promote(args):
         header, cpp = _athena_playerstate_constructor_policy.finalize(model, header, cpp)
         header, cpp = _world_profile_gate_policy.finalize(model, header, cpp)
         header, cpp = _movement_attribute_defaults_policy.finalize(model, header, cpp)
+        header, cpp = _server_ground_sprint_policy.finalize(model, header, cpp)
         header, cpp = _pawn_hand_socket_policy.finalize(model, header, cpp)
         header, cpp = _replicated_building_defaults_policy.finalize(model, header, cpp)
         header, cpp = _playlist_storm_defaults_policy.finalize(model, header, cpp)
