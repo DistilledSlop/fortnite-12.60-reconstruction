@@ -180,9 +180,6 @@ namespace FortAthenaMatchFlowPrivate
         int32 FoundationNoCollisionMeshes = 0;
         bool bFoundationSweepProbeDone = false;
         // Foundation level naming: plain package name (matches the original client) versus the unique fallback.
-        TSet<FName> PlainStreamedFoundationPackages;
-        int32 FoundationPlainNamedStreams = 0;
-        int32 FoundationUniqueNamedStreams = 0;
     };
 
     FMatchFlowState& State()
@@ -1289,41 +1286,24 @@ namespace FortAthenaMatchFlowPrivate
             ? (Foundation->GetActorRotation() + Foundation->NativeGetBuildingRotation())
             : Foundation->NativeGetBuildingRotation();
 
-        // Original ABuildingFoundation stream routine (0x141bed450, called from OnRep_LevelToStream at 0x141be5bc0) does
-        // NOT use ULevelStreamingDynamic::LoadLevelInstance. It creates a ULevelStreamingDynamic with NewObject and
-        // calls SetWorldAssetByPackageName(LevelToStream) (0x1442e5a10: plain "%s.%s", no suffix). The stock helper
-        // would name the package "<package>_LevelInstance_<process-local counter>", so every object in the level gets
-        // a path the original client cannot resolve: its ClientAdjustPosition then drops server corrections whose
-        // movement base is such a component ("could not resolve the new relative movement base actor"). Use the plain
-        // package name like the original. If the same package is requested again, one level object cannot hold two
-        // placements, so fall back to a uniquely named instance for that foundation and count it.
-        ULevelStreamingDynamic* Streaming = nullptr;
-        if (!State().PlainStreamedFoundationPackages.Contains(PackageName))
-        {
-            State().PlainStreamedFoundationPackages.Add(PackageName);
-            Streaming = NewObject<ULevelStreamingDynamic>(World, ULevelStreamingDynamic::StaticClass(), NAME_None, RF_NoFlags);
-            Streaming->SetWorldAssetByPackageName(PackageName);
-            Streaming->LevelTransform = FTransform(Rotation, Foundation->GetActorLocation());
-            Streaming->bShouldBlockOnLoad = false;
-            Streaming->bInitiallyLoaded = true;
-            Streaming->bInitiallyVisible = true;
-            World->AddStreamingLevel(Streaming);
-            ++State().FoundationPlainNamedStreams;
-        }
-        else
-        {
-            bool bAccepted = false;
-            Streaming = ULevelStreamingDynamic::LoadLevelInstance(
-                World, Package, Foundation->GetActorLocation(), Rotation, bAccepted);
-            if (!bAccepted)
-                Streaming = nullptr;
-            ++State().FoundationUniqueNamedStreams;
-            if (State().FoundationUniqueNamedStreams <= 5)
-            {
-                UE_LOG(LogTemp, Warning, TEXT("MatchFlow: foundation package requested again, using a unique level instance name (client cannot resolve its components) actor=%s package=%s"),
-                    *Foundation->GetPathName(), *Package);
-            }
-        }
+        // The original client names every foundation level "/Temp" + package + "_%08x" (instance id from
+        // NativeComputeFoundationInstanceId, format string at 0x1460469ac, "/Temp/Game/" prefix check at 0x141e09aee) and
+        // loads it from the on-disk package (PackageNameToLoad). Verified against a live client: it sent the server a
+        // package path "/Temp/Game/Athena/Apollo/Maps/Buildings/7x12/Apollo_7x12_BusPort_b_58366ff3" and the server logged
+        // the same id (58366ff3) for that BusPort_b foundation. The stock LoadLevelInstance name
+        // ("<package>_LevelInstance_<counter>") and a plain package name both give every object in the level a path the
+        // client cannot resolve, so it drops ClientAdjustPosition corrections naming such a movable base ("could not resolve
+        // the new relative movement base actor") and eventually stops moving. The id is unique per foundation, so
+        // repeated packages need no special case.
+        const FString TempPackageName = FString::Printf(TEXT("/Temp%s_%08x"), *Package, InstanceId);
+        ULevelStreamingDynamic* Streaming = NewObject<ULevelStreamingDynamic>(World, ULevelStreamingDynamic::StaticClass(), NAME_None, RF_NoFlags);
+        Streaming->SetWorldAssetByPackageName(FName(*TempPackageName));
+        Streaming->PackageNameToLoad = PackageName;
+        Streaming->LevelTransform = FTransform(Rotation, Foundation->GetActorLocation());
+        Streaming->bShouldBlockOnLoad = false;
+        Streaming->bInitiallyLoaded = true;
+        Streaming->bInitiallyVisible = true;
+        World->AddStreamingLevel(Streaming);
         if (!Streaming)
         {
             UE_LOG(LogTemp, Warning, TEXT("MatchFlow: foundation stream rejected actor=%s package=%s"),
@@ -1485,9 +1465,8 @@ namespace FortAthenaMatchFlowPrivate
             UE_LOG(LogTemp, Warning, TEXT("FoundationSweepProbe: invalid point '%s' (expected X=..,Y=..,Z=..)"), *Requested);
             return;
         }
-        UE_LOG(LogTemp, Display, TEXT("FoundationSweepProbe: census pawnBlockingMeshes=%d withoutCollision=%d streamedFoundations=%d plainNamed=%d uniqueNamedFallback=%d"),
-            S.FoundationBlockingMeshes, S.FoundationNoCollisionMeshes, S.StreamedFoundationIds.Num(),
-            S.FoundationPlainNamedStreams, S.FoundationUniqueNamedStreams);
+        UE_LOG(LogTemp, Display, TEXT("FoundationSweepProbe: census pawnBlockingMeshes=%d withoutCollision=%d streamedFoundations=%d "),
+            S.FoundationBlockingMeshes, S.FoundationNoCollisionMeshes, S.StreamedFoundationIds.Num());
         struct FSweep { const TCHAR* Name; FVector From; FVector To; };
         const FSweep Sweeps[] = {
             { TEXT("+X"), Start, Start + FVector(600.0f, 0.0f, 0.0f) },

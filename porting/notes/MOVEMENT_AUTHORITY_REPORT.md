@@ -486,24 +486,25 @@ touched a building piece the client stopped moving for the rest of the session.
   (relative position). The client never converged, never acked, and its input stopped reaching the server (server
   `ServerMove` acceleration 0 for the last 7 s; 28 full and 60 short corrections sent, no `ClientAckGoodMove`).
   The "absolute base unresolved" variant is Verbose-only, so static-base corrections fail silently.
-- Cause: the server loaded foundation levels with `ULevelStreamingDynamic::LoadLevelInstance`, which names the package
-  `<package>_LevelInstance_<process-local counter>` (the number differs between runs: 486, 277, 354). The original does
-  not do that. Original `ABuildingFoundation` streaming `0x141bed450` (called from `OnRep_LevelToStream` `0x141be5bc0`)
-  makes a `ULevelStreamingDynamic` with `NewObject` and calls `SetWorldAssetByPackageName(LevelToStream)`
-  (`0x1442e5a10`, plain `"%s.%s"`). Only the pocket-level loader (`0x141bafd20`) uses `LoadLevelInstance`
-  (`0x1442dd9b0`, whose original has a 4.26-style name override and the `_LevelInstance_` counter fallback at
-  `0x1442ddac0`). The unmodified client therefore holds the building at the plain path and cannot resolve the server's
-  suffixed one. Evidence for this is the client warning plus the original code; the client's actual object paths were not
-  read.
-- Fix in `MatchFlow.cpp` `StreamFoundation`: create the streaming level the way the original does (plain package name).
-  A headless run shows 457 of 517 foundations plain-named, with the BusPort wall and floor still hit by the capsule
-  sweep and no crash. 60 foundations request a package another foundation already uses (for example
-  `Apollo_1x1_BusStation_a` at several POIs). One level object cannot hold two placements, and the original routine has
-  no step that makes them unique, so those still use the unique name (counted as `uniqueNamedFallback` in the probe
-  census and logged once per foundation, first five). Their bases remain unresolvable on the client; how the original
-  handles repeated packages is open.
-- Not yet checked from the client side: whether the freeze is gone. A separate divergence started it: at the wall the
-  client stopped while the server pawn stood on `BrickSimple_AAA_SolidWall75` and kept walking about 250 cm.
+- Cause: the client names every foundation level `/Temp` + package + `_%08x` (the id is
+  `ABuildingFoundation::NativeComputeFoundationInstanceId`, format string at `0x1460469ac`, `/Temp/Game/` prefix check
+  at `0x141e09aee`). Verified from a live session: the client sent the server the package path
+  `/Temp/Game/Athena/Apollo/Maps/Buildings/7x12/Apollo_7x12_BusPort_b_58366ff3` ("Unable to resolve default guid from
+  client"), and the server's computed id for its BusPort_b foundation is `58366ff3`. The server used the stock
+  `LoadLevelInstance` name (`<package>_LevelInstance_<counter>`), and then (first attempt, did not fix the freeze) the
+  plain package name. Neither matches, so the client cannot resolve the server's floor/wall components. Floor tiles are
+  Movable, so a correction naming one as the base is dropped ("could not resolve the new relative movement base
+  actor"); static bases (sidewalks) fail silently because the absolute variant is Verbose-only. The client never
+  acks, saved moves hit 96, and input stops.
+- Fix in `FortAthenaMatchFlow.cpp` `StreamFoundation`: for every foundation make a `ULevelStreamingDynamic`
+  (`NewObject`), `SetWorldAssetByPackageName("/Temp<package>_<id %08x>")`, `PackageNameToLoad = <package>`. The id is
+  unique per foundation, so repeated packages (60 of them) need no special case. Headless run: 517 foundations,
+  pending=0, a capsule sweep at the stuck tile returns
+  `/Temp/Game/.../Apollo_7x12_BusPort_b_58366ff3.Apollo_7x12_BusPort_b:PersistentLevel.SM_FORT_Floors_Generic_BasicTile33`,
+  the same path form the client uses.
+- Not yet confirmed from the client side: whether the freeze is gone. A separate divergence started the first
+  incident: at the wall the client stopped while the server pawn stood on `BrickSimple_AAA_SolidWall75` and kept
+  walking about 250 cm.
 
 ## Appendix: original movement overrides
 
