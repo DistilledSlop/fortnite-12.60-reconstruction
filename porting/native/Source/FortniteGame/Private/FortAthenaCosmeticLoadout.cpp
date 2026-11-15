@@ -17,6 +17,8 @@
 #include "UAthenaVictoryPoseItemDefinition.h"
 #include "UAthenaLoadingScreenItemDefinition.h"
 #include "AssetRegistryModule.h"
+#include "HAL/FileManager.h"
+#include "Misc/Paths.h"
 #include "Modules/ModuleManager.h"
 #include "UObject/UObjectGlobals.h"
 
@@ -64,6 +66,22 @@ namespace
 		Registry.GetAssetsByPath(FName(Folder), Assets, true);
 		for (const FAssetData& Asset : Assets)
 			Map.Add(Asset.AssetName.ToString().ToLower(), Asset.ObjectPath.ToString());
+		// The stage asset registry lists few of the staged definitions and the backend sends lower-case template ids
+		// (eid_celebration) while the files keep their cooked case (EID_Celebration.uasset), which a case-sensitive file
+		// system does not resolve. Scan the staged folder for the real names.
+		{
+			FString Relative = Key;
+			Relative.RemoveFromStart(TEXT("/Game/"));
+			TArray<FString> Files;
+			IFileManager::Get().FindFilesRecursive(Files, *FPaths::Combine(FPaths::ProjectContentDir(), Relative), TEXT("*.uasset"), true, false);
+			for (const FString& File : Files)
+			{
+				const FString Name = FPaths::GetBaseFilename(File);
+				const FString Lower = Name.ToLower();
+				if (!Map.Contains(Lower))
+					Map.Add(Lower, FString::Printf(TEXT("%s/%s.%s"), Folder, *Name, *Name));
+			}
+		}
 		UE_LOG(LogFortCosmeticLoadout, Display, TEXT("Cosmetics: %s -> %d assets in the registry"), Folder, Map.Num());
 		return Map;
 	}
