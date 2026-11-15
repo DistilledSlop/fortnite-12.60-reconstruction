@@ -1,6 +1,7 @@
 """Local storefront shared by catalog display and purchase validation."""
 from copy import deepcopy
 
+from cosmetic_variant_data import VARIANTS
 from release_day_shop import DAILY, FEATURED, INITIAL_MATERIAL_STYLES
 
 LOCAL_CREDIT_OFFER = "local-free-credits"
@@ -8,9 +9,17 @@ SEASON12_PASS_OFFER = "89DED540434B169187E1D6A5C2086AA2"
 SEASON12_LEVEL_OFFER = "350050574100C333CB9ACA8D1CEF9BF6"
 
 
+def default_variants(template):
+    """Server-side default/owned styles from the cooked assets (bIsDefault / bStartUnlocked)."""
+    key = template.casefold()
+    if key == "athenacharacter:cid_695_athena_commando_f_desertopscamo":
+        return []  # Maya styles are permanent per-account choices (maya_reward_service)
+    return deepcopy(VARIANTS.get(key, []))
+
+
 def cosmetic_attributes(template):
     variants = ([{"channel": "Material", "active": "Mat1", "owned": ["Mat1", "Mat2"]}]
-                if template.casefold() in INITIAL_MATERIAL_STYLES else [])
+                if template.casefold() in INITIAL_MATERIAL_STYLES else default_variants(template))
     if template.casefold() == "athenacharacter:cid_701_athena_commando_m_bananaagent":
         # CID_701's cooked Progressive channel marks Stage1 default and unlocked.
         variants = [{"channel": "Progressive", "active": "Stage1", "owned": ["Stage1"]}]

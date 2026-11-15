@@ -43,7 +43,7 @@ from typing import Callable
 from api_common import ApiError, Err
 from banner_inventory import repair_starter_items
 from banner_reward_service import convert_banner_tokens
-from catalog import LOCAL_CREDIT_OFFER, SEASON12_LEVEL_OFFER, SEASON12_PASS_OFFER, cosmetic_attributes, get_offer
+from catalog import LOCAL_CREDIT_OFFER, SEASON12_LEVEL_OFFER, SEASON12_PASS_OFFER, cosmetic_attributes, default_variants, get_offer
 from season12_rewards import FREE as SEASON12_FREE, PAID as SEASON12_PAID
 from season12_grants import SUPPORTED_GRANTS_TO_EVERYONE, initial_grant_attributes
 from profile_defaults import (CATEGORY_BY_PREFIX, MAX_SLOT_INDEX, WRAP_SLOT_COUNT, MTX_PLATFORMS, PROFILE_IDS,
@@ -780,6 +780,25 @@ def _delete_cosmetic_loadout(ctx):
         tx.remove_item(removed)
 
 
+# Maya's outfit styles are permanent per-account choices owned by maya_reward_service.
+_VARIANT_FILL_SKIP = {"athenacharacter:cid_695_athena_commando_f_desertopscamo"}
+
+
+def _fill_default_variants(tx):
+    """Give owned cosmetics their cooked default styles when the item has none yet.
+
+    The data is server-side (cosmetic_variant_data); client claims are still validated by
+    _equip against the stored owned list.
+    """
+    for item_id, item in list(tx.profile["items"].items()):
+        key = item["templateId"].casefold()
+        if key in _VARIANT_FILL_SKIP or item["attributes"].get("variants"):
+            continue
+        defaults = default_variants(item["templateId"])
+        if defaults:
+            tx.set_item_attr(item_id, "variants", defaults)
+
+
 class ProfileService:
     def __init__(self, ctx, accounts, oauth, state_dir=None):
         self.ctx = ctx
@@ -959,6 +978,12 @@ class ProfileService:
         if profile_id == "common_core":
             tx = ProfileTx(self.ctx, profile)
             repair_starter_items(self, account_id, tx)
+            if tx.changed:
+                self._store(account_id, {profile_id: tx})
+                profile = tx.profile
+        if profile_id == "athena":
+            tx = ProfileTx(self.ctx, profile)
+            _fill_default_variants(tx)
             if tx.changed:
                 self._store(account_id, {profile_id: tx})
                 profile = tx.profile
