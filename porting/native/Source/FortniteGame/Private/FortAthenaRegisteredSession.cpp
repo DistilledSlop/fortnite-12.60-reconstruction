@@ -212,6 +212,7 @@ namespace FortAthenaRegisteredSession
         FString CharacterTemplateId;
         TArray<FVariantSelection> Variants;
         TMap<FString, TArray<FString>> Slots;
+        int32 SeasonLevel = 1;
         FString LoadoutError;
         bool bLoadoutApplied = false;
     };
@@ -424,6 +425,15 @@ namespace FortAthenaRegisteredSession
                 Entry->CharacterTemplateId = MoveTemp(TemplateId);
                 Entry->Variants = MoveTemp(Variants);
                 ParseCosmeticSlots(Body, Entry->Slots);
+                {
+                    TSharedPtr<FJsonObject> LevelJson;
+                    const TSharedRef<TJsonReader<>> LevelReader = TJsonReaderFactory<>::Create(Body);
+                    int32 Level = 1;
+                    if (FJsonSerializer::Deserialize(LevelReader, LevelJson) && LevelJson.IsValid() && LevelJson->TryGetNumberField(TEXT("seasonLevel"), Level))
+                        Entry->SeasonLevel = FMath::Clamp(Level, 1, 9999);
+                    else
+                        Entry->SeasonLevel = 1;
+                }
                 Entry->LoadoutError.Empty();
                 Entry->bLoadoutApplied = false;
                 Entry->LoadoutStatus = ELoadoutStatus::Ready;
@@ -534,6 +544,7 @@ namespace FortAthenaRegisteredSession
         OutLoadout.CharacterTemplateId = Peer->CharacterTemplateId;
         OutLoadout.Variants = Peer->Variants;
         OutLoadout.Slots = Peer->Slots;
+        OutLoadout.SeasonLevel = Peer->SeasonLevel;
         OutLoadout.bApplied = Peer->bLoadoutApplied;
         return ELoadoutStatus::Ready;
     }

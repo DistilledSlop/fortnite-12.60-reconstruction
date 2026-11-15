@@ -137,6 +137,7 @@ namespace FortAthenaMatchFlowPrivate
         // deploy/undeploy changes the replicated state. Toggling bIsSkydiving off and on once after the exit gives the client
         // a real OnRep transition. Disabled with -FortniteNoSkydiveRekick.
         float RekickAt = -1.0f;
+        float NextProbeLog = 0.0f;
         int32 RekickStage = 0;
     };
 
@@ -1544,6 +1545,15 @@ namespace FortAthenaMatchFlowPrivate
             UCharacterMovementComponent* Movement = Pawn->GetCharacterMovement();
             FSkydiverState& Diver = Pair.Value;
             const bool bClientOnGround = Movement && Movement->MovementMode != MOVE_Custom && Movement->IsMovingOnGround();
+            if (!Diver.bLanded && NowTime >= Diver.NextProbeLog)
+            {
+                // Diagnostic for "cannot skydive again after gliding out to the world border": state every 5 s while airborne.
+                Diver.NextProbeLog = NowTime + 5.0f;
+                UE_LOG(LogTemp, Display, TEXT("MatchFlow: skydiver %s at %s vel %s mode %s custom %d skydiving %d parachute %d"), *Pawn->GetName(),
+                    *Pawn->GetActorLocation().ToString(), Movement ? *Movement->Velocity.ToString() : TEXT("-"),
+                    Movement ? *Movement->GetMovementName() : TEXT("-"), Movement ? static_cast<int32>(Movement->CustomMovementMode) : -1,
+                    Pawn->bIsSkydiving ? 1 : 0, Pawn->bIsParachuteOpen ? 1 : 0);
+            }
             if (!Diver.bLanded && Diver.RekickAt >= 0.0f && NowTime >= Diver.RekickAt)
             {
                 if (Diver.RekickStage == 0)

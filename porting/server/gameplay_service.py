@@ -5,7 +5,9 @@ may read admitted players' loadouts or report results. Neither client MCP nor
 public stats requests can award progression.
 """
 
+import collections
 import copy
+import logging
 
 from api_common import ApiError, Err
 
@@ -15,6 +17,7 @@ class GameplayService:
         self.ctx, self.accounts, self.profiles = ctx, accounts, profiles
         self.oauth, self.party = oauth, party
         self.gameservers, self.progression = gameservers, progression
+        self.reports = collections.deque(maxlen=500)
 
     def _member(self, session_id, account_id, *, include_expired=False):
         session = self.gameservers.get_session(session_id, include_expired=include_expired)
@@ -45,11 +48,40 @@ class GameplayService:
             "cosmetics": {category: list(slot.get("items", [])) for category, slot in slots.items()},
             "variants": {category: copy.deepcopy(slot.get("activeVariants", []))
                          for category, slot in slots.items()},
+            "seasonLevel": self._season_level(stats),
             "bannerIcon": attrs.get("banner_icon_template", stats.get("banner_icon", "")),
             "bannerColor": attrs.get("banner_color_template", stats.get("banner_color", "")),
             "partyId": party["id"] if party else None,
             "partyMembers": [member["account_id"] for member in party["members"]] if party else [],
         }
+
+    def report_player(self, req, match):
+        """In-game player report (UFortMcpUtils ReportPlayerToxicityUrl).
+
+        Path shape follows the retail toxicity service: POST
+        /fortnite/api/game/v2/toxicity/account/{reporter}/report/{reported}; the body carries
+        free-form reason/details/gameSessionId. The route status is a guess. Reports are
+        kept in a bounded in-memory list and logged; there is no moderation backend.
+        """
+        session = self.oauth.account_session(req)
+        reporter, reported = match.group(1, 2)
+        if session.account_id != reporter:
+            raise ApiError(403, Err.MISSING_PERMISSION, "A player can only file reports as themselves.")
+        if self.accounts.get(reported) is None:
+            raise ApiError(404, Err.ACCOUNT_NOT_FOUND, "Sorry, we couldn't find an account for that id.")
+        body = req.json_object()
+        record = {"reporter": reporter, "reported": reported, "reason": str(body.get("reason", ""))[:200],
+                  "details": str(body.get("details", ""))[:1000],
+                  "gameSessionId": str(body.get("gameSessionId", ""))[:100]}
+        self.reports.append(record)
+        logging.getLogger("backend").info("player report %s", record)
+        return 204, None
+
+    @staticmethod
+    def _season_level(stats):
+        """Level shown on the in-match nameplate (PlayerState SeasonLevelUIDisplay): the Season 12 book level."""
+        value = stats.get("book_level") if stats.get("season_num") == 12 else stats.get("level")
+        return value if isinstance(value, int) and not isinstance(value, bool) and value >= 1 else 1
 
     def result(self, req, match):
         self.gameservers.authorize(req)
@@ -148,6 +180,8 @@ class GameplayService:
     def register(self, router):
         router.add("GET", r"/local/gameserver/([^/]+)/player/([^/]+)", self.player,
                    name="gameserver.player", status="guess")
+        router.add("POST", r"/fortnite/api/game/v2/toxicity/account/([^/]+)/report/([^/]+)", self.report_player,
+                   name="toxicity.report", status="guess")
         router.add("POST", r"/local/gameserver/([^/]+)/result", self.result,
                    name="gameserver.result", status="guess")
         router.add("POST", r"/local/gameserver/([^/]+)/quest-event", self.quest_event,

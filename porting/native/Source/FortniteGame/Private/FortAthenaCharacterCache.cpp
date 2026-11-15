@@ -4,6 +4,7 @@
 #include "AFortPlayerController.h"
 #include "AFortPlayerPawn.h"
 #include "AFortPlayerState.h"
+#include "AFortPlayerStateAthena.h"
 #include "EFortCustomBodyType.h"
 #include "EFortCustomGender.h"
 #include "EFortCustomPartType.h"
@@ -598,6 +599,11 @@ namespace FortAthenaCharacterCache
         }
 
         FortAthenaCosmeticLoadout::Apply(Controller, Loadout.Slots);
+        if (AFortPlayerStateAthena* AthenaState = Cast<AFortPlayerStateAthena>(PlayerState))
+        {
+            AthenaState->SeasonLevelUIDisplay = Loadout.SeasonLevel;
+            AthenaState->ForceNetUpdate();
+        }
         FortAthenaRegisteredSession::MarkControllerLoadoutApplied(Controller);
         UE_LOG(LogTemp, Display,
             TEXT("Applied registered character %s (hero=%s flags=0x%02x gender=%d body=%d variants=%d afterPawn=%d) to %s"),

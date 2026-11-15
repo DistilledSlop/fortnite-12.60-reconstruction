@@ -26,6 +26,7 @@ namespace FortAthenaRegisteredSession
         FString CharacterTemplateId;
         TArray<FVariantSelection> Variants;
         TMap<FString, TArray<FString>> Slots;  // every cosmetics slot of the backend loadout (category -> template ids)
+        int32 SeasonLevel = 1;  // backend nameplate level (PlayerState SeasonLevelUIDisplay)
         bool bApplied = false;
     };
 

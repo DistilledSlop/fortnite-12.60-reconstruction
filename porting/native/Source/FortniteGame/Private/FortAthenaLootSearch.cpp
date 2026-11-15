@@ -172,6 +172,35 @@ namespace
 				UE_LOG(LogTemp, Display, TEXT("LootSearch: non-container interactable=%s type=%d -> delegating to ServerAttemptInteract_Implementation (req=%d)"),
 					*GetNameSafe(ReceivingActor), static_cast<int32>(InteractType), RequestId);
 			}
+			// stand-in: the original ABuildingActor::ServerOnAttemptInteract (native virtual, stripped) asks the Blueprint
+			// whether the interaction is allowed and then runs BlueprintOnInteract. Hiding props (porta-potty, dumpster,
+			// haystack: B_HidingProp), doors and similar props implement their whole behaviour in those two events.
+			// Distance/line-of-sight validation of the original is not recovered; a 4 m margin around the bounds is used.
+			if (FortAthenaLootSearch::IsEnabled())
+			{
+				AFortPlayerController* BpController = Cast<AFortPlayerController>(Component->GetOwner());
+				AFortPawn* BpPawn = BpController ? Cast<AFortPawn>(BpController->GetPawn()) : nullptr;
+				ABuildingActor* BpActor = Cast<ABuildingActor>(ReceivingActor);
+				if (BpController && BpController->HasAuthority() && BpPawn && BpActor && !BpActor->IsPendingKill() && !BpActor->bDestroyed
+					&& BpActor->bAllowInteract)
+				{
+					FVector Origin, Extent;
+					BpActor->GetActorBounds(true, Origin, Extent);
+					const float Dist2D = FVector::Dist2D(BpPawn->GetActorLocation(), Origin) - FMath::Max(Extent.X, Extent.Y);
+					if (Dist2D <= 400.0f && (InteractType == TInteractionType::IT_Simple || InteractType == TInteractionType::IT_LongPress))
+					{
+						const bool bCan = BpActor->BlueprintCanInteract(BpPawn, InteractionBeingAttempted, InteractType);
+						UE_LOG(LogTemp, Display, TEXT("LootSearch: blueprint interact %s by %s type=%d attempt=%d can=%d"), *BpActor->GetName(),
+							*BpPawn->GetName(), static_cast<int32>(InteractType), static_cast<int32>(InteractionBeingAttempted), bCan ? 1 : 0);
+						if (bCan)
+						{
+							BpActor->OnInteract.Broadcast(BpActor, BpPawn);
+							BpActor->BlueprintOnInteract(BpPawn, InteractionBeingAttempted);
+						}
+						return;
+					}
+				}
+			}
 			// Generated UFortControllerComponent_Interaction::ServerAttemptInteract_Implementation is currently a stub;
 			// calling it here preserves any future promoted implementation cleanly.
 			Component->ServerAttemptInteract_Implementation(
