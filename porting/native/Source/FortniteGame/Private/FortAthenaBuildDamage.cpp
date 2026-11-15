@@ -416,7 +416,11 @@ namespace
 		}
 		Building->HandleDestroyed();
 
-		const float LifeSpan = (Building->LifespanAfterDeath > 0.0f) ? Building->LifespanAfterDeath : 5.0f;
+		// stand-in: LifespanAfterDeath comes from the native constructor default, which is not recovered. A guessed 5 s left
+	// destroyed objects standing (hits kept landing on them with no weak spots, then they popped out); retail removes them
+	// right after the death animation. -FortniteDeathLifespan=<seconds> overrides the fallback.
+	static const float FallbackLifespan = []() { float V = 1.0f; FParse::Value(FCommandLine::Get(), TEXT("FortniteDeathLifespan="), V); return FMath::Max(0.05f, V); }();
+	const float LifeSpan = (Building->LifespanAfterDeath > 0.0f) ? Building->LifespanAfterDeath : FallbackLifespan;
 		Building->SetLifeSpan(LifeSpan);
 		Building->ForceNetUpdate();
 	}
