@@ -45,3 +45,7 @@ Correction breakdown of the 23:15 run (3879 FortMovementPair rows, user log arch
 - Road glitch with client authority: the flag was on the command line, and the whole 04.25-04.33 run produced only 3 movement corrections (`ClientAdjustPosition` x1, `ClientVeryShortAdjustPosition` x2, all at world time 343 s). So the road glitch is not server position correction; it is something client-side or visual (movement base, smoothing, or physical material). Needs a description or a clip of what it looks like.
 - Weak spots: placement now uses the camera ray (400 uu) like the original `SpawnWeakSpot`. Built, not client-tested.
 - Dances/backpacks "not loadable": the backend sends lower-case template ids (`eid_celebration`), the staged files are `EID_Celebration.uasset` and the stage asset registry lists almost nothing, so the plain-path fallback misses on case-sensitive Linux. Fix: scan the staged folder for the real file name.
+
+## Scope change (user, 2026-11-15)
+
+Removed from the goal list: POIs (missing / no collision), styles (glider/emote/outfit style editing, Pandemonium, style level), and the world-border re-skydive. Their earlier notes above stay as reference only; no further work is planned on them. Remaining list: breaking builds, editing builds, fall damage, skydive movement, looting, guns/inventory slots, ziplines, emoting outside the lobby, storm gunshot sound, porta-potty hiding, player reporting.
