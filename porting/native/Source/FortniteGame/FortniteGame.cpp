@@ -1,6 +1,8 @@
 #include "AbilitySystemGlobals.h"
 #include "Engine/NetworkDelegates.h"
 #include "Engine/Engine.h"
+#include "GameFramework/GameNetworkManager.h"
+#include "HAL/PlatformTime.h"
 #include "FortNativeGameplayTagsRuntime.h"
 #include "Private/FortOriginalDefaults.h"
 #include "Private/FortAthenaRegisteredSession.h"
@@ -312,6 +314,39 @@ public:
     }
 
 private:
+    // Evidence (run 2026.11.15, network-rpc.jsonl): the dedicated server stalls for about 0.3 s every 61.1 s (the default
+    // garbage collection interval); the client's buffered moves then arrive in one burst while the server's world time is
+    // still the pre-stall value, which the stock movement time-discrepancy check reads as a client running ahead by more than
+    // MovementTimeDiscrepancyMaxTimeMargin (0.25 s). The original config also sets
+    // bMovementTimeDiscrepancyForceCorrectionsDuringResolution=true, so three corrections are sent even when the server is
+    // set to accept the client's movement. The retail servers do not stall like this one, so a stall here must not be
+    // treated as client time manipulation: keep detection, do not force corrections, and widen the margin past the stall.
+    static void ConfigureServerMovementTimeDiscrepancy()
+    {
+        if (!IsRunningDedicatedServer() || !FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")))
+        {
+            return;
+        }
+        if (AGameNetworkManager* Manager = GetMutableDefault<AGameNetworkManager>())
+        {
+            Manager->bMovementTimeDiscrepancyForceCorrectionsDuringResolution = false;
+            Manager->MovementTimeDiscrepancyMaxTimeMargin = FMath::Max(Manager->MovementTimeDiscrepancyMaxTimeMargin, 1.0f);
+            UE_LOG(LogFortniteNet, Display, TEXT("Movement time discrepancy: forced corrections off, max margin %.2f s (server stalls are not client time manipulation)"),
+                Manager->MovementTimeDiscrepancyMaxTimeMargin);
+        }
+        // Diagnostic for the stall above: log every garbage collection that takes more than 50 ms.
+        static double GcStart = 0.0;
+        FCoreUObjectDelegates::GetPreGarbageCollectDelegate().AddLambda([]() { GcStart = FPlatformTime::Seconds(); });
+        FCoreUObjectDelegates::GetPostGarbageCollect().AddLambda([]()
+        {
+            const double Ms = (FPlatformTime::Seconds() - GcStart) * 1000.0;
+            if (Ms > 50.0)
+            {
+                UE_LOG(LogFortniteNet, Display, TEXT("GC: collection took %.0f ms"), Ms);
+            }
+        });
+    }
+
     static void InitializeOriginalNativeGameplayTags()
     {
         FFortNativeGameplayTagsRuntime::Get();
@@ -320,6 +355,7 @@ private:
     static void OnEngineInitialized()
     {
         FortOriginalDefaults::Apply();
+        ConfigureServerMovementTimeDiscrepancy();
         // UE4.26 requires the game to initialize global GAS data explicitly.
         UAbilitySystemGlobals::Get().InitGlobalData();
         UE_LOG(LogFortniteNet, Display, TEXT("GAS target-data cache initialized: %d script structs"),

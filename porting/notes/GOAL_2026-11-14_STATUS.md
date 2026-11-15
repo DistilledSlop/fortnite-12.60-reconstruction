@@ -100,3 +100,10 @@ Removed from the goal list: POIs (missing / no collision), styles (glider/emote/
 - Pickup flight: DefaultFlyTime 1.5 -> 0.4, flight clamp 0.45 s, destroy delay <= 0.6 s.
 - Non-container interactables: restore `bAllowInteract` from the class default before `BlueprintCanInteract` (doors read can=0), log class names. Containers with an empty instance tier group fall back to the class default group and log once per class.
 - Not found: the 61 s periodic ClientAdjustPosition bursts (456.4, 517.5, 578.6 s, three corrections 0.1 s apart) even with -FortniteClientMovementAuthority; cause unidentified.
+
+### 2026-11-15 position corrections every 61 s (built, NOT client-tested)
+
+- Evidence (network-rpc.jsonl, run 22:56-23:00 UTC): ClientAdjustPosition/ClientVeryShortAdjustPosition come in bursts of three, 0.1 s apart, at world time 456.4, 517.5, 578.6 (period 61.1 s = default GC interval). Each burst is preceded by a ~0.29 s wall gap with no client RPCs received, then 5-7 buffered ServerMove/ServerUpdateCamera calls in one server frame stamped with the pre-stall world time.
+- Mechanism (engine `CharacterMovementComponent.cpp` ProcessClientTimeStampForTimeDiscrepancy ~8400-8540): the burst makes ClientDelta exceed ServerDelta, discrepancy passes MovementTimeDiscrepancyMaxTimeMargin 0.25, resolution mode starts, and the original DefaultGame.ini setting `bMovementTimeDiscrepancyForceCorrectionsDuringResolution=true` sets `bForceClientUpdate`, which sends corrections even with bIgnoreClientMovementErrorChecksAndCorrection (ServerMoveHandleClientError ~8836).
+- Change: dedicated server (-FortniteOriginalClient) sets ForceCorrectionsDuringResolution=false and MaxTimeMargin>=1.0 at engine init, and logs `GC: collection took N ms` for collections over 50 ms to confirm the stall source. Not proven: that the stall is GC (only the period matches); the new log line will show it.
+- Physics contact offsets (an earlier agent's lead) are already staged in the stage DefaultEngine.ini; not the cause here.
