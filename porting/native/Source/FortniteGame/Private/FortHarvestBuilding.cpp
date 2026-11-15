@@ -337,14 +337,34 @@ namespace
 		const FVector ImpactNormal = Hit.ImpactNormal.IsNearlyZero() ? FVector::UpVector : FVector(Hit.ImpactNormal).GetSafeNormal();
 		Data.Normal = FVector_NetQuantizeNormal(ImpactNormal);
 
-		// stand-in: exact server weak-spot offset/raycast helper inside 0x1423b5c20 uses complex geometry / vtable[+0x6f8];
-		// jitter slightly in the tangent plane around Hit.ImpactPoint so client reticle shifts between consecutive hits.
-		FVector TangentX, TangentY;
-		ImpactNormal.FindBestAxisVectors(TangentX, TangentY);
+		// binary 0x1423b5c20 (AFortPlayerController::SpawnWeakSpot): takes the player's view point (PC vtable +0x6f8), turns the
+		// view rotation into a direction, and asks the building (vtable +0xab8) for the surface point where a 400 uu ray
+		// from the view location along that direction meets it; that point and its normal become the weak spot. So the
+		// circle sits where the player is looking at the object, not around the pickaxe hit.
+		// stand-in: the building helper (vtable +0xab8) is not ported; ActorLineTraceSingle against the building plays its
+		// role. The original keeps the first pitch on the entry (+0x24) for later spawns and randomizes inside the helper;
+		// neither is recovered. If the ray misses, the pickaxe impact point is used as it is (no offset).
 		const int32 NextHitCount = (FoundIdx != INDEX_NONE) ? (PC->ActiveWeakSpots[FoundIdx].HitCount + (bWeakSpotHit ? 1 : 0)) : 1;
-		const float Angle = static_cast<float>(NextHitCount) * 2.1f;
-		const FVector BasePos = Hit.ImpactPoint.IsNearlyZero() ? Building->GetActorLocation() : FVector(Hit.ImpactPoint);
-		Data.Position = FVector_NetQuantize10(BasePos + (TangentX * FMath::Cos(Angle) + TangentY * FMath::Sin(Angle)) * 32.0f);
+		FVector BasePos = Hit.ImpactPoint.IsNearlyZero() ? Building->GetActorLocation() : FVector(Hit.ImpactPoint);
+		FVector SpotNormal = ImpactNormal;
+		{
+			FVector ViewLocation;
+			FRotator ViewRotation;
+			PC->GetPlayerViewPoint(ViewLocation, ViewRotation);
+			static const float RayLength = []() { float V = 400.0f; FParse::Value(FCommandLine::Get(), TEXT("FortniteWeakSpotRay="), V); return FMath::Max(50.0f, V); }();
+			// The third-person camera sits behind the pawn: start the ray at the camera and reach past the pawn.
+			const float CameraBack = FMath::Max(0.0f, FVector::Dist(ViewLocation, PC->GetPawn() ? PC->GetPawn()->GetActorLocation() : ViewLocation));
+			const FVector RayEnd = ViewLocation + ViewRotation.Vector() * (RayLength + CameraBack);
+			FHitResult RayHit;
+			FCollisionQueryParams RayParams(FName(TEXT("WeakSpotRay")), true);
+			if (Building->ActorLineTraceSingle(RayHit, ViewLocation, RayEnd, ECC_Visibility, RayParams))
+			{
+				BasePos = RayHit.ImpactPoint;
+				SpotNormal = RayHit.ImpactNormal.GetSafeNormal();
+			}
+		}
+		Data.Normal = FVector_NetQuantizeNormal(SpotNormal);
+		Data.Position = FVector_NetQuantize10(BasePos);
 		Data.HitCount = NextHitCount;
 
 		if (FoundIdx != INDEX_NONE)

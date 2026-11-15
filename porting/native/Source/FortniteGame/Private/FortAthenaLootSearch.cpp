@@ -49,10 +49,20 @@ namespace
 			OutReason = TEXT("already_destroyed");
 			return false;
 		}
+		// bAllowInteract is a native constructor default (BuildingSMActor, OriginalDefaults.json) that is 0 on the placed
+		// chests at runtime (run 2026.11.15: every Tiered_Chest attempt was rejected as interact_disabled while the client
+		// offered the prompt). It is not replicated and no Blueprint clears it, so it is logged but not enforced here;
+		// bAlreadySearched/bDestroyed and the distance check still gate the search.
 		if (!Container->bAllowInteract)
 		{
-			OutReason = TEXT("interact_disabled");
-			return false;
+			static bool bLoggedDisabled = false;
+			if (!bLoggedDisabled)
+			{
+				bLoggedDisabled = true;
+				const ABuildingContainer* Cdo = Container->GetClass()->GetDefaultObject<ABuildingContainer>();
+				UE_LOG(LogTemp, Display, TEXT("LootSearch: %s has bAllowInteract=0 (class default=%d); ignoring"),
+					*Container->GetName(), Cdo ? static_cast<int32>(Cdo->bAllowInteract) : -1);
+			}
 		}
 		if (Container->bAlreadySearched)
 		{
@@ -182,7 +192,7 @@ namespace
 				AFortPawn* BpPawn = BpController ? Cast<AFortPawn>(BpController->GetPawn()) : nullptr;
 				ABuildingActor* BpActor = Cast<ABuildingActor>(ReceivingActor);
 				if (BpController && BpController->HasAuthority() && BpPawn && BpActor && !BpActor->IsPendingKill() && !BpActor->bDestroyed
-					&& BpActor->bAllowInteract)
+)
 				{
 					FVector Origin, Extent;
 					BpActor->GetActorBounds(true, Origin, Extent);

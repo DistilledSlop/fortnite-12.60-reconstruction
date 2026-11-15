@@ -135,7 +135,7 @@ namespace FortAthenaMatchFlowPrivate
         // stand-in (skydive input fix): the pawn is already skydiving when its first replication reaches the client, so the
         // client never sees bIsSkydiving change and does not run its own BeginSkydiving: the player cannot steer until a glider
         // deploy/undeploy changes the replicated state. Toggling bIsSkydiving off and on once after the exit gives the client
-        // a real OnRep transition. Disabled with -FortniteNoSkydiveRekick.
+        // a real OnRep transition. Opt-in with -FortniteSkydiveRekick.
         float RekickAt = -1.0f;
         float NextProbeLog = 0.0f;
         int32 RekickStage = 0;
@@ -2708,7 +2708,9 @@ namespace FortAthenaMatchFlow
         }
         Pawn->ForceNetUpdate();
         FSkydiverState& NewDiver = S.Skydivers.FindOrAdd(TWeakObjectPtr<APawn>(Pawn));
-        if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteNoSkydiveRekick")))
+        // The bIsSkydiving off/on re-kick restarts the client's skydive and ends the contrail effect about a second after the
+        // bus exit (user run 2026.11.15: "after a second my trail glitched off"), so it is opt-in now.
+        if (FParse::Param(FCommandLine::Get(), TEXT("FortniteSkydiveRekick")))
         {
             NewDiver.RekickAt = Pawn->GetWorld()->GetTimeSeconds() + 0.75f;
             NewDiver.RekickStage = 0;

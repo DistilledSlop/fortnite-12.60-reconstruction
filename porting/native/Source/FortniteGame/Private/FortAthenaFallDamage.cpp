@@ -1,13 +1,14 @@
 // Fall damage re-creation.
 //   data   /Game/Athena/Balance/DataTables/AthenaFallingDamage row `Player`: fall speed -> damage fraction
-//          (D4-game-data.md: 1300:0.1, 1536:0.2, 1920:0.5, 2304:1.0). AFortPawn::GetMaxDistanceWithoutFallDamage
+//          (D4-game-data.md: 1300:0.1, 1536:0.2, 1920:0.5, 2304:1.0). The key is the fall DISTANCE in cm, not a speed:
+//          AFortPawn::GetMaxDistanceWithoutFallDamage
 //          (0x142321b30 -> 0x142321b50 "FallingDamageTable Lookup") scans the same row for its first non-zero key.
 //   binary 0x14231b6e0 evaluates the row curve for a given value and returns the fraction.
 //   stand-in: the original applies the fraction through GET_FallingDamage / an execution calculation that has no ported
 //          body. The damage here is fraction * MaxHealth, ignoring shields (D6 3: fall damage ignores shields), tagged with
 //          the native FallDamage death-cause tag (original tag table offset 0x358, AFortPlayerStateAthena::ToDeathCause 0x141a5f1c0).
-//   stand-in: the landing speed is sampled from the pawn's velocity on the last tick it was MOVE_Falling, not from the
-//          original Landed hit. bIgnoreNextFallingDamage is honoured and cleared. Custom movement modes (skydive/parachute/
+//   stand-in: the fall distance is the drop from the highest Z seen while MOVE_Falling, not the original Landed hit
+//          (a speed-keyed lookup gave 12 damage for a 3.9 m drop and 100 for 13.9 m: player gravity here is ~2500 cm/s^2). bIgnoreNextFallingDamage is honoured and cleared. Custom movement modes (skydive/parachute/
 //          glider) never accumulate speed, so gliding landings do no damage.
 #include "FortAthenaFallDamage.h"
 #include "FortAthenaHealth.h"
@@ -91,7 +92,7 @@ void FortAthenaFallDamage::Tick(UWorld* World)
 		}
 		if (Movement->MovementMode == MOVE_Swimming)
 			continue;
-		const float Fraction = FMath::Clamp(Curve->Eval(Speed, 0.0f), 0.0f, 1.0f);
+		const float Fraction = FMath::Clamp(Curve->Eval(Drop, 0.0f), 0.0f, 1.0f);
 		if (Fraction <= 0.0f)
 			continue;
 		const float Damage = Fraction * Pawn->GetMaxHealth();
