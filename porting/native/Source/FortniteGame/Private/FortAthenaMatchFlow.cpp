@@ -1529,6 +1529,43 @@ namespace FortAthenaMatchFlowPrivate
             UE_LOG(LogTemp, Display, TEXT("MatchFlow: collision disabled on %d actors of the Apollo_Background level"), Count);
     }
 
+    // Server authority is the default for all movement. Exception (stand-in): the server has no skydive/parachute physics
+    // (PhysCustom of UFortMovementComp_Character is not ported), so while a pawn is skydiving or gliding the server takes
+    // the client's position and movement mode (both CMC flags) and sends no corrections; authority returns on landing.
+    // Without this exception every skydive move was corrected (about 20 per second), which showed as stuttering
+    // skydive audio, a glider that cannot be stowed, and no steering.
+    // -FortniteClientMovementAuthority takes the client's movement for everything (the old Step 0 behaviour of
+    // porting/notes/MOVEMENT_AUTHORITY_REPORT.md), for comparison runs only.
+    bool UseClientMovementAuthorityEverywhere()
+    {
+        static const bool bEnabled = FParse::Param(FCommandLine::Get(), TEXT("FortniteClientMovementAuthority"));
+        return bEnabled;
+    }
+
+    void AcceptClientMovement(UCharacterMovementComponent* Movement)
+    {
+        if (!Movement)
+            return;
+        Movement->bIgnoreClientMovementErrorChecksAndCorrection = true;
+        Movement->bServerAcceptClientAuthoritativePosition = true;
+    }
+
+    // -FortniteServerSkydiveAuthority: no skydive exception, the server's ported skydive/parachute physics decides
+    // (use it to test that physics; expect corrections until it matches the client).
+    bool UseServerSkydiveAuthority()
+    {
+        static const bool bEnabled = FParse::Param(FCommandLine::Get(), TEXT("FortniteServerSkydiveAuthority"));
+        return bEnabled;
+    }
+
+    void RestoreMovementAuthority(UCharacterMovementComponent* Movement)
+    {
+        if (!Movement || UseClientMovementAuthorityEverywhere())
+            return;
+        Movement->bIgnoreClientMovementErrorChecksAndCorrection = false;
+        Movement->bServerAcceptClientAuthoritativePosition = false;
+    }
+
     void TickSkydivers(UWorld* World)
     {
         FMatchFlowState& S = State();
@@ -1643,7 +1680,8 @@ namespace FortAthenaMatchFlowPrivate
                 // The 10 s limit only covers a client that never reports a ground mode.
                 if (Movement && Movement->MovementMode == MOVE_Custom)
                     Movement->SetMovementMode(MOVE_Falling);
-                UE_LOG(LogTemp, Display, TEXT("MatchFlow: %s landed (mode %s)"), *Pawn->GetName(),
+                RestoreMovementAuthority(Movement);
+                UE_LOG(LogTemp, Display, TEXT("MatchFlow: %s landed, server movement authority restored (mode %s)"), *Pawn->GetName(),
                     Movement ? *Movement->GetMovementName() : TEXT("none"));
                 Done.Add(Pair.Key);
             }
@@ -2488,6 +2526,9 @@ namespace FortAthenaMatchFlow
 
     void OnPlayerRestarted(AFortGameModeAthena* GameMode, AController* Controller)
     {
+        if (UseClientMovementAuthorityEverywhere())
+            if (const ACharacter* Character = Controller ? Cast<ACharacter>(Controller->GetPawn()) : nullptr)
+                AcceptClientMovement(Character->GetCharacterMovement());
         FMatchFlowState& S = State();
         if (!S.bActive || !GameMode || !Controller)
             return;
@@ -2653,6 +2694,8 @@ namespace FortAthenaMatchFlow
         if (UCharacterMovementComponent* Movement = Pawn->GetCharacterMovement())
         {
             Movement->SetMovementMode(MOVE_Custom, static_cast<uint8>(EFortCustomMovement::Skydiving));
+            if (!UseServerSkydiveAuthority())
+                AcceptClientMovement(Movement);
         }
         if (Player->bJump)
         {
