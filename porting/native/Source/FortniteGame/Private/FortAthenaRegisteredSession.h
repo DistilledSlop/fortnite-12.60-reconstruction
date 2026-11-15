@@ -25,6 +25,7 @@ namespace FortAthenaRegisteredSession
         FString AccountId;
         FString CharacterTemplateId;
         TArray<FVariantSelection> Variants;
+        TMap<FString, TArray<FString>> Slots;  // every cosmetics slot of the backend loadout (category -> template ids)
         bool bApplied = false;
     };
 

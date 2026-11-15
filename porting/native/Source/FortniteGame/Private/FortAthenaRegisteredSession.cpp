@@ -40,6 +40,33 @@ namespace FortAthenaRegisteredSession
         return true;
     }
 
+    // Every cosmetics slot (Glider, Pickaxe, Backpack, SkyDiveContrail, Dance, ...) as raw template ids. Best effort: a malformed
+    // slot is skipped, the character path above stays the only fail-closed one.
+    static void ParseCosmeticSlots(const FString& Body, TMap<FString, TArray<FString>>& OutSlots)
+    {
+        OutSlots.Reset();
+        TSharedPtr<FJsonObject> Root;
+        if (!FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(Body), Root) || !Root.IsValid())
+            return;
+        const TSharedPtr<FJsonObject>* Cosmetics = nullptr;
+        if (!Root->TryGetObjectField(TEXT("cosmetics"), Cosmetics) || !Cosmetics || !Cosmetics->IsValid())
+            return;
+        for (const TPair<FString, TSharedPtr<FJsonValue>>& Pair : (*Cosmetics)->Values)
+        {
+            const TArray<TSharedPtr<FJsonValue>>* Items = nullptr;
+            if (!Pair.Value.IsValid() || !Pair.Value->TryGetArray(Items) || !Items)
+                continue;
+            TArray<FString>& Out = OutSlots.Add(Pair.Key);
+            for (const TSharedPtr<FJsonValue>& Item : *Items)
+            {
+                FString Id;
+                if (Item.IsValid())
+                    Item->TryGetString(Id);
+                Out.Add(Id);
+            }
+        }
+    }
+
     static bool ParseLoadoutResponse(
         const FString& Body,
         const FString& ExpectedAccount,
@@ -184,6 +211,7 @@ namespace FortAthenaRegisteredSession
         ELoadoutStatus LoadoutStatus = ELoadoutStatus::Pending;
         FString CharacterTemplateId;
         TArray<FVariantSelection> Variants;
+        TMap<FString, TArray<FString>> Slots;
         FString LoadoutError;
         bool bLoadoutApplied = false;
     };
@@ -395,6 +423,7 @@ namespace FortAthenaRegisteredSession
 
                 Entry->CharacterTemplateId = MoveTemp(TemplateId);
                 Entry->Variants = MoveTemp(Variants);
+                ParseCosmeticSlots(Body, Entry->Slots);
                 Entry->LoadoutError.Empty();
                 Entry->bLoadoutApplied = false;
                 Entry->LoadoutStatus = ELoadoutStatus::Ready;
@@ -504,6 +533,7 @@ namespace FortAthenaRegisteredSession
         OutLoadout.AccountId = Peer->Account;
         OutLoadout.CharacterTemplateId = Peer->CharacterTemplateId;
         OutLoadout.Variants = Peer->Variants;
+        OutLoadout.Slots = Peer->Slots;
         OutLoadout.bApplied = Peer->bLoadoutApplied;
         return ELoadoutStatus::Ready;
     }

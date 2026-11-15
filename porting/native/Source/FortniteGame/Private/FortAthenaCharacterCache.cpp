@@ -9,6 +9,7 @@
 #include "EFortCustomPartType.h"
 #include "FCustomCharacterData.h"
 #include "FFortAthenaLoadout.h"
+#include "FortAthenaCosmeticLoadout.h"
 #include "FMcpVariantChannelInfo.h"
 #include "UAthenaCharacterItemDefinition.h"
 #include "UCustomCharacterPart.h"
@@ -596,6 +597,7 @@ namespace FortAthenaCharacterCache
             FortPawn->ForceNetUpdate();
         }
 
+        FortAthenaCosmeticLoadout::Apply(Controller, Loadout.Slots);
         FortAthenaRegisteredSession::MarkControllerLoadoutApplied(Controller);
         UE_LOG(LogTemp, Display,
             TEXT("Applied registered character %s (hero=%s flags=0x%02x gender=%d body=%d variants=%d afterPawn=%d) to %s"),

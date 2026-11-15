@@ -132,6 +132,12 @@ namespace FortAthenaMatchFlowPrivate
     {
         bool bLanded = false;
         float LandedTime = -1.0f;
+        // stand-in (skydive input fix): the pawn is already skydiving when its first replication reaches the client, so the
+        // client never sees bIsSkydiving change and does not run its own BeginSkydiving: the player cannot steer until a glider
+        // deploy/undeploy changes the replicated state. Toggling bIsSkydiving off and on once after the exit gives the client
+        // a real OnRep transition. Disabled with -FortniteNoSkydiveRekick.
+        float RekickAt = -1.0f;
+        int32 RekickStage = 0;
     };
 
     struct FPawnStormState
@@ -1538,6 +1544,29 @@ namespace FortAthenaMatchFlowPrivate
             UCharacterMovementComponent* Movement = Pawn->GetCharacterMovement();
             FSkydiverState& Diver = Pair.Value;
             const bool bClientOnGround = Movement && Movement->MovementMode != MOVE_Custom && Movement->IsMovingOnGround();
+            if (!Diver.bLanded && Diver.RekickAt >= 0.0f && NowTime >= Diver.RekickAt)
+            {
+                if (Diver.RekickStage == 0)
+                {
+                    Pawn->bIsSkydiving = false;
+                    if (Movement && Movement->MovementMode == MOVE_Custom)
+                        Movement->SetMovementMode(MOVE_Falling);
+                    Pawn->ForceNetUpdate();
+                    Diver.RekickStage = 1;
+                    Diver.RekickAt = NowTime + 0.2f;
+                    UE_LOG(LogTemp, Display, TEXT("MatchFlow: %s skydive re-kick: bIsSkydiving off"), *Pawn->GetName());
+                }
+                else
+                {
+                    Pawn->bIsSkydiving = true;
+                    Pawn->bIsParachuteOpen = false;
+                    if (Movement)
+                        Movement->SetMovementMode(MOVE_Custom, static_cast<uint8>(EFortCustomMovement::Skydiving));
+                    Pawn->ForceNetUpdate();
+                    Diver.RekickAt = -1.0f;
+                    UE_LOG(LogTemp, Display, TEXT("MatchFlow: %s skydive re-kick: bIsSkydiving on"), *Pawn->GetName());
+                }
+            }
             if (!Diver.bLanded)
             {
                 FHitResult Hit;
@@ -2625,7 +2654,12 @@ namespace FortAthenaMatchFlow
             }
         }
         Pawn->ForceNetUpdate();
-        S.Skydivers.FindOrAdd(TWeakObjectPtr<APawn>(Pawn));
+        FSkydiverState& NewDiver = S.Skydivers.FindOrAdd(TWeakObjectPtr<APawn>(Pawn));
+        if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteNoSkydiveRekick")))
+        {
+            NewDiver.RekickAt = Pawn->GetWorld()->GetTimeSeconds() + 0.75f;
+            NewDiver.RekickStage = 0;
+        }
         UE_LOG(LogTemp, Display, TEXT("MatchFlow: %s skydiving from the bus at %s (%s)"), *Pawn->GetName(), *Pawn->GetActorLocation().ToString(),
             Player->bJump ? TEXT("jump") : TEXT("forced exit"));
     }
