@@ -1,15 +1,15 @@
 # Goal list status (2026-11-14, user testing)
 
-Labels: done = code built, staged and smoke-booted (server reaches SERVER READY, rebinds logged); not live-tested with a client.
+Labels (rows corrected 2026-11-15 after user tests; see GAMEPLAY_GAP_ANALYSIS_2026-11-15.md for the full state model): done = code built, staged and smoke-booted (server reaches SERVER READY, rebinds logged); not live-tested with a client.
 
 | Item | Status | Where |
 |---|---|---|
 | Fall damage | done | `FortAthenaFallDamage.cpp`: speed sampled while MOVE_Falling, curve `AthenaFallingDamage` row `Player`, fraction x max health, ignores shields, honours `bIgnoreNextFallingDamage`. Logs `FallDamage:` |
 | Storm damage plays a gunshot sound | done (likely cause) | `FortAthenaHealth.cpp` `ApplyDamage`: the batched hit cue multicast is now skipped when there is no instigator and no causer (storm, fall) |
-| Chest / ammo box search | done | `FortAthenaLootSearch.cpp` binds `ServerAttemptInteract`; logs `LootSearch:` |
-| Floor loot | done | `FortAthenaLootWorld.cpp`; smoke log shows pickups spawned per streamed level (`LootWorld:`) |
-| Guns have no inventory slots | done | `FortAthenaLootTransfer.cpp`: server mirrors quickbar through `DelayedQuickBarActions`; hooks in `FortAthenaInventoryFlow.cpp` (`GiveItem`, `RemoveItem`, `SetupPlayer`) |
-| Pickup / swap / drop | done | `FortAthenaLootTransfer.cpp` rebinds `ServerHandlePickup*`, `ServerAttemptInventoryDrop`, `ServerAcknowledgeDelayedQuickBarAction` |
+| Chest / ammo box search | **user-tested 2026-11-15: failed, 2 fixes pushed (eacae928, b5d7190b), untested** | `FortAthenaLootSearch.cpp` binds `ServerAttemptInteract`; logs `LootSearch:` |
+| Floor loot | spawns (log-confirmed); pickup of guns failed in user test, fix b5d7190b untested | `FortAthenaLootWorld.cpp`; smoke log shows pickups spawned per streamed level (`LootWorld:`) |
+| Guns have no inventory slots | **user-tested 2026-11-15: still no slots; root cause (GetItemGuid stub) fixed in b5d7190b, untested** | `FortAthenaLootTransfer.cpp`: server mirrors quickbar through `DelayedQuickBarActions`; hooks in `FortAthenaInventoryFlow.cpp` (`GiveItem`, `RemoveItem`, `SetupPlayer`) |
+| Pickup / swap / drop | **user-tested 2026-11-15: too slow, backpack full; fixes in b5d7190b, untested** | `FortAthenaLootTransfer.cpp` rebinds `ServerHandlePickup*`, `ServerAttemptInventoryDrop`, `ServerAcknowledgeDelayedQuickBarAction` |
 | Emote outside lobby | done | `FortAthenaEmote.cpp`: `ServerPlayEmoteItem` gives and activates `GAB_Emote_Generic` (or the item's `CustomDanceAbility`) with the emote as SourceObject |
 | Ziplines | done (partial) | `FortAthenaMiscRpcs.cpp`: `ServerSendZiplineState` stores the client's state so it replicates |
 | POIs missing / no collision | not reproduced | Server log of the last test: 52 POI levels + 63 grid levels loaded, `SERVER READY` after about 4 min, POI meshes have collision (only decals/FX meshes lack it). Likely joined before SERVER READY. Retest after the READY line |
