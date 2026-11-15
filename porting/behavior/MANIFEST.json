@@ -97837,5 +97837,47 @@
     "inc_path": "porting/behavior/UFortMovementComp_CharacterAthena/ShouldPerformAirControlForPathFollowing.inc",
     "confidence": "high",
     "status": "ported"
+  },
+  {
+    "class": "ABuildingActor",
+    "function": "GetHealth",
+    "kind": "getter",
+    "signature": "float GetHealth() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/ABuildingActor/GetHealth.inc",
+    "confidence": "medium",
+    "address": "0x141b9edb0",
+    "status": "ported",
+    "static": false,
+    "access": "public",
+    "notes": "Added so Blueprint name lookups of GetHealth/GetMaxHealth/GetHealthPercent succeed; bodies call FortHarvest."
+  },
+  {
+    "class": "ABuildingActor",
+    "function": "GetMaxHealth",
+    "kind": "getter",
+    "signature": "float GetMaxHealth() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/ABuildingActor/GetMaxHealth.inc",
+    "confidence": "medium",
+    "address": "0x141ba73d0",
+    "status": "ported",
+    "static": false,
+    "access": "public",
+    "notes": "Added so Blueprint name lookups of GetHealth/GetMaxHealth/GetHealthPercent succeed; bodies call FortHarvest."
+  },
+  {
+    "class": "ABuildingActor",
+    "function": "GetHealthPercent",
+    "kind": "getter",
+    "signature": "float GetHealthPercent() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/ABuildingActor/GetHealthPercent.inc",
+    "confidence": "low",
+    "address": "0x1427327f0",
+    "status": "ported",
+    "static": false,
+    "access": "public",
+    "notes": "Added so Blueprint name lookups of GetHealth/GetMaxHealth/GetHealthPercent succeed; bodies call FortHarvest."
   }
 ]

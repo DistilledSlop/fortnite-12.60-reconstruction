@@ -71,6 +71,59 @@ void ABuildingActor::GetEditorTestTags(FGameplayTagContainer& TagContainer) cons
 	// Original exec body is Stub_Empty (0x1406801c0, empty no-op per porting/decompilation_notes.md). TagContainer is not written.
 }
 
+float ABuildingActor::GetHealth() const
+{
+	// Blueprint-visible health getter. Retail exposes GetHealth/GetMaxHealth/GetHealthPercent as BlueprintCallable functions, and
+	// Prop_Athena_StaticGenerator_C.StormHealthModGenerator calls GetHealth through a name lookup: a class without the function is
+	// a fatal error (server crash 2026-11-15 21:28:46, ScriptCore.cpp:1268 FindFunctionChecked).
+	// Original address: 0x141b9edb0.
+	// CONFIDENCE: MEDIUM
+	// Reads BuildingAttributeSet->Health when the set exists, otherwise the full max health (undamaged lazy actor).
+	const UFortBuildingActorSet* AttributeSet = BuildingAttributeSet;
+	if (AttributeSet != nullptr)
+	{
+		return FMath::Max(0.0f, AttributeSet->Health.GetCurrentValue());
+	}
+	return GetMaxHealth();
+}
+
+float ABuildingActor::GetHealthPercent() const
+{
+	// Blueprint-visible health getter. Retail exposes GetHealth/GetMaxHealth/GetHealthPercent as BlueprintCallable functions, and
+	// Prop_Athena_StaticGenerator_C.StormHealthModGenerator calls GetHealth through a name lookup: a class without the function is
+	// a fatal error (server crash 2026-11-15 21:28:46, ScriptCore.cpp:1268 FindFunctionChecked).
+	// Original address: 0x1427327f0.
+	// CONFIDENCE: LOW
+	// The address is the reflected UFunction create function; the body address is unknown. Health divided by max health.
+	const float MaxHealthValue = GetMaxHealth();
+	if (MaxHealthValue > 0.0f)
+	{
+		return GetHealth() / MaxHealthValue;
+	}
+	return 0.0f;
+}
+
+float ABuildingActor::GetMaxHealth() const
+{
+	// Blueprint-visible health getter. Retail exposes GetHealth/GetMaxHealth/GetHealthPercent as BlueprintCallable functions, and
+	// Prop_Athena_StaticGenerator_C.StormHealthModGenerator calls GetHealth through a name lookup: a class without the function is
+	// a fatal error (server crash 2026-11-15 21:28:46, ScriptCore.cpp:1268 FindFunctionChecked).
+	// Original address: 0x141ba73d0.
+	// CONFIDENCE: MEDIUM
+	// MaxHealth from the attribute set when set, else the cached initialization value. The curve lookup the original falls back to
+	// is done by FortHarvest on first damage; before that an uninitialized actor reports the 100 fallback the harvest code uses.
+	const UFortBuildingActorSet* AttributeSet = BuildingAttributeSet;
+	if (AttributeSet != nullptr && AttributeSet->MaxHealth.GetCurrentValue() > 0.0f)
+	{
+		return AttributeSet->MaxHealth.GetCurrentValue();
+	}
+	if (MaxHealthInitializationValue > 0.0f)
+	{
+		return MaxHealthInitializationValue;
+	}
+	return 100.0f;
+}
+
 float ABuildingActor::GetMaxShield() const
 {
 	// Original address: 0x141ba75a0.

@@ -696,6 +696,15 @@ public:
 	void GetEditorTestTags(FGameplayTagContainer& TagContainer) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetHealth() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetHealthPercent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMaxHealth() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetMaxShield() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)

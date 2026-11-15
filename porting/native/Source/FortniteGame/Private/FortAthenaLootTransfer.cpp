@@ -1297,6 +1297,11 @@ void FortAthenaLootTransfer::AcknowledgeDelayedQuickBarActions(AFortPlayerContro
 	}
 }
 
+void FortAthenaLootTransfer::InitializeWorldPickup(AFortPickupAthena* Pickup, const FVector& Location)
+{
+	InitializeSpawnedPickupActor(Pickup, Location);
+}
+
 AFortPickupAthena* FortAthenaLootTransfer::SpawnTossedPickupFromEntry(UWorld* World, const FFortItemEntry& Entry,
 	const FVector& StartLocation, const FVector& TossDirection, AFortPawn* OwnerPawn,
 	uint8 SourceTypeFlags, EFortPickupSpawnSource SpawnSource, float FlyTime)

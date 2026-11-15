@@ -12,6 +12,11 @@
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
 
+namespace FortAthenaLootTransfer
+{
+	void InitializeWorldPickup(AFortPickupAthena* Pickup, const FVector& Location);
+}
+
 bool FortAthenaLoot::IsEnabled()
 {
 	return FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient"));
@@ -33,6 +38,8 @@ AFortPickupAthena* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVec
 		UE_LOG(LogTemp, Warning, TEXT("Loot: failed to spawn resolved pickup"));
 		return nullptr;
 	}
+	// The generated pickup has no root component (see InitializeWorldPickup): give it one at the requested location first.
+	FortAthenaLootTransfer::InitializeWorldPickup(Pickup, Location);
 	Pickup->PrimaryPickupItemEntry.ItemDefinition = Definition;
 	Pickup->PrimaryPickupItemEntry.Count = Count;
 	Pickup->PrimaryPickupItemEntry.Level = Level;
@@ -40,7 +47,8 @@ AFortPickupAthena* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVec
 	Pickup->PrimaryPickupItemEntry.ItemGuid = FGuid::NewGuid();
 	Pickup->SetReplicates(true);
 	Pickup->ForceNetUpdate();
-	UE_LOG(LogTemp, Display, TEXT("Loot: spawned resolved pickup %s count=%d"), *Definition->GetName(), Count);
+	UE_LOG(LogTemp, Display, TEXT("Loot: spawned resolved pickup %s count=%d at (%.0f,%.0f,%.0f) root=%d"), *Definition->GetName(), Count,
+		Pickup->GetActorLocation().X, Pickup->GetActorLocation().Y, Pickup->GetActorLocation().Z, Pickup->GetRootComponent() ? 1 : 0);
 	return Pickup;
 }
 
@@ -49,6 +57,7 @@ namespace FortAthenaLootTransfer
 	void InstallRpcOverrides();
 	bool HandlePickup(AFortPlayerPawn* Pawn, AFortPickup* Pickup,
 		float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound);
+	void InitializeWorldPickup(AFortPickupAthena* Pickup, const FVector& Location);
 }
 
 namespace

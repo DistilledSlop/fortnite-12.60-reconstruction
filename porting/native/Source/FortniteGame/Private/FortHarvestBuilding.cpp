@@ -697,6 +697,43 @@ bool ApplyBuildingDamage(
 		return false;
 	}
 
+	// What a pickaxe can break. Retail only damages buildings that can hold health: invulnerable buildings and buildings with no
+	// health data at all take nothing. (Buildings whose blueprint sets AbilitySystemComponentCreationPolicy=Never have no ability
+	// system and cannot be damaged either, but the policy is only logged for now: it is not confirmed that the blueprint defaults
+	// were applied before the blueprints loaded, and refusing on a wrong value would make every prop unbreakable.) Before this the server gave every non-container ABuildingSMActor the 100 health fallback,
+	// so anything the client swung at broke (user report 2026.11.15). The first refusal per class is logged so the list can be
+	// checked against the game.
+	{
+		static TSet<FName> LoggedClasses;
+		const FName ClassName = Building->GetClass()->GetFName();
+		const char* Refusal = nullptr;
+		if (Building->bIsInvulnerable)
+		{
+			Refusal = "invulnerable";
+		}
+		else if (!Building->BuildingAttributeSet && !(Building->MaxHealthInitializationValue > 0.0f) && !(ResolveMaxHealthFromCurves(Building) > 0.0f))
+		{
+			Refusal = "no health data";
+		}
+		static TSet<FName> LoggedPolicies;
+		if (!LoggedPolicies.Contains(ClassName))
+		{
+			LoggedPolicies.Add(ClassName);
+			UE_LOG(LogFortHarvestBuilding, Display, TEXT("Building: first damage on %s class=%s policy=%d invulnerable=%d resource=%d"), *Building->GetName(),
+				*ClassName.ToString(), static_cast<int32>(Building->AbilitySystemComponentCreationPolicy), Building->bIsInvulnerable ? 1 : 0,
+				static_cast<int32>(Building->ResourceType.GetValue()));
+		}
+		if (Refusal)
+		{
+			if (!LoggedClasses.Contains(ClassName))
+			{
+				LoggedClasses.Add(ClassName);
+				UE_LOG(LogFortHarvestBuilding, Display, TEXT("Building: not damageable %s (class %s): %hs"), *Building->GetName(), *ClassName.ToString(), Refusal);
+			}
+			return false;
+		}
+	}
+
 	InitializeBuildingHealth(Building);
 
 	const float MaxHealth = FMath::Max(1.0f, GetBuildingMaxHealth(Building));

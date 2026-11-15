@@ -18,6 +18,11 @@ namespace FortAthenaLootTransfer
 	// Gated behind -FortniteOriginalClient to match FortAthenaLoot / FortAthenaInventoryFlow.
 	bool IsEnabled();
 
+	// Gives a freshly spawned pickup a scene root at Location and the native ctor defaults, and turns on replication plus movement
+	// replication. The generated AFortPickup ctor creates its components but never sets a root, so without this a pickup spawned by
+	// chest/floor loot has no transform (it sits at the world origin and never reaches the client).
+	void InitializeWorldPickup(AFortPickupAthena* Pickup, const FVector& Location);
+
 	// Rebinds stripped shipping RPC thunks for pickups, swaps, inventory drop, and quickbar acks:
 	// - AFortPlayerPawn::ServerHandlePickup (exec 0x142a7ed80)
 	// - AFortPlayerPawn::ServerHandlePickupWithRequestedSwap (exec 0x142a7ef10)
