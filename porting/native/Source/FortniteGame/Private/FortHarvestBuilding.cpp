@@ -385,10 +385,24 @@ namespace
 		}
 
 		// A spot stays where it is until it is hit; only then (or when the building has none yet) a new one is placed.
+		// The client drops a weak spot it was not hit on after a short while (user run 2026.11.15: once the spot was missed or
+		// mining paused it never came back, because the server still believed it existed). So a stored spot older than
+		// WeakSpotRespawnSeconds is re-sent at a new position on the next hit.
+		static TMap<TWeakObjectPtr<ABuildingSMActor>, double> SpotSentTime;
+		const double NowSeconds = Building->GetWorld() ? Building->GetWorld()->GetTimeSeconds() : 0.0;
+		constexpr double WeakSpotRespawnSeconds = 2.0;
 		if (FoundIdx != INDEX_NONE && !bWeakSpotHit)
 		{
-			return;
+			const double* Sent = SpotSentTime.Find(Building);
+			if (Sent && NowSeconds - *Sent < WeakSpotRespawnSeconds)
+			{
+				return;
+			}
 		}
+		SpotSentTime.Add(Building, NowSeconds);
+		for (auto It = SpotSentTime.CreateIterator(); It; ++It)
+			if (!It.Key().IsValid())
+				It.RemoveCurrent();
 
 		FBuildingWeakSpotData Data;
 		Data.ParentBuilding = Building;
@@ -626,6 +640,14 @@ void ReplicateBuildingDamageCue(
 	Building->ProxyGameplayCueDamagePhysical = Proxy;
 	Building->FlushNetDormancy();
 	Building->ForceNetUpdate();
+	static int32 LoggedCues = 0;
+	if (LoggedCues < 40)
+	{
+		++LoggedCues;
+		UE_LOG(LogFortHarvestBuilding, Display, TEXT("Building: damage cue set on %s magnitude=%d fatal=%d replicates=%d dormancy=%d netUpdateFreq=%.1f"),
+			*Building->GetName(), Proxy.ProxyGameplayCueDamagePhysicalMagnitude, bFatal ? 1 : 0, Building->GetIsReplicated() ? 1 : 0,
+			static_cast<int32>(Building->NetDormancy), Building->NetUpdateFrequency);
+	}
 }
 
 bool ApplyBuildingDamage(
