@@ -30,6 +30,7 @@
 #include "Engine/LevelStreamingDynamic.h"
 #include "Engine/Level.h"
 #include "Engine/LODActor.h"
+#include "ABuildingActor.h"
 #include "ABuildingFoundation.h"
 #include "AWorldTileFoundation.h"
 #include "EDynamicFoundationEnabledState.h"
@@ -137,6 +138,10 @@ namespace FortAthenaMatchFlowPrivate
         // deploy/undeploy changes the replicated state. Toggling bIsSkydiving off and on once after the exit gives the client
         // a real OnRep transition. Opt-in with -FortniteSkydiveRekick.
         float RekickAt = -1.0f;
+        // Delayed skydive start: the pawn is spawned at the bus exit as a plain falling pawn and bIsSkydiving/
+        // bIsSkydivingFromBus are set together BeginAt seconds later, so the client sees a real false->true transition
+        // on a fully begun pawn (AFortPlayerPawn::OnRep_IsSkydiving 0x14233c8a0 runs BeginSkydiving only on that edge).
+        float BeginAt = -1.0f;
         float NextProbeLog = 0.0f;
         int32 RekickStage = 0;
     };
@@ -1566,6 +1571,79 @@ namespace FortAthenaMatchFlowPrivate
         Movement->bServerAcceptClientAuthoritativePosition = false;
     }
 
+    // Test aid (-FortniteTestTeleportTo=<NameSubstring>[,<distance>]): once per player pawn, about 10 s after it exists and
+    // before it skydives, move it next to the nearest building actor whose name contains the text and turn it to face the
+    // actor, so a scripted client can swing the pickaxe or hold interact without walking there.
+    void TickTestTeleport(UWorld* World)
+    {
+        static bool bInit = false;
+        static FString Needle;
+        static float Distance = 170.0f;
+        if (!bInit)
+        {
+            bInit = true;
+            FString Value;
+            if (FParse::Value(FCommandLine::Get(), TEXT("FortniteTestTeleportTo="), Value) && !Value.IsEmpty())
+            {
+                FString Name, Dist;
+                if (!Value.Split(TEXT(","), &Name, &Dist))
+                    Name = Value;
+                else
+                    Distance = FCString::Atof(*Dist);
+                Needle = Name;
+            }
+        }
+        if (Needle.IsEmpty())
+            return;
+        static TMap<TWeakObjectPtr<APawn>, float> FirstSeen;
+        static TSet<TWeakObjectPtr<APawn>> Done;
+        const float NowTime = World->GetTimeSeconds();
+        for (TActorIterator<AFortPlayerPawn> It(World); It; ++It)
+        {
+            AFortPlayerPawn* Pawn = *It;
+            if (!Pawn || Done.Contains(Pawn) || !Pawn->GetController() || Pawn->bIsSkydiving)
+                continue;
+            const float Seen = FirstSeen.FindOrAdd(Pawn, NowTime);
+            if (NowTime - Seen < 10.0f)
+                continue;
+            Done.Add(Pawn);
+            ABuildingActor* Best = nullptr;
+            float BestDist = 1e12f;
+            for (TActorIterator<ABuildingActor> BuildingIt(World); BuildingIt; ++BuildingIt)
+            {
+                ABuildingActor* Candidate = *BuildingIt;
+                if (!Candidate || Candidate->bDestroyed || Candidate->bPlayerPlaced || !Candidate->GetName().Contains(Needle))
+                    continue;
+                const float Dist = FVector::Dist(Candidate->GetActorLocation(), Pawn->GetActorLocation());
+                if (Dist < BestDist)
+                {
+                    BestDist = Dist;
+                    Best = Candidate;
+                }
+            }
+            if (!Best)
+            {
+                UE_LOG(LogTemp, Warning, TEXT("MatchFlow: test teleport: no actor matching '%s' near %s"), *Needle, *Pawn->GetActorLocation().ToString());
+                continue;
+            }
+            FVector Origin, Extent;
+            Best->GetActorBounds(true, Origin, Extent);
+            FVector Away = Pawn->GetActorLocation() - Origin;
+            Away.Z = 0.0f;
+            Away = Away.IsNearlyZero() ? FVector::ForwardVector : Away.GetSafeNormal();
+            const FVector Target = FVector(Origin.X, Origin.Y, Origin.Z - Extent.Z + 100.0f) + Away * (FMath::Max(Extent.X, Extent.Y) * 0.5f + Distance);
+            const FRotator Facing = (-Away).Rotation();
+            Pawn->TeleportTo(Target, Facing, false, true);
+            if (APlayerController* PC = Cast<APlayerController>(Pawn->GetController()))
+            {
+                PC->SetControlRotation(Facing);
+                PC->ClientSetRotation(Facing, true);
+            }
+            UE_LOG(LogTemp, Display, TEXT("MatchFlow: test teleport %s to %s (%s) at %s facing %s"), *Pawn->GetName(), *Best->GetName(),
+                *Best->GetClass()->GetName(), *Target.ToString(), *Facing.ToString());
+        }
+    }
+
     void TickSkydivers(UWorld* World)
     {
         FMatchFlowState& S = State();
@@ -1590,6 +1668,21 @@ namespace FortAthenaMatchFlowPrivate
                     *Pawn->GetActorLocation().ToString(), Movement ? *Movement->Velocity.ToString() : TEXT("-"),
                     Movement ? *Movement->GetMovementName() : TEXT("-"), Movement ? static_cast<int32>(Movement->CustomMovementMode) : -1,
                     Pawn->bIsSkydiving ? 1 : 0, Pawn->bIsParachuteOpen ? 1 : 0);
+            }
+            if (!Diver.bLanded && Diver.BeginAt >= 0.0f && NowTime >= Diver.BeginAt)
+            {
+                Diver.BeginAt = -1.0f;
+                Pawn->bIsSkydiving = true;
+                Pawn->bIsSkydivingFromBus = 1;
+                Pawn->bIsParachuteOpen = false;
+                if (Movement)
+                {
+                    Movement->SetMovementMode(MOVE_Custom, static_cast<uint8>(EFortCustomMovement::Skydiving));
+                    if (!UseServerSkydiveAuthority())
+                        AcceptClientMovement(Movement);
+                }
+                Pawn->ForceNetUpdate();
+                UE_LOG(LogTemp, Display, TEXT("MatchFlow: %s skydive started (delayed) at %s"), *Pawn->GetName(), *Pawn->GetActorLocation().ToString());
             }
             if (!Diver.bLanded && Diver.RekickAt >= 0.0f && NowTime >= Diver.RekickAt)
             {
@@ -2004,6 +2097,7 @@ namespace FortAthenaMatchFlowPrivate
         // Steps 7-8 (supply drop list, storm cap 0x1419797b0, 0x1419783c0, mutator ticks) not ported.
         TickAircraft(GameMode, GameState);
         TickSkydivers(World);
+        TickTestTeleport(World);
         FortAthenaFallDamage::Tick(World);
 
         if (S.LastStatusTime < 0.0f || WorldTime - S.LastStatusTime >= 5.0f)
@@ -2688,12 +2782,20 @@ namespace FortAthenaMatchFlow
         Player->bPendingExit = false;
         // stand-in: TeleportToSkyDive 0x141a267c0 and BeginSkydiving are real client code but not ported to our pawn.
         // PositionPlayerForAircraftExit already placed the pawn below the bus before initial actor replication.
-        Pawn->bIsSkydiving = true;
-        Pawn->bIsSkydivingFromBus = 1;
+        // Spawning the pawn already skydiving means the client's first replication of it carries bIsSkydiving=true before the
+        // pawn has begun play, so BeginSkydiving (steering, contrail) does not run properly until a glider deploy/undeploy
+        // flips the state. Start the skydive after a short delay instead (-FortniteSkydiveBeginDelay=<s>, 0 = at once).
+        static const float BeginDelay = []() { float V = 0.6f; FParse::Value(FCommandLine::Get(), TEXT("FortniteSkydiveBeginDelay="), V); return FMath::Max(0.0f, V); }();
+        const bool bDelayBegin = BeginDelay > 0.0f;
+        Pawn->bIsSkydiving = !bDelayBegin;
+        Pawn->bIsSkydivingFromBus = bDelayBegin ? 0 : 1;
         Pawn->bIsParachuteOpen = false;
         if (UCharacterMovementComponent* Movement = Pawn->GetCharacterMovement())
         {
-            Movement->SetMovementMode(MOVE_Custom, static_cast<uint8>(EFortCustomMovement::Skydiving));
+            if (bDelayBegin)
+                Movement->SetMovementMode(MOVE_Falling);
+            else
+                Movement->SetMovementMode(MOVE_Custom, static_cast<uint8>(EFortCustomMovement::Skydiving));
             if (!UseServerSkydiveAuthority())
                 AcceptClientMovement(Movement);
         }
@@ -2708,6 +2810,8 @@ namespace FortAthenaMatchFlow
         }
         Pawn->ForceNetUpdate();
         FSkydiverState& NewDiver = S.Skydivers.FindOrAdd(TWeakObjectPtr<APawn>(Pawn));
+        if (bDelayBegin)
+            NewDiver.BeginAt = Pawn->GetWorld()->GetTimeSeconds() + BeginDelay;
         // The bIsSkydiving off/on re-kick restarts the client's skydive and ends the contrail effect about a second after the
         // bus exit (user run 2026.11.15: "after a second my trail glitched off"), so it is opt-in now.
         if (FParse::Param(FCommandLine::Get(), TEXT("FortniteSkydiveRekick")))

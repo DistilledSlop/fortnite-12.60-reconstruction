@@ -49,3 +49,14 @@ Correction breakdown of the 23:15 run (3879 FortMovementPair rows, user log arch
 ## Scope change (user, 2026-11-15)
 
 Removed from the goal list: POIs (missing / no collision), styles (glider/emote/outfit style editing, Pandemonium, style level), and the world-border re-skydive. Their earlier notes above stay as reference only; no further work is planned on them. Remaining list: breaking builds, editing builds, fall damage, skydive movement, looting, guns/inventory slots, ziplines, emoting outside the lobby, storm gunshot sound, porta-potty hiding, player reporting.
+
+## 2026-11-15 pass: building damage visuals, weak spots, skydive start, fall cue (built, staged, NOT client-tested beyond a join)
+
+- Root cause of "no cracks / dead props stay standing / hits still sound": the server never set `ABuildingSMActor::ProxyGameplayCueDamagePhysical`. The client OnRep (0x142757c10) builds a gameplay-cue from `abs(Magnitude)/MaxHealth` plus the effect context and calls the building's cue handler (0x141b99240): damage cue 0x141c16570 (cracks, `LastDamageAmount`, needs a Fort-type context or it returns early) or, when the context's +0x70 flag is set, the death cue 0x141c16100 (destruction effects, hide). `FortHarvest::ReplicateBuildingDamageCue` now sets it on every hit (sign alternates so equal hits replicate; fatal flag on the killing hit) for level props and player-built pieces.
+- Weak spots: retail placement (client 0x141c0a060, "WeakSpotTrace") is a random direction in a cone around the aim (30 deg horizontal / 12 deg vertical), 400 uu trace from the pawn, up to 30 tries. Ported as `FindRandomWeakSpot`; a spot now stays until it is hit, then moves. Falls back to the aim ray. Logs `Building: weak spot new/moved ...`.
+- Original `BuildingActor::LifespanAfterDeath` default is 5.0 (OriginalDefaults.json); the 1 s fallback stays until the client death cue is confirmed to hide the actor (set `-FortniteDeathLifespan=5` to match retail).
+- Pickaxe no longer damages loot containers (chests were destroyed by swings and could not be searched afterwards).
+- Skydive: pawn is spawned falling and `bIsSkydiving`/`bIsSkydivingFromBus` are set together 0.6 s later (`-FortniteSkydiveBeginDelay=<s>`, 0 = old behaviour), because `OnRep_IsSkydiving` (0x14233c8a0) only runs BeginSkydiving on a false->true edge on a begun pawn.
+- Fall damage now also sends the batched hit cue (storm stays silent).
+- Test aid `-FortniteTestTeleportTo=<NameSubstring>[,<dist>]` moves each pawn beside the nearest matching prop 10 s after spawn (a first test run showed the teleport lands the pawn in a fall: it died of fall damage; Z needs tuning before reuse).
+- Glider auto-deploy right after the bus exit: client mode flips 19 -> 20 about 0.8 s after exit in the 23:15 run; the client decides it (server never sets `bIsParachuteOpen`/`bIsParachuteForcedOpen`). No server-side cause found; unresolved.

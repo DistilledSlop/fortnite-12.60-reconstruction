@@ -726,6 +726,7 @@ bool OnPlayerBuiltPieceDamaged(
 	}
 
 	FortHarvest::ForceBuildingHealth(Building, NewHealth);
+	FortHarvest::ReplicateBuildingDamageCue(Building, ClampedDamage, Instigator, Causer, Hit, bWillDestroy);
 
 	const FVector HitPoint = !Hit.ImpactPoint.IsZero() ? FVector(Hit.ImpactPoint) : Building->GetActorLocation();
 	const FVector Momentum = FVector::ZeroVector;

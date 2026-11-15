@@ -621,7 +621,11 @@ void FortAthenaHealth::ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, co
 
 	// Environmental damage (storm, falling) has no instigator or causer. The original applies it through a gameplay effect
 	// without the weapon hit cue; sending the batched hit cue here played a gunshot-like sound on the client.
-	if (InstigatedBy || DamageCauser)
+	// Fall damage is the exception: without any cue the victim gets no hit feedback at all (health bar only), so it
+	// sends the batched cue (hit number / damage reaction) like other damage. Storm damage stays silent.
+	const FGameplayTag FallDamageTag = FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x358);
+	const bool bFallDamage = FallDamageTag.IsValid() && DamageTags.HasTag(FallDamageTag);
+	if (InstigatedBy || DamageCauser || bFallDamage)
 	{
 		VictimPawn->NetMulticast_Athena_BatchedDamageCues(SharedCues, NonSharedCues);
 	}

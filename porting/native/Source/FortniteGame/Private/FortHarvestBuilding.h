@@ -28,6 +28,20 @@ namespace FortHarvest
 	/** Materializes AbilitySystemComponent / BuildingAttributeSet if lazy and forces Health to NewHealth [0, MaxHealth]. */
 	void ForceBuildingHealth(ABuildingActor* Building, float NewHealth);
 
+	/**
+	 * Replicates the damage presentation of a building: sets ABuildingSMActor::ProxyGameplayCueDamagePhysical, whose client
+	 * OnRep (0x142757c10) turns the magnitude into a damage cue (cracks, hit reaction) and, when bFatal, into the death cue
+	 * (client death presentation, removal). The sign of the magnitude alternates per hit because the client reads abs() and
+	 * the property only replicates when its value changes.
+	 */
+	void ReplicateBuildingDamageCue(
+		ABuildingSMActor* Building,
+		float Damage,
+		AController* Instigator,
+		AActor* Causer,
+		const FHitResult& Hit,
+		bool bFatal);
+
 	/** Applies harvesting/combat damage to a building/prop: health reduction, Blueprint/delegate notifications, resource grant + overflow drop, client RPCs, weak spots, and destruction. */
 	bool ApplyBuildingDamage(
 		ABuildingSMActor* Building,

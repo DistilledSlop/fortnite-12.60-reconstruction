@@ -3,6 +3,7 @@
 
 #include "ABuildingActor.h"
 #include "ABuildingSMActor.h"
+#include "ABuildingContainer.h"
 #include "AFortPlayerController.h"
 #include "AbilitySystemGlobals.h"
 #include "EAbilitySystemComponentCreationPolicy.h"
@@ -11,6 +12,8 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "FBuildingWeakSpotData.h"
+#include "FProxyGameplayCueDamagePhysical.h"
+#include "FortServerGameplayEffectContext.h"
 #include "FFortAttributeInitializationKey.h"
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaLoot.h"
@@ -310,6 +313,55 @@ namespace
 		return FMath::Max(0.0f, Pool);
 	}
 
+	// Retail weak-spot placement (client binary 0x141c0a060 = ABuildingSMActor vtable +0xab8, trace tag "WeakSpotTrace"):
+	// up to 30 tries. Each try picks a random direction inside an elliptical cone around the player's aim (half angles
+	// 30 deg horizontal / 12 deg vertical, the first shrinking and the second growing by 18 deg as the aim points up), accepts
+	// it only if it differs from the aim by more than 0.1 on some axis (not enforced after 14 tries), and traces 400 uu
+	// (minus up to 100 looking up) from the pawn. The first trace that hits THIS building on a face turned towards the player
+	// (normal . direction < -0.1) is the spot. The old placement used the aim ray itself, so the circle always sat where the
+	// player was already hitting.
+	// stand-in: ECC_Visibility against the building's own components (the original channel set is not recovered); the ray
+	// starts at the pawn's view location (the original uses the root plus a small rotated offset).
+	bool FindRandomWeakSpot(AFortPlayerController* PC, ABuildingSMActor* Building, FVector& OutPos, FVector& OutNormal, int32& OutTries)
+	{
+		APawn* Pawn = PC ? PC->GetPawn() : nullptr;
+		if (!Pawn || !Building)
+		{
+			return false;
+		}
+
+		FVector ViewLocation;
+		FRotator ViewRotation;
+		PC->GetPlayerViewPoint(ViewLocation, ViewRotation);
+		const FVector Aim = ViewRotation.Vector();
+		const float Up = FMath::Clamp(Aim.Z, 0.0f, 1.0f);
+		const float HalfAngleH = 0.5235988f - Up * 0.31415927f;
+		const float HalfAngleV = Up * 0.31415927f + 0.20943952f;
+		static const float BaseRange = []() { float V = 400.0f; FParse::Value(FCommandLine::Get(), TEXT("FortniteWeakSpotRay="), V); return FMath::Max(50.0f, V); }();
+		const float Range = BaseRange - Up * 100.0f;
+		const FVector Origin = Pawn->GetPawnViewLocation();
+
+		FCollisionQueryParams Params(FName(TEXT("WeakSpotTrace")), true);
+		for (int32 Try = 0; Try < 30; ++Try)
+		{
+			OutTries = Try + 1;
+			const FVector Dir = FMath::VRandCone(Aim, HalfAngleH, HalfAngleV);
+			if (Try <= 14 && FMath::Abs(Aim.X - Dir.X) <= 0.1f && FMath::Abs(Aim.Y - Dir.Y) <= 0.1f && FMath::Abs(Aim.Z - Dir.Z) <= 0.1f)
+			{
+				continue;
+			}
+			FHitResult RayHit;
+			if (Building->ActorLineTraceSingle(RayHit, Origin, Origin + Dir * Range, ECC_Visibility, Params)
+				&& FVector::DotProduct(RayHit.ImpactNormal, Dir) < -0.1f)
+			{
+				OutPos = RayHit.ImpactPoint;
+				OutNormal = RayHit.ImpactNormal.GetSafeNormal();
+				return true;
+			}
+		}
+		return false;
+	}
+
 	void UpdateOrSpawnWeakSpot(
 		AFortPlayerController* PC,
 		ABuildingSMActor* Building,
@@ -332,37 +384,37 @@ namespace
 			}
 		}
 
+		// A spot stays where it is until it is hit; only then (or when the building has none yet) a new one is placed.
+		if (FoundIdx != INDEX_NONE && !bWeakSpotHit)
+		{
+			return;
+		}
+
 		FBuildingWeakSpotData Data;
 		Data.ParentBuilding = Building;
-		const FVector ImpactNormal = Hit.ImpactNormal.IsNearlyZero() ? FVector::UpVector : FVector(Hit.ImpactNormal).GetSafeNormal();
-		Data.Normal = FVector_NetQuantizeNormal(ImpactNormal);
-
-		// binary 0x1423b5c20 (AFortPlayerController::SpawnWeakSpot): takes the player's view point (PC vtable +0x6f8), turns the
-		// view rotation into a direction, and asks the building (vtable +0xab8) for the surface point where a 400 uu ray
-		// from the view location along that direction meets it; that point and its normal become the weak spot. So the
-		// circle sits where the player is looking at the object, not around the pickaxe hit.
-		// stand-in: the building helper (vtable +0xab8) is not ported; ActorLineTraceSingle against the building plays its
-		// role. The original keeps the first pitch on the entry (+0x24) for later spawns and randomizes inside the helper;
-		// neither is recovered. If the ray misses, the pickaxe impact point is used as it is (no offset).
 		const int32 NextHitCount = (FoundIdx != INDEX_NONE) ? (PC->ActiveWeakSpots[FoundIdx].HitCount + (bWeakSpotHit ? 1 : 0)) : 1;
+
 		FVector BasePos = Hit.ImpactPoint.IsNearlyZero() ? Building->GetActorLocation() : FVector(Hit.ImpactPoint);
-		FVector SpotNormal = ImpactNormal;
+		FVector SpotNormal = Hit.ImpactNormal.IsNearlyZero() ? FVector::UpVector : FVector(Hit.ImpactNormal).GetSafeNormal();
+		int32 Tries = 0;
+		const bool bRandom = FindRandomWeakSpot(PC, Building, BasePos, SpotNormal, Tries);
+		if (!bRandom)
 		{
+			// No random placement worked (thin or far object): fall back to the aim ray, then to the pickaxe impact point.
 			FVector ViewLocation;
 			FRotator ViewRotation;
 			PC->GetPlayerViewPoint(ViewLocation, ViewRotation);
-			static const float RayLength = []() { float V = 400.0f; FParse::Value(FCommandLine::Get(), TEXT("FortniteWeakSpotRay="), V); return FMath::Max(50.0f, V); }();
-			// The third-person camera sits behind the pawn: start the ray at the camera and reach past the pawn.
 			const float CameraBack = FMath::Max(0.0f, FVector::Dist(ViewLocation, PC->GetPawn() ? PC->GetPawn()->GetActorLocation() : ViewLocation));
-			const FVector RayEnd = ViewLocation + ViewRotation.Vector() * (RayLength + CameraBack);
 			FHitResult RayHit;
 			FCollisionQueryParams RayParams(FName(TEXT("WeakSpotRay")), true);
-			if (Building->ActorLineTraceSingle(RayHit, ViewLocation, RayEnd, ECC_Visibility, RayParams))
+			if (Building->ActorLineTraceSingle(RayHit, ViewLocation, ViewLocation + ViewRotation.Vector() * (400.0f + CameraBack), ECC_Visibility, RayParams))
 			{
 				BasePos = RayHit.ImpactPoint;
 				SpotNormal = RayHit.ImpactNormal.GetSafeNormal();
 			}
 		}
+		UE_LOG(LogFortHarvestBuilding, Display, TEXT("Building: weak spot %s on %s at %s (%s, tries=%d, hits=%d)"),
+			FoundIdx != INDEX_NONE ? TEXT("moved") : TEXT("new"), *Building->GetName(), *BasePos.ToString(), bRandom ? TEXT("random cone") : TEXT("fallback"), Tries, NextHitCount);
 		Data.Normal = FVector_NetQuantizeNormal(SpotNormal);
 		Data.Position = FVector_NetQuantize10(BasePos);
 		Data.HitCount = NextHitCount;
@@ -537,6 +589,45 @@ void ForceBuildingHealth(ABuildingActor* Building, float NewHealth)
 	Building->ForceNetUpdate();
 }
 
+void ReplicateBuildingDamageCue(
+	ABuildingSMActor* Building,
+	float Damage,
+	AController* Instigator,
+	AActor* Causer,
+	const FHitResult& Hit,
+	bool bFatal)
+{
+	if (!Building || Building->GetLocalRole() != ROLE_Authority)
+	{
+		return;
+	}
+
+	// Client side (0x142757c10): magnitude = abs(ProxyGameplayCueDamagePhysicalMagnitude), normalized by max health (1.0 when
+	// health is 0), copied with the effect context into FGameplayCueParameters and handed to the building's cue handler
+	// (0x141b99240): damage cue (0x141c16570: LastDamageAmount, hit direction from the context, damage visuals such as
+	// cracks) or, when the context's fatal flag (+0x70) is set, the death cue (0x141c16100). The damage visuals need a
+	// context object of the Fortnite type; without one the damage handler returns right after its base work.
+	FFortServerGameplayEffectContext* Context = new FFortServerGameplayEffectContext();
+	AActor* InstigatorActor = Instigator ? static_cast<AActor*>(Instigator->GetPawn()) : nullptr;
+	Context->AddInstigator(InstigatorActor, Causer ? Causer : InstigatorActor);
+	if (!Hit.ImpactPoint.IsNearlyZero())
+	{
+		FHitResult ContextHit = Hit;
+		Context->AddHitResult(ContextHit, true);
+		Context->AddOrigin(FVector(Hit.ImpactPoint));
+	}
+	Context->bFlag70 = bFatal;
+
+	const int32 Magnitude = FMath::Max(1, FMath::RoundToInt(Damage));
+	const int32 Previous = Building->ProxyGameplayCueDamagePhysical.ProxyGameplayCueDamagePhysicalMagnitude;
+	FProxyGameplayCueDamagePhysical Proxy;
+	Proxy.ProxyGameplayCueDamagePhysicalMagnitude = (Previous > 0) ? -Magnitude : Magnitude; // sign flips so repeated equal hits still replicate
+	Proxy.EffectContext = FGameplayEffectContextHandle(Context);
+	Building->ProxyGameplayCueDamagePhysical = Proxy;
+	Building->FlushNetDormancy();
+	Building->ForceNetUpdate();
+}
+
 bool ApplyBuildingDamage(
 	ABuildingSMActor* Building,
 	float Damage,
@@ -551,6 +642,12 @@ bool ApplyBuildingDamage(
 	}
 
 	if (!Building || !Building->IsValidLowLevel() || Building->bDestroyed || Damage <= 0.0f)
+	{
+		return false;
+	}
+	// Loot containers (chests, ammo boxes) are opened, not broken: a pickaxe swing at one while trying to search it
+	// destroyed it (user run: six applied hits on Tiered_Chest_Athena) and left nothing to loot.
+	if (!Building->bPlayerPlaced && Cast<ABuildingContainer>(Building))
 	{
 		return false;
 	}
@@ -580,6 +677,7 @@ bool ApplyBuildingDamage(
 
 	// 1. Update BuildingAttributeSet / ASC health (original 0x141bc4a90 / 0x141b990d0).
 	ForceBuildingHealth(Building, NewHealth);
+	ReplicateBuildingDamageCue(Building, ClampedDamage, Instigator, Causer, Hit, bKilledThisHit);
 
 	// 2. Fire OnDamageServer BlueprintImplementableEvent and OnDamaged delegate (original 0x141baaf60 -> 0x142734dc0).
 	FGameplayTagContainer DamageTags;
