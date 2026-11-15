@@ -22,6 +22,9 @@ namespace FortHarvest
 	/** Returns the building's max health (BuildingAttributeSet->MaxHealth, cached MaxHealthInitializationValue, or FFortAttributeSetInitter curve lookup). */
 	float GetBuildingMaxHealth(ABuildingActor* Building);
 
+	/** Turns replication on for a level actor that was spawned by the map without it (server only); no-op when it already replicates. */
+	void EnableBuildingReplication(AActor* Building);
+
 	/** Initializes a building's max health and current health percentage (level props = 100%, player-placed = curve percentage). */
 	bool InitializeBuildingHealth(ABuildingActor* Building);
 

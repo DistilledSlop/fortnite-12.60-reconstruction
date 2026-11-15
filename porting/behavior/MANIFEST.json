@@ -97879,5 +97879,23 @@
     "static": false,
     "access": "public",
     "notes": "Added so Blueprint name lookups of GetHealth/GetMaxHealth/GetHealthPercent succeed; bodies call FortHarvest."
+  },
+  {
+    "class": "ABuildingContainer",
+    "function": "PreReplication",
+    "signature": "void PreReplication(IRepChangedPropertyTracker& ChangedPropertyTracker)",
+    "kind": "helper",
+    "address": "0x0",
+    "access": "public",
+    "includes": [
+      "Net/UnrealNetwork.h"
+    ],
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/ABuildingContainer/PreReplication.inc",
+    "confidence": "low",
+    "status": "ported",
+    "notes": "Turns on the COND_Custom bAlreadySearched replication so clients see a searched chest. Retail override address not recovered.",
+    "virtual": true,
+    "override": true
   }
 ]

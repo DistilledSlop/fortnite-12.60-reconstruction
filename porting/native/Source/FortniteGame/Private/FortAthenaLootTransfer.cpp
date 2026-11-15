@@ -3,6 +3,7 @@
 #include "AFortInventory.h"
 #include "AFortPawn.h"
 #include "AFortPickup.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 #include "AFortPickupAthena.h"
 #include "AFortPlayerController.h"
 #include "AFortPlayerControllerAthena.h"
@@ -793,8 +794,8 @@ namespace
 			const float DistSq = FVector::DistSquared(Pawn->GetActorLocation(), Pickup->GetActorLocation());
 			if (DistSq > MaxPickupRangeSq)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("LootTransfer: Pickup rejected (out of range dist=%.1f) pc=%s pickup=%s"),
-					FMath::Sqrt(DistSq), *PC->GetName(), *Pickup->GetName());
+				UE_LOG(LogTemp, Warning, TEXT("LootTransfer: Pickup rejected (out of range dist=%.1f pawn=%s pickup=%s) pc=%s pickup=%s"),
+					FMath::Sqrt(DistSq), *Pawn->GetActorLocation().ToString(), *Pickup->GetActorLocation().ToString(), *PC->GetName(), *Pickup->GetName());
 				return false;
 			}
 		}
@@ -1300,6 +1301,18 @@ void FortAthenaLootTransfer::AcknowledgeDelayedQuickBarActions(AFortPlayerContro
 void FortAthenaLootTransfer::InitializeWorldPickup(AFortPickupAthena* Pickup, const FVector& Location)
 {
 	InitializeSpawnedPickupActor(Pickup, Location);
+	// The pickup's projectile component has gravity on and nothing to collide with (its root is a plain scene component), so a
+	// resting loot pickup would fall away from where it was placed (the server rejected the client's pickup requests as out of
+	// range at 1971 then 2818 units, growing). World loot is placed by the toss data, not by physics.
+	if (Pickup)
+	{
+		if (UProjectileMovementComponent* Movement = Pickup->FindComponentByClass<UProjectileMovementComponent>())
+		{
+			Movement->StopMovementImmediately();
+			Movement->Deactivate();
+			Movement->SetComponentTickEnabled(false);
+		}
+	}
 }
 
 AFortPickupAthena* FortAthenaLootTransfer::SpawnTossedPickupFromEntry(UWorld* World, const FFortItemEntry& Entry,

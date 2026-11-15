@@ -474,6 +474,11 @@ namespace
 	}
 } // namespace
 
+void EnableBuildingReplication(AActor* Building)
+{
+	EnsureBuildingReplicates(Building);
+}
+
 bool IsEnabled()
 {
 	return FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient"));

@@ -13,6 +13,7 @@
 #include "FFortBaseWeaponStats.h"
 #include "FFortLootLevelData.h"
 #include "FortAthenaLoot.h"
+#include "FortHarvestBuilding.h"
 #include "FortAthenaLootData.h"
 #include "FortAthenaLootRoll.h"
 #include "GameFramework/Actor.h"
@@ -114,7 +115,8 @@ namespace
 			? (static_cast<float>(DropIndex) / static_cast<float>(TotalDrops - 1)) - 0.5f
 			: 0.0f;
 		const float AngleRad = FMath::DegreesToRadians(BaseYawDeg + StepFraction * 2.0f * HalfConeDeg);
-		const float Radius = FMath::Clamp(ScatterRadius * FMath::FRandRange(0.55f, 1.0f), 15.0f, 120.0f);
+		// Retail chest loot lands roughly 1-2.5 m from the chest (LootTossSpeed_Athena 550 over the toss flight), not on top of it.
+		const float Radius = FMath::FRandRange(110.0f, 250.0f);
 		return WorldOrigin + FVector(FMath::Cos(AngleRad) * Radius, FMath::Sin(AngleRad) * Radius, 6.0f);
 	}
 
@@ -125,10 +127,17 @@ namespace
 			return;
 
 		Container->bAlreadySearched = 1;
+		// Level containers replicate nothing until they are enabled (bReplicates was 0 on the placed chests, same cause as the
+		// missing cracks): without this the searched state, open animation and sounds never reach the client.
+		FortHarvest::EnableBuildingReplication(Container);
+		Container->FlushNetDormancy();
 		if (InteractingPawn)
 			Container->OnInteract.Broadcast(Container, InteractingPawn);
 
-		if (Container->bDestroyContainerOnSearch && !Container->bAlwaysShowContainer)
+		// Retail chests and boxes stay in the world with their searched mesh and play the open animation and sound from the
+		// replicated bAlreadySearched; destroying one right after the search (the old behaviour for every container whose
+		// bDestroyContainerOnSearch reads 1) removed the visuals and sounds. Only containers that have no searched mesh are removed.
+		if (Container->bDestroyContainerOnSearch && !Container->bAlwaysShowContainer && !Container->SearchedMesh)
 		{
 			Container->ForceNetUpdate();
 			UE_LOG(LogTemp, Display, TEXT("LootSearch: destroying %s after search (bDestroyContainerOnSearch=1)"), *Container->GetName());
@@ -444,7 +453,7 @@ bool FortAthenaLootSearch::RollAndSpawnContainerLoot(
 		const int32 LoadedAmmo = ResolveLoadedAmmo(Drop.Definition);
 		const FVector SpawnLoc = ComputeDropSpawnLocation(Container, WorldOrigin, Index, Drops.Num(), ScatterRadius);
 		AFortPickupAthena* Pickup = FortAthenaLoot::SpawnResolvedPickup(
-			World, SpawnLoc, Drop.Definition, Drop.Count, Drop.Level, LoadedAmmo);
+			World, SpawnLoc, Drop.Definition, Drop.Count, Drop.Level, LoadedAmmo, &WorldOrigin);
 		if (Pickup)
 		{
 			++SpawnedCount;

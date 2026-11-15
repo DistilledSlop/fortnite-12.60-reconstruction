@@ -14,6 +14,7 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
+#include "Net/UnrealNetwork.h"
 #include "UObject/Object.h"
 
 class UAudioComponent;
@@ -304,5 +305,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static bool NativeIsGameModeOne141ed8c70(UObject* ContextObject);
+	virtual void PreReplication(IRepChangedPropertyTracker& ChangedPropertyTracker) override;
 };
 

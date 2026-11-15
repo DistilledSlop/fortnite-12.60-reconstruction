@@ -11,6 +11,9 @@
 #include "Engine/World.h"
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
+#include "EFortPickupTossState.h"
+#include "TimerManager.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 namespace FortAthenaLootTransfer
 {
@@ -23,7 +26,7 @@ bool FortAthenaLoot::IsEnabled()
 }
 
 AFortPickupAthena* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVector& Location,
-	UFortItemDefinition* Definition, int32 Count, int32 Level, int32 LoadedAmmo)
+	UFortItemDefinition* Definition, int32 Count, int32 Level, int32 LoadedAmmo, const FVector* TossFrom)
 {
 	if (!IsEnabled() || !World || World->GetNetMode() == NM_Client || !Definition || Count <= 0)
 		return nullptr;
@@ -32,19 +35,54 @@ AFortPickupAthena* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVec
 	// The result is not connected to a table roll or a map spawner yet.
 	FActorSpawnParameters Parameters;
 	Parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	AFortPickupAthena* Pickup = World->SpawnActor<AFortPickupAthena>(Location, FRotator::ZeroRotator, Parameters);
+	const FVector SpawnAt = TossFrom ? *TossFrom : Location;
+	AFortPickupAthena* Pickup = World->SpawnActor<AFortPickupAthena>(SpawnAt, FRotator::ZeroRotator, Parameters);
 	if (!Pickup)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Loot: failed to spawn resolved pickup"));
 		return nullptr;
 	}
 	// The generated pickup has no root component (see InitializeWorldPickup): give it one at the requested location first.
-	FortAthenaLootTransfer::InitializeWorldPickup(Pickup, Location);
+	FortAthenaLootTransfer::InitializeWorldPickup(Pickup, SpawnAt);
 	Pickup->PrimaryPickupItemEntry.ItemDefinition = Definition;
 	Pickup->PrimaryPickupItemEntry.Count = Count;
 	Pickup->PrimaryPickupItemEntry.Level = Level;
 	Pickup->PrimaryPickupItemEntry.LoadedAmmo = LoadedAmmo;
 	Pickup->PrimaryPickupItemEntry.ItemGuid = FGuid::NewGuid();
+	if (TossFrom)
+	{
+		// Same replicated toss the dropped-item path uses (SpawnTossedPickupFromEntry): the client plays the arc from the start
+		// to the rest position, the server moves the actor to the rest position when the flight ends and marks it AtRest.
+		constexpr float TossFlyTime = 0.75f;
+		FVector Dir = (Location - *TossFrom).GetSafeNormal();
+		if (Dir.IsNearlyZero())
+			Dir = FVector::UpVector;
+		Pickup->PickupLocationData.ItemOwner = nullptr;
+		Pickup->PickupLocationData.PickupTarget = nullptr;
+		Pickup->PickupLocationData.CombineTarget = nullptr;
+		Pickup->PickupLocationData.LootInitialPosition = *TossFrom;
+		Pickup->PickupLocationData.LootFinalPosition = Location;
+		Pickup->PickupLocationData.FinalTossRestLocation = Location;
+		Pickup->PickupLocationData.FlyTime = TossFlyTime;
+		Pickup->PickupLocationData.StartDirection = Dir;
+		Pickup->PickupLocationData.TossState = EFortPickupTossState::InProgress;
+		Pickup->PickupLocationData.bPlayPickupSound = false;
+		Pickup->PickupLocationData.PickupGuid = FGuid::NewGuid();
+		FTimerHandle RestTimer;
+		TWeakObjectPtr<AFortPickupAthena> WeakPickup(Pickup);
+		World->GetTimerManager().SetTimer(RestTimer, [WeakPickup, Location]()
+		{
+			if (AFortPickupAthena* Target = WeakPickup.Get())
+			{
+				if (IsValid(Target) && !Target->bPickedUp)
+				{
+					Target->SetActorLocation(Location);
+					Target->PickupLocationData.TossState = EFortPickupTossState::AtRest;
+					Target->ForceNetUpdate();
+				}
+			}
+		}, TossFlyTime, false);
+	}
 	Pickup->SetReplicates(true);
 	Pickup->ForceNetUpdate();
 	UE_LOG(LogTemp, Display, TEXT("Loot: spawned resolved pickup %s count=%d at (%.0f,%.0f,%.0f) root=%d"), *Definition->GetName(), Count,
