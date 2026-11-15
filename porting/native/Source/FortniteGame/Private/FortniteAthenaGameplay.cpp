@@ -5,6 +5,7 @@
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaLoot.h"
 #include "FortAthenaLootSearch.h"
+#include "FortAthenaBuildEdit.h"
 #include "FortAthenaHealth.h"
 #include "FortAthenaBuilding.h"
 #include "FortAthenaMatchFlow.h"
@@ -268,6 +269,7 @@ void AFortGameModeAthena::StartPlay()
     FortAthenaLoot::InstallRpcOverrides();
     FortAthenaLootSearch::InstallRpcOverrides();
     FortAthenaBuilding::InstallRpcOverrides();
+    FortAthenaBuildEdit::InstallRpcOverrides();
     FortAthenaBuilding::PrepareBuildableClasses(GetGameState<AFortGameStateAthena>());
     if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteNoHealth")))
         FortAthenaHealth::InstallRpcOverrides();

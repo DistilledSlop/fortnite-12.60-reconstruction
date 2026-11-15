@@ -1,4 +1,5 @@
 #include "FortHarvestBuilding.h"
+#include "FortAthenaBuildDamage.h"
 
 #include "ABuildingActor.h"
 #include "ABuildingSMActor.h"
@@ -533,6 +534,10 @@ bool ApplyBuildingDamage(
 	{
 		return false;
 	}
+	if (Building->bPlayerPlaced)
+	{
+		return FortAthenaBuildDamage::OnPlayerBuiltPieceDamaged(Building, Damage, Instigator, Causer, Hit, bWeakSpot);
+	}
 
 	if (Building->GetLocalRole() != ROLE_Authority)
 	{
@@ -570,7 +575,7 @@ bool ApplyBuildingDamage(
 	// 3. Resource calculation, inventory grant (999 stack cap + pickup overflow), and client feedback RPC.
 	AFortPlayerController* PC = Cast<AFortPlayerController>(Instigator);
 	const EFortResourceType::Type ResType = Building->ResourceType.GetValue();
-	if (PC && ResType != EFortResourceType::None && (Building->bAllowResourceDrop || IsLevelHarvestable(Building))
+	if (PC && ResType != EFortResourceType::None && FortAthenaBuildDamage::ShouldAllowResourceDrop(Building) && (Building->bAllowResourceDrop || IsLevelHarvestable(Building))
 		&& Building->BlueprintCanAttemptGenerateResources(DamageTags, Instigator))
 	{
 		bool bUsedCurve = false;

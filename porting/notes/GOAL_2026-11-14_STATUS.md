@@ -1,0 +1,22 @@
+# Goal list status (2026-11-14, user testing)
+
+Labels: done = code built, staged and smoke-booted (server reaches SERVER READY, rebinds logged); not live-tested with a client.
+
+| Item | Status | Where |
+|---|---|---|
+| Fall damage | done | `FortAthenaFallDamage.cpp`: speed sampled while MOVE_Falling, curve `AthenaFallingDamage` row `Player`, fraction x max health, ignores shields, honours `bIgnoreNextFallingDamage`. Logs `FallDamage:` |
+| Storm damage plays a gunshot sound | done (likely cause) | `FortAthenaHealth.cpp` `ApplyDamage`: the batched hit cue multicast is now skipped when there is no instigator and no causer (storm, fall) |
+| Chest / ammo box search | done | `FortAthenaLootSearch.cpp` binds `ServerAttemptInteract`; logs `LootSearch:` |
+| Floor loot | done | `FortAthenaLootWorld.cpp`; smoke log shows pickups spawned per streamed level (`LootWorld:`) |
+| Guns have no inventory slots | done | `FortAthenaLootTransfer.cpp`: server mirrors quickbar through `DelayedQuickBarActions`; hooks in `FortAthenaInventoryFlow.cpp` (`GiveItem`, `RemoveItem`, `SetupPlayer`) |
+| Pickup / swap / drop | done | `FortAthenaLootTransfer.cpp` rebinds `ServerHandlePickup*`, `ServerAttemptInventoryDrop`, `ServerAcknowledgeDelayedQuickBarAction` |
+| Emote outside lobby | done | `FortAthenaEmote.cpp`: `ServerPlayEmoteItem` gives and activates `GAB_Emote_Generic` (or the item's `CustomDanceAbility`) with the emote as SourceObject |
+| Ziplines | done (partial) | `FortAthenaMiscRpcs.cpp`: `ServerSendZiplineState` stores the client's state so it replicates |
+| POIs missing / no collision | not reproduced | Server log of the last test: 52 POI levels + 63 grid levels loaded, `SERVER READY` after about 4 min, POI meshes have collision (only decals/FX meshes lack it). Likely joined before SERVER READY. Retest after the READY line |
+| Breaking / editing builds | worker running | `generated/agents/loot/build/` (edit RPCs `ServerBeginEditing/Edit/EndEditing`, player-built piece damage) |
+| Skydive cannot move until glider deployed | not fixed | No log of the failing run exists (current logs are warmup only). Commit 95ebd51e switched movement to server authority; custom modes 3/4 run stock `PhysFalling` on the server. Needs a log with `-FortniteProbeMovementDefaults` of a bus drop |
+| Cannot skydive again after leaving the world border | not investigated | |
+| Glider / emote styles, style level always 1, player reporting | backend/profile | Variant choice and levels come from the MCP profile (backend). `AFortPlayerState::ServerChangeActiveVariantForCosmeticItem` is a stripped RPC (empty body) so the in-match preview does nothing; not implemented |
+| Porta-potty hiding | not implemented | Interaction goes through `ServerAttemptInteract` -> actor `ServerOnAttemptInteract` (native virtual, not reflected); only containers are handled so far |
+
+Housekeeping: root disk hit 100% (core dumps in the stage `Binaries/Linux`); 35 dumps dated before 2026-11-14 (34 GB) were deleted by mistake, the 7 dumps from 2026-11-14 were moved to `/mnt/vibrato/archive-from-root/cores-2026-11-14/`. Run smoke tests with `ulimit -c 0`. Codex is out of quota until 2026-11-18, so workers run through `agy`.

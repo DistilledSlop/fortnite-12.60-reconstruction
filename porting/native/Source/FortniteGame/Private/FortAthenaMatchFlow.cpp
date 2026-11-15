@@ -23,6 +23,7 @@
 #include "FortAthenaFallDamage.h"
 #include "FortAthenaEmote.h"
 #include "FortAthenaLootWorld.h"
+#include "FortAthenaBuildDamage.h"
 #include "FortAthenaMiscRpcs.h"
 #include "FortAthenaEndGame.h"
 #include "Engine/LevelStreaming.h"
@@ -1887,6 +1888,7 @@ namespace FortAthenaMatchFlowPrivate
         const float Delta = S.LastDriverTime < 0.0f ? 0.0f : WorldTime - S.LastDriverTime;
         S.LastDriverTime = WorldTime;
         FortAthenaInventory::Tick(World);
+        FortAthenaBuildDamage::TickAutoBuild(World, Delta);
         FortAthenaEndGame::Tick(GameMode, Delta);
         FinalizeVisibleFoundationStreams(World);
         FortAthenaLootWorld::Tick(GameMode);

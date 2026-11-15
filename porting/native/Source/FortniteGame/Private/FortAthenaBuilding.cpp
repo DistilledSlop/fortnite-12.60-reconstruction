@@ -1,5 +1,6 @@
 #include "FortAthenaBuilding.h"
 #include "FortBuildingClassCache.h"
+#include "FortAthenaBuildDamage.h"
 
 #include "AFortGameStateAthena.h"
 #include "AFortInventory.h"
@@ -88,6 +89,7 @@ namespace
 		Piece->bMirrored = Data.bMirrored ? 1 : 0;
 		if (const AFortPlayerStateAthena* PS = Cast<AFortPlayerStateAthena>(Controller->PlayerState))
 			Piece->SetTeam(PS->TeamIndex);
+		FortAthenaBuildDamage::InitializePlayerBuiltPiece(Piece, Controller);
 		Piece->ForceNetUpdate();
 		const int32 Remaining = Material ? Material->ItemEntry.Count - (bInfinite ? 0 : BuildCost) : -1;
 		if (!bInfinite && Material)
