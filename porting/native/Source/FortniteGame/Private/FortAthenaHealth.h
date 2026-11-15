@@ -43,7 +43,7 @@ namespace FortAthenaHealth
 	void BeginMatch(AFortGameModeAthena* GameMode);
 	AFortPlayerControllerAthena* GetSoleSurvivor(AFortGameModeAthena* GameMode);
 	void FinalizeSurvival(AFortGameModeAthena* GameMode, AFortPlayerStateAthena* PlayerState);
-	void SendPartialTeamStats(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller, int32 Place);
+	void SendPartialTeamStats(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller, int32 Place, bool bPadTotal = false);
 
 	// Returns the current count of alive player controllers.
 	int32 GetAlivePlayerCount();

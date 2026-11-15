@@ -202,13 +202,13 @@ void FortAthenaHealth::FinalizeSurvival(AFortGameModeAthena* GameMode, AFortPlay
 	PS->OnRep_NumMinutesAlive();
 }
 
-void FortAthenaHealth::SendPartialTeamStats(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller, int32 Place)
+void FortAthenaHealth::SendPartialTeamStats(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller, int32 Place, bool bPadTotal)
 {
 	if (!GameMode || RosterMode.Get() != GameMode || !Controller || !bRosterFrozen) return;
 	// Detailed stats and rewards require recovered semantics.
 	FAthenaMatchTeamStats TeamStats{};
 	TeamStats.Place = Place;
-	TeamStats.TotalPlayers = MatchParticipants;
+	TeamStats.TotalPlayers = bPadTotal ? FMath::Max(MatchParticipants, Place) : MatchParticipants;
 	Controller->ClientSendTeamStatsForPlayer(TeamStats);
 	UE_LOG(LogFortHealth, Display, TEXT("Health: Sent partial team stats to %s (Place #%d of %d)"),
 		*Controller->GetName(), Place, TeamStats.TotalPlayers);
@@ -754,7 +754,12 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 		VictimPC ? *VictimPC->GetName() : TEXT("Unknown"), NewPlayersLeft, OldPlayersLeft);
 
 	// 6. Placement and end-match stats for victim (D6 §2 step 7).
-	const int32 Place = NewPlayersLeft + 1;
+	// stand-in: a sole player who dies has nobody to place behind, which made the client treat the death as place #1 and show
+	// Victory Royale straight after a fatal fall (user report 2026.11.15). With no one left the death is reported as 2nd of at
+	// least 2 so the elimination screen is used, and the stats (which switch the client to the end screen) are sent after a
+	// short delay so the death presentation (health drop, death cue, death camera) is visible first.
+	const bool bNobodyLeft = NewPlayersLeft == 0;
+	const int32 Place = bNobodyLeft ? 2 : NewPlayersLeft + 1;
 	if (VictimState)
 	{
 		VictimState->Place = Place;
@@ -762,7 +767,22 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 		FinalizeSurvival(GameMode, VictimState);
 	}
 
-	SendPartialTeamStats(GameMode, VictimPC, Place);
+	static const float StatsDelay = []() { float V = 3.5f; FParse::Value(FCommandLine::Get(), TEXT("FortniteDeathStatsDelay="), V); return FMath::Max(0.0f, V); }();
+	if (StatsDelay > 0.0f && World && VictimPC)
+	{
+		TWeakObjectPtr<AFortGameModeAthena> WeakMode(GameMode);
+		TWeakObjectPtr<AFortPlayerControllerAthena> WeakPC(VictimPC);
+		FTimerHandle Handle;
+		World->GetTimerManager().SetTimer(Handle, FTimerDelegate::CreateLambda([WeakMode, WeakPC, Place, bNobodyLeft]()
+		{
+			if (WeakMode.IsValid() && WeakPC.IsValid())
+				SendPartialTeamStats(WeakMode.Get(), WeakPC.Get(), Place, bNobodyLeft);
+		}), StatsDelay, false);
+	}
+	else
+	{
+		SendPartialTeamStats(GameMode, VictimPC, Place, bNobodyLeft);
+	}
 
 	// Single winner boundary: pass the actual eliminating event and roster snapshot.
 	FortAthenaEndGame::OnPlayerEliminated(GameMode, OldPlayersLeft, NewPlayersLeft,
