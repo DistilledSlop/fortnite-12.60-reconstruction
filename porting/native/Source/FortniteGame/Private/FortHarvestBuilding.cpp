@@ -10,6 +10,9 @@
 #include "EFortResourceType.h"
 #include "Engine/CurveTable.h"
 #include "Engine/Engine.h"
+#include "Engine/NetConnection.h"
+#include "Engine/ActorChannel.h"
+#include "GameFramework/PlayerController.h"
 #include "Engine/World.h"
 #include "FBuildingWeakSpotData.h"
 #include "FProxyGameplayCueDamagePhysical.h"
@@ -384,29 +387,19 @@ namespace
 			}
 		}
 
-		// A spot stays where it is until it is hit; only then (or when the building has none yet) a new one is placed.
-		// The client drops a weak spot it was not hit on after a short while (user run 2026.11.15: once the spot was missed or
-		// mining paused it never came back, because the server still believed it existed). So a stored spot older than
-		// WeakSpotRespawnSeconds is re-sent at a new position on the next hit.
-		static TMap<TWeakObjectPtr<ABuildingSMActor>, double> SpotSentTime;
-		const double NowSeconds = Building->GetWorld() ? Building->GetWorld()->GetTimeSeconds() : 0.0;
-		constexpr double WeakSpotRespawnSeconds = 2.0;
-		if (FoundIdx != INDEX_NONE && !bWeakSpotHit)
-		{
-			const double* Sent = SpotSentTime.Find(Building);
-			if (Sent && NowSeconds - *Sent < WeakSpotRespawnSeconds)
-			{
-				return;
-			}
-		}
-		SpotSentTime.Add(Building, NowSeconds);
-		for (auto It = SpotSentTime.CreateIterator(); It; ++It)
-			if (!It.Key().IsValid())
-				It.RemoveCurrent();
+		// Retail (server 0x141c0b650 -> 0x1423b5c20): every non-fatal hit on a building that allows weak spots sends a spot, except
+		// a non-weak hit while the stored spot's timer still has more than 1.0 s left. The timer is armed with
+		// GetWeakSpotEnabledTimeout() + 1.0 s; that event is a BlueprintImplementableEvent that no cooked building blueprint
+		// overrides (no staged asset carries the name), so it returns 0 and the timer never has more than 1.0 s left: a new spot
+		// goes out on every hit, hit or miss. The earlier "keep it until it is hit" rule (and its 2 s patch) left the client
+		// without a circle after a miss or a pause (user run 2026.11.15). The stored hit count resets on a non-weak hit and
+		// grows on a weak one (0x141c0b650: entry+0x20), a new entry starts at 0.
+		// stand-in: the retail one-shot timer that removes the entry 1 s after the send is not ported; the newest spot simply
+		// stays the weak-spot target until the next hit replaces it, which only makes the hit test more forgiving.
 
 		FBuildingWeakSpotData Data;
 		Data.ParentBuilding = Building;
-		const int32 NextHitCount = (FoundIdx != INDEX_NONE) ? (PC->ActiveWeakSpots[FoundIdx].HitCount + (bWeakSpotHit ? 1 : 0)) : 1;
+		const int32 NextHitCount = (FoundIdx != INDEX_NONE && bWeakSpotHit) ? (PC->ActiveWeakSpots[FoundIdx].HitCount + 1) : 0;
 
 		FVector BasePos = Hit.ImpactPoint.IsNearlyZero() ? Building->GetActorLocation() : FVector(Hit.ImpactPoint);
 		FVector SpotNormal = Hit.ImpactNormal.IsNearlyZero() ? FVector::UpVector : FVector(Hit.ImpactNormal).GetSafeNormal();
@@ -460,6 +453,24 @@ namespace
 			}
 		}
 		PC->MulticastClearWeakSpotData(Building);
+	}
+	// Level props that get damaged must reach the client: the 2026.11.15 server log printed replicates=0 for every damage cue
+	// (Prop_Rock_492, Apllo_Tree_Birch_Large62, streetlights), so ProxyGameplayCueDamagePhysical, the health push and bDestroyed
+	// never left the server (no cracks, dead props left standing). Retail props replicate (OriginalDefaults: bReplicates=1,
+	// DORM_Initial, 1 Hz). Enabled per damaged building, not class-wide, and only on the server.
+	void EnsureBuildingReplicates(AActor* Building)
+	{
+		if (!Building || Building->GetLocalRole() != ROLE_Authority || Building->GetIsReplicated())
+		{
+			return;
+		}
+		Building->SetReplicates(true);
+		Building->NetUpdateFrequency = 1.0f; // retail 1 Hz; every damage event below also calls ForceNetUpdate
+		UE_LOG(LogFortHarvestBuilding, Display,
+			TEXT("Building: replication enabled on %s (netStartup=%d replicates=%d remoteRole=%d dormancy=%d freq=%.1f cull=%.0f)"),
+			*Building->GetName(), Building->IsNetStartupActor() ? 1 : 0, Building->GetIsReplicated() ? 1 : 0,
+			static_cast<int32>(Building->GetRemoteRole()), static_cast<int32>(Building->NetDormancy), Building->NetUpdateFrequency,
+			Building->NetCullDistanceSquared);
 	}
 } // namespace
 
@@ -599,6 +610,7 @@ void ForceBuildingHealth(ABuildingActor* Building, float NewHealth)
 		}
 	}
 
+	EnsureBuildingReplicates(Building);
 	Building->FlushNetDormancy(); // level props are DORM_Initial / 1 Hz: push the new health and attribute set to clients now
 	Building->ForceNetUpdate();
 }
@@ -637,17 +649,19 @@ void ReplicateBuildingDamageCue(
 	FProxyGameplayCueDamagePhysical Proxy;
 	Proxy.ProxyGameplayCueDamagePhysicalMagnitude = (Previous > 0) ? -Magnitude : Magnitude; // sign flips so repeated equal hits still replicate
 	Proxy.EffectContext = FGameplayEffectContextHandle(Context);
+	EnsureBuildingReplicates(Building);
 	Building->ProxyGameplayCueDamagePhysical = Proxy;
 	Building->FlushNetDormancy();
 	Building->ForceNetUpdate();
-	static int32 LoggedCues = 0;
-	if (LoggedCues < 40)
-	{
-		++LoggedCues;
-		UE_LOG(LogFortHarvestBuilding, Display, TEXT("Building: damage cue set on %s magnitude=%d fatal=%d replicates=%d dormancy=%d netUpdateFreq=%.1f"),
-			*Building->GetName(), Proxy.ProxyGameplayCueDamagePhysicalMagnitude, bFatal ? 1 : 0, Building->GetIsReplicated() ? 1 : 0,
-			static_cast<int32>(Building->NetDormancy), Building->NetUpdateFrequency);
-	}
+
+	// Delivery proof for the next server log: replicated flag, and whether the instigator's connection already has an actor
+	// channel for this building (it opens on the first replication pass after enabling, so the first hit may show channel=0).
+	APlayerController* InstigatorPC = Cast<APlayerController>(Instigator);
+	UNetConnection* Connection = InstigatorPC ? InstigatorPC->NetConnection : nullptr;
+	const bool bChannel = Connection && Connection->FindActorChannelRef(Building) != nullptr;
+	UE_LOG(LogFortHarvestBuilding, Display, TEXT("Building: damage cue set on %s magnitude=%d fatal=%d replicates=%d dormancy=%d netUpdateFreq=%.1f channel=%d"),
+		*Building->GetName(), Proxy.ProxyGameplayCueDamagePhysicalMagnitude, bFatal ? 1 : 0, Building->GetIsReplicated() ? 1 : 0,
+		static_cast<int32>(Building->NetDormancy), Building->NetUpdateFrequency, bChannel ? 1 : 0);
 }
 
 bool ApplyBuildingDamage(
