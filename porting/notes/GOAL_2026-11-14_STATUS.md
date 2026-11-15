@@ -93,3 +93,10 @@ Removed from the goal list: POIs (missing / no collision), styles (glider/emote/
 - Chests are no longer destroyed on search when they have a `SearchedMesh` (the Tiered_Chest blueprint has one plus open sound/FX events that run from the replicated flag); `bDestroyContainerOnSearch` read 1 on them.
 - Loot spread: chest drops now use the replicated toss (`PickupLocationData` Initial/Final/InProgress, rest timer at 0.75 s, same as dropped items) over a 110-250 unit radius in the chest's toss cone.
 - Pickups walked into were rejected as out of range with a growing distance (1971 then 2818): the pickup's projectile component had gravity and no collision. `InitializeWorldPickup` now stops and deactivates it; the reject log prints the pawn and pickup locations.
+
+### 2026-11-15 inventory slots and pickup pass (built, NOT client-tested)
+
+- Root cause of "backpack full / no inventory slots": `UFortItem::GetItemGuid()` is a stub that returns an empty guid (retail 0x140693ec0 does the same for the base class) and `UFortWorldItem` only overrides `NativeGetItemGuid()`. `FortAthenaLootTransfer` called `GetItemGuid()`, so `OnItemGranted` returned silently, no quickbar slot was assigned and no `DelayedQuickBarActions` Add was ever sent (no "Assigned quickbar slot" line in any log; "Granted pickup ... guid=0000"). All eight calls now use `NativeGetItemGuid()`.
+- Pickup flight: DefaultFlyTime 1.5 -> 0.4, flight clamp 0.45 s, destroy delay <= 0.6 s.
+- Non-container interactables: restore `bAllowInteract` from the class default before `BlueprintCanInteract` (doors read can=0), log class names. Containers with an empty instance tier group fall back to the class default group and log once per class.
+- Not found: the 61 s periodic ClientAdjustPosition bursts (456.4, 517.5, 578.6 s, three corrections 0.1 s apart) even with -FortniteClientMovementAuthority; cause unidentified.

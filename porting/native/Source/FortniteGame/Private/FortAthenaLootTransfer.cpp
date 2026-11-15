@@ -532,7 +532,9 @@ namespace
 		Pickup->SetReplicates(true);
 		Pickup->SetReplicateMovement(true);
 		// Native ctor defaults from 0x1420231b0 / 0x1419b7ab0.
-		Pickup->DefaultFlyTime = 1.5f;
+		// The constructor value (1.5 s) made the vanilla client's pickup flight (it sends the pickup's fly time back in ServerHandlePickup)
+		// read as very slow; retail loot snaps to the player in a fraction of a second.
+		Pickup->DefaultFlyTime = 0.4f;
 		Pickup->bClientUseInterpolationOnly = true;
 		Pickup->bUsePickupWidget = true;
 		Pickup->bDoServerHandlePickupTrace = true;
@@ -640,7 +642,7 @@ namespace
 					FortAthenaLootTransfer::OnItemGranted(PC, GrantedItem, EFortQuickBars::Primary, SwapSlot, bWasHoldingSwapped);
 					if (bWasHoldingSwapped)
 					{
-						FortAthenaInventory::ExecuteInventoryItem(PC, GrantedItem->GetItemGuid());
+						FortAthenaInventory::ExecuteInventoryItem(PC, GrantedItem->NativeGetItemGuid());
 						PC->ClientActivateSlot(EFortQuickBars::Primary, SwapSlot, 0.0f, true, true);
 					}
 
@@ -650,7 +652,7 @@ namespace
 						OutgoingEntry.ItemDefinition ? *OutgoingEntry.ItemDefinition->GetName() : TEXT("None"),
 						*SwapGuid.ToString(),
 						*Def->GetName(),
-						*GrantedItem->GetItemGuid().ToString(),
+						*GrantedItem->NativeGetItemGuid().ToString(),
 						SwapSlot,
 						AcceptedCount,
 						SrcEntry.Count - AcceptedCount);
@@ -672,7 +674,7 @@ namespace
 		{
 			if (Existing && Existing->ItemEntry.Count > 0)
 			{
-				ExistingGuids.Add(Existing->GetItemGuid());
+				ExistingGuids.Add(Existing->NativeGetItemGuid());
 			}
 		}
 
@@ -693,7 +695,7 @@ namespace
 			{
 				continue;
 			}
-			const FGuid InstGuid = Inst->GetItemGuid();
+			const FGuid InstGuid = Inst->NativeGetItemGuid();
 			if (!ExistingGuids.Contains(InstGuid))
 			{
 				if (FortAthenaLootTransfer::OnItemGranted(PC, Inst, EFortQuickBars::Max_None, INDEX_NONE, false))
@@ -702,7 +704,7 @@ namespace
 				}
 			}
 		}
-		if (!bAnyNewSlotted && GrantedItem && !ExistingGuids.Contains(GrantedItem->GetItemGuid()))
+		if (!bAnyNewSlotted && GrantedItem && !ExistingGuids.Contains(GrantedItem->NativeGetItemGuid()))
 		{
 			FortAthenaLootTransfer::OnItemGranted(PC, GrantedItem, EFortQuickBars::Max_None, INDEX_NONE, false);
 		}
@@ -710,7 +712,7 @@ namespace
 		UE_LOG(LogTemp, Display, TEXT("LootTransfer: Granted pickup pc=%s def=%s guid=%s accepted=%d remainder=%d loadedAmmo=%d"),
 			*PC->GetName(),
 			*Def->GetName(),
-			GrantedItem ? *GrantedItem->GetItemGuid().ToString() : TEXT("None"),
+			GrantedItem ? *GrantedItem->NativeGetItemGuid().ToString() : TEXT("None"),
 			AcceptedCount,
 			SrcEntry.Count - AcceptedCount,
 			SrcEntry.LoadedAmmo);
@@ -727,7 +729,7 @@ namespace
 		}
 
 		const float DefaultFly = (Pickup->DefaultFlyTime > 0.0f) ? Pickup->DefaultFlyTime : 0.25f;
-		const float ClampedFly = FMath::Clamp(InFlyTime > 0.0f ? InFlyTime : DefaultFly, 0.10f, 1.50f);
+		const float ClampedFly = FMath::Clamp(InFlyTime > 0.0f ? InFlyTime : DefaultFly, 0.10f, 0.45f);
 		const FVector PickupLoc = Pickup->GetActorLocation();
 		const FVector PawnLoc = Pawn->GetActorLocation();
 		FVector Dir = InStartDirection.GetSafeNormal();
@@ -754,7 +756,7 @@ namespace
 		{
 			FTimerHandle DestroyTimer;
 			TWeakObjectPtr<AFortPickup> WeakPickup(Pickup);
-			const float DestroyDelay = FMath::Clamp(ClampedFly + 0.15f, 0.35f, 1.50f);
+			const float DestroyDelay = FMath::Clamp(ClampedFly + 0.1f, 0.25f, 0.6f);
 			World->GetTimerManager().SetTimer(
 				DestroyTimer,
 				[WeakPickup]()
@@ -1001,7 +1003,7 @@ void FortAthenaLootTransfer::SetupPlayerQuickBars(AFortPlayerController* Control
 		{
 			continue;
 		}
-		if (!FindItemSlot(State, Item->GetItemGuid()).IsValid())
+		if (!FindItemSlot(State, Item->NativeGetItemGuid()).IsValid())
 		{
 			OnItemGranted(Controller, Item, EFortQuickBars::Max_None, INDEX_NONE, false);
 		}
@@ -1016,7 +1018,7 @@ bool FortAthenaLootTransfer::OnItemGranted(AFortPlayerController* Controller, UF
 		return false;
 	}
 	UFortItemDefinition* Def = Item->GetItemDefinitionBP();
-	const FGuid Guid = Item->GetItemGuid();
+	const FGuid Guid = Item->NativeGetItemGuid();
 	if (!Def || !Guid.IsValid())
 	{
 		return false;

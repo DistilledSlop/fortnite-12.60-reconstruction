@@ -208,8 +208,20 @@ namespace
 					const float Dist2D = FVector::Dist2D(BpPawn->GetActorLocation(), Origin) - FMath::Max(Extent.X, Extent.Y);
 					if (Dist2D <= 400.0f && (InteractType == TInteractionType::IT_Simple || InteractType == TInteractionType::IT_LongPress))
 					{
+						// bAllowInteract is 0 on placed props although the class default is 1 (same cause as the containers); the
+						// blueprint checks usually read it, so restore the class default before asking.
+						if (!BpActor->bAllowInteract)
+						{
+							const ABuildingActor* Cdo = BpActor->GetClass()->GetDefaultObject<ABuildingActor>();
+							if (Cdo && Cdo->bAllowInteract)
+							{
+								UE_LOG(LogTemp, Display, TEXT("LootSearch: %s (class %s) had bAllowInteract=0, class default 1; restoring"),
+									*BpActor->GetName(), *BpActor->GetClass()->GetName());
+								BpActor->bAllowInteract = true;
+							}
+						}
 						const bool bCan = BpActor->BlueprintCanInteract(BpPawn, InteractionBeingAttempted, InteractType);
-						UE_LOG(LogTemp, Display, TEXT("LootSearch: blueprint interact %s by %s type=%d attempt=%d can=%d"), *BpActor->GetName(),
+						UE_LOG(LogTemp, Display, TEXT("LootSearch: blueprint interact %s (class %s) by %s type=%d attempt=%d can=%d"), *BpActor->GetName(), *BpActor->GetClass()->GetName(),
 							*BpPawn->GetName(), static_cast<int32>(InteractType), static_cast<int32>(InteractionBeingAttempted), bCan ? 1 : 0);
 						if (bCan)
 						{
@@ -366,7 +378,21 @@ FName FortAthenaLootSearch::ResolveContainerLootTierGroup(const ABuildingContain
 		if (UpgradeGroup != NAME_None)
 			return UpgradeGroup;
 	}
-	return Container->SearchLootTierGroup;
+	if (Container->SearchLootTierGroup != NAME_None)
+		return Container->SearchLootTierGroup;
+	// The placed instance can carry an empty group while the blueprint class names one (cooked levels store only differences);
+	// fall back to the class default, and say so once per class so the remaining empty ones can be identified.
+	const ABuildingContainer* Cdo = Container->GetClass()->GetDefaultObject<ABuildingContainer>();
+	static TSet<FName> LoggedEmpty;
+	if (Cdo && Cdo->SearchLootTierGroup != NAME_None)
+		return Cdo->SearchLootTierGroup;
+	if (!LoggedEmpty.Contains(Container->GetClass()->GetFName()))
+	{
+		LoggedEmpty.Add(Container->GetClass()->GetFName());
+		UE_LOG(LogTemp, Display, TEXT("LootSearch: no loot tier group on %s (class %s, instance and class default both empty, potentialUpgrades=%d chosen=%d)"),
+			*Container->GetName(), *Container->GetClass()->GetName(), Container->PotentialRandomUpgrades.Num(), Container->ChosenRandomUpgrade);
+	}
+	return NAME_None;
 }
 
 bool FortAthenaLootSearch::RollAndSpawnContainerLoot(
