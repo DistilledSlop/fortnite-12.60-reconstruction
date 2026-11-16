@@ -49,6 +49,8 @@
 #include "UFortWorldItemDefinition.h"
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaLoot.h"
+#include "FortAthenaLootRoll.h"
+#include "FortAthenaLootSearch.h"
 #include "FortHarvestBuilding.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFortBpNatives, Log, All);
@@ -654,6 +656,77 @@ namespace
 		P_NATIVE_END;
 	}
 
+	DEFINE_FUNCTION(ExecPickLootDrops)
+	{
+		P_GET_OBJECT(UObject, WorldContextObject);
+		P_GET_TARRAY_REF(FFortItemEntry, OutLootToDrop);
+		P_GET_PROPERTY(FNameProperty, TierGroupName);
+		P_GET_PROPERTY(FIntProperty, WorldLevel);
+		P_GET_PROPERTY(FIntProperty, ForcedLootTier);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		bool bOk = false;
+		UWorld* World = WorldOf(WorldContextObject);
+		const AFortGameModeAthena* Mode = World ? Cast<AFortGameModeAthena>(World->GetAuthGameMode()) : nullptr;
+		if (Mode)
+		{
+			FortAthenaLootRoll::FRequest Request;
+			Request.Group = TierGroupName;
+			Request.WorldLevel = WorldLevel;
+			Request.LootTier = ForcedLootTier >= 0 ? ForcedLootTier : -1;
+			TArray<FortAthenaLootRoll::FDrop> Drops;
+			FString Error;
+			// stand-in: item levels are taken from the roll's loot level without the LootLevel curve table.
+			bOk = FortAthenaLootRoll::RollForMode(Mode, Request, []() { return static_cast<double>(FMath::FRand()); },
+				[](UFortItemDefinition*, int32 LootLevel, int32& OutLevel) { OutLevel = FMath::Max(LootLevel, 1); return true; }, Drops, Error);
+			if (bOk)
+			{
+				for (const FortAthenaLootRoll::FDrop& Drop : Drops)
+				{
+					if (Drop.Definition && Drop.Count > 0)
+					{
+						FFortItemEntry Entry{};
+						Entry.ItemDefinition = Drop.Definition;
+						Entry.Count = Drop.Count;
+						Entry.Level = Drop.Level;
+						Entry.ItemGuid = FGuid::NewGuid();
+						OutLootToDrop.Add(Entry);
+					}
+				}
+			}
+			else
+			{
+				UE_LOG(LogFortBpNatives, Warning, TEXT("PickLootDrops: group=%s roll failed: %s"), *TierGroupName.ToString(), *Error);
+			}
+		}
+		*static_cast<bool*>(RESULT_PARAM) = bOk && OutLootToDrop.Num() > 0;
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecBP_SpawnLoot)
+	{
+		P_GET_OBJECT(AFortPlayerPawn, PlayerPawn);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		ABuildingContainer* Container = Cast<ABuildingContainer>(Context);
+		AFortPlayerController* Controller = PlayerPawn ? Cast<AFortPlayerController>(PlayerPawn->GetController()) : nullptr;
+		*static_cast<bool*>(RESULT_PARAM) = Container && Controller && FortAthenaLootSearch::TrySearchContainer(Controller, Container);
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecK2_ConsumeAmmo)
+	{
+		P_GET_PROPERTY(FIntProperty, Quantity);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		if (AFortWeapon* Weapon = Cast<AFortWeapon>(Context))
+		{
+			Weapon->AmmoCount = FMath::Max(0, Weapon->AmmoCount - FMath::Max(Quantity, 0));
+			Weapon->ForceNetUpdate();
+		}
+		P_NATIVE_END;
+	}
+
 	// ---- stubbed server RPCs ---------------------------------------------------------------------------------------------
 
 	// ServerCombineInventoryItems: empty in the retail client (stripped server body, shared stub 0x1406801c0).
@@ -703,6 +776,19 @@ namespace
 		P_NATIVE_END;
 	}
 
+	// ServerSetAutoEquipBetterItems: stand-in that stores the client preference in the replicated flag (the retail body 0x1423ac470 was not read).
+	DEFINE_FUNCTION(ExecServerSetAutoEquipBetterItems)
+	{
+		P_GET_UBOOL(bAutoEquip);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		if (AFortPlayerController* Controller = Cast<AFortPlayerController>(Context))
+		{
+			Controller->bAutoEquipBetterItems = bAutoEquip;
+		}
+		P_NATIVE_END;
+	}
+
 	struct FNativeBinding
 	{
 		const TCHAR* ClassPath;
@@ -742,8 +828,12 @@ namespace
 		{ TEXT("/Script/FortniteGame.FortPickup"), TEXT("GetItemEntry"), &ExecGetItemEntry },
 		{ TEXT("/Script/FortniteGame.FortPlayerState"), TEXT("GetPlayerPawnOrVehicleDriver"), &ExecGetPlayerPawnOrVehicleDriver },
 		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("WeaponDataIsValid"), &ExecWeaponDataIsValid },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("PickLootDrops"), &ExecPickLootDrops },
+		{ TEXT("/Script/FortniteGame.BuildingContainer"), TEXT("BP_SpawnLoot"), &ExecBP_SpawnLoot },
+		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("K2_ConsumeAmmo"), &ExecK2_ConsumeAmmo },
 		{ TEXT("/Script/FortniteGame.FortPlayerController"), TEXT("ServerCombineInventoryItems"), &ExecServerCombineInventoryItems },
 		{ TEXT("/Script/FortniteGame.FortPlayerController"), TEXT("ServerSpotActor"), &ExecServerSpotActor },
+		{ TEXT("/Script/FortniteGame.FortPlayerController"), TEXT("ServerSetAutoEquipBetterItems"), &ExecServerSetAutoEquipBetterItems },
 		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("ServerReleaseWeaponAbility"), &ExecServerReleaseWeaponAbility },
 	};
 }

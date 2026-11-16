@@ -42,6 +42,10 @@ namespace FortAthenaHealth
 	// Freeze the starting roster and participation clock at the reconstructed aircraft boundary.
 	void BeginMatch(AFortGameModeAthena* GameMode);
 	AFortPlayerControllerAthena* GetSoleSurvivor(AFortGameModeAthena* GameMode);
+	// Team modes: fills OutTeam with every alive player and returns true when they all share one team (and at least one is alive).
+	bool GetSingleAliveTeam(AFortGameModeAthena* GameMode, TArray<AFortPlayerControllerAthena*>& OutTeam);
+	// Number of distinct teams with at least one alive player.
+	int32 GetAliveTeamCount(AFortGameModeAthena* GameMode);
 	void FinalizeSurvival(AFortGameModeAthena* GameMode, AFortPlayerStateAthena* PlayerState);
 	void SendPartialTeamStats(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller, int32 Place, bool bPadTotal = false);
 

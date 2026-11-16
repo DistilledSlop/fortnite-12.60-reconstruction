@@ -18,52 +18,51 @@ namespace
 {
     TWeakObjectPtr<AFortGameModeAthena> ActiveMode;
     bool bStarted = false;
-    bool bReportedUnsupported = false;
-
+    
     void ResetFor(AFortGameModeAthena* Mode)
     {
         if (ActiveMode.Get() != Mode)
         {
             ActiveMode = Mode;
             bStarted = false;
-            bReportedUnsupported = false;
         }
     }
 
-    void BeginSolo(AFortGameModeAthena* Mode, AFortPlayerControllerAthena* Winner,
-                   AFortPawn* Finisher, UFortWeaponItemDefinition* Weapon, EDeathCause Cause)
+    void BeginWin(AFortGameModeAthena* Mode, const TArray<AFortPlayerControllerAthena*>& Winners,
+                  AFortPawn* Finisher, UFortWeaponItemDefinition* Weapon, EDeathCause Cause)
     {
+        AFortPlayerControllerAthena* Winner = Winners.Num() > 0 ? Winners[0] : nullptr;
         AFortGameStateAthena* GS = Mode ? Mode->GetGameState<AFortGameStateAthena>() : nullptr;
         AFortPlayerStateAthena* PS = Winner ? Cast<AFortPlayerStateAthena>(Winner->PlayerState) : nullptr;
         UFortPlaylistAthena* Playlist = GS ? GS->GetCurrentPlaylistAthena() : nullptr;
         if (!GS || !PS || !Playlist || bStarted || GS->bForceTeamScorePlacementOnDeath ||
             (GS->GamePhase != EAthenaGamePhase::Aircraft && GS->GamePhase != EAthenaGamePhase::SafeZones))
             return;
-        // stand-in: other win-condition modes and team placement require the original mutator and team accounting.
-        if (Playlist->MaxTeamSize != 1)
-        {
-            if (!bReportedUnsupported)
-                UE_LOG(LogTemp, Warning, TEXT("EndGame: team and special-mode win checks are not implemented"));
-            bReportedUnsupported = true;
-            return;
-        }
+        // stand-in: other special win-condition modes need the original mutator accounting. Solo and last-team-standing
+        // (duo/squad) are handled; the original team placement and results reporting are not reconstructed.
         bStarted = true;
-        FortAthenaHealth::FinalizeSurvival(Mode, PS);
-        PS->Place = 1;
-        PS->OnRep_Place();
         GS->WinningTeam = PS->TeamIndex;
         GS->WinningPlayerState = PS;
-        bool bFound = false;
-        for (const FFortWinnerPlayerData& Entry : GS->WinningPlayerList)
-            bFound |= Entry.PlayerId == PS->GetPlayerId();
-        if (!bFound)
+        for (AFortPlayerControllerAthena* WinnerPC : Winners)
         {
-            FFortWinnerPlayerData Entry{};
-            Entry.PlayerId = PS->GetPlayerId();
-            GS->WinningPlayerList.Add(Entry);
+            AFortPlayerStateAthena* WinnerState = WinnerPC ? Cast<AFortPlayerStateAthena>(WinnerPC->PlayerState) : nullptr;
+            if (!WinnerState)
+                continue;
+            FortAthenaHealth::FinalizeSurvival(Mode, WinnerState);
+            WinnerState->Place = 1;
+            WinnerState->OnRep_Place();
+            bool bFound = false;
+            for (const FFortWinnerPlayerData& Entry : GS->WinningPlayerList)
+                bFound |= Entry.PlayerId == WinnerState->GetPlayerId();
+            if (!bFound)
+            {
+                FFortWinnerPlayerData Entry{};
+                Entry.PlayerId = WinnerState->GetPlayerId();
+                GS->WinningPlayerList.Add(Entry);
+            }
+            WinnerPC->ClientNotifyWon(Finisher, Weapon, Cause);
+            FortAthenaHealth::SendPartialTeamStats(Mode, WinnerPC, 1);
         }
-        Winner->ClientNotifyWon(Finisher, Weapon, Cause);
-        FortAthenaHealth::SendPartialTeamStats(Mode, Winner, 1);
         GS->OnRep_WinningTeam();
         GS->OnRep_WinningPlayerState();
         GS->OnRep_WinningPlayerList();
@@ -71,7 +70,7 @@ namespace
         GS->GamePhase = EAthenaGamePhase::EndGame;
         GS->OnRep_GamePhase(OldPhase);
         GS->ForceNetUpdate();
-        UE_LOG(LogTemp, Display, TEXT("EndGame: solo winner %s; phase EndGame"), *Winner->GetName());
+        UE_LOG(LogTemp, Display, TEXT("EndGame: winner team %d (%d players, first %s); phase EndGame"), PS->TeamIndex, Winners.Num(), *Winner->GetName());
         // stand-in: the original end-match helper, results reporting and delayed return are not reconstructed here.
         UE_LOG(LogTemp, Warning, TEXT("EndGame: end-match helper, results reporting, post-game return and shutdown are unresolved"));
     }
@@ -89,8 +88,12 @@ void FortAthenaEndGame::OnPlayerEliminated(AFortGameModeAthena* GameMode, int32 
     if (!IsEnabled() || !GameMode) return;
     ResetFor(GameMode);
     AFortGameStateAthena* GS = GameMode->GetGameState<AFortGameStateAthena>();
-    if (GS && OldPlayersLeft >= 2 && NewPlayersLeft == 1 && GS->PlayersLeft == NewPlayersLeft && Survivor)
-        BeginSolo(GameMode, Survivor, FinisherPawn, FinishingWeapon, DeathCause);
+    TArray<AFortPlayerControllerAthena*> Team;
+    if (GS && NewPlayersLeft >= 1 && OldPlayersLeft > NewPlayersLeft && GS->PlayersLeft == NewPlayersLeft &&
+        FortAthenaHealth::GetSingleAliveTeam(GameMode, Team) &&
+        // solo playlists end on the last player regardless of how team indices were assigned
+        (!GS->GetCurrentPlaylistAthena() || GS->GetCurrentPlaylistAthena()->MaxTeamSize != 1 || Team.Num() == 1))
+        BeginWin(GameMode, Team, FinisherPawn, FinishingWeapon, DeathCause);
 }
 
 void FortAthenaEndGame::Tick(AFortGameModeAthena* GameMode, float DeltaSeconds)
@@ -105,5 +108,5 @@ void FortAthenaEndGame::Tick(AFortGameModeAthena* GameMode, float DeltaSeconds)
     // stand-in: the testing switch permits one player without a prior elimination. Reject ambiguous rosters.
     AFortPlayerControllerAthena* Survivor = FortAthenaHealth::GetSoleSurvivor(GameMode);
     if (Survivor)
-        BeginSolo(GameMode, Survivor, Cast<AFortPawn>(Survivor->GetPawn()), nullptr, EDeathCause::WonMatch);
+        BeginWin(GameMode, TArray<AFortPlayerControllerAthena*>{ Survivor }, Cast<AFortPawn>(Survivor->GetPawn()), nullptr, EDeathCause::WonMatch);
 }

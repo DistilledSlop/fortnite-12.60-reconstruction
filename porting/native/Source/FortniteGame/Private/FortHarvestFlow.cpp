@@ -130,17 +130,10 @@ namespace FortHarvest
 
             // Ammo: one bullet batch per accepted report (CartridgePerFire hits can share one report).
             const int32 AmmoCost = FMath::Max(Row->AmmoCostPerFire, 1);
-            // The server-side AmmoCount is only meaningful if the equip path initialised it from the item's LoadedAmmo (not verified);
-            // an uninitialised 0 must not block all damage, so the shot is logged and accepted, and ammo is only decremented when positive.
-            if (Weapon->AmmoCount >= AmmoCost)
-            {
-                Weapon->AmmoCount -= AmmoCost;
-                Weapon->ForceNetUpdate();
-            }
-            else
-            {
-                UE_LOG(LogFortHarvest, Display, TEXT("Combat: RangedShot ammo not tracked on the server (AmmoCount=%d, cost=%d) weapon=%s"), Weapon->AmmoCount, AmmoCost, *GetNameSafe(Weapon));
-            }
+            // Ammo is deliberately NOT changed on the server. The client predicts consumption and reload locally; the server has no
+            // reload implementation, so a server-side decrement would be replicated back over the client's reloaded value (AmmoCount
+            // replicates on change) and make reloads appear to fail. The count is logged so a later reload port can verify it.
+            UE_LOG(LogFortHarvest, Verbose, TEXT("Combat: RangedShot weapon=%s serverAmmo=%d cost=%d (not modified)"), *GetNameSafe(Weapon), Weapon->AmmoCount, AmmoCost);
 
             const uint8 ShooterTeam = [&]() { AFortPlayerState* S = Cast<AFortPlayerState>(PC->PlayerState); return S ? S->NativeGetTeam163() : uint8(255); }();
             for (int32 Index = 0; Index < TargetData.Num(); ++Index)

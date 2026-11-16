@@ -22,6 +22,7 @@
 // - stand-in: marks behaviours that are stand-ins or re-creations of server logic compiled out of the client exe.
 
 #include "FortAthenaHealth.h"
+#include "UFortPlaylistAthena.h"
 #include "FortAthenaLootTransfer.h"
 #include "FortAthenaEndGame.h"
 #include "UFortAssetManager.h"
@@ -192,6 +193,38 @@ AFortPlayerControllerAthena* FortAthenaHealth::GetSoleSurvivor(AFortGameModeAthe
 {
 	if (!GameMode || RosterMode.Get() != GameMode || GetAlivePlayerCount() != 1) return nullptr;
 	return GetAlivePlayers()[0].Get();
+}
+
+bool FortAthenaHealth::GetSingleAliveTeam(AFortGameModeAthena* GameMode, TArray<AFortPlayerControllerAthena*>& OutTeam)
+{
+	OutTeam.Reset();
+	if (!GameMode || RosterMode.Get() != GameMode) return false;
+	int32 Team = INDEX_NONE;
+	for (const TWeakObjectPtr<AFortPlayerControllerAthena>& Weak : GetAlivePlayers())
+	{
+		AFortPlayerControllerAthena* PC = Weak.Get();
+		AFortPlayerStateAthena* PS = PC ? Cast<AFortPlayerStateAthena>(PC->PlayerState) : nullptr;
+		if (!PS) continue;
+		if (Team == INDEX_NONE) Team = PS->TeamIndex;
+		else if (Team != PS->TeamIndex) { OutTeam.Reset(); return false; }
+		OutTeam.Add(PC);
+	}
+	return OutTeam.Num() > 0;
+}
+
+int32 FortAthenaHealth::GetAliveTeamCount(AFortGameModeAthena* GameMode)
+{
+	TSet<int32> Teams;
+	if (GameMode && RosterMode.Get() == GameMode)
+	{
+		for (const TWeakObjectPtr<AFortPlayerControllerAthena>& Weak : GetAlivePlayers())
+		{
+			const AFortPlayerControllerAthena* PC = Weak.Get();
+			if (const AFortPlayerStateAthena* PS = PC ? Cast<AFortPlayerStateAthena>(PC->PlayerState) : nullptr)
+				Teams.Add(PS->TeamIndex);
+		}
+	}
+	return Teams.Num();
 }
 
 void FortAthenaHealth::FinalizeSurvival(AFortGameModeAthena* GameMode, AFortPlayerStateAthena* PS)
@@ -763,7 +796,10 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 	// least 2 so the elimination screen is used, and the stats (which switch the client to the end screen) are sent after a
 	// short delay so the death presentation (health drop, death cue, death camera) is visible first.
 	const bool bNobodyLeft = NewPlayersLeft == 0;
-	const int32 Place = bNobodyLeft ? 2 : NewPlayersLeft + 1;
+	// Team playlists place by teams left, not players left (stand-in: a victim whose teammates are alive is provisionally placed the same).
+	const UFortPlaylistAthena* VictimPlaylist = GameState ? GameState->GetCurrentPlaylistAthena() : nullptr;
+	const bool bTeamPlaylist = VictimPlaylist && VictimPlaylist->MaxTeamSize > 1;
+	const int32 Place = bNobodyLeft ? 2 : (bTeamPlaylist ? GetAliveTeamCount(GameMode) : NewPlayersLeft) + 1;
 	if (VictimState)
 	{
 		VictimState->Place = Place;
