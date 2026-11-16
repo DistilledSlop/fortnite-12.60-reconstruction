@@ -15,6 +15,7 @@
 //   Wall, Floor, Stair_W, RoofS (1 each), EditTool (1), WoodItemData (0).
 
 #include "FortAthenaInventoryFlow.h"
+#include "UFortGameplayAbility_Reload.h"
 #include "FortAthenaCombatEquip.h"
 #include "EngineUtils.h"
 #include "UObject/ScriptMacros.h"
@@ -161,7 +162,15 @@ namespace
 		bool bResolved = true;
 		bResolved &= Add(Definition->GetPrimaryFireAbility(), 0, !Definition->PrimaryFireAbility.IsNull());
 		bResolved &= Add(Definition->GetSecondaryFireAbility(), 1, !Definition->SecondaryFireAbility.IsNull());
-		bResolved &= Add(Definition->GetReloadAbility(), 2, !Definition->ReloadAbility.IsNull());
+		// The weapon definitions in the cooked data do not set ReloadAbility; the retail default (set in the definition's native
+		// constructor, which is not recovered) is the native reload ability. Without a granted reload spec the weapon's replicated
+		// ReloadAbilitySpecHandle stays invalid and the client's reload start returns immediately, so ammo weapons fall back to it.
+		TSubclassOf<UFortGameplayAbility> ReloadAbilityClass = Definition->GetReloadAbility();
+		if (!ReloadAbilityClass && Definition->ReloadAbility.IsNull() && Definition->GetAmmoWorldItemDefinitionNative())
+		{
+			ReloadAbilityClass = UFortGameplayAbility_Reload::StaticClass();
+		}
+		bResolved &= Add(ReloadAbilityClass, 2, !Definition->ReloadAbility.IsNull());
 		bResolved &= Add(Definition->GetOnHitAbility(), 3, !Definition->OnHitAbility.IsNull());
 		const auto Equipped = Definition->GetEquippedAbilities();
 		int32 Expected = 0;
@@ -612,6 +621,46 @@ int32 FortAthenaInventory::RemoveItem(AFortPlayerController* Controller, const F
 	Inventory->NativeNotifyInventoryChanged();
 	UE_LOG(LogTemp, Display, TEXT("Inventory: removed %d of %s"), Removed, *ItemGuid.ToString());
 	return Removed;
+}
+
+int32 FortAthenaInventory::ConsumeAmmo(AFortPlayerController* Controller, UFortItemDefinition* AmmoDefinition, int32 Count)
+{
+	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
+	if (!IsEnabled() || !Inventory || !AmmoDefinition || Count <= 0)
+	{
+		return 0;
+	}
+	TArray<FGuid> Stacks;
+	for (UFortWorldItem* Item : Inventory->Inventory.ItemInstances)
+	{
+		if (Item && Item->ItemEntry.ItemDefinition == AmmoDefinition && Item->ItemEntry.Count > 0)
+		{
+			Stacks.Add(Item->ItemEntry.ItemGuid);
+		}
+	}
+	int32 Removed = 0;
+	for (const FGuid& Guid : Stacks)
+	{
+		if (Removed >= Count)
+		{
+			break;
+		}
+		Removed += RemoveItem(Controller, Guid, Count - Removed);
+	}
+	return Removed;
+}
+
+void FortAthenaInventory::SetLoadedAmmo(AFortPlayerController* Controller, const FGuid& WeaponItemGuid, int32 LoadedAmmo)
+{
+	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
+	if (!Inventory)
+	{
+		return;
+	}
+	if (UFortWorldItem* Item = FindItemByGuid(Inventory, WeaponItemGuid))
+	{
+		Item->ItemEntry.LoadedAmmo = LoadedAmmo;
+	}
 }
 
 void FortAthenaInventory::ExecuteInventoryItem(AFortPlayerController* Controller, const FGuid& ItemGuid)

@@ -1,4 +1,5 @@
 #include "FortAthenaCombatEquip.h"
+#include "FortWeaponReload.h"
 
 #include "AFortPawn.h"
 #include "AFortPlayerState.h"
@@ -163,7 +164,7 @@ bool FortAthenaCombatEquip::EnsureGrants(AFortPlayerState* Owner, AFortPawn* Ava
 				{
 				case 0: Weapon->PrimaryAbilitySpecHandle = Handle; break;
 				case 1: Weapon->SecondaryAbilitySpecHandle = Handle; break;
-				case 2: Weapon->ReloadAbilitySpecHandle = Handle; break;
+				case 2: Weapon->ReloadAbilitySpecHandle = Handle; FortWeaponReload::BindAbilitySystem(ASC); break;
 				case 3: Weapon->ImpactAbilitySpecHandle = Handle; break;
 				default: Weapon->EquippedAbilityHandles.Add(Handle); break;
 				}

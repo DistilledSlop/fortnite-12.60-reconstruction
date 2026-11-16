@@ -36,6 +36,12 @@ namespace FortAthenaInventory
 	// Used by the drop/pickup slice; no RPC calls it yet.
 	int32 RemoveItem(AFortPlayerController* Controller, const FGuid& ItemGuid, int32 Count);
 
+	// Removes up to Count of the ammo item AmmoDefinition, taking from every stack of it. Returns the number removed.
+	int32 ConsumeAmmo(AFortPlayerController* Controller, UFortItemDefinition* AmmoDefinition, int32 Count);
+
+	// Stores the weapon's current magazine in its item entry (the server copy; used when the weapon is dropped or re-equipped).
+	void SetLoadedAmmo(AFortPlayerController* Controller, const FGuid& WeaponItemGuid, int32 LoadedAmmo);
+
 	// Server side of AFortPlayerController::ServerExecuteInventoryItem: find the entry, equip its definition on the
 	// controller's pawn. Unknown guids are ignored (logged).
 	void ExecuteInventoryItem(AFortPlayerController* Controller, const FGuid& ItemGuid);

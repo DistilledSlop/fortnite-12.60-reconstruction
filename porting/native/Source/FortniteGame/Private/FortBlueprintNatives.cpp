@@ -60,6 +60,7 @@
 #include "FortAthenaLootRoll.h"
 #include "FortAthenaLootSearch.h"
 #include "FortHarvestBuilding.h"
+#include "FortWeaponReload.h"
 #include "AFortGameStateAthena.h"
 #include "UFortPlaylistAthena.h"
 #include "UOpenableInterface.h"
@@ -1013,6 +1014,15 @@ namespace
 		P_NATIVE_END;
 	}
 
+	// Authority-only step a reload ability graph calls at its load point.
+	DEFINE_FUNCTION(ExecTryReloadAmmoFromAbility)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*static_cast<bool*>(RESULT_PARAM) = FortWeaponReload::LoadMagazine(Cast<AFortWeapon>(Context));
+		P_NATIVE_END;
+	}
+
 	DEFINE_FUNCTION(ExecGetWeaponDataGameplayTags)
 	{
 		P_GET_STRUCT_REF(FGameplayTagContainer, GameplayTags);
@@ -1380,6 +1390,7 @@ namespace
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("IsCreativeOrPlaygroundModePlaylist"), &ExecIsCreativeOrPlaygroundModePlaylist },
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("CreateTossAmmoPickupForWeaponItemDefinitionAtLocation"), &ExecCreateTossAmmoPickup },
 		{ TEXT("/Script/FortniteGame.FortPickup"), TEXT("TossPickup"), &ExecTossPickup },
+		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("TryReloadAmmoFromAbility"), &ExecTryReloadAmmoFromAbility },
 		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("HasInfiniteAmmo"), &ExecHasInfiniteAmmo },
 		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("InventoryOwnerHasInfiniteAmmo"), &ExecInventoryOwnerHasInfiniteAmmo },
 		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("GetWeaponDataGameplayTags"), &ExecGetWeaponDataGameplayTags },

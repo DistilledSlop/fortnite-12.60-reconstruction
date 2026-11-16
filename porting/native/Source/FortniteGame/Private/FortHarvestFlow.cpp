@@ -10,6 +10,7 @@
 #include "Abilities/GameplayAbility.h"
 #include "Engine/EngineBaseTypes.h"
 #include "Engine/World.h"
+#include "FortWeaponReload.h"
 #include "Misc/CommandLine.h"
 #include "Misc/CoreDelegates.h"
 #include "Misc/Parse.h"
@@ -130,10 +131,10 @@ namespace FortHarvest
 
             // Ammo: one bullet batch per accepted report (CartridgePerFire hits can share one report).
             const int32 AmmoCost = FMath::Max(Row->AmmoCostPerFire, 1);
-            // Ammo is deliberately NOT changed on the server. The client predicts consumption and reload locally; the server has no
-            // reload implementation, so a server-side decrement would be replicated back over the client's reloaded value (AmmoCount
-            // replicates on change) and make reloads appear to fail. The count is logged so a later reload port can verify it.
-            UE_LOG(LogFortHarvest, Verbose, TEXT("Combat: RangedShot weapon=%s serverAmmo=%d cost=%d (not modified)"), *GetNameSafe(Weapon), Weapon->AmmoCount, AmmoCost);
+            // Server-authoritative magazine: each accepted shot report takes its cost from the replicated AmmoCount (the client's local count
+            // is a prediction it reconciles against this value), and FortWeaponReload refills it when the reload ability runs.
+            FortWeaponReload::ConsumeShot(PC, Weapon, AmmoCost);
+            UE_LOG(LogFortHarvest, Verbose, TEXT("Combat: RangedShot weapon=%s serverAmmo=%d cost=%d"), *GetNameSafe(Weapon), Weapon->AmmoCount, AmmoCost);
 
             const uint8 ShooterTeam = [&]() { AFortPlayerState* S = Cast<AFortPlayerState>(PC->PlayerState); return S ? S->NativeGetTeam163() : uint8(255); }();
             for (int32 Index = 0; Index < TargetData.Num(); ++Index)
