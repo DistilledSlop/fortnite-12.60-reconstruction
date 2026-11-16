@@ -1407,3 +1407,37 @@ AFortPickupAthena* FortAthenaLootTransfer::SpawnTossedPickupFromEntry(UWorld* Wo
 
 	return Pickup;
 }
+
+int32 FortAthenaLootTransfer::DropAllOnDeath(AFortPlayerController* VictimController, AFortPawn* VictimPawn)
+{
+	AFortInventory* Inventory = VictimController ? VictimController->WorldInventory : nullptr;
+	UWorld* World = VictimPawn ? VictimPawn->GetWorld() : nullptr;
+	if (!Inventory || !World)
+	{
+		return 0;
+	}
+	// stand-in: the original elimination drop (backpack pickup/spread rules) is not recovered; each droppable stack becomes one
+	// pickup tossed in a different direction so the loot fans out instead of stacking on one spot.
+	TArray<UFortWorldItem*> Items = Inventory->Inventory.ItemInstances;
+	int32 Spawned = 0;
+	const float BaseYaw = FMath::FRandRange(0.0f, 360.0f);
+	for (UFortWorldItem* Item : Items)
+	{
+		UFortWorldItemDefinition* Def = Item ? Cast<UFortWorldItemDefinition>(Item->ItemEntry.ItemDefinition) : nullptr;
+		if (!Def || Item->ItemEntry.Count <= 0 || Def->DropBehavior == EWorldItemDropBehavior::DestroyOnDrop)
+		{
+			continue;
+		}
+		const FVector Dir = FVector::ForwardVector.RotateAngleAxis(BaseYaw + Spawned * 137.5f, FVector::UpVector);
+		FVector TossStart, TossFinal, TossDir;
+		BuildTossLocations(VictimPawn, Dir, TossStart, TossFinal, TossDir);
+		const uint8 SourceFlags = static_cast<uint8>(EFortPickupSourceTypeFlag::Player) |
+			static_cast<uint8>(EFortPickupSourceTypeFlag::Tossed);
+		if (SpawnTossedPickupFromEntry(World, Item->ItemEntry, TossStart, TossDir, VictimPawn, SourceFlags, EFortPickupSpawnSource::PlayerElimination))
+		{
+			++Spawned;
+		}
+	}
+	UE_LOG(LogTemp, Display, TEXT("LootTransfer: elimination drop pc=%s items=%d dropped=%d"), *GetNameSafe(VictimController), Items.Num(), Spawned);
+	return Spawned;
+}

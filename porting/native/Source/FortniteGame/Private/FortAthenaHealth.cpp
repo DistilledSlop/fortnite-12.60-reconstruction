@@ -22,6 +22,7 @@
 // - stand-in: marks behaviours that are stand-ins or re-creations of server logic compiled out of the client exe.
 
 #include "FortAthenaHealth.h"
+#include "FortAthenaLootTransfer.h"
 #include "FortAthenaEndGame.h"
 #include "UFortAssetManager.h"
 #include "Engine/Engine.h"
@@ -731,6 +732,9 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 		VictimState->OnRep_DeathInfo();
 	}
 
+	// Drop the victim's inventory where they died (Report.bDroppedBackpack says the client may show the backpack drop).
+	FortAthenaLootTransfer::DropAllOnDeath(VictimPC, VictimPawn);
+
 	// 3. Update killer scores and feed (D6 §2 step 3).
 	if (KillerState && KillerState != VictimState)
 	{
@@ -782,6 +786,46 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 	else
 	{
 		SendPartialTeamStats(GameMode, VictimPC, Place, bNobodyLeft);
+	}
+
+	// Spectate after death. stand-in: Athena allows spectating after death (constructor evidence in G9 section 2) but the original target
+	// selection and ServerSpectatePlayer bodies are not recovered; after a short delay the victim's view follows the killer if alive,
+	// otherwise the first living player. Untested with a client; the death camera is kept when nobody is left.
+	if (World && VictimPC && NewPlayersLeft > 0)
+	{
+		TWeakObjectPtr<AFortPlayerControllerAthena> WeakVictim(VictimPC);
+		TWeakObjectPtr<AFortPawn> WeakKiller(KillerPawn);
+		FTimerHandle SpectateHandle;
+		World->GetTimerManager().SetTimer(SpectateHandle, FTimerDelegate::CreateLambda([WeakVictim, WeakKiller]()
+		{
+			AFortPlayerControllerAthena* Victim = WeakVictim.Get();
+			if (!Victim)
+				return;
+			AActor* Target = nullptr;
+			if (AFortPawn* Killer = WeakKiller.Get())
+			{
+				if (!Killer->bIsDying && Killer != Victim->GetPawn())
+					Target = Killer;
+			}
+			if (!Target)
+			{
+				for (const TWeakObjectPtr<AFortPlayerControllerAthena>& Other : GetAlivePlayers())
+				{
+					AFortPlayerControllerAthena* OtherPC = Other.Get();
+					AFortPawn* OtherPawn = OtherPC ? Cast<AFortPawn>(OtherPC->GetPawn()) : nullptr;
+					if (OtherPawn && !OtherPawn->bIsDying)
+					{
+						Target = OtherPawn;
+						break;
+					}
+				}
+			}
+			if (Target)
+			{
+				Victim->SetViewTargetWithBlend(Target, 0.5f);
+				UE_LOG(LogFortHealth, Display, TEXT("Health: %s spectating %s after death"), *Victim->GetName(), *Target->GetName());
+			}
+		}), 5.0f, false);
 	}
 
 	// Single winner boundary: pass the actual eliminating event and roster snapshot.

@@ -65,6 +65,11 @@ namespace FortAthenaLootTransfer
 
 	// Spawns an outgoing AFortPickupAthena initialized with TossPickup location/interpolation data
 	// (0x14203cda0, 0x142029370, 0x14203b400, 0x142039830) and ctor defaults (0x1420231b0).
+	// Elimination: drops every droppable item of the victim as a tossed pickup spread around the death location (the retail
+	// elimination path drops the backpack; FFortPlayerDeathReport::bDroppedBackpack only reports it). Items whose definition
+	// destroys on drop (the pickaxe) stay. Returns the number of pickups spawned. Server only.
+	int32 DropAllOnDeath(AFortPlayerController* VictimController, AFortPawn* VictimPawn);
+
 	AFortPickupAthena* SpawnTossedPickupFromEntry(UWorld* World, const FFortItemEntry& Entry,
 		const FVector& StartLocation, const FVector& TossDirection, AFortPawn* OwnerPawn,
 		uint8 SourceTypeFlags, EFortPickupSpawnSource SpawnSource, float FlyTime = -1.0f);
