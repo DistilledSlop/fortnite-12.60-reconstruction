@@ -9,6 +9,7 @@
 #include "Abilities/GameplayAbilityTypes.h"
 #include "AttributeSet.h"
 #include "EFortSharedAnimationState.h"
+#include "FAttributeInfo.h"
 #include "FGameplayAbilityRepSharedAnim.h"
 #include "FPersonalVehicleBlockingChanged.h"
 #include "FReplicatedMontagePair.h"
@@ -57,6 +58,9 @@ public:
 	void BP_CancelAbilitiesWithTags(FGameplayTagContainer& Tags);
 
 	UFUNCTION(BlueprintCallable)
+	FActiveGameplayEffectHandle BP_FortApplyGameplayEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, UObject* OptionalSourceObject, AActor* OptionalEffectCauser, AActor* OptionalDamageSource, float Level, FGameplayEffectContextHandle EffectContext);
+
+	UFUNCTION(BlueprintCallable)
 	FActiveGameplayEffectHandle BP_FortApplyGameplayEffectToTarget(TSubclassOf<UGameplayEffect> GameplayEffectClass, UAbilitySystemComponent* TargetOfEffect, UObject* OptionalSourceObject, AActor* OptionalEffectCauser, AActor* OptionalDamageSource, float Level, FGameplayEffectContextHandle EffectContext);
 
 	UFUNCTION(BlueprintCallable)
@@ -64,6 +68,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool CanActivateAbilityWithMatchingTag(FGameplayTagContainer GameplayAbilityTags) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FAttributeInfo FindAttributeInformation(FString AttributeName) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetAttributeMagnitude(FAttributeInfo Info) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasActiveAbilityWithAnyMatchingTag(FGameplayTagContainer Tags) const;

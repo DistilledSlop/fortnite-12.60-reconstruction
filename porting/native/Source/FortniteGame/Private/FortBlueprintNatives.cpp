@@ -69,6 +69,7 @@
 #include "FFortGameplayEffectContainer.h"
 #include "Abilities/GameplayAbility.h"
 #include "EngineUtils.h"
+#include "UFortGameplayAbility.h"
 #include "ABuildingGameplayActorConsumable.h"
 #include "ABuildingGameplayActorSentry.h"
 #include "ABuildingGameplayActorSpawnMachine.h"
@@ -1869,6 +1870,232 @@ namespace
 		P_NATIVE_END;
 	}
 
+	// ---- UFortGameplayAbility effect containers (base of every ability; a Blueprint calling one of these undeclared virtual-by-name
+	// functions aborts the server: "Failed to find function ApplyGameplayEffectContainer in GAB_Melee_...") -----------------------
+
+	FFortGameplayEffectContainerSpec BuildContainerSpec(const FFortGameplayEffectContainer& Container, UGameplayAbility* Ability, int32 Level)
+	{
+		FFortGameplayEffectContainerSpec Spec;
+		Spec.TargetSelection = Container.TargetSelection;
+		Spec.ActivationCues = Container.ActivationCues;
+		Spec.ImpactCues = Container.ImpactCues;
+		Spec.bOverrideChargeMagnitude = Container.bOverrideChargeMagnitude;
+		Spec.ChargeMagnitudeOverrideValue = Container.ChargeMagnitudeOverrideValue;
+		if (Ability)
+		{
+			for (const TSubclassOf<UGameplayEffect>& EffectClass : Container.TargetGameplayEffectClasses)
+			{
+				if (EffectClass)
+				{
+					Spec.TargetGameplayEffectSpecs.Add(Ability->MakeOutgoingGameplayEffectSpec(EffectClass, static_cast<float>(Level)));
+				}
+			}
+			for (const TSubclassOf<UGameplayEffect>& EffectClass : Container.OwnerGameplayEffectClasses)
+			{
+				if (EffectClass)
+				{
+					Spec.OwnerGameplayEffectSpecs.Add(Ability->MakeOutgoingGameplayEffectSpec(EffectClass, static_cast<float>(Level)));
+				}
+			}
+		}
+		return Spec;
+	}
+
+	// Containers of an ability that apply under ApplicationTag: the fixed slots, the configured list and the runtime-added ones.
+	void CollectContainers(const UFortGameplayAbility* Ability, const FGameplayTag& ApplicationTag, TArray<FFortGameplayEffectContainer>& Out)
+	{
+		if (!Ability)
+		{
+			return;
+		}
+		for (const FFortGameplayEffectContainer& Container : Ability->EffectContainers)
+		{
+			if (Container.ApplicationTag == ApplicationTag)
+			{
+				Out.Add(Container);
+			}
+		}
+		for (const FFortGameplayEffectContainer& Container : Ability->GameplayEffectContainers)
+		{
+			if (Container.ApplicationTag == ApplicationTag)
+			{
+				Out.Add(Container);
+			}
+		}
+		if (const FFortGameplayEffectContainer* Dynamic = Ability->DynamicGameplayEffectContainers.Find(ApplicationTag))
+		{
+			Out.Add(*Dynamic);
+		}
+	}
+
+	DEFINE_FUNCTION(ExecBP_GetGameplayEffectContainers)
+	{
+		P_GET_STRUCT(FGameplayTag, ApplicationTag);
+		P_GET_TARRAY_REF(FFortGameplayEffectContainer, OutContainers);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		OutContainers.Reset();
+		CollectContainers(Cast<UFortGameplayAbility>(Context), ApplicationTag, OutContainers);
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecBP_GetGameplayEffectContainer)
+	{
+		P_GET_STRUCT(FGameplayTag, ApplicationTag);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		TArray<FFortGameplayEffectContainer> Found;
+		CollectContainers(Cast<UFortGameplayAbility>(Context), ApplicationTag, Found);
+		*static_cast<FFortGameplayEffectContainer*>(RESULT_PARAM) = Found.Num() > 0 ? Found[0] : FFortGameplayEffectContainer();
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecMakeGameplayEffectContainerSpecs)
+	{
+		P_GET_STRUCT(FGameplayTag, ApplicationTag);
+		P_GET_PROPERTY(FIntProperty, GameplayEffectLevel);
+		P_GET_TARRAY_REF(FFortGameplayEffectContainerSpec, OutSpecContainers);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		OutSpecContainers.Reset();
+		UFortGameplayAbility* Ability = Cast<UFortGameplayAbility>(Context);
+		TArray<FFortGameplayEffectContainer> Found;
+		CollectContainers(Ability, ApplicationTag, Found);
+		for (const FFortGameplayEffectContainer& Container : Found)
+		{
+			OutSpecContainers.Add(BuildContainerSpec(Container, Ability, GameplayEffectLevel));
+		}
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecMakeGameplayEffectContainerSpec)
+	{
+		P_GET_STRUCT(FGameplayTag, ApplicationTag);
+		P_GET_PROPERTY(FIntProperty, GameplayEffectLevel);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UFortGameplayAbility* Ability = Cast<UFortGameplayAbility>(Context);
+		TArray<FFortGameplayEffectContainer> Found;
+		CollectContainers(Ability, ApplicationTag, Found);
+		*static_cast<FFortGameplayEffectContainerSpec*>(RESULT_PARAM) = Found.Num() > 0 ? BuildContainerSpec(Found[0], Ability, GameplayEffectLevel) : FFortGameplayEffectContainerSpec();
+		P_NATIVE_END;
+	}
+
+	TArray<FActiveGameplayEffectHandle> ApplyContainers(UFortGameplayAbility* Ability, const FGameplayAbilityTargetDataHandle& TargetData,
+		const FGameplayTag& ApplicationTag, int32 Level)
+	{
+		TArray<FActiveGameplayEffectHandle> Applied;
+		TArray<FFortGameplayEffectContainer> Found;
+		CollectContainers(Ability, ApplicationTag, Found);
+		for (const FFortGameplayEffectContainer& Container : Found)
+		{
+			const FFortGameplayEffectContainerSpec Spec = BuildContainerSpec(Container, Ability, Level);
+			UAbilitySystemComponent* OwnerASC = Ability->GetAbilitySystemComponentFromActorInfo();
+			for (const FGameplayEffectSpecHandle& SpecHandle : Spec.TargetGameplayEffectSpecs)
+			{
+				if (!SpecHandle.IsValid() || !OwnerASC)
+				{
+					continue;
+				}
+				for (const TSharedPtr<FGameplayAbilityTargetData>& Data : TargetData.Data)
+				{
+					if (!Data.IsValid())
+					{
+						continue;
+					}
+					for (const TWeakObjectPtr<AActor>& Actor : Data->GetActors())
+					{
+						const IAbilitySystemInterface* Interface = Cast<IAbilitySystemInterface>(Actor.Get());
+						UAbilitySystemComponent* TargetASC = Interface ? Interface->GetAbilitySystemComponent() : nullptr;
+						if (TargetASC)
+						{
+							Applied.Add(OwnerASC->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), TargetASC));
+						}
+					}
+				}
+			}
+			for (const FGameplayEffectSpecHandle& SpecHandle : Spec.OwnerGameplayEffectSpecs)
+			{
+				if (SpecHandle.IsValid() && OwnerASC)
+				{
+					Applied.Add(OwnerASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get()));
+				}
+			}
+		}
+		return Applied;
+	}
+
+	DEFINE_FUNCTION(ExecApplyGameplayEffectContainer)
+	{
+		P_GET_STRUCT(FGameplayAbilityTargetDataHandle, TargetData);
+		P_GET_STRUCT(FGameplayTag, ApplicationTag);
+		P_GET_PROPERTY(FIntProperty, GameplayEffectLevel);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*static_cast<TArray<FActiveGameplayEffectHandle>*>(RESULT_PARAM) = ApplyContainers(Cast<UFortGameplayAbility>(Context), TargetData, ApplicationTag, GameplayEffectLevel);
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecApplyGameplayEffectContainerWithCSVStats)
+	{
+		P_GET_STRUCT(FGameplayAbilityTargetDataHandle, TargetData);
+		P_GET_STRUCT(FGameplayTag, ApplicationTag);
+		P_GET_PROPERTY(FIntProperty, GameplayEffectLevel);
+		P_GET_PROPERTY(FStrProperty, StatName);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*static_cast<TArray<FActiveGameplayEffectHandle>*>(RESULT_PARAM) = ApplyContainers(Cast<UFortGameplayAbility>(Context), TargetData, ApplicationTag, GameplayEffectLevel);
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecDoesTargetHaveTags)
+	{
+		P_GET_OBJECT(AActor, Target);
+		P_GET_STRUCT_REF(FGameplayTagContainer, Tags);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const IAbilitySystemInterface* Interface = Cast<IAbilitySystemInterface>(Target);
+		UAbilitySystemComponent* ASC = Interface ? Interface->GetAbilitySystemComponent() : nullptr;
+		*static_cast<bool*>(RESULT_PARAM) = ASC && ASC->HasAllMatchingGameplayTags(Tags);
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecGetCurrentAbilitySourceLevel)
+	{
+		P_GET_PROPERTY_REF(FFloatProperty, OutSourceLevel);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const UGameplayAbility* Ability = Cast<UGameplayAbility>(Context);
+		OutSourceLevel = Ability ? static_cast<float>(FMath::Max(Ability->GetAbilityLevel(), 1)) : 1.0f;
+		P_NATIVE_END;
+	}
+
+	// Where an ability fires from: the avatar's eye point and the controller's aim.
+	DEFINE_FUNCTION(ExecGetFireLocation)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const UGameplayAbility* Ability = Cast<UGameplayAbility>(Context);
+		const AActor* Avatar = Ability ? Ability->GetAvatarActorFromActorInfo() : nullptr;
+		const APawn* Pawn = Cast<APawn>(Avatar);
+		*static_cast<FVector*>(RESULT_PARAM) = Pawn ? Pawn->GetPawnViewLocation() : (Avatar ? Avatar->GetActorLocation() : FVector::ZeroVector);
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecGetFireRotation)
+	{
+		P_GET_UBOOL(bApplyLeading);
+		P_GET_UBOOL(bApplyInaccuracy);
+		P_GET_UBOOL(bApplyClampedMaxYawAngleToFire);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const UGameplayAbility* Ability = Cast<UGameplayAbility>(Context);
+		const AActor* Avatar = Ability ? Ability->GetAvatarActorFromActorInfo() : nullptr;
+		const APawn* Pawn = Cast<APawn>(Avatar);
+		*static_cast<FRotator*>(RESULT_PARAM) = Pawn ? Pawn->GetViewRotation() : (Avatar ? Avatar->GetActorRotation() : FRotator::ZeroRotator);
+		P_NATIVE_END;
+	}
+
 	// ---- stubbed server RPCs ---------------------------------------------------------------------------------------------
 
 	// ServerCombineInventoryItems: empty in the retail client (stripped server body, shared stub 0x1406801c0).
@@ -1957,6 +2184,16 @@ namespace
 
 	const FNativeBinding GBindings[] = {
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("GetActorTeam"), &ExecGetActorTeam },
+		{ TEXT("/Script/FortniteGame.FortGameplayAbility"), TEXT("BP_GetGameplayEffectContainers"), &ExecBP_GetGameplayEffectContainers },
+		{ TEXT("/Script/FortniteGame.FortGameplayAbility"), TEXT("BP_GetGameplayEffectContainer"), &ExecBP_GetGameplayEffectContainer },
+		{ TEXT("/Script/FortniteGame.FortGameplayAbility"), TEXT("MakeGameplayEffectContainerSpecs"), &ExecMakeGameplayEffectContainerSpecs },
+		{ TEXT("/Script/FortniteGame.FortGameplayAbility"), TEXT("MakeGameplayEffectContainerSpec"), &ExecMakeGameplayEffectContainerSpec },
+		{ TEXT("/Script/FortniteGame.FortGameplayAbility"), TEXT("ApplyGameplayEffectContainer"), &ExecApplyGameplayEffectContainer },
+		{ TEXT("/Script/FortniteGame.FortGameplayAbility"), TEXT("ApplyGameplayEffectContainerWithCSVStats"), &ExecApplyGameplayEffectContainerWithCSVStats },
+		{ TEXT("/Script/FortniteGame.FortGameplayAbility"), TEXT("DoesTargetHaveTags"), &ExecDoesTargetHaveTags },
+		{ TEXT("/Script/FortniteGame.FortGameplayAbility"), TEXT("GetCurrentAbilitySourceLevel"), &ExecGetCurrentAbilitySourceLevel },
+		{ TEXT("/Script/FortniteGame.FortGameplayAbility"), TEXT("GetFireLocation"), &ExecGetFireLocation },
+		{ TEXT("/Script/FortniteGame.FortGameplayAbility"), TEXT("GetFireRotation"), &ExecGetFireRotation },
 		{ TEXT("/Script/FortniteGame.BuildingGameplayActorConsumable"), TEXT("GetOnConsumeMontage"), &ExecGetOnConsumeMontage },
 		{ TEXT("/Script/FortniteGame.FortAthenaVehicleSpawner"), TEXT("GetVehicleClass"), &ExecGetVehicleClass },
 		{ TEXT("/Script/FortniteGame.BuildingGameplayActorSpawnMachine"), TEXT("GetCooldownLength"), &ExecGetCooldownLength },

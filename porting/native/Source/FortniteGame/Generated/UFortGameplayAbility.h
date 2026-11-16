@@ -6,27 +6,34 @@
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
 
+#include "Abilities/GameplayAbilityTargetTypes.h"
 #include "Abilities/GameplayAbilityTypes.h"
 #include "EFortAILODLevel.h"
 #include "EFortAIWeaponUsage.h"
 #include "EFortGameplayAbilityActivation.h"
 #include "Engine/DataTable.h"
+#include "Engine/EngineTypes.h"
 #include "FAbilityTrackedActorSettings.h"
 #include "FFortAbilityCost.h"
 #include "FFortGameplayAbilityBehaviorDistanceData.h"
 #include "FFortGameplayAbilityMontageInfo.h"
 #include "FFortGameplayEffectContainer.h"
+#include "FFortGameplayEffectContainerSpec.h"
+#include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
 #include "HAL/UnrealMemory.h"
+#include "Math/Rotator.h"
 #include "Math/TransformNonVectorized.h"
 #include "Math/UnrealMathUtility.h"
 #include "Math/Vector.h"
 #include "UObject/Class.h"
 #include "UObject/Object.h"
 
+class AActor;
 class AFortPawn;
 class AFortProjectileBase;
 class AFortWeapon;
+class APlayerController;
 class UFortAbilitySystemComponent;
 class UFortCameraMode;
 class UFortTooltip;
@@ -280,17 +287,77 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void AddDynamicGameplayEffectContainer(FGameplayTag& ApplicationTag, FFortGameplayEffectContainer& Container);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector ApplyAccuracyToTargetLocation(FVector& SourceLocation, FVector& TargetLocation, float inDesiredThrowAngle) const;
+
+	UFUNCTION(BlueprintCallable)
+	TArray<FActiveGameplayEffectHandle> ApplyGameplayEffectContainer(FGameplayAbilityTargetDataHandle TargetData, FGameplayTag ApplicationTag, int32 GameplayEffectLevel);
+
+	UFUNCTION(BlueprintCallable)
+	TArray<FActiveGameplayEffectHandle> ApplyGameplayEffectContainerWithCSVStats(FGameplayAbilityTargetDataHandle TargetData, FGameplayTag ApplicationTag, int32 GameplayEffectLevel, FString StatName);
+
+	UFUNCTION(BlueprintCallable)
+	bool ApplySourcePropertyOverrides(TArray<FName>& OverriddenPropertyNames);
+
+	UFUNCTION(BlueprintCallable)
+	FFortGameplayEffectContainer BP_GetGameplayEffectContainer(FGameplayTag ApplicationTag);
+
+	UFUNCTION(BlueprintCallable)
+	void BP_GetGameplayEffectContainers(FGameplayTag ApplicationTag, TArray<FFortGameplayEffectContainer>& OutContainers);
+
+	UFUNCTION(BlueprintCallable)
+	static void CalculateProjectileTrajectorySpline(TArray<FVector>& OutSplinePoints, TArray<FVector>& OutSplineTangents, AActor* Instigator, FVector InitialLocation, FVector InitialVelocity, float MaxSpeed, float Gravity, float Friction, float Bounciness, float TimeStep, float TraceExtent, ECollisionChannel TraceChannel, int32 MaxBounces, int32 MaxSteps, float MaxDistanceBetweenSplinePoints, float InitialDistance);
+
+	UFUNCTION(BlueprintCallable)
+	static void CalculateProjectileTrajectorySplineProfile(TArray<FVector>& OutSplinePoints, TArray<FVector>& OutSplineTangents, AActor* Instigator, FVector InitialLocation, FVector InitialVelocity, float MaxSpeed, float Gravity, float Friction, float Bounciness, float TimeStep, float TraceExtent, FName CollisionProfile, int32 MaxBounces, int32 MaxSteps, float MaxDistanceBetweenSplinePoints, float InitialDistance);
+
+	UFUNCTION(BlueprintCallable)
+	static void CalculateProjectileTrajectorySplineWithHit(FHitResult& OutHitResult, TArray<FVector>& OutSplinePoints, TArray<FVector>& OutSplineTangents, AActor* Instigator, FVector InitialLocation, FVector InitialVelocity, float MaxSpeed, float Gravity, float Friction, float Bounciness, float TimeStep, float TraceExtent, ECollisionChannel TraceChannel, int32 MaxBounces, int32 MaxSteps, float MaxDistanceBetweenSplinePoints, float InitialDistance);
+
+	UFUNCTION(BlueprintCallable)
+	static void CalculateProjectileTrajectorySplineWithHitProfile(FHitResult& OutHitResult, TArray<FVector>& OutSplinePoints, TArray<FVector>& OutSplineTangents, AActor* Instigator, FVector InitialLocation, FVector InitialVelocity, float MaxSpeed, float Gravity, float Friction, float Bounciness, float TimeStep, float TraceExtent, FName CollisionProfile, int32 MaxBounces, int32 MaxSteps, float MaxDistanceBetweenSplinePoints, float InitialDistance);
+
+	UFUNCTION(BlueprintCallable)
+	void ClearAIFocalPoint(bool bUseAttackingPriority);
+
 	UFUNCTION(BlueprintCallable)
 	void ClearCameraMode();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ClearTrackedActors(bool bDestroyActors);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ClearTrackedGroupedActors(FGameplayTag GroupTag, bool bDestroyActors);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool DoesTargetHaveProhibitedTagsForAI(AActor* Target) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool DoesTargetHaveTags(AActor* Target, FGameplayTagContainer& Tags) const;
+
+	UFUNCTION(BlueprintCallable)
+	void EquipAbilityWeapon(UFortWeaponItemDefinition* WeaponDefinition, int32 ItemLevel);
+
 	UFUNCTION(BlueprintCallable)
 	void EquipVehicleWeapon(UFortWeaponItemDefinition* WeaponDefinition, int32 SeatIndex, int32 ItemLevel);
+
+	UFUNCTION(BlueprintCallable)
+	void ForceCameraLookDown(APlayerController* PC);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortAbilitySystemComponent* GetActivatingAbilityComponent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortPawn* GetActivatingPawn() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AActor* GetAIAbilityTarget() const;
+
+	UFUNCTION(BlueprintCallable)
+	FVector GetAimLocationNearestPawn(AFortPawn* Instigator);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetCurrentAbilitySourceLevel(float& OutSourceLevel) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortWorldItemDefinition* GetCurrentSourceItemDefinition() const;
@@ -303,17 +370,47 @@ protected:
 	virtual UFortTooltipDisplayStatsList* GetDisplayStats() const;
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetFireLocation() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FRotator GetFireRotation(bool bApplyLeading, bool bApplyInaccuracy, bool bApplyClampedMaxYawAngleToFire) const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	int32 GetMaxNumTrackedActors() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetOwningPlayerTeamPerkProgressiveActivationLevel() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetProjectileInitialValues(float& outProjectileSpeed, FRotator& outSpawnDirection, float& outProjectileGravity, AActor*& HomingTarget, bool bApplyInaccuracy, bool bApplyClampedMaxYawAngleToFire, bool bApplyLeading) const;
 
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual TSubclassOf<UFortTooltip> GetTooltip(bool bSummaryTooltip) const;
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	TArray<AActor*> GetTrackedActors() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	TArray<AActor*> GetTrackedGroupedActors(FGameplayTag GroupTag) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsTargetOutsideOfMaxYawRotation() const;
+
+	UFUNCTION(BlueprintCallable)
+	FFortGameplayEffectContainerSpec MakeGameplayEffectContainerSpec(FGameplayTag ApplicationTag, int32 GameplayEffectLevel);
+
+	UFUNCTION(BlueprintCallable)
+	void MakeGameplayEffectContainerSpecs(FGameplayTag ApplicationTag, int32 GameplayEffectLevel, TArray<FFortGameplayEffectContainerSpec>& OutSpecContainers);
+
 	UFUNCTION(BlueprintNativeEvent)
 	void OnGenericNotifyFromAnimation(FGameplayTag NotifyTag);
 	virtual void OnGenericNotifyFromAnimation_Implementation(FGameplayTag NotifyTag);
+
+	UFUNCTION(BlueprintCallable)
+	void SetAIFocalPoint(AActor* FocusTarget, FVector FocalPoint, bool bUseAttackingPriority);
 
 	UFUNCTION(BlueprintCallable)
 	void SetCameraMode(TSubclassOf<UFortCameraMode> CameraModeClass);
@@ -321,6 +418,12 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 	bool SetupPreviewImageOverride();
 	virtual bool SetupPreviewImageOverride_Implementation();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void TrackActor(AActor* ActorToTrack);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void TrackGroupedActor(AActor* ActorToTrack, FGameplayTag GroupTag);
 
 public:
 	UFUNCTION(BlueprintImplementableEvent)
