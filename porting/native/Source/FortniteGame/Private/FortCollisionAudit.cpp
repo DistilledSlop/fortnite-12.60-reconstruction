@@ -34,7 +34,9 @@ namespace
 			return;
 		}
 		TMap<FString, FLevelStats> PerLevel;
-		int32 Total = 0, Missing = 0;
+		int32 Total = 0, Missing = 0, HighCount = 0;
+		constexpr float HighAltitude = 20000.0f;
+		TArray<FString> HighExamples;
 		for (TObjectIterator<UPrimitiveComponent> It; It; ++It)
 		{
 			UPrimitiveComponent* Comp = *It;
@@ -45,6 +47,23 @@ namespace
 			if (Comp->GetCollisionEnabled() == ECollisionEnabled::NoCollision || Comp->GetCollisionResponseToChannel(ECC_Pawn) == ECR_Ignore)
 			{
 				continue;
+			}
+			// Glider diagnostic: the client's parachute auto-deploy traces down at most ~10000 units, and the server log showed the glider
+			// opening ~49000 units up. Anything solid that high would be hit by that trace, so list every blocking component of any type
+			// whose top is above 20000 units.
+			{
+				const FBoxSphereBounds Bounds = Comp->Bounds;
+				const float Top = Bounds.Origin.Z + Bounds.BoxExtent.Z;
+				if (Top > HighAltitude)
+				{
+					++HighCount;
+					if (HighExamples.Num() < 25)
+					{
+						HighExamples.Add(FString::Printf(TEXT("%s class=%s profile=%s z=[%.0f..%.0f] extent=(%.0f,%.0f)"), *Comp->GetPathName().Right(110),
+							*Comp->GetClass()->GetName(), *Comp->GetCollisionProfileName().ToString(), Bounds.Origin.Z - Bounds.BoxExtent.Z, Top,
+							Bounds.BoxExtent.X, Bounds.BoxExtent.Y));
+					}
+				}
 			}
 			if (!Comp->IsA<UStaticMeshComponent>())
 			{
@@ -66,6 +85,11 @@ namespace
 			}
 		}
 		UE_LOG(LogFortCollisionAudit, Display, TEXT("CollisionAudit: %d pawn-blocking static mesh components, %d without a physics body, %d levels"), Total, Missing, PerLevel.Num());
+		UE_LOG(LogFortCollisionAudit, Display, TEXT("CollisionAudit: %d blocking components reach above %.0f units (glider deploy trace is ~10000)"), HighCount, HighAltitude);
+		for (const FString& Example : HighExamples)
+		{
+			UE_LOG(LogFortCollisionAudit, Display, TEXT("CollisionAudit: high %s"), *Example);
+		}
 		PerLevel.ValueSort([](const FLevelStats& A, const FLevelStats& B) { return A.NoBody > B.NoBody; });
 		int32 Printed = 0;
 		for (const TPair<FString, FLevelStats>& Pair : PerLevel)
