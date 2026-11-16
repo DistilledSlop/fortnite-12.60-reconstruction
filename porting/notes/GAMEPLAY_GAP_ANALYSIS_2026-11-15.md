@@ -149,3 +149,15 @@ Natives deliberately left at their default result (no safe stand-in yet): `PickL
 
 Still not done from the choke-point list: collision audit (needs a run with a known bad spot), skydive movement (needs a failing-run log), structural support/placement rules, throwables/traps/vehicles,
 team end-game and return to lobby. Nothing in this section is client-verified.
+
+### Further changes the same day (commits `5dbc71c4`, `9e54f4a8` and the one after; built OK, none client-tested)
+
+* **Likely cause of "guns do not shoot" found and fixed**: `EquipItem` in `FortAthenaInventoryFlow.cpp` never set the spawned weapon's `AmmoCount`, which replicates to the client as the magazine count. Every gun therefore reached the client with an empty magazine. It is now set from the item entry's `LoadedAmmo` (rolled from the weapon's `ClipSize`).
+* **Ranged hits no longer change server ammo.** With no server reload, a server-side decrement would be replicated over the client's reloaded value. Reload is client-side only for now, so the inventory's reserve ammo is not consumed (infinite reserve). The retail reload ability (`UFortGameplayAbility_Reload`, native, no cooked Blueprint) is still not ported.
+* `PickLootDrops`, `BP_SpawnLoot`, `K2_ConsumeAmmo`, `ServerSetAutoEquipBetterItems` and `ServerReturnToMainMenu` (G9 section 4: sends the engine `ClientReturnToMainMenuWithTextReason`) are implemented.
+* **Last-team-standing win check** (duo/squad) replaces the solo-only check; placement in team playlists counts teams left. Solo is unchanged and still requires one player left.
+* **Collision audit**: console command `FortCollisionAudit` (or start with `-FortniteCollisionAudit`, runs once 90 s in) logs, per level, scenery static meshes that block pawns but have no physics body on the server. Run it and send the `CollisionAudit:` lines; the output names the levels and example locations.
+
+Genuinely not done, with the reason: skydive movement (no log of a failing run exists; the existing 5 s `MatchFlow: skydiver` lines will show it), structural support and placement rules (retail
+building-support code not ported; needs its own work package), projectile/throwable/trap abilities (native `SpawnProjectile` and the WaitTarget/SpawnProjectile tasks have no recovered bodies), server reload,
+DBNO/revive, vehicles, and AI/bots. These are separate implementation efforts, each larger than a one-pass fix.

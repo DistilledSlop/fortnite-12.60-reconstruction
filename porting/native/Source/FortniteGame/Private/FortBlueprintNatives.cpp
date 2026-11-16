@@ -789,6 +789,23 @@ namespace
 		P_NATIVE_END;
 	}
 
+	// ServerReturnToMainMenu: the "Return to Lobby" click (G9 plan section 4). binary: original body 0x1423ac090 logs
+	// "FortPC::ServerReturnToMainMenu()" and invokes virtual +0xa58, which resolves to the engine RPC
+	// ClientReturnToMainMenuWithTextReason; the client owns the frontend transition, so only that reliable RPC is sent (empty reason).
+	// stand-in: the original also starts a timeout and touches session ownership, which is not reproduced; other clients and the match
+	// are left running.
+	DEFINE_FUNCTION(ExecServerReturnToMainMenu)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		if (AFortPlayerController* Controller = Cast<AFortPlayerController>(Context))
+		{
+			UE_LOG(LogFortBpNatives, Display, TEXT("FortPC::ServerReturnToMainMenu() %s"), *Controller->GetName());
+			Controller->ClientReturnToMainMenuWithTextReason(FText::GetEmpty());
+		}
+		P_NATIVE_END;
+	}
+
 	struct FNativeBinding
 	{
 		const TCHAR* ClassPath;
@@ -833,6 +850,7 @@ namespace
 		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("K2_ConsumeAmmo"), &ExecK2_ConsumeAmmo },
 		{ TEXT("/Script/FortniteGame.FortPlayerController"), TEXT("ServerCombineInventoryItems"), &ExecServerCombineInventoryItems },
 		{ TEXT("/Script/FortniteGame.FortPlayerController"), TEXT("ServerSpotActor"), &ExecServerSpotActor },
+		{ TEXT("/Script/FortniteGame.FortPlayerController"), TEXT("ServerReturnToMainMenu"), &ExecServerReturnToMainMenu },
 		{ TEXT("/Script/FortniteGame.FortPlayerController"), TEXT("ServerSetAutoEquipBetterItems"), &ExecServerSetAutoEquipBetterItems },
 		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("ServerReleaseWeaponAbility"), &ExecServerReleaseWeaponAbility },
 	};

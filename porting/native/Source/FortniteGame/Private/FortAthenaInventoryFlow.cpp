@@ -306,6 +306,10 @@ namespace
 		Weapon->WeaponData = Definition;
 		Weapon->ItemEntryGuid = Guid;
 		Weapon->WeaponLevel = Item->ItemEntry.Level;
+		// stand-in for the retail weapon initialisation from its item entry: the magazine count replicates from the server weapon, and
+		// nothing else set it, so every spawned gun reached the client with an empty magazine. The item entry's LoadedAmmo (set when the
+		// pickup was rolled or dropped) is the starting count; later shots/reloads are tracked by the client (see FortHarvestFlow.cpp).
+		Weapon->AmmoCount = Item->ItemEntry.LoadedAmmo;
 		Weapon->FinishSpawning(SpawnTransform);
 		if (!IsValid(Weapon)) return nullptr;
 		Pawn->CurrentWeaponList.Insert(Weapon, 0);
