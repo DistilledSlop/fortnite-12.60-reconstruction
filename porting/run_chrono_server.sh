@@ -123,8 +123,8 @@ fi
 
 read -r -a extra_args <<< "${FN_SERVER_ARGS:--FortniteSkipUnconvertedLegacyShaderMaps -FortniteTolerateNeedLoadDependencies -FortniteSkipEngineClassNetChecksum -FortniteStartingWood=500 -FortniteBlueprintPawn -FortniteNoServerAnimDecode -FortniteInventoryAbilities -FortniteWarmupSeconds=90 -FortniteNetworkTrace=$log_dir/network-rpc.jsonl}"
 
-# Extra flags appended to the defaults, e.g. FN_SERVER_EXTRA_ARGS="-FortniteClientMovementAuthority" (server takes the
-# client's movement for everything) or "-FortniteServerSkydiveAuthority" (no skydive exception).
+# Extra flags appended to the defaults. Client-authoritative movement is the default (the server never corrects positions); pass FN_SERVER_EXTRA_ARGS="-FortniteServerMovementAuthority" to restore server authority except while skydiving, or
+# "-FortniteServerSkydiveAuthority" removes the skydive exception.
 if [[ -n ${FN_SERVER_EXTRA_ARGS:-} ]]; then
     read -r -a added_args <<< "$FN_SERVER_EXTRA_ARGS"
     extra_args+=("${added_args[@]}")

@@ -1540,11 +1540,14 @@ namespace FortAthenaMatchFlowPrivate
     // the client's position and movement mode (both CMC flags) and sends no corrections; authority returns on landing.
     // Without this exception every skydive move was corrected (about 20 per second), which showed as stuttering
     // skydive audio, a glider that cannot be stowed, and no steering.
-    // -FortniteClientMovementAuthority takes the client's movement for everything (the old Step 0 behaviour of
-    // porting/notes/MOVEMENT_AUTHORITY_REPORT.md), for comparison runs only.
+    // Default: the server takes the client's movement for everything (the old Step 0 behaviour of
+    // porting/notes/MOVEMENT_AUTHORITY_REPORT.md), so the server never sends position corrections. Pass
+    // -FortniteServerMovementAuthority to get the exception-only behaviour described above (server authority except while
+    // skydiving or gliding). -FortniteClientMovementAuthority is still accepted and forces client authority.
     bool UseClientMovementAuthorityEverywhere()
     {
-        static const bool bEnabled = FParse::Param(FCommandLine::Get(), TEXT("FortniteClientMovementAuthority"));
+        static const bool bEnabled = FParse::Param(FCommandLine::Get(), TEXT("FortniteClientMovementAuthority"))
+            || !FParse::Param(FCommandLine::Get(), TEXT("FortniteServerMovementAuthority"));
         return bEnabled;
     }
 
