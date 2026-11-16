@@ -10,6 +10,7 @@
 #include "UFortResourceItemDefinition.h"
 #include "UFortWorldItem.h"
 #include "Engine/World.h"
+#include "EngineUtils.h"
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
 #include "UObject/ScriptMacros.h"
@@ -29,6 +30,10 @@ namespace
 
 	// stand-in: the stripped server body does not reveal the building cost.
 	constexpr int32 BuildCost = 10;
+	// Largest builder-to-piece distance accepted (preview reach is a few grid cells; generous to absorb client/server position lag).
+	constexpr float MaxBuildReach = 2500.0f;
+	// Two pieces of one type whose centres are closer than this occupy the same grid slot (grid cells are 512 wide).
+	constexpr float SlotMatchTolerance = 16.0f;
 
 	FString HeldToolName(AFortPlayerController* Controller)
 	{
@@ -71,10 +76,31 @@ namespace
 			UE_LOG(LogTemp, Display, TEXT("Building: refused %s: %d resource type %d available, %d required"), *Class->GetName(), Material ? Material->ItemEntry.Count : 0, int32(Default->ResourceType.GetValue()), BuildCost);
 			return;
 		}
+		// Placement validation. The client snaps its preview to the building grid and only sends placements it considers valid; the server
+		// repeats the two checks that do not need the (unrecovered) structural grid: the piece must be within build reach of the
+		// builder, and its grid slot must be free (no live piece of the same type centred on the same spot).
+		const FVector BuildLocation(Data.BuildLoc);
+		const AFortPawn* Builder = Controller->GetPawn<AFortPawn>();
+		if (Builder && FVector::DistSquared(Builder->GetActorLocation(), BuildLocation) > FMath::Square(MaxBuildReach))
+		{
+			UE_LOG(LogTemp, Display, TEXT("Building: refused %s: %.0f units from the builder (reach %.0f)"), *Class->GetName(),
+				FVector::Dist(Builder->GetActorLocation(), BuildLocation), MaxBuildReach);
+			return;
+		}
+		for (TActorIterator<ABuildingSMActor> It(World); It; ++It)
+		{
+			const ABuildingSMActor* Existing = *It;
+			if (IsValid(Existing) && !Existing->bDestroyed && Existing->BuildingType == Default->BuildingType
+				&& FVector::DistSquared(Existing->GetActorLocation(), BuildLocation) < FMath::Square(SlotMatchTolerance))
+			{
+				UE_LOG(LogTemp, Display, TEXT("Building: refused %s: grid slot already holds %s"), *Class->GetName(), *Existing->GetName());
+				return;
+			}
+		}
 		FActorSpawnParameters Params;
 		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		// stand-in: no structural grid snap or overlap validation yet (binary 0x141c78270, 0x1423881c0 not ported); the
-		// client already snaps its preview, so its BuildLoc is used as sent.
+		// stand-in: no structural support propagation (binary 0x1423881c0 not ported); the client already snaps its preview, so its
+		// BuildLoc is used as sent once the checks above pass.
 		ABuildingSMActor* Piece = World->SpawnActor<ABuildingSMActor>(Class, FVector(Data.BuildLoc), Data.BuildRot, Params);
 		if (!Piece)
 		{
