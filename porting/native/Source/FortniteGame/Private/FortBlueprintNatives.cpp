@@ -69,6 +69,25 @@
 #include "FFortGameplayEffectContainer.h"
 #include "Abilities/GameplayAbility.h"
 #include "EngineUtils.h"
+#include "ABuildingGameplayActorConsumable.h"
+#include "ABuildingGameplayActorSentry.h"
+#include "ABuildingGameplayActorSpawnMachine.h"
+#include "AFortAthenaVehicleSpawner.h"
+#include "AFortPlayerControllerAthena.h"
+#include "UAthenaBattleBusItemDefinition.h"
+#include "UFortVehicleItemDefinition.h"
+#include "UFortHeldObjectComponent.h"
+#include "UFortAsyncAction_GameStateReady.h"
+#include "UFortAsyncAction_AuthorityMatchReady.h"
+#include "UFortAsyncAction_CurrentPlaylistReady.h"
+#include "UFortAsyncAction_TeleportAndWaitForLevelStreaming.h"
+#include "UFortAbilityTask_PlayMontageWaitTarget.h"
+#include "UFortAbilityTask_WaitTargetSelection.h"
+#include "FFortGameplayAbilityMontageInfo.h"
+#include "EFortAbilityTargetDataPolicy.h"
+#include "EFortGameplayAbilityMontageSectionToPlay.h"
+#include "Abilities/GameplayAbilityTargetTypes.h"
+#include "Animation/AnimMontage.h"
 #include "Engine/Engine.h"
 #include "TimerManager.h"
 
@@ -1293,6 +1312,544 @@ namespace
 		P_NATIVE_END;
 	}
 
+	// ---- consumables, building helpers, async-ready actions, montage / targeting ability tasks ------------------------------------
+
+	void AfterSeconds(UWorld* World, float Delay, TFunction<void()> Function)
+	{
+		if (World)
+		{
+			FTimerHandle Handle;
+			World->GetTimerManager().SetTimer(Handle, FTimerDelegate::CreateLambda(MoveTemp(Function)), FMath::Max(Delay, 0.01f), false);
+		}
+	}
+
+	// Calls Fire once Ready() holds, checking a few times a second. The Blueprint binds its delegates after the factory returns, so the
+	// first check is deferred past the current frame.
+	void FireWhenReady(UWorld* World, TFunction<bool()> Ready, TFunction<void()> Fire)
+	{
+		if (!World)
+		{
+			return;
+		}
+		TSharedRef<FTimerHandle> Handle = MakeShared<FTimerHandle>();
+		TWeakObjectPtr<UWorld> WeakWorld(World);
+		World->GetTimerManager().SetTimer(*Handle, FTimerDelegate::CreateLambda([WeakWorld, Handle, Ready, Fire]()
+		{
+			UWorld* Current = WeakWorld.Get();
+			if (!Current)
+			{
+				return;
+			}
+			if (Ready())
+			{
+				Current->GetTimerManager().ClearTimer(*Handle);
+				Fire();
+			}
+		}), 0.25f, true, 0.05f);
+	}
+
+	DEFINE_FUNCTION(ExecGetOnConsumeMontage)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const ABuildingGameplayActorConsumable* Consumable = Cast<ABuildingGameplayActorConsumable>(Context);
+		*static_cast<UAnimMontage**>(RESULT_PARAM) = Consumable ? Consumable->OnConsumeMontage : nullptr;
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecGetVehicleClass)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const AFortAthenaVehicleSpawner* Spawner = Cast<AFortAthenaVehicleSpawner>(Context);
+		UFortVehicleItemDefinition* Definition = Spawner ? Spawner->FortVehicleItemDef.LoadSynchronous() : nullptr;
+		UClass* VehicleClass = Definition ? Definition->VehicleActorClass.LoadSynchronous() : nullptr;
+		*static_cast<TSubclassOf<UObject>*>(RESULT_PARAM) = VehicleClass;
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecGetCooldownLength)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const ABuildingGameplayActorSpawnMachine* Machine = Cast<ABuildingGameplayActorSpawnMachine>(Context);
+		*static_cast<float*>(RESULT_PARAM) = Machine ? Machine->CooldownLengthRow.GetValueAtLevel(0.0f) : 0.0f;
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecSetSentryState)
+	{
+		P_GET_ENUM(EBuildingGameplayActorSentry_State, InSentryState);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		if (ABuildingGameplayActorSentry* Sentry = Cast<ABuildingGameplayActorSentry>(Context))
+		{
+			if (Sentry->CurrentSentryState != InSentryState)
+			{
+				Sentry->CurrentSentryState = InSentryState;
+				Sentry->ForceNetUpdate();
+				Sentry->OnRep_CurrentSentryState();
+			}
+		}
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecSetPawnBeingTracked)
+	{
+		P_GET_OBJECT(AFortPlayerPawn, InPawnBeingTracked);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		if (ABuildingGameplayActorSentry* Sentry = Cast<ABuildingGameplayActorSentry>(Context))
+		{
+			Sentry->PawnBeingTracked = InPawnBeingTracked;
+			if (InPawnBeingTracked)
+			{
+				Sentry->LastPawnBeingTrackedLocation = InPawnBeingTracked->GetActorLocation();
+			}
+		}
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecForceChangeOwnerInstigator)
+	{
+		P_GET_OBJECT(AFortPlayerController, NewInstigator);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		if (AActor* Self = Cast<AActor>(Context))
+		{
+			Self->SetOwner(NewInstigator);
+			Self->SetInstigator(NewInstigator ? NewInstigator->GetPawn() : nullptr);
+		}
+		P_NATIVE_END;
+	}
+
+	// A building that Blueprint code kills (hiding props, trap spawners): goes through the same damage path as a lethal hit so loot,
+	// resources, cues and death events all run.
+	DEFINE_FUNCTION(ExecBlueprintDie)
+	{
+		P_GET_STRUCT(FGameplayTag, DeathReason);
+		P_GET_OBJECT(AController, Killer);
+		P_GET_OBJECT(AActor, DamageCauser);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		if (ABuildingActor* Building = Cast<ABuildingActor>(Context))
+		{
+			if (!Building->bDestroyed)
+			{
+				if (ABuildingSMActor* Piece = Cast<ABuildingSMActor>(Building))
+				{
+					const float Lethal = FMath::Max(FortHarvest::GetBuildingMaxHealth(Piece), FortHarvest::GetBuildingHealth(Piece)) + 1.0f;
+					FortHarvest::ApplyBuildingDamage(Piece, Lethal, Killer, DamageCauser, FHitResult(), false);
+				}
+				else
+				{
+					Building->bDestroyed = 1;
+					Building->Destroy();
+				}
+			}
+		}
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecGetLootTierGroupOverride)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const ABuildingContainer* Container = Cast<ABuildingContainer>(Context);
+		*static_cast<FName*>(RESULT_PARAM) = Container ? Container->SearchLootTierGroup : FName();
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecGetBattleBusForPlayer)
+	{
+		P_GET_OBJECT(AFortPlayerControllerAthena, PC);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*static_cast<UAthenaBattleBusItemDefinition**>(RESULT_PARAM) = PC ? PC->CosmeticLoadoutPC.BattleBus : nullptr;
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecApplyGlobalEnvironmentGameplayEffectToActor)
+	{
+		P_GET_OBJECT(AActor, EffectTargetActor);
+		P_GET_OBJECT(UClass, GameplayEffect);
+		P_GET_PROPERTY(FIntProperty, GameplayEffectLevel);
+		P_GET_STRUCT(FGameplayTagContainer, AdditionalContextTags);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		FActiveGameplayEffectHandle Handle;
+		UAbilitySystemComponent* ASC = nullptr;
+		if (EffectTargetActor)
+		{
+			const IAbilitySystemInterface* Interface = Cast<IAbilitySystemInterface>(EffectTargetActor);
+			ASC = Interface ? Interface->GetAbilitySystemComponent() : EffectTargetActor->FindComponentByClass<UAbilitySystemComponent>();
+		}
+		if (ASC && GameplayEffect && GameplayEffect->IsChildOf(UGameplayEffect::StaticClass()))
+		{
+			const FGameplayEffectSpecHandle Spec = ASC->MakeOutgoingSpec(GameplayEffect, static_cast<float>(GameplayEffectLevel), ASC->MakeEffectContext());
+			if (Spec.IsValid())
+			{
+				Spec.Data->CapturedSourceTags.GetSpecTags().AppendTags(AdditionalContextTags);
+				Handle = ASC->ApplyGameplayEffectSpecToSelf(*Spec.Data.Get());
+			}
+		}
+		*static_cast<FActiveGameplayEffectHandle*>(RESULT_PARAM) = Handle;
+		P_NATIVE_END;
+	}
+
+	AActor* FindHeldObjectActor(const AFortPlayerPawn* Pawn)
+	{
+		if (Pawn)
+		{
+			TArray<AActor*> Attached;
+			Pawn->GetAttachedActors(Attached);
+			for (AActor* Actor : Attached)
+			{
+				if (Actor && Actor->FindComponentByClass<UFortHeldObjectComponent>())
+				{
+					return Actor;
+				}
+			}
+		}
+		return nullptr;
+	}
+
+	DEFINE_FUNCTION(ExecGetHeldObjectAttachedToPlayer)
+	{
+		P_GET_OBJECT(AFortPlayerPawn, FortPawn);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*static_cast<AActor**>(RESULT_PARAM) = FindHeldObjectActor(FortPawn);
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecGetHeldObjectComponentAttachedToPlayer)
+	{
+		P_GET_OBJECT(AFortPlayerPawn, FortPawn);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const AActor* Held = FindHeldObjectActor(FortPawn);
+		*static_cast<UFortHeldObjectComponent**>(RESULT_PARAM) = Held ? Held->FindComponentByClass<UFortHeldObjectComponent>() : nullptr;
+		P_NATIVE_END;
+	}
+
+	// A held object can be picked up by a pawn that is not already carrying one, while nobody carries this object.
+	DEFINE_FUNCTION(ExecHeldObjectCanInteract)
+	{
+		P_GET_OBJECT(AFortPlayerPawn, RequestingPawn);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const UFortHeldObjectComponent* Component = Cast<UFortHeldObjectComponent>(Context);
+		const AActor* Owner = Component ? Component->GetOwner() : nullptr;
+		*static_cast<bool*>(RESULT_PARAM) = Owner && RequestingPawn && !Owner->GetAttachParentActor() && !FindHeldObjectActor(RequestingPawn);
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecProjectileSetVelocity)
+	{
+		P_GET_STRUCT_REF(FVector, InReplicatedVelocity);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		if (UProjectileMovementComponent* Movement = Cast<UProjectileMovementComponent>(Context))
+		{
+			Movement->Velocity = InReplicatedVelocity;
+			Movement->UpdateComponentVelocity();
+		}
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecFortShippingLog)
+	{
+		P_GET_OBJECT(UObject, WorldContextObject);
+		P_GET_PROPERTY(FStrProperty, InString);
+		P_GET_UBOOL(bLogAsWarning);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		if (bLogAsWarning)
+		{
+			UE_LOG(LogFortBpNatives, Warning, TEXT("BP: %s"), *InString);
+		}
+		else
+		{
+			UE_LOG(LogFortBpNatives, Log, TEXT("BP: %s"), *InString);
+		}
+		P_NATIVE_END;
+	}
+
+	// The async "ready" nodes complete as soon as the server-side condition holds; each broadcasts once and releases itself.
+	DEFINE_FUNCTION(ExecGameStateReadyAsync)
+	{
+		P_GET_OBJECT(UObject, WorldContextObject);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UWorld* World = GEngine ? GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::ReturnNull) : nullptr;
+		UFortAsyncAction_GameStateReady* Action = World ? NewObject<UFortAsyncAction_GameStateReady>(GetTransientPackage()) : nullptr;
+		if (Action)
+		{
+			Action->RegisterWithGameInstance(WorldContextObject);
+			TWeakObjectPtr<UFortAsyncAction_GameStateReady> Weak(Action);
+			TWeakObjectPtr<UWorld> WeakWorld(World);
+			FireWhenReady(World, [WeakWorld]() { return WeakWorld.IsValid() && WeakWorld->GetGameState() != nullptr; },
+				[Weak, WeakWorld]()
+				{
+					if (UFortAsyncAction_GameStateReady* Target = Weak.Get())
+					{
+						Target->OnReady.Broadcast(WeakWorld.IsValid() ? WeakWorld->GetGameState() : nullptr);
+						Target->SetReadyToDestroy();
+					}
+				});
+		}
+		*static_cast<UFortAsyncAction_GameStateReady**>(RESULT_PARAM) = Action;
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecMatchReadyAsync)
+	{
+		P_GET_OBJECT(UObject, WorldContextObject);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UWorld* World = GEngine ? GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::ReturnNull) : nullptr;
+		UFortAsyncAction_AuthorityMatchReady* Action = World ? NewObject<UFortAsyncAction_AuthorityMatchReady>(GetTransientPackage()) : nullptr;
+		if (Action)
+		{
+			Action->RegisterWithGameInstance(WorldContextObject);
+			TWeakObjectPtr<UFortAsyncAction_AuthorityMatchReady> Weak(Action);
+			TWeakObjectPtr<UWorld> WeakWorld(World);
+			FireWhenReady(World, [WeakWorld]()
+				{
+					const AFortGameStateAthena* State = WeakWorld.IsValid() ? WeakWorld->GetGameState<AFortGameStateAthena>() : nullptr;
+					return State && State->bPlaylistDataIsLoaded && WeakWorld->GetAuthGameMode() != nullptr;
+				},
+				[Weak]()
+				{
+					if (UFortAsyncAction_AuthorityMatchReady* Target = Weak.Get())
+					{
+						Target->OnReady.Broadcast();
+						Target->SetReadyToDestroy();
+					}
+				});
+		}
+		*static_cast<UFortAsyncAction_AuthorityMatchReady**>(RESULT_PARAM) = Action;
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecPlaylistDataReadyAsync)
+	{
+		P_GET_OBJECT(UObject, WorldContextObject);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UWorld* World = GEngine ? GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::ReturnNull) : nullptr;
+		UFortAsyncAction_CurrentPlaylistReady* Action = World ? NewObject<UFortAsyncAction_CurrentPlaylistReady>(GetTransientPackage()) : nullptr;
+		if (Action)
+		{
+			Action->RegisterWithGameInstance(WorldContextObject);
+			TWeakObjectPtr<UFortAsyncAction_CurrentPlaylistReady> Weak(Action);
+			TWeakObjectPtr<UWorld> WeakWorld(World);
+			FireWhenReady(World, [WeakWorld]()
+				{
+					const AFortGameStateAthena* State = WeakWorld.IsValid() ? WeakWorld->GetGameState<AFortGameStateAthena>() : nullptr;
+					return State && State->bPlaylistDataIsLoaded && State->GetCurrentPlaylistAthena() != nullptr;
+				},
+				[Weak, WeakWorld]()
+				{
+					AFortGameStateAthena* State = WeakWorld.IsValid() ? WeakWorld->GetGameState<AFortGameStateAthena>() : nullptr;
+					if (UFortAsyncAction_CurrentPlaylistReady* Target = Weak.Get())
+					{
+						Target->OnReady.Broadcast(State, State ? State->GetCurrentPlaylistAthena() : nullptr, FGameplayTagContainer());
+						Target->SetReadyToDestroy();
+					}
+				});
+		}
+		*static_cast<UFortAsyncAction_CurrentPlaylistReady**>(RESULT_PARAM) = Action;
+		P_NATIVE_END;
+	}
+
+	// Waits until streaming levels around the destination have finished before reporting the teleport complete.
+	DEFINE_FUNCTION(ExecCreateTeleportAndWaitForLevelStreaming)
+	{
+		P_GET_OBJECT(AFortPlayerPawn, InPlayerPawn);
+		P_GET_STRUCT_REF(FVector, InTeleportLocation);
+		P_GET_STRUCT_REF(FRotator, InTeleportRotation);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UWorld* World = InPlayerPawn ? InPlayerPawn->GetWorld() : nullptr;
+		UFortAsyncAction_TeleportAndWaitForLevelStreaming* Action = World ? NewObject<UFortAsyncAction_TeleportAndWaitForLevelStreaming>(GetTransientPackage()) : nullptr;
+		if (Action)
+		{
+			Action->PlayerPawn = InPlayerPawn;
+			Action->TeleportLocation = InTeleportLocation;
+			Action->TeleportRotation = InTeleportRotation;
+			Action->RegisterWithGameInstance(InPlayerPawn);
+			TWeakObjectPtr<UFortAsyncAction_TeleportAndWaitForLevelStreaming> Weak(Action);
+			TWeakObjectPtr<UWorld> WeakWorld(World);
+			AfterSeconds(World, 0.02f, [Weak]()
+			{
+				if (UFortAsyncAction_TeleportAndWaitForLevelStreaming* Target = Weak.Get())
+				{
+					if (Target->PlayerPawn)
+					{
+						Target->PlayerPawn->TeleportTo(Target->TeleportLocation, Target->TeleportRotation);
+					}
+				}
+			});
+			FireWhenReady(World, [WeakWorld]() { return WeakWorld.IsValid() && !WeakWorld->IsVisibilityRequestPending(); },
+				[Weak]()
+				{
+					if (UFortAsyncAction_TeleportAndWaitForLevelStreaming* Target = Weak.Get())
+					{
+						Target->OnComplete.Broadcast();
+						Target->SetReadyToDestroy();
+					}
+				});
+		}
+		*static_cast<UFortAsyncAction_TeleportAndWaitForLevelStreaming**>(RESULT_PARAM) = Action;
+		P_NATIVE_END;
+	}
+
+	FGameplayAbilityTargetDataHandle SelfTargetData(const UAbilityTask* Task)
+	{
+		FGameplayAbilityTargetDataHandle Handle;
+		if (const AActor* Avatar = (Task && Task->AbilitySystemComponent) ? Task->AbilitySystemComponent->GetAvatarActor() : nullptr)
+		{
+			FGameplayAbilityTargetData_ActorArray* Data = new FGameplayAbilityTargetData_ActorArray();
+			Data->TargetActorArray.Add(const_cast<AActor*>(Avatar));
+			Handle.Add(Data);
+		}
+		return Handle;
+	}
+
+	// Plays the montage on the ability's avatar and reports Triggered near its end (where the retail montage notifies consumption)
+	// and Completed when it finishes. Both stop if the ability ended earlier.
+	UFortAbilityTask_PlayMontageWaitTarget* StartMontageTask(UGameplayAbility* OwningAbility, FName TaskInstanceName, UAnimMontage* Montage, float Rate,
+		FName Section, EFortAbilityTargetDataPolicy Policy)
+	{
+		UFortAbilityTask_PlayMontageWaitTarget* Task = OwningAbility ? UAbilityTask::NewAbilityTask<UFortAbilityTask_PlayMontageWaitTarget>(OwningAbility, TaskInstanceName) : nullptr;
+		UWorld* World = OwningAbility ? OwningAbility->GetWorld() : nullptr;
+		if (!Task || !World)
+		{
+			return Task;
+		}
+		TWeakObjectPtr<UFortAbilityTask_PlayMontageWaitTarget> Weak(Task);
+		AfterSeconds(World, 0.02f, [Weak, OwningAbilityWeak = TWeakObjectPtr<UGameplayAbility>(OwningAbility), Montage, Rate, Section, World]()
+		{
+			UFortAbilityTask_PlayMontageWaitTarget* Target = Weak.Get();
+			UGameplayAbility* Ability = OwningAbilityWeak.Get();
+			if (!Target || !Ability || !Target->IsActive() || !Target->AbilitySystemComponent)
+			{
+				return;
+			}
+			float Duration = Montage ? Target->AbilitySystemComponent->PlayMontage(Ability, Ability->GetCurrentActivationInfo(), Montage, Rate, Section) : 0.0f;
+			if (Duration <= 0.0f)
+			{
+				Duration = Montage ? Montage->GetPlayLength() / FMath::Max(Rate, 0.01f) : 0.0f;
+			}
+			Duration = FMath::Max(Duration, 0.05f);
+			AfterSeconds(World, Duration * 0.9f, [Weak]()
+			{
+				if (UFortAbilityTask_PlayMontageWaitTarget* Active = Weak.Get())
+				{
+					if (Active->IsActive())
+					{
+						Active->Triggered.Broadcast(SelfTargetData(Active), FGameplayTag());
+					}
+				}
+			});
+			AfterSeconds(World, Duration, [Weak]()
+			{
+				if (UFortAbilityTask_PlayMontageWaitTarget* Active = Weak.Get())
+				{
+					if (Active->IsActive())
+					{
+						Active->Completed.Broadcast(FGameplayAbilityTargetDataHandle(), FGameplayTag());
+						Active->EndTask();
+					}
+				}
+			});
+		});
+		return Task;
+	}
+
+	FName PickMontageSection(UAnimMontage* Montage, EFortGameplayAbilityMontageSectionToPlay Choice, FName OverrideSection, bool bRandom)
+	{
+		if (!OverrideSection.IsNone())
+		{
+			return OverrideSection;
+		}
+		if ((bRandom || Choice != EFortGameplayAbilityMontageSectionToPlay::FirstSection) && Montage && Montage->CompositeSections.Num() > 0)
+		{
+			return Montage->CompositeSections[FMath::RandRange(0, Montage->CompositeSections.Num() - 1)].SectionName;
+		}
+		return NAME_None;
+	}
+
+	DEFINE_FUNCTION(ExecPlayMontageWaitTarget)
+	{
+		P_GET_OBJECT(UGameplayAbility, OwningAbility);
+		P_GET_PROPERTY(FNameProperty, TaskInstanceName);
+		P_GET_OBJECT(UAnimMontage, MontageToPlay);
+		P_GET_PROPERTY(FFloatProperty, AnimPlayRate);
+		P_GET_ENUM(EFortGameplayAbilityMontageSectionToPlay, SectionToPlay);
+		P_GET_PROPERTY(FNameProperty, OverrideSection);
+		P_GET_PROPERTY(FFloatProperty, AnimRootMotionTranslationScale);
+		P_GET_ENUM(EFortAbilityTargetDataPolicy, TargetDataPolicy);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UFortAbilityTask_PlayMontageWaitTarget* Task = StartMontageTask(OwningAbility, TaskInstanceName, MontageToPlay, AnimPlayRate,
+			PickMontageSection(MontageToPlay, SectionToPlay, OverrideSection, false), TargetDataPolicy);
+		*static_cast<UFortAbilityTask_PlayMontageWaitTarget**>(RESULT_PARAM) = Task;
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecPlayMontageInfoAndWaitForTrigger)
+	{
+		P_GET_OBJECT(UGameplayAbility, OwningAbility);
+		P_GET_PROPERTY(FNameProperty, TaskInstanceName);
+		P_GET_STRUCT_REF(FFortGameplayAbilityMontageInfo, MontageInfo);
+		P_GET_ENUM(EFortAbilityTargetDataPolicy, TargetDataPolicy);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UFortAbilityTask_PlayMontageWaitTarget* Task = StartMontageTask(OwningAbility, TaskInstanceName, MontageInfo.MontageToPlay, MontageInfo.AnimPlayRate,
+			PickMontageSection(MontageInfo.MontageToPlay, MontageInfo.MontageSectionToPlay, MontageInfo.OverrideSection, MontageInfo.bPlayRandomSection),
+			TargetDataPolicy);
+		if (Task)
+		{
+			Task->MontageInfo = MontageInfo;
+		}
+		*static_cast<UFortAbilityTask_PlayMontageWaitTarget**>(RESULT_PARAM) = Task;
+		P_NATIVE_END;
+	}
+
+	// Instant targeting: the avatar itself is the selected target, reported as soon as the Blueprint has bound the delegates.
+	DEFINE_FUNCTION(ExecWaitTargetSelection)
+	{
+		P_GET_OBJECT(UGameplayAbility, OwningAbility);
+		P_GET_PROPERTY(FNameProperty, TaskInstanceName);
+		P_GET_STRUCT(FGameplayTag, InApplicationTag);
+		P_GET_UBOOL(bInForceTargetingOnServer);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UFortAbilityTask_WaitTargetSelection* Task = OwningAbility ? UAbilityTask::NewAbilityTask<UFortAbilityTask_WaitTargetSelection>(OwningAbility, TaskInstanceName) : nullptr;
+		if (Task)
+		{
+			Task->bForceTargetingOnServer = bInForceTargetingOnServer;
+			Task->InstantTargetTag = InApplicationTag;
+			TWeakObjectPtr<UFortAbilityTask_WaitTargetSelection> Weak(Task);
+			AfterSeconds(OwningAbility->GetWorld(), 0.05f, [Weak, InApplicationTag]()
+			{
+				if (UFortAbilityTask_WaitTargetSelection* Active = Weak.Get())
+				{
+					if (Active->IsActive())
+					{
+						Active->Targeted.Broadcast(SelfTargetData(Active), InApplicationTag);
+						Active->EndTask();
+					}
+				}
+			});
+		}
+		*static_cast<UFortAbilityTask_WaitTargetSelection**>(RESULT_PARAM) = Task;
+		P_NATIVE_END;
+	}
+
 	// ---- stubbed server RPCs ---------------------------------------------------------------------------------------------
 
 	// ServerCombineInventoryItems: empty in the retail client (stripped server body, shared stub 0x1406801c0).
@@ -1381,6 +1938,28 @@ namespace
 
 	const FNativeBinding GBindings[] = {
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("GetActorTeam"), &ExecGetActorTeam },
+		{ TEXT("/Script/FortniteGame.BuildingGameplayActorConsumable"), TEXT("GetOnConsumeMontage"), &ExecGetOnConsumeMontage },
+		{ TEXT("/Script/FortniteGame.FortAthenaVehicleSpawner"), TEXT("GetVehicleClass"), &ExecGetVehicleClass },
+		{ TEXT("/Script/FortniteGame.BuildingGameplayActorSpawnMachine"), TEXT("GetCooldownLength"), &ExecGetCooldownLength },
+		{ TEXT("/Script/FortniteGame.BuildingGameplayActorSentry"), TEXT("SetSentryState"), &ExecSetSentryState },
+		{ TEXT("/Script/FortniteGame.BuildingGameplayActorSentry"), TEXT("SetPawnBeingTracked"), &ExecSetPawnBeingTracked },
+		{ TEXT("/Script/FortniteGame.BuildingGameplayActor"), TEXT("ForceChangeOwnerInstigator"), &ExecForceChangeOwnerInstigator },
+		{ TEXT("/Script/FortniteGame.BuildingActor"), TEXT("BlueprintDie"), &ExecBlueprintDie },
+		{ TEXT("/Script/FortniteGame.BuildingActor"), TEXT("GetLootTierGroupOverride"), &ExecGetLootTierGroupOverride },
+		{ TEXT("/Script/FortniteGame.FortGameStateAthena"), TEXT("GetBattleBusForPlayer"), &ExecGetBattleBusForPlayer },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("ApplyGlobalEnvironmentGameplayEffectToActor"), &ExecApplyGlobalEnvironmentGameplayEffectToActor },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("GetHeldObjectAttachedToPlayer"), &ExecGetHeldObjectAttachedToPlayer },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("GetHeldObjectComponentAttachedToPlayer"), &ExecGetHeldObjectComponentAttachedToPlayer },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("FortShippingLog"), &ExecFortShippingLog },
+		{ TEXT("/Script/FortniteGame.FortHeldObjectComponent"), TEXT("CanInteract"), &ExecHeldObjectCanInteract },
+		{ TEXT("/Script/FortniteGame.FortProjectileMovementComponent"), TEXT("SetVelocity"), &ExecProjectileSetVelocity },
+		{ TEXT("/Script/FortniteGame.FortAsyncAction_GameStateReady"), TEXT("GameStateReadyAsync"), &ExecGameStateReadyAsync },
+		{ TEXT("/Script/FortniteGame.FortAsyncAction_AuthorityMatchReady"), TEXT("MatchReadyAsync"), &ExecMatchReadyAsync },
+		{ TEXT("/Script/FortniteGame.FortAsyncAction_CurrentPlaylistReady"), TEXT("PlaylistDataReadyAsync"), &ExecPlaylistDataReadyAsync },
+		{ TEXT("/Script/FortniteGame.FortAsyncAction_TeleportAndWaitForLevelStreaming"), TEXT("CreateTeleportAndWaitForLevelStreaming"), &ExecCreateTeleportAndWaitForLevelStreaming },
+		{ TEXT("/Script/FortniteGame.FortAbilityTask_PlayMontageWaitTarget"), TEXT("PlayMontageWaitTarget"), &ExecPlayMontageWaitTarget },
+		{ TEXT("/Script/FortniteGame.FortAbilityTask_PlayMontageWaitTarget"), TEXT("PlayMontageInfoAndWaitForTrigger"), &ExecPlayMontageInfoAndWaitForTrigger },
+		{ TEXT("/Script/FortniteGame.FortAbilityTask_WaitTargetSelection"), TEXT("WaitTargetSelection"), &ExecWaitTargetSelection },
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("IsCriticalHit"), &ExecIsCriticalHit },
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("IsFatalHit"), &ExecIsFatalHit },
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("OpenActor"), &ExecOpenActor },

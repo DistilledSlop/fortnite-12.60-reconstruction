@@ -161,3 +161,15 @@ team end-game and return to lobby. Nothing in this section is client-verified.
 Genuinely not done, with the reason: skydive movement (no log of a failing run exists; the existing 5 s `MatchFlow: skydiver` lines will show it), structural support and placement rules (retail
 building-support code not ported; needs its own work package), projectile/throwable/trap abilities (native `SpawnProjectile` and the WaitTarget/SpawnProjectile tasks have no recovered bodies), server reload,
 DBNO/revive, vehicles, and AI/bots. These are separate implementation efforts, each larger than a one-pass fix.
+
+
+## Update 3 (2026-11-15, later): placeholders replaced; all built, none client-tested
+
+Implemented in `Private/FortBlueprintNatives.cpp` and related files (commits a06e80e6, c66131de, f030b322, 109b1fbb, and the final natives commit):
+- Projectile spawn natives (SpawnProjectile, SpawnProjectileAndWait task, SpawnBuildingGameplayActor). Spawn and initial velocity only: impact, bounce and explosion events are not generated, so grenades do not explode on impact yet.
+- Squad queries, infinite-ammo checks, resurrection rule, open/close actor, critical/fatal hit flags (head-bone rule), thrown-projectile noise, effect-container spec building, TossPickup (with combine), ammo toss pickups, creative-playlist query.
+- Building placement: reach and grid-slot occupancy checks (structural support propagation still not ported).
+- Reload and ammo: weapon definitions do not set `ReloadAbility`, so no reload spec was granted and the client's reload start returned at once. Ammo weapons now fall back to the native reload ability; `FortWeaponReload.cpp` fills the magazine from inventory at 90% of the reload time and ends the ability; ranged shots now consume ammo server-side.
+- 32 further natives declared so their imports resolve (consumable montage, vehicle spawner class, supply-drop loot override, sentry, spawn machine, held object, async-ready actions, montage/targeting ability tasks) with real bodies for most.
+
+Still not done: structural support propagation, projectile impact/explosion events, DBNO/revive, vehicles, bots, skydive/glider early-deploy cause, quests, replays. A headless boot of the earlier build rebound 44 of 44 natives; the final build was not booted at the user's request.
