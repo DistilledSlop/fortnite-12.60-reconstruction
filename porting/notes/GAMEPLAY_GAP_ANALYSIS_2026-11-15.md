@@ -173,3 +173,5 @@ Implemented in `Private/FortBlueprintNatives.cpp` and related files (commits a06
 - 32 further natives declared so their imports resolve (consumable montage, vehicle spawner class, supply-drop loot override, sentry, spawn machine, held object, async-ready actions, montage/targeting ability tasks) with real bodies for most.
 
 Still not done: structural support propagation, projectile impact/explosion events, DBNO/revive, vehicles, bots, skydive/glider early-deploy cause, quests, replays. A headless boot of the earlier build rebound 44 of 44 natives; the final build was not booted at the user's request.
+
+Update 3 addendum: projectile impact. Spawned projectiles now have their movement component's stop event bound to the Blueprint `OnStop` event (`BindProjectileImpact`), which is where rockets and impact grenades start their explosion. Bounce and melee-hit events are still not forwarded; built, not run.

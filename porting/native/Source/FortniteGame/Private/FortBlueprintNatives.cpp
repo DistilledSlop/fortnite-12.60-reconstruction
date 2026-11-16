@@ -771,6 +771,23 @@ namespace
 	// flow (fuse timers, Blueprint explosion graphs) can run; hit/bounce/stop events that the retail native movement code raises are
 	// not generated, so throwables that depend on them will not explode on impact yet.
 
+	// Impact: the retail projectile forwards its movement component's stop event to the Blueprint OnStop event, which is where rockets,
+	// impact grenades and traps start their explosion. The movement component raises the stop event on the server when the projectile
+	// hits something it cannot bounce off (or slows below the bounce threshold), so bind it here. Both signatures carry one FHitResult.
+	// stand-in: the retail native OnStop also records the stopping hit for client replication and arms the post-stop lifespan; bounce
+	// and melee-hit events are not forwarded.
+	void BindProjectileImpact(AFortProjectileBase* Projectile)
+	{
+		UProjectileMovementComponent* Movement = Projectile ? Projectile->ProjectileMovementComponent : nullptr;
+		if (!Movement || !Projectile->HasAuthority())
+		{
+			return;
+		}
+		FScriptDelegate StopDelegate;
+		StopDelegate.BindUFunction(Projectile, TEXT("OnStop"));
+		Movement->OnProjectileStop.AddUnique(StopDelegate);
+	}
+
 	AFortProjectileBase* SpawnProjectileActor(TSubclassOf<AFortProjectileBase> ProjectileClass, AActor* RequestedBy, const FVector& Location,
 		const FRotator& Rotation, const FRotator& Direction, float InitialSpeed, float GravityScale, AActor* HomingTarget, float ChargePercent, bool bFinish)
 	{
@@ -810,6 +827,7 @@ namespace
 		if (bFinish)
 		{
 			Projectile->FinishSpawning(Transform);
+			BindProjectileImpact(Projectile);
 		}
 		return Projectile;
 	}
@@ -909,6 +927,7 @@ namespace
 		if (Task && SpawnedActor)
 		{
 			SpawnedActor->FinishSpawning(FTransform(Task->SpawnRotation, Task->SpawnLocation));
+			BindProjectileImpact(SpawnedActor);
 			FProjectileEventData EventData{};
 			EventData.SpawnedProjectile = SpawnedActor;
 			Task->Created.Broadcast(EventData);
