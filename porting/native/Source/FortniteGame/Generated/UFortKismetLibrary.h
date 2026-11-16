@@ -15,6 +15,8 @@
 #include "Engine/Level.h"
 #include "FFortClientEventName.h"
 #include "FFortDialogExternalLatentActionHandle.h"
+#include "FFortGameplayEffectContainer.h"
+#include "FFortGameplayEffectContainerSpec.h"
 #include "FFortItemEntry.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayEffectTypes.h"
@@ -23,6 +25,7 @@
 #include "HAL/UnrealMemory.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
+#include "Math/TransformNonVectorized.h"
 #include "Math/UnrealMathUtility.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
@@ -32,14 +35,17 @@
 
 class AActor;
 class ABuildingActor;
+class ABuildingGameplayActor;
 class AController;
 class AFortGameStateAthena;
 class AFortPickup;
 class AFortPlayerController;
+class AFortProjectileBase;
 class UFortItem;
 class UFortItemDefinition;
 class UFortWeaponItemDefinition;
 class UFortWorldItemDefinition;
+class UGameplayAbility;
 class UMaterialInstanceDynamic;
 class UObject;
 
@@ -207,8 +213,14 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	static AFortPickup* K2_SpawnPickupInWorldWithClass(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, TSubclassOf<AFortPickup> PickupClass, int32 NumberToSpawn, FVector Position, FVector Direction, int32 OverrideMaxStackCount, bool bToss, bool bRandomRotation, bool bBlockedFromAutoPickup, int32 PickupInstigatorHandle, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source, AFortPlayerController* OptionalOwnerPC, bool bPickupOnlyRelevantToOwner);
 
+	UFUNCTION(BlueprintCallable)
+	static FFortGameplayEffectContainerSpec MakeGameplayEffectContainerSpecFromAbility(FFortGameplayEffectContainer& EffectContainer, UGameplayAbility* Ability, int32 GameplayEffectLevel);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static FVector NormalizedAngleInDegreesToVector(float A);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+	static void NotifyProjectileThrown(TSubclassOf<AFortProjectileBase> ProjClass, AActor* RequestedBy, FVector& SpawnLocation, FRotator& SpawnRotation, float Speed);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool OnSameTeam(AActor* ActorA, AActor* ActorB);
@@ -221,6 +233,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	static void SetCanBeDamaged(AActor* Actor, bool bCanBeDamaged);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static ABuildingGameplayActor* SpawnBuildingGameplayActor(TSubclassOf<ABuildingGameplayActor> BGAClass, FTransform& Transform, AActor* Instigator);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static AFortProjectileBase* SpawnProjectile(TSubclassOf<AFortProjectileBase> ProjectileClass, AActor* RequestedBy, FVector& SpawnLocation, FRotator SpawnRotation, FRotator& SpawnDirection, FFortGameplayEffectContainerSpec EffectContainerSpecToApplyOnHit, FFortGameplayEffectContainerSpec EffectContainerSpecToApplyOnExplode, bool bUseDefaultPhysics, AActor* HomingTarget, float InitialSpeed, float GravityScale, float ChargePercent);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static float VectorToNormalizedAngleInDegrees(FVector V);

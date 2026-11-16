@@ -499,6 +499,15 @@ AFortPickup* UFortKismetLibrary::K2_SpawnPickupInWorldWithClass(UObject* WorldCo
 	return nullptr;
 }
 
+FFortGameplayEffectContainerSpec UFortKismetLibrary::MakeGameplayEffectContainerSpecFromAbility(FFortGameplayEffectContainer& EffectContainer, UGameplayAbility* Ability, int32 GameplayEffectLevel)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return {};
+}
+
 FVector UFortKismetLibrary::NormalizedAngleInDegreesToVector(float A)
 {
 	// CONFIDENCE: HIGH
@@ -506,6 +515,15 @@ FVector UFortKismetLibrary::NormalizedAngleInDegreesToVector(float A)
 	float Sine, Cosine;
 	FMath::SinCos(&Sine, &Cosine, A * 0.017453292f);
 	return FVector(Cosine, Sine, 0.0f);
+}
+
+void UFortKismetLibrary::NotifyProjectileThrown(TSubclassOf<AFortProjectileBase> ProjClass, AActor* RequestedBy, FVector& SpawnLocation, FRotator& SpawnRotation, float Speed)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
 }
 
 bool UFortKismetLibrary::OnSameTeam(AActor* ActorA, AActor* ActorB)
@@ -542,6 +560,24 @@ void UFortKismetLibrary::SetCanBeDamaged(AActor* Actor, bool bCanBeDamaged)
 	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
 	// Default result if the rebind is not installed:
 	return;
+}
+
+ABuildingGameplayActor* UFortKismetLibrary::SpawnBuildingGameplayActor(TSubclassOf<ABuildingGameplayActor> BGAClass, FTransform& Transform, AActor* Instigator)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
+}
+
+AFortProjectileBase* UFortKismetLibrary::SpawnProjectile(TSubclassOf<AFortProjectileBase> ProjectileClass, AActor* RequestedBy, FVector& SpawnLocation, FRotator SpawnRotation, FRotator& SpawnDirection, FFortGameplayEffectContainerSpec EffectContainerSpecToApplyOnHit, FFortGameplayEffectContainerSpec EffectContainerSpecToApplyOnExplode, bool bUseDefaultPhysics, AActor* HomingTarget, float InitialSpeed, float GravityScale, float ChargePercent)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
 }
 
 float UFortKismetLibrary::VectorToNormalizedAngleInDegrees(FVector V)

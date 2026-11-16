@@ -10,7 +10,7 @@
 
 #include "FFortGameplayEffectContainerSpec.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortGameplayEffectContainerSpec
 {
 	GENERATED_BODY()

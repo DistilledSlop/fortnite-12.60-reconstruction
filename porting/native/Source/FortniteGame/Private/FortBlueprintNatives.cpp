@@ -40,6 +40,14 @@
 #include "EFortTeamAffiliation.h"
 #include "FFortItemEntry.h"
 #include "UFortAbilitySystemBlueprintLibrary.h"
+#include "Abilities/Tasks/AbilityTask.h"
+#include "GameFramework/ProjectileMovementComponent.h"
+#include "AFortProjectileBase.h"
+#include "ABuildingGameplayActor.h"
+#include "UFortAbilityTask_SpawnProjectileAndWait.h"
+#include "UFortProjectileMovementComponent.h"
+#include "FFortGameplayEffectContainerSpec.h"
+#include "FProjectileEventData.h"
 #include "UFortAbilitySystemComponent.h"
 #include "UFortGlobals.h"
 #include "UFortItem.h"
@@ -727,6 +735,179 @@ namespace
 		P_NATIVE_END;
 	}
 
+	// ---- projectiles -------------------------------------------------------------------------------------------------------
+	// stand-in: the original projectile spawn/hit/explode code (AFortProjectileBase native hit handling, effect-container application on
+	// hit and explode) is not recovered. These functions spawn the projectile actor and give it its initial velocity so the Blueprint
+	// flow (fuse timers, Blueprint explosion graphs) can run; hit/bounce/stop events that the retail native movement code raises are
+	// not generated, so throwables that depend on them will not explode on impact yet.
+
+	AFortProjectileBase* SpawnProjectileActor(TSubclassOf<AFortProjectileBase> ProjectileClass, AActor* RequestedBy, const FVector& Location,
+		const FRotator& Rotation, const FRotator& Direction, float InitialSpeed, float GravityScale, AActor* HomingTarget, float ChargePercent, bool bFinish)
+	{
+		UWorld* World = RequestedBy ? RequestedBy->GetWorld() : nullptr;
+		if (!World || !ProjectileClass)
+		{
+			return nullptr;
+		}
+		const FTransform Transform(Rotation, Location);
+		AFortProjectileBase* Projectile = World->SpawnActorDeferred<AFortProjectileBase>(ProjectileClass, Transform, RequestedBy, Cast<APawn>(RequestedBy),
+			ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+		if (!Projectile)
+		{
+			return nullptr;
+		}
+		Projectile->ChargePercent = ChargePercent;
+		if (GravityScale > 0.0f)
+		{
+			Projectile->GravityScale = GravityScale;
+		}
+		Projectile->OriginalTarget = HomingTarget;
+		if (UProjectileMovementComponent* Movement = Projectile->ProjectileMovementComponent)
+		{
+			if (InitialSpeed > 0.0f)
+			{
+				Movement->Velocity = Direction.Vector() * InitialSpeed;
+			}
+			if (GravityScale > 0.0f)
+			{
+				Movement->ProjectileGravityScale = GravityScale;
+			}
+			if (HomingTarget && HomingTarget->GetRootComponent())
+			{
+				Movement->HomingTargetComponent = HomingTarget->GetRootComponent();
+			}
+		}
+		if (bFinish)
+		{
+			Projectile->FinishSpawning(Transform);
+		}
+		return Projectile;
+	}
+
+	DEFINE_FUNCTION(ExecSpawnProjectile)
+	{
+		P_GET_OBJECT(UClass, ProjectileClass);
+		P_GET_OBJECT(AActor, RequestedBy);
+		P_GET_STRUCT_REF(FVector, SpawnLocation);
+		P_GET_STRUCT(FRotator, SpawnRotation);
+		P_GET_STRUCT_REF(FRotator, SpawnDirection);
+		P_GET_STRUCT(FFortGameplayEffectContainerSpec, EffectContainerSpecToApplyOnHit);
+		P_GET_STRUCT(FFortGameplayEffectContainerSpec, EffectContainerSpecToApplyOnExplode);
+		P_GET_UBOOL(bUseDefaultPhysics);
+		P_GET_OBJECT(AActor, HomingTarget);
+		P_GET_PROPERTY(FFloatProperty, InitialSpeed);
+		P_GET_PROPERTY(FFloatProperty, GravityScale);
+		P_GET_PROPERTY(FFloatProperty, ChargePercent);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*static_cast<AFortProjectileBase**>(RESULT_PARAM) = SpawnProjectileActor(ProjectileClass, RequestedBy, SpawnLocation, SpawnRotation,
+			SpawnDirection, InitialSpeed, GravityScale, HomingTarget, ChargePercent, true);
+		P_NATIVE_END;
+	}
+
+	TMap<TWeakObjectPtr<UFortAbilityTask_SpawnProjectileAndWait>, TSubclassOf<AFortProjectileBase>>& TaskProjectileClasses()
+	{
+		static TMap<TWeakObjectPtr<UFortAbilityTask_SpawnProjectileAndWait>, TSubclassOf<AFortProjectileBase>> Map;
+		return Map;
+	}
+
+	DEFINE_FUNCTION(ExecSpawnProjectileAndWait)
+	{
+		P_GET_OBJECT(UGameplayAbility, OwningAbility);
+		P_GET_OBJECT(UClass, Class);
+		P_GET_OBJECT(AActor, RequestedBy);
+		P_GET_STRUCT_REF(FVector, SpawnLocation);
+		P_GET_STRUCT_REF(FRotator, SpawnRotation);
+		P_GET_STRUCT_REF(FRotator, SpawnDirection);
+		P_GET_PROPERTY(FFloatProperty, InitialSpeed);
+		P_GET_STRUCT(FFortGameplayEffectContainerSpec, EffectContainerSpecToApplyOnHit);
+		P_GET_STRUCT(FFortGameplayEffectContainerSpec, EffectContainerSpecToApplyOnExplode);
+		P_GET_PROPERTY(FFloatProperty, GravityScale);
+		P_GET_OBJECT(AActor, HomingTarget);
+		P_GET_UBOOL(bAllowProjectileSpawnWhenDead);
+		P_GET_UBOOL(bAllowProjectileSpawnWhenDBNO);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UFortAbilityTask_SpawnProjectileAndWait* Task = OwningAbility ? UAbilityTask::NewAbilityTask<UFortAbilityTask_SpawnProjectileAndWait>(OwningAbility) : nullptr;
+		if (Task)
+		{
+			Task->RequestedBy = RequestedBy;
+			Task->SpawnLocation = SpawnLocation;
+			Task->SpawnRotation = SpawnRotation;
+			Task->SpawnDirection = SpawnDirection;
+			Task->InitialSpeed = InitialSpeed;
+			Task->EffectContainerSpecToApplyOnHit = EffectContainerSpecToApplyOnHit;
+			Task->EffectContainerSpecToApplyOnExplode = EffectContainerSpecToApplyOnExplode;
+			Task->GravityScale = GravityScale;
+			Task->HomingTarget = HomingTarget;
+			Task->bAllowSpawnWhenDead = bAllowProjectileSpawnWhenDead;
+			Task->bAllowSpawnWhenDBNO = bAllowProjectileSpawnWhenDBNO;
+			TaskProjectileClasses().Add(Task, Class);
+		}
+		*static_cast<UFortAbilityTask_SpawnProjectileAndWait**>(RESULT_PARAM) = Task;
+		P_NATIVE_END;
+	}
+
+	// Latent-node pair of the task: Begin spawns the actor (deferred, so the Blueprint can set exposed values), Finish completes it.
+	DEFINE_FUNCTION(ExecBeginSpawningActor)
+	{
+		P_GET_OBJECT(UGameplayAbility, OwningAbility);
+		P_GET_OBJECT(UClass, Class);
+		P_GET_OBJECT_REF(AFortProjectileBase, SpawnedActor);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UFortAbilityTask_SpawnProjectileAndWait* Task = Cast<UFortAbilityTask_SpawnProjectileAndWait>(Context);
+		bool bSpawned = false;
+		if (Task && Task->RequestedBy)
+		{
+			SpawnedActor = SpawnProjectileActor(Class, Task->RequestedBy, Task->SpawnLocation, Task->SpawnRotation, Task->SpawnDirection,
+				Task->InitialSpeed, Task->GravityScale, Task->HomingTarget, 0.0f, false);
+			Task->SpawnedProj = SpawnedActor;
+			bSpawned = SpawnedActor != nullptr;
+		}
+		*static_cast<bool*>(RESULT_PARAM) = bSpawned;
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecFinishSpawningActor)
+	{
+		P_GET_OBJECT(UGameplayAbility, OwningAbility);
+		P_GET_OBJECT(AFortProjectileBase, SpawnedActor);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UFortAbilityTask_SpawnProjectileAndWait* Task = Cast<UFortAbilityTask_SpawnProjectileAndWait>(Context);
+		if (Task && SpawnedActor)
+		{
+			SpawnedActor->FinishSpawning(FTransform(Task->SpawnRotation, Task->SpawnLocation));
+			FProjectileEventData EventData{};
+			EventData.SpawnedProjectile = SpawnedActor;
+			Task->Created.Broadcast(EventData);
+		}
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecSpawnBuildingGameplayActor)
+	{
+		P_GET_OBJECT(UClass, BGAClass);
+		P_GET_STRUCT_REF(FTransform, Transform);
+		P_GET_OBJECT(AActor, Instigator);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		ABuildingGameplayActor* Spawned = nullptr;
+		UWorld* World = Instigator ? Instigator->GetWorld() : nullptr;
+		if (World && BGAClass)
+		{
+			Spawned = World->SpawnActorDeferred<ABuildingGameplayActor>(BGAClass, Transform, Instigator, Cast<APawn>(Instigator),
+				ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+			if (Spawned)
+			{
+				Spawned->FinishSpawning(Transform);
+			}
+		}
+		*static_cast<ABuildingGameplayActor**>(RESULT_PARAM) = Spawned;
+		P_NATIVE_END;
+	}
+
 	// ---- stubbed server RPCs ---------------------------------------------------------------------------------------------
 
 	// ServerCombineInventoryItems: empty in the retail client (stripped server body, shared stub 0x1406801c0).
@@ -850,6 +1031,11 @@ namespace
 		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("K2_ConsumeAmmo"), &ExecK2_ConsumeAmmo },
 		{ TEXT("/Script/FortniteGame.FortPlayerController"), TEXT("ServerCombineInventoryItems"), &ExecServerCombineInventoryItems },
 		{ TEXT("/Script/FortniteGame.FortPlayerController"), TEXT("ServerSpotActor"), &ExecServerSpotActor },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("SpawnProjectile"), &ExecSpawnProjectile },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("SpawnBuildingGameplayActor"), &ExecSpawnBuildingGameplayActor },
+		{ TEXT("/Script/FortniteGame.FortAbilityTask_SpawnProjectileAndWait"), TEXT("SpawnProjectileAndWait"), &ExecSpawnProjectileAndWait },
+		{ TEXT("/Script/FortniteGame.FortAbilityTask_SpawnProjectileAndWait"), TEXT("BeginSpawningActor"), &ExecBeginSpawningActor },
+		{ TEXT("/Script/FortniteGame.FortAbilityTask_SpawnProjectileAndWait"), TEXT("FinishSpawningActor"), &ExecFinishSpawningActor },
 		{ TEXT("/Script/FortniteGame.FortPlayerController"), TEXT("ServerReturnToMainMenu"), &ExecServerReturnToMainMenu },
 		{ TEXT("/Script/FortniteGame.FortPlayerController"), TEXT("ServerSetAutoEquipBetterItems"), &ExecServerSetAutoEquipBetterItems },
 		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("ServerReleaseWeaponAbility"), &ExecServerReleaseWeaponAbility },

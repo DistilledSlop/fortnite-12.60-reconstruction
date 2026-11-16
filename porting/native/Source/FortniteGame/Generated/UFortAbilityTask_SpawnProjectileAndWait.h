@@ -13,6 +13,7 @@
 
 class AActor;
 class AFortProjectileBase;
+class UGameplayAbility;
 
 #include "UFortAbilityTask_SpawnProjectileAndWait.generated.h"
 
@@ -93,6 +94,15 @@ public:
 	// table index 0, flags 0x10000000000000
 	UPROPERTY()
 	bool bAllowSpawnWhenDBNO;
+
+	UFUNCTION(BlueprintCallable)
+	bool BeginSpawningActor(UGameplayAbility* OwningAbility, TSubclassOf<AFortProjectileBase> Class, AFortProjectileBase*& SpawnedActor);
+
+	UFUNCTION(BlueprintCallable)
+	void FinishSpawningActor(UGameplayAbility* OwningAbility, AFortProjectileBase* SpawnedActor);
+
+	UFUNCTION(BlueprintCallable)
+	static UFortAbilityTask_SpawnProjectileAndWait* SpawnProjectileAndWait(UGameplayAbility* OwningAbility, TSubclassOf<AFortProjectileBase> Class, AActor* InRequestedBy, FVector& InSpawnLocation, FRotator& InSpawnRotation, FRotator& InSpawnDirection, float InInitialSpeed, FFortGameplayEffectContainerSpec InEffectContainerSpecToApplyOnHit, FFortGameplayEffectContainerSpec InEffectContainerSpecToApplyOnExplode, float InGravityScale, AActor* InHomingTarget, bool bAllowProjectileSpawnWhenDead, bool bAllowProjectileSpawnWhenDBNO);
 
 };
 
