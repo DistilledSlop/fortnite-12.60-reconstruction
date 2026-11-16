@@ -60,6 +60,16 @@
 #include "FortAthenaLootRoll.h"
 #include "FortAthenaLootSearch.h"
 #include "FortHarvestBuilding.h"
+#include "AFortGameStateAthena.h"
+#include "UFortPlaylistAthena.h"
+#include "UOpenableInterface.h"
+#include "UFortInventoryOwnerInterface.h"
+#include "UFortWeaponItemDefinition.h"
+#include "FFortGameplayEffectContainer.h"
+#include "Abilities/GameplayAbility.h"
+#include "EngineUtils.h"
+#include "Engine/Engine.h"
+#include "TimerManager.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFortBpNatives, Log, All);
 
@@ -908,6 +918,371 @@ namespace
 		P_NATIVE_END;
 	}
 
+	// ---- squads, ammo rules, resurrection, open/close, hit flags, toss pickups ---------------------------------------------------
+
+	TArray<AFortPlayerStateAthena*> SquadMembersOf(const AFortPlayerStateAthena* Of, bool bIncludeSelf)
+	{
+		TArray<AFortPlayerStateAthena*> Members;
+		const UWorld* World = Of ? Of->GetWorld() : nullptr;
+		const AGameStateBase* State = World ? World->GetGameState() : nullptr;
+		if (!State)
+		{
+			return Members;
+		}
+		for (APlayerState* Candidate : State->PlayerArray)
+		{
+			AFortPlayerStateAthena* Member = Cast<AFortPlayerStateAthena>(Candidate);
+			if (!Member || !IsValid(Member))
+			{
+				continue;
+			}
+			if (Member == Of)
+			{
+				if (bIncludeSelf)
+				{
+					Members.Add(Member);
+				}
+			}
+			else if (Member->TeamIndex == Of->TeamIndex)
+			{
+				// stand-in: a squad is every player state of the same team; the retail native also filters on SquadId, which the
+				// server assigns equal to the team's slot.
+				Members.Add(Member);
+			}
+		}
+		return Members;
+	}
+
+	DEFINE_FUNCTION(ExecGetSquadMemberPlayerStates)
+	{
+		P_GET_OBJECT(AFortPlayerStateAthena, InstigatingPlayerState);
+		P_GET_UBOOL(bIncludeSelf);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*static_cast<TArray<AFortPlayerStateAthena*>*>(RESULT_PARAM) = SquadMembersOf(InstigatingPlayerState, bIncludeSelf);
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecIsInSquad)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const AFortPlayerStateAthena* State = Cast<AFortPlayerStateAthena>(Context);
+		*static_cast<bool*>(RESULT_PARAM) = State && SquadMembersOf(State, false).Num() > 0;
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecIsResurrectionEnabled)
+	{
+		P_GET_OBJECT(AFortPlayerPawn, PlayerPawn);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const AFortGameStateAthena* State = Cast<AFortGameStateAthena>(Context);
+		bool bEnabled = State && State->ResurrectionEnabledRow.GetValueAtLevel(0.0f) > 0.0f;
+		if (bEnabled && PlayerPawn)
+		{
+			const AFortPlayerStateAthena* Player = Cast<AFortPlayerStateAthena>(PlayerPawn->GetPlayerState());
+			bEnabled = !(Player && Player->bResurrectionChipDisabled);
+		}
+		*static_cast<bool*>(RESULT_PARAM) = bEnabled;
+		P_NATIVE_END;
+	}
+
+	// Same decision the weapon's ammo lookup (0x14269ed80) makes: a weapon that does not use ammo, or whose inventory owner has the
+	// infinite-ammo rule (mutator / controller flag) for this weapon definition, never runs dry.
+	bool WeaponOwnerHasInfiniteAmmo(AFortWeapon* Weapon)
+	{
+		IFortInventoryOwnerInterface* Owner = Weapon ? Weapon->NativeGetInventoryOwnerInterface14269c8f0() : nullptr;
+		return Owner && Weapon->WeaponData && Owner->NativeHasInfiniteAmmo(Weapon->WeaponData);
+	}
+
+	DEFINE_FUNCTION(ExecHasInfiniteAmmo)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		AFortWeapon* Weapon = Cast<AFortWeapon>(Context);
+		*static_cast<bool*>(RESULT_PARAM) = Weapon && (!Weapon->NativeUsesAmmo820() || WeaponOwnerHasInfiniteAmmo(Weapon));
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecInventoryOwnerHasInfiniteAmmo)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*static_cast<bool*>(RESULT_PARAM) = WeaponOwnerHasInfiniteAmmo(Cast<AFortWeapon>(Context));
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecGetWeaponDataGameplayTags)
+	{
+		P_GET_STRUCT_REF(FGameplayTagContainer, GameplayTags);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const AFortWeapon* Weapon = Cast<AFortWeapon>(Context);
+		GameplayTags = (Weapon && Weapon->WeaponData) ? Weapon->WeaponData->GameplayTags : FGameplayTagContainer();
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecIsCreativeOrPlaygroundModePlaylist)
+	{
+		P_GET_OBJECT(UObject, WorldContextObject);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UWorld* World = GEngine ? GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::ReturnNull) : nullptr;
+		const AFortGameStateAthena* State = World ? World->GetGameState<AFortGameStateAthena>() : nullptr;
+		const UFortPlaylistAthena* Playlist = State ? State->GetCurrentPlaylistAthena() : nullptr;
+		bool bCreative = false;
+		if (Playlist)
+		{
+			const FString Name = Playlist->GetName();
+			bCreative = Playlist->bEnableCreativeMode || Name.Contains(TEXT("Creative")) || Name.Contains(TEXT("Playground"));
+		}
+		*static_cast<bool*>(RESULT_PARAM) = bCreative;
+		P_NATIVE_END;
+	}
+
+	// Doors and other openable actors implement IOpenableInterface (BlueprintNativeEvent Open/Close/IsOpen); these natives drive it and
+	// report whether the actor ended up in the requested state.
+	DEFINE_FUNCTION(ExecOpenActor)
+	{
+		P_GET_OBJECT(AActor, OpenableInterfaceActor);
+		P_GET_OBJECT(AController, OptionalControllerInstigator);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		bool bOpen = false;
+		if (OpenableInterfaceActor && OpenableInterfaceActor->GetClass()->ImplementsInterface(UOpenableInterface::StaticClass()))
+		{
+			if (!IOpenableInterface::Execute_IsOpen(OpenableInterfaceActor))
+			{
+				IOpenableInterface::Execute_Open(OpenableInterfaceActor, OptionalControllerInstigator);
+			}
+			bOpen = IOpenableInterface::Execute_IsOpen(OpenableInterfaceActor);
+		}
+		*static_cast<bool*>(RESULT_PARAM) = bOpen;
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecCloseActor)
+	{
+		P_GET_OBJECT(AActor, OpenableInterfaceActor);
+		P_GET_OBJECT(AController, OptionalControllerInstigator);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		bool bClosed = false;
+		if (OpenableInterfaceActor && OpenableInterfaceActor->GetClass()->ImplementsInterface(UOpenableInterface::StaticClass()))
+		{
+			if (IOpenableInterface::Execute_IsOpen(OpenableInterfaceActor))
+			{
+				IOpenableInterface::Execute_Close(OpenableInterfaceActor, OptionalControllerInstigator);
+			}
+			bClosed = !IOpenableInterface::Execute_IsOpen(OpenableInterfaceActor);
+		}
+		*static_cast<bool*>(RESULT_PARAM) = bClosed;
+		P_NATIVE_END;
+	}
+
+	// Hit flags are derived the way the server damage path (FortHarvestFlow OnRangedTargetData) decides them: a hit on the head bone is
+	// the critical zone, and a hit whose target has no health left is fatal.
+	DEFINE_FUNCTION(ExecIsCriticalHit)
+	{
+		P_GET_STRUCT(FGameplayEffectContextHandle, EffectContext);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const FHitResult* Hit = EffectContext.IsValid() ? EffectContext.GetHitResult() : nullptr;
+		*static_cast<bool*>(RESULT_PARAM) = Hit && Hit->BoneName.ToString().Contains(TEXT("head"), ESearchCase::IgnoreCase);
+		P_NATIVE_END;
+	}
+
+	DEFINE_FUNCTION(ExecIsFatalHit)
+	{
+		P_GET_STRUCT(FGameplayEffectContextHandle, EffectContext);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const FHitResult* Hit = EffectContext.IsValid() ? EffectContext.GetHitResult() : nullptr;
+		const AFortPawn* Victim = Hit ? Cast<AFortPawn>(Hit->GetActor()) : nullptr;
+		*static_cast<bool*>(RESULT_PARAM) = Victim && Victim->GetHealth() <= 0.0f;
+		P_NATIVE_END;
+	}
+
+	// The thrower makes a noise at the release point so perception systems (bots, hearing) can react to the throw.
+	DEFINE_FUNCTION(ExecNotifyProjectileThrown)
+	{
+		P_GET_OBJECT(UClass, ProjClass);
+		P_GET_OBJECT(AActor, RequestedBy);
+		P_GET_STRUCT_REF(FVector, SpawnLocation);
+		P_GET_STRUCT_REF(FRotator, SpawnRotation);
+		P_GET_PROPERTY(FFloatProperty, Speed);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		if (APawn* Thrower = Cast<APawn>(RequestedBy))
+		{
+			Thrower->MakeNoise(1.0f, Thrower, SpawnLocation, 0.0f, FName(TEXT("ProjectileThrown")));
+		}
+		P_NATIVE_END;
+	}
+
+	// Builds the runtime spec for an ability's effect container: one outgoing spec per target / owner effect class at the given level,
+	// with the container's targeting, cue and magnitude settings carried over.
+	DEFINE_FUNCTION(ExecMakeGameplayEffectContainerSpecFromAbility)
+	{
+		P_GET_STRUCT_REF(FFortGameplayEffectContainer, EffectContainer);
+		P_GET_OBJECT(UGameplayAbility, Ability);
+		P_GET_PROPERTY(FIntProperty, GameplayEffectLevel);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		FFortGameplayEffectContainerSpec& Spec = *static_cast<FFortGameplayEffectContainerSpec*>(RESULT_PARAM);
+		Spec = FFortGameplayEffectContainerSpec();
+		Spec.TargetSelection = EffectContainer.TargetSelection;
+		Spec.ActivationCues = EffectContainer.ActivationCues;
+		Spec.ImpactCues = EffectContainer.ImpactCues;
+		Spec.bOverrideChargeMagnitude = EffectContainer.bOverrideChargeMagnitude;
+		Spec.ChargeMagnitudeOverrideValue = EffectContainer.ChargeMagnitudeOverrideValue;
+		if (Ability)
+		{
+			const float Level = static_cast<float>(GameplayEffectLevel);
+			for (const TSubclassOf<UGameplayEffect>& EffectClass : EffectContainer.TargetGameplayEffectClasses)
+			{
+				if (EffectClass)
+				{
+					Spec.TargetGameplayEffectSpecs.Add(Ability->MakeOutgoingGameplayEffectSpec(EffectClass, Level));
+				}
+			}
+			for (const TSubclassOf<UGameplayEffect>& EffectClass : EffectContainer.OwnerGameplayEffectClasses)
+			{
+				if (EffectClass)
+				{
+					Spec.OwnerGameplayEffectSpecs.Add(Ability->MakeOutgoingGameplayEffectSpec(EffectClass, Level));
+				}
+			}
+		}
+		P_NATIVE_END;
+	}
+
+	// Starts the replicated toss of a pickup from its current position to Rest; the server moves the actor when the flight ends.
+	// Same replicated fields the loot path uses (FortAthenaLoot::SpawnResolvedPickup).
+	void BeginPickupToss(AFortPickup* Pickup, const FVector& Rest, AFortPawn* ItemOwner, bool bToss, bool bCombineWhenDone)
+	{
+		UWorld* World = Pickup ? Pickup->GetWorld() : nullptr;
+		if (!World)
+		{
+			return;
+		}
+		const FVector From = Pickup->GetActorLocation();
+		Pickup->bCombinePickupsWhenTossCompletes = bCombineWhenDone;
+		if (!bToss)
+		{
+			Pickup->SetActorLocation(Rest);
+			Pickup->PickupLocationData.TossState = EFortPickupTossState::AtRest;
+			Pickup->ForceNetUpdate();
+			return;
+		}
+		constexpr float TossFlyTime = 0.75f;
+		FVector Dir = (Rest - From).GetSafeNormal();
+		if (Dir.IsNearlyZero())
+		{
+			Dir = FVector::UpVector;
+		}
+		Pickup->PickupLocationData.ItemOwner = ItemOwner;
+		Pickup->PickupLocationData.PickupTarget = nullptr;
+		Pickup->PickupLocationData.CombineTarget = nullptr;
+		Pickup->PickupLocationData.LootInitialPosition = From;
+		Pickup->PickupLocationData.LootFinalPosition = Rest;
+		Pickup->PickupLocationData.FinalTossRestLocation = Rest;
+		Pickup->PickupLocationData.FlyTime = TossFlyTime;
+		Pickup->PickupLocationData.StartDirection = Dir;
+		Pickup->PickupLocationData.TossState = EFortPickupTossState::InProgress;
+		Pickup->PickupLocationData.bPlayPickupSound = false;
+		Pickup->PickupLocationData.PickupGuid = FGuid::NewGuid();
+		Pickup->ForceNetUpdate();
+		FTimerHandle RestTimer;
+		TWeakObjectPtr<AFortPickup> WeakPickup(Pickup);
+		World->GetTimerManager().SetTimer(RestTimer, [WeakPickup, Rest, bCombineWhenDone]()
+		{
+			AFortPickup* Target = WeakPickup.Get();
+			if (!Target || !IsValid(Target) || Target->bPickedUp)
+			{
+				return;
+			}
+			Target->SetActorLocation(Rest);
+			Target->PickupLocationData.TossState = EFortPickupTossState::AtRest;
+			if (bCombineWhenDone)
+			{
+				// Merge into a resting pickup of the same item (same definition and level) within reach, up to the stack limit.
+				FFortItemEntry& Mine = Target->PrimaryPickupItemEntry;
+				const int32 MaxStack = Mine.ItemDefinition ? FMath::Max(1, static_cast<int32>(Mine.ItemDefinition->MaxStackSize.GetValue())) : 1;
+				for (TActorIterator<AFortPickup> It(Target->GetWorld()); It; ++It)
+				{
+					AFortPickup* Other = *It;
+					if (Other == Target || !IsValid(Other) || Other->bPickedUp || Other->PickupLocationData.TossState != EFortPickupTossState::AtRest)
+					{
+						continue;
+					}
+					FFortItemEntry& Theirs = Other->PrimaryPickupItemEntry;
+					if (Theirs.ItemDefinition == Mine.ItemDefinition && Theirs.Level == Mine.Level
+						&& FVector::DistSquared(Other->GetActorLocation(), Rest) < FMath::Square(150.0f)
+						&& Theirs.Count + Mine.Count <= MaxStack)
+					{
+						Theirs.Count += Mine.Count;
+						Other->ForceNetUpdate();
+						Target->Destroy();
+						return;
+					}
+				}
+			}
+			Target->ForceNetUpdate();
+		}, TossFlyTime, false);
+	}
+
+	DEFINE_FUNCTION(ExecTossPickup)
+	{
+		P_GET_STRUCT(FVector, FinalLocation);
+		P_GET_OBJECT(AFortPawn, ItemOwner);
+		P_GET_PROPERTY(FIntProperty, OverrideMaxStackCount);
+		P_GET_UBOOL(bToss);
+		P_GET_UBOOL(bShouldCombinePickupsWhenTossCompletes);
+		P_GET_ENUM(EFortPickupSourceTypeFlag, InPickupSourceTypeFlags);
+		P_GET_ENUM(EFortPickupSpawnSource, InPickupSpawnSource);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		if (AFortPickup* Pickup = Cast<AFortPickup>(Context))
+		{
+			Pickup->PickupSourceTypeFlags = InPickupSourceTypeFlags;
+			Pickup->PickupSpawnSource = InPickupSpawnSource;
+			// stand-in: OverrideMaxStackCount only limits how a later combine may grow the stack in the retail native; the combine step
+			// above uses the item definition's own stack limit.
+			BeginPickupToss(Pickup, FinalLocation, ItemOwner, bToss, bShouldCombinePickupsWhenTossCompletes);
+		}
+		P_NATIVE_END;
+	}
+
+	// Spawns the ammo pickup that belongs to a weapon definition and tosses it away from Location (used by throwables and drops).
+	DEFINE_FUNCTION(ExecCreateTossAmmoPickup)
+	{
+		P_GET_OBJECT(UObject, WorldContextObject);
+		P_GET_OBJECT(UFortWeaponItemDefinition, WeaponItemDefinition);
+		P_GET_STRUCT_REF(FGameplayTagContainer, SourceTags);
+		P_GET_STRUCT_REF(FVector, Location);
+		P_GET_ENUM(EFortPickupSourceTypeFlag, SourceTypeFlag);
+		P_GET_ENUM(EFortPickupSpawnSource, SpawnSource);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UWorld* World = GEngine ? GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::ReturnNull) : nullptr;
+		UFortWorldItemDefinition* Ammo = WeaponItemDefinition ? WeaponItemDefinition->GetAmmoWorldItemDefinitionNative() : nullptr;
+		if (World && Ammo)
+		{
+			const int32 Count = FMath::Max(1, Ammo->DropCount);
+			const float Angle = FMath::FRandRange(0.0f, 2.0f * PI);
+			const FVector Rest = Location + FVector(FMath::Cos(Angle), FMath::Sin(Angle), 0.0f) * FMath::FRandRange(80.0f, 160.0f);
+			const FVector From = Location + FVector(0.0f, 0.0f, 40.0f);
+			if (AFortPickup* Pickup = FortAthenaLoot::SpawnResolvedPickup(World, Rest, Ammo, Count, 0, 0, &From))
+			{
+				Pickup->PickupSourceTypeFlags = SourceTypeFlag;
+				Pickup->PickupSpawnSource = SpawnSource;
+			}
+		}
+		P_NATIVE_END;
+	}
+
 	// ---- stubbed server RPCs ---------------------------------------------------------------------------------------------
 
 	// ServerCombineInventoryItems: empty in the retail client (stripped server body, shared stub 0x1406801c0).
@@ -996,6 +1371,21 @@ namespace
 
 	const FNativeBinding GBindings[] = {
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("GetActorTeam"), &ExecGetActorTeam },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("IsCriticalHit"), &ExecIsCriticalHit },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("IsFatalHit"), &ExecIsFatalHit },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("OpenActor"), &ExecOpenActor },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("CloseActor"), &ExecCloseActor },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("NotifyProjectileThrown"), &ExecNotifyProjectileThrown },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("MakeGameplayEffectContainerSpecFromAbility"), &ExecMakeGameplayEffectContainerSpecFromAbility },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("IsCreativeOrPlaygroundModePlaylist"), &ExecIsCreativeOrPlaygroundModePlaylist },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("CreateTossAmmoPickupForWeaponItemDefinitionAtLocation"), &ExecCreateTossAmmoPickup },
+		{ TEXT("/Script/FortniteGame.FortPickup"), TEXT("TossPickup"), &ExecTossPickup },
+		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("HasInfiniteAmmo"), &ExecHasInfiniteAmmo },
+		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("InventoryOwnerHasInfiniteAmmo"), &ExecInventoryOwnerHasInfiniteAmmo },
+		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("GetWeaponDataGameplayTags"), &ExecGetWeaponDataGameplayTags },
+		{ TEXT("/Script/FortniteGame.FortPlayerStateAthena"), TEXT("IsInSquad"), &ExecIsInSquad },
+		{ TEXT("/Script/FortniteGame.FortGameStateAthena"), TEXT("GetSquadMemberPlayerStates"), &ExecGetSquadMemberPlayerStates },
+		{ TEXT("/Script/FortniteGame.FortGameStateAthena"), TEXT("IsResurrectionEnabled"), &ExecIsResurrectionEnabled },
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("OnSameTeam"), &ExecOnSameTeam },
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("GetTeamAffiliation"), &ExecGetTeamAffiliation },
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("GetFortPlayerControllerFromActor"), &ExecGetFortPlayerControllerFromActor },
