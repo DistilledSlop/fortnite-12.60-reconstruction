@@ -233,6 +233,15 @@ void ABuildingActor::HandleDestroyed()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool ABuildingActor::HasHealthLeft() const
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
+}
+
 bool ABuildingActor::IsAcceptablePositionForPlacement_Implementation(FVector& InLocation, FRotator& InRotation, AFortDecoTool* DecoTool, bool bIsCDO, FText& OutFailureReason) const
 {
 	// Exact original shared stub 0x1406801d0.
@@ -332,6 +341,15 @@ void ABuildingActor::SetCanExportNavigationObstacle(bool InCanExportNavigationOb
 	    bCanExportNavigationObstacle = InCanExportNavigationObstacle;
 	    UNavigationSystemV1::UpdateActorInNavOctree(*this);
 	}
+}
+
+void ABuildingActor::SetHealth(float NewHealth)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
 }
 
 void ABuildingActor::SetHealthBarIndicatorDifficultyRating(int32 InDisplayLevel)

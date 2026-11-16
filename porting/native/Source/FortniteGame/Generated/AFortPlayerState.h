@@ -280,6 +280,9 @@ public:
 	AFortPlayerPawn* GetCurrentPawn() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPlayerPawn* GetPlayerPawnOrVehicleDriver() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasStartedPlaying() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

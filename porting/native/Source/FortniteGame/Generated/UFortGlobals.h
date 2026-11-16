@@ -674,7 +674,13 @@ public:
 	static bool IsHestiaEnabled();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsInAthena(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsIronCityAutoAmplifierPlacementEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsMobileGame(UObject* WorldContextObject);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsNewRewardFlowEnabled();
@@ -684,6 +690,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsTwitchEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsUsingTouch(UObject* WorldContextObject);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsWargameDebugEnabled();

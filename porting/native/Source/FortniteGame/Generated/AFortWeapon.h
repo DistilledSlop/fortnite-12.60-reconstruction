@@ -918,6 +918,9 @@ public:
 	UFortWorldItemDefinition* GetWeaponDataAmmoWorldItemDefinition() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetWeaponDataGameplayTags(FGameplayTagContainer& GameplayTags) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortItemType GetWeaponDataItemType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -936,10 +939,19 @@ public:
 	UFortWeaponAnimSet* GetWeaponPawnAnimSet() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasInfiniteAmmo() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool InventoryOwnerHasInfiniteAmmo() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsEquipped() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsProjectileWeapon() const;
+
+	UFUNCTION(BlueprintCallable)
+	void K2_ConsumeAmmo(int32 Quantity);
 
 	UFUNCTION()
 	void OnRep_AmmoCount(int32 OldAmmoCount);
@@ -1019,6 +1031,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	bool TryReloadAmmoFromAbility();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool WeaponDataIsValid() const;
 
 public:
 	UFUNCTION(BlueprintImplementableEvent)

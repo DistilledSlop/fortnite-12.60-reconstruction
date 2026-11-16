@@ -404,6 +404,9 @@ public:
 	bool IsDisconnected() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInSquad() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsResurrectingNow() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

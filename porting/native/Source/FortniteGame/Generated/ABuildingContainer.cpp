@@ -10,6 +10,15 @@ void ABuildingContainer::BounceContainer()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool ABuildingContainer::BP_SpawnLoot(AFortPlayerPawn* PlayerPawn)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
+}
+
 int32 ABuildingContainer::GetLootTier()
 {
 	// Original address: 0x14273c2a0.
@@ -31,6 +40,15 @@ void ABuildingContainer::OnRep_ChosenRandomUpgrade()
 void ABuildingContainer::OnRep_LootTier()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void ABuildingContainer::SetSearchLootTierGroup(FName InSearchLootTierGroup)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
 }
 
 bool ABuildingContainer::NativeIsGameModeOne141ed8c70(UObject* ContextObject)

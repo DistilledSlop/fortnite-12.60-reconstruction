@@ -323,6 +323,15 @@ UFortWorldItemDefinition* AFortWeapon::GetWeaponDataAmmoWorldItemDefinition() co
 	return nullptr;
 }
 
+void AFortWeapon::GetWeaponDataGameplayTags(FGameplayTagContainer& GameplayTags) const
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
+}
+
 EFortItemType AFortWeapon::GetWeaponDataItemType() const
 {
 	// Native callee 0x1426a0b10; CONFIDENCE: HIGH.
@@ -383,6 +392,24 @@ UFortWeaponAnimSet* AFortWeapon::GetWeaponPawnAnimSet() const
 	return WeaponPawnAnimsetOverride ? WeaponPawnAnimsetOverride : WeaponPawnAnimSet;
 }
 
+bool AFortWeapon::HasInfiniteAmmo() const
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
+}
+
+bool AFortWeapon::InventoryOwnerHasInfiniteAmmo() const
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
+}
+
 bool AFortWeapon::IsEquipped() const
 {
 	// CONFIDENCE: high; preserve instigator cast, current-weapon identity, and virtual equip-state query.
@@ -394,6 +421,15 @@ bool AFortWeapon::IsProjectileWeapon() const
 {
 	// Native target 0x1406801e0; CONFIDENCE: high.
 	return false;
+}
+
+void AFortWeapon::K2_ConsumeAmmo(int32 Quantity)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
 }
 
 void AFortWeapon::OnRep_AmmoCount(int32 OldAmmoCount)
@@ -555,6 +591,15 @@ bool AFortWeapon::TryReloadAmmoFromAbility()
 	// Original address: 0x140a02a40.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return false;
+}
+
+bool AFortWeapon::WeaponDataIsValid() const
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
 	return false;
 }
 

@@ -15,13 +15,17 @@
 #include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Controller.h"
+#include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
 #include "HAL/Platform.h"
 #include "SharedFortGameLog.h"
 #include "UObject/Class.h"
 #include "UObject/Object.h"
 
+class AActor;
 class UAnimMontage;
+class UGameplayEffect;
+class UObject;
 
 #include "UFortAbilitySystemComponent.generated.h"
 
@@ -53,6 +57,9 @@ public:
 	void BP_CancelAbilitiesWithTags(FGameplayTagContainer& Tags);
 
 	UFUNCTION(BlueprintCallable)
+	FActiveGameplayEffectHandle BP_FortApplyGameplayEffectToTarget(TSubclassOf<UGameplayEffect> GameplayEffectClass, UAbilitySystemComponent* TargetOfEffect, UObject* OptionalSourceObject, AActor* OptionalEffectCauser, AActor* OptionalDamageSource, float Level, FGameplayEffectContextHandle EffectContext);
+
+	UFUNCTION(BlueprintCallable)
 	void BP_UnBlockAbilitiesWithTags(FGameplayTagContainer& Tags);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -60,6 +67,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasActiveAbilityWithAnyMatchingTag(FGameplayTagContainer Tags) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FGameplayEffectContextHandle MakeFortEffectContext(UObject* SourceObject, AActor* EffectCauser, AActor* DamageSource, int32 GameplayEffectLevel) const;
 
 	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_RefreshActiveGameplayEffectCueEvents();

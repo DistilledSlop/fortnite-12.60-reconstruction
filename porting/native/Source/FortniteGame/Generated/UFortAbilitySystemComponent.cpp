@@ -36,6 +36,15 @@ void UFortAbilitySystemComponent::BP_CancelAbilitiesWithTags(FGameplayTagContain
 	CancelAbilities(&Tags, nullptr, nullptr);
 }
 
+FActiveGameplayEffectHandle UFortAbilitySystemComponent::BP_FortApplyGameplayEffectToTarget(TSubclassOf<UGameplayEffect> GameplayEffectClass, UAbilitySystemComponent* TargetOfEffect, UObject* OptionalSourceObject, AActor* OptionalEffectCauser, AActor* OptionalDamageSource, float Level, FGameplayEffectContextHandle EffectContext)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return {};
+}
+
 void UFortAbilitySystemComponent::BP_UnBlockAbilitiesWithTags(FGameplayTagContainer& Tags)
 {
 	// CONFIDENCE: high
@@ -75,6 +84,15 @@ bool UFortAbilitySystemComponent::HasActiveAbilityWithAnyMatchingTag(FGameplayTa
 	    }
 	}
 	return false;
+}
+
+FGameplayEffectContextHandle UFortAbilitySystemComponent::MakeFortEffectContext(UObject* SourceObject, AActor* EffectCauser, AActor* DamageSource, int32 GameplayEffectLevel) const
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return {};
 }
 
 void UFortAbilitySystemComponent::NetMulticast_RefreshActiveGameplayEffectCueEvents_Implementation()

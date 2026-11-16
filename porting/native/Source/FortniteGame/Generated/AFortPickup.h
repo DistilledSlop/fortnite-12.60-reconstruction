@@ -14,6 +14,7 @@
 #include "FPickupOnCombined.h"
 #include "FPickupOnDespawn.h"
 #include "FPickupOnPickup.h"
+#include "Math/Vector.h"
 #include "Misc/Guid.h"
 
 class AFortPawn;
@@ -242,6 +243,9 @@ protected:
 public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FFortItemEntry GetItemEntry(int32 ItemIndex) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetItemEntryNum() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -291,6 +295,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetPickedUp(bool bInPickedUp);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void TossPickup(FVector FinalLocation, AFortPawn* ItemOwner, int32 OverrideMaxStackCount, bool bToss, bool bShouldCombinePickupsWhenTossCompletes, EFortPickupSourceTypeFlag InPickupSourceTypeFlags, EFortPickupSpawnSource InPickupSpawnSource);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

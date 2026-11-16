@@ -55,6 +55,33 @@
 #include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"
 
+UFortItem* AFortPlayerController::BP_FindExistingItemForDefinition(UFortItemDefinition* ItemDefinition, bool bInStorageVault) const
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
+}
+
+void AFortPlayerController::BP_FindItemInstancesFromDefinition(UFortItemDefinition* ItemDefinition, TArray<UFortItem*>& ItemArray)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
+}
+
+UFortItem* AFortPlayerController::BP_GetInventoryItemWithGuid(FGuid ItemGuid) const
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
+}
+
 bool AFortPlayerController::CanAlterHostileWalls() const
 {
 	// Exact original shared stub 0x1406801e0.

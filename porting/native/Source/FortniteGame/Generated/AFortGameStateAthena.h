@@ -967,6 +967,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortSafeZoneIndicator* GetSafeZoneIndicator() const;
 
+	UFUNCTION(BlueprintCallable)
+	TArray<AFortPlayerStateAthena*> GetSquadMemberPlayerStates(AFortPlayerStateAthena* InstigatingPlayerState, bool bIncludeSelf) const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FTotalPlayers GetTotalPlayers() const;
 
@@ -1020,6 +1023,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPlaygroundModePlaylist() const;
+
+	UFUNCTION(BlueprintCallable)
+	bool IsResurrectionEnabled(AFortPlayerPawn* PlayerPawn) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsTeleportToCreativeHubAllowed(AFortPlayerState* PlayerState) const;

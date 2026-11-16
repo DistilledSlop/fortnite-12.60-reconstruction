@@ -131,7 +131,7 @@ bool FortAthenaLootData::Initialize(AFortGameModeAthena* Mode, UFortPlaylistAthe
                         // a zero row names any such modifier rather than assume.
                         if (!Row->NamedWeightMult.IsNone() || Row->PotentialNamedWeights.Num())
                         { ++Missing; UE_LOG(LogTemp, Warning, TEXT("LootData: zero-weight row has unresolved named weight row=%s"), *Pair.Key.ToString()); continue; }
-                        UE_LOG(LogTemp, Display, TEXT("LootData: inactive zero-weight item reference row=%s path=%s (not checked)"), *Pair.Key.ToString(), *Row->ItemDefinition.ToSoftObjectPath().ToString());
+                        UE_LOG(LogTemp, Verbose, TEXT("LootData: inactive zero-weight item reference row=%s path=%s (not checked)"), *Pair.Key.ToString(), *Row->ItemDefinition.ToSoftObjectPath().ToString());
                         continue;
                     }
                     UObject* Item = Row->ItemDefinition.LoadSynchronous();
@@ -172,7 +172,7 @@ bool FortAthenaLootData::ResolveGroup(const AFortGameModeAthena* Mode, FName Inp
         if (Seen.Contains(Output)) { UE_LOG(LogTemp, Warning, TEXT("LootData: redirect cycle at %s"), *Output.ToString()); return false; }
         Seen.Add(Output); Output = *Next;
     }
-    UE_LOG(LogTemp, Display, TEXT("LootData: resolve %s -> %s"), *Input.ToString(), *Output.ToString()); return true;
+    UE_LOG(LogTemp, Verbose, TEXT("LootData: resolve %s -> %s"), *Input.ToString(), *Output.ToString()); return true;
 }
 void FortAthenaLootData::FindTiers(const AFortGameModeAthena* Mode, FName Group, TArray<const FFortLootTierData*>& Out)
 {

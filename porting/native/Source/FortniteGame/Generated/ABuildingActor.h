@@ -722,6 +722,9 @@ public:
 	UFUNCTION()
 	void HandleDestroyed();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasHealthLeft() const;
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
 	bool IsAcceptablePositionForPlacement(FVector& InLocation, FRotator& InRotation, AFortDecoTool* DecoTool, bool bIsCDO, FText& OutFailureReason) const;
 	virtual bool IsAcceptablePositionForPlacement_Implementation(FVector& InLocation, FRotator& InRotation, AFortDecoTool* DecoTool, bool bIsCDO, FText& OutFailureReason) const;
@@ -776,6 +779,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetCanExportNavigationObstacle(bool InCanExportNavigationObstacle);
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetHealth(float NewHealth);
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetHealthBarIndicatorDifficultyRating(int32 InDisplayLevel);

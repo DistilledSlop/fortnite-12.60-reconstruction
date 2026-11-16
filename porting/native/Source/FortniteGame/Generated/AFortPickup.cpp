@@ -22,6 +22,15 @@ bool AFortPickup::BlueprintCanInteract_Implementation(AFortPlayerPawn* FortPawn,
 	return false;
 }
 
+FFortItemEntry AFortPickup::GetItemEntry(int32 ItemIndex) const
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return {};
+}
+
 int32 AFortPickup::GetItemEntryNum() const
 {
 	// CONFIDENCE: high; 0x142a2abd0 -> 0x14202ed80.
@@ -137,6 +146,15 @@ void AFortPickup::SetPickedUp(bool bInPickedUp)
 {
 	// CONFIDENCE: high
 	bPickedUp = bInPickedUp;
+}
+
+void AFortPickup::TossPickup(FVector FinalLocation, AFortPawn* ItemOwner, int32 OverrideMaxStackCount, bool bToss, bool bShouldCombinePickupsWhenTossCompletes, EFortPickupSourceTypeFlag InPickupSourceTypeFlags, EFortPickupSpawnSource InPickupSpawnSource)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
 }
 
 void AFortPickup::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

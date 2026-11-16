@@ -490,8 +490,17 @@ bool FortAthenaLootSearch::RollAndSpawnContainerLoot(
 		}
 	}
 
-	UE_LOG(LogTemp, Display, TEXT("LootSearch: rolled container=%s group=%s worldLevel=%d drops=%d spawned=%d"),
-		*Container->GetName(), *TierGroup.ToString(), Req.WorldLevel, Drops.Num(), SpawnedCount);
+	// Floor-loot containers roll thousands of times per match; only chests, ammo boxes and the like are worth a Display line.
+	if (TierGroup.ToString().StartsWith(TEXT("Loot_AthenaFloorLoot")))
+	{
+		UE_LOG(LogTemp, Verbose, TEXT("LootSearch: rolled container=%s group=%s worldLevel=%d drops=%d spawned=%d"),
+			*Container->GetName(), *TierGroup.ToString(), Req.WorldLevel, Drops.Num(), SpawnedCount);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Display, TEXT("LootSearch: rolled container=%s group=%s worldLevel=%d drops=%d spawned=%d"),
+			*Container->GetName(), *TierGroup.ToString(), Req.WorldLevel, Drops.Num(), SpawnedCount);
+	}
 	return true;
 }
 

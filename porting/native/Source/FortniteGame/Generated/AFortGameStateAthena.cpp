@@ -313,6 +313,15 @@ AFortSafeZoneIndicator* AFortGameStateAthena::GetSafeZoneIndicator() const
 	return SafeZoneIndicator;
 }
 
+TArray<AFortPlayerStateAthena*> AFortGameStateAthena::GetSquadMemberPlayerStates(AFortPlayerStateAthena* InstigatingPlayerState, bool bIncludeSelf) const
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return {};
+}
+
 FTotalPlayers AFortGameStateAthena::GetTotalPlayers() const
 {
 	// Behaviour snippet: AFortGameStateAthena::GetTotalPlayers (body only).
@@ -465,6 +474,15 @@ bool AFortGameStateAthena::IsPlaygroundModePlaylist() const
 {
 	// CONFIDENCE: HIGH; captured native playlist selection and helper dispatch.
 	return UFortPlaylistAthenaHelper::IsPlaygroundModePlaylist(GetCurrentPlaylistAthena());
+}
+
+bool AFortGameStateAthena::IsResurrectionEnabled(AFortPlayerPawn* PlayerPawn) const
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
 }
 
 bool AFortGameStateAthena::IsTeleportToCreativeHubAllowed(AFortPlayerState* PlayerState) const

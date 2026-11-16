@@ -1243,6 +1243,15 @@ public:
 	FOnToggleFullscreenMap OnToggleFullscreenMap;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItem* BP_FindExistingItemForDefinition(UFortItemDefinition* ItemDefinition, bool bInStorageVault) const;
+
+	UFUNCTION(BlueprintCallable)
+	void BP_FindItemInstancesFromDefinition(UFortItemDefinition* ItemDefinition, TArray<UFortItem*>& ItemArray);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItem* BP_GetInventoryItemWithGuid(FGuid ItemGuid) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool CanAlterHostileWalls() const;
 
 	UFUNCTION(Server, Reliable, WithValidation)

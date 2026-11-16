@@ -42,6 +42,24 @@ bool UFortKismetLibrary::AreCampaignVehiclesEnabled()
 	return UFortGlobals::NativeGetGlobals()->bCampaignUsesSimCollision;
 }
 
+bool UFortKismetLibrary::CheckLineOfSightToActor(FVector& SourcePos, AActor* Target, AActor* Source)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
+}
+
+bool UFortKismetLibrary::CloseActor(AActor* OpenableInterfaceActor, AController* OptionalControllerInstigator)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
+}
+
 void UFortKismetLibrary::CopyHideElements(UMaterialInstanceDynamic* SourceMID, UMaterialInstanceDynamic* TargetMID)
 {
 	// Original address: 0x141ee94b0; decompile source: porting/generated/native-cap-direct/0x141ee94b0.c.
@@ -71,6 +89,24 @@ void UFortKismetLibrary::CopyHideElements(UMaterialInstanceDynamic* SourceMID, U
 	    if (SourceMID->GetScalarParameterValue(::FHashedMaterialParameterInfo(FName(TEXT("Hide Element 10"))), Value, true))
 	        TargetMID->SetScalarParameterValue(FName(TEXT("Hide Element 10")), Value);
 	}
+}
+
+FFortItemEntry UFortKismetLibrary::CreateItemEntry(UFortItemDefinition* InItemDefinition, int32 InCount, int32 InLevel)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return {};
+}
+
+void UFortKismetLibrary::CreateTossAmmoPickupForWeaponItemDefinitionAtLocation(UObject* WorldContextObject, UFortWeaponItemDefinition* WeaponItemDefinition, FGameplayTagContainer& SourceTags, FVector& Location, EFortPickupSourceTypeFlag SourceTypeFlag, EFortPickupSpawnSource SpawnSource)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
 }
 
 void UFortKismetLibrary::CustomHandleActorStreamedInEditor(AActor* SourceActor)
@@ -134,6 +170,15 @@ void UFortKismetLibrary::ExecuteClientEvent(UObject* WorldContextObject, FFortCl
 	    NativeLogClientEventWorldFailure141eece7a();
 }
 
+uint8 UFortKismetLibrary::GetActorTeam(AActor* Actor)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return 0;
+}
+
 float UFortKismetLibrary::GetAngleDegrees(FVector& Source, FVector& Target)
 {
 	// CONFIDENCE: HIGH
@@ -156,6 +201,60 @@ float UFortKismetLibrary::GetAngleDegrees(FVector& Source, FVector& Target)
 	return FMath::Acos(Clamped) * 57.295776f;
 }
 
+float UFortKismetLibrary::GetBuildingHealthPercentage(ABuildingActor* BuildingActor)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return 0.0f;
+}
+
+AActor* UFortKismetLibrary::GetClosestActorFromArray(AActor* Actor, TArray<AActor*>& ArrayOfActors)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
+}
+
+AFortPlayerController* UFortKismetLibrary::GetFortPlayerControllerFromActor(AActor* Actor)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
+}
+
+AFortGameStateAthena* UFortKismetLibrary::GetGameStateAthena(UObject* WorldContextObject)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
+}
+
+bool UFortKismetLibrary::GetNumericCVar(FString CVar, float& OutValue)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
+}
+
+float UFortKismetLibrary::GetServerWorldTimeSeconds(UObject* WorldContextObject)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return 0.0f;
+}
+
 ESubGame UFortKismetLibrary::GetSubGame(UObject* WorldContextObject)
 {
 	// Original address: 0x141ef70e0; decompile source: porting/generated/native-cap-direct/.
@@ -163,6 +262,24 @@ ESubGame UFortKismetLibrary::GetSubGame(UObject* WorldContextObject)
 	// Exec 0x14296ffe0 calls 0x141ef70e0: resolve globals, then 0x141ed4e30.
 	(void)UFortGlobals::NativeGetGlobals();
 	return static_cast<ESubGame>(UFortGameInstance::NativeGetGameMode141ed4e30(WorldContextObject));
+}
+
+TEnumAsByte<EFortTeamAffiliation::Type> UFortKismetLibrary::GetTeamAffiliation(AActor* ActorA, AActor* ActorB)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return {};
+}
+
+void UFortKismetLibrary::GiveItemToInventoryOwner(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, UFortWorldItemDefinition* ItemDefinition, int32 NumberToGive, bool bNotifyPlayer, int32 ItemLevel, int32 PickupInstigatorHandle)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
 }
 
 void UFortKismetLibrary::InvalidateLatentActionHandle(FFortDialogExternalLatentActionHandle& Handle)
@@ -190,6 +307,33 @@ bool UFortKismetLibrary::IsConsolePlatform()
 {
 	// CONFIDENCE: MEDIUM
 	// Migrated from the hand-written UFortKismetLibrary in FortniteMapClasses.cpp.
+	return false;
+}
+
+bool UFortKismetLibrary::IsCreativeOrPlaygroundModePlaylist(UObject* WorldContextObject)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
+}
+
+bool UFortKismetLibrary::IsCriticalHit(FGameplayEffectContextHandle EffectContext)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
+}
+
+bool UFortKismetLibrary::IsFatalHit(FGameplayEffectContextHandle EffectContext)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
 	return false;
 }
 
@@ -262,6 +406,15 @@ FVector UFortKismetLibrary::K2_GetClosestAxisXY(FVector InVector)
 	return InVector;
 }
 
+int32 UFortKismetLibrary::K2_GetItemQuantityOnPlayer(AFortPlayerController* PlayerController, UFortItemDefinition* ItemDefinition)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return 0;
+}
+
 void UFortKismetLibrary::K2_GiveItemToAllPlayers(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 NumberToGive, bool bNotifyPlayer)
 {
 	// CONFIDENCE: MEDIUM
@@ -276,11 +429,29 @@ void UFortKismetLibrary::K2_GiveItemToPlayer(AFortPlayerController* PlayerContro
 	return;
 }
 
+int32 UFortKismetLibrary::K2_RemoveFortItemFromPlayer(AFortPlayerController* PlayerController, UFortItem* Item, int32 AmountToRemove, bool bForceRemoval)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return 0;
+}
+
 void UFortKismetLibrary::K2_RemoveItemFromAllPlayers(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 AmountToRemove)
 {
 	// CONFIDENCE: MEDIUM
 	// Migrated from the hand-written UFortKismetLibrary in FortniteMapClasses.cpp.
 	return;
+}
+
+int32 UFortKismetLibrary::K2_RemoveItemFromPlayer(AFortPlayerController* PlayerController, UFortWorldItemDefinition* ItemDefinition, int32 AmountToRemove, bool bForceRemoval)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return 0;
 }
 
 int32 UFortKismetLibrary::K2_RemoveItemFromPlayerByGuid(AFortPlayerController* PlayerController, FGuid ItemGuid, int32 AmountToRemove, bool bForceRemoval)
@@ -310,6 +481,24 @@ int32 UFortKismetLibrary::K2_RemoveItemsFromPlayerByNameStateValue(AFortPlayerCo
 	return 0;
 }
 
+AFortPickup* UFortKismetLibrary::K2_SpawnPickupInWorld(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 NumberToSpawn, FVector Position, FVector Direction, int32 OverrideMaxStackCount, bool bToss, bool bRandomRotation, bool bBlockedFromAutoPickup, int32 PickupInstigatorHandle, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source, AFortPlayerController* OptionalOwnerPC, bool bPickupOnlyRelevantToOwner)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
+}
+
+AFortPickup* UFortKismetLibrary::K2_SpawnPickupInWorldWithClass(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, TSubclassOf<AFortPickup> PickupClass, int32 NumberToSpawn, FVector Position, FVector Direction, int32 OverrideMaxStackCount, bool bToss, bool bRandomRotation, bool bBlockedFromAutoPickup, int32 PickupInstigatorHandle, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source, AFortPlayerController* OptionalOwnerPC, bool bPickupOnlyRelevantToOwner)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
+}
+
 FVector UFortKismetLibrary::NormalizedAngleInDegreesToVector(float A)
 {
 	// CONFIDENCE: HIGH
@@ -317,6 +506,42 @@ FVector UFortKismetLibrary::NormalizedAngleInDegreesToVector(float A)
 	float Sine, Cosine;
 	FMath::SinCos(&Sine, &Cosine, A * 0.017453292f);
 	return FVector(Cosine, Sine, 0.0f);
+}
+
+bool UFortKismetLibrary::OnSameTeam(AActor* ActorA, AActor* ActorB)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
+}
+
+bool UFortKismetLibrary::OpenActor(AActor* OpenableInterfaceActor, AController* OptionalControllerInstigator)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
+}
+
+bool UFortKismetLibrary::PickLootDrops(UObject* WorldContextObject, TArray<FFortItemEntry>& OutLootToDrop, FName TierGroupName, int32 WorldLevel, int32 ForcedLootTier)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
+}
+
+void UFortKismetLibrary::SetCanBeDamaged(AActor* Actor, bool bCanBeDamaged)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
 }
 
 float UFortKismetLibrary::VectorToNormalizedAngleInDegrees(FVector V)

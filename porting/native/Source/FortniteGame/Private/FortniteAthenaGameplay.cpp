@@ -2,6 +2,7 @@
 #include "FortAthenaCharacterCache.h"
 #include "FortAthenaRegisteredSession.h"
 #include "UObject/ConstructorHelpers.h"
+#include "FortBlueprintNatives.h"
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaLoot.h"
 #include "FortAthenaLootSearch.h"
@@ -266,6 +267,7 @@ void AFortGameModeAthena::StartPlay()
     Super::StartPlay();
     FortAthenaRegisteredSession::Start(this);
     FortAthenaInventory::InstallRpcOverrides();
+    FortBlueprintNatives::Install();
     FortAthenaLoot::InstallRpcOverrides();
     FortAthenaLootSearch::InstallRpcOverrides();
     FortAthenaBuilding::InstallRpcOverrides();

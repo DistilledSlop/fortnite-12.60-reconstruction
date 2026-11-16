@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+class AActor;
+class UFortAbilitySystemComponent;
+
 #include "UFortAbilitySystemBlueprintLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +17,8 @@ class FORTNITEGAME_API UFortAbilitySystemBlueprintLibrary : public UBlueprintFun
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static UFortAbilitySystemComponent* GetFortAbilitySystemComponent(AActor* Actor);
+
 };
 

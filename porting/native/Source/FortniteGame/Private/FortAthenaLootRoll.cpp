@@ -106,7 +106,7 @@ namespace
             int32 Index;
             if (!Choose(Weights, Index)) return false;
             const auto& P = *Rows[Index];
-            UE_LOG(LogTemp, Display, TEXT("LootRoll: group=%s package=%s annotation=%s count=%d category=%d"),
+            UE_LOG(LogTemp, Verbose, TEXT("LootRoll: group=%s package=%s annotation=%s count=%d category=%d"),
                 *Q.Group.ToString(), *Id.ToString(), *P.Annotation, P.Count, Category);
             if (P.Count == 0) return true; // Explicit authored no-drop; no fallback.
             if (!P.LootPackageCall.IsEmpty())
@@ -152,7 +152,7 @@ namespace
             int32 Total = static_cast<int32>(T.NumLootPackageDrops);
             const double Fraction = static_cast<double>(T.NumLootPackageDrops) - Total;
             if (Fraction > 0) { double R; if (!Draw(R)) return false; if (R < Fraction) ++Total; }
-            UE_LOG(LogTemp, Display, TEXT("LootRoll: group=%s resolved=%s tier=%d annotation=%s total=%d"),
+            UE_LOG(LogTemp, Verbose, TEXT("LootRoll: group=%s resolved=%s tier=%d annotation=%s total=%d"),
                 *Q.Group.ToString(), *Group.ToString(), T.LootTier, *T.Annotation, Total);
             const int32 Cats = T.LootPackageCategoryWeightArray.Num();
             if (!Cats || T.LootPackageCategoryMinArray.Num() != Cats || T.LootPackageCategoryMaxArray.Num() != Cats)

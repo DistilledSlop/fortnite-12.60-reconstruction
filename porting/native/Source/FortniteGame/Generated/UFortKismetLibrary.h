@@ -8,11 +8,17 @@
 
 #include "Containers/UnrealString.h"
 #include "EFortItemEntryState.h"
+#include "EFortPickupSourceTypeFlag.h"
+#include "EFortPickupSpawnSource.h"
+#include "EFortTeamAffiliation.h"
 #include "ESubGame.h"
 #include "Engine/Level.h"
 #include "FFortClientEventName.h"
 #include "FFortDialogExternalLatentActionHandle.h"
+#include "FFortItemEntry.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "GameplayEffectTypes.h"
+#include "GameplayTagContainer.h"
 #include "HAL/Platform.h"
 #include "HAL/UnrealMemory.h"
 #include "Math/Color.h"
@@ -20,11 +26,19 @@
 #include "Math/UnrealMathUtility.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
+#include "UFortInventoryOwnerInterface.h"
 #include "UObject/NoExportTypes.h"
 #include "UObject/Object.h"
 
 class AActor;
+class ABuildingActor;
+class AController;
+class AFortGameStateAthena;
+class AFortPickup;
 class AFortPlayerController;
+class UFortItem;
+class UFortItemDefinition;
+class UFortWeaponItemDefinition;
 class UFortWorldItemDefinition;
 class UMaterialInstanceDynamic;
 class UObject;
@@ -44,7 +58,19 @@ public:
 	static bool AreCampaignVehiclesEnabled();
 
 	UFUNCTION(BlueprintCallable)
+	static bool CheckLineOfSightToActor(FVector& SourcePos, AActor* Target, AActor* Source);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static bool CloseActor(AActor* OpenableInterfaceActor, AController* OptionalControllerInstigator);
+
+	UFUNCTION(BlueprintCallable)
 	static void CopyHideElements(UMaterialInstanceDynamic* SourceMID, UMaterialInstanceDynamic* TargetMID);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static FFortItemEntry CreateItemEntry(UFortItemDefinition* InItemDefinition, int32 InCount, int32 InLevel);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static void CreateTossAmmoPickupForWeaponItemDefinitionAtLocation(UObject* WorldContextObject, UFortWeaponItemDefinition* WeaponItemDefinition, FGameplayTagContainer& SourceTags, FVector& Location, EFortPickupSourceTypeFlag SourceTypeFlag, EFortPickupSpawnSource SpawnSource);
 
 	UFUNCTION(BlueprintCallable)
 	static void CustomHandleActorStreamedInEditor(AActor* SourceActor);
@@ -70,11 +96,38 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	static void ExecuteClientEvent(UObject* WorldContextObject, FFortClientEventName EventType, UObject* EventSource, UObject* EventFocus);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static uint8 GetActorTeam(AActor* Actor);
+
 	UFUNCTION(BlueprintCallable)
 	static float GetAngleDegrees(FVector& Source, FVector& Target);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static float GetBuildingHealthPercentage(ABuildingActor* BuildingActor);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static AActor* GetClosestActorFromArray(AActor* Actor, TArray<AActor*>& ArrayOfActors);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static AFortPlayerController* GetFortPlayerControllerFromActor(AActor* Actor);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static AFortGameStateAthena* GetGameStateAthena(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool GetNumericCVar(FString CVar, float& OutValue);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static float GetServerWorldTimeSeconds(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static ESubGame GetSubGame(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static TEnumAsByte<EFortTeamAffiliation::Type> GetTeamAffiliation(AActor* ActorA, AActor* ActorB);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static void GiveItemToInventoryOwner(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, UFortWorldItemDefinition* ItemDefinition, int32 NumberToGive, bool bNotifyPlayer, int32 ItemLevel, int32 PickupInstigatorHandle);
 
 	UFUNCTION(BlueprintCallable)
 	static void InvalidateLatentActionHandle(FFortDialogExternalLatentActionHandle& Handle);
@@ -87,6 +140,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsConsolePlatform();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsCreativeOrPlaygroundModePlaylist(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsCriticalHit(FGameplayEffectContextHandle EffectContext);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsFatalHit(FGameplayEffectContextHandle EffectContext);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsLatentActionHandleValid(FFortDialogExternalLatentActionHandle& Handle);
@@ -112,6 +174,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static FVector K2_GetClosestAxisXY(FVector InVector);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static int32 K2_GetItemQuantityOnPlayer(AFortPlayerController* PlayerController, UFortItemDefinition* ItemDefinition);
+
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	static void K2_GiveItemToAllPlayers(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 NumberToGive, bool bNotifyPlayer);
 
@@ -119,7 +184,13 @@ public:
 	static void K2_GiveItemToPlayer(AFortPlayerController* PlayerController, UFortWorldItemDefinition* ItemDefinition, int32 NumberToGive, bool bNotifyPlayer);
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static int32 K2_RemoveFortItemFromPlayer(AFortPlayerController* PlayerController, UFortItem* Item, int32 AmountToRemove, bool bForceRemoval);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	static void K2_RemoveItemFromAllPlayers(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 AmountToRemove);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static int32 K2_RemoveItemFromPlayer(AFortPlayerController* PlayerController, UFortWorldItemDefinition* ItemDefinition, int32 AmountToRemove, bool bForceRemoval);
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	static int32 K2_RemoveItemFromPlayerByGuid(AFortPlayerController* PlayerController, FGuid ItemGuid, int32 AmountToRemove, bool bForceRemoval);
@@ -130,8 +201,26 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	static int32 K2_RemoveItemsFromPlayerByNameStateValue(AFortPlayerController* PlayerController, EFortItemEntryState::Type StateType, FName StateValue, bool bForceRemoval);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static AFortPickup* K2_SpawnPickupInWorld(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 NumberToSpawn, FVector Position, FVector Direction, int32 OverrideMaxStackCount, bool bToss, bool bRandomRotation, bool bBlockedFromAutoPickup, int32 PickupInstigatorHandle, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source, AFortPlayerController* OptionalOwnerPC, bool bPickupOnlyRelevantToOwner);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static AFortPickup* K2_SpawnPickupInWorldWithClass(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, TSubclassOf<AFortPickup> PickupClass, int32 NumberToSpawn, FVector Position, FVector Direction, int32 OverrideMaxStackCount, bool bToss, bool bRandomRotation, bool bBlockedFromAutoPickup, int32 PickupInstigatorHandle, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source, AFortPlayerController* OptionalOwnerPC, bool bPickupOnlyRelevantToOwner);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static FVector NormalizedAngleInDegreesToVector(float A);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool OnSameTeam(AActor* ActorA, AActor* ActorB);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static bool OpenActor(AActor* OpenableInterfaceActor, AController* OptionalControllerInstigator);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static bool PickLootDrops(UObject* WorldContextObject, TArray<FFortItemEntry>& OutLootToDrop, FName TierGroupName, int32 WorldLevel, int32 ForcedLootTier);
+
+	UFUNCTION(BlueprintCallable)
+	static void SetCanBeDamaged(AActor* Actor, bool bCanBeDamaged);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static float VectorToNormalizedAngleInDegrees(FVector V);

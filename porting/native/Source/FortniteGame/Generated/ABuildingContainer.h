@@ -17,6 +17,7 @@
 #include "Net/UnrealNetwork.h"
 #include "UObject/Object.h"
 
+class AFortPlayerPawn;
 class UAudioComponent;
 class UCurveFloat;
 class UFortWorldItemDefinition;
@@ -238,6 +239,11 @@ public:
 	UFUNCTION()
 	void BounceContainer();
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	bool BP_SpawnLoot(AFortPlayerPawn* PlayerPawn);
+public:
+
 	UFUNCTION(BlueprintCallable)
 	int32 GetLootTier();
 
@@ -249,6 +255,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_LootTier();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetSearchLootTierGroup(FName InSearchLootTierGroup);
 
 public:
 	UFUNCTION(BlueprintImplementableEvent)

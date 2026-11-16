@@ -22,6 +22,10 @@
 #include "GameFramework/Actor.h"
 #include "FortHarvestBuilding.h"
 #include "FortHarvestDamage.h"
+#include "FortAthenaHealth.h"
+#include "FFortRangedWeaponStats.h"
+#include "Engine/DataTable.h"
+#include "GameplayTagContainer.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFortHarvest, Log, All);
 
@@ -72,13 +76,131 @@ namespace FortHarvest
             return false;
         }
 
+
+        // ---- ranged weapons -------------------------------------------------------------------------------------------------
+        // The original ranged ability (FortGameplayAbility_RangedWeapon, native) is not ported, so the server never runs the fire,
+        // trace and damage logic. The client still predicts the shot and reports its hit through the same target-data RPC the melee
+        // ability uses, so the hit arrives here. Damage is computed on the server from the weapon's stat row (never from the
+        // client), the hit is range-checked against the row, and ammo is consumed from the replicated weapon.
+        // stand-in: the original per-bullet validation, spread/recoil, falloff curve rounding and effect-container path are not
+        // reproduced; falloff is a linear blend between the row's range bands.
+        TMap<TWeakObjectPtr<const AController>, double>& LastShotTime()
+        {
+            static TMap<TWeakObjectPtr<const AController>, double> Times;
+            return Times;
+        }
+
+        float RangedFalloffDamage(const FFortBaseWeaponStats& Row, float Distance)
+        {
+            const float Bands[4] = { Row.RngPB, Row.RngMid, Row.RngLong, Row.RngMax };
+            const float Dmg[4] = { Row.DmgPB, Row.DmgMid, Row.DmgLong, Row.DmgMaxRange };
+            if (Distance <= Bands[0] || Bands[1] <= Bands[0])
+                return Dmg[0];
+            for (int32 I = 0; I < 3; ++I)
+            {
+                if (Distance <= Bands[I + 1] && Bands[I + 1] > Bands[I])
+                    return FMath::Lerp(Dmg[I], Dmg[I + 1], (Distance - Bands[I]) / (Bands[I + 1] - Bands[I]));
+            }
+            return Dmg[3];
+        }
+
+        void OnRangedTargetData(UAbilitySystemComponent* ASC, const UGameplayAbility* Ability, const FGameplayAbilityTargetDataHandle& TargetData)
+        {
+            AFortPawn* Pawn = Cast<AFortPawn>(ASC->GetAvatarActor());
+            AFortPlayerController* PC = Pawn ? Cast<AFortPlayerController>(Pawn->GetController()) : nullptr;
+            AFortWeapon* Weapon = Pawn ? Pawn->CurrentWeapon : nullptr;
+            const UFortWeaponItemDefinition* WeaponDef = Weapon ? Weapon->WeaponData : nullptr;
+            const FDataTableRowHandle StatHandle = WeaponDef ? WeaponDef->GetWeaponStatHandle() : FDataTableRowHandle();
+            const FFortBaseWeaponStats* Row = StatHandle.DataTable ? StatHandle.GetRow<FFortBaseWeaponStats>(TEXT("RangedTargetData")) : nullptr;
+            static int32 Logged = 0;
+            if (Logged++ < 200)
+            {
+                UE_LOG(LogFortHarvest, Display, TEXT("Combat: RangedTargetData ability=%s pawn=%s weapon=%s def=%s row=%s rowFound=%d ammo=%d entries=%d"),
+                    *GetNameSafe(Ability), *GetNameSafe(Pawn), *GetNameSafe(Weapon), *GetNameSafe(WeaponDef), *StatHandle.RowName.ToString(),
+                    Row != nullptr, Weapon ? Weapon->AmmoCount : -1, TargetData.Num());
+            }
+            if (!PC || !Weapon || !Row)
+                return;
+            UWorld* World = Pawn->GetWorld();
+            const double Now = World ? World->GetTimeSeconds() : 0.0;
+            double& Last = LastShotTime().FindOrAdd(PC);
+            if (Now - Last < 0.04)
+                return;
+            Last = Now;
+
+            // Ammo: one bullet batch per accepted report (CartridgePerFire hits can share one report).
+            const int32 AmmoCost = FMath::Max(Row->AmmoCostPerFire, 1);
+            // The server-side AmmoCount is only meaningful if the equip path initialised it from the item's LoadedAmmo (not verified);
+            // an uninitialised 0 must not block all damage, so the shot is logged and accepted, and ammo is only decremented when positive.
+            if (Weapon->AmmoCount >= AmmoCost)
+            {
+                Weapon->AmmoCount -= AmmoCost;
+                Weapon->ForceNetUpdate();
+            }
+            else
+            {
+                UE_LOG(LogFortHarvest, Display, TEXT("Combat: RangedShot ammo not tracked on the server (AmmoCount=%d, cost=%d) weapon=%s"), Weapon->AmmoCount, AmmoCost, *GetNameSafe(Weapon));
+            }
+
+            const uint8 ShooterTeam = [&]() { AFortPlayerState* S = Cast<AFortPlayerState>(PC->PlayerState); return S ? S->NativeGetTeam163() : uint8(255); }();
+            for (int32 Index = 0; Index < TargetData.Num(); ++Index)
+            {
+                const FGameplayAbilityTargetData* Data = TargetData.Get(Index);
+                const FHitResult* Hit = Data ? Data->GetHitResult() : nullptr;
+                if (!Hit)
+                    continue;
+                AActor* Target = Hit->GetActor();
+                const FVector Impact(Hit->ImpactPoint);
+                const float Distance = FVector::Dist(Pawn->GetActorLocation(), Impact);
+                const float MaxRange = FMath::Max(Row->RngMax, Row->RngLong) * 1.25f + 500.0f;
+                if (!Target || Distance > MaxRange)
+                {
+                    UE_LOG(LogFortHarvest, Display, TEXT("Combat: RangedHit [%d] ignored target=%s distance=%.0f maxRange=%.0f"), Index, *GetNameSafe(Target), Distance, MaxRange);
+                    continue;
+                }
+                if (ABuildingSMActor* Building = Cast<ABuildingSMActor>(Target))
+                {
+                    const float EnvDamage = Row->EnvDmgPB > 0.0f ? Row->EnvDmgPB : Row->DmgPB * 0.5f;
+                    const bool bApplied = FortHarvest::ApplyBuildingDamage(Building, EnvDamage, PC, Pawn, *Hit, false);
+                    UE_LOG(LogFortHarvest, Display, TEXT("Combat: RangedHit [%d] building=%s damage=%.1f applied=%d"), Index, *GetNameSafe(Building), EnvDamage, bApplied);
+                    continue;
+                }
+                AFortPawn* Victim = Cast<AFortPawn>(Target);
+                if (!Victim || Victim == Pawn)
+                {
+                    UE_LOG(LogFortHarvest, Display, TEXT("Combat: RangedHit [%d] target=%s is not damageable here"), Index, *GetNameSafe(Target));
+                    continue;
+                }
+                AFortPlayerState* VictimState = Cast<AFortPlayerState>(Victim->GetPlayerState());
+                if (VictimState && ShooterTeam != 255 && VictimState->NativeGetTeam163() == ShooterTeam)
+                {
+                    UE_LOG(LogFortHarvest, Display, TEXT("Combat: RangedHit [%d] ignored, same team"), Index);
+                    continue;
+                }
+                const bool bHeadshot = Hit->BoneName.ToString().Contains(TEXT("head"), ESearchCase::IgnoreCase);
+                float Damage = RangedFalloffDamage(*Row, Distance);
+                if (bHeadshot && Row->DamageZone_Critical > 0.0f)
+                    Damage *= Row->DamageZone_Critical;
+                const float Before = Victim->GetHealth() + Victim->GetShield();
+                FortAthenaHealth::ApplyDamage(Victim, Damage, FGameplayTagContainer(), PC, Weapon, false);
+                UE_LOG(LogFortHarvest, Display, TEXT("Combat: RangedHit [%d] victim=%s damage=%.1f headshot=%d distance=%.0f hp+shield %.1f -> %.1f dying=%d"),
+                    Index, *GetNameSafe(Victim), Damage, bHeadshot, Distance, Before, Victim->GetHealth() + Victim->GetShield(), Victim->bIsDying ? 1 : 0);
+            }
+        }
+
         void OnTargetData(UAbilitySystemComponent* ASC, FGameplayAbilitySpecHandle SpecHandle,
                           const FGameplayAbilityTargetDataHandle& TargetData, FGameplayTag ApplicationTag)
         {
             const FGameplayAbilitySpec* Spec = ASC ? ASC->FindAbilitySpecFromHandle(SpecHandle) : nullptr;
             const UGameplayAbility* Ability = Spec ? Spec->Ability : nullptr;
-            if (!IsMeleeAbility(Ability))
+            if (!Ability)
                 return;
+            if (!IsMeleeAbility(Ability))
+            {
+                if (Ability->GetClass()->GetName().Contains(TEXT("Ranged")))
+                    OnRangedTargetData(ASC, Ability, TargetData);
+                return;
+            }
             AFortPawn* Pawn = Cast<AFortPawn>(ASC->GetAvatarActor());
             AFortPlayerController* PC = Pawn ? Cast<AFortPlayerController>(Pawn->GetController()) : nullptr;
             const AFortWeapon* Weapon = Pawn ? Pawn->CurrentWeapon : nullptr;
