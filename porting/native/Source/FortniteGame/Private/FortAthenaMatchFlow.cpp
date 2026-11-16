@@ -13,6 +13,7 @@
 // Everything is inactive unless -FortniteOriginalClient is set.
 
 #include "FortAthenaMatchFlow.h"
+#include "FortCollisionAudit.h"
 #include "HAL/IConsoleManager.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -2099,6 +2100,7 @@ namespace FortAthenaMatchFlowPrivate
         TickSkydivers(World);
         TickTestTeleport(World);
         FortAthenaFallDamage::Tick(World);
+        FortCollisionAudit::Tick(World);
 
         if (S.LastStatusTime < 0.0f || WorldTime - S.LastStatusTime >= 5.0f)
         {
