@@ -10,6 +10,15 @@ TArray<FString> UQuestInteractableComponent::Editor_GetValidObjectives() const
 	return TArray<FString>();
 }
 
+UFortQuestManager* UQuestInteractableComponent::GetQuestManagerForActor(AActor* InActor)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
+}
+
 void UQuestInteractableComponent::OnRep_Ready()
 {
 	// Body not recovered: reflection-derived stub.

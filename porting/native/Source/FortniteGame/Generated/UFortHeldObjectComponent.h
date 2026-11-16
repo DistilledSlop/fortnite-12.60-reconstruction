@@ -152,6 +152,9 @@ public:
 	UPROPERTY(Transient)
 	AFortDecoPreview* PlacementPreviewActor;
 
+	UFUNCTION(BlueprintCallable)
+	bool CanInteract(AFortPlayerPawn* RequestingPawn);
+
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void DropHeldObject();
 

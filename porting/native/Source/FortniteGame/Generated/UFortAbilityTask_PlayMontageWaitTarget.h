@@ -7,9 +7,14 @@
 #include "Abilities/Tasks/AbilityTask.h"
 
 #include "Containers/Array.h"
+#include "EFortAbilityTargetDataPolicy.h"
+#include "EFortGameplayAbilityMontageSectionToPlay.h"
 #include "FFortGameplayAbilityMontageInfo.h"
 #include "FWaitTargetSelectionDelegate.h"
 #include "Templates/UnrealTemplate.h"
+
+class UAnimMontage;
+class UGameplayAbility;
 
 #include "UFortAbilityTask_PlayMontageWaitTarget.generated.h"
 
@@ -34,6 +39,12 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	FFortGameplayAbilityMontageInfo MontageInfo;
+
+	UFUNCTION(BlueprintCallable)
+	static UFortAbilityTask_PlayMontageWaitTarget* PlayMontageInfoAndWaitForTrigger(UGameplayAbility* OwningAbility, FName TaskInstanceName, FFortGameplayAbilityMontageInfo& InMontageInfo, EFortAbilityTargetDataPolicy TargetDataPolicy);
+
+	UFUNCTION(BlueprintCallable)
+	static UFortAbilityTask_PlayMontageWaitTarget* PlayMontageWaitTarget(UGameplayAbility* OwningAbility, FName TaskInstanceName, UAnimMontage* MontageToPlay, float AnimPlayRate, EFortGameplayAbilityMontageSectionToPlay SectionToPlay, FName OverrideSection, float AnimRootMotionTranslationScale, EFortAbilityTargetDataPolicy TargetDataPolicy);
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

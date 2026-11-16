@@ -99,6 +99,7 @@ class AFortGameplayMutator;
 class AFortLocalizationService;
 class AFortPawn;
 class AFortPlayerController;
+class AFortPlayerControllerAthena;
 class AFortPlayerPawn;
 class AFortPlayerState;
 class AFortPlayerStateAthena;
@@ -941,6 +942,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool CanRespawnOnStarterIsland() const;
 
+	UFUNCTION(BlueprintCallable)
+	bool CanUseSlowMotionOnVictory();
+
 protected:
 	UFUNCTION()
 	void ConditionalStopAutoPerfCapture();
@@ -951,6 +955,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FGameplayTagContainer GetAthenaPlaylistContextTags() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UAthenaBattleBusItemDefinition* GetBattleBusForPlayer(AFortPlayerControllerAthena* PC) const;
 
 	UFUNCTION(BlueprintCallable)
 	FName GetCurrentPlaylistName();

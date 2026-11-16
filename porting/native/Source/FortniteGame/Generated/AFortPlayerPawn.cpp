@@ -160,6 +160,12 @@ void AFortPlayerPawn::EndGhostModeExit()
 	GhostModeExitDuration = 0.0f;
 }
 
+void AFortPlayerPawn::ForceDetachFromRemoteControlledPawn()
+{
+	// CONFIDENCE: low
+	return;
+}
+
 UFXSystemComponent* AFortPlayerPawn::GetActivePlayerHandSplashInWaterComponent() const
 {
 	// Behaviour snippet: AFortPlayerPawn::GetActivePlayerHandSplashInWaterComponent (body only; spliced into the generated member function).
@@ -224,6 +230,15 @@ UFXSystemComponent* AFortPlayerPawn::GetActivePlayerWaterBoostComponent() const
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return NiagaraPlayerWaterBoost;
+}
+
+TEnumAsByte<EFortCustomBodyType::Type> AFortPlayerPawn::GetCharacterBodyType() const
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return {};
 }
 
 AFortPlayerCharm* AFortPlayerPawn::GetCharacterCharmActorForCharmType(EFortCustomCharmType::Type CharmType) const

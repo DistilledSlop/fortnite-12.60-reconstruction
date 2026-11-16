@@ -21,6 +21,15 @@ void ABuildingActor::AddEditorOnlyInstanceGameplayTags(FGameplayTagContainer& Ne
 	(void)NewTags;
 }
 
+void ABuildingActor::BlueprintDie(FGameplayTag DeathReason, AController* Killer, AActor* DamageCauser)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
+}
+
 bool ABuildingActor::BlueprintGetInteractionTime_Implementation(AFortPawn* InteractingPawn, float& OutInteractionTime, EInteractionBeingAttempted InteractionBeingAttempted) const
 {
 	// Exact original shared stub 0x1406801e0.
@@ -101,6 +110,15 @@ float ABuildingActor::GetHealthPercent() const
 		return GetHealth() / MaxHealthValue;
 	}
 	return 0.0f;
+}
+
+FName ABuildingActor::GetLootTierGroupOverride()
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return {};
 }
 
 float ABuildingActor::GetMaxHealth() const

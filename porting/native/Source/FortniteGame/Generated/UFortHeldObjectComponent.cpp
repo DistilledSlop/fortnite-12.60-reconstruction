@@ -2,6 +2,15 @@
 #include "UFortHeldObjectComponent.h"
 #include "Net/UnrealNetwork.h"
 
+bool UFortHeldObjectComponent::CanInteract(AFortPlayerPawn* RequestingPawn)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
+}
+
 void UFortHeldObjectComponent::DropHeldObject()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

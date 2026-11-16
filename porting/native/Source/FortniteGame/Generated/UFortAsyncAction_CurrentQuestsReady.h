@@ -8,7 +8,9 @@
 
 #include "FOnCurrentQuestsReady.h"
 
+class UFortQuestItemDefinition;
 class UFortQuestManager;
+class UObject;
 
 #include "UFortAsyncAction_CurrentQuestsReady.generated.h"
 
@@ -25,6 +27,9 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortQuestManager* MyQuestManager;
+
+	UFUNCTION(BlueprintCallable)
+	static UFortAsyncAction_CurrentQuestsReady* CurrentQuestsReadyAsync(UObject* WorldContextObject, UFortQuestManager* QuestManager, TArray<UFortQuestItemDefinition*>& QuestItemDefinitions);
 
 };
 

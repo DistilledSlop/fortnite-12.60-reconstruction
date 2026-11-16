@@ -222,6 +222,12 @@ public:
 	UFUNCTION()
 	void OnRep_ExactIdleRotation();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetPawnBeingTracked(AFortPlayerPawn* InPawnBeingTracked);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetSentryState(EBuildingGameplayActorSentry_State InSentryState);
+
 public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void BPOnSentryStateChanged();

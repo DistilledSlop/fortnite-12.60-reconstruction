@@ -8,6 +8,8 @@
 
 #include "FPlaylistReadyAsyncDelegate.h"
 
+class UObject;
+
 #include "UFortAsyncAction_CurrentPlaylistReady.generated.h"
 
 UCLASS()
@@ -19,6 +21,9 @@ public:
 	// table index 0, flags 0x10000010080000
 	UPROPERTY()
 	FPlaylistReadyAsyncDelegate OnReady;
+
+	UFUNCTION(BlueprintCallable)
+	static UFortAsyncAction_CurrentPlaylistReady* PlaylistDataReadyAsync(UObject* WorldContextObject);
 
 };
 

@@ -14,6 +14,24 @@ void ABuildingGameplayActorSentry::OnRep_ExactIdleRotation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void ABuildingGameplayActorSentry::SetPawnBeingTracked(AFortPlayerPawn* InPawnBeingTracked)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
+}
+
+void ABuildingGameplayActorSentry::SetSentryState(EBuildingGameplayActorSentry_State InSentryState)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
+}
+
 void ABuildingGameplayActorSentry::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

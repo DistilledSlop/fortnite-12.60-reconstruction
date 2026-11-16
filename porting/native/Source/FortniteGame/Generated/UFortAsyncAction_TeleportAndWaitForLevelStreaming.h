@@ -36,5 +36,8 @@ public:
 	UPROPERTY(Transient)
 	FRotator TeleportRotation;
 
+	UFUNCTION(BlueprintCallable)
+	static UFortAsyncAction_TeleportAndWaitForLevelStreaming* CreateTeleportAndWaitForLevelStreaming(AFortPlayerPawn* InPlayerPawn, FVector& InTeleportLocation, FRotator& InTeleportRotation);
+
 };
 

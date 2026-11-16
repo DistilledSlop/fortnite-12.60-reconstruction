@@ -62,6 +62,12 @@ FBox UBuildingStructuralSupportSystem::K2_GetGridBoxFromWorldLoc(FVector& WorldL
 	return FBox(FVector(CenterX - HalfExtentX, CenterY - HalfExtentY, CenterZ - HalfExtentZ), FVector(CenterX + HalfExtentX, CenterY + HalfExtentY, CenterZ + HalfExtentZ));
 }
 
+void UBuildingStructuralSupportSystem::StartActorRemovalBatch()
+{
+	// CONFIDENCE: low
+	return;
+}
+
 bool UBuildingStructuralSupportSystem::NativeWorldToGrid141c78270(const FVector& World, FIntVector& Out) const
 {
 	// CONFIDENCE: HIGH

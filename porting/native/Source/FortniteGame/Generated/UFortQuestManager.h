@@ -291,6 +291,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FString PopNextPendingFeatureUnlock();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SendComplexCustomStatEvent(UObject* TargetObject, FGameplayTagContainer AdditionalSourceTags, FGameplayTagContainer TargetTags, bool& QuestActive, bool& QuestCompleted, int32 Count);
+
 	UFUNCTION()
 	void SetQuestMapMode(EQuestMapScreenMode NewQuestMapMode);
 

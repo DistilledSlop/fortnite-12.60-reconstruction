@@ -16,6 +16,15 @@
 #include "UFortGlobals.h"
 #include "UObject/Object.h"
 
+FActiveGameplayEffectHandle UFortKismetLibrary::ApplyGlobalEnvironmentGameplayEffectToActor(AActor* EffectTargetActor, TSubclassOf<UGameplayEffect> GameplayEffect, int32 GameplayEffectLevel, FGameplayTagContainer AdditionalContextTags)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return {};
+}
+
 bool UFortKismetLibrary::AreAthenaVehiclesEnabled()
 {
 	// Behaviour snippet: UFortKismetLibrary::AreAthenaVehiclesEnabled (body only).
@@ -170,6 +179,15 @@ void UFortKismetLibrary::ExecuteClientEvent(UObject* WorldContextObject, FFortCl
 	    NativeLogClientEventWorldFailure141eece7a();
 }
 
+void UFortKismetLibrary::FortShippingLog(UObject* WorldContextObject, FString InString, bool bLogAsWarning)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
+}
+
 uint8 UFortKismetLibrary::GetActorTeam(AActor* Actor)
 {
 	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
@@ -219,6 +237,15 @@ AActor* UFortKismetLibrary::GetClosestActorFromArray(AActor* Actor, TArray<AActo
 	return nullptr;
 }
 
+AFortPlayerController* UFortKismetLibrary::GetFirstLocalFortPlayerController(UObject* WorldContextObject, bool bIncludeNonSpectators, bool bIncludeSpectators)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
+}
+
 AFortPlayerController* UFortKismetLibrary::GetFortPlayerControllerFromActor(AActor* Actor)
 {
 	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
@@ -235,6 +262,42 @@ AFortGameStateAthena* UFortKismetLibrary::GetGameStateAthena(UObject* WorldConte
 	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
 	// Default result if the rebind is not installed:
 	return nullptr;
+}
+
+AActor* UFortKismetLibrary::GetHeldObjectAttachedToPlayer(AFortPlayerPawn* FortPawn)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
+}
+
+UFortHeldObjectComponent* UFortKismetLibrary::GetHeldObjectComponentAttachedToPlayer(AFortPlayerPawn* FortPawn)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
+}
+
+bool UFortKismetLibrary::GetIsPlayingReplay(UObject* WorldContextObject)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
+}
+
+TArray<AFortPlayerController*> UFortKismetLibrary::GetLocalFortPlayerControllers(UObject* WorldContextObject, bool bIncludeNonSpectators, bool bIncludeSpectators)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return {};
 }
 
 bool UFortKismetLibrary::GetNumericCVar(FString CVar, float& OutValue)

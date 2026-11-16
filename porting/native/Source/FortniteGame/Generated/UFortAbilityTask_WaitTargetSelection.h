@@ -10,6 +10,8 @@
 #include "FWaitTargetSelectionDelegate.h"
 #include "GameplayTagContainer.h"
 
+class UGameplayAbility;
+
 #include "UFortAbilityTask_WaitTargetSelection.generated.h"
 
 UCLASS(config=Game)
@@ -37,6 +39,9 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	FGameplayTag InstantTargetTag;
+
+	UFUNCTION(BlueprintCallable)
+	static UFortAbilityTask_WaitTargetSelection* WaitTargetSelection(UGameplayAbility* OwningAbility, FName TaskInstanceName, FGameplayTag InApplicationTag, bool InbForceTargetingOnServer);
 
 };
 

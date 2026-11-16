@@ -143,6 +143,9 @@ public:
 	void SetHomingTurnSpeedMin(float NewHomingTurnSpeedMin);
 
 	UFUNCTION(BlueprintCallable)
+	void SetVelocity(FVector& InReplicatedVelocity);
+
+	UFUNCTION(BlueprintCallable)
 	void SetWaterInteractionComponent(UFortWaterInteractionComponent* WaterComponent);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

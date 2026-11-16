@@ -11,6 +11,7 @@
 #include "HAL/Platform.h"
 
 class UFortVehicleItemDefinition;
+class UObject;
 class USceneComponent;
 
 #include "AFortAthenaVehicleSpawner.generated.h"
@@ -30,6 +31,9 @@ public:
 	// table index 0, flags 0x24080000000001
 	UPROPERTY()
 	TSoftObjectPtr<UFortVehicleItemDefinition> FortVehicleItemDef;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSubclassOf<UObject> GetVehicleClass() const;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void SpawnVehicle();

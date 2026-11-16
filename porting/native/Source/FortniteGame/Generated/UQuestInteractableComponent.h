@@ -11,9 +11,11 @@
 #include "FSimpleDynamicMulticastDelegate.h"
 #include "GameplayTagContainer.h"
 
+class AActor;
 class AFortPlayerController;
 class AQuestVisual;
 class UFortQuestItemDefinition;
+class UFortQuestManager;
 
 #include "UQuestInteractableComponent.generated.h"
 
@@ -87,6 +89,9 @@ private:
 	UFUNCTION()
 	TArray<FString> Editor_GetValidObjectives() const;
 public:
+
+	UFUNCTION(BlueprintCallable)
+	UFortQuestManager* GetQuestManagerForActor(AActor* InActor);
 
 	UFUNCTION()
 	void OnRep_Ready();

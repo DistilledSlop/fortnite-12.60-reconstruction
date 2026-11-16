@@ -92,6 +92,9 @@ public:
 	FTransform GetDeathFXTransform() const;
 	virtual FTransform GetDeathFXTransform_Implementation() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UAnimMontage* GetOnConsumeMontage() const;
+
 	UFUNCTION(BlueprintNativeEvent)
 	bool OnInteractAllowedToConsume(AFortPawn* InteractingPawn, EInteractionBeingAttempted InteractionBeingAttempted);
 	virtual bool OnInteractAllowedToConsume_Implementation(AFortPawn* InteractingPawn, EInteractionBeingAttempted InteractionBeingAttempted);

@@ -17,6 +17,7 @@
 #include "GameplayTagContainer.h"
 #include "Math/TransformNonVectorized.h"
 
+class AFortPlayerController;
 class UFortAbilitySet;
 class UFortDamageSet;
 class UPrimitiveComponent;
@@ -104,6 +105,9 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
 	bool AcceptsEmoteSprays() const;
 	virtual bool AcceptsEmoteSprays_Implementation() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ForceChangeOwnerInstigator(AFortPlayerController* NewInstigator);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
 	FTransform GetTargetingSourceTransform(EFortAbilityTargetingSource Source) const;

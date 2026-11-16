@@ -8,6 +8,8 @@
 
 #include "FGameStateReadyAsyncDelegate.h"
 
+class UObject;
+
 #include "UFortAsyncAction_GameStateReady.generated.h"
 
 UCLASS()
@@ -19,6 +21,9 @@ public:
 	// table index 0, flags 0x10000010080000
 	UPROPERTY()
 	FGameStateReadyAsyncDelegate OnReady;
+
+	UFUNCTION(BlueprintCallable)
+	static UFortAsyncAction_GameStateReady* GameStateReadyAsync(UObject* WorldContextObject);
 
 };
 

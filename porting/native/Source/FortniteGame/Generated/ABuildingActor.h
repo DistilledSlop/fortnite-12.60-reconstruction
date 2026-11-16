@@ -679,6 +679,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AddEditorOnlyInstanceGameplayTags(FGameplayTagContainer& NewTags);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void BlueprintDie(FGameplayTag DeathReason, AController* Killer, AActor* DamageCauser);
+
 	UFUNCTION(BlueprintNativeEvent)
 	bool BlueprintGetInteractionTime(AFortPawn* InteractingPawn, float& OutInteractionTime, EInteractionBeingAttempted InteractionBeingAttempted) const;
 	virtual bool BlueprintGetInteractionTime_Implementation(AFortPawn* InteractingPawn, float& OutInteractionTime, EInteractionBeingAttempted InteractionBeingAttempted) const;
@@ -700,6 +703,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetHealthPercent() const;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	FName GetLootTierGroupOverride();
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetMaxHealth() const;

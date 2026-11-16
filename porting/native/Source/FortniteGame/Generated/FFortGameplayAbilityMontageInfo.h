@@ -11,7 +11,7 @@ class UAnimMontage;
 
 #include "FFortGameplayAbilityMontageInfo.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortGameplayAbilityMontageInfo
 {
 	GENERATED_BODY()

@@ -167,6 +167,15 @@ bool AFortGameStateAthena::CanRespawnOnStarterIsland() const
 	return PlaylistIsPlayground(GetCurrentPlaylistAthena()) && InitialPlaylist->bUseCreativeStarterIsland;
 }
 
+bool AFortGameStateAthena::CanUseSlowMotionOnVictory()
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return false;
+}
+
 void AFortGameStateAthena::ConditionalStopAutoPerfCapture()
 {
 	// Behaviour snippet: AFortGameStateAthena::ConditionalStopAutoPerfCapture (body only; spliced into the generated member function).
@@ -247,6 +256,15 @@ FGameplayTagContainer AFortGameStateAthena::GetAthenaPlaylistContextTags() const
 	    }
 	}
 	return Result;
+}
+
+UAthenaBattleBusItemDefinition* AFortGameStateAthena::GetBattleBusForPlayer(AFortPlayerControllerAthena* PC) const
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
 }
 
 FName AFortGameStateAthena::GetCurrentPlaylistName()

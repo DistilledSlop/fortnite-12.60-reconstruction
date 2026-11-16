@@ -108,6 +108,15 @@ void UFortProjectileMovementComponent::SetHomingTurnSpeedMin(float NewHomingTurn
 	this->HomingData.MinTurnSpeed = NewHomingTurnSpeedMin;
 }
 
+void UFortProjectileMovementComponent::SetVelocity(FVector& InReplicatedVelocity)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
+}
+
 void UFortProjectileMovementComponent::SetWaterInteractionComponent(UFortWaterInteractionComponent* WaterComponent)
 {
 	// Original exec: 0x142aa7180; native body: 0x141d16d80.

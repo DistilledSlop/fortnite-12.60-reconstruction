@@ -9,6 +9,15 @@ bool ABuildingGameplayActor::AcceptsEmoteSprays_Implementation() const
 	return true;
 }
 
+void ABuildingGameplayActor::ForceChangeOwnerInstigator(AFortPlayerController* NewInstigator)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return;
+}
+
 FTransform ABuildingGameplayActor::GetTargetingSourceTransform_Implementation(EFortAbilityTargetingSource Source) const
 {
 	// Original body 0x141bdd320 (thunk 0x1427401b0) for ABuildingGameplayActor::GetTargetingSourceTransform_Implementation.

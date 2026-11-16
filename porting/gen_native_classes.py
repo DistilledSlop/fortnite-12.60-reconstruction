@@ -1680,7 +1680,7 @@ def rpc_arg(decl, enum_args=()):
 
 _HEADER_MEMBER_NAMES = frozenset()
 # Structs passed through Blueprint-callable UFUNCTIONs (FortniteMapClasses.h); UHT requires BlueprintType.
-UHT_BLUEPRINT_STRUCTS = frozenset({"FFortGameplayEffectContainerSpec", "FAbilityToolSpawnParameters", "FCrucibleCourseResults", "FCrucibleSegmentResults", "FFortCrewSlotInformation", "FFortDialogExternalLatentActionHandle", "FFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetFocusInfo", "FIndicatedActorParticleSystemData", "FIndicatedActorScaleAndOpacityData", "FItemAndCount", "FMinigameEndCondition", "FMissionTimeDisplayData"})
+UHT_BLUEPRINT_STRUCTS = frozenset({"FFortGameplayAbilityMontageInfo", "FFortGameplayEffectContainerSpec", "FAbilityToolSpawnParameters", "FCrucibleCourseResults", "FCrucibleSegmentResults", "FFortCrewSlotInformation", "FFortDialogExternalLatentActionHandle", "FFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetFocusInfo", "FIndicatedActorParticleSystemData", "FIndicatedActorScaleAndOpacityData", "FItemAndCount", "FMinigameEndCondition", "FMissionTimeDisplayData"})
 
 
 def header_arg(f, arg, member_names=None):

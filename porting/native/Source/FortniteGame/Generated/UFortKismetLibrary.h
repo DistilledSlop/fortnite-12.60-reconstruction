@@ -40,12 +40,15 @@ class AController;
 class AFortGameStateAthena;
 class AFortPickup;
 class AFortPlayerController;
+class AFortPlayerPawn;
 class AFortProjectileBase;
+class UFortHeldObjectComponent;
 class UFortItem;
 class UFortItemDefinition;
 class UFortWeaponItemDefinition;
 class UFortWorldItemDefinition;
 class UGameplayAbility;
+class UGameplayEffect;
 class UMaterialInstanceDynamic;
 class UObject;
 
@@ -57,6 +60,9 @@ class FORTNITEGAME_API UFortKismetLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static FActiveGameplayEffectHandle ApplyGlobalEnvironmentGameplayEffectToActor(AActor* EffectTargetActor, TSubclassOf<UGameplayEffect> GameplayEffect, int32 GameplayEffectLevel, FGameplayTagContainer AdditionalContextTags);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool AreAthenaVehiclesEnabled();
 
@@ -102,6 +108,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	static void ExecuteClientEvent(UObject* WorldContextObject, FFortClientEventName EventType, UObject* EventSource, UObject* EventFocus);
 
+	UFUNCTION(BlueprintCallable)
+	static void FortShippingLog(UObject* WorldContextObject, FString InString, bool bLogAsWarning);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static uint8 GetActorTeam(AActor* Actor);
 
@@ -115,10 +124,25 @@ public:
 	static AActor* GetClosestActorFromArray(AActor* Actor, TArray<AActor*>& ArrayOfActors);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static AFortPlayerController* GetFirstLocalFortPlayerController(UObject* WorldContextObject, bool bIncludeNonSpectators, bool bIncludeSpectators);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static AFortPlayerController* GetFortPlayerControllerFromActor(AActor* Actor);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static AFortGameStateAthena* GetGameStateAthena(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable)
+	static AActor* GetHeldObjectAttachedToPlayer(AFortPlayerPawn* FortPawn);
+
+	UFUNCTION(BlueprintCallable)
+	static UFortHeldObjectComponent* GetHeldObjectComponentAttachedToPlayer(AFortPlayerPawn* FortPawn);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool GetIsPlayingReplay(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static TArray<AFortPlayerController*> GetLocalFortPlayerControllers(UObject* WorldContextObject, bool bIncludeNonSpectators, bool bIncludeSpectators);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool GetNumericCVar(FString CVar, float& OutValue);

@@ -1487,6 +1487,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	void EndGhostModeExit();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ForceDetachFromRemoteControlledPawn();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFXSystemComponent* GetActivePlayerHandSplashInWaterComponent() const;
 
@@ -1501,6 +1504,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFXSystemComponent* GetActivePlayerWaterBoostComponent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TEnumAsByte<EFortCustomBodyType::Type> GetCharacterBodyType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual AFortPlayerCharm* GetCharacterCharmActorForCharmType(EFortCustomCharmType::Type CharmType) const;

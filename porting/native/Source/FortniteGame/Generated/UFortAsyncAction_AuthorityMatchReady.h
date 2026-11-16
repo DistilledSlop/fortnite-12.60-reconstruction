@@ -8,6 +8,8 @@
 
 #include "FAuthorityMatchReadyAsyncDelegate.h"
 
+class UObject;
+
 #include "UFortAsyncAction_AuthorityMatchReady.generated.h"
 
 UCLASS()
@@ -19,6 +21,9 @@ public:
 	// table index 0, flags 0x10000010080000
 	UPROPERTY()
 	FAuthorityMatchReadyAsyncDelegate OnReady;
+
+	UFUNCTION(BlueprintCallable)
+	static UFortAsyncAction_AuthorityMatchReady* MatchReadyAsync(UObject* WorldContextObject);
 
 };
 

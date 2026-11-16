@@ -3,6 +3,24 @@
 #include "Containers/Array.h"
 #include "Templates/UnrealTemplate.h"
 
+UFortAbilityTask_PlayMontageWaitTarget* UFortAbilityTask_PlayMontageWaitTarget::PlayMontageInfoAndWaitForTrigger(UGameplayAbility* OwningAbility, FName TaskInstanceName, FFortGameplayAbilityMontageInfo& InMontageInfo, EFortAbilityTargetDataPolicy TargetDataPolicy)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
+}
+
+UFortAbilityTask_PlayMontageWaitTarget* UFortAbilityTask_PlayMontageWaitTarget::PlayMontageWaitTarget(UGameplayAbility* OwningAbility, FName TaskInstanceName, UAnimMontage* MontageToPlay, float AnimPlayRate, EFortGameplayAbilityMontageSectionToPlay SectionToPlay, FName OverrideSection, float AnimRootMotionTranslationScale, EFortAbilityTargetDataPolicy TargetDataPolicy)
+{
+	// Original address: 0x0 (retail native not located; the original BP-callable body is unknown).
+	// CONFIDENCE: low
+	// stand-in: declares the native so cooked Blueprints resolve it; Private/FortBlueprintNatives.cpp rebinds the exec at runtime.
+	// Default result if the rebind is not installed:
+	return nullptr;
+}
+
 uint8* UFortAbilityTask_PlayMontageWaitTarget::NativeMoveAssignMontageInfo141616d70(uint8* Destination, uint8* Source)
 {
 	// Original body address: 0x141616d70 (helper, no thunk; returns Destination in RAX)

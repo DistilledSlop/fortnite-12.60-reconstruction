@@ -86,6 +86,9 @@ public:
 	int32 HandleIntoGameState;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetCooldownLength() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	ESpawnMachineState GetSpawnMachineState() const;
 
 protected:
