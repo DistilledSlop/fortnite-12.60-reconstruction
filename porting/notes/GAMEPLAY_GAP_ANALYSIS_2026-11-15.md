@@ -80,9 +80,9 @@ The log does contain physics-data evidence for the "collision is still messed up
 These are shapes the server cannot build, so server-side traces and the server's own movement collision silently skip them (roads/rails/spline meshes; some POI convex hulls). That can
 yield "falls through / walks through" on the server and a correction on the client where the client has the full shape. Not proven for any specific spot; next step is a one-off `CollisionAudit:` that, for each
 streamed level, lists static mesh actors whose body setup has zero convex/trimesh shapes, then compare with what the user is hitting.
-Pickup root: 2,457 `FortPickupAthena ... natively added scene component(s) ... none set as RootComponent - picking one arbitrarily` (engine `FixupNativeActorComponents`). So the root is
-never null: the `if (!GetRootComponent())` branch in `InitializeSpawnedPickupActor` (`FortAthenaLootTransfer.cpp:520`) never runs, and my earlier note that it adds a root is wrong. The root is whichever
-native scene component `GetComponents` returns first, not necessarily `CollisionCylinder`. Fix: set `RootComponent = CollisionCylinder` explicitly in the generated ctor/behavior snippet for `AFortPickup`.
+Pickup root (corrected): the 2,457 `FortPickupAthena ... natively added scene component(s) ... none set as RootComponent - picking one arbitrarily` warnings come from engine
+`FixupNativeActorComponents`. The generated `AFortPickup` constructor creates only one scene component (`CollisionCylinder`; the link, projectile and water components are not scene components), so
+the "arbitrary" pick is the capsule. The root is therefore never null, my `if (!GetRootComponent())` branch in `InitializeSpawnedPickupActor` never runs (harmless), and there is no root defect; the warning is noise.
 Possession: 42 `ClientRetryClientRestart` + `ServerCheckClientPossessionReliable` pairs, all between world time 396.5 and 398.4 s (about 2 s burst), well before the aircraft/skydive phase
 (`ServerSetSpectatorLocation` ran 396.5-496.1 s, i.e. warmup spectate). So it is the pre-bus pawn-less period retrying restart, not a mid-game possession loss. Low priority.
 
@@ -132,3 +132,20 @@ State column uses the labels above.
 
 Searching a chest (sound, searched state, items spreading and flying in about 0.4 s); picking up a gun and seeing a quickbar slot; picking up and equipping that gun and pulling the trigger
 (expect nothing visible, but we get `Combat:` lines either way); `GC:` lines if a 61 s correction burst repeats. Send `gameserver.log` and `network-rpc.jsonl` from `generated/chrono-server-logs`.
+
+## Update, later on 2026-11-15: what was implemented (all built OK, none client-tested)
+
+| Item | Commit | State |
+|---|---|---|
+| 49 Blueprint natives declared from behavior snippets (signatures from reflection) | `852108e0` | pushed, untested. The loader should no longer log "Skipping import Function" for them |
+| 31 of those rebound to real server implementations in `Private/FortBlueprintNatives.cpp`: team queries (`GetActorTeam`, `OnSameTeam`, `GetTeamAffiliation`), `GetFortPlayerControllerFromActor`, `GetGameStateAthena`, `GetServerWorldTimeSeconds`, item give/remove/quantity/find, `K2_SpawnPickupInWorld(+WithClass)`, `CreateItemEntry`, `GetFortAbilitySystemComponent`, `MakeFortEffectContext`, `BP_FortApplyGameplayEffectToTarget`, building health, `IsInAthena`, `GetNumericCVar` | `852108e0` | pushed, untested. Log `BpNatives: N of M ... rebound` shows what bound |
+| Ranged hit damage from target data (`Combat: RangedTargetData`, `Combat: RangedHit`), server-side from the weapon stat row; ammo decremented only when the server AmmoCount is positive | `852108e0` | pushed, untested. First thing to read in the next log: `rowFound=` and `ammo=` on `RangedTargetData` |
+| Floor-loot roll logs moved to Verbose | `852108e0` | pushed |
+| Elimination drops the victim's inventory as spread pickups; 5 s later the victim's view follows the killer or a survivor | `cd80d9ea` | pushed, untested; spectate is only reached when someone is left alive |
+| `ServerCombineInventoryItems` re-created (stack merge), `ServerSpotActor` no-op, `ServerReleaseWeaponAbility` re-created from the retail read (spec input released on the owner's ASC) | next commit | built, untested |
+
+Natives deliberately left at their default result (no safe stand-in yet): `PickLootDrops`, `SpawnProjectile` and the projectile/WaitTarget tasks, `IsCriticalHit`/`IsFatalHit`, `OpenActor`/`CloseActor`, `K2_ConsumeAmmo`, `TossPickup`,
+`BP_SpawnLoot`, squad/resurrection queries, and the structural-support natives.
+
+Still not done from the choke-point list: collision audit (needs a run with a known bad spot), skydive movement (needs a failing-run log), structural support/placement rules, throwables/traps/vehicles,
+team end-game and return to lobby. Nothing in this section is client-verified.

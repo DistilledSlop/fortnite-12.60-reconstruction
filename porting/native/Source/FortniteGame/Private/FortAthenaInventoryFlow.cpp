@@ -524,6 +524,40 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 	return Item;
 }
 
+int32 FortAthenaInventory::CombineStacks(AFortPlayerController* Controller, const FGuid& TargetGuid, const FGuid& SourceGuid)
+{
+	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
+	if (!IsEnabled() || !Inventory || TargetGuid == SourceGuid)
+	{
+		return 0;
+	}
+	UFortWorldItem* Target = FindItemByGuid(Inventory, TargetGuid);
+	UFortWorldItem* Source = FindItemByGuid(Inventory, SourceGuid);
+	if (!Target || !Source || Target->ItemEntry.ItemDefinition != Source->ItemEntry.ItemDefinition || !Target->ItemEntry.ItemDefinition
+		|| !Target->ItemEntry.ItemDefinition->IsStackable())
+	{
+		UE_LOG(LogTemp, Display, TEXT("Inventory: combine %s <- %s rejected (missing item, different definition or not stackable)"), *TargetGuid.ToString(), *SourceGuid.ToString());
+		return 0;
+	}
+	// stand-in: the original combine rules are not recovered; this is the plain stack merge bounded by the max stack size.
+	const int32 MaxStack = Target->ItemEntry.ItemDefinition->NativeGetMaxStackSize(nullptr);
+	const int32 Moved = FMath::Min(FMath::Max(0, MaxStack - Target->ItemEntry.Count), Source->ItemEntry.Count);
+	if (Moved <= 0)
+	{
+		return 0;
+	}
+	Target->ItemEntry.Count += Moved;
+	if (FFortItemEntry* Replicated = FindReplicatedEntry(Inventory, TargetGuid))
+	{
+		Replicated->Count = Target->ItemEntry.Count;
+		Inventory->Inventory.MarkItemDirty(*Replicated);
+	}
+	RemoveItem(Controller, SourceGuid, Moved);
+	Inventory->NativeNotifyInventoryChanged();
+	UE_LOG(LogTemp, Display, TEXT("Inventory: combined %d x %s into %s (now %d)"), Moved, *Target->ItemEntry.ItemDefinition->GetName(), *TargetGuid.ToString(), Target->ItemEntry.Count);
+	return Moved;
+}
+
 int32 FortAthenaInventory::RemoveItem(AFortPlayerController* Controller, const FGuid& ItemGuid, int32 Count)
 {
 	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;

@@ -40,6 +40,9 @@ namespace FortAthenaInventory
 	// controller's pawn. Unknown guids are ignored (logged).
 	void ExecuteInventoryItem(AFortPlayerController* Controller, const FGuid& ItemGuid);
 
+	// Moves as much as fits of the Source stack into the Target stack (same stackable definition). Returns the amount moved.
+	int32 CombineStacks(AFortPlayerController* Controller, const FGuid& TargetGuid, const FGuid& SourceGuid);
+
 	// stand-in: rebinds the native pointer of the Server RPCs whose generated _Implementation is the folded empty stub
 	// (ServerExecuteInventoryItem) to the re-created bodies above, without editing generated code. Call once per world
 	// (StartPlay). Remove when the bodies are spliced through behavior/*.inc and the generator.

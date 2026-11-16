@@ -20,6 +20,8 @@
 #include "GameFramework/GameStateBase.h"
 #include "HAL/IConsoleManager.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystemInterface.h"
+#include "Abilities/GameplayAbilityTypes.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectTypes.h"
 #include "ABuildingActor.h"
@@ -652,6 +654,55 @@ namespace
 		P_NATIVE_END;
 	}
 
+	// ---- stubbed server RPCs ---------------------------------------------------------------------------------------------
+
+	// ServerCombineInventoryItems: empty in the retail client (stripped server body, shared stub 0x1406801c0).
+	DEFINE_FUNCTION(ExecServerCombineInventoryItems)
+	{
+		P_GET_STRUCT_REF(FGuid, TargetItemGuid);
+		P_GET_STRUCT_REF(FGuid, SourceItemGuid);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		if (AFortPlayerController* Controller = Cast<AFortPlayerController>(Context))
+		{
+			FortAthenaInventory::CombineStacks(Controller, TargetItemGuid, SourceItemGuid);
+		}
+		P_NATIVE_END;
+	}
+
+	// ServerSpotActor: empty in the retail client. The spotting UI marks the actor locally; nothing server side is replicated here.
+	DEFINE_FUNCTION(ExecServerSpotActor)
+	{
+		P_GET_OBJECT(AActor, NewlySpottedActor);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UE_LOG(LogFortBpNatives, Verbose, TEXT("ServerSpotActor: %s spotted %s"), *GetNameSafe(Context), *GetNameSafe(NewlySpottedActor));
+		P_NATIVE_END;
+	}
+
+	// AFortWeapon::ServerReleaseWeaponAbility: the client's fire-button release for a weapon ability (the 21 calls in the 2026-11-15 run).
+	// binary: implementation 0x1426b0cb0 -> 0x1426aec00 (read in porting/server_scope/local_model/claude/deps): looks up the spec on the
+	// owner controller's ability system component and calls AbilitySpecInputReleased; the BP weapon-released notification only runs on a
+	// local controller and is omitted on the server.
+	DEFINE_FUNCTION(ExecServerReleaseWeaponAbility)
+	{
+		P_GET_STRUCT_REF(FGameplayAbilitySpecHandle, SpecHandle);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		const AFortWeapon* Weapon = Cast<AFortWeapon>(Context);
+		AFortPlayerController* Owner = Weapon ? Cast<AFortPlayerController>(Weapon->GetOwner()) : nullptr;
+		const IAbilitySystemInterface* Interface = Owner ? Cast<IAbilitySystemInterface>(Owner->PlayerState) : nullptr;
+		UAbilitySystemComponent* ASC = Interface ? Interface->GetAbilitySystemComponent() : nullptr;
+		if (ASC && SpecHandle.IsValid())
+		{
+			if (FGameplayAbilitySpec* Spec = ASC->FindAbilitySpecFromHandle(SpecHandle))
+			{
+				ASC->AbilitySpecInputReleased(*Spec);
+			}
+		}
+		P_NATIVE_END;
+	}
+
 	struct FNativeBinding
 	{
 		const TCHAR* ClassPath;
@@ -691,6 +742,9 @@ namespace
 		{ TEXT("/Script/FortniteGame.FortPickup"), TEXT("GetItemEntry"), &ExecGetItemEntry },
 		{ TEXT("/Script/FortniteGame.FortPlayerState"), TEXT("GetPlayerPawnOrVehicleDriver"), &ExecGetPlayerPawnOrVehicleDriver },
 		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("WeaponDataIsValid"), &ExecWeaponDataIsValid },
+		{ TEXT("/Script/FortniteGame.FortPlayerController"), TEXT("ServerCombineInventoryItems"), &ExecServerCombineInventoryItems },
+		{ TEXT("/Script/FortniteGame.FortPlayerController"), TEXT("ServerSpotActor"), &ExecServerSpotActor },
+		{ TEXT("/Script/FortniteGame.FortWeapon"), TEXT("ServerReleaseWeaponAbility"), &ExecServerReleaseWeaponAbility },
 	};
 }
 
