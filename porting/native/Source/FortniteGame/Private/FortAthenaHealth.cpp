@@ -52,6 +52,7 @@
 #include "UFortAbilitySystemComponentAthena.h"
 #include "UFortCharacterAttrSet.h"
 #include "UFortPlayerAttrSet.h"
+#include "UFortHomebaseSet.h"
 #include "UFortHero.h"
 #include "UFortHeroType.h"
 #include "UFortRegisteredPlayerInfo.h"
@@ -433,6 +434,17 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 	PlayerState->AttributeSets.PlayerAttrSet = AddNamedSet<UFortPlayerAttrSet>(ASC, PlayerState, TEXT("PlayerAttrSet"));
 
 	InitializeAthenaHeroAttributes(*PlayerState, *Controller, *GameMode, *ASC);
+
+	// GUESS (backpack-full): the client's pickup fit check adds WorldInventorySizeBonus from this set to inventory
+	// capacity. Without the set the capacity may evaluate to 0 and every gun is refused with "Backpack full".
+	if (UFortHomebaseSet* Homebase = AddNamedSet<UFortHomebaseSet>(ASC, PlayerState, TEXT("HomebaseSet")))
+	{
+		Homebase->WorldInventorySizeBonus.SetBaseValue(50.0f);
+		Homebase->WorldInventorySizeBonus.SetCurrentValue(50.0f);
+		Homebase->InventorySizeBonus.SetBaseValue(50.0f);
+		Homebase->InventorySizeBonus.SetCurrentValue(50.0f);
+		UE_LOG(LogFortHealth, Display, TEXT("Attributes: HomebaseSet inventory bonus set for %s"), *PlayerState->GetName());
+	}
 
 	// Retain the existing server health bootstrap only when neither hero curves nor
 	// legacy stats supplied usable health. Successful original initialization owns it.
