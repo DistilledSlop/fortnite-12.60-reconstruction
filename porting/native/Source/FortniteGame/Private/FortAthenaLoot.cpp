@@ -68,20 +68,7 @@ AFortPickupAthena* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVec
 		Pickup->PickupLocationData.TossState = EFortPickupTossState::InProgress;
 		Pickup->PickupLocationData.bPlayPickupSound = false;
 		Pickup->PickupLocationData.PickupGuid = FGuid::NewGuid();
-		FTimerHandle RestTimer;
-		TWeakObjectPtr<AFortPickupAthena> WeakPickup(Pickup);
-		World->GetTimerManager().SetTimer(RestTimer, [WeakPickup, Location]()
-		{
-			if (AFortPickupAthena* Target = WeakPickup.Get())
-			{
-				if (IsValid(Target) && !Target->bPickedUp)
-				{
-					Target->SetActorLocation(Location);
-					Target->PickupLocationData.TossState = EFortPickupTossState::AtRest;
-					Target->ForceNetUpdate();
-				}
-			}
-		}, TossFlyTime, false);
+		FortAthenaLootTransfer::BeginServerToss(Pickup, *TossFrom, Location, TossFlyTime);
 	}
 	Pickup->SetReplicates(true);
 	Pickup->ForceNetUpdate();

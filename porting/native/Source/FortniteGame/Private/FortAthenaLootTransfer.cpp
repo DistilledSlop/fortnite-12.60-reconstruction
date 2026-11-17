@@ -1317,6 +1317,55 @@ void FortAthenaLootTransfer::InitializeWorldPickup(AFortPickupAthena* Pickup, co
 	}
 }
 
+void FortAthenaLootTransfer::BeginServerToss(AFortPickupAthena* Pickup, const FVector& Start, const FVector& Final, float FlyTime)
+{
+	UWorld* World = Pickup ? Pickup->GetWorld() : nullptr;
+	if (!World || !Pickup->GetRootComponent())
+	{
+		return;
+	}
+	FlyTime = FMath::Max(FlyTime, 0.1f);
+	UProjectileMovementComponent* Movement = Pickup->MovementComponent ? Pickup->MovementComponent : Pickup->FindComponentByClass<UProjectileMovementComponent>();
+	if (Movement)
+	{
+		Pickup->SetActorLocation(Start);
+		Movement->SetUpdatedComponent(Pickup->GetRootComponent());
+		Movement->bShouldBounce = false;
+		Movement->bRotationFollowsVelocity = false;
+		Movement->bInitialVelocityInLocalSpace = false;
+		Movement->ProjectileGravityScale = 1.5f;
+		const float Gz = Movement->GetGravityZ(); // already scaled, negative
+		// Ballistic launch velocity that lands on Final after exactly FlyTime: x = x0 + v*t + g*t^2/2.
+		Movement->Velocity = (Final - Start) / FlyTime - FVector(0.0f, 0.0f, 0.5f * Gz * FlyTime);
+		Movement->SetComponentTickEnabled(true);
+		Movement->Activate(true);
+		Movement->UpdateComponentVelocity();
+		Pickup->NetUpdateFrequency = 30.0f;
+		Pickup->ForceNetUpdate();
+	}
+
+	FTimerHandle RestTimer;
+	TWeakObjectPtr<AFortPickupAthena> WeakPickup(Pickup);
+	World->GetTimerManager().SetTimer(RestTimer, [WeakPickup, Final]()
+	{
+		AFortPickupAthena* Target = WeakPickup.Get();
+		if (!IsValid(Target) || Target->bPickedUp)
+		{
+			return;
+		}
+		if (UProjectileMovementComponent* M = Target->MovementComponent ? Target->MovementComponent : Target->FindComponentByClass<UProjectileMovementComponent>())
+		{
+			M->StopMovementImmediately();
+			M->Deactivate();
+			M->SetComponentTickEnabled(false);
+		}
+		Target->SetActorLocation(Final);
+		Target->NetUpdateFrequency = 10.0f;
+		Target->PickupLocationData.TossState = EFortPickupTossState::AtRest;
+		Target->ForceNetUpdate();
+	}, FlyTime, false);
+}
+
 AFortPickupAthena* FortAthenaLootTransfer::SpawnTossedPickupFromEntry(UWorld* World, const FFortItemEntry& Entry,
 	const FVector& StartLocation, const FVector& TossDirection, AFortPawn* OwnerPawn,
 	uint8 SourceTypeFlags, EFortPickupSpawnSource SpawnSource, float FlyTime)
@@ -1379,24 +1428,7 @@ AFortPickupAthena* FortAthenaLootTransfer::SpawnTossedPickupFromEntry(UWorld* Wo
 	Pickup->PickupLocationData.PickupGuid = FGuid::NewGuid();
 	Pickup->ForceNetUpdate();
 
-	FTimerHandle TossRestTimer;
-	TWeakObjectPtr<AFortPickupAthena> WeakPickup(Pickup);
-	World->GetTimerManager().SetTimer(
-		TossRestTimer,
-		[WeakPickup, TossFinal]()
-		{
-			if (AFortPickupAthena* Target = WeakPickup.Get())
-			{
-				if (IsValid(Target) && !Target->bPickedUp)
-				{
-					Target->SetActorLocation(TossFinal);
-					Target->PickupLocationData.TossState = EFortPickupTossState::AtRest;
-					Target->ForceNetUpdate();
-				}
-			}
-		},
-		ResolvedFlyTime,
-		false);
+	BeginServerToss(Pickup, StartLocation, TossFinal, ResolvedFlyTime);
 
 	UE_LOG(LogTemp, Display, TEXT("LootTransfer: Spawned tossed pickup %s def=%s count=%d loadedAmmo=%d flyTime=%.2f"),
 		*Pickup->GetName(),
