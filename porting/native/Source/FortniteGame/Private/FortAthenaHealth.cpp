@@ -446,6 +446,37 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 		UE_LOG(LogFortHealth, Display, TEXT("Attributes: HomebaseSet inventory bonus set for %s"), *PlayerState->GetName());
 	}
 
+	// GUESS 2 (backpack-full): strip pickup-blocking tags. The client refuses a pickup when its pawn ASC owns
+	// Gameplay.Status.DisablePickup.<Type> or Gameplay.Action.Player.BlockPickup. Log what is found.
+	if (UWorld* TagWorld = Controller->GetWorld())
+	{
+		TWeakObjectPtr<UFortAbilitySystemComponent> WeakASC(ASC);
+		FTimerHandle TagHandle;
+		TagWorld->GetTimerManager().SetTimer(TagHandle, FTimerDelegate::CreateLambda([WeakASC]()
+		{
+			UFortAbilitySystemComponent* A = WeakASC.Get();
+			if (!A) { return; }
+			FGameplayTagContainer Owned;
+			A->GetOwnedGameplayTags(Owned);
+			FGameplayTagContainer Blocking;
+			for (const FGameplayTag& Tag : Owned)
+			{
+				const FString Name = Tag.ToString();
+				if (Name.Contains(TEXT("DisablePickup")) || Name.Contains(TEXT("BlockPickup")))
+				{
+					Blocking.AddTag(Tag);
+				}
+			}
+			if (Blocking.Num() == 0) { return; }
+			UE_LOG(LogFortHealth, Display, TEXT("PickupTags: stripping %s"), *Blocking.ToStringSimple());
+			A->RemoveActiveEffectsWithGrantedTags(Blocking);
+			for (const FGameplayTag& Tag : Blocking)
+			{
+				A->SetLooseGameplayTagCount(Tag, 0);
+			}
+		}), 1.0f, true);
+	}
+
 	// Retain the existing server health bootstrap only when neither hero curves nor
 	// legacy stats supplied usable health. Successful original initialization owns it.
 	if (HealthSet)
