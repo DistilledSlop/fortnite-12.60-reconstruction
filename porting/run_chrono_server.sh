@@ -123,6 +123,13 @@ fi
 
 read -r -a extra_args <<< "${FN_SERVER_ARGS:--FortniteSkipUnconvertedLegacyShaderMaps -FortniteTolerateNeedLoadDependencies -FortniteSkipEngineClassNetChecksum -FortniteStartingWood=500 -FortniteBlueprintPawn -FortniteNoServerAnimDecode -FortniteInventoryAbilities -FortniteWarmupSeconds=90 -FortniteNetworkTrace=$log_dir/network-rpc.jsonl}"
 
+# Boot speed: a dedicated server ticks at 30 Hz and the stock streaming budgets (5 ms of actor work per frame, 10 components
+# registered per step, 1 ms unregister) leave each frame ~75% asleep, so streaming the Apollo sublevels took ~4 minutes.
+# Raising the budgets makes the same boot take ~50 s (measured 2026-11-17). FN_BOOT_BUDGET=0 restores the stock budgets.
+if [[ ${FN_BOOT_BUDGET:-1} != 0 ]]; then
+    extra_args+=("-ini:Engine:[SystemSettings]:s.LevelStreamingActorsUpdateTimeLimit=100,[SystemSettings]:s.LevelStreamingComponentsRegistrationGranularity=1000,[SystemSettings]:s.UnregisterComponentsTimeLimit=100,[SystemSettings]:s.AsyncLoadingTimeLimit=100,[SystemSettings]:s.AsyncLoadingUseFullTimeLimit=1,[SystemSettings]:s.PriorityAsyncLoadingExtraTime=100")
+fi
+
 # Extra flags appended to the defaults. Client-authoritative movement is the default (the server never corrects positions); pass FN_SERVER_EXTRA_ARGS="-FortniteServerMovementAuthority" to restore server authority except while skydiving, or
 # "-FortniteServerSkydiveAuthority" removes the skydive exception.
 if [[ -n ${FN_SERVER_EXTRA_ARGS:-} ]]; then
