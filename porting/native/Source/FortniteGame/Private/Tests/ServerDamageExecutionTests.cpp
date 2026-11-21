@@ -7,6 +7,7 @@
 #include "FortAthenaHealth.h"
 #include "FortHarvestBuilding.h"
 #include "GameFramework/DamageType.h"
+#include "GameplayEffectExtension.h"
 #include "Misc/AutomationTest.h"
 #include "ServerDamageExecution.h"
 #include "UFortAbilitySystemComponent.h"
@@ -61,7 +62,33 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 
 	UServerActorDamageListener::Bind(*Pawn);
 	UServerActorDamageListener::Bind(*Pawn);
-	Pawn->TakeDamage(15, FDamageEvent(), nullptr, nullptr);
+	AFortPawn* Attacker = World->SpawnActor<AFortPawn>(FVector(100, 0, 10000), FRotator::ZeroRotator, SpawnParameters);
+	if (!TestNotNull(TEXT("Attacking pawn"), Attacker))
+	{
+		Pawn->Destroy();
+		return false;
+	}
+	UFortAbilitySystemComponent* AttackerASC = NewObject<UFortAbilitySystemComponent>(Attacker);
+	Attacker->AbilitySystemComponent = AttackerASC;
+	AttackerASC->RegisterComponent();
+	AttackerASC->InitAbilityActorInfo(Attacker, Attacker);
+
+	// Engine callers can supply a causer with a pawn instigator and no controller.
+	Attacker->SetInstigator(Attacker);
+	FGameplayEffectContextHandle HitContext;
+	auto& ShieldChanged = ASC->GetGameplayAttributeValueChangeDelegate(Shield);
+	const FDelegateHandle HitListener = ShieldChanged.AddLambda([&HitContext](const FOnAttributeChangeData& Change)
+	{
+		if (Change.GEModData)
+		{
+			HitContext = Change.GEModData->EffectSpec.GetContext();
+		}
+	});
+	Pawn->TakeDamage(15, FDamageEvent(), nullptr, Attacker);
+	ShieldChanged.Remove(HitListener);
+	TestTrue(TEXT("Damage captures the attacking ability system"), HitContext.GetInstigatorAbilitySystemComponent() == AttackerASC);
+	TestTrue(TEXT("Damage retains the engine causer"), HitContext.GetEffectCauser() == Attacker);
+	Attacker->Destroy();
 	TestEqual(TEXT("A damage event fires once and shield absorbs the hit"), Pawn->GetShield(), 15.0f);
 	TestEqual(TEXT("Health is intact"), Pawn->GetHealth(), 100.0f);
 
