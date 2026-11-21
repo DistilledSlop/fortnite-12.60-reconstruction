@@ -561,9 +561,13 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 						{
 							AActor* Source = Spec.GetContext().GetOriginalInstigator();
 							AController* SourceController = Cast<AController>(Source);
-							if (!SourceController)
+							if (APawn* SourcePawn = Cast<APawn>(Source))
 							{
-								if (APawn* SourcePawn = Cast<APawn>(Source)) { SourceController = SourcePawn->GetController(); }
+								SourceController = SourcePawn->GetController();
+							}
+							else if (APlayerState* SourceState = Cast<APlayerState>(Source))
+							{
+								SourceController = Cast<AController>(SourceState->GetOwner());
 							}
 							WeakInstigator = SourceController;
 							WeakCauser = Spec.GetContext().GetEffectCauser();
@@ -817,7 +821,12 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 
 	AFortPlayerStateAthena* KillerState = InstigatedBy ? Cast<AFortPlayerStateAthena>(InstigatedBy->PlayerState) : nullptr;
 	AFortPawn* KillerPawn = InstigatedBy ? Cast<AFortPawn>(InstigatedBy->GetPawn()) : nullptr;
-	UFortWeaponItemDefinition* KillerWeapon = (KillerPawn && KillerPawn->CurrentWeapon) ? KillerPawn->CurrentWeapon->WeaponData : nullptr;
+	AFortWeapon* FinishingWeapon = Cast<AFortWeapon>(DamageCauser);
+	if (!FinishingWeapon && KillerPawn)
+	{
+		FinishingWeapon = KillerPawn->CurrentWeapon;
+	}
+	UFortWeaponItemDefinition* KillerWeapon = FinishingWeapon ? FinishingWeapon->WeaponData : nullptr;
 
 	// 1. Build FFortPlayerDeathReport (D6 §2 step 1).
 	FFortPlayerDeathReport Report{};
