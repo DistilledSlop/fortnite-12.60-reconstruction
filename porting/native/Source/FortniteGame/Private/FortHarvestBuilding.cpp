@@ -1,4 +1,5 @@
 #include "FortHarvestBuilding.h"
+#include "ServerDamageExecution.h"
 #include "FortAthenaBuildDamage.h"
 
 #include "ABuildingActor.h"
@@ -576,6 +577,10 @@ bool InitializeBuildingHealth(ABuildingActor* Building)
 	}
 
 	InitializedBuildings.Add(Building);
+	if (Cast<ABuildingSMActor>(Building))
+	{
+		UServerActorDamageListener::Bind(*Building);
+	}
 	Building->MaxHealthInitializationValue = MaxHealth;
 	const float InitialPct = ResolveInitialHealthPct(Building);
 	const float InitialHealth = FMath::Clamp(MaxHealth * InitialPct, 0.0f, MaxHealth);

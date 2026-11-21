@@ -1,8 +1,10 @@
 #include "ServerDamageExecution.h"
 
+#include "ABuildingSMActor.h"
 #include "AFortPawn.h"
 #include "AbilitySystemComponent.h"
 #include "FortAthenaHealth.h"
+#include "FortHarvestBuilding.h"
 #include "GameFramework/DamageType.h"
 #include "UFortHealthSet.h"
 
@@ -69,18 +71,29 @@ UServerDamageEffect::UServerDamageEffect()
 	Execution.CalculationClass = UServerDamageExecution::StaticClass();
 }
 
-void UServerPawnDamageListener::Bind(AActor& Actor)
+void UServerActorDamageListener::Bind(AActor& Actor)
 {
 	if (Actor.HasAuthority())
 	{
 		Actor.OnTakeAnyDamage.AddUniqueDynamic(
-			GetMutableDefault<UServerPawnDamageListener>(), &UServerPawnDamageListener::OnDamage);
+			GetMutableDefault<UServerActorDamageListener>(), &UServerActorDamageListener::OnDamage);
 	}
 }
 
-void UServerPawnDamageListener::OnDamage(AActor* Actor, float Amount, const UDamageType*,
+void UServerActorDamageListener::OnDamage(AActor* Actor, float Amount, const UDamageType*,
 	AController* Instigator, AActor* Causer)
 {
-	FortAthenaHealth::ApplyDamage(Cast<AFortPawn>(Actor), Amount, FGameplayTagContainer(),
-		Instigator, Causer, false);
+	if (!FMath::IsFinite(Amount) || Amount <= 0.0f)
+	{
+		return;
+	}
+
+	if (AFortPawn* Pawn = Cast<AFortPawn>(Actor))
+	{
+		FortAthenaHealth::ApplyDamage(Pawn, Amount, FGameplayTagContainer(), Instigator, Causer, false);
+	}
+	else if (ABuildingSMActor* Building = Cast<ABuildingSMActor>(Actor))
+	{
+		FortHarvest::ApplyBuildingDamage(Building, Amount, Instigator, Causer, FHitResult(), false);
+	}
 }

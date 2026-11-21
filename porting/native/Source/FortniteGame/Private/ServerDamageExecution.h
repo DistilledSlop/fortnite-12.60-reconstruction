@@ -27,9 +27,9 @@ public:
 	UServerDamageEffect();
 };
 
-// For pawns whose health is managed by the server's ability system.
+// Routes engine damage events for actors with server-managed health.
 UCLASS()
-class UServerPawnDamageListener : public UObject
+class UServerActorDamageListener : public UObject
 {
 	GENERATED_BODY()
 

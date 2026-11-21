@@ -1,9 +1,11 @@
 #if WITH_DEV_AUTOMATION_TESTS
 
+#include "ABuildingWall.h"
 #include "AFortPawn.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "FortAthenaHealth.h"
+#include "FortHarvestBuilding.h"
 #include "GameFramework/DamageType.h"
 #include "Misc/AutomationTest.h"
 #include "ServerDamageExecution.h"
@@ -57,8 +59,8 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	ASC->SetNumericAttributeBase(Health, 100);
 	ASC->SetNumericAttributeBase(Shield, 30);
 
-	UServerPawnDamageListener::Bind(*Pawn);
-	UServerPawnDamageListener::Bind(*Pawn);
+	UServerActorDamageListener::Bind(*Pawn);
+	UServerActorDamageListener::Bind(*Pawn);
 	Pawn->TakeDamage(15, FDamageEvent(), nullptr, nullptr);
 	TestEqual(TEXT("A damage event fires once and shield absorbs the hit"), Pawn->GetShield(), 15.0f);
 	TestEqual(TEXT("Health is intact"), Pawn->GetHealth(), 100.0f);
@@ -79,6 +81,24 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TestFalse(TEXT("A dying pawn stops accepting damage events"), Pawn->CanBeDamaged());
 
 	Pawn->Destroy();
+
+	ABuildingWall* Wall = World->SpawnActor<ABuildingWall>(FVector(0, 0, 10000), FRotator::ZeroRotator, SpawnParameters);
+	if (!TestNotNull(TEXT("Damage test wall"), Wall))
+	{
+		return false;
+	}
+	Wall->MaxHealthInitializationValue = 100.0f;
+	Wall->bIsInvulnerable = false;
+	Wall->SetCanBeDamaged(true);
+	TestTrue(TEXT("Structure health is initialized"), FortHarvest::InitializeBuildingHealth(Wall));
+	FortHarvest::ForceBuildingHealth(Wall, 100.0f);
+
+	Wall->TakeDamage(20, FDamageEvent(), nullptr, nullptr);
+	TestEqual(TEXT("Engine damage reduces initialized structure health"), FortHarvest::GetBuildingHealth(Wall), 80.0f);
+	Wall->bIsInvulnerable = true;
+	Wall->TakeDamage(20, FDamageEvent(), nullptr, nullptr);
+	TestEqual(TEXT("Invulnerability blocks engine damage"), FortHarvest::GetBuildingHealth(Wall), 80.0f);
+	Wall->Destroy();
 	return true;
 }
 
