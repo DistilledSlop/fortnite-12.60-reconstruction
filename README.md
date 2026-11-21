@@ -28,6 +28,12 @@ Reconstructing Fortnite Chapter 2 Season 2 as an Unreal Engine project, with rec
 
 The reference build is **12.60, CL 13477524**. The current development environment uses Unreal Engine 4.25 on Linux; the project's goal is to recover the game as an Unreal Engine project. It is under active reconstruction and is not yet a complete, playable release.
 
+## Join a local match
+
+The original 12.60 client can join the reconstructed dedicated server and drop from the Battle Bus onto the Apollo island. Full-match gameplay is still in development.
+
+![Original 12.60 client on the Apollo island in a match hosted by the reconstructed server](docs/screenshots/2026-11-13/vanilla-client-real-island-lit.png)
+
 ## Scope
 
 - Recover the client's classes, function behavior, assets pipeline, frontend, and world systems from the supplied build.
