@@ -398,6 +398,7 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 		Pawn->HealthSet = HealthSet;
 		Pawn->bHealthSynced = 1;
 
+		UServerPawnDamageListener::Bind(*Pawn);
 	}
 
 	// Ensure combat and movement attribute sets exist on PlayerState/ASC.

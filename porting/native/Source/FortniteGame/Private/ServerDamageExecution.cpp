@@ -2,6 +2,8 @@
 
 #include "AFortPawn.h"
 #include "AbilitySystemComponent.h"
+#include "FortAthenaHealth.h"
+#include "GameFramework/DamageType.h"
 #include "UFortHealthSet.h"
 
 namespace
@@ -65,4 +67,20 @@ UServerDamageEffect::UServerDamageEffect()
 	DurationPolicy = EGameplayEffectDurationType::Instant;
 	FGameplayEffectExecutionDefinition& Execution = Executions.AddDefaulted_GetRef();
 	Execution.CalculationClass = UServerDamageExecution::StaticClass();
+}
+
+void UServerPawnDamageListener::Bind(AActor& Actor)
+{
+	if (Actor.HasAuthority())
+	{
+		Actor.OnTakeAnyDamage.AddUniqueDynamic(
+			GetMutableDefault<UServerPawnDamageListener>(), &UServerPawnDamageListener::OnDamage);
+	}
+}
+
+void UServerPawnDamageListener::OnDamage(AActor* Actor, float Amount, const UDamageType*,
+	AController* Instigator, AActor* Causer)
+{
+	FortAthenaHealth::ApplyDamage(Cast<AFortPawn>(Actor), Amount, FGameplayTagContainer(),
+		Instigator, Causer, false);
 }
