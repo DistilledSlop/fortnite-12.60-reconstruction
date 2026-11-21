@@ -98,6 +98,43 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	ASC->ApplyGameplayEffectSpecToSelf(Recovery);
 	TestEqual(TEXT("Recovery at the shield cap changes nothing"), Pawn->GetShield(), 50.0f);
 
+	UClass* BandageClass = LoadClass<UGameplayEffect>(nullptr,
+		TEXT("/Game/Athena/Items/Consumables/Bandage/GE_Athena_Bandage_Heal.GE_Athena_Bandage_Heal_C"));
+	UClass* MedkitClass = LoadClass<UGameplayEffect>(nullptr,
+		TEXT("/Game/Athena/Items/Consumables/Medkit/GE_Athena_Medkit_Heal.GE_Athena_Medkit_Heal_C"));
+	if (!TestNotNull(TEXT("Staged bandage effect"), BandageClass) ||
+		!TestNotNull(TEXT("Staged medkit effect"), MedkitClass))
+	{
+		Pawn->Destroy();
+		return false;
+	}
+
+	ASC->SetNumericAttributeBase(Health, 50.0f);
+	FGameplayEffectSpec Bandage(GetDefault<UGameplayEffect>(BandageClass), ASC->MakeEffectContext(), 1.0f);
+	ASC->ApplyGameplayEffectSpecToSelf(Bandage);
+	TestTrue(TEXT("Direct cooked bandage effect reaches health recovery"), Pawn->GetHealth() > 50.0f);
+	const float HealthAfterBandage = Pawn->GetHealth();
+	FGameplayEffectSpec Medkit(GetDefault<UGameplayEffect>(MedkitClass), ASC->MakeEffectContext(), 1.0f);
+	ASC->ApplyGameplayEffectSpecToSelf(Medkit);
+	TestTrue(TEXT("Direct cooked medkit effect reaches health recovery"), Pawn->GetHealth() > HealthAfterBandage);
+	TestEqual(TEXT("Cooked effects clear the healing accumulator"), ASC->GetNumericAttribute(Healing), 0.0f);
+
+	UClass* ParentEffectClass = LoadClass<UGameplayEffect>(nullptr,
+		TEXT("/Game/Athena/Items/Consumables/Parents/GE_Athena_MedConsumable_Parent.GE_Athena_MedConsumable_Parent_C"));
+	if (!TestNotNull(TEXT("Staged shared consumable effect"), ParentEffectClass))
+	{
+		Pawn->Destroy();
+		return false;
+	}
+	ASC->SetNumericAttributeBase(Health, 50.0f);
+	ASC->SetNumericAttributeBase(Shield, 30.0f);
+	FGameplayEffectSpec ParentEffect(GetDefault<UGameplayEffect>(ParentEffectClass), ASC->MakeEffectContext(), 1.0f);
+	ParentEffect.SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName(TEXT("SetByCaller.Healing"))), 15.0f);
+	ParentEffect.SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName(TEXT("SetByCaller.Shield"))), 20.0f);
+	ASC->ApplyGameplayEffectSpecToSelf(ParentEffect);
+	TestEqual(TEXT("Shared cooked effect reads the healing magnitude"), Pawn->GetHealth(), 65.0f);
+	TestEqual(TEXT("Shared cooked effect reads the shield magnitude"), Pawn->GetShield(), 50.0f);
+
 	Pawn->TakeDamage(150, FDamageEvent(), nullptr, nullptr);
 	TestEqual(TEXT("Lethal damage clamps health to zero"), Pawn->GetHealth(), 0.0f);
 	TestEqual(TEXT("Lethal damage depletes the remaining shield"), Pawn->GetShield(), 0.0f);
