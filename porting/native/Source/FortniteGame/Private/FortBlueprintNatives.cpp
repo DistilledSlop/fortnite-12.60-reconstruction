@@ -2009,7 +2009,15 @@ namespace
 						UAbilitySystemComponent* TargetASC = Interface ? Interface->GetAbilitySystemComponent() : nullptr;
 						if (TargetASC)
 						{
-							Applied.Add(OwnerASC->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), TargetASC));
+							FGameplayEffectSpec TargetSpec(*SpecHandle.Data.Get());
+							if (TargetSpec.GetContext().IsValid())
+							{
+								// Keep this hit's context isolated from the next target and effect.
+								FGameplayEffectContextHandle TargetContext = TargetSpec.GetContext().Duplicate();
+								Data->AddTargetDataToContext(TargetContext, false);
+								TargetSpec.SetContext(TargetContext);
+							}
+							Applied.Add(OwnerASC->ApplyGameplayEffectSpecToTarget(TargetSpec, TargetASC));
 						}
 					}
 				}
