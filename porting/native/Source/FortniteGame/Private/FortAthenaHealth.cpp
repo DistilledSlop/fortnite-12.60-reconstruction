@@ -659,14 +659,38 @@ void FortAthenaHealth::ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, co
 		return;
 	}
 
-	const float CurrentShield = VictimPawn->GetShield();
-	const float OldHealth = VictimPawn->GetHealth();
 	UAbilitySystemComponent* ASC = VictimPawn->GetAbilitySystemComponent();
-	static const FGameplayAttribute Health(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Health")));
-	if (!ASC || ASC->GetAvatarActor() != VictimPawn || !ASC->HasAttributeSetForAttribute(Health))
+	if (!ASC)
 	{
 		return;
 	}
+
+	// Non-player pawns can own an ASC with a configured health set before
+	// their pawn-side health pointer has been synchronized.
+	if (!VictimPawn->bHealthSynced && !Cast<AFortPlayerPawn>(VictimPawn) && ASC->GetOwner() == VictimPawn)
+	{
+		if (const UFortHealthSet* HealthSet = ASC->GetSet<UFortHealthSet>())
+		{
+			if (!ASC->GetAvatarActor())
+			{
+				ASC->InitAbilityActorInfo(VictimPawn, VictimPawn);
+			}
+			if (ASC->GetAvatarActor() == VictimPawn)
+			{
+				VictimPawn->HealthSet = const_cast<UFortHealthSet*>(HealthSet);
+				VictimPawn->bHealthSynced = true;
+			}
+		}
+	}
+
+	static const FGameplayAttribute Health(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Health")));
+	if (ASC->GetAvatarActor() != VictimPawn || !ASC->HasAttributeSetForAttribute(Health) || !VictimPawn->bHealthSynced)
+	{
+		return;
+	}
+
+	const float CurrentShield = VictimPawn->GetShield();
+	const float OldHealth = VictimPawn->GetHealth();
 
 	// GAS captures source tags and attributes from the actor in the effect context.
 	// Keep controller attribution separately for elimination and match statistics.

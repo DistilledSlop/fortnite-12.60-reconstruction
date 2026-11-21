@@ -51,9 +51,8 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	Pawn->AbilitySystemComponent = ASC;
 	ASC->RegisterComponent();
 	ASC->InitAbilityActorInfo(Pawn, Pawn);
-	Pawn->HealthSet = NewObject<UFortHealthSet>(Pawn);
-	ASC->AddAttributeSetSubobject(Pawn->HealthSet);
-	Pawn->bHealthSynced = true;
+	ASC->AddAttributeSetSubobject(NewObject<UFortHealthSet>(Pawn));
+	Pawn->bHealthSynced = false;
 
 	const FGameplayAttribute Health(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Health")));
 	const FGameplayAttribute Shield(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("CurrentShield")));
@@ -86,6 +85,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	});
 	Pawn->TakeDamage(15, FDamageEvent(), nullptr, Attacker);
 	ShieldChanged.Remove(HitListener);
+	TestTrue(TEXT("First hit synchronizes the non-player pawn health set"), Pawn->bHealthSynced);
 	TestTrue(TEXT("Damage captures the attacking ability system"), HitContext.GetInstigatorAbilitySystemComponent() == AttackerASC);
 	TestTrue(TEXT("Damage retains the engine causer"), HitContext.GetEffectCauser() == Attacker);
 	Attacker->Destroy();
