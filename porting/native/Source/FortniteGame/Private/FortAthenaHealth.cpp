@@ -715,6 +715,20 @@ void FortAthenaHealth::ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, co
 	}
 }
 
+namespace
+{
+	void NotifyPawnDeath(AFortPawn* VictimPawn, AController* InstigatedBy, AActor* DamageCauser)
+	{
+		VictimPawn->bWasDBNOOnDeath = VictimPawn->bIsDBNO;
+		if (UCharacterMovementComponent* MoveComp = VictimPawn->GetCharacterMovement())
+		{
+			MoveComp->DisableMovement();
+		}
+		VictimPawn->SetCanBeDamaged(false);
+		VictimPawn->OnDied.Broadcast(VictimPawn, 0.0f, InstigatedBy, DamageCauser, VictimPawn->GetActorLocation(), nullptr, NAME_None, FVector::ZeroVector);
+	}
+}
+
 void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGameplayTagContainer& DamageTags,
                                              AController* InstigatedBy, AActor* DamageCauser)
 {
@@ -729,6 +743,13 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 		VictimState = Cast<AFortPlayerStateAthena>(VictimPC->PlayerState);
 	if (!VictimPC && VictimState)
 		VictimPC = Cast<AFortPlayerControllerAthena>(VictimState->GetOwner());
+	// AI and other non-player pawns have no match placement to finalize.
+	if (!VictimPC && !VictimState && !Cast<APlayerController>(VictimPawn->GetController()))
+	{
+		VictimPawn->bIsDying = true;
+		NotifyPawnDeath(VictimPawn, InstigatedBy, DamageCauser);
+		return;
+	}
 	UWorld* World = VictimPawn->GetWorld();
 	AFortGameStateAthena* GameState = World ? Cast<AFortGameStateAthena>(World->GetGameState()) : nullptr;
 	AFortGameModeAthena* GameMode = World ? Cast<AFortGameModeAthena>(World->GetAuthGameMode()) : nullptr;
@@ -750,13 +771,7 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 		GameState->PlayersLeft = NewPlayersLeft;
 		GameState->OnRep_PlayersLeft();
 	}
-	VictimPawn->bWasDBNOOnDeath = VictimPawn->bIsDBNO;
-	if (UCharacterMovementComponent* MoveComp = VictimPawn->GetCharacterMovement())
-	{
-		MoveComp->DisableMovement();
-	}
-	VictimPawn->SetCanBeDamaged(false);
-	VictimPawn->OnDied.Broadcast(VictimPawn, 0.0f, InstigatedBy, DamageCauser, VictimPawn->GetActorLocation(), nullptr, NAME_None, FVector::ZeroVector);
+	NotifyPawnDeath(VictimPawn, InstigatedBy, DamageCauser);
 
 	AFortPlayerStateAthena* KillerState = InstigatedBy ? Cast<AFortPlayerStateAthena>(InstigatedBy->PlayerState) : nullptr;
 	AFortPawn* KillerPawn = InstigatedBy ? Cast<AFortPawn>(InstigatedBy->GetPawn()) : nullptr;

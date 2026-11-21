@@ -72,6 +72,12 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TestEqual(TEXT("Bypass preserves shield"), Pawn->GetShield(), 30.0f);
 	TestEqual(TEXT("Bypass reduces health"), Pawn->GetHealth(), 70.0f);
 
+	Pawn->TakeDamage(150, FDamageEvent(), nullptr, nullptr);
+	TestEqual(TEXT("Lethal damage clamps health to zero"), Pawn->GetHealth(), 0.0f);
+	TestEqual(TEXT("Lethal damage depletes the remaining shield"), Pawn->GetShield(), 0.0f);
+	TestTrue(TEXT("A non-player pawn enters the dying state"), Pawn->bIsDying != 0);
+	TestFalse(TEXT("A dying pawn stops accepting damage events"), Pawn->CanBeDamaged());
+
 	Pawn->Destroy();
 	return true;
 }
