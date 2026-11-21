@@ -555,7 +555,7 @@ void BindLevelDamageEvents(const ULevel* Level)
 	for (AActor* Actor : Level->Actors)
 	{
 		ABuildingSMActor* Building = Cast<ABuildingSMActor>(Actor);
-		if (IsValid(Building) && Building->CanBeDamaged())
+		if (IsValid(Building))
 		{
 			UServerActorDamageListener::Bind(*Building);
 		}

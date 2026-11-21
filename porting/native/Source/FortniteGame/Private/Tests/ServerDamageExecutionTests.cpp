@@ -197,11 +197,14 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	}
 	Wall->MaxHealthInitializationValue = 100.0f;
 	Wall->bIsInvulnerable = false;
-	Wall->SetCanBeDamaged(true);
+	Wall->SetCanBeDamaged(false);
 	FortHarvest::BindLevelDamageEvents(Wall->GetLevel());
-
 	Wall->TakeDamage(20, FDamageEvent(), nullptr, nullptr);
-	TestEqual(TEXT("The first engine damage event reduces structure health"), FortHarvest::GetBuildingHealth(Wall), 80.0f);
+	TestEqual(TEXT("Disabled engine damage preserves structure health"), FortHarvest::GetBuildingHealth(Wall), 100.0f);
+
+	Wall->SetCanBeDamaged(true);
+	Wall->TakeDamage(20, FDamageEvent(), nullptr, nullptr);
+	TestEqual(TEXT("A previously disabled structure takes damage when enabled"), FortHarvest::GetBuildingHealth(Wall), 80.0f);
 	Wall->bIsInvulnerable = true;
 	Wall->TakeDamage(20, FDamageEvent(), nullptr, nullptr);
 	TestEqual(TEXT("Invulnerability blocks engine damage"), FortHarvest::GetBuildingHealth(Wall), 80.0f);
