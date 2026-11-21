@@ -51,6 +51,8 @@
 #include "AFortPlayerStateZone.h"
 #include "AFortPlayerPawn.h"
 #include "AFortPawn.h"
+#include "AFortAIPawn.h"
+#include "ServerDamageExecution.h"
 #include "UFortPlaylistAthena.h"
 #include "FortAthenaLootData.h"
 #include "UFortControllerComponent_Aircraft.h"
@@ -90,6 +92,23 @@
 
 namespace FortAthenaMatchFlowPrivate
 {
+    void BindAIPawnDamage(AActor* Actor)
+    {
+        if (AFortAIPawn* Pawn = Cast<AFortAIPawn>(Actor))
+        {
+            UServerActorDamageListener::Bind(*Pawn);
+        }
+    }
+
+    void BindLevelActorDamage(ULevel* Level)
+    {
+        FortHarvest::BindLevelDamageEvents(Level);
+        for (AActor* Actor : Level->Actors)
+        {
+            BindAIPawnDamage(Actor);
+        }
+    }
+
     // Asset paths (data: /mnt/vibrato/fortnite-extracted-full/FortniteGame/Content).
     FString PlaylistObjectPath()
     {
@@ -2187,6 +2206,7 @@ namespace FortAthenaMatchFlow
         GameMode->GetWorldTimerManager().SetTimer(S.DriverHandle, FTimerDelegate::CreateStatic(&DriverTick), DriverInterval, true);
         UWorld* World = GameMode->GetWorld();
         FortniteAthenaGameplay::EnsureWorldManager(World);
+        World->AddOnActorSpawnedHandler(FOnActorSpawned::FDelegate::CreateStatic(&BindAIPawnDamage));
         if (!S.bFoundationStreamingHooked)
         {
             S.bFoundationStreamingHooked = true;
@@ -2197,13 +2217,13 @@ namespace FortAthenaMatchFlow
                     DisableBackgroundCollision(InWorld);
                     StreamFoundationsInLevel(InWorld, InLevel);
                     FortAthenaLootWorld::OnLevelAdded(State().GameMode.Get(), InLevel);
-                    FortHarvest::BindLevelDamageEvents(InLevel);
+                    BindLevelActorDamage(InLevel);
                 }
             });
         }
-        for (const ULevel* Level : World->GetLevels())
+        for (ULevel* Level : World->GetLevels())
         {
-            FortHarvest::BindLevelDamageEvents(Level);
+            BindLevelActorDamage(Level);
         }
         DisableBackgroundCollision(World);
         StreamFoundationsInWorld(World);

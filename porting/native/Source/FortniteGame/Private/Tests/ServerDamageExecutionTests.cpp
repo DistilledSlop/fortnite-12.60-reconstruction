@@ -2,6 +2,7 @@
 
 #include "ABuildingWall.h"
 #include "AFortPawn.h"
+#include "AFortAIPawn.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "FortAthenaHealth.h"
@@ -189,6 +190,24 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TestFalse(TEXT("A dying pawn stops accepting damage events"), Pawn->CanBeDamaged());
 
 	Pawn->Destroy();
+
+	AFortAIPawn* AI = World->SpawnActor<AFortAIPawn>(FVector(0, 0, 10000), FRotator::ZeroRotator, SpawnParameters);
+	if (!TestNotNull(TEXT("Spawned AI damage target"), AI))
+	{
+		return false;
+	}
+	UAbilitySystemComponent* AIASC = AI->GetAbilitySystemComponent();
+	if (!TestNotNull(TEXT("AI native ability system"), AIASC))
+	{
+		AI->Destroy();
+		return false;
+	}
+	AIASC->AddAttributeSetSubobject(NewObject<UFortHealthSet>(AI));
+	AIASC->SetNumericAttributeBase(Health, 50.0f);
+	AI->SetCanBeDamaged(true);
+	AI->TakeDamage(10, FDamageEvent(), nullptr, nullptr);
+	TestEqual(TEXT("Spawned AI receives engine damage without explicit listener binding"), AI->GetHealth(), 40.0f);
+	AI->Destroy();
 
 	ABuildingWall* Wall = World->SpawnActor<ABuildingWall>(FVector(0, 0, 10000), FRotator::ZeroRotator, SpawnParameters);
 	if (!TestNotNull(TEXT("Damage test wall"), Wall))
