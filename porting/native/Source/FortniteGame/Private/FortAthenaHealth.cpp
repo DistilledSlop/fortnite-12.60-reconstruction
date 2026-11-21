@@ -22,6 +22,7 @@
 // - stand-in: marks behaviours that are stand-ins or re-creations of server logic compiled out of the client exe.
 
 #include "FortAthenaHealth.h"
+#include "ServerDamageExecution.h"
 #include "UFortPlaylistAthena.h"
 #include "FortAthenaLootTransfer.h"
 #include "FortAthenaEndGame.h"
@@ -649,38 +650,35 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 void FortAthenaHealth::ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, const FGameplayTagContainer& DamageTags,
                                   AController* InstigatedBy, AActor* DamageCauser, bool bIgnoreShield)
 {
-	if (!IsEnabled() || !VictimPawn || DamageAmount <= 0.0f || VictimPawn->bIsDying)
+	if (!IsEnabled() || !VictimPawn || !VictimPawn->HasAuthority() || VictimPawn->bIsDying ||
+		!FMath::IsFinite(DamageAmount) || DamageAmount <= 0.0f)
 	{
 		return;
 	}
 
-	float ShieldDamage = 0.0f;
-	float HealthDamage = DamageAmount;
 	const float CurrentShield = VictimPawn->GetShield();
-
-	// Shield absorbs damage first unless ignored (e.g. storm damage or fall damage).
-	if (!bIgnoreShield && CurrentShield > 0.0f)
+	const float OldHealth = VictimPawn->GetHealth();
+	UAbilitySystemComponent* ASC = VictimPawn->GetAbilitySystemComponent();
+	static const FGameplayAttribute Health(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Health")));
+	if (!ASC || ASC->GetAvatarActor() != VictimPawn || !ASC->HasAttributeSetForAttribute(Health))
 	{
-		if (DamageAmount <= CurrentShield)
-		{
-			ShieldDamage = DamageAmount;
-			HealthDamage = 0.0f;
-			VictimPawn->SetShield(CurrentShield - DamageAmount);
-		}
-		else
-		{
-			ShieldDamage = CurrentShield;
-			HealthDamage = DamageAmount - CurrentShield;
-			VictimPawn->SetShield(0.0f);
-		}
+		return;
 	}
 
-	const float OldHealth = VictimPawn->GetHealth();
-	float NewHealth = OldHealth;
-	if (HealthDamage > 0.0f)
+	FGameplayEffectContextHandle Context = ASC->MakeEffectContext();
+	Context.AddInstigator(InstigatedBy, DamageCauser);
+	FGameplayEffectSpec Spec(GetDefault<UServerDamageEffect>(), Context, 1.0f);
+	Spec.DynamicAssetTags.AppendTags(DamageTags);
+	Spec.SetSetByCallerMagnitude(FName(TEXT("Damage")), DamageAmount);
+	Spec.SetSetByCallerMagnitude(FName(TEXT("IgnoreShield")), bIgnoreShield ? 1.0f : 0.0f);
+	ASC->ApplyGameplayEffectSpecToSelf(Spec);
+
+	const float NewHealth = VictimPawn->GetHealth();
+	const float ShieldDamage = CurrentShield - VictimPawn->GetShield();
+	const float HealthDamage = OldHealth - NewHealth;
+	if (ShieldDamage <= 0.0f && HealthDamage <= 0.0f)
 	{
-		NewHealth = FMath::Max(0.0f, OldHealth - HealthDamage);
-		VictimPawn->SetHealth(NewHealth);
+		return;
 	}
 
 	// Multicast damage cues to client (hit numbers, hit markers, shield shatter).
