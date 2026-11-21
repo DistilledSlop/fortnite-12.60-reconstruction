@@ -26,6 +26,7 @@ class UServerDamageEffect : public UGameplayEffect
 
 public:
 	UServerDamageEffect();
+	static void BindDamageAttribute(UAbilitySystemComponent& ASC);
 };
 
 // An instant recovery effect. Supply RestoreHealth and/or RestoreShield as

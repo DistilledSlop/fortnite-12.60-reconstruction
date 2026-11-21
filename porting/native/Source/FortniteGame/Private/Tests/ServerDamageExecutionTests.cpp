@@ -102,6 +102,20 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TestEqual(TEXT("Shield is depleted"), Pawn->GetShield(), 0.0f);
 	TestEqual(TEXT("Overflow reduces health"), Pawn->GetHealth(), 75.0f);
 
+	UServerDamageEffect::BindDamageAttribute(*ASC);
+	const FGameplayAttribute Damage(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Damage")));
+	UGameplayEffect* AuthoredDamage = NewObject<UGameplayEffect>(GetTransientPackage());
+	FGameplayModifierInfo& DamageModifier = AuthoredDamage->Modifiers.AddDefaulted_GetRef();
+	DamageModifier.Attribute = Damage;
+	DamageModifier.ModifierOp = EGameplayModOp::Additive;
+	DamageModifier.ModifierMagnitude = FGameplayEffectModifierMagnitude(FScalableFloat(10.0f));
+	FGameplayEffectSpec DamageSpec(AuthoredDamage, ASC->MakeEffectContext(), 1.0f);
+	ASC->SetNumericAttributeBase(Shield, 15);
+	ASC->ApplyGameplayEffectSpecToSelf(DamageSpec);
+	TestEqual(TEXT("Authored Damage drains shield"), Pawn->GetShield(), 5.0f);
+	TestEqual(TEXT("Authored Damage preserves health while shield remains"), Pawn->GetHealth(), 75.0f);
+	TestEqual(TEXT("Damage accumulator clears after each effect"), ASC->GetNumericAttribute(Damage), 0.0f);
+
 	ASC->SetNumericAttributeBase(Shield, 30);
 	FortAthenaHealth::ApplyDamage(Pawn, 5, FGameplayTagContainer(), nullptr, nullptr, true);
 	TestEqual(TEXT("Bypass preserves shield"), Pawn->GetShield(), 30.0f);

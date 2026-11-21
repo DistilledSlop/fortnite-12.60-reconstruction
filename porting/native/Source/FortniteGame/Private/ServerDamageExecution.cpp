@@ -6,6 +6,7 @@
 #include "FortAthenaHealth.h"
 #include "FortHarvestBuilding.h"
 #include "GameFramework/DamageType.h"
+#include "GameplayEffectExtension.h"
 #include "UFortHealthSet.h"
 
 namespace
@@ -69,6 +70,36 @@ UServerDamageEffect::UServerDamageEffect()
 	DurationPolicy = EGameplayEffectDurationType::Instant;
 	FGameplayEffectExecutionDefinition& Execution = Executions.AddDefaulted_GetRef();
 	Execution.CalculationClass = UServerDamageExecution::StaticClass();
+}
+
+void UServerDamageEffect::BindDamageAttribute(UAbilitySystemComponent& ASC)
+{
+	static const FGameplayAttribute Damage(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Damage")));
+	TWeakObjectPtr<UAbilitySystemComponent> WeakASC(&ASC);
+	ASC.GetGameplayAttributeValueChangeDelegate(Damage).AddLambda([WeakASC](const FOnAttributeChangeData& Change)
+	{
+		UAbilitySystemComponent* Target = WeakASC.Get();
+		const AFortPawn* Pawn = Target ? Cast<AFortPawn>(Target->GetAvatarActor()) : nullptr;
+		if (!Pawn || !Pawn->HasAuthority() || !Change.GEModData || Change.NewValue == 0.0f)
+		{
+			return;
+		}
+
+		const FGameplayEffectSpec& Authored = Change.GEModData->EffectSpec;
+		const float Amount = Change.NewValue - Change.OldValue;
+		FGameplayEffectSpec Resolved(GetDefault<UServerDamageEffect>(), Authored.GetContext(), Authored.GetLevel());
+		Authored.GetAllAssetTags(Resolved.DynamicAssetTags);
+		Resolved.SetSetByCallerMagnitude(FName(TEXT("Damage")), Amount);
+		Resolved.SetSetByCallerMagnitude(FName(TEXT("IgnoreShield")),
+			Authored.GetSetByCallerMagnitude(FName(TEXT("IgnoreShield")), false));
+
+		// Consume the meta attribute even when the actor cannot take damage.
+		Target->SetNumericAttributeBase(Damage, 0.0f);
+		if (Pawn->CanBeDamaged() && FMath::IsFinite(Amount) && Amount > 0.0f)
+		{
+			Target->ApplyGameplayEffectSpecToSelf(Resolved);
+		}
+	});
 }
 
 UServerRecoveryEffect::UServerRecoveryEffect()
