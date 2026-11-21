@@ -32,7 +32,7 @@ The reference build is **12.60, CL 13477524**. The current development environme
 
 The original 12.60 client can join the reconstructed dedicated server and drop from the Battle Bus onto the Apollo island. Full-match gameplay is still in development.
 
-![Original 12.60 client on the Apollo island in a match hosted by the reconstructed server](docs/screenshots/2026-11-13/vanilla-client-real-island-lit.png)
+![Victory Royale screen in the original 12.60 client during a local server test on November 15](docs/screenshots/2026-11-15/vanilla-client-local-test-results.png)
 
 ## Scope
 

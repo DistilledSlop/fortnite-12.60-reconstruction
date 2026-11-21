@@ -24,6 +24,7 @@ allowed_exact.update({
     "docs/screenshots/2026-11-12/vanilla-client-real-map-warmup.png",
     "docs/screenshots/2026-11-13/vanilla-client-real-map-lobby-island.png",
     "docs/screenshots/2026-11-13/vanilla-client-real-island-lit.png",
+    "docs/screenshots/2026-11-15/vanilla-client-local-test-results.png",
 })
 forbidden_directories = (
     "porting/generated/", "porting/build/", "porting/.venv/",
