@@ -695,10 +695,18 @@ void FortAthenaHealth::ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, co
 	// GAS captures source tags and attributes from the actor in the effect context.
 	// Keep controller attribution separately for elimination and match statistics.
 	AActor* SourceActor = InstigatedBy;
-	APawn* SourcePawn = InstigatedBy ? InstigatedBy->GetPawn() : (DamageCauser ? DamageCauser->GetInstigator() : nullptr);
+	APawn* SourcePawn = InstigatedBy ? InstigatedBy->GetPawn() : nullptr;
+	if (!SourcePawn && DamageCauser)
+	{
+		SourcePawn = DamageCauser->GetInstigator();
+	}
 	if (UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(SourcePawn))
 	{
 		SourceActor = SourcePawn;
+	}
+	else if (!SourceActor && UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(DamageCauser))
+	{
+		SourceActor = DamageCauser;
 	}
 	FGameplayEffectContextHandle Context(UAbilitySystemGlobals::Get().AllocGameplayEffectContext());
 	Context.AddInstigator(SourceActor, DamageCauser);

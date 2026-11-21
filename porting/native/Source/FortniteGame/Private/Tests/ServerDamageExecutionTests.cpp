@@ -73,8 +73,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	AttackerASC->RegisterComponent();
 	AttackerASC->InitAbilityActorInfo(Attacker, Attacker);
 
-	// Engine callers can supply a causer with a pawn instigator and no controller.
-	Attacker->SetInstigator(Attacker);
+	// A pawn can directly cause damage before it has a controller.
 	FGameplayEffectContextHandle HitContext;
 	auto& ShieldChanged = ASC->GetGameplayAttributeValueChangeDelegate(Shield);
 	const FDelegateHandle HitListener = ShieldChanged.AddLambda([&HitContext](const FOnAttributeChangeData& Change)
