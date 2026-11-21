@@ -83,13 +83,13 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 			HitContext = Change.GEModData->EffectSpec.GetContext();
 		}
 	});
-	Pawn->TakeDamage(15, FDamageEvent(), nullptr, Attacker);
+	Pawn->TakeDamage(15, FPointDamageEvent(), nullptr, Attacker);
 	ShieldChanged.Remove(HitListener);
 	TestTrue(TEXT("First hit synchronizes the non-player pawn health set"), Pawn->bHealthSynced);
 	TestTrue(TEXT("Damage captures the attacking ability system"), HitContext.GetInstigatorAbilitySystemComponent() == AttackerASC);
 	TestTrue(TEXT("Damage retains the engine causer"), HitContext.GetEffectCauser() == Attacker);
 	Attacker->Destroy();
-	TestEqual(TEXT("A damage event fires once and shield absorbs the hit"), Pawn->GetShield(), 15.0f);
+	TestEqual(TEXT("A point damage event fires once and shield absorbs the hit"), Pawn->GetShield(), 15.0f);
 	TestEqual(TEXT("Health is intact"), Pawn->GetHealth(), 100.0f);
 
 	Pawn->SetCanBeDamaged(false);
@@ -98,9 +98,17 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TestEqual(TEXT("Disabled engine damage preserves health"), Pawn->GetHealth(), 100.0f);
 	Pawn->SetCanBeDamaged(true);
 
-	Pawn->TakeDamage(40, FDamageEvent(), nullptr, nullptr);
-	TestEqual(TEXT("Shield is depleted"), Pawn->GetShield(), 0.0f);
-	TestEqual(TEXT("Overflow reduces health"), Pawn->GetHealth(), 75.0f);
+	FRadialDamageEvent Blast;
+	Blast.Origin = Pawn->GetActorLocation() - FVector(100, 0, 0);
+	Blast.Params.BaseDamage = 80.0f;
+	Blast.Params.MinimumDamage = 0.0f;
+	Blast.Params.InnerRadius = 0.0f;
+	Blast.Params.OuterRadius = 200.0f;
+	Blast.Params.DamageFalloff = 1.0f;
+	Blast.ComponentHits.AddDefaulted_GetRef().ImpactPoint = Pawn->GetActorLocation();
+	TestEqual(TEXT("Engine radial falloff resolves halfway to 40"), Pawn->TakeDamage(80, Blast, nullptr, nullptr), 40.0f);
+	TestEqual(TEXT("Radial damage depletes the remaining shield"), Pawn->GetShield(), 0.0f);
+	TestEqual(TEXT("Only the radial overflow reduces health"), Pawn->GetHealth(), 75.0f);
 
 	UServerDamageEffect::BindDamageAttribute(*ASC);
 	const FGameplayAttribute Damage(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Damage")));
