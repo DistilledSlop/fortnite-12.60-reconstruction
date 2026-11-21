@@ -77,6 +77,29 @@ UServerRecoveryEffect::UServerRecoveryEffect()
 	Executions.AddDefaulted_GetRef().CalculationClass = UServerRecoveryExecution::StaticClass();
 }
 
+void UServerRecoveryEffect::BindHealingAttribute(UAbilitySystemComponent& ASC)
+{
+	static const FGameplayAttribute Healing(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Healing")));
+	TWeakObjectPtr<UAbilitySystemComponent> WeakASC(&ASC);
+	ASC.GetGameplayAttributeValueChangeDelegate(Healing).AddLambda([WeakASC](const FOnAttributeChangeData& Change)
+	{
+		UAbilitySystemComponent* Target = WeakASC.Get();
+		const AFortPawn* Pawn = Target ? Cast<AFortPawn>(Target->GetAvatarActor()) : nullptr;
+		const float Amount = Change.NewValue - Change.OldValue;
+		if (!Pawn || !Pawn->HasAuthority() || !Change.GEModData || !FMath::IsFinite(Amount) || Amount <= 0.0f)
+		{
+			return;
+		}
+
+		// Healing is an accumulator used by instant gameplay effects. Clear it
+		// before applying recovery so the next effect starts from zero.
+		Target->SetNumericAttributeBase(Healing, 0.0f);
+		FGameplayEffectSpec Recovery(GetDefault<UServerRecoveryEffect>(), Target->MakeEffectContext(), 1.0f);
+		Recovery.SetSetByCallerMagnitude(FName(TEXT("RestoreHealth")), Amount);
+		Target->ApplyGameplayEffectSpecToSelf(Recovery);
+	});
+}
+
 void UServerRecoveryExecution::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& Parameters,
 	FGameplayEffectCustomExecutionOutput& Output) const
 {

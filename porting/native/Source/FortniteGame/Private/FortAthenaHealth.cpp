@@ -534,6 +534,7 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 		if (HealthProperty)
 		{
 			GetBoundASCs().Add(ASC);
+			UServerRecoveryEffect::BindHealingAttribute(*ASC);
 			TWeakObjectPtr<UAbilitySystemComponent> WeakASC(ASC);
 			TSharedRef<uint64> ChangeSerial = MakeShared<uint64>(0);
 			ASC->GetGameplayAttributeValueChangeDelegate(FGameplayAttribute(HealthProperty)).AddLambda(

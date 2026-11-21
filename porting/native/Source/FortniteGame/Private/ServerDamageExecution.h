@@ -5,6 +5,7 @@
 #include "ServerDamageExecution.generated.h"
 
 class UDamageType;
+class UAbilitySystemComponent;
 
 // Supply a positive Damage SetByCaller magnitude on an instant gameplay effect.
 // A positive IgnoreShield magnitude makes the effect bypass shield.
@@ -36,6 +37,7 @@ class UServerRecoveryEffect : public UGameplayEffect
 
 public:
 	UServerRecoveryEffect();
+	static void BindHealingAttribute(UAbilitySystemComponent& ASC);
 };
 
 UCLASS()

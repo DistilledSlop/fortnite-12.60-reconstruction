@@ -76,6 +76,18 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 
 	ASC->SetNumericAttributeBase(FGameplayAttribute(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("MaxHealth"))), 100);
 	ASC->SetNumericAttributeBase(FGameplayAttribute(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Shield"))), 100);
+	UServerRecoveryEffect::BindHealingAttribute(*ASC);
+	const FGameplayAttribute Healing(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Healing")));
+	UGameplayEffect* AuthoredHealing = NewObject<UGameplayEffect>(GetTransientPackage());
+	AuthoredHealing->DurationPolicy = EGameplayEffectDurationType::Instant;
+	FGameplayModifierInfo& HealingModifier = AuthoredHealing->Modifiers.AddDefaulted_GetRef();
+	HealingModifier.Attribute = Healing;
+	HealingModifier.ModifierOp = EGameplayModOp::Additive;
+	HealingModifier.ModifierMagnitude = FGameplayEffectModifierMagnitude(FScalableFloat(15.0f));
+	FGameplayEffectSpec HealingSpec(AuthoredHealing, ASC->MakeEffectContext(), 1.0f);
+	ASC->ApplyGameplayEffectSpecToSelf(HealingSpec);
+	TestEqual(TEXT("An authored Healing modifier restores health"), Pawn->GetHealth(), 85.0f);
+	TestEqual(TEXT("Healing accumulator clears after each effect"), ASC->GetNumericAttribute(Healing), 0.0f);
 	FGameplayEffectSpec Recovery(GetDefault<UServerRecoveryEffect>(), ASC->MakeEffectContext(), 1.0f);
 	Recovery.SetSetByCallerMagnitude(FName(TEXT("RestoreShield")), 25.0f);
 	Recovery.SetSetByCallerMagnitude(FName(TEXT("ShieldCap")), 50.0f);
