@@ -10,6 +10,7 @@
 #include "EAbilitySystemComponentCreationPolicy.h"
 #include "EFortResourceType.h"
 #include "Engine/CurveTable.h"
+#include "Engine/Level.h"
 #include "Engine/Engine.h"
 #include "Engine/NetConnection.h"
 #include "Engine/ActorChannel.h"
@@ -542,6 +543,23 @@ float GetBuildingHealth(const ABuildingActor* Building)
 	}
 
 	return GetBuildingMaxHealth(const_cast<ABuildingActor*>(Building));
+}
+
+void BindLevelDamageEvents(const ULevel* Level)
+{
+	if (!Level || !IsEnabled())
+	{
+		return;
+	}
+
+	for (AActor* Actor : Level->Actors)
+	{
+		ABuildingSMActor* Building = Cast<ABuildingSMActor>(Actor);
+		if (IsValid(Building) && Building->CanBeDamaged())
+		{
+			UServerActorDamageListener::Bind(*Building);
+		}
+	}
 }
 
 bool InitializeBuildingHealth(ABuildingActor* Building)

@@ -90,11 +90,10 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	Wall->MaxHealthInitializationValue = 100.0f;
 	Wall->bIsInvulnerable = false;
 	Wall->SetCanBeDamaged(true);
-	TestTrue(TEXT("Structure health is initialized"), FortHarvest::InitializeBuildingHealth(Wall));
-	FortHarvest::ForceBuildingHealth(Wall, 100.0f);
+	FortHarvest::BindLevelDamageEvents(Wall->GetLevel());
 
 	Wall->TakeDamage(20, FDamageEvent(), nullptr, nullptr);
-	TestEqual(TEXT("Engine damage reduces initialized structure health"), FortHarvest::GetBuildingHealth(Wall), 80.0f);
+	TestEqual(TEXT("The first engine damage event reduces structure health"), FortHarvest::GetBuildingHealth(Wall), 80.0f);
 	Wall->bIsInvulnerable = true;
 	Wall->TakeDamage(20, FDamageEvent(), nullptr, nullptr);
 	TestEqual(TEXT("Invulnerability blocks engine damage"), FortHarvest::GetBuildingHealth(Wall), 80.0f);

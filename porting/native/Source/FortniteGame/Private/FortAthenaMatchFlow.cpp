@@ -23,6 +23,7 @@
 #include "FortAthenaHealth.h"
 #include "FortAthenaFallDamage.h"
 #include "FortAthenaEmote.h"
+#include "FortHarvestBuilding.h"
 #include "FortAthenaLootWorld.h"
 #include "FortAthenaBuildDamage.h"
 #include "FortAthenaMiscRpcs.h"
@@ -2196,8 +2197,13 @@ namespace FortAthenaMatchFlow
                     DisableBackgroundCollision(InWorld);
                     StreamFoundationsInLevel(InWorld, InLevel);
                     FortAthenaLootWorld::OnLevelAdded(State().GameMode.Get(), InLevel);
+                    FortHarvest::BindLevelDamageEvents(InLevel);
                 }
             });
+        }
+        for (const ULevel* Level : World->GetLevels())
+        {
+            FortHarvest::BindLevelDamageEvents(Level);
         }
         DisableBackgroundCollision(World);
         StreamFoundationsInWorld(World);

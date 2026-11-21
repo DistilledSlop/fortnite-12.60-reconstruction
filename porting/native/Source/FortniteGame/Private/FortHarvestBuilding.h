@@ -8,6 +8,8 @@ class ABuildingActor;
 class ABuildingSMActor;
 class AController;
 
+class ULevel;
+
 namespace FortHarvest
 {
 	/** Returns true when the server runs with -FortniteOriginalClient. */
@@ -27,6 +29,7 @@ namespace FortHarvest
 
 	/** Initializes a building's max health and current health percentage (level props = 100%, player-placed = curve percentage). */
 	bool InitializeBuildingHealth(ABuildingActor* Building);
+	void BindLevelDamageEvents(const ULevel* Level);
 
 	/** Materializes AbilitySystemComponent / BuildingAttributeSet if lazy and forces Health to NewHealth [0, MaxHealth]. */
 	void ForceBuildingHealth(ABuildingActor* Building, float NewHealth);
