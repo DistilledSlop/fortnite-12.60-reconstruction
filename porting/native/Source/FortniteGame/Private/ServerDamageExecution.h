@@ -27,6 +27,27 @@ public:
 	UServerDamageEffect();
 };
 
+// An instant recovery effect. Supply RestoreHealth and/or RestoreShield as
+// positive SetByCaller magnitudes. HealthCap and ShieldCap are optional limits.
+UCLASS()
+class UServerRecoveryEffect : public UGameplayEffect
+{
+	GENERATED_BODY()
+
+public:
+	UServerRecoveryEffect();
+};
+
+UCLASS()
+class UServerRecoveryExecution : public UGameplayEffectExecutionCalculation
+{
+	GENERATED_BODY()
+
+public:
+	virtual void Execute_Implementation(const FGameplayEffectCustomExecutionParameters& Parameters,
+		FGameplayEffectCustomExecutionOutput& Output) const override;
+};
+
 // Routes engine damage events for actors with server-managed health.
 UCLASS()
 class UServerActorDamageListener : public UObject

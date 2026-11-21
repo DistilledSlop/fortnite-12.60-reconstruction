@@ -74,6 +74,18 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TestEqual(TEXT("Bypass preserves shield"), Pawn->GetShield(), 30.0f);
 	TestEqual(TEXT("Bypass reduces health"), Pawn->GetHealth(), 70.0f);
 
+	ASC->SetNumericAttributeBase(FGameplayAttribute(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("MaxHealth"))), 100);
+	ASC->SetNumericAttributeBase(FGameplayAttribute(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Shield"))), 100);
+	FGameplayEffectSpec Recovery(GetDefault<UServerRecoveryEffect>(), ASC->MakeEffectContext(), 1.0f);
+	Recovery.SetSetByCallerMagnitude(FName(TEXT("RestoreShield")), 25.0f);
+	Recovery.SetSetByCallerMagnitude(FName(TEXT("ShieldCap")), 50.0f);
+	Recovery.SetSetByCallerMagnitude(FName(TEXT("RestoreHealth")), 50.0f);
+	ASC->ApplyGameplayEffectSpecToSelf(Recovery);
+	TestEqual(TEXT("Shield recovery respects the item cap"), Pawn->GetShield(), 50.0f);
+	TestEqual(TEXT("Health recovery respects the pawn maximum"), Pawn->GetHealth(), 100.0f);
+	ASC->ApplyGameplayEffectSpecToSelf(Recovery);
+	TestEqual(TEXT("Recovery at the shield cap changes nothing"), Pawn->GetShield(), 50.0f);
+
 	Pawn->TakeDamage(150, FDamageEvent(), nullptr, nullptr);
 	TestEqual(TEXT("Lethal damage clamps health to zero"), Pawn->GetHealth(), 0.0f);
 	TestEqual(TEXT("Lethal damage depletes the remaining shield"), Pawn->GetShield(), 0.0f);

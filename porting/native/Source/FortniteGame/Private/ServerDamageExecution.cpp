@@ -71,6 +71,55 @@ UServerDamageEffect::UServerDamageEffect()
 	Execution.CalculationClass = UServerDamageExecution::StaticClass();
 }
 
+UServerRecoveryEffect::UServerRecoveryEffect()
+{
+	DurationPolicy = EGameplayEffectDurationType::Instant;
+	Executions.AddDefaulted_GetRef().CalculationClass = UServerRecoveryExecution::StaticClass();
+}
+
+void UServerRecoveryExecution::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& Parameters,
+	FGameplayEffectCustomExecutionOutput& Output) const
+{
+	UAbilitySystemComponent* Target = Parameters.GetTargetAbilitySystemComponent();
+	const AFortPawn* Pawn = Target ? Cast<AFortPawn>(Target->GetAvatarActor()) : nullptr;
+	if (!Pawn || !Pawn->HasAuthority() || Pawn->bIsDying)
+	{
+		return;
+	}
+
+	static const FGameplayAttribute Health(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Health")));
+	static const FGameplayAttribute MaxHealth(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("MaxHealth")));
+	static const FGameplayAttribute Shield(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("CurrentShield")));
+	static const FGameplayAttribute MaxShield(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Shield")));
+	if (!Target->HasAttributeSetForAttribute(Health) || Target->GetNumericAttribute(Health) <= 0.0f)
+	{
+		return;
+	}
+
+	const FGameplayEffectSpec& Spec = Parameters.GetOwningSpec();
+	const auto AddRecovery = [&](const FGameplayAttribute& Attribute, const FGameplayAttribute& Maximum,
+		FName AmountName, FName CapName)
+	{
+		const float Amount = Spec.GetSetByCallerMagnitude(AmountName, false);
+		const float MaxValue = Target->GetNumericAttribute(Maximum);
+		const float Cap = Spec.GetSetByCallerMagnitude(CapName, false, MaxValue);
+		if (!FMath::IsFinite(Amount) || !FMath::IsFinite(Cap) || Amount <= 0.0f)
+		{
+			return;
+		}
+
+		const float Room = FMath::Min(Cap, MaxValue) - Target->GetNumericAttribute(Attribute);
+		if (Room > 0.0f)
+		{
+			Output.AddOutputModifier(FGameplayModifierEvaluatedData(Attribute, EGameplayModOp::Additive,
+				FMath::Min(Amount, Room)));
+		}
+	};
+
+	AddRecovery(Health, MaxHealth, FName(TEXT("RestoreHealth")), FName(TEXT("HealthCap")));
+	AddRecovery(Shield, MaxShield, FName(TEXT("RestoreShield")), FName(TEXT("ShieldCap")));
+}
+
 void UServerActorDamageListener::Bind(AActor& Actor)
 {
 	if (Actor.HasAuthority())
