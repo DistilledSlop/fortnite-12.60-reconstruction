@@ -2014,6 +2014,11 @@ namespace
 							{
 								// Keep this hit's context isolated from the next target and effect.
 								FGameplayEffectContextHandle TargetContext = TargetSpec.GetContext().Duplicate();
+								if (const FHitResult* Hit = Data->GetHitResult())
+								{
+									// A hit inherited from the outgoing spec can belong to a different actor.
+									TargetContext.AddHitResult(*Hit, true);
+								}
 								Data->AddTargetDataToContext(TargetContext, false);
 								TargetSpec.SetContext(TargetContext);
 							}
