@@ -155,7 +155,8 @@ void UServerActorDamageListener::Bind(AActor& Actor)
 void UServerActorDamageListener::OnDamage(AActor* Actor, float Amount, const UDamageType*,
 	AController* Instigator, AActor* Causer)
 {
-	if (!FMath::IsFinite(Amount) || Amount <= 0.0f)
+	if (!IsValid(Actor) || !Actor->HasAuthority() || !Actor->CanBeDamaged() ||
+		!FMath::IsFinite(Amount) || Amount <= 0.0f)
 	{
 		return;
 	}

@@ -92,6 +92,12 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TestEqual(TEXT("A damage event fires once and shield absorbs the hit"), Pawn->GetShield(), 15.0f);
 	TestEqual(TEXT("Health is intact"), Pawn->GetHealth(), 100.0f);
 
+	Pawn->SetCanBeDamaged(false);
+	Pawn->TakeDamage(40, FDamageEvent(), nullptr, nullptr);
+	TestEqual(TEXT("Disabled engine damage preserves shield"), Pawn->GetShield(), 15.0f);
+	TestEqual(TEXT("Disabled engine damage preserves health"), Pawn->GetHealth(), 100.0f);
+	Pawn->SetCanBeDamaged(true);
+
 	Pawn->TakeDamage(40, FDamageEvent(), nullptr, nullptr);
 	TestEqual(TEXT("Shield is depleted"), Pawn->GetShield(), 0.0f);
 	TestEqual(TEXT("Overflow reduces health"), Pawn->GetHealth(), 75.0f);
