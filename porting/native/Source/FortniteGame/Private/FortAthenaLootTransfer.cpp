@@ -8,6 +8,7 @@
 #include "AFortPlayerController.h"
 #include "AFortPlayerControllerAthena.h"
 #include "AFortPlayerPawn.h"
+#include "AFortPlayerPawnAthena.h"
 #include "AFortWeapon.h"
 #include "Components/SceneComponent.h"
 #include "EFortDelayedQuickBarAction.h"
@@ -1554,6 +1555,13 @@ int32 FortAthenaLootTransfer::DropAllOnDeath(AFortPlayerController* VictimContro
 	if (!Inventory || !World || !VictimController->HasAuthority() || !VictimPawn->HasAuthority())
 	{
 		return 0;
+	}
+	if (const AFortPlayerPawnAthena* AthenaPawn = Cast<AFortPlayerPawnAthena>(VictimPawn))
+	{
+		if (!AthenaPawn->bShouldDropItemsOnDeath)
+		{
+			return 0;
+		}
 	}
 	// stand-in: the original elimination drop (backpack pickup/spread rules) is not recovered; each droppable stack becomes one
 	// pickup tossed in a different direction so the loot fans out instead of stacking on one spot.

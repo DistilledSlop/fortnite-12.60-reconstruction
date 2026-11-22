@@ -439,7 +439,7 @@ Verified: Preserve Blueprint inventory quantity and removal results when matchin
 Verified: Require the owned inventory instance when removing items by object through Blueprint
 Verified: Remove items from a single server inventory stack by GUID through Blueprint
 Verified: Remove destroy-on-drop stacks during elimination without spawning pickups
-Verified: Transfer eligible elimination loot once and preserve protected stacks
+Verified: Transfer eligible elimination loot once, preserve protected stacks and retain all inventory when pawn death drops are disabled
 Verified: Charge the exact repair material cost and preserve unrelated stacks on acceptance and rejection
 Verified: Verify five server loadout slots, separate pickaxe and trap slots, materials outside the quickbar and preservation of a rejected sixth weapon pickup
 Verified: Verify server stack merges preserve overflow, remove depleted sources and update replicated counts

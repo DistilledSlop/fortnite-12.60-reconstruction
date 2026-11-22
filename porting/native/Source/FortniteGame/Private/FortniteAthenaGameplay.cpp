@@ -620,7 +620,14 @@ void AFortGameModeAthena::RestartPlayer(AController* NewPlayer)
     FortniteAthenaGameplay::EnsureWorldManager(GetWorld());
     if (!FortAthenaMatchFlow::IsActive())
         EnsureWarmupPhase(GetWorld());
+    const APawn* PreviousPawn = NewPlayer ? NewPlayer->GetPawn() : nullptr;
     Super::RestartPlayer(NewPlayer);
+    if (AFortPlayerPawnAthena* Pawn = NewPlayer ? Cast<AFortPlayerPawnAthena>(NewPlayer->GetPawn()) : nullptr)
+    {
+        // Keep the native fallback's normal drops enabled at spawn. Blueprint pawn classes supply their own defaults.
+        if (Pawn != PreviousPawn && Pawn->GetClass() == AFortPlayerPawnAthena::StaticClass())
+            Pawn->SetShouldDropItemsOnDeath(true);
+    }
     if (FortAthenaRegisteredSession::Enabled())
         FortAthenaCharacterCache::ApplyForController(NewPlayer, true);
     if (NewPlayer && NewPlayer->GetPawn())

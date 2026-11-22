@@ -1287,7 +1287,6 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 	Report.KillerShieldPercent = KillerPawn ? KillerPawn->GetShieldPercent() : 0.0f;
 	Report.KillerWeapon = KillerWeapon;
 	Report.DamageCauser = DamageCauser;
-	Report.bDroppedBackpack = 1;
 	Report.bNotifyUI = 1;
 	Report.Tags = DamageTags;
 	Report.ViewLocationAtTimeOfDeath = VictimPawn->GetActorLocation();
@@ -1322,7 +1321,7 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 	}
 
 	// Drop the victim's inventory where they died (Report.bDroppedBackpack says the client may show the backpack drop).
-	FortAthenaLootTransfer::DropAllOnDeath(VictimPC, VictimPawn);
+	Report.bDroppedBackpack = FortAthenaLootTransfer::DropAllOnDeath(VictimPC, VictimPawn) > 0;
 
 	// 3. Update killer scores and feed (D6 §2 step 3).
 	if (KillerState && KillerState != VictimState)

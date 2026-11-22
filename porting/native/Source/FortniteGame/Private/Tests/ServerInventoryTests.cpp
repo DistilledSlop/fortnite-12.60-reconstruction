@@ -689,6 +689,30 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 		return false;
 	}
 	const FGuid DiscardGuid = DiscardItem->NativeGetItemGuid();
+	int32 PickupsBeforeDisabledDrop = 0;
+	for (TActorIterator<AFortPickupAthena> It(World); It; ++It)
+	{
+		++PickupsBeforeDisabledDrop;
+	}
+	Pawn->SetShouldDropItemsOnDeath(false);
+	TestEqual(TEXT("Elimination creates no drops when death drops are disabled"), FortAthenaLootTransfer::DropAllOnDeath(Controller, Pawn), 0);
+	int32 PickupsAfterDisabledDrop = 0;
+	for (TActorIterator<AFortPickupAthena> It(World); It; ++It)
+	{
+		++PickupsAfterDisabledDrop;
+	}
+	TestEqual(TEXT("Disabled death drops create no world pickups"), PickupsAfterDisabledDrop, PickupsBeforeDisabledDrop);
+	UFortWorldItem* PreservedWeapon = Inventory->NativeFindItemByGuid(RecoveredGuid);
+	if (TestNotNull(TEXT("Disabled death drops preserve the weapon"), PreservedWeapon))
+	{
+		TestEqual(TEXT("Disabled death drops preserve the weapon quantity"), PreservedWeapon->ItemEntry.Count, 1);
+	}
+	UFortWorldItem* PreservedDiscard = Inventory->NativeFindItemByGuid(DiscardGuid);
+	if (TestNotNull(TEXT("Disabled death drops preserve the destroy-on-drop stack"), PreservedDiscard))
+	{
+		TestEqual(TEXT("Disabled death drops preserve the destroy-on-drop quantity"), PreservedDiscard->ItemEntry.Count, 2);
+	}
+	Pawn->SetShouldDropItemsOnDeath(true);
 	TestEqual(TEXT("Elimination drops only the eligible weapon"), FortAthenaLootTransfer::DropAllOnDeath(Controller, Pawn), 1);
 	TestNull(TEXT("Elimination removes the dropped weapon from inventory"), Inventory->NativeFindItemByGuid(RecoveredGuid));
 	TestNull(TEXT("Elimination consumes the destroy-on-drop stack"), Inventory->NativeFindItemByGuid(DiscardGuid));
