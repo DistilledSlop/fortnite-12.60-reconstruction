@@ -582,6 +582,14 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	const UGameplayAbility* RangedAbility = GetDefault<UFortGameplayAbility_RangedWeapon>();
 	TestTrue(TEXT("A standing player can activate a ranged ability"),
 		RangedAbility->CanActivateAbility(RangedAbilityHandle, FirstASC->AbilityActorInfo.Get()));
+	{
+		// Let the headless server start the predicted ability through GAS's authority-only path.
+		TGuardValue<TWeakObjectPtr<APlayerController>> LocalActivation(
+			FirstASC->AbilityActorInfo->PlayerController, TWeakObjectPtr<APlayerController>());
+		TestTrue(TEXT("The ranged ability starts before knock"), FirstASC->TryActivateAbility(RangedAbilityHandle, false));
+	}
+	const FGameplayAbilitySpec* RangedSpec = FirstASC->FindAbilitySpecFromHandle(RangedAbilityHandle);
+	TestTrue(TEXT("The ranged ability is still active before knock"), RangedSpec && RangedSpec->IsActive());
 
 	TeamPlaylist->DBNOType = EDBNOType::NotWhenRespawning;
 	TeamPlaylist->RespawnType = EAthenaRespawnType::InfiniteRespawnExceptStorm;
@@ -595,6 +603,8 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TestEqual(TEXT("A knock fills the downed health pool"), FirstPawn->GetHealth(), 100.0f);
 	TestFalse(TEXT("A downed player cannot activate a ranged ability"),
 		RangedAbility->CanActivateAbility(RangedAbilityHandle, FirstASC->AbilityActorInfo.Get()));
+	RangedSpec = FirstASC->FindAbilitySpecFromHandle(RangedAbilityHandle);
+	TestTrue(TEXT("Knock cancels the active ranged ability"), RangedSpec && !RangedSpec->IsActive());
 	TestTrue(TEXT("A knock queues the crawl stance immediately"), FirstPawn->GetCharacterMovement()->bWantsToCrouch != 0);
 	SecondPawn->bAllowDBNOCarry = true;
 	TestTrue(TEXT("A standing teammate can carry the knocked player"),
