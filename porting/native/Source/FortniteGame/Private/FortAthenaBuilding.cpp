@@ -3,12 +3,9 @@
 #include "FortAthenaBuildDamage.h"
 
 #include "AFortGameStateAthena.h"
-#include "AFortInventory.h"
 #include "AFortPlayerController.h"
 #include "ABuildingSMActor.h"
 #include "FCreateBuildingActorData.h"
-#include "UFortResourceItemDefinition.h"
-#include "UFortWorldItem.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "Misc/CommandLine.h"
@@ -19,7 +16,6 @@
 #include "AFortWeapon.h"
 #include "UFortItemDefinition.h"
 #include "UFortWeaponItemDefinition.h"
-#include "FortAthenaInventoryFlow.h"
 
 namespace
 {
@@ -62,23 +58,11 @@ namespace
 		const ABuildingSMActor* Default = Cast<ABuildingSMActor>(Class->GetDefaultObject());
 		if (!Default) return;
 		const bool bInfinite = FParse::Param(FCommandLine::Get(), TEXT("FortniteInfiniteBuildMaterials"));
-		TArray<FGuid> MaterialStacks;
-		int64 AvailableMaterials = 0;
-		if (Controller->WorldInventory)
-		{
-			for (UFortWorldItem* Item : Controller->WorldInventory->Inventory.ItemInstances)
-			{
-				const UFortResourceItemDefinition* Resource = Item ? Cast<UFortResourceItemDefinition>(Item->ItemEntry.ItemDefinition) : nullptr;
-				if (Resource && Resource->ResourceType == Default->ResourceType && Item->ItemEntry.Count > 0)
-				{
-					MaterialStacks.Add(Item->ItemEntry.ItemGuid);
-					AvailableMaterials += Item->ItemEntry.Count;
-				}
-			}
-		}
+		const EFortResourceType::Type ResourceType = Default->ResourceType.GetValue();
+		const int32 AvailableMaterials = FortAthenaBuildDamage::CountBuildingMaterials(Controller, ResourceType);
 		if (!bInfinite && AvailableMaterials < BuildCost)
 		{
-			UE_LOG(LogTemp, Display, TEXT("Building: refused %s: %lld resource type %d available, %d required"),
+			UE_LOG(LogTemp, Display, TEXT("Building: refused %s: %d resource type %d available, %d required"),
 				*Class->GetName(), AvailableMaterials, int32(Default->ResourceType.GetValue()), BuildCost);
 			return;
 		}
@@ -108,9 +92,15 @@ namespace
 		// stand-in: no structural support propagation (binary 0x1423881c0 not ported); the client already snaps its preview, so its
 		// BuildLoc is used as sent once the checks above pass.
 		ABuildingSMActor* Piece = World->SpawnActor<ABuildingSMActor>(Class, FVector(Data.BuildLoc), Data.BuildRot, Params);
-		if (!Piece)
+		if (!IsValid(Piece))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Building: spawn of %s failed at %s"), *Class->GetName(), *FVector(Data.BuildLoc).ToString());
+			return;
+		}
+		if (!bInfinite && !FortAthenaBuildDamage::SpendBuildingMaterials(Controller, ResourceType, BuildCost))
+		{
+			Piece->Destroy();
+			UE_LOG(LogTemp, Display, TEXT("Building: discarded %s because material payment failed"), *Class->GetName());
 			return;
 		}
 		// stand-in for the ABuildingActor constructor defaults (no generated constructor; see the weapon note in
@@ -123,18 +113,9 @@ namespace
 			Piece->SetTeam(PS->TeamIndex);
 		FortAthenaBuildDamage::InitializePlayerBuiltPiece(Piece, Controller);
 		Piece->ForceNetUpdate();
-		int32 CostRemaining = bInfinite ? 0 : BuildCost;
-		for (const FGuid& Guid : MaterialStacks)
-		{
-			if (CostRemaining == 0)
-			{
-				break;
-			}
-			CostRemaining -= FortAthenaInventory::RemoveItem(Controller, Guid, CostRemaining);
-		}
-		const int64 Remaining = AvailableMaterials - (bInfinite ? 0 : BuildCost - CostRemaining);
-		UE_LOG(LogTemp, Display, TEXT("Building: placed %s (%s) at %s yaw %.0f mirrored %d resource type %d left %lld"), *Piece->GetName(), *Tool,
-			*FVector(Data.BuildLoc).ToString(), Data.BuildRot.Yaw, Data.bMirrored ? 1 : 0, int32(Default->ResourceType.GetValue()), Remaining);
+		const int32 Remaining = FortAthenaBuildDamage::CountBuildingMaterials(Controller, ResourceType);
+		UE_LOG(LogTemp, Display, TEXT("Building: placed %s (%s) at %s yaw %.0f mirrored %d resource type %d left %d"), *Piece->GetName(), *Tool,
+			*FVector(Data.BuildLoc).ToString(), Data.BuildRot.Yaw, Data.bMirrored ? 1 : 0, int32(ResourceType), Remaining);
 	}
 
 	void ExecCreateBuilding(UObject* Context, FFrame& Stack, RESULT_DECL)

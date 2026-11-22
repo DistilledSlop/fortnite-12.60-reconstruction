@@ -423,7 +423,7 @@ Implemented: Handle quickbar selection, pickup, swap and drop on the server
 Implemented: Transfer successfully spawned elimination drops out of the victim inventory
 Implemented: Cap new inventory stacks and report the quantity accepted from pickups
 Implemented: Fill existing partial stacks before allocating a new stack
-Implemented: Check and spend building materials across matching inventory stacks
+Implemented: Check and spend building materials across matching inventory stacks and discard unpaid placements
 Implemented: Require enough contiguous quickbar slots before accepting a pickup or swapping an item
 Implemented: Preserve magazine ammo across partial pickups and prevent merges that would discard a loaded source while keeping self-ammo items stackable and out of magazine reloads
 Implemented: Reconcile manual drops with the quantity removed and clear slots through inventory removal

@@ -295,72 +295,6 @@ namespace
 		BuildDamageActiveProgress.Add(Entry);
 	}
 
-	int32 BuildDamageCountResourceInInventory(const AFortPlayerController* Controller, EFortResourceType::Type ResourceType)
-	{
-		const AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
-		if (!Inventory)
-		{
-			return 0;
-		}
-
-		int64 Total = 0;
-		for (const UFortWorldItem* Item : Inventory->Inventory.ItemInstances)
-		{
-			const UFortResourceItemDefinition* ResDef = Item
-				? Cast<UFortResourceItemDefinition>(Item->ItemEntry.ItemDefinition)
-				: nullptr;
-			if (ResDef && ResDef->ResourceType == ResourceType && Item->ItemEntry.Count > 0)
-			{
-				Total += Item->ItemEntry.Count;
-			}
-		}
-		return static_cast<int32>(FMath::Min<int64>(Total, MAX_int32));
-	}
-
-	bool BuildDamageConsumeResourceFromInventory(AFortPlayerController* Controller, EFortResourceType::Type ResourceType, int32 AmountToConsume)
-	{
-		if (AmountToConsume <= 0)
-		{
-			return true;
-		}
-
-		AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
-		if (!Inventory || !Controller->HasAuthority() || !FortAthenaInventory::IsEnabled())
-		{
-			return false;
-		}
-
-		TArray<TPair<FGuid, int32>> Deductions;
-		int32 Remaining = AmountToConsume;
-		for (const UFortWorldItem* Item : Inventory->Inventory.ItemInstances)
-		{
-			if (Remaining <= 0)
-			{
-				break;
-			}
-			const UFortResourceItemDefinition* ResDef = Item
-				? Cast<UFortResourceItemDefinition>(Item->ItemEntry.ItemDefinition)
-				: nullptr;
-			if (ResDef && ResDef->ResourceType == ResourceType && Item->ItemEntry.Count > 0)
-			{
-				const int32 Take = FMath::Min(Remaining, Item->ItemEntry.Count);
-				Deductions.Emplace(Item->ItemEntry.ItemGuid, Take);
-				Remaining -= Take;
-			}
-		}
-
-		if (Remaining != 0)
-		{
-			return false;
-		}
-		int32 Removed = 0;
-		for (const TPair<FGuid, int32>& Step : Deductions)
-		{
-			Removed += FortAthenaInventory::RemoveItem(Controller, Step.Key, Step.Value);
-		}
-		return Removed == AmountToConsume;
-	}
-
 	float BuildDamageGetMaxInteractionDistance(const AFortPlayerController* Controller)
 	{
 		if (Controller && Controller->EditModeDistance > 0.0f)
@@ -425,6 +359,73 @@ namespace
 		Building->ForceNetUpdate();
 	}
 } // namespace
+
+int32 CountBuildingMaterials(const AFortPlayerController* Controller, EFortResourceType::Type ResourceType)
+{
+	const AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
+	if (!Inventory)
+	{
+		return 0;
+	}
+
+	int64 Total = 0;
+	for (const UFortWorldItem* Item : Inventory->Inventory.ItemInstances)
+	{
+		const UFortResourceItemDefinition* ResDef = Item
+			? Cast<UFortResourceItemDefinition>(Item->ItemEntry.ItemDefinition)
+			: nullptr;
+		if (ResDef && ResDef->ResourceType == ResourceType && Item->ItemEntry.Count > 0)
+		{
+			Total += Item->ItemEntry.Count;
+		}
+	}
+	return static_cast<int32>(FMath::Min<int64>(Total, MAX_int32));
+}
+
+bool SpendBuildingMaterials(AFortPlayerController* Controller, EFortResourceType::Type ResourceType, int32 AmountToConsume)
+{
+	if (AmountToConsume <= 0)
+	{
+		return true;
+	}
+
+	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
+	if (!Inventory || !Inventory->HasAuthority() || !Controller->HasAuthority() || !FortAthenaInventory::IsEnabled())
+	{
+		return false;
+	}
+
+	TArray<TPair<FGuid, int32>> Deductions;
+	int32 Remaining = AmountToConsume;
+	for (const UFortWorldItem* Item : Inventory->Inventory.ItemInstances)
+	{
+		if (Remaining <= 0)
+		{
+			break;
+		}
+		const UFortResourceItemDefinition* ResDef = Item
+			? Cast<UFortResourceItemDefinition>(Item->ItemEntry.ItemDefinition)
+			: nullptr;
+		if (ResDef && ResDef->ResourceType == ResourceType && Item->ItemEntry.Count > 0)
+		{
+			const int32 Take = FMath::Min(Remaining, Item->ItemEntry.Count);
+			Deductions.Emplace(Item->ItemEntry.ItemGuid, Take);
+			Remaining -= Take;
+		}
+	}
+
+	if (Remaining != 0)
+	{
+		return false;
+	}
+	int32 Removed = 0;
+	for (const TPair<FGuid, int32>& Step : Deductions)
+	{
+		Removed += FortAthenaInventory::RemoveItem(Controller, Step.Key, Step.Value);
+	}
+	return Removed == AmountToConsume;
+}
+
 
 bool IsEnabled()
 {
@@ -871,8 +872,8 @@ bool RepairBuildingActor(AFortPlayerController* Controller, ABuildingSMActor* Bu
 	const int32 RepairCost = Controller->bCraftFree ? 0 : ComputeRepairCost(Building);
 	if (RepairCost > 0)
 	{
-		const int32 Available = BuildDamageCountResourceInInventory(Controller, ResType);
-		if (Available < RepairCost || !BuildDamageConsumeResourceFromInventory(Controller, ResType, RepairCost))
+		const int32 Available = CountBuildingMaterials(Controller, ResType);
+		if (Available < RepairCost || !SpendBuildingMaterials(Controller, ResType, RepairCost))
 		{
 			BuildDamageLogDecision(FString::Printf(
 				TEXT("RepairBuildingActor refused: %s insufficient res=%d avail=%d need=%d"),

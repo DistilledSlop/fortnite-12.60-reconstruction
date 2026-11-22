@@ -8,6 +8,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/EngineTypes.h"
+#include "EFortResourceType.h"
 
 class AActor;
 class ABuildingSMActor;
@@ -19,6 +20,10 @@ namespace FortAthenaBuildDamage
 {
 	// True when -FortniteOriginalClient is passed on the server command line.
 	bool IsEnabled();
+
+	// Count matching material stacks and spend only when their combined balance covers the full cost.
+	int32 CountBuildingMaterials(const AFortPlayerController* Controller, EFortResourceType::Type ResourceType);
+	bool SpendBuildingMaterials(AFortPlayerController* Controller, EFortResourceType::Type ResourceType, int32 Amount);
 
 	// Initializes a newly placed player-built piece:
 	// - Clears bAllowResourceDrop (player builds drop 0 resources in BR)
