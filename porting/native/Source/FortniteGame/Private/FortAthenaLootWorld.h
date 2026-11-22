@@ -12,7 +12,8 @@ class ULevel;
 // A map-authored actor tag LootDeliverySeconds=<delay> schedules the marker relative to the
 // start of the safe-zone phase. The marker needs an assigned loot tier group.
 // Add LootDeliveryCrate to a marker with a movable root to descend to the authored transform
-// and unlock the container for normal search on landing.
+// and unlock the container for normal search on landing. Without a movable root,
+// the marker spawns pickups at its authored transform when the delivery is due.
 // GroundLootCacheCandidate markers are selected randomly from visible levels when play starts.
 // GroundLootCacheCount caps activations per match (default one) as candidate levels become visible.
 // Add BreakableLootContainer to enable lethal-hit opening.

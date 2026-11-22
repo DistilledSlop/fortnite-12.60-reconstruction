@@ -299,12 +299,14 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 					const USceneComponent* Root = Container->GetRootComponent();
 					if (!Root || Root->Mobility != EComponentMobility::Movable)
 					{
-						S.ProcessedContainers.Add(Marker);
-						UE_LOG(LogTemp, Warning, TEXT("LootWorld: delivery crate %s needs a movable root"), *Container->GetName());
-						return;
+						Delivery.bSearchableCrate = false;
+						UE_LOG(LogTemp, Warning, TEXT("LootWorld: delivery crate %s needs a movable root, using scheduled pickup delivery"), *Container->GetPathName());
 					}
-					Delivery.LandingLocation = Container->GetActorLocation();
-					Delivery.bRestoreCollision = Container->GetActorEnableCollision();
+					else
+					{
+						Delivery.LandingLocation = Container->GetActorLocation();
+						Delivery.bRestoreCollision = Container->GetActorEnableCollision();
+					}
 				}
 				S.ScheduledDeliveries.Add(Marker, Delivery);
 				if (Delivery.bSearchableCrate)
