@@ -32,6 +32,7 @@
 #include "UFortWeaponItemDefinition.h"
 #include "UFortWeaponRangedItemDefinition.h"
 #include "UFortWorldItem.h"
+#include "WeaponUpgradeItemRow.h"
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FServerInventoryStacksTest, "Fortnite.Server.Inventory.StackAccounting",
 	EAutomationTestFlags::ClientContext | EAutomationTestFlags::ServerContext | EAutomationTestFlags::EngineFilter)
@@ -636,6 +637,60 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 		TestEqual(TEXT("The replacement contains one item"), Replacement->ItemEntry.Count, 1);
 	}
 	TestEqual(TEXT("The replacement pickup is depleted"), SwapPickup->PrimaryPickupItemEntry.Count, 0);
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FServerWeaponUpgradeRecipeTest, "Fortnite.Server.Inventory.WeaponUpgradeRecipe",
+	EAutomationTestFlags::ClientContext | EAutomationTestFlags::ServerContext | EAutomationTestFlags::EngineFilter)
+
+bool FServerWeaponUpgradeRecipeTest::RunTest(const FString&)
+{
+	UDataTable* Table = NewObject<UDataTable>();
+	Table->RowStruct = FWeaponUpgradeItemRow::StaticStruct();
+	UFortWeaponRangedItemDefinition* Source = NewObject<UFortWeaponRangedItemDefinition>(Table);
+	UFortWeaponRangedItemDefinition* Upgrade = NewObject<UFortWeaponRangedItemDefinition>(Table);
+	UFortWeaponRangedItemDefinition* Sidegrade = NewObject<UFortWeaponRangedItemDefinition>(Table);
+
+	FWeaponUpgradeItemRow Vertical;
+	Vertical.CurrentWeaponDef = Source;
+	Vertical.UpgradedWeaponDef = Upgrade;
+	Vertical.Direction = EFortWeaponUpgradeDirection::Vertical;
+	Vertical.WoodCost = EFortWeaponUpgradeCosts::WoodRare;
+	Table->AddRow(TEXT("Upgrade"), Vertical);
+	Table->AddRow(TEXT("DuplicateUpgrade"), Vertical);
+
+	FWeaponUpgradeItemRow Horizontal = Vertical;
+	Horizontal.UpgradedWeaponDef = Sidegrade;
+	Horizontal.Direction = EFortWeaponUpgradeDirection::Horizontal;
+	Horizontal.WoodCost = EFortWeaponUpgradeCosts::HorizontalWoodUncommon;
+	Table->AddRow(TEXT("Sidegrade"), Horizontal);
+
+	const FWeaponUpgradeItemRow* Recipe = FWeaponUpgradeItemRow::FindRecipe(Table, Source, Vertical.Direction);
+	if (TestNotNull(TEXT("Identical upgrade rows resolve to a single recipe"), Recipe))
+	{
+		TestTrue(TEXT("Vertical recipe selects the upgrade weapon"), Recipe->UpgradedWeaponDef == Upgrade);
+		TestTrue(TEXT("Vertical recipe preserves its material cost selector"), Recipe->WoodCost == Vertical.WoodCost);
+	}
+	Recipe = FWeaponUpgradeItemRow::FindRecipe(Table, Source, Horizontal.Direction);
+	if (TestNotNull(TEXT("Horizontal recipe resolves separately"), Recipe))
+	{
+		TestTrue(TEXT("Horizontal recipe selects the sidegrade weapon"), Recipe->UpgradedWeaponDef == Sidegrade);
+		TestTrue(TEXT("Horizontal recipe preserves its material cost selector"), Recipe->WoodCost == Horizontal.WoodCost);
+	}
+	TestNull(TEXT("A different weapon has no recipe"), FWeaponUpgradeItemRow::FindRecipe(Table, Upgrade, Vertical.Direction));
+	TestNull(TEXT("An unset direction has no recipe"),
+		FWeaponUpgradeItemRow::FindRecipe(Table, Source, EFortWeaponUpgradeDirection::NotSet));
+
+	FWeaponUpgradeItemRow Invalid = Vertical;
+	Invalid.Direction = static_cast<EFortWeaponUpgradeDirection>(3);
+	Table->AddRow(TEXT("InvalidDirection"), Invalid);
+	TestNull(TEXT("An unsupported direction has no recipe even when present in the table"),
+		FWeaponUpgradeItemRow::FindRecipe(Table, Source, Invalid.Direction));
+
+	Vertical.WoodCost = EFortWeaponUpgradeCosts::WoodVeryRare;
+	Table->AddRow(TEXT("ConflictingCost"), Vertical);
+	TestNull(TEXT("Conflicting prices reject the recipe even when the result weapon matches"),
+		FWeaponUpgradeItemRow::FindRecipe(Table, Source, Vertical.Direction));
 	return true;
 }
 

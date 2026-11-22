@@ -5,7 +5,8 @@
 const FWeaponUpgradeItemRow* FWeaponUpgradeItemRow::FindRecipe(const UDataTable* Table,
 	const UFortWeaponItemDefinition* Weapon, EFortWeaponUpgradeDirection Direction)
 {
-	if (!Table || Table->GetRowStruct() != StaticStruct() || !Weapon || Direction == EFortWeaponUpgradeDirection::NotSet)
+	if (!Table || Table->GetRowStruct() != StaticStruct() || !Weapon ||
+		(Direction != EFortWeaponUpgradeDirection::Vertical && Direction != EFortWeaponUpgradeDirection::Horizontal))
 	{
 		return nullptr;
 	}
