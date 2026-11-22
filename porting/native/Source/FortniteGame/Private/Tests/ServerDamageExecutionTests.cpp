@@ -14,6 +14,7 @@
 #include "FortAthenaHealth.h"
 #include "FortAthenaLootSearch.h"
 #include "FortHarvestBuilding.h"
+#include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/DamageType.h"
 #include "GameplayEffectExtension.h"
 #include "Misc/AutomationTest.h"
@@ -573,10 +574,15 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	FortAthenaHealth::ApplyDamage(ThirdPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
 	TestTrue(TEXT("A team playlist with DBNO disabled eliminates a player with standing teammates"),
 		ThirdPawn->bIsDying && !ThirdPawn->bIsDBNO);
+	TeamPlaylist->DBNOType = EDBNOType::NotWhenRespawning;
+	TeamPlaylist->RespawnType = EAthenaRespawnType::InfiniteRespawnExceptStorm;
+	const FGameplayTag StormTag = FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x360);
+	TestTrue(TEXT("Storm damage tag is available"), StormTag.IsValid());
+	FortAthenaHealth::ApplyDamage(FirstPawn, 200.0f, FGameplayTagContainer(StormTag), nullptr, nullptr, true);
+	TestTrue(TEXT("Lethal storm damage knocks a player when the playlist excludes storm respawns"),
+		FirstPawn->bIsDBNO && !FirstPawn->bIsDying);
 	TeamPlaylist->DBNOType = EDBNOType::On;
-
-	FortAthenaHealth::ApplyDamage(FirstPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
-	TestTrue(TEXT("Lethal damage knocks a player with a standing teammate"), FirstPawn->bIsDBNO && !FirstPawn->bIsDying);
+	TeamPlaylist->RespawnType = EAthenaRespawnType::None;
 	TestEqual(TEXT("A knock fills the downed health pool"), FirstPawn->GetHealth(), 100.0f);
 	TestTrue(TEXT("A knock queues the crawl stance immediately"), FirstPawn->GetCharacterMovement()->bWantsToCrouch != 0);
 	SecondPawn->bAllowDBNOCarry = true;

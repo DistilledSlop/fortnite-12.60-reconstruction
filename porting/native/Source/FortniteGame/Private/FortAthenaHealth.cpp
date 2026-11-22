@@ -371,10 +371,21 @@ namespace
 		const UFortPlaylistAthena* Playlist = State ? State->GetCurrentPlaylistAthena() : nullptr;
 		if (!Mode || RosterMode.Get() != Mode || !Playlist || Playlist->MaxTeamSize <= 1 ||
 			Playlist->DBNOType == EDBNOType::Off ||
-			(Playlist->DBNOType == EDBNOType::NotWhenRespawning && Playlist->RespawnType != EAthenaRespawnType::None) ||
 			Player->bIsDBNO || Player->bIsDying || !Player->HasAuthority())
 		{
 			return false;
+		}
+
+		if (Playlist->DBNOType == EDBNOType::NotWhenRespawning)
+		{
+			const FGameplayTag StormTag = FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x360);
+			const bool bCanRespawn = Playlist->RespawnType == EAthenaRespawnType::InfiniteRespawn ||
+				(Playlist->RespawnType == EAthenaRespawnType::InfiniteRespawnExceptStorm &&
+					(!StormTag.IsValid() || !DamageTags.HasTag(StormTag)));
+			if (bCanRespawn)
+			{
+				return false;
+			}
 		}
 
 		if (!HasStandingTeammate(Player))
