@@ -500,12 +500,9 @@ FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnCon
 		Drops,
 		RollError);
 
-	if (!bRolled && Req.LootTier != -1)
+	if (!bRolled && Req.LootTier != -1 && RollError == FortAthenaLootRoll::NoEligibleTierRows)
 	{
-		// The container's ReplicatedLootTier is 0 here (the original sets it when the container is spawned/upgraded), but the
-		// Apollo rare chest group rows are LootTier 2 and the large ammo group is LootTier 1 (AthenaCompositeLTD). Run
-		// 2026.11.15 05:50: every upgraded chest failed with "no positive-weight candidates" and nothing came out. Each such
-		// group holds a single tier, so retry across all tiers of the group.
+		// Some upgraded containers retain tier zero while their loot group only has higher-tier rows.
 		UE_LOG(LogTemp, Display, TEXT("LootSearch: roll for container=%s group=%s found no tier-%d rows (%s); retrying with any tier"),
 			*Container->GetName(), *TierGroup.ToString(), Req.LootTier, *RollError);
 		Req.LootTier = -1;

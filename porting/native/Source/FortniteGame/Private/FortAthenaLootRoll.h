@@ -8,6 +8,7 @@ struct FFortLootPackageData;
 // Reconstructed ordinary-loot contract; original server parity is unresolved.
 namespace FortAthenaLootRoll
 {
+    constexpr TCHAR NoEligibleTierRows[] = TEXT("no eligible loot tier rows");
     struct FRequest
     {
         FName Group;

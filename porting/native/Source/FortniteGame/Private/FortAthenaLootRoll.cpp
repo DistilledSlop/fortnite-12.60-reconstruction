@@ -144,6 +144,7 @@ namespace
                 if (!TierSupported(*T)) return false;
                 Rows.Add(T); Weights.Add(T->Weight);
             }
+            if (Rows.Num() == 0) return Fail(FortAthenaLootRoll::NoEligibleTierRows);
             int32 Index;
             if (!Choose(Weights, Index)) return false;
             const auto& T = *Rows[Index];
