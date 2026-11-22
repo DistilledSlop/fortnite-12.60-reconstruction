@@ -11,7 +11,7 @@ import progress
 ROOT = Path(__file__).resolve().parents[2]
 LEDGER = ROOT / "porting/progress/server_checks.txt"
 BOARD = ROOT / "docs/progress/server/index.html"
-OUTPUT = BOARD.with_name("server-implementation-treemap.svg")
+OUTPUT = BOARD.with_name("server-implementation-treemap-v2.svg")
 REPO_URL = "https://github.com/DistilledSlop/fortnite-12.60-reconstruction"
 START = "<!-- checks:start -->"
 END = "<!-- checks:end -->"
