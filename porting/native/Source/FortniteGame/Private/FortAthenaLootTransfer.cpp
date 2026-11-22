@@ -1516,9 +1516,13 @@ int32 FortAthenaLootTransfer::DropAllOnDeath(AFortPlayerController* VictimContro
 	{
 		const UFortWorldItem* Item = Inventory->NativeFindItemByGuid(ItemGuid);
 		UFortWorldItemDefinition* Def = Item ? Cast<UFortWorldItemDefinition>(Item->ItemEntry.ItemDefinition) : nullptr;
-		if (!Def || !Def->bCanBeDropped || Item->ItemEntry.Count <= 0 ||
-			Def->DropBehavior == EWorldItemDropBehavior::DestroyOnDrop)
+		if (!Def || !Def->bCanBeDropped || Item->ItemEntry.Count <= 0)
 		{
+			continue;
+		}
+		if (Def->DropBehavior == EWorldItemDropBehavior::DestroyOnDrop)
+		{
+			FortAthenaInventory::RemoveItem(VictimController, ItemGuid, Item->ItemEntry.Count);
 			continue;
 		}
 		const FVector Dir = FVector::ForwardVector.RotateAngleAxis(BaseYaw + Spawned * 137.5f, FVector::UpVector);

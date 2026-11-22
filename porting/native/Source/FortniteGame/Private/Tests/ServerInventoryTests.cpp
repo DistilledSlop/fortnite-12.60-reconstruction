@@ -318,8 +318,19 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 		return false;
 	}
 	const FGuid ProtectedGuid = ProtectedItem->NativeGetItemGuid();
+	UFortResourceItemDefinition* DiscardDefinition = NewObject<UFortResourceItemDefinition>(Inventory);
+	DiscardDefinition->MaxStackSize = FScalableFloat(10.0f);
+	DiscardDefinition->bCanBeDropped = true;
+	DiscardDefinition->DropBehavior = EWorldItemDropBehavior::DestroyOnDrop;
+	UFortWorldItem* DiscardItem = FortAthenaInventory::GiveItem(Controller, DiscardDefinition, 2);
+	if (!TestNotNull(TEXT("Destroy-on-drop inventory item"), DiscardItem))
+	{
+		return false;
+	}
+	const FGuid DiscardGuid = DiscardItem->NativeGetItemGuid();
 	TestEqual(TEXT("Elimination drops only the eligible weapon"), FortAthenaLootTransfer::DropAllOnDeath(Controller, Pawn), 1);
 	TestNull(TEXT("Elimination removes the dropped weapon from inventory"), Inventory->NativeFindItemByGuid(RecoveredGuid));
+	TestNull(TEXT("Elimination consumes the destroy-on-drop stack"), Inventory->NativeFindItemByGuid(DiscardGuid));
 	if (TestEqual(TEXT("Only the protected stack stays in replicated inventory"), Inventory->Inventory.ReplicatedEntries.Num(), 1))
 	{
 		const FFortItemEntry& Entry = Inventory->Inventory.ReplicatedEntries[0];
@@ -333,7 +344,7 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 		{
 			continue;
 		}
-		TestTrue(TEXT("Elimination loot contains no protected item"), It->PrimaryPickupItemEntry.ItemDefinition == WeaponDefinition);
+		TestTrue(TEXT("Elimination loot contains only the eligible weapon"), It->PrimaryPickupItemEntry.ItemDefinition == WeaponDefinition);
 		TestEqual(TEXT("Elimination transfers exactly one weapon"), It->PrimaryPickupItemEntry.Count, 1);
 		++WeaponPickups;
 		It->Destroy();
