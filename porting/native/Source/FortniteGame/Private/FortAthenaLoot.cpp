@@ -28,6 +28,13 @@ AFortPickup* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVector& L
 	if (!IsEnabled() || !World || World->GetNetMode() == NM_Client || !Definition || Count <= 0)
 		return nullptr;
 
+	const FVector SpawnAt = TossFrom ? *TossFrom : Location;
+	if (SpawnAt.ContainsNaN() || Location.ContainsNaN())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Loot: invalid resolved pickup position for %s"), *GetNameSafe(Definition));
+		return nullptr;
+	}
+
 	if (!IsValid(Owner) || Owner->GetWorld() != World)
 	{
 		if (bOnlyRelevantToOwner)
@@ -40,7 +47,6 @@ AFortPickup* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVector& L
 	FActorSpawnParameters Parameters;
 	Parameters.Owner = Owner;
 	Parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	const FVector SpawnAt = TossFrom ? *TossFrom : Location;
 	UClass* SpawnClass = PickupClass ? PickupClass.Get() : AFortPickupAthena::StaticClass();
 	AFortPickup* Pickup = World->SpawnActor<AFortPickup>(SpawnClass, SpawnAt, FRotator::ZeroRotator, Parameters);
 	if (!IsValid(Pickup) || Pickup->IsActorBeingDestroyed())
@@ -55,6 +61,12 @@ AFortPickup* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVector& L
 	}
 	// The generated pickup has no root component (see InitializeWorldPickup): give it one at the requested location first.
 	FortAthenaLootTransfer::InitializeWorldPickup(Pickup, SpawnAt);
+	if (!Pickup->GetRootComponent() || !Pickup->GetActorLocation().Equals(SpawnAt, 1.0f))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Loot: failed to place resolved pickup for %s"), *GetNameSafe(Definition));
+		Pickup->Destroy();
+		return nullptr;
+	}
 	Pickup->PrimaryPickupItemEntry.ItemDefinition = Definition;
 	Pickup->PrimaryPickupItemEntry.Count = Count;
 	Pickup->PrimaryPickupItemEntry.Level = Level;
