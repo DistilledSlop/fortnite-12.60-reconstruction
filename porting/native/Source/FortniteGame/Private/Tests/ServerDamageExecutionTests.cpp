@@ -4,6 +4,7 @@
 #include "AIController.h"
 #include "AFortPawn.h"
 #include "AFortAIPawn.h"
+#include "AFortAthenaMutator_DBNOSetting.h"
 #include "AFortGameModeAthena.h"
 #include "AFortGameStateAthena.h"
 #include "AFortPlayerControllerAthena.h"
@@ -26,6 +27,7 @@
 #include "UFortHealthSet.h"
 #include "UFortGameplayAbility_RangedWeapon.h"
 #include "UFortPlaylistAthena.h"
+#include "UFortMutatorListComponent.h"
 #include "UFortMovementComp_CharacterAthena.h"
 
 // UE 4.25 discovers dedicated-server tests under ClientContext.
@@ -604,9 +606,22 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	FortAthenaHealth::RegisterAlivePlayer(Mode, Third);
 	FortAthenaHealth::RegisterAlivePlayer(Mode, NoKnockController);
 
-	TeamPlaylist->DBNOType = EDBNOType::Off;
-	FortAthenaHealth::ApplyDamage(NoKnockPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
-	TestTrue(TEXT("A team playlist with DBNO disabled eliminates a player with standing teammates"),
+	AFortAthenaMutator_DBNOSetting* DBNOMutator = World->SpawnActor<AFortAthenaMutator_DBNOSetting>();
+	if (!TestNotNull(TEXT("DBNO setting mutator fixture"), DBNOMutator))
+	{
+		return false;
+	}
+	UFortMutatorListComponent* MutatorList = NewObject<UFortMutatorListComponent>(State);
+	MutatorList->RegisterComponent();
+	MutatorList->Mutators.Add(DBNOMutator);
+	TeamPlaylist->DBNOType = EDBNOType::On;
+	DBNOMutator->bMutatorActive = true;
+	DBNOMutator->DBNOSetting = EDBNOMutatorType::Off;
+	{
+		TGuardValue<UFortMutatorListComponent*> MutatorListOverride(State->MutatorListComponent, MutatorList);
+		FortAthenaHealth::ApplyDamage(NoKnockPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
+	}
+	TestTrue(TEXT("An active Off mutator overrides a team playlist with DBNO enabled"),
 		NoKnockPawn->bIsDying && !NoKnockPawn->bIsDBNO);
 	UFortAbilitySystemComponent* FirstASC = FirstPawn->AbilitySystemComponent;
 	const FGameplayAbilitySpecHandle RangedAbilityHandle = FirstASC->GiveAbility(
@@ -653,7 +668,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakFirstPawn(FirstPawn);
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakSecondPawn(SecondPawn);
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakThirdPawn(ThirdPawn);
-	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakSecondPawn, WeakOpponent, HealthAfterFirstBleed]()
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakSecondPawn, WeakOpponent, DBNOMutator, MutatorList, HealthAfterFirstBleed]()
 	{
 		AFortPlayerPawnAthena* RevivedPawn = WeakFirstPawn.Get();
 		AFortPlayerPawnAthena* Teammate = WeakSecondPawn.Get();
@@ -663,8 +678,16 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 			TestFalse(TEXT("A teammate revive clears the real knock"), RevivedPawn->bIsDBNO);
 			TestEqual(TEXT("The original bleed timer leaves revived health intact"), RevivedPawn->GetHealth(), 30.0f);
 
-			FortAthenaHealth::ApplyDamage(RevivedPawn, 200.0f, FGameplayTagContainer(), WeakOpponent.Get(), nullptr, true);
-			TestTrue(TEXT("Lethal damage can knock the revived player again"), RevivedPawn->bIsDBNO && !RevivedPawn->bIsDying);
+			AFortGameStateAthena* CurrentState = RevivedPawn->GetWorld()->GetGameState<AFortGameStateAthena>();
+			UFortPlaylistAthena* Playlist = CurrentState->CurrentPlaylistInfo.OverridePlaylist;
+			DBNOMutator->DBNOSetting = EDBNOMutatorType::On;
+			{
+				TGuardValue<UFortMutatorListComponent*> MutatorListOverride(CurrentState->MutatorListComponent, MutatorList);
+				TGuardValue<EDBNOType> PlaylistOverride(Playlist->DBNOType, EDBNOType::Off);
+				FortAthenaHealth::ApplyDamage(RevivedPawn, 200.0f, FGameplayTagContainer(), WeakOpponent.Get(), nullptr, true);
+			}
+			TestTrue(TEXT("An active On mutator knocks a revived player even with DBNO disabled in the playlist"),
+				RevivedPawn->bIsDBNO && !RevivedPawn->bIsDying);
 			Teammate->bAllowDBNOCarry = true;
 			TestTrue(TEXT("A standing teammate can carry the knocked player"),
 				FortAthenaHealth::TryCarryDownedPlayer(Teammate->GetController(), RevivedPawn));
@@ -715,8 +738,8 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	}), 1.5f));
 
 	const TWeakObjectPtr<AFortGameStateAthena> WeakState(State);
-	const TArray<TWeakObjectPtr<AActor>> TeamFixtures = {First, Second, Third, NoKnockController, FirstPawn, SecondPawn, ThirdPawn, NoKnockPawn, Opponent};
-	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakOpponent, WeakState, PreviousPlaylist, TeamFixtures]()
+	const TArray<TWeakObjectPtr<AActor>> TeamFixtures = {First, Second, Third, NoKnockController, FirstPawn, SecondPawn, ThirdPawn, NoKnockPawn, Opponent, DBNOMutator};
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakOpponent, WeakState, PreviousPlaylist, TeamFixtures, MutatorList]()
 	{
 		AFortPlayerPawnAthena* DownedPawn = WeakFirstPawn.Get();
 		if (TestNotNull(TEXT("Downed team fixture after last teammate elimination"), DownedPawn))
@@ -737,6 +760,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 		{
 			CurrentState->CurrentPlaylistInfo.OverridePlaylist = PreviousPlaylist.Get();
 		}
+		MutatorList->DestroyComponent();
 		for (const TWeakObjectPtr<AActor>& Fixture : TeamFixtures)
 		{
 			if (AActor* Actor = Fixture.Get())
