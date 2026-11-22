@@ -2,6 +2,7 @@
 """Generate the server treemap and evidence table from one acceptance ledger."""
 import argparse
 from collections import Counter
+from hashlib import sha256
 from html import escape
 from pathlib import Path
 import re
@@ -138,25 +139,19 @@ def main():
     args = parser.parse_args()
     areas = read_checks()
     groups, counts = measure(areas)
-    done = counts["verified"] + counts["implemented"]
-    total = counts.total() - counts["client"]
-    summary = (
-        f'**{done} of {total} server checks implemented ({done / total:.1%}).** '
-        f'{counts["verified"]} verified, {counts["implemented"]} awaiting verification, '
-        f'{counts["open"]} open.'
-    )
+    svg = render_svg(groups, counts)
+    version = sha256(svg.encode()).hexdigest()[:12]
     readme = README.read_text()
-    heading = "## Dedicated-server progress\n\n"
-    replacement = f"{heading}<!-- server-progress:start -->\n{summary}\n<!-- server-progress:end -->\n\n"
+    svg_path = OUTPUT.relative_to(ROOT).as_posix()
+    embed = f"[![Dedicated-server reconstruction progress treemap]({svg_path}?v={version})]"
     readme, matches = re.subn(
-        re.escape(heading) + r"(?:<!-- server-progress:start -->\n.*?\n<!-- server-progress:end -->\n\n)?",
-        lambda _: replacement,
+        r"\[!\[Dedicated-server reconstruction progress treemap\]\(" + re.escape(svg_path) + r"(?:\?v=[0-9a-f]+)?\)\]",
+        lambda _: embed,
         readme,
-        flags=re.DOTALL,
     )
     if matches != 1:
-        parser.exit(1, "Expected one dedicated-server progress section in README.md\n")
-    outputs = {OUTPUT: render_svg(groups, counts), BOARD: render_board(areas, groups, counts), README: readme}
+        parser.exit(1, "Expected one embedded dedicated-server treemap in README.md\n")
+    outputs = {OUTPUT: svg, BOARD: render_board(areas, groups, counts), README: readme}
     for path, content in outputs.items():
         if args.check:
             if not path.is_file() or path.read_text() != content:
