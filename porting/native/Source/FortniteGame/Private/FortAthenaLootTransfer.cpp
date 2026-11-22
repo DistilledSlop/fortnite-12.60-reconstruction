@@ -1437,6 +1437,7 @@ AFortPickupAthena* FortAthenaLootTransfer::SpawnTossedPickupFromEntry(UWorld* Wo
 	InitializeSpawnedPickupActor(Pickup, StartLocation);
 
 	Pickup->PrimaryPickupItemEntry = Entry;
+	Pickup->PrimaryPickupItemEntry.LoadedAmmo = FortAthenaInventory::NormalizeLoadedAmmo(Entry.ItemDefinition, Entry.LoadedAmmo);
 	Pickup->PrimaryPickupItemEntry.ItemGuid = FGuid::NewGuid();
 	Pickup->PrimaryPickupItemEntry.bIsReplicatedCopy = false;
 	Pickup->PrimaryPickupItemEntry.bIsDirty = false;
@@ -1484,7 +1485,7 @@ AFortPickupAthena* FortAthenaLootTransfer::SpawnTossedPickupFromEntry(UWorld* Wo
 		*Pickup->GetName(),
 		*Entry.ItemDefinition->GetName(),
 		Entry.Count,
-		Entry.LoadedAmmo,
+		Pickup->PrimaryPickupItemEntry.LoadedAmmo,
 		ResolvedFlyTime);
 
 	return Pickup;

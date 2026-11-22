@@ -1010,6 +1010,18 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 	{
 		return false;
 	}
+	FFortItemEntry LegacyBandageEntry = LastBandage->ItemEntry;
+	LegacyBandageEntry.LoadedAmmo = 5;
+	AFortPickupAthena* DroppedBandage = FortAthenaLootTransfer::SpawnTossedPickupFromEntry(
+		World, LegacyBandageEntry, Pawn->GetActorLocation(), FVector::ForwardVector, Pawn, 0, EFortPickupSpawnSource::Unset);
+	if (!TestNotNull(TEXT("Dropped legacy bandage"), DroppedBandage))
+	{
+		return false;
+	}
+	TestEqual(TEXT("Dropped bandage keeps its charge"), DroppedBandage->PrimaryPickupItemEntry.Count, 1);
+	TestEqual(TEXT("Dropped bandage has no magazine ammo"), DroppedBandage->PrimaryPickupItemEntry.LoadedAmmo, 0);
+	DroppedBandage->Destroy();
+
 	const FGuid LastBandageGuid = LastBandage->NativeGetItemGuid();
 	// Use a native source actor because the staged cooked weapon mesh cannot evaluate its animation codec.
 	AFortWeapon* Equipped = World->SpawnActor<AFortWeapon>();
