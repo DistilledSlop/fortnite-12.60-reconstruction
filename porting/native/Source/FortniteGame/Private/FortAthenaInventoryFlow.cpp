@@ -463,7 +463,7 @@ int32 FortAthenaInventory::NormalizeLoadedAmmo(const UFortItemDefinition* Defini
 }
 
 UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller, UFortItemDefinition* Definition, int32 Count, int32 Level, int32 LoadedAmmo,
-	int32* OutAcceptedCount, int32 PreferredPrimarySlot, bool bActivatePreferredSlot)
+	int32* OutAcceptedCount, int32 PreferredPrimarySlot, bool bActivatePreferredSlot, float Durability)
 {
 	if (OutAcceptedCount)
 		*OutAcceptedCount = 0;
@@ -493,8 +493,8 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 			{
 				continue;
 			}
-			// Merging must preserve the incoming item level and magazine.
-			if (LoadedAmmo > 0 || FMath::Max(1, Existing->ItemEntry.Level) != Level)
+			// Merging must preserve the incoming item level, durability and magazine.
+			if (LoadedAmmo > 0 || FMath::Max(1, Existing->ItemEntry.Level) != Level || Existing->ItemEntry.Durability != Durability)
 			{
 				if (!Definition->bAllowMultipleStacks)
 				{
@@ -537,6 +537,7 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 	Entry.ItemDefinition = Definition;
 	Entry.Count = Count;
 	Entry.Level = Level;
+	Entry.Durability = Durability;
 	Entry.LoadedAmmo = LoadedAmmo;
 	Entry.ItemGuid = FGuid::NewGuid();
 
@@ -586,6 +587,7 @@ int32 FortAthenaInventory::CombineStacks(AFortPlayerController* Controller, cons
 	if (!Target || !Source || Target->ItemEntry.ItemDefinition != Source->ItemEntry.ItemDefinition || !Target->ItemEntry.ItemDefinition
 		|| !Target->ItemEntry.ItemDefinition->IsStackable()
 		|| FMath::Max(1, Target->ItemEntry.Level) != FMath::Max(1, Source->ItemEntry.Level)
+		|| Target->ItemEntry.Durability != Source->ItemEntry.Durability
 		|| NormalizeLoadedAmmo(Source->ItemEntry.ItemDefinition, Source->ItemEntry.LoadedAmmo) > 0)
 	{
 		UE_LOG(LogTemp, Display, TEXT("Inventory: combine %s <- %s rejected (incompatible stacks or loaded source)"), *TargetGuid.ToString(), *SourceGuid.ToString());

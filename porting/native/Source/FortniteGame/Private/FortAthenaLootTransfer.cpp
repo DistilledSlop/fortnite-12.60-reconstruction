@@ -394,7 +394,7 @@ namespace
 	}
 
 	// Computes how many units of Def can stack onto existing WorldInventory entries without consuming a new slot.
-	int32 ComputeExistingStackHeadroom(AFortPlayerController* Controller, UFortItemDefinition* Def, int32 Level)
+	int32 ComputeExistingStackHeadroom(AFortPlayerController* Controller, UFortItemDefinition* Def, int32 Level, float Durability)
 	{
 		if (!Controller || !Controller->WorldInventory || !Def)
 		{
@@ -412,7 +412,7 @@ namespace
 			{
 				continue;
 			}
-			if (FMath::Max(1, Existing->ItemEntry.Level) == Level && Existing->ItemEntry.Count < MaxStack)
+			if (FMath::Max(1, Existing->ItemEntry.Level) == Level && Existing->ItemEntry.Durability == Durability && Existing->ItemEntry.Count < MaxStack)
 			{
 				Headroom += static_cast<int64>(MaxStack) - Existing->ItemEntry.Count;
 			}
@@ -589,7 +589,7 @@ namespace
 				Slots->SetNum(MaxSlotsInBar);
 			}
 
-			const int32 StackHeadroom = LoadedAmmo > 0 ? 0 : ComputeExistingStackHeadroom(PC, Def, Level);
+			const int32 StackHeadroom = LoadedAmmo > 0 ? 0 : ComputeExistingStackHeadroom(PC, Def, Level, SrcEntry.Durability);
 			const UFortWorldItemDefinition* WorldDef = Cast<UFortWorldItemDefinition>(Def);
 			const int32 Span = WorldDef ? FMath::Max(1, static_cast<int32>(WorldDef->NumberOfSlotsToTake)) : 1;
 			const int32 FreeSlot = Slots ? FindFreeSlotRange(*Slots, MinSlot, MaxSlot, Span, BarDefinition, Def->NativeGetItemType()) : INDEX_NONE;
@@ -682,7 +682,7 @@ namespace
 
 					int32 AcceptedCount = 0;
 					UFortWorldItem* GrantedItem = FortAthenaInventory::GiveItem(
-						PC, Def, SrcEntry.Count, Level, LoadedAmmo, &AcceptedCount, SwapSlot, bWasHoldingSwapped);
+						PC, Def, SrcEntry.Count, Level, LoadedAmmo, &AcceptedCount, SwapSlot, bWasHoldingSwapped, SrcEntry.Durability);
 					if (!GrantedItem || AcceptedCount <= 0)
 					{
 						UE_LOG(LogTemp, Warning, TEXT("LootTransfer: Swap GiveItem returned 0 after drop pc=%s def=%s"),
@@ -732,7 +732,7 @@ namespace
 
 		int32 AcceptedCount = 0;
 		UFortWorldItem* GrantedItem = FortAthenaInventory::GiveItem(
-			PC, Def, MaxGrantable, Level, LoadedAmmo, &AcceptedCount);
+			PC, Def, MaxGrantable, Level, LoadedAmmo, &AcceptedCount, INDEX_NONE, false, SrcEntry.Durability);
 
 		if (AcceptedCount <= 0)
 		{

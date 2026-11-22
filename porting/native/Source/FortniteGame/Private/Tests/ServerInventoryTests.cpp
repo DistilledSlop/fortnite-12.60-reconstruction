@@ -338,6 +338,7 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	LoadedBundle.ItemDefinition = WeaponDefinition;
 	LoadedBundle.Count = 2;
 	LoadedBundle.LoadedAmmo = 5;
+	LoadedBundle.Durability = 42.0f;
 	AFortPickupAthena* LoadedPickup = FortAthenaLootTransfer::SpawnTossedPickupFromEntry(
 		World, LoadedBundle, Pawn->GetActorLocation(), FVector::ForwardVector, nullptr, 0, EFortPickupSpawnSource::Unset);
 	if (!TestNotNull(TEXT("Loaded pickup bundle"), LoadedPickup))
@@ -353,6 +354,8 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	}
 	const FFortItemEntry& LoadedWeapon = Inventory->Inventory.ReplicatedEntries[0];
 	TestEqual(TEXT("First grant keeps the original magazine"), LoadedWeapon.LoadedAmmo, 5);
+	TestEqual(TEXT("First grant keeps the original durability"), LoadedWeapon.Durability, 42.0f);
+	TestEqual(TEXT("The remaining weapon keeps its durability"), LoadedPickup->PrimaryPickupItemEntry.Durability, 42.0f);
 	TestEqual(TEXT("One weapon remains in the world"), LoadedPickup->PrimaryPickupItemEntry.Count, 1);
 	TestEqual(TEXT("Remainder does not duplicate the magazine"), LoadedPickup->PrimaryPickupItemEntry.LoadedAmmo, 0);
 	const FGuid LoadedGuid = LoadedWeapon.ItemGuid;
