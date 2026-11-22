@@ -1,5 +1,6 @@
 #if WITH_DEV_AUTOMATION_TESTS
 
+#include "ABuildingItemWeaponUpgradeActor.h"
 #include "ABuildingWall.h"
 #include "AbilitySystemComponent.h"
 #include "AFortInventory.h"
@@ -850,6 +851,23 @@ bool FServerWeaponUpgradeRecipeTest::RunTest(const FString&)
 			Rifle->WoodCost == EFortWeaponUpgradeCosts::HorizontalWoodCommon &&
 			Rifle->MetalCost == EFortWeaponUpgradeCosts::HorizontalMetalCommon &&
 			Rifle->BrickCost == EFortWeaponUpgradeCosts::HorizontalBrickCommon);
+
+		const UClass* BenchClass = LoadClass<ABuildingItemWeaponUpgradeActor>(nullptr,
+			TEXT("/Game/Athena/Items/Gameplay/Wumba/B_Athena_Wumba.B_Athena_Wumba_C"));
+		const ABuildingItemWeaponUpgradeActor* Bench = BenchClass ? BenchClass->GetDefaultObject<ABuildingItemWeaponUpgradeActor>() : nullptr;
+		if (!TestNotNull(TEXT("Cooked upgrade bench defaults"), Bench))
+		{
+			return false;
+		}
+		FIntVector Costs(-1, -1, -1);
+		TestTrue(TEXT("Pistol upgrade resolves its cooked prices"), Pistol->TryResolveMaterialCosts(*Bench, Costs));
+		TestTrue(TEXT("The tier-three pistol upgrade costs 150 of each material"), Costs == FIntVector(150, 150, 150));
+		TestTrue(TEXT("Rifle sidegrade resolves its cooked prices"), Rifle->TryResolveMaterialCosts(*Bench, Costs));
+		TestTrue(TEXT("The tier-zero sidegrade costs 20 of each material"), Costs == FIntVector(20, 20, 20));
+		FWeaponUpgradeItemRow BadRecipe = *Rifle;
+		BadRecipe.BrickCost = EFortWeaponUpgradeCosts::HorizontalMetalCommon;
+		TestFalse(TEXT("A selector for the wrong material rejects the price"), BadRecipe.TryResolveMaterialCosts(*Bench, Costs));
+		TestTrue(TEXT("Failed price lookup leaves the previous quote intact"), Costs == FIntVector(20, 20, 20));
 	}
 	return true;
 }

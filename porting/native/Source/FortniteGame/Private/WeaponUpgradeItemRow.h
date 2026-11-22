@@ -5,6 +5,7 @@
 #include "EFortWeaponUpgradeDirection.h"
 #include "WeaponUpgradeItemRow.generated.h"
 
+class ABuildingItemWeaponUpgradeActor;
 class UFortWeaponItemDefinition;
 class UFortWeaponRangedItemDefinition;
 
@@ -64,6 +65,9 @@ struct FWeaponUpgradeItemRow : public FTableRowBase
 
 	UPROPERTY()
 	EFortWeaponUpgradeDirection Direction = EFortWeaponUpgradeDirection::NotSet;
+
+	// Costs are returned in wood, metal, brick order.
+	bool TryResolveMaterialCosts(const ABuildingItemWeaponUpgradeActor& Bench, FIntVector& OutCosts) const;
 
 	static const FWeaponUpgradeItemRow* FindRecipe(const UDataTable* Table,
 		const UFortWeaponItemDefinition* Weapon, EFortWeaponUpgradeDirection Direction);
