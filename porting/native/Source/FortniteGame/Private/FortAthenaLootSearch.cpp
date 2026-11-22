@@ -184,17 +184,24 @@ namespace
 		if (!Component)
 			return;
 
+		AController* InteractingController = Cast<AController>(Component->GetOwner());
+		const AFortPawn* InteractingPawn = InteractingController ? Cast<AFortPawn>(InteractingController->GetPawn()) : nullptr;
+		if (FortAthenaHealth::IsEnabled() && InteractingPawn && (InteractingPawn->bIsDBNO || InteractingPawn->bIsDying))
+		{
+			return;
+		}
+
 		if (AFortPawn* TargetPawn = Cast<AFortPawn>(ReceivingActor))
 		{
 			if (TargetPawn->bIsDBNO && InteractionBeingAttempted == EInteractionBeingAttempted::SecondInteraction &&
 				(InteractType == TInteractionType::IT_Simple || InteractType == TInteractionType::IT_LongPress) &&
-				FortAthenaHealth::TryCarryDownedPlayer(Cast<AController>(Component->GetOwner()), TargetPawn))
+				FortAthenaHealth::TryCarryDownedPlayer(InteractingController, TargetPawn))
 			{
 				return;
 			}
 			if (TargetPawn->bIsDBNO && InteractionBeingAttempted != EInteractionBeingAttempted::SecondInteraction &&
 				(InteractType == TInteractionType::IT_Simple || InteractType == TInteractionType::IT_LongPress) &&
-				FortAthenaHealth::TryStartRevive(Cast<AController>(Component->GetOwner()), TargetPawn))
+				FortAthenaHealth::TryStartRevive(InteractingController, TargetPawn))
 			{
 				return;
 			}
