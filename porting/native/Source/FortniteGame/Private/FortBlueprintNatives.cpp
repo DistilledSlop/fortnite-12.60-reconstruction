@@ -1778,10 +1778,12 @@ namespace
 			{
 				return;
 			}
-			float Duration = Montage ? Target->AbilitySystemComponent->PlayMontage(Ability, Ability->GetCurrentActivationInfo(), Montage, Rate, Section) : 0.0f;
+			// Cooked consumable montage info can leave the play rate at zero.
+			const float PlayRate = FMath::IsNearlyZero(Rate) ? 1.0f : Rate;
+			float Duration = Montage ? Target->AbilitySystemComponent->PlayMontage(Ability, Ability->GetCurrentActivationInfo(), Montage, PlayRate, Section) : 0.0f;
 			if (Duration <= 0.0f)
 			{
-				Duration = Montage ? Montage->GetPlayLength() / FMath::Max(Rate, 0.01f) : 0.0f;
+				Duration = Montage ? Montage->GetPlayLength() / FMath::Abs(PlayRate) : 0.0f;
 			}
 			Duration = FMath::Max(Duration, 0.05f);
 			AfterSeconds(World, Duration * 0.9f, [Weak]()

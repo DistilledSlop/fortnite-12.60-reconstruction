@@ -17,8 +17,8 @@
 .grp-head{fill:var(--tm-group-label);font-weight:600;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 .grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style>
 <rect class="tm-bg" width="1000" height="720"/>
-<text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: 62.9% implemented</text>
-<text x="12" y="48" font-size="12" class="tm-head">112 of 178 server checks implemented | 78 verified | 66 open</text>
+<text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: 63.5% implemented</text>
+<text x="12" y="48" font-size="12" class="tm-head">113 of 178 server checks implemented | 78 verified | 65 open</text>
 <g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Lobby, accounts and Epic service compatibility
 60.4% complete (32/53)
@@ -35,11 +35,11 @@ effort weight 47 | source: equal-weight server implementation checks
 <text class="grp-head" x="7.0" y="352.0" font-size="12">Match flow and player states<tspan class="grp-pct"> · 83%</tspan></text>
 </g>
 <g><title>Items, inventory and loot
-76.7% complete (33/43)
+79.1% complete (34/43)
 effort weight 43 | source: equal-weight server implementation checks
 </title>
 <rect class="tile-frame tm-grp0" x="562.8" y="1.0" width="436.2" height="346.4" rx="4"/>
-<text class="grp-head" x="568.8" y="17.0" font-size="12">Items, inventory and loot<tspan class="grp-pct"> · 77%</tspan></text>
+<text class="grp-head" x="568.8" y="17.0" font-size="12">Items, inventory and loot<tspan class="grp-pct"> · 79%</tspan></text>
 </g>
 <g><title>Weapons and gunplay
 46.2% complete (6/13)
@@ -417,7 +417,7 @@ Implemented: Replicate the thanks flag on PlayerState for the original client&#x
 <rect class="tile-frame" x="519.5" y="467.6" width="37.3" height="159.4" rx="4"/>
 </g>
 <g><title>Inventory operations
-87.9% complete (29/33)
+90.9% complete (30/33)
 effort weight 33 | source: equal-weight server implementation checks
 Implemented: Handle quickbar selection, pickup, swap and drop on the server
 Implemented: Transfer successfully spawned elimination drops out of the victim inventory
@@ -448,17 +448,17 @@ Verified: Confirm the cooked bandage ability charges one unit of its own invento
 Verified: Debit the last bandage at authoritative ability cost commit with or without a cached controller and reject repayment from the depleted stack
 Verified: Resolve the cooked bandage stack cap of 15 and debit successive charges from the same stack
 Verified: Reject item-use charges against an unrelated inventory stack
-Open: Verify item use and gain, spend or loss reconcile with inventory including a cooked consumable activation that heals and debits its stack when GAS has no cached controller
+Implemented: Activate a cooked bandage at the default montage rate, restore health and debit its stack through authoritative GAS. Headless assertions passed with a native weapon source; the test still reports cooked asset load errors
 Implemented: Load the cooked upgrade bench table and resolve recipes by weapon and direction
 Implemented: Expose cooked recipe lookup to the upgrade bench actor and its Blueprints
 Open: Upgrade a weapon at a bench and charge the correct materials</title>
 <rect class="tile-body" x="566.8" y="25.0" width="328.2" height="318.4" rx="4"/>
 <clipPath id="servertm-c19"><rect x="566.80" y="25.00" width="328.16" height="318.41" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c19)"><rect class="tile-fill" x="566.80" y="63.60" width="328.16" height="279.82"/>
-<rect class="tile-edge" x="566.80" y="62.60" width="328.16" height="2"/>
+<g clip-path="url(#servertm-c19)"><rect class="tile-fill" x="566.80" y="53.95" width="328.16" height="289.46"/>
+<rect class="tile-edge" x="566.80" y="52.95" width="328.16" height="2"/>
 </g>
 <text class="leaf-label" x="571.8" y="40.0" font-size="11">Inventory operations</text>
-<text class="leaf-pct" x="571.8" y="53.0" font-size="12">88%</text>
+<text class="leaf-pct" x="571.8" y="53.0" font-size="12">91%</text>
 <rect class="tile-frame" x="566.8" y="25.0" width="328.2" height="318.4" rx="4"/>
 </g>
 <g><title>Loot sources
