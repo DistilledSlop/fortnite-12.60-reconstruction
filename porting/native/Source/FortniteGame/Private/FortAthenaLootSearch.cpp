@@ -582,9 +582,18 @@ FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnCon
 				RetrySeeds.Add(ContainerKey, Seed);
 			return bContainerAvailable ? EContainerLootResult::SpawnFailed : EContainerLootResult::RollFailed;
 		}
+	}
+
+	for (const AFortPickupAthena* Pickup : SpawnedPickups)
+	{
+		if (!IsValid(Pickup))
+			continue;
+
+		const FFortItemEntry& Entry = Pickup->PrimaryPickupItemEntry;
+		const FVector& Rest = Pickup->PickupLocationData.FinalTossRestLocation;
 		UE_LOG(LogTemp, Display, TEXT("LootSearch:  spawned item=%s count=%d level=%d ammo=%d loc=(%.0f,%.0f,%.0f) source=%s pickupItemGuid=%s"),
-			*Drop.Definition->GetName(), Drop.Count, Drop.Level, LoadedAmmo, SpawnLoc.X, SpawnLoc.Y, SpawnLoc.Z,
-			*Container->GetPathName(), *Pickup->PrimaryPickupItemEntry.ItemGuid.ToString());
+			*GetNameSafe(Entry.ItemDefinition), Entry.Count, Entry.Level, Entry.LoadedAmmo,
+			Rest.X, Rest.Y, Rest.Z, *Container->GetPathName(), *Entry.ItemGuid.ToString());
 	}
 
 	if (OutPickups)

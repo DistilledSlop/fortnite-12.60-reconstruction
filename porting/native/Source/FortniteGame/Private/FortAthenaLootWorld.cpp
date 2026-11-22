@@ -527,6 +527,8 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 				Container->SetActorHiddenInGame(false);
 				Container->SetActorEnableCollision(bEnableCollision);
 				Container->ForceNetUpdate();
+				UE_LOG(LogTemp, Display, TEXT("LootWorld: ground cache activated %s (%d/%d)"),
+					*Container->GetPathName(), S.ActivatedGroundCacheCount, GroundCacheLimit);
 			}
 		}
 
