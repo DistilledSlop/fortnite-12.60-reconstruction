@@ -426,7 +426,7 @@ Implemented: Fill existing partial stacks before allocating a new stack
 Implemented: Charge the configured placement cost across matching material stacks and discard unpaid placements
 Implemented: Require contiguous compatible quickbar slots before accepting a pickup or swapping an item
 Implemented: Preserve magazine ammo across partial pickups and prevent merges that would discard a loaded source while keeping self-ammo items stackable and out of magazine reloads
-Implemented: Reconcile manual drops with the quantity removed, clear quickbar slots and detach depleted stacks before weapon ability cancellation can re-enter inventory
+Implemented: Reconcile manual drops with the quantity removed, clear quickbar slots and detach depleted stacks before weapon ability cancellation can re-enter inventory (callback ordering covered by the headless inventory suite)
 Implemented: Honor destroy-on-drop and debit only the requested target during explicit pickup swaps
 Implemented: Activate the actual assigned quickbar slot after replacing a held item
 Verified: Exercise capped grants, partial-stack top-ups and multi-stack spending against replicated inventory

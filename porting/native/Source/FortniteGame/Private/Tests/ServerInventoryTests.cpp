@@ -15,6 +15,7 @@
 #include "EFortQuickBars.h"
 #include "EWorldItemDropBehavior.h"
 #include "FortAthenaBuildDamage.h"
+#include "FortAthenaCombatEquip.h"
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaLootSearch.h"
 #include "FortAthenaLootTransfer.h"
@@ -792,6 +793,52 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 	UServerRecoveryEffect::BindHealingAttribute(*PawnASC);
 	Pawn->SetMaxHealth(100.0f);
 	Pawn->SetHealth(50.0f);
+
+	UFortWorldItem* CancelledBandage = FortAthenaInventory::GiveItem(Controller, Bandage, 1);
+	if (!TestNotNull(TEXT("Bandage stack for cancellation"), CancelledBandage))
+	{
+		return false;
+	}
+	const FGuid CancelledGuid = CancelledBandage->NativeGetItemGuid();
+	Weapon->SetOwner(Pawn);
+	Weapon->SetInstigator(Pawn);
+	Weapon->ItemEntryGuid = CancelledGuid;
+	Pawn->CurrentWeapon = Weapon;
+	Pawn->CurrentWeaponList.Add(Weapon);
+	const TArray<FortAthenaCombatEquip::FGrant> Grants = {{Ability->GetClass(), 0}};
+	if (!TestTrue(TEXT("Cancellation fixture grants the primary ability"),
+		FortAthenaCombatEquip::EnsureGrants(PlayerState, Pawn, Weapon, Grants, nullptr, false)))
+	{
+		return false;
+	}
+	{
+		TGuardValue<TWeakObjectPtr<APlayerController>> LocalActivation(
+			PawnASC->AbilityActorInfo->PlayerController, TWeakObjectPtr<APlayerController>());
+		if (!TestTrue(TEXT("Cancellation fixture activates the primary ability"),
+			PawnASC->TryActivateAbility(Weapon->PrimaryAbilitySpecHandle, false)))
+		{
+			return false;
+		}
+	}
+	bool bSawAbilityEnd = false;
+	const FDelegateHandle EndCallback = PawnASC->AbilityEndedCallbacks.AddLambda([&](UGameplayAbility*)
+	{
+		bSawAbilityEnd = true;
+		TestNull(TEXT("Ability end callback sees the depleted item detached"), Inventory->NativeFindItemByGuid(CancelledGuid));
+		TestFalse(TEXT("Ability end callback sees the replicated entry removed"),
+			Inventory->Inventory.ReplicatedEntries.ContainsByPredicate([&](const FFortItemEntry& Entry)
+			{
+				return Entry.ItemGuid == CancelledGuid;
+			}));
+		TestEqual(TEXT("Ability end callback cannot remove the same item again"),
+			FortAthenaInventory::RemoveItem(Controller, CancelledGuid, 1), 0);
+	});
+	TestEqual(TEXT("Removing the active bandage debits one unit"),
+		FortAthenaInventory::RemoveItem(Controller, CancelledGuid, 1), 1);
+	PawnASC->AbilityEndedCallbacks.Remove(EndCallback);
+	TestTrue(TEXT("Removing the active bandage ends its granted ability"), bSawAbilityEnd);
+	Pawn->CurrentWeaponList.Remove(Weapon);
+	Pawn->CurrentWeapon = nullptr;
 
 	UFortWorldItem* LastBandage = FortAthenaInventory::GiveItem(Controller, Bandage, 1);
 	if (!TestNotNull(TEXT("Last bandage for activation"), LastBandage))
