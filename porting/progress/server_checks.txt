@@ -101,7 +101,7 @@ Inventory operations|implemented|Expose cooked recipe lookup to the upgrade benc
 Inventory operations|implemented|Process bench interactions on the server, preflight and charge all three materials across stacks, and replace the equipped weapon in its quickbar slot. Headless RPC checks cover insufficient funds, a fixture upgrade and a cooked rifle sidegrade using a native weapon actor|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Loot sources|verified|Exercise reconstructed loot selection with the loot contract test|porting/native/Source/FortniteGame/Private/Tests/FortAthenaLootRollTests.cpp
 Loot sources|implemented|Search a chest and replicate its searched state|eacae928
-Loot sources|open|Verify chest, ammo crate and world loot contents and contested pickups. Headless checks cover Blueprint pickup spawn positions, including directional tosses
+Loot sources|open|Verify chest, ammo crate and world loot contents and contested pickups. Headless checks cover directional Blueprint pickup tosses and owner-only collection
 Loot sources|open|Find and search a Loot Llama and validate its drops
 Loot sources|open|Spawn, land and open a supply drop, then verify its loot
 World items and traversal|verified|Apply selected cooked consumable recovery effects with server caps|8a616111

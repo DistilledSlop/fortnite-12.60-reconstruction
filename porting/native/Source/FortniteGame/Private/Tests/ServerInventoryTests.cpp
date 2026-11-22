@@ -127,6 +127,114 @@ bool FServerBlueprintPickupTossTest::RunTest(const FString&)
 	return true;
 }
 
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FServerBlueprintPickupOwnershipTest, "Fortnite.Server.Inventory.BlueprintPickupOwnership",
+	EAutomationTestFlags::ClientContext | EAutomationTestFlags::ServerContext | EAutomationTestFlags::EngineFilter)
+
+bool FServerBlueprintPickupOwnershipTest::RunTest(const FString&)
+{
+	if (!IsRunningDedicatedServer() || !FortAthenaInventory::IsEnabled())
+	{
+		AddInfo(TEXT("Requires a dedicated server launched with -FortniteOriginalClient."));
+		return true;
+	}
+	UWorld* World = nullptr;
+	for (const FWorldContext& Context : GEngine->GetWorldContexts())
+	{
+		if (Context.World() && Context.World()->GetNetMode() == NM_DedicatedServer)
+		{
+			World = Context.World();
+			break;
+		}
+	}
+	if (!TestNotNull(TEXT("Dedicated server world"), World))
+		return false;
+
+	AFortPlayerControllerAthena* Owner = World->SpawnActor<AFortPlayerControllerAthena>();
+	AFortPlayerControllerAthena* Other = World->SpawnActor<AFortPlayerControllerAthena>();
+	AFortInventory* OwnerInventory = World->SpawnActor<AFortInventory>();
+	AFortInventory* OtherInventory = World->SpawnActor<AFortInventory>();
+	const FVector Position(1200.0f, 2300.0f, 16000.0f);
+	AFortPlayerPawnAthena* OwnerPawn = World->SpawnActor<AFortPlayerPawnAthena>(Position, FRotator::ZeroRotator);
+	AFortPlayerPawnAthena* OtherPawn = World->SpawnActor<AFortPlayerPawnAthena>(Position + FVector(150, 0, 0), FRotator::ZeroRotator);
+	ON_SCOPE_EXIT
+	{
+		if (Owner) { Owner->WorldInventory = nullptr; Owner->Destroy(); }
+		if (Other) { Other->WorldInventory = nullptr; Other->Destroy(); }
+		if (OwnerPawn) OwnerPawn->Destroy();
+		if (OtherPawn) OtherPawn->Destroy();
+		if (OwnerInventory) OwnerInventory->Destroy();
+		if (OtherInventory) OtherInventory->Destroy();
+	};
+	if (!TestNotNull(TEXT("Owner controller"), Owner) || !TestNotNull(TEXT("Other controller"), Other) ||
+		!TestNotNull(TEXT("Owner inventory"), OwnerInventory) || !TestNotNull(TEXT("Other inventory"), OtherInventory) ||
+		!TestNotNull(TEXT("Owner pawn"), OwnerPawn) || !TestNotNull(TEXT("Other pawn"), OtherPawn))
+		return false;
+	Owner->WorldInventory = OwnerInventory;
+	Other->WorldInventory = OtherInventory;
+	Owner->Possess(OwnerPawn);
+	Other->Possess(OtherPawn);
+	if (!TestTrue(TEXT("Owner controls its pawn"), OwnerPawn->GetController() == Owner) ||
+		!TestTrue(TEXT("Other player controls its pawn"), OtherPawn->GetController() == Other))
+		return false;
+
+	UFortKismetLibrary* Library = GetMutableDefault<UFortKismetLibrary>();
+	UFunction* Spawn = Library->FindFunction(TEXT("K2_SpawnPickupInWorld"));
+	if (!TestNotNull(TEXT("Blueprint pickup spawn function"), Spawn))
+		return false;
+	UFortResourceItemDefinition* Definition = NewObject<UFortResourceItemDefinition>(World);
+	Definition->ItemType = EFortItemType::WorldResource;
+	Definition->MaxStackSize = FScalableFloat(10.0f);
+	Definition->bAllowMultipleStacks = true;
+	// This layout follows the generated reflected function declaration.
+	struct FSpawnParams
+	{
+		UObject* WorldContextObject; UFortWorldItemDefinition* ItemDefinition;
+		int32 NumberToSpawn; FVector Position; FVector Direction; int32 OverrideMaxStackCount;
+		bool bToss; bool bRandomRotation; bool bBlockedFromAutoPickup; int32 PickupInstigatorHandle;
+		EFortPickupSourceTypeFlag SourceType; EFortPickupSpawnSource Source;
+		AFortPlayerController* OptionalOwnerPC; bool bPickupOnlyRelevantToOwner; AFortPickup* ReturnValue;
+	};
+	FSpawnParams Params{World, Definition, 1, Position, FVector::ZeroVector, 0, false, false, false, 0,
+		EFortPickupSourceTypeFlag::Other, EFortPickupSpawnSource::Unset, nullptr, true, nullptr};
+	Library->ProcessEvent(Spawn, &Params);
+	TestNull(TEXT("Private pickup requires an owner"), Params.ReturnValue);
+	if (Params.ReturnValue) Params.ReturnValue->Destroy();
+	Params.OptionalOwnerPC = Owner;
+	Params.ReturnValue = nullptr;
+	Library->ProcessEvent(Spawn, &Params);
+	AFortPickup* PrivatePickup = Params.ReturnValue;
+	if (!TestNotNull(TEXT("Private pickup spawned"), PrivatePickup))
+		return false;
+	ON_SCOPE_EXIT { PrivatePickup->Destroy(); };
+	TestTrue(TEXT("Private pickup has the requested owner"), PrivatePickup->GetOwner() == Owner);
+	TestTrue(TEXT("Private pickup is only relevant to its owner"), PrivatePickup->bOnlyRelevantToOwner);
+	OtherPawn->ServerHandlePickup(PrivatePickup, 0.25f, FVector::ZeroVector, false);
+	TestEqual(TEXT("Other player receives no items from the private pickup"), OtherInventory->Inventory.ReplicatedEntries.Num(), 0);
+	TestFalse(TEXT("Rejected private pickup remains available"), PrivatePickup->bPickedUp);
+	TestEqual(TEXT("Rejected private pickup retains its count"), PrivatePickup->PrimaryPickupItemEntry.Count, 1);
+	OwnerPawn->ServerHandlePickup(PrivatePickup, 0.25f, FVector::ZeroVector, false);
+	TestTrue(TEXT("Owner can collect the private pickup"), PrivatePickup->bPickedUp);
+	if (TestEqual(TEXT("Owner receives one stack"), OwnerInventory->Inventory.ReplicatedEntries.Num(), 1))
+	{
+		TestTrue(TEXT("Owner receives the requested item"), OwnerInventory->Inventory.ReplicatedEntries[0].ItemDefinition == Definition);
+		TestEqual(TEXT("Owner receives one unit"), OwnerInventory->Inventory.ReplicatedEntries[0].Count, 1);
+	}
+	Params.bPickupOnlyRelevantToOwner = false;
+	Params.ReturnValue = nullptr;
+	Library->ProcessEvent(Spawn, &Params);
+	if (TestNotNull(TEXT("Public pickup spawned"), Params.ReturnValue))
+	{
+		AFortPickup* PublicPickup = Params.ReturnValue;
+		ON_SCOPE_EXIT { PublicPickup->Destroy(); };
+		TestTrue(TEXT("Public pickup retains the requested owner"), PublicPickup->GetOwner() == Owner);
+		TestFalse(TEXT("Public pickup is relevant to other players"), PublicPickup->bOnlyRelevantToOwner);
+		OtherPawn->ServerHandlePickup(PublicPickup, 0.25f, FVector::ZeroVector, false);
+		TestTrue(TEXT("Other player can collect the public pickup"), PublicPickup->bPickedUp);
+		TestEqual(TEXT("Other player receives the public pickup"), OtherInventory->Inventory.ReplicatedEntries.Num(), 1);
+	}
+	return true;
+}
+
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FServerInventoryStacksTest, "Fortnite.Server.Inventory.StackAccounting",
 	EAutomationTestFlags::ClientContext | EAutomationTestFlags::ServerContext | EAutomationTestFlags::EngineFilter)
 

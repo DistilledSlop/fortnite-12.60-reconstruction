@@ -26,14 +26,25 @@ bool FortAthenaLoot::IsEnabled()
 }
 
 AFortPickupAthena* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVector& Location,
-	UFortItemDefinition* Definition, int32 Count, int32 Level, int32 LoadedAmmo, const FVector* TossFrom)
+	UFortItemDefinition* Definition, int32 Count, int32 Level, int32 LoadedAmmo, const FVector* TossFrom,
+	AFortPlayerController* Owner, bool bOnlyRelevantToOwner)
 {
 	if (!IsEnabled() || !World || World->GetNetMode() == NM_Client || !Definition || Count <= 0)
 		return nullptr;
 
+	if (!IsValid(Owner) || Owner->GetWorld() != World)
+	{
+		if (bOnlyRelevantToOwner)
+		{
+			return nullptr;
+		}
+		Owner = nullptr;
+	}
+
 	// stand-in: native pickup selection, initialization and toss behavior still need recovery.
 	// The result is not connected to a table roll or a map spawner yet.
 	FActorSpawnParameters Parameters;
+	Parameters.Owner = Owner;
 	Parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	const FVector SpawnAt = TossFrom ? *TossFrom : Location;
 	AFortPickupAthena* Pickup = World->SpawnActor<AFortPickupAthena>(SpawnAt, FRotator::ZeroRotator, Parameters);
@@ -41,6 +52,11 @@ AFortPickupAthena* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVec
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Loot: failed to spawn resolved pickup"));
 		return nullptr;
+	}
+	if (bOnlyRelevantToOwner)
+	{
+		Pickup->bOnlyRelevantToOwner = true;
+		Pickup->bAlwaysRelevant = false;
 	}
 	// The generated pickup has no root component (see InitializeWorldPickup): give it one at the requested location first.
 	FortAthenaLootTransfer::InitializeWorldPickup(Pickup, SpawnAt);

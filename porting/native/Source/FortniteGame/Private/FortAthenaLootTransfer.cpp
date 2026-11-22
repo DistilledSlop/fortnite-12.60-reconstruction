@@ -860,6 +860,11 @@ namespace
 			return false;
 		}
 
+		if (Pickup->bOnlyRelevantToOwner && Pickup->GetOwner() != PC)
+		{
+			return false;
+		}
+
 		if (Pickup->GetRootComponent())
 		{
 			const float DistSq = FVector::DistSquared(Pawn->GetActorLocation(), Pickup->GetActorLocation());
