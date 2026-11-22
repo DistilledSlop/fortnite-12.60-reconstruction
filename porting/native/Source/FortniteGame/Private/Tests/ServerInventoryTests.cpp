@@ -461,6 +461,45 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	TestEqual(TEXT("Rejected pickup preserves the inventory total"), Second->ItemEntry.Count, 10);
 	TestEqual(TEXT("Rejected pickup preserves the ground remainder"), Pickup->PrimaryPickupItemEntry.Count, 2);
 
+	// Discard paths debit inventory without creating a collectible actor.
+	UFortResourceItemDefinition* Discard = NewObject<UFortResourceItemDefinition>(Inventory);
+	Discard->ItemType = EFortItemType::WorldResource;
+	Discard->MaxStackSize = FScalableFloat(10.0f);
+	Discard->bCanBeDropped = false;
+	UFortWorldItem* DiscardStack = FortAthenaInventory::GiveItem(Controller, Discard, 5);
+	if (TestNotNull(TEXT("Discard fixture stack"), DiscardStack))
+	{
+		const FGuid DiscardGuid = DiscardStack->NativeGetItemGuid();
+		Controller->ServerAttemptInventoryDrop(DiscardGuid, 2, false);
+		Controller->ServerAttemptInventoryDrop(DiscardGuid, 2, true);
+		TestEqual(TEXT("Protected stacks reject both drop and trash"), DiscardStack->ItemEntry.Count, 5);
+
+		Discard->bCanBeDropped = true;
+		Controller->ServerAttemptInventoryDrop(DiscardGuid, 2, true);
+		TestEqual(TEXT("Trash debits only the requested quantity"), DiscardStack->ItemEntry.Count, 3);
+		const FFortItemEntry* ReplicatedDiscard = Inventory->Inventory.ReplicatedEntries.FindByPredicate(
+			[DiscardGuid](const FFortItemEntry& Entry) { return Entry.ItemGuid == DiscardGuid; });
+		if (TestNotNull(TEXT("Partially trashed stack remains replicated"), ReplicatedDiscard))
+		{
+			TestEqual(TEXT("Replicated count reflects the trash debit"), ReplicatedDiscard->Count, 3);
+		}
+
+		Discard->DropBehavior = EWorldItemDropBehavior::DestroyOnDrop;
+		Controller->ServerAttemptInventoryDrop(DiscardGuid, 3, false);
+		TestNull(TEXT("Destroy-on-drop removes the exhausted stack"), Inventory->NativeFindItemByGuid(DiscardGuid));
+		TestFalse(TEXT("Destroy-on-drop removes the exhausted replicated entry"),
+			Inventory->Inventory.ReplicatedEntries.ContainsByPredicate(
+				[DiscardGuid](const FFortItemEntry& Entry) { return Entry.ItemGuid == DiscardGuid; }));
+		for (TActorIterator<AFortPickupAthena> It(World); It; ++It)
+		{
+			if (It->PrimaryPickupItemEntry.ItemDefinition == Discard)
+			{
+				AddError(TEXT("A protected drop, trash or destroy-on-drop spawned a world pickup"));
+				It->Destroy();
+			}
+		}
+	}
+
 	Controller->ServerAttemptInventoryDrop(SecondGuid, 0, false);
 	TestEqual(TEXT("A zero-count drop preserves the stack"), Second->ItemEntry.Count, 10);
 	Controller->ServerAttemptInventoryDrop(SecondGuid, 4, false);
