@@ -445,7 +445,7 @@ Open: Verify five loadout slots and separate pickaxe, trap and material storage
 Verified: Verify server stack merges preserve overflow, remove depleted sources and update replicated counts
 Open: Verify slot reorder, stack split and auto-pickup rules on two clients
 Verified: Confirm the cooked bandage ability charges one unit of its own inventory definition at commit
-Verified: Debit the last bandage at authoritative ability cost commit and reject repayment from the depleted stack
+Verified: Debit the last bandage at authoritative ability cost commit with or without a cached controller and reject repayment from the depleted stack
 Verified: Resolve the cooked bandage stack cap of 15 and debit successive charges from the same stack
 Verified: Reject item-use charges against an unrelated inventory stack
 Open: Verify item use and gain, spend or loss reconcile with inventory including a cooked consumable activation that heals and debits its stack when GAS has no cached controller

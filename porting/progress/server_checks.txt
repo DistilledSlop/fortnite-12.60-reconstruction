@@ -92,7 +92,7 @@ Inventory operations|open|Verify five loadout slots and separate pickaxe, trap a
 Inventory operations|verified|Verify server stack merges preserve overflow, remove depleted sources and update replicated counts|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|open|Verify slot reorder, stack split and auto-pickup rules on two clients
 Inventory operations|verified|Confirm the cooked bandage ability charges one unit of its own inventory definition at commit|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
-Inventory operations|verified|Debit the last bandage at authoritative ability cost commit and reject repayment from the depleted stack|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
+Inventory operations|verified|Debit the last bandage at authoritative ability cost commit with or without a cached controller and reject repayment from the depleted stack|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|verified|Resolve the cooked bandage stack cap of 15 and debit successive charges from the same stack|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|verified|Reject item-use charges against an unrelated inventory stack|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|open|Verify item use and gain, spend or loss reconcile with inventory including a cooked consumable activation that heals and debits its stack when GAS has no cached controller

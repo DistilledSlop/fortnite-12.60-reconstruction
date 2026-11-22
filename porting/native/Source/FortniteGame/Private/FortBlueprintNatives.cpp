@@ -8,6 +8,7 @@
 // binary: the original bodies are not recovered; each function is a stand-in derived from the name, the signature and the Blueprint
 // call sites. Only server-authoritative behaviour is implemented here; client-only/cosmetic natives are not touched.
 #include "FortBlueprintNatives.h"
+#include "WeaponHudKeyActionVisibility.h"
 #include "CoreMinimal.h"
 #include "UObject/Class.h"
 #include "UObject/Stack.h"
