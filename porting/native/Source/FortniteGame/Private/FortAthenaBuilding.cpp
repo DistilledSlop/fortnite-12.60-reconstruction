@@ -62,18 +62,24 @@ namespace
 		const ABuildingSMActor* Default = Cast<ABuildingSMActor>(Class->GetDefaultObject());
 		if (!Default) return;
 		const bool bInfinite = FParse::Param(FCommandLine::Get(), TEXT("FortniteInfiniteBuildMaterials"));
-		UFortWorldItem* Material = nullptr;
+		TArray<FGuid> MaterialStacks;
+		int64 AvailableMaterials = 0;
 		if (Controller->WorldInventory)
 		{
 			for (UFortWorldItem* Item : Controller->WorldInventory->Inventory.ItemInstances)
 			{
 				const UFortResourceItemDefinition* Resource = Item ? Cast<UFortResourceItemDefinition>(Item->ItemEntry.ItemDefinition) : nullptr;
-				if (Resource && Resource->ResourceType == Default->ResourceType && Item->ItemEntry.Count > 0) { Material = Item; break; }
+				if (Resource && Resource->ResourceType == Default->ResourceType && Item->ItemEntry.Count > 0)
+				{
+					MaterialStacks.Add(Item->ItemEntry.ItemGuid);
+					AvailableMaterials += Item->ItemEntry.Count;
+				}
 			}
 		}
-		if (!bInfinite && (!Material || Material->ItemEntry.Count < BuildCost))
+		if (!bInfinite && AvailableMaterials < BuildCost)
 		{
-			UE_LOG(LogTemp, Display, TEXT("Building: refused %s: %d resource type %d available, %d required"), *Class->GetName(), Material ? Material->ItemEntry.Count : 0, int32(Default->ResourceType.GetValue()), BuildCost);
+			UE_LOG(LogTemp, Display, TEXT("Building: refused %s: %lld resource type %d available, %d required"),
+				*Class->GetName(), AvailableMaterials, int32(Default->ResourceType.GetValue()), BuildCost);
 			return;
 		}
 		// Placement validation. The client snaps its preview to the building grid and only sends placements it considers valid; the server
@@ -117,10 +123,17 @@ namespace
 			Piece->SetTeam(PS->TeamIndex);
 		FortAthenaBuildDamage::InitializePlayerBuiltPiece(Piece, Controller);
 		Piece->ForceNetUpdate();
-		const int32 Remaining = Material ? Material->ItemEntry.Count - (bInfinite ? 0 : BuildCost) : -1;
-		if (!bInfinite && Material)
-			FortAthenaInventory::RemoveItem(Controller, Material->ItemEntry.ItemGuid, BuildCost);
-		UE_LOG(LogTemp, Display, TEXT("Building: placed %s (%s) at %s yaw %.0f mirrored %d resource type %d left %d"), *Piece->GetName(), *Tool,
+		int32 CostRemaining = bInfinite ? 0 : BuildCost;
+		for (const FGuid& Guid : MaterialStacks)
+		{
+			if (CostRemaining == 0)
+			{
+				break;
+			}
+			CostRemaining -= FortAthenaInventory::RemoveItem(Controller, Guid, CostRemaining);
+		}
+		const int64 Remaining = AvailableMaterials - (bInfinite ? 0 : BuildCost - CostRemaining);
+		UE_LOG(LogTemp, Display, TEXT("Building: placed %s (%s) at %s yaw %.0f mirrored %d resource type %d left %lld"), *Piece->GetName(), *Tool,
 			*FVector(Data.BuildLoc).ToString(), Data.BuildRot.Yaw, Data.bMirrored ? 1 : 0, int32(Default->ResourceType.GetValue()), Remaining);
 	}
 
