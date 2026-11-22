@@ -462,11 +462,15 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 
 	ScanInventory(Inventory, nullptr, TEXT("before"));
 	const int32 MaxStack = FMath::Max(1, Definition->NativeGetMaxStackSize(nullptr));
-	// Stack onto an existing entry of the same definition.
+	// Fill matching stacks before creating a new one.
 	if (Count > 0 && Definition->IsStackable())
 	{
-		if (UFortWorldItem* Existing = Inventory->NativeFindWorldItemByDefinition(Definition, true))
+		for (UFortWorldItem* Existing : Inventory->Inventory.ItemInstances)
 		{
+			if (!Existing || Existing->GetItemDefinitionBP() != Definition)
+			{
+				continue;
+			}
 			const int32 Room = FMath::Max(0, MaxStack - Existing->ItemEntry.Count);
 			const int32 Added = FMath::Min(Room, Count);
 			if (Added > 0)
