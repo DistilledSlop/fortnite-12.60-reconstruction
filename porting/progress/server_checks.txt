@@ -83,6 +83,7 @@ Inventory operations|verified|Reject repeat claims, reconcile discarded stacks a
 Inventory operations|verified|Transfer a split drop between two server-side players and reject repeat claims|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|verified|Collect every entry in a multi-item pickup when the combined quantity exceeds a signed 32-bit count|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|verified|Preserve Blueprint inventory quantity and removal results when matching stacks exceed a signed 32-bit count|porting/native/Source/FortniteGame/Private/FortBlueprintNatives.cpp
+Inventory operations|implemented|Require the owned inventory instance when removing items by object through Blueprint|porting/native/Source/FortniteGame/Private/FortBlueprintNatives.cpp
 Inventory operations|verified|Remove items from a single server inventory stack by GUID through Blueprint|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|implemented|Remove destroy-on-drop stacks during elimination without spawning pickups|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
 Inventory operations|verified|Transfer eligible elimination loot once and preserve protected stacks|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp

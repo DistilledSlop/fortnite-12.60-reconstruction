@@ -492,9 +492,11 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	UFunction* QueryFunction = Library->FindFunction(FName(TEXT("K2_GetItemQuantityOnPlayer")));
 	UFunction* RemoveFunction = Library->FindFunction(FName(TEXT("K2_RemoveItemFromPlayer")));
 	UFunction* RemoveByGuidFunction = Library->FindFunction(FName(TEXT("K2_RemoveItemFromPlayerByGuid")));
+	UFunction* RemoveInstanceFunction = Library->FindFunction(FName(TEXT("K2_RemoveFortItemFromPlayer")));
 	if (!TestNotNull(TEXT("Blueprint quantity function"), QueryFunction) ||
 		!TestNotNull(TEXT("Blueprint removal function"), RemoveFunction) ||
-		!TestNotNull(TEXT("Blueprint removal by GUID function"), RemoveByGuidFunction))
+		!TestNotNull(TEXT("Blueprint removal by GUID function"), RemoveByGuidFunction) ||
+		!TestNotNull(TEXT("Blueprint removal by instance function"), RemoveInstanceFunction))
 	{
 		return false;
 	}
@@ -524,7 +526,24 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	TestEqual(TEXT("GUID removal debits the selected stack"), TargetStack->ItemEntry.Count, BundleStackCount - 2);
 	Library->ProcessEvent(QueryFunction, &Query);
 	TestEqual(TEXT("GUID removal preserves the other matching stack"), Query.ReturnValue, MAX_int32 - 1);
-	FortAthenaInventory::GiveItem(Controller, BundleFirst, 2);
+	UFortWorldItem* DetachedCopy = NewObject<UFortWorldItem>(Inventory);
+	DetachedCopy->ItemEntry = TargetStack->ItemEntry;
+	struct
+	{
+		AFortPlayerController* PlayerController;
+		UFortItem* Item;
+		int32 AmountToRemove;
+		bool bForceRemoval;
+		int32 ReturnValue;
+	} RemoveInstance{Controller, DetachedCopy, 1, false, -1};
+	Library->ProcessEvent(RemoveInstanceFunction, &RemoveInstance);
+	TestEqual(TEXT("A detached item with a matching GUID cannot debit inventory"), RemoveInstance.ReturnValue, 0);
+	TestEqual(TEXT("Detached removal preserves the live stack"), TargetStack->ItemEntry.Count, BundleStackCount - 2);
+	RemoveInstance.Item = TargetStack;
+	Library->ProcessEvent(RemoveInstanceFunction, &RemoveInstance);
+	TestEqual(TEXT("Removing the owned instance reports the debit"), RemoveInstance.ReturnValue, 1);
+	TestEqual(TEXT("Removing the owned instance debits the selected stack"), TargetStack->ItemEntry.Count, BundleStackCount - 3);
+	FortAthenaInventory::GiveItem(Controller, BundleFirst, 3);
 
 	struct
 	{
