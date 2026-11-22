@@ -249,10 +249,13 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 	TArray<ABuildingContainer*> Candidates;
 	const auto AddMarker = [&S, &Candidates](ABuildingContainer* Container)
 	{
+		const TArray<FName>* ActorTags = nullptr;
+		const TArray<FName>* ClassTags = nullptr;
 		if (IsValid(Container) && S.ConfiguredMarkerTags.Num() > 0)
 		{
 			const FString ActorPath = Container->GetPathName();
-			if (const TArray<FName>* Tags = S.ConfiguredMarkerTags.Find(ActorPath))
+			ActorTags = S.ConfiguredMarkerTags.Find(ActorPath);
+			if (ActorTags)
 			{
 				TWeakObjectPtr<ABuildingContainer>& Seen = S.SeenConfiguredMarkers.FindOrAdd(ActorPath);
 				if (Seen.Get() != Container)
@@ -260,9 +263,9 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 					Seen = Container;
 					if (IsAvailableLootContainer(Container) && FortAthenaLootSearch::ResolveContainerLootTierGroup(Container) != NAME_None)
 					{
-						for (const FName& Tag : *Tags)
+						for (const FName& Tag : *ActorTags)
 							Container->Tags.AddUnique(Tag);
-						UE_LOG(LogTemp, Display, TEXT("LootWorld: configured marker %s tags=%d"), *ActorPath, Tags->Num());
+						UE_LOG(LogTemp, Display, TEXT("LootWorld: configured marker %s tags=%d"), *ActorPath, ActorTags->Num());
 					}
 					else
 					{
@@ -285,15 +288,15 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 		if (S.ConfiguredMarkerClassTags.Num() > 0)
 		{
 			const FString ClassPath = Container->GetClass()->GetPathName();
-			const TArray<FName>* Tags = S.ConfiguredMarkerClassTags.Find(ClassPath);
-			if (Tags && FortAthenaLootSearch::ResolveContainerLootTierGroup(Container) != NAME_None)
+			ClassTags = S.ConfiguredMarkerClassTags.Find(ClassPath);
+			if (ClassTags && FortAthenaLootSearch::ResolveContainerLootTierGroup(Container) != NAME_None)
 			{
 				if (!S.MatchedMarkerClasses.Contains(ClassPath))
 				{
 					S.MatchedMarkerClasses.Add(ClassPath);
 					UE_LOG(LogTemp, Display, TEXT("LootWorld: configured marker class %s matched %s"), *ClassPath, *Container->GetPathName());
 				}
-				for (const FName& Tag : *Tags)
+				for (const FName& Tag : *ClassTags)
 					Container->Tags.AddUnique(Tag);
 			}
 		}
@@ -316,13 +319,27 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 			return;
 		}
 
-		for (const FName& Tag : Container->Tags)
+		constexpr const TCHAR* Prefix = TEXT("LootDeliverySeconds=");
+		const auto FindDeliveryTag = [Prefix](const TArray<FName>* Tags, FString& OutTag)
 		{
-			const FString TagText = Tag.ToString();
-			constexpr const TCHAR* Prefix = TEXT("LootDeliverySeconds=");
-			if (!TagText.StartsWith(Prefix))
-				continue;
+			if (!Tags)
+				return false;
+			for (const FName& Tag : *Tags)
+			{
+				const FString Text = Tag.ToString();
+				if (Text.StartsWith(Prefix))
+				{
+					OutTag = Text;
+					return true;
+				}
+			}
+			return false;
+		};
 
+		FString TagText;
+		if (FindDeliveryTag(ActorTags, TagText) || FindDeliveryTag(ClassTags, TagText) ||
+			FindDeliveryTag(&Container->Tags, TagText))
+		{
 			float Delay = 0.0f;
 			if (FDefaultValueHelper::ParseFloat(TagText.Mid(FCString::Strlen(Prefix)), Delay) && FMath::IsFinite(Delay) && Delay >= 0.0f)
 			{
