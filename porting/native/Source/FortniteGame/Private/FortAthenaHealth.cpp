@@ -486,7 +486,8 @@ namespace
 	{
 		const AFortPawn* Helper = Reviver ? Cast<AFortPawn>(Reviver->GetPawn()) : nullptr;
 		if (!IsValid(Target) || !IsValid(Helper) || Helper == Target || !Target->HasAuthority() ||
-			!Target->bIsDBNO || Target->bIsDying || Target->bIsBeingDBNOCarried || !Target->GetController() ||
+			!Target->bIsDBNO || Target->bIsDying || Target->GetHealth() <= 0.0f ||
+			Target->bIsBeingDBNOCarried || !Target->GetController() ||
 			Helper->bIsDBNO || Helper->bIsDying || Helper->GetHealth() <= 0.0f ||
 			Helper->GetWorld() != Target->GetWorld())
 		{
