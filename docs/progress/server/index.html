@@ -24,9 +24,9 @@ td:nth-child(2) { white-space: nowrap; }
 <img src="server-implementation-treemap-v5.svg" width="1000" height="720" style="max-width:100%;height:auto" alt="Dedicated-server progress treemap">
 <p>The server can host a local match for the original 12.60 client, including a Battle Bus drop onto Apollo. The goal is a complete multiplayer match with authoritative gameplay, replication, and the backend services the original client uses.</p>
 <!-- checks:start -->
-<p><strong>75/140 server checks implemented (53.6%).</strong> 58 are verified, 17 await verification, 65 remain open, and 7 client-only checks are tracked outside the server score.</p>
+<p><strong>76/141 server checks implemented (53.9%).</strong> 59 are verified, 17 await verification, 65 remain open, and 7 client-only checks are tracked outside the server score.</p>
 <p>Coverage = (implemented checks + verified checks) ÷ all server checks. Area and capability scores use the same formula. Every check has equal weight. Verified means the stated behavior has a recorded headless test, service test, or original-client observation. Implementation-only checks have a source reference. Each check contributes at most one point.</p>
-<h2>Match flow and player states <small>30/37 implemented (81.1%)</small></h2>
+<h2>Match flow and player states <small>31/38 implemented (81.6%)</small></h2>
 <div class="table"><table aria-label="Match flow and player states">
 <thead><tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Acceptance check</th><th scope="col">Evidence</th></tr></thead><tbody>
 <tr><th scope="row">Hosting and drop</th><td>Verified</td><td>Build and boot the Linux dedicated target and run headless automation</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/417bfc45">Source</a></td></tr>
@@ -39,6 +39,7 @@ td:nth-child(2) { white-space: nowrap; }
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Drain two downed health per bleed tick while a teammate stands and resolve squad wipes</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/6b2e9a77">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Pick up and drop a downed teammate</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/b3295a17">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Apply configured forward and upward throw velocity</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/d714d0e5">Source</a></td></tr>
+<tr><th scope="row">DBNO</th><td>Verified</td><td>Clear a pending throw when a downed player is picked up again before the movement tick</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/7112068e">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Complete and cancel a timed teammate revive</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/2b0c4d87">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Keep revived health through the old bleed deadline and start a new bleed cycle on the next knock</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/2d2d3589">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Suppress knocks when a team playlist disables DBNO</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/ba715d19">Source</a></td></tr>
