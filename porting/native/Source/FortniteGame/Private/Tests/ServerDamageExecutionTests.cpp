@@ -201,6 +201,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 					Player->bIsDBNO && Player->DBNORevivalStacking == 0 && !Helper->ItemInteractionActor);
 				TestEqual(TEXT("Leaving revive range leaves downed health unchanged"), Player->GetHealth(), 60.0f);
 				TestFalse(TEXT("A revive cannot start outside range"), FortAthenaHealth::TryStartRevive(Reviver, Player));
+				Player->SetMaxHealth(20.0f);
 				Player->SetActorLocation(FVector(175, 0, 12000));
 				TestTrue(TEXT("Returning to range allows another revive"), FortAthenaHealth::TryStartRevive(Reviver, Player));
 			}
@@ -213,7 +214,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 		if (Helper && Player && Fixtures[0].IsValid() && Fixtures[1].IsValid() && Fixtures[4].IsValid() && Fixtures[5].IsValid())
 		{
 			TestFalse(TEXT("A completed revive clears the downed state"), Player->bIsDBNO);
-			TestEqual(TEXT("A completed revive restores 30 health"), Player->GetHealth(), 30.0f);
+			TestEqual(TEXT("A completed revive respects the standing health cap"), Player->GetHealth(), 20.0f);
 			TestTrue(TEXT("A completed revive clears both interaction states"),
 				!Helper->ItemInteractionActor && Player->DBNORevivalStacking == 0);
 			AController* Reviver = CastChecked<AController>(Fixtures[0].Get());

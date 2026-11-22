@@ -530,7 +530,7 @@ bool FortAthenaHealth::TryStartRevive(AController* Reviver, AFortPawn* Target)
 				Player->DBNORevivalStacking = 0;
 				if (bCanContinue)
 				{
-					Player->SetHealth(30.0f);
+					Player->SetHealth(FMath::Min(30.0f, Player->GetMaxHealth()));
 					Player->bIsDBNO = false;
 					Player->bPlayedDying = false;
 					if (!Player->bWasCrouchedBeforeDBNO)
