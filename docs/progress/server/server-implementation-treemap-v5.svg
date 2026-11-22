@@ -424,7 +424,7 @@ Implemented: Transfer successfully spawned elimination drops out of the victim i
 Implemented: Cap new inventory stacks and report the quantity accepted from pickups
 Implemented: Fill existing partial stacks before allocating a new stack
 Implemented: Charge the configured placement cost across matching material stacks and discard unpaid placements
-Implemented: Require enough contiguous quickbar slots before accepting a pickup or swapping an item
+Implemented: Require contiguous compatible quickbar slots before accepting a pickup or swapping an item
 Implemented: Preserve magazine ammo across partial pickups and prevent merges that would discard a loaded source while keeping self-ammo items stackable and out of magazine reloads
 Implemented: Reconcile manual drops with the quantity removed and clear slots through inventory removal
 Implemented: Honor destroy-on-drop and the outgoing inventory debit during pickup swaps

@@ -126,12 +126,13 @@ namespace
 	// Uses AFortPlayerControllerAthena::QuickBarDefinitions when populated, otherwise canonical Athena BR layout
 	// derived from 0x1419d3cf0 / 0x1423bd5e0 / 0x142049610.
 	bool ResolveQuickBarRange(const AFortPlayerController* Controller, const UFortItemDefinition* Def,
-		EFortQuickBars& OutBar, int32& OutMinSlot, int32& OutMaxSlot, int32& OutMaxSlotsInBar)
+		EFortQuickBars& OutBar, int32& OutMinSlot, int32& OutMaxSlot, int32& OutMaxSlotsInBar, const FQuickBarData*& OutBarDefinition)
 	{
 		OutBar = EFortQuickBars::Max_None;
 		OutMinSlot = INDEX_NONE;
 		OutMaxSlot = INDEX_NONE;
 		OutMaxSlotsInBar = 0;
+		OutBarDefinition = nullptr;
 
 		if (!Def)
 		{
@@ -174,6 +175,7 @@ namespace
 					OutMinSlot = FirstMatch;
 					OutMaxSlot = LastMatch;
 					OutMaxSlotsInBar = NumSlots;
+					OutBarDefinition = &BarDef;
 					return true;
 				}
 			}
@@ -289,8 +291,9 @@ namespace
 		return FMath::Max(1, Span);
 	}
 
-	// Checks for Span consecutive empty slots in [MinSlot, MaxSlot].
-	int32 FindFreeSlotRange(const TArray<FGuid>& Slots, int32 MinSlot, int32 MaxSlot, int32 Span)
+	// Checks for Span consecutive empty slots that accept the item type.
+	int32 FindFreeSlotRange(const TArray<FGuid>& Slots, int32 MinSlot, int32 MaxSlot, int32 Span,
+		const FQuickBarData* BarDefinition, EFortItemType ItemType)
 	{
 		const int32 ClampedMin = FMath::Max(0, MinSlot);
 		const int32 ClampedMax = FMath::Min(MaxSlot, Slots.Num() - 1);
@@ -304,7 +307,9 @@ namespace
 			bool bAllFree = true;
 			for (int32 Offset = 0; Offset < Span; ++Offset)
 			{
-				if (Slots[Start + Offset].IsValid())
+				const int32 Slot = Start + Offset;
+				if (Slots[Slot].IsValid() ||
+					(BarDefinition && !BarDefinition->QuickbarSlots[Slot].AcceptedItemTypes.Contains(ItemType)))
 				{
 					bAllFree = false;
 					break;
@@ -568,7 +573,8 @@ namespace
 		int32 MinSlot = INDEX_NONE;
 		int32 MaxSlot = INDEX_NONE;
 		int32 MaxSlotsInBar = 0;
-		const bool bNeedsQuickBar = ResolveQuickBarRange(PC, Def, TargetBar, MinSlot, MaxSlot, MaxSlotsInBar);
+		const FQuickBarData* BarDefinition = nullptr;
+		const bool bNeedsQuickBar = ResolveQuickBarRange(PC, Def, TargetBar, MinSlot, MaxSlot, MaxSlotsInBar, BarDefinition);
 
 		const int32 Level = SrcEntry.Level > 0 ? SrcEntry.Level : 1;
 		const int32 LoadedAmmo = FortAthenaInventory::NormalizeLoadedAmmo(Def, SrcEntry.LoadedAmmo);
@@ -585,7 +591,7 @@ namespace
 			const int32 StackHeadroom = LoadedAmmo > 0 ? 0 : ComputeExistingStackHeadroom(PC, Def);
 			const UFortWorldItemDefinition* WorldDef = Cast<UFortWorldItemDefinition>(Def);
 			const int32 Span = WorldDef ? FMath::Max(1, static_cast<int32>(WorldDef->NumberOfSlotsToTake)) : 1;
-			const int32 FreeSlot = Slots ? FindFreeSlotRange(*Slots, MinSlot, MaxSlot, Span) : INDEX_NONE;
+			const int32 FreeSlot = Slots ? FindFreeSlotRange(*Slots, MinSlot, MaxSlot, Span, BarDefinition, Def->NativeGetItemType()) : INDEX_NONE;
 
 			if (FreeSlot == INDEX_NONE)
 			{
@@ -617,7 +623,7 @@ namespace
 
 					TArray<FGuid> SlotsAfterSwap = State.PrimarySlots;
 					ClearGuidFromSlots(SlotsAfterSwap, SwapGuid);
-					if (FindFreeSlotRange(SlotsAfterSwap, MinSlot, MaxSlot, Span) == INDEX_NONE)
+					if (FindFreeSlotRange(SlotsAfterSwap, MinSlot, MaxSlot, Span, BarDefinition, Def->NativeGetItemType()) == INDEX_NONE)
 					{
 						return 0;
 					}
@@ -1085,16 +1091,13 @@ bool FortAthenaLootTransfer::OnItemGranted(AFortPlayerController* Controller, UF
 	int32 MinSlot = INDEX_NONE;
 	int32 MaxSlot = INDEX_NONE;
 	int32 MaxSlotsInBar = 0;
-	if (!ResolveQuickBarRange(Controller, Def, TargetBar, MinSlot, MaxSlot, MaxSlotsInBar))
+	const FQuickBarData* BarDefinition = nullptr;
+	if (!ResolveQuickBarRange(Controller, Def, TargetBar, MinSlot, MaxSlot, MaxSlotsInBar, BarDefinition))
 	{
 		// Non-quickbar item (ammo, resource, ingredient, edit tool) remains in WorldInventory only.
 		return false;
 	}
 
-	if (PreferredBar != EFortQuickBars::Max_None)
-	{
-		TargetBar = PreferredBar;
-	}
 	TArray<FGuid>* Slots = State.GetBarArray(TargetBar);
 	if (!Slots)
 	{
@@ -1107,26 +1110,14 @@ bool FortAthenaLootTransfer::OnItemGranted(AFortPlayerController* Controller, UF
 
 	const int32 Span = GetItemSlotSpan(Item);
 	int32 ChosenSlot = INDEX_NONE;
-	if (PreferredSlot >= 0 && PreferredSlot + Span <= Slots->Num())
+	if (PreferredBar == TargetBar && PreferredSlot >= MinSlot && PreferredSlot <= MaxSlot - Span + 1)
 	{
-		bool bFree = true;
-		for (int32 Offset = 0; Offset < Span; ++Offset)
-		{
-			if ((*Slots)[PreferredSlot + Offset].IsValid())
-			{
-				bFree = false;
-				break;
-			}
-		}
-		if (bFree)
-		{
-			ChosenSlot = PreferredSlot;
-		}
+		ChosenSlot = FindFreeSlotRange(*Slots, PreferredSlot, PreferredSlot + Span - 1, Span, BarDefinition, Def->NativeGetItemType());
 	}
 
 	if (ChosenSlot == INDEX_NONE)
 	{
-		ChosenSlot = FindFreeSlotRange(*Slots, MinSlot, MaxSlot, Span);
+		ChosenSlot = FindFreeSlotRange(*Slots, MinSlot, MaxSlot, Span, BarDefinition, Def->NativeGetItemType());
 	}
 	if (ChosenSlot == INDEX_NONE)
 	{
