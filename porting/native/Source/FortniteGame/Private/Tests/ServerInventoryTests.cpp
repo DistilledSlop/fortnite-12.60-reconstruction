@@ -1524,6 +1524,7 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 	const TSharedRef<FGuid> ShieldGuid = MakeShared<FGuid>();
 	const TSharedRef<FGameplayAbilitySpecHandle> ShieldHandle = MakeShared<FGameplayAbilitySpecHandle>();
 	const TSharedRef<FGuid> MedkitGuid = MakeShared<FGuid>();
+	const TSharedRef<FGameplayAbilitySpecHandle> MedkitHandle = MakeShared<FGameplayAbilitySpecHandle>();
 	const TWeakObjectPtr<UFortWeaponItemDefinition> WeakMedkit(Medkit);
 	const TWeakObjectPtr<UFortWeaponItemDefinition> WeakSmallShield(SmallShield);
 	const TWeakObjectPtr<UFortWeaponItemDefinition> WeakLargeShield(LargeShield);
@@ -1616,7 +1617,7 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 		CheckShield(TEXT("small"), 50.0f);
 		ActivateShield(WeakLargeShield.Get(), TEXT("large"), 0.0f);
 	}), 8.0f));
-	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakPawn, WeakEquipped, WeakController, WeakMedkit, MedkitGuid, CheckShield]()
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakPawn, WeakEquipped, WeakController, WeakMedkit, MedkitGuid, MedkitHandle, CheckShield]()
 	{
 		CheckShield(TEXT("large"), 50.0f);
 		AFortPlayerPawnAthena* LivePawn = WeakPawn.Get();
@@ -1646,27 +1647,45 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 		LiveWeapon->ItemEntryGuid = *MedkitGuid;
 		LivePawn->CurrentWeapon = LiveWeapon;
 		LivePawn->CurrentWeaponList.AddUnique(LiveWeapon);
-		const FGameplayAbilitySpecHandle MedkitHandle = LiveASC->GiveAbility(
+		*MedkitHandle = LiveASC->GiveAbility(
 			FGameplayAbilitySpec(MedkitClass, 1, INDEX_NONE, LiveWeapon));
-		if (TestTrue(TEXT("Cooked medkit ability is granted"), MedkitHandle.IsValid()))
+		if (TestTrue(TEXT("Cooked medkit ability is granted"), MedkitHandle->IsValid()))
 		{
 			TGuardValue<TWeakObjectPtr<APlayerController>> LocalActivation(
 				LiveASC->AbilityActorInfo->PlayerController, TWeakObjectPtr<APlayerController>());
-			TestTrue(TEXT("Equipped medkit ability activates"), LiveASC->TryActivateAbility(MedkitHandle, false));
+			TestTrue(TEXT("Equipped medkit ability activates"), LiveASC->TryActivateAbility(*MedkitHandle, false));
 		}
 	}), 8.0f));
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakPawn, MedkitHandle]()
+	{
+		AFortPlayerPawnAthena* LivePawn = WeakPawn.Get();
+		UAbilitySystemComponent* LiveASC = LivePawn ? LivePawn->GetAbilitySystemComponent() : nullptr;
+		if (!TestNotNull(TEXT("Ability system at full health"), LiveASC))
+		{
+			return;
+		}
+		TestEqual(TEXT("Using a medkit restores full health"), LivePawn->GetHealth(), 100.0f);
+		const FGameplayAbilitySpec* Spec = LiveASC->FindAbilitySpecFromHandle(*MedkitHandle);
+		if (TestNotNull(TEXT("Medkit ability still granted"), Spec) &&
+			TestFalse(TEXT("The first medkit use has ended"), Spec->IsActive()))
+		{
+			TGuardValue<TWeakObjectPtr<APlayerController>> LocalActivation(
+				LiveASC->AbilityActorInfo->PlayerController, TWeakObjectPtr<APlayerController>());
+			TestFalse(TEXT("Medkit use is rejected at full health"), LiveASC->TryActivateAbility(*MedkitHandle, false));
+		}
+	}), 12.0f));
 	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakPawn, WeakEquipped, WeakController, WeakInventory, MedkitGuid]()
 	{
 		if (TestNotNull(TEXT("Consumable pawn after medkit use"), WeakPawn.Get()))
 		{
-			TestEqual(TEXT("Using a medkit restores full health"), WeakPawn->GetHealth(), 100.0f);
+			TestEqual(TEXT("The full-health retry leaves health unchanged"), WeakPawn->GetHealth(), 100.0f);
 		}
 		if (TestNotNull(TEXT("Consumable inventory after medkit use"), WeakInventory.Get()))
 		{
 			UFortWorldItem* RemainingMedkit = WeakInventory->NativeFindItemByGuid(*MedkitGuid);
 			if (TestNotNull(TEXT("Medkit stack remains after use"), RemainingMedkit))
 			{
-				TestEqual(TEXT("Using a medkit spends one unit"), RemainingMedkit->ItemEntry.Count, 1);
+				TestEqual(TEXT("Only the successful medkit use spends an item"), RemainingMedkit->ItemEntry.Count, 1);
 			}
 		}
 		if (AFortPlayerPawnAthena* LivePawn = WeakPawn.Get())
