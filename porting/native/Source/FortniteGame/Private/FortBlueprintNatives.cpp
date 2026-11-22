@@ -172,7 +172,7 @@ namespace
 	int32 RemoveFromItems(AFortPlayerController* Controller, const TArray<UFortWorldItem*>& Items, int32 Amount)
 	{
 		// Amount < 0 removes every matching item completely.
-		int32 Removed = 0;
+		int64 Removed = 0;
 		for (UFortWorldItem* Item : Items)
 		{
 			if (Amount >= 0 && Removed >= Amount)
@@ -180,13 +180,13 @@ namespace
 				break;
 			}
 			const int32 Have = Item->ItemEntry.Count;
-			const int32 Take = Amount < 0 ? Have : FMath::Min(Have, Amount - Removed);
+			const int32 Take = Amount < 0 ? Have : FMath::Min(Have, Amount - static_cast<int32>(Removed));
 			if (Take > 0)
 			{
 				Removed += FortAthenaInventory::RemoveItem(Controller, Item->NativeGetItemGuid(), Take);
 			}
 		}
-		return Removed;
+		return static_cast<int32>(FMath::Min<int64>(Removed, MAX_int32));
 	}
 
 	// ---- UFortKismetLibrary ------------------------------------------------------------------------------------------------
@@ -379,12 +379,12 @@ namespace
 		P_NATIVE_BEGIN;
 		TArray<UFortWorldItem*> Items;
 		FindItemsByDefinition(PlayerController, ItemDefinition, Items);
-		int32 Total = 0;
+		int64 Total = 0;
 		for (const UFortWorldItem* Item : Items)
 		{
 			Total += Item->ItemEntry.Count;
 		}
-		*static_cast<int32*>(RESULT_PARAM) = Total;
+		*static_cast<int32*>(RESULT_PARAM) = static_cast<int32>(FMath::Min<int64>(Total, MAX_int32));
 		P_NATIVE_END;
 	}
 
