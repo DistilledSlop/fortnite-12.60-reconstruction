@@ -37,7 +37,7 @@ namespace
 	// stand-in: 0x141d08ed0 reads URuntimeOptions+0x690 or InteractionComponent+0x168 (not in generated reflection);
 	// 500 cm matches standard BR search range before the 2x multiplier in 0x141d14c20.
 	constexpr float DefaultInteractValidationDistance = 500.0f;
-	TSet<ABuildingContainer*> ContainersBeingSearched;
+	TSet<ABuildingContainer*> ContainersSpawningLoot;
 
 	bool IsContainerVisible(const ABuildingContainer* Container)
 	{
@@ -466,8 +466,15 @@ FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnCon
 		return EContainerLootResult::RollFailed;
 
 	UWorld* World = Container->GetWorld();
-	if (!World || World->GetNetMode() == NM_Client)
+	if (!World || World != GameMode->GetWorld() || World->GetNetMode() == NM_Client ||
+		Container->IsActorBeingDestroyed() || Container->bDestroyed || Container->bAlreadySearched ||
+		ContainersSpawningLoot.Contains(Container))
+	{
 		return EContainerLootResult::RollFailed;
+	}
+
+	ContainersSpawningLoot.Add(Container);
+	ON_SCOPE_EXIT { ContainersSpawningLoot.Remove(Container); };
 
 	if (!FortAthenaLootData::IsReady(GameMode))
 	{
@@ -629,13 +636,6 @@ namespace
 		UE_LOG(LogTemp, Display, TEXT("LootSearch: rolling container=%s class=%s group=%s upgrade=%d tossSpeed=%.0f tossCone=%.0f"),
 			*Container->GetName(), *GetNameSafe(Container->GetClass()), *TierGroup.ToString(),
 			Container->ChosenRandomUpgrade, Container->LootTossSpeed_Athena, Container->LootTossConeHalfAngle_Athena);
-
-		if (ContainersBeingSearched.Contains(Container))
-		{
-			return false;
-		}
-		ContainersBeingSearched.Add(Container);
-		ON_SCOPE_EXIT { ContainersBeingSearched.Remove(Container); };
 
 		return FortAthenaLootSearch::RollAndSpawnContainerLoot(GameMode, Container, TierGroup, WorldSpawn, ScatterRadius)
 			== FortAthenaLootSearch::EContainerLootResult::Success;
