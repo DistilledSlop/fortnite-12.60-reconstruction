@@ -782,13 +782,14 @@ namespace
 			FortAthenaLootTransfer::OnItemGranted(PC, GrantedItem, EFortQuickBars::Max_None, INDEX_NONE, false);
 		}
 
-		UE_LOG(LogTemp, Display, TEXT("LootTransfer: Granted pickup pc=%s def=%s guid=%s accepted=%d remainder=%d loadedAmmo=%d"),
+		UE_LOG(LogTemp, Display, TEXT("LootTransfer: Granted pickup pc=%s def=%s guid=%s accepted=%d remainder=%d loadedAmmo=%d pickupItemGuid=%s"),
 			*PC->GetName(),
 			*Def->GetName(),
 			GrantedItem ? *GrantedItem->NativeGetItemGuid().ToString() : TEXT("None"),
 			AcceptedCount,
 			SrcEntry.Count - AcceptedCount,
-			SrcEntry.LoadedAmmo);
+			SrcEntry.LoadedAmmo,
+			*SrcEntry.ItemGuid.ToString());
 
 		return AcceptedCount;
 	}

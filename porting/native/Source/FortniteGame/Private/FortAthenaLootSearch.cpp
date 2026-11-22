@@ -582,8 +582,9 @@ FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnCon
 				RetrySeeds.Add(ContainerKey, Seed);
 			return bContainerAvailable ? EContainerLootResult::SpawnFailed : EContainerLootResult::RollFailed;
 		}
-		UE_LOG(LogTemp, Display, TEXT("LootSearch:  spawned item=%s count=%d level=%d ammo=%d loc=(%.0f,%.0f,%.0f)"),
-			*Drop.Definition->GetName(), Drop.Count, Drop.Level, LoadedAmmo, SpawnLoc.X, SpawnLoc.Y, SpawnLoc.Z);
+		UE_LOG(LogTemp, Display, TEXT("LootSearch:  spawned item=%s count=%d level=%d ammo=%d loc=(%.0f,%.0f,%.0f) source=%s pickupItemGuid=%s"),
+			*Drop.Definition->GetName(), Drop.Count, Drop.Level, LoadedAmmo, SpawnLoc.X, SpawnLoc.Y, SpawnLoc.Z,
+			*Container->GetPathName(), *Pickup->PrimaryPickupItemEntry.ItemGuid.ToString());
 	}
 
 	if (OutPickups)
