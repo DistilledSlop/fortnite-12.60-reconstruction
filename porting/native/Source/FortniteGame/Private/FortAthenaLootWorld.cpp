@@ -285,8 +285,8 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 		if (S.ConfiguredMarkerClassTags.Num() > 0)
 		{
 			const FString ClassPath = Container->GetClass()->GetPathName();
-			if (const TArray<FName>* Tags = S.ConfiguredMarkerClassTags.Find(ClassPath);
-				Tags && FortAthenaLootSearch::ResolveContainerLootTierGroup(Container) != NAME_None)
+			const TArray<FName>* Tags = S.ConfiguredMarkerClassTags.Find(ClassPath);
+			if (Tags && FortAthenaLootSearch::ResolveContainerLootTierGroup(Container) != NAME_None)
 			{
 				if (!S.MatchedMarkerClasses.Contains(ClassPath))
 				{
