@@ -281,7 +281,7 @@ bool FortAthenaHealth::TryCarryDownedPlayer(AController* Controller, AFortPawn* 
 	constexpr float CarryRange = 250.0f;
 	if (!IsEnabled() || !IsValid(Carrier) || !IsValid(Downed) || Carrier == Downed ||
 		!Carrier->HasAuthority() || !Carrier->bAllowDBNOCarry || Carrier->bIsDBNO || Carrier->bIsDying ||
-		Carrier->GetHealth() <= 0.0f || Carrier->DBNOHoistee || !Downed->bIsDBNO || Downed->bIsDying ||
+		Carrier->GetHealth() <= 0.0f || Carrier->ItemInteractionActor || Carrier->DBNOHoistee || !Downed->bIsDBNO || Downed->bIsDying ||
 		Downed->bIsBeingDBNOCarried || Downed->DBNORevivalStacking != 0 ||
 		FVector::DistSquared(Carrier->GetActorLocation(), Downed->GetActorLocation()) > FMath::Square(CarryRange) ||
 		!Controller->LineOfSightTo(Downed))
@@ -396,6 +396,20 @@ namespace
 
 namespace
 {
+	void ExecClearReviveInteraction(UObject* Context, FFrame& Stack, RESULT_DECL)
+	{
+		P_GET_OBJECT(AActor, InteractingItem);
+		P_GET_UBOOL(bClearInteraction);
+		P_FINISH;
+		AFortPlayerPawnAthena* Helper = Cast<AFortPlayerPawnAthena>(Context);
+		if (bClearInteraction && Helper && Helper->HasAuthority() &&
+			(!InteractingItem || InteractingItem == Helper->ItemInteractionActor))
+		{
+			Helper->ItemInteractionActor = nullptr;
+			Helper->ForceNetUpdate();
+		}
+	}
+
 	bool CanRevive(AController* Reviver, AFortPlayerPawnAthena* Target)
 	{
 		const AFortPawn* Helper = Reviver ? Cast<AFortPawn>(Reviver->GetPawn()) : nullptr;
@@ -419,7 +433,9 @@ namespace
 bool FortAthenaHealth::TryStartRevive(AController* Reviver, AFortPawn* Target)
 {
 	AFortPlayerPawnAthena* Downed = Cast<AFortPlayerPawnAthena>(Target);
-	if (!IsEnabled() || !CanRevive(Reviver, Downed) || Downed->DBNORevivalStacking != 0)
+	AFortPlayerPawnAthena* HelperPawn = Reviver ? Cast<AFortPlayerPawnAthena>(Reviver->GetPawn()) : nullptr;
+	if (!IsEnabled() || !HelperPawn || HelperPawn->bIsDBNOCarrying || HelperPawn->ItemInteractionActor ||
+		!CanRevive(Reviver, Downed) || Downed->DBNORevivalStacking != 0)
 	{
 		return false;
 	}
@@ -428,13 +444,15 @@ bool FortAthenaHealth::TryStartRevive(AController* Reviver, AFortPawn* Target)
 	const float ReviveDuration = Downed->ReviveFromDBNOTime > 0.0f ? Downed->ReviveFromDBNOTime : 10.0f;
 	const float EndTime = World->GetTimeSeconds() + ReviveDuration;
 	const float KnockTime = Downed->DBNOStartTime;
+	HelperPawn->ItemInteractionActor = Downed;
+	HelperPawn->ForceNetUpdate();
 	Downed->DBNORevivalStacking = 1;
 	Downed->ForceNetUpdate();
 
 	const TSharedRef<FTimerHandle> Timer = MakeShared<FTimerHandle>();
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakTarget(Downed);
 	const TWeakObjectPtr<AController> WeakReviver(Reviver);
-	const TWeakObjectPtr<APawn> WeakHelper(Reviver->GetPawn());
+	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakHelper(HelperPawn);
 	const TWeakObjectPtr<UWorld> WeakWorld(World);
 	World->GetTimerManager().SetTimer(*Timer, FTimerDelegate::CreateLambda(
 		[Timer, WeakWorld, WeakTarget, WeakReviver, WeakHelper, EndTime, KnockTime]()
@@ -447,15 +465,24 @@ bool FortAthenaHealth::TryStartRevive(AController* Reviver, AFortPawn* Target)
 
 			AFortPlayerPawnAthena* Player = WeakTarget.Get();
 			AController* Helper = WeakReviver.Get();
+			AFortPlayerPawnAthena* CurrentHelperPawn = WeakHelper.Get();
 			const bool bSameKnock = Player && Player->DBNOStartTime == KnockTime;
-			const bool bCanContinue = bSameKnock && Helper && Helper->GetPawn() == WeakHelper.Get() && CanRevive(Helper, Player);
+			const bool bCanContinue = bSameKnock && Helper && CurrentHelperPawn &&
+				Helper->GetPawn() == CurrentHelperPawn && CurrentHelperPawn->ItemInteractionActor == Player &&
+				!CurrentHelperPawn->bIsDBNOCarrying && CanRevive(Helper, Player);
 			const bool bFinished = CurrentWorld->GetTimeSeconds() >= EndTime;
 			if (bCanContinue && !bFinished)
 			{
 				return;
 			}
 
+			const bool bOwnsInteraction = CurrentHelperPawn && CurrentHelperPawn->ItemInteractionActor == WeakTarget.Get(true);
 			CurrentWorld->GetTimerManager().ClearTimer(*Timer);
+			if (bOwnsInteraction)
+			{
+				CurrentHelperPawn->ItemInteractionActor = nullptr;
+				CurrentHelperPawn->ForceNetUpdate();
+			}
 			if (bSameKnock)
 			{
 				Player->DBNORevivalStacking = 0;
@@ -1296,6 +1323,11 @@ void FortAthenaHealth::InstallRpcOverrides()
 	else
 	{
 		UE_LOG(LogFortHealth, Warning, TEXT("Health: AFortPlayerPawn::ServerResetAbilitySystemComponent UFunction not found"));
+	}
+
+	if (UFunction* Interaction = AFortPlayerPawnAthena::StaticClass()->FindFunctionByName(TEXT("ServerSetInteractingItem")))
+	{
+		Interaction->SetNativeFunc(&ExecClearReviveInteraction);
 	}
 
 	if (UFunction* Drop = AFortPlayerPawn::StaticClass()->FindFunctionByName(TEXT("ServerDropCarriedPlayer")))
