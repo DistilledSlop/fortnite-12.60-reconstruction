@@ -599,6 +599,16 @@ namespace
 						return 0;
 					}
 
+					if (Def->IsStackable() && !Def->bAllowMultipleStacks)
+					{
+						const UFortWorldItem* Existing = PC->WorldInventory->NativeFindWorldItemByDefinition(Def, true);
+						if (Existing && Existing->ItemEntry.ItemGuid != SwapGuid)
+						{
+							// The matching stack is full and would still exist after this swap.
+							return 0;
+						}
+					}
+
 					TArray<FGuid> SlotsAfterSwap = State.PrimarySlots;
 					ClearGuidFromSlots(SlotsAfterSwap, SwapGuid);
 					if (FindFreeSlotRange(SlotsAfterSwap, MinSlot, MaxSlot, Span) == INDEX_NONE)
