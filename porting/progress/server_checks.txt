@@ -25,6 +25,7 @@ DBNO|verified|Release a carried player immediately when the carrier loses posses
 DBNO|verified|Release a carried player on carrier knock and allow a standing teammate to pick them up|a709f6f7
 DBNO|verified|Cancel a revive when the target leaves range and allow a retry|d29161c5
 DBNO|verified|Cancel a revive on possession loss even if the reviver immediately repossesses|b5b068e5
+DBNO|implemented|Clear the revive interaction immediately when the reviver is knocked or eliminated|ce9a3c9d
 DBNO|verified|Credit the knock instigator for bleed-out in the death report and elimination score|porting/native/Source/FortniteGame/Private/Tests/ServerDamageExecutionTests.cpp
 DBNO|implemented|Suppress weapon hit cues on bleed ticks|6b2e9a77
 DBNO|verified|Cap revive health at the standing health maximum|2968c991
