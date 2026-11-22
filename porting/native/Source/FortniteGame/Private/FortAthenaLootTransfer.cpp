@@ -1490,7 +1490,7 @@ int32 FortAthenaLootTransfer::DropAllOnDeath(AFortPlayerController* VictimContro
 {
 	AFortInventory* Inventory = VictimController ? VictimController->WorldInventory : nullptr;
 	UWorld* World = VictimPawn ? VictimPawn->GetWorld() : nullptr;
-	if (!Inventory || !World)
+	if (!Inventory || !World || !VictimController->HasAuthority() || !VictimPawn->HasAuthority())
 	{
 		return 0;
 	}
@@ -1510,7 +1510,8 @@ int32 FortAthenaLootTransfer::DropAllOnDeath(AFortPlayerController* VictimContro
 	{
 		const UFortWorldItem* Item = Inventory->NativeFindItemByGuid(ItemGuid);
 		UFortWorldItemDefinition* Def = Item ? Cast<UFortWorldItemDefinition>(Item->ItemEntry.ItemDefinition) : nullptr;
-		if (!Def || Item->ItemEntry.Count <= 0 || Def->DropBehavior == EWorldItemDropBehavior::DestroyOnDrop)
+		if (!Def || !Def->bCanBeDropped || Item->ItemEntry.Count <= 0 ||
+			Def->DropBehavior == EWorldItemDropBehavior::DestroyOnDrop)
 		{
 			continue;
 		}
@@ -1534,6 +1535,10 @@ int32 FortAthenaLootTransfer::DropAllOnDeath(AFortPlayerController* VictimContro
 			continue;
 		}
 		Pickup->PrimaryPickupItemEntry.Count = Removed;
+		if (Removed < Entry.Count)
+		{
+			Pickup->PrimaryPickupItemEntry.LoadedAmmo = 0;
+		}
 		++Spawned;
 	}
 	UE_LOG(LogTemp, Display, TEXT("LootTransfer: elimination drop pc=%s items=%d dropped=%d"), *GetNameSafe(VictimController), ItemGuids.Num(), Spawned);
