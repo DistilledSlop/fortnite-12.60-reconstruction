@@ -454,7 +454,7 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 	}
 	FGcProbeScope GcProbe(Definition ? Definition->GetName() : FString(TEXT("null")));
 	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
-	if (!Inventory || !Definition || Count < 0)
+	if (!Inventory || !Inventory->HasAuthority() || !Definition || Count < 0)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Inventory: GiveItem rejected (inventory=%d definition=%s count=%d)"),
 			Inventory ? 1 : 0, Definition ? *Definition->GetName() : TEXT("null"), Count);
@@ -547,7 +547,7 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 int32 FortAthenaInventory::CombineStacks(AFortPlayerController* Controller, const FGuid& TargetGuid, const FGuid& SourceGuid)
 {
 	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
-	if (!IsEnabled() || !Inventory || TargetGuid == SourceGuid)
+	if (!IsEnabled() || !Inventory || !Inventory->HasAuthority() || TargetGuid == SourceGuid)
 	{
 		return 0;
 	}
@@ -581,7 +581,7 @@ int32 FortAthenaInventory::CombineStacks(AFortPlayerController* Controller, cons
 int32 FortAthenaInventory::RemoveItem(AFortPlayerController* Controller, const FGuid& ItemGuid, int32 Count, bool bDeferAbilityCleanup)
 {
 	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
-	if (!IsEnabled() || !Inventory)
+	if (!IsEnabled() || !Inventory || !Inventory->HasAuthority())
 	{
 		return 0;
 	}
@@ -653,7 +653,7 @@ int32 FortAthenaInventory::RemoveItem(AFortPlayerController* Controller, const F
 int32 FortAthenaInventory::ConsumeAmmo(AFortPlayerController* Controller, UFortItemDefinition* AmmoDefinition, int32 Count)
 {
 	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
-	if (!IsEnabled() || !Inventory || !AmmoDefinition || Count <= 0)
+	if (!IsEnabled() || !Inventory || !Inventory->HasAuthority() || !AmmoDefinition || Count <= 0)
 	{
 		return 0;
 	}
