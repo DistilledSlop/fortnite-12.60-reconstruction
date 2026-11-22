@@ -963,6 +963,11 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 	}
 
 	// 6. Track alive players list and synchronize GameState->PlayersLeft.
+	RegisterAlivePlayer(GameMode, Controller);
+}
+
+void FortAthenaHealth::RegisterAlivePlayer(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller)
+{
 	ResetRosterFor(GameMode);
 	TArray<TWeakObjectPtr<AFortPlayerControllerAthena>>& Alive = GetAlivePlayers();
 	Alive.RemoveAll([](const TWeakObjectPtr<AFortPlayerControllerAthena>& P) { return !P.IsValid(); });

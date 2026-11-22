@@ -4,6 +4,9 @@
 #include "AIController.h"
 #include "AFortPawn.h"
 #include "AFortAIPawn.h"
+#include "AFortGameModeAthena.h"
+#include "AFortGameStateAthena.h"
+#include "AFortPlayerControllerAthena.h"
 #include "AFortPlayerPawnAthena.h"
 #include "AFortPlayerStateAthena.h"
 #include "Engine/Engine.h"
@@ -18,6 +21,7 @@
 #include "UFortDamageFormulaExecutionCalculation.h"
 #include "UFortDamageSet.h"
 #include "UFortHealthSet.h"
+#include "UFortPlaylistAthena.h"
 #include "UFortMovementComp_CharacterAthena.h"
 
 // UE 4.25 discovers dedicated-server tests under ClientContext.
@@ -434,6 +438,101 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	Wall->TakeDamage(20, FDamageEvent(), nullptr, nullptr);
 	TestEqual(TEXT("Invulnerability blocks engine damage"), FortHarvest::GetBuildingHealth(Wall), 80.0f);
 	Wall->Destroy();
+	AFortGameModeAthena* Mode = Cast<AFortGameModeAthena>(World->GetAuthGameMode());
+	AFortGameStateAthena* State = World->GetGameState<AFortGameStateAthena>();
+	if (!TestNotNull(TEXT("Team knock fixture game mode"), Mode) || !TestNotNull(TEXT("Team knock fixture game state"), State))
+	{
+		return false;
+	}
+
+	AFortPlayerControllerAthena* First = World->SpawnActor<AFortPlayerControllerAthena>();
+	AFortPlayerControllerAthena* Second = World->SpawnActor<AFortPlayerControllerAthena>();
+	AFortPlayerPawnAthena* FirstPawn = World->SpawnActor<AFortPlayerPawnAthena>(
+		FVector(0, 0, 14000), FRotator::ZeroRotator, SpawnParameters);
+	AFortPlayerPawnAthena* SecondPawn = World->SpawnActor<AFortPlayerPawnAthena>(
+		FVector(200, 0, 14000), FRotator::ZeroRotator, SpawnParameters);
+	if (!TestNotNull(TEXT("First team fixture controller"), First) ||
+		!TestNotNull(TEXT("Second team fixture controller"), Second) ||
+		!TestNotNull(TEXT("First team fixture pawn"), FirstPawn) ||
+		!TestNotNull(TEXT("Second team fixture pawn"), SecondPawn))
+	{
+		return false;
+	}
+
+	AFortPlayerStateAthena* FirstState = Cast<AFortPlayerStateAthena>(First->PlayerState);
+	AFortPlayerStateAthena* SecondState = Cast<AFortPlayerStateAthena>(Second->PlayerState);
+	if (!TestNotNull(TEXT("First team fixture player state"), FirstState) ||
+		!TestNotNull(TEXT("Second team fixture player state"), SecondState))
+	{
+		return false;
+	}
+
+	const TWeakObjectPtr<UFortPlaylistAthena> PreviousPlaylist(State->CurrentPlaylistInfo.OverridePlaylist);
+	UFortPlaylistAthena* TeamPlaylist = NewObject<UFortPlaylistAthena>(State);
+	TeamPlaylist->MaxTeamSize = 2;
+	State->CurrentPlaylistInfo.OverridePlaylist = TeamPlaylist;
+	FirstState->TeamIndex = SecondState->TeamIndex = 30;
+	First->Possess(FirstPawn);
+	Second->Possess(SecondPawn);
+	FirstPawn->GetCharacterMovement()->SetComponentTickEnabled(false);
+	SecondPawn->GetCharacterMovement()->SetComponentTickEnabled(false);
+	for (AFortPlayerPawnAthena* TeamPawn : {FirstPawn, SecondPawn})
+	{
+		UFortAbilitySystemComponent* TeamASC = NewObject<UFortAbilitySystemComponent>(TeamPawn);
+		TeamPawn->AbilitySystemComponent = TeamASC;
+		TeamASC->RegisterComponent();
+		TeamASC->InitAbilityActorInfo(TeamPawn, TeamPawn);
+		TeamPawn->HealthSet = NewObject<UFortHealthSet>(TeamPawn);
+		TeamASC->AddAttributeSetSubobject(TeamPawn->HealthSet);
+		TeamPawn->bHealthSynced = true;
+		TeamPawn->SetMaxHealth(100.0f);
+		TeamPawn->SetHealth(100.0f);
+	}
+	FortAthenaHealth::RegisterAlivePlayer(Mode, First);
+	FortAthenaHealth::RegisterAlivePlayer(Mode, Second);
+
+	FortAthenaHealth::ApplyDamage(FirstPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
+	TestTrue(TEXT("Lethal damage knocks a player with a standing teammate"), FirstPawn->bIsDBNO && !FirstPawn->bIsDying);
+	TestEqual(TEXT("A knock fills the downed health pool"), FirstPawn->GetHealth(), 100.0f);
+
+	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakFirstPawn(FirstPawn);
+	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakSecondPawn(SecondPawn);
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakSecondPawn]()
+	{
+		AFortPlayerPawnAthena* DownedPawn = WeakFirstPawn.Get();
+		AFortPlayerPawnAthena* StandingPawn = WeakSecondPawn.Get();
+		if (TestNotNull(TEXT("Downed team fixture stays alive through first bleed tick"), DownedPawn) &&
+			TestNotNull(TEXT("Standing team fixture survives until the lethal hit"), StandingPawn))
+		{
+			TestTrue(TEXT("Bleed ticks drain downed health while a teammate stands"),
+				DownedPawn->bIsDBNO && !DownedPawn->bIsDying && DownedPawn->GetHealth() < 100.0f);
+			FortAthenaHealth::ApplyDamage(StandingPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
+			TestTrue(TEXT("The last standing member is eliminated without a knock"), StandingPawn->bIsDying && !StandingPawn->bIsDBNO);
+		}
+	}), 1.5f));
+
+	const TWeakObjectPtr<AFortGameStateAthena> WeakState(State);
+	const TArray<TWeakObjectPtr<AActor>> TeamFixtures = {First, Second, FirstPawn, SecondPawn};
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakState, PreviousPlaylist, TeamFixtures]()
+	{
+		AFortPlayerPawnAthena* DownedPawn = WeakFirstPawn.Get();
+		if (TestNotNull(TEXT("Downed team fixture after last teammate elimination"), DownedPawn))
+		{
+			TestTrue(TEXT("The next bleed tick finishes the downed squad member"), DownedPawn->bIsDying);
+		}
+		if (AFortGameStateAthena* CurrentState = WeakState.Get())
+		{
+			CurrentState->CurrentPlaylistInfo.OverridePlaylist = PreviousPlaylist.Get();
+		}
+		for (const TWeakObjectPtr<AActor>& Fixture : TeamFixtures)
+		{
+			if (AActor* Actor = Fixture.Get())
+			{
+				Actor->Destroy();
+			}
+		}
+	}), 1.5f));
+
 	return true;
 }
 

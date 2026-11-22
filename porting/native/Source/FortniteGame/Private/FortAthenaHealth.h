@@ -24,6 +24,7 @@ namespace FortAthenaHealth
 	// attribute sets (UFortRegenHealthSet, UFortDamageSet, etc.) are created on PlayerState/ASC and assigned to Pawn,
 	// and GAS_AthenaPlayer abilities/effects are granted to ASC.
 	void SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller);
+	void RegisterAlivePlayer(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller);
 
 	// Applies damage to a pawn's HealthSet (Shield first, then Health; or bIgnoreShield for storm/fall damage).
 	// Sends NetMulticast_Athena_BatchedDamageCues so the client displays hit markers and damage numbers.
