@@ -12,6 +12,7 @@
 #include "FortAthenaLootData.h"
 #include "FortAthenaLootSearch.h"
 #include "Misc/CommandLine.h"
+#include "Misc/ConfigCacheIni.h"
 #include "Misc/DefaultValueHelper.h"
 #include "Misc/Parse.h"
 
@@ -39,6 +40,7 @@ namespace
 		TArray<TWeakObjectPtr<ABuildingContainer>> PendingSpawnRetries;
 		TMap<TWeakObjectPtr<ABuildingContainer>, FScheduledDelivery> ScheduledDeliveries;
 		TMap<TWeakObjectPtr<ABuildingContainer>, bool> GroundCacheCandidates;
+		TMap<FString, TArray<FName>> ConfiguredMarkerTags;
 		bool bGroundCachesSelected = false;
 		float DeliveryStartTime = -1.0f;
 		bool bLoggedWaitingForData = false;
@@ -57,6 +59,24 @@ namespace
 			return;
 
 		S.ActiveWorld = World;
+		S.ConfiguredMarkerTags.Reset();
+		if (GConfig)
+		{
+			TArray<FString> Settings;
+			GConfig->GetArray(TEXT("WorldLoot"), TEXT("MarkerTag"), Settings, GGameIni);
+			for (const FString& Setting : Settings)
+			{
+				FString ActorPath;
+				FString Tag;
+				if (!Setting.Split(TEXT("|"), &ActorPath, &Tag))
+					continue;
+
+				ActorPath.TrimStartAndEndInline();
+				Tag.TrimStartAndEndInline();
+				if (!ActorPath.IsEmpty() && !Tag.IsEmpty())
+					S.ConfiguredMarkerTags.FindOrAdd(ActorPath).AddUnique(FName(*Tag));
+			}
+		}
 		S.ProcessedContainers.Reset();
 		S.ScannedLevels.Reset();
 		S.PendingSpawnRetries.Reset();
@@ -157,6 +177,7 @@ void FortAthenaLootWorld::Reset()
 {
 	FWorldLootState& S = LootWorldState();
 	S.ActiveWorld.Reset();
+	S.ConfiguredMarkerTags.Reset();
 	S.ProcessedContainers.Reset();
 	S.ScannedLevels.Reset();
 	S.PendingSpawnRetries.Reset();
@@ -202,6 +223,15 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 			S.GroundCacheCandidates.Contains(Marker))
 		{
 			return;
+		}
+
+		if (S.ConfiguredMarkerTags.Num() > 0)
+		{
+			if (const TArray<FName>* Tags = S.ConfiguredMarkerTags.Find(Container->GetPathName()))
+			{
+				for (const FName& Tag : *Tags)
+					Container->Tags.AddUnique(Tag);
+			}
 		}
 
 		if (Container->ActorHasTag(GroundCacheTag))
