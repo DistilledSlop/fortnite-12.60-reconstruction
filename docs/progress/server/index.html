@@ -21,10 +21,10 @@ td:nth-child(2) { white-space: nowrap; }
 <main>
 <nav aria-label="Progress boards"><a href="../../combined.html">Original client + server board</a></nav>
 <h1>Fortnite 12.60 dedicated-server progress</h1>
-<img src="server-implementation-treemap-v3.svg" width="1000" height="720" style="max-width:100%;height:auto" alt="Dedicated-server progress treemap">
+<img src="server-implementation-treemap-v4.svg" width="1000" height="720" style="max-width:100%;height:auto" alt="Dedicated-server progress treemap">
 <p>The server can host a local match for the original 12.60 client, including a Battle Bus drop onto Apollo. The goal is a complete multiplayer match with authoritative gameplay, replication, and the backend services the original client uses.</p>
 <!-- checks:start -->
-<p><strong>54/122 server checks implemented (44.3%).</strong> 42 are verified, 12 await verification, 68 remain open, and 6 client-only checks are tracked outside the server score.</p>
+<p><strong>58/126 server checks implemented (46.0%).</strong> 42 are verified, 16 await verification, 68 remain open, and 6 client-only checks are tracked outside the server score.</p>
 <p>Coverage = (implemented checks + verified checks) ÷ all server checks. Area and capability scores use the same formula. Every check has equal weight. Verified means the stated behavior has a recorded headless test, service test, or original-client observation. Implementation-only checks have a source reference. Each check contributes at most one point.</p>
 <h2>Match flow and player states <small>14/22 implemented (63.6%)</small></h2>
 <div class="table"><table aria-label="Match flow and player states">
@@ -132,7 +132,7 @@ td:nth-child(2) { white-space: nowrap; }
 <tr><th scope="row">Tick rate and relevance</th><td>Open</td><td>Record server tick-time distribution and packet load during a sustained multiplayer match</td><td>—</td></tr>
 <tr><th scope="row">Tick rate and relevance</th><td>Open</td><td>Check nearby actors replicate and distant irrelevant actors leave network relevance</td><td>—</td></tr>
 </tbody></table></div>
-<h2>Lobby, accounts and Epic service compatibility <small>27/50 implemented (54.0%)</small></h2>
+<h2>Lobby, accounts and Epic service compatibility <small>31/54 implemented (57.4%)</small></h2>
 <div class="table"><table aria-label="Lobby, accounts and Epic service compatibility">
 <thead><tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Acceptance check</th><th scope="col">Evidence</th></tr></thead><tbody>
 <tr><th scope="row">Login and identity</th><td>Verified</td><td>Exercise OAuth exchange-code handling against the local service</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_oauth_exchange_codes.py">Source</a></td></tr>
@@ -171,10 +171,14 @@ td:nth-child(2) { white-space: nowrap; }
 <tr><th scope="row">Locker and cosmetic styles</th><td>Verified</td><td>Exercise per-slot wrap updates and persistence</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_profile_wrap_slots.py">Source</a></td></tr>
 <tr><th scope="row">Locker and cosmetic styles</th><td>Verified</td><td>Exercise persisted cosmetic variant changes</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_profile_variant_updates.py">Source</a></td></tr>
 <tr><th scope="row">Locker and cosmetic styles</th><td>Open</td><td>Persist and reselect presets, style choices and randomized slots across original-client reconnects</td><td>—</td></tr>
-<tr><th scope="row">In-match cosmetics</th><td>Open</td><td>Apply selected outfit, style, back bling and harvesting tool to the pawn and replicate them</td><td>—</td></tr>
-<tr><th scope="row">In-match cosmetics</th><td>Open</td><td>Apply glider, contrail and style during the drop and replicate them</td><td>—</td></tr>
+<tr><th scope="row">In-match cosmetics</th><td>Implemented</td><td>Apply the selected outfit and resolved style channels to the controller and pawn loadouts</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/native/Source/FortniteGame/Private/FortAthenaCharacterCache.cpp">Source</a></td></tr>
+<tr><th scope="row">In-match cosmetics</th><td>Implemented</td><td>Populate and replicate selected back bling and harvesting tool in the pawn loadout</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/native/Source/FortniteGame/Private/FortAthenaCosmeticLoadout.cpp">Source</a></td></tr>
+<tr><th scope="row">In-match cosmetics</th><td>Implemented</td><td>Populate and replicate the selected glider and contrail in the pawn loadout</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/native/Source/FortniteGame/Private/FortAthenaCosmeticLoadout.cpp">Source</a></td></tr>
+<tr><th scope="row">In-match cosmetics</th><td>Implemented</td><td>Load one wrap override into the pawn cosmetic loadout</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/native/Source/FortniteGame/Private/FortAthenaCosmeticLoadout.cpp">Source</a></td></tr>
 <tr><th scope="row">In-match cosmetics</th><td>Open</td><td>Apply slot-specific wraps to weapons and supported vehicles</td><td>—</td></tr>
-<tr><th scope="row">In-match cosmetics</th><td>Open</td><td>Replicate equipped emotes, sprays, emoticons and toys in a match</td><td>—</td></tr>
+<tr><th scope="row">In-match cosmetics</th><td>Open</td><td>Apply per-item styles to gliders, harvesting tools and back bling in a match</td><td>—</td></tr>
+<tr><th scope="row">In-match cosmetics</th><td>Open</td><td>Play equipped emotes and replicate them in a match</td><td>—</td></tr>
+<tr><th scope="row">In-match cosmetics</th><td>Open</td><td>Use and replicate equipped sprays, emoticons and toys in a match</td><td>—</td></tr>
 <tr><th scope="row">In-match cosmetics</th><td>Open</td><td>Carry reactive or progression-linked cosmetic changes through match events</td><td>—</td></tr>
 <tr><th scope="row">Battle Pass and progression</th><td>Verified</td><td>Exercise Battle Pass profile behavior</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_profile_battle_pass.py">Source</a></td></tr>
 <tr><th scope="row">Battle Pass and progression</th><td>Verified</td><td>Exercise XP and leveling service logic</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_progression.py">Source</a></td></tr>

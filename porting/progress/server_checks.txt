@@ -122,10 +122,14 @@ Locker and cosmetic styles|verified|Exercise profile loadout selection and persi
 Locker and cosmetic styles|verified|Exercise per-slot wrap updates and persistence|porting/server/tests/test_profile_wrap_slots.py
 Locker and cosmetic styles|verified|Exercise persisted cosmetic variant changes|porting/server/tests/test_profile_variant_updates.py
 Locker and cosmetic styles|open|Persist and reselect presets, style choices and randomized slots across original-client reconnects
-In-match cosmetics|open|Apply selected outfit, style, back bling and harvesting tool to the pawn and replicate them
-In-match cosmetics|open|Apply glider, contrail and style during the drop and replicate them
+In-match cosmetics|implemented|Apply the selected outfit and resolved style channels to the controller and pawn loadouts|porting/native/Source/FortniteGame/Private/FortAthenaCharacterCache.cpp
+In-match cosmetics|implemented|Populate and replicate selected back bling and harvesting tool in the pawn loadout|porting/native/Source/FortniteGame/Private/FortAthenaCosmeticLoadout.cpp
+In-match cosmetics|implemented|Populate and replicate the selected glider and contrail in the pawn loadout|porting/native/Source/FortniteGame/Private/FortAthenaCosmeticLoadout.cpp
+In-match cosmetics|implemented|Load one wrap override into the pawn cosmetic loadout|porting/native/Source/FortniteGame/Private/FortAthenaCosmeticLoadout.cpp
 In-match cosmetics|open|Apply slot-specific wraps to weapons and supported vehicles
-In-match cosmetics|open|Replicate equipped emotes, sprays, emoticons and toys in a match
+In-match cosmetics|open|Apply per-item styles to gliders, harvesting tools and back bling in a match
+In-match cosmetics|open|Play equipped emotes and replicate them in a match
+In-match cosmetics|open|Use and replicate equipped sprays, emoticons and toys in a match
 In-match cosmetics|open|Carry reactive or progression-linked cosmetic changes through match events
 Battle Pass and progression|verified|Exercise Battle Pass profile behavior|porting/server/tests/test_profile_battle_pass.py
 Battle Pass and progression|verified|Exercise XP and leveling service logic|porting/server/tests/test_progression.py
