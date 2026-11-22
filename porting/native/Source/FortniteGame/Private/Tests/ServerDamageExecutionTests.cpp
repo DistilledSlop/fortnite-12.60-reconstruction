@@ -195,6 +195,14 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TestEqual(TEXT("Bypass preserves shield"), Pawn->GetShield(), 30.0f);
 	TestEqual(TEXT("Bypass reduces health"), Pawn->GetHealth(), 70.0f);
 
+	FGameplayEffectSpec AuthoredBypass(FormulaEffect, ASC->MakeEffectContext(), 1.0f);
+	AuthoredBypass.SetSetByCallerMagnitude(FName(TEXT("Damage")), 6.0f);
+	AuthoredBypass.SetSetByCallerMagnitude(FName(TEXT("IgnoreShield")), 1.0f);
+	ASC->ApplyGameplayEffectSpecToSelf(AuthoredBypass);
+	TestEqual(TEXT("Authored bypass preserves shield"), Pawn->GetShield(), 30.0f);
+	TestEqual(TEXT("Authored bypass applies damage to health"), Pawn->GetHealth(), 64.0f);
+	ASC->SetNumericAttributeBase(Health, 70.0f);
+
 	ASC->SetNumericAttributeBase(FGameplayAttribute(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("MaxHealth"))), 100);
 	ASC->SetNumericAttributeBase(FGameplayAttribute(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Shield"))), 100);
 	UServerRecoveryEffect::BindHealingAttribute(*ASC);
