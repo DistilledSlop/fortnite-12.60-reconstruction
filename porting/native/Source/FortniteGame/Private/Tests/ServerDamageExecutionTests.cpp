@@ -3,6 +3,7 @@
 #include "ABuildingWall.h"
 #include "AFortPawn.h"
 #include "AFortAIPawn.h"
+#include "AFortPlayerPawnAthena.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "FortAthenaHealth.h"
@@ -15,6 +16,7 @@
 #include "UFortDamageFormulaExecutionCalculation.h"
 #include "UFortDamageSet.h"
 #include "UFortHealthSet.h"
+#include "UFortMovementComp_CharacterAthena.h"
 
 // UE 4.25 discovers dedicated-server tests under ClientContext.
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FServerDamageExecutionTest, "Fortnite.Server.Damage.UnrealEvent",
@@ -44,6 +46,23 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 
 	FActorSpawnParameters SpawnParameters;
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	AFortPlayerPawnAthena* Crawler = World->SpawnActor<AFortPlayerPawnAthena>(
+		FVector(0, 0, 11000), FRotator::ZeroRotator, SpawnParameters);
+	if (TestNotNull(TEXT("Downed movement test pawn"), Crawler))
+	{
+		UFortMovementComp_CharacterAthena* Move = Cast<UFortMovementComp_CharacterAthena>(Crawler->GetCharacterMovement());
+		if (TestNotNull(TEXT("Downed pawn uses Athena movement"), Move))
+		{
+			Move->SetMovementMode(MOVE_Walking, 0);
+			Crawler->bIsDBNO = true;
+			Move->bWantsToCrouch = false;
+			Move->UpdateCharacterStateBeforeMovement(0.0f);
+			TestTrue(TEXT("Downed movement keeps crouch requested"), Move->bWantsToCrouch != 0);
+			TestFalse(TEXT("Downed movement blocks jump attempts"), Move->CanAttemptJump());
+		}
+		Crawler->Destroy();
+	}
+
 	AFortPawn* Pawn = World->SpawnActor<AFortPawn>(FVector(0, 0, 10000), FRotator::ZeroRotator, SpawnParameters);
 	if (!TestNotNull(TEXT("Damage test pawn"), Pawn))
 	{

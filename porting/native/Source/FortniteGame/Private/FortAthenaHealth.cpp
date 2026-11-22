@@ -354,7 +354,10 @@ namespace
 		}
 
 		ReleaseCarryConnections(Player);
+		Player->bWasCrouchedBeforeDBNO = Player->bIsCrouched;
 		Player->bIsDBNO = true;
+		Player->StopJumping();
+		Player->Crouch();
 		const float KnockTime = World->GetTimeSeconds();
 		Player->DBNOStartTime = KnockTime;
 		Player->DBNORevivalStacking = 0;
@@ -461,6 +464,10 @@ bool FortAthenaHealth::TryStartRevive(AController* Reviver, AFortPawn* Target)
 					Player->SetHealth(30.0f);
 					Player->bIsDBNO = false;
 					Player->bPlayedDying = false;
+					if (!Player->bWasCrouchedBeforeDBNO)
+					{
+						Player->UnCrouch();
+					}
 					Player->OnDBNOStateChanged.Broadcast(Player, false);
 				}
 				Player->ForceNetUpdate();
