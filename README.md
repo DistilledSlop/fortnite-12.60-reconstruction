@@ -2,7 +2,7 @@
 
 # Fortnite Chapter 2 Season 2 → Unreal Engine Project
 
-Reconstructing the Fortnite Chapter 2 Season 2 dedicated server and local backend services for the original 12.60 client.
+Reconstructing Fortnite Chapter 2 Season 2 as an Unreal Engine project, with recovered C++ source, a dedicated server, and local backend services.
 
 [Wiki](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki) ·
 [Source reference](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Source-and-API-Index) ·
