@@ -432,7 +432,7 @@ Verified: Exercise capped grants, partial-stack top-ups and multi-stack spending
 Implemented: Reject swaps that cannot grant a single-stack item before dropping the outgoing item
 Verified: Exercise partial world pickup, split drop and remainder pickup on the dedicated server
 Verified: Reject repeat claims, reconcile discarded stacks and preserve empty magazines through drop and pickup
-Verified: Reject a second server-side player claiming an already collected pickup
+Verified: Transfer a split drop between two server-side players and reject repeat claims
 Verified: Transfer eligible elimination loot once and preserve protected stacks
 Verified: Charge the exact repair material cost and preserve unrelated stacks on acceptance and rejection
 Open: Verify five loadout slots and separate pickaxe, trap and material storage
