@@ -44,6 +44,7 @@ namespace
 		TMap<TWeakObjectPtr<ABuildingContainer>, bool> GroundCacheCandidates;
 		TMap<FString, TArray<FName>> ConfiguredMarkerTags;
 		TMap<FString, TArray<FName>> ConfiguredMarkerClassTags;
+		TSet<FString> MatchedMarkerClasses;
 		TMap<FString, TWeakObjectPtr<ABuildingContainer>> SeenConfiguredMarkers;
 		int32 ActivatedGroundCacheCount = 0;
 		bool bReportedMissingMarkers = false;
@@ -66,6 +67,7 @@ namespace
 		S.ActiveWorld = World;
 		S.ConfiguredMarkerTags.Reset();
 		S.ConfiguredMarkerClassTags.Reset();
+		S.MatchedMarkerClasses.Reset();
 		S.SeenConfiguredMarkers.Reset();
 		if (GConfig)
 		{
@@ -211,6 +213,7 @@ void FortAthenaLootWorld::Reset()
 	S.ActiveWorld.Reset();
 	S.ConfiguredMarkerTags.Reset();
 	S.ConfiguredMarkerClassTags.Reset();
+	S.MatchedMarkerClasses.Reset();
 	S.SeenConfiguredMarkers.Reset();
 	S.ProcessedContainers.Reset();
 	S.ScannedLevels.Reset();
@@ -289,6 +292,11 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 			const FString ClassPath = Container->GetClass()->GetPathName();
 			if (const TArray<FName>* Tags = S.ConfiguredMarkerClassTags.Find(ClassPath))
 			{
+				if (!S.MatchedMarkerClasses.Contains(ClassPath))
+				{
+					S.MatchedMarkerClasses.Add(ClassPath);
+					UE_LOG(LogTemp, Display, TEXT("LootWorld: configured marker class %s matched %s"), *ClassPath, *Container->GetPathName());
+				}
 				for (const FName& Tag : *Tags)
 					Container->Tags.AddUnique(Tag);
 			}
@@ -447,6 +455,11 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 		{
 			if (!S.SeenConfiguredMarkers.Contains(Entry.Key))
 				UE_LOG(LogTemp, Warning, TEXT("LootWorld: configured marker %s was not present at match start"), *Entry.Key);
+		}
+		for (const auto& Entry : S.ConfiguredMarkerClassTags)
+		{
+			if (!S.MatchedMarkerClasses.Contains(Entry.Key))
+				UE_LOG(LogTemp, Warning, TEXT("LootWorld: configured marker class %s had no eligible actors at match start"), *Entry.Key);
 		}
 	}
 
