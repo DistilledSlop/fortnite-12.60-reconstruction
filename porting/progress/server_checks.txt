@@ -105,7 +105,7 @@ Loot sources|open|Verify chest, ammo crate and world loot contents and contested
 Loot sources|open|Find and search a Loot Llama and validate its drops
 Loot sources|open|Spawn, land and open a supply drop, then verify its loot
 World items and traversal|verified|Apply selected cooked consumable recovery effects with server caps|8a616111
-World items and traversal|open|Use all supported small and large shield and healing items from inventory
+World items and traversal|open|Use all supported small and large shield and healing items from inventory. Headless cooked ability checks cover bandages and one-unit small shield spending
 World items and traversal|open|Deploy and use crash pads and launch pads with replicated movement
 World items and traversal|implemented|Handle server zipline interaction RPCs|01a191ca
 World items and traversal|open|Verify zipline mount and dismount and representative map interactables
