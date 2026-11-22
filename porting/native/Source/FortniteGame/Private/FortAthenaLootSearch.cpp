@@ -455,7 +455,7 @@ FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnCon
 	float ScatterRadius,
 	TArray<AFortPickupAthena*>* OutPickups)
 {
-	if (!IsEnabled() || !GameMode || !GameMode->HasAuthority() || !Container || TierGroup == NAME_None)
+	if (!IsEnabled() || !GameMode || !GameMode->HasAuthority() || !IsValid(Container) || TierGroup == NAME_None)
 		return EContainerLootResult::RollFailed;
 
 	UWorld* World = Container->GetWorld();
@@ -533,7 +533,15 @@ FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnCon
 		const FVector SpawnLoc = ComputeDropSpawnLocation(Container, WorldOrigin, Index, Drops.Num(), ScatterRadius);
 		AFortPickupAthena* Pickup = Cast<AFortPickupAthena>(FortAthenaLoot::SpawnResolvedPickup(
 			World, SpawnLoc, Drop.Definition, Drop.Count, Drop.Level, LoadedAmmo, &WorldOrigin));
-		if (!IsValid(Pickup))
+		const bool bPickupSpawned = IsValid(Pickup);
+		if (bPickupSpawned)
+		{
+			SpawnedPickups.Add(Pickup);
+		}
+
+		// Spawn callbacks can destroy the source before its searched state is committed.
+		const bool bContainerAvailable = IsValid(Container) && !Container->IsActorBeingDestroyed() && !Container->bDestroyed;
+		if (!bPickupSpawned || !bContainerAvailable)
 		{
 			// Keep a failed roll retryable without leaving part of its loot in the world.
 			for (AFortPickupAthena* Spawned : SpawnedPickups)
@@ -543,11 +551,10 @@ FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnCon
 					Spawned->Destroy();
 				}
 			}
-			UE_LOG(LogTemp, Warning, TEXT("LootSearch: pickup spawn failed container=%s group=%s item=%s"),
-				*GetNameSafe(Container), *TierGroup.ToString(), *GetNameSafe(Drop.Definition));
-			return EContainerLootResult::SpawnFailed;
+			UE_LOG(LogTemp, Warning, TEXT("LootSearch: pickup spawn failed container=%s group=%s item=%s pickupSpawned=%d containerAvailable=%d"),
+				*GetNameSafe(Container), *TierGroup.ToString(), *GetNameSafe(Drop.Definition), bPickupSpawned, bContainerAvailable);
+			return bContainerAvailable ? EContainerLootResult::SpawnFailed : EContainerLootResult::RollFailed;
 		}
-		SpawnedPickups.Add(Pickup);
 		UE_LOG(LogTemp, Display, TEXT("LootSearch:  spawned item=%s count=%d level=%d ammo=%d loc=(%.0f,%.0f,%.0f)"),
 			*Drop.Definition->GetName(), Drop.Count, Drop.Level, LoadedAmmo, SpawnLoc.X, SpawnLoc.Y, SpawnLoc.Z);
 	}
