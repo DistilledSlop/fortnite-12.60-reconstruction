@@ -368,6 +368,19 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	{
 		return false;
 	}
+	UFortWorldItem* HigherLevelStack = FortAthenaInventory::GiveItem(Controller, WeaponDefinition, 1, 3);
+	if (!TestNotNull(TEXT("Weapon grant at a different level"), HigherLevelStack))
+	{
+		return false;
+	}
+	const FGuid HigherLevelGuid = HigherLevelStack->NativeGetItemGuid();
+	TestTrue(TEXT("A different-level grant creates a separate stack"), HigherLevelStack != EmptyStack);
+	TestEqual(TEXT("A different-level grant keeps its level"), HigherLevelStack->ItemEntry.Level, 3);
+	TestEqual(TEXT("An explicit merge cannot consume a different-level stack"),
+		FortAthenaInventory::CombineStacks(Controller, EmptyStack->NativeGetItemGuid(), HigherLevelGuid), 0);
+	TestEqual(TEXT("The original stack stays at one unit"), EmptyStack->ItemEntry.Count, 1);
+	TestEqual(TEXT("The higher-level stack stays at one unit"), HigherLevelStack->ItemEntry.Count, 1);
+	TestEqual(TEXT("Remove the higher-level test stack"), FortAthenaInventory::RemoveItem(Controller, HigherLevelGuid, 1), 1);
 	const FGuid EmptyStackGuid = EmptyStack->NativeGetItemGuid();
 	const FGuid LoadedStackGuid = LoadedStack->NativeGetItemGuid();
 	TestEqual(TEXT("Loaded grant retains its magazine"), LoadedStack->ItemEntry.LoadedAmmo, 5);

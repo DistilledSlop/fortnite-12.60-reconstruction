@@ -481,6 +481,7 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 	}
 
 	LoadedAmmo = NormalizeLoadedAmmo(Definition, LoadedAmmo);
+	Level = FMath::Max(1, Level);
 	ScanInventory(Inventory, nullptr, TEXT("before"));
 	const int32 MaxStack = FMath::Max(1, Definition->NativeGetMaxStackSize(nullptr));
 	// Fill matching stacks before creating a new one.
@@ -492,8 +493,8 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 			{
 				continue;
 			}
-			// A magazine belongs to its source entry. Topping up another stack would lose it.
-			if (LoadedAmmo > 0)
+			// Merging must preserve the incoming item level and magazine.
+			if (LoadedAmmo > 0 || FMath::Max(1, Existing->ItemEntry.Level) != Level)
 			{
 				if (!Definition->bAllowMultipleStacks)
 				{
@@ -583,7 +584,9 @@ int32 FortAthenaInventory::CombineStacks(AFortPlayerController* Controller, cons
 	UFortWorldItem* Target = FindItemByGuid(Inventory, TargetGuid);
 	UFortWorldItem* Source = FindItemByGuid(Inventory, SourceGuid);
 	if (!Target || !Source || Target->ItemEntry.ItemDefinition != Source->ItemEntry.ItemDefinition || !Target->ItemEntry.ItemDefinition
-		|| !Target->ItemEntry.ItemDefinition->IsStackable() || NormalizeLoadedAmmo(Source->ItemEntry.ItemDefinition, Source->ItemEntry.LoadedAmmo) > 0)
+		|| !Target->ItemEntry.ItemDefinition->IsStackable()
+		|| FMath::Max(1, Target->ItemEntry.Level) != FMath::Max(1, Source->ItemEntry.Level)
+		|| NormalizeLoadedAmmo(Source->ItemEntry.ItemDefinition, Source->ItemEntry.LoadedAmmo) > 0)
 	{
 		UE_LOG(LogTemp, Display, TEXT("Inventory: combine %s <- %s rejected (incompatible stacks or loaded source)"), *TargetGuid.ToString(), *SourceGuid.ToString());
 		return 0;
