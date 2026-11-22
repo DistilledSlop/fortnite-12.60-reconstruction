@@ -12,12 +12,14 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "FortAthenaHealth.h"
+#include "FortAthenaLootSearch.h"
 #include "FortHarvestBuilding.h"
 #include "GameFramework/DamageType.h"
 #include "GameplayEffectExtension.h"
 #include "Misc/AutomationTest.h"
 #include "ServerDamageExecution.h"
 #include "UFortAbilitySystemComponent.h"
+#include "UFortControllerComponent_Interaction.h"
 #include "UFortDamageFormulaExecutionCalculation.h"
 #include "UFortDamageSet.h"
 #include "UFortHealthSet.h"
@@ -75,23 +77,31 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 		FVector(175, 0, 12000), FRotator::ZeroRotator, SpawnParameters);
 	AAIController* CarryController = World->SpawnActor<AAIController>();
 	AAIController* DownedController = World->SpawnActor<AAIController>();
+	UFortControllerComponent_Interaction* Interaction = CarryController
+		? NewObject<UFortControllerComponent_Interaction>(CarryController) : nullptr;
 	AFortPlayerStateAthena* CarrierState = World->SpawnActor<AFortPlayerStateAthena>();
 	AFortPlayerStateAthena* DownedState = World->SpawnActor<AFortPlayerStateAthena>();
 	if (TestNotNull(TEXT("Carry fixture carrier"), Carrier) && TestNotNull(TEXT("Carry fixture target"), Downed) &&
-		TestNotNull(TEXT("Carry fixture controller"), CarryController) &&
+		TestNotNull(TEXT("Carry fixture interaction component"), Interaction) &&
 		TestNotNull(TEXT("Downed fixture controller"), DownedController) &&
 		TestNotNull(TEXT("Carry fixture carrier state"), CarrierState) && TestNotNull(TEXT("Carry fixture target state"), DownedState))
 	{
+		FortAthenaLootSearch::InstallRpcOverrides();
+		Interaction->RegisterComponent();
 		CarryController->Possess(Carrier);
 		DownedController->Possess(Downed);
 		Carrier->SetPlayerState(CarrierState);
 		Downed->SetPlayerState(DownedState);
 		CarrierState->TeamIndex = DownedState->TeamIndex = 3;
 		Carrier->bAllowDBNOCarry = true;
-		TestFalse(TEXT("A standing player cannot be picked up"), FortAthenaHealth::TryCarryDownedPlayer(CarryController, Downed));
+		Interaction->ServerAttemptInteract(Downed, nullptr, TInteractionType::IT_Simple, nullptr,
+			EInteractionBeingAttempted::SecondInteraction, 1);
+		TestNull(TEXT("The interaction RPC rejects carrying a standing player"), Carrier->DBNOHoistee);
 		Downed->bIsDBNO = true;
 
-		if (TestTrue(TEXT("A nearby downed player can be picked up"), FortAthenaHealth::TryCarryDownedPlayer(CarryController, Downed)))
+		Interaction->ServerAttemptInteract(Downed, nullptr, TInteractionType::IT_Simple, nullptr,
+			EInteractionBeingAttempted::SecondInteraction, 2);
+		if (TestTrue(TEXT("The interaction RPC picks up a nearby downed player"), Carrier->DBNOHoistee == Downed))
 		{
 			TestTrue(TEXT("Carry establishes both links and attaches the downed player"),
 				Carrier->DBNOHoistee == Downed && Downed->DBNOHoisterData.DBNOHoister == Carrier &&
@@ -120,7 +130,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	const TArray<TWeakObjectPtr<AActor>> Fixtures = {
 		CarryController, DownedController, Carrier, Downed, CarrierState, DownedState
 	};
-	if (Carrier && Downed && CarryController && DownedController && CarrierState && DownedState)
+	if (Carrier && Downed && Interaction && DownedController && CarrierState && DownedState)
 	{
 		Carrier->GetCharacterMovement()->SetComponentTickEnabled(false);
 		Downed->GetCharacterMovement()->SetComponentTickEnabled(false);
@@ -137,7 +147,10 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 		Downed->SetMaxHealth(100.0f);
 		Downed->SetHealth(60.0f);
 
-		TestTrue(TEXT("A standing teammate can start a timed revive"), FortAthenaHealth::TryStartRevive(CarryController, Downed));
+		Interaction->ServerAttemptInteract(Downed, nullptr, TInteractionType::IT_LongPress, nullptr,
+			EInteractionBeingAttempted::FirstInteraction, 3);
+		TestTrue(TEXT("The interaction RPC starts a timed revive for a standing teammate"),
+			Carrier->ItemInteractionActor == Downed && Downed->DBNORevivalStacking == 1);
 		Carrier->ServerSetInteractingItem(Downed, true);
 		TestNull(TEXT("Clearing interaction releases the reviver's target"), Carrier->ItemInteractionActor);
 		ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, Fixtures]()
