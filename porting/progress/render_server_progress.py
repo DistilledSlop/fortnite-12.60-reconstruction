@@ -6,7 +6,7 @@ from pathlib import Path
 import progress
 
 ROOT = Path(__file__).resolve().parents[2]
-OUTPUT = ROOT / "docs/progress/server/progress.svg"
+OUTPUT = ROOT / "docs/progress/server/acceptance-treemap.svg"
 
 # Completed checks cite recorded evidence. Open checks specify what still needs
 # a result. Each check counts once and contributes one unit of tile area.
