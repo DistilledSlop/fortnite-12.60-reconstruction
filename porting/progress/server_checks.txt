@@ -12,6 +12,15 @@ DBNO|verified|Drain downed health and resolve a squad wipe on the bleed timer|41
 DBNO|verified|Pick up and drop a downed teammate|b3295a17
 DBNO|verified|Apply configured forward and upward throw velocity|d714d0e5
 DBNO|verified|Complete and cancel a timed teammate revive|2b0c4d87
+DBNO|verified|Suppress knocks when a team playlist disables DBNO|ba715d19
+DBNO|verified|Allow a knock when storm damage prevents a conditional respawn|26846161
+DBNO|verified|Block jumping when the downed movement update clears crouch|d456d649
+DBNO|verified|Use a crawl speed fallback and cap analog movement|eb6788c9
+DBNO|verified|Pick up a downed player through the dedicated hoist RPC|d29161c5
+DBNO|verified|Update local carry flags when replication callbacks run|870032a6
+DBNO|verified|Use the configured drop height|3cd7cb5c
+DBNO|verified|Release a carried player immediately when the carrier loses possession|57bf159b
+DBNO|verified|Cancel a revive when the target leaves range and allow a retry|d29161c5
 DBNO|open|Match crawl, carry, throw and revive state on two original clients
 Elimination and reboot|implemented|Spawn elimination inventory drops|cd80d9ea
 Elimination and reboot|open|Spawn, collect and expire a Reboot Card in a match

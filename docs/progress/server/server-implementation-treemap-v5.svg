@@ -17,68 +17,69 @@
 .grp-head{fill:var(--tm-group-label);font-weight:600;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 .grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style>
 <rect class="tm-bg" width="1000" height="720"/>
-<text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: 47.2% implemented</text>
-<text x="12" y="48" font-size="12" class="tm-head">59 of 125 server checks implemented | 43 verified | 66 open</text>
+<text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: 50.7% implemented</text>
+<text x="12" y="48" font-size="12" class="tm-head">68 of 134 server checks implemented | 52 verified | 66 open</text>
 <g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Lobby, accounts and Epic service compatibility
 60.4% complete (32/53)
 effort weight 53 | source: equal-weight server implementation checks
 </title>
-<rect class="tile-frame tm-grp0" x="1.0" y="1.0" width="422.0" height="630.0" rx="4"/>
+<rect class="tile-frame tm-grp0" x="1.0" y="1.0" width="393.5" height="630.0" rx="4"/>
 <text class="grp-head" x="7.0" y="17.0" font-size="12">Lobby, accounts and Epic service compatibility<tspan class="grp-pct"> · 60%</tspan></text>
 </g>
 <g><title>Match flow and player states
-63.6% complete (14/22)
-effort weight 22 | source: equal-weight server implementation checks
+74.2% complete (23/31)
+effort weight 31 | source: equal-weight server implementation checks
 </title>
-<rect class="tile-frame tm-grp0" x="425.0" y="1.0" width="340.5" height="322.8" rx="4"/>
-<text class="grp-head" x="431.0" y="17.0" font-size="12">Match flow and player states<tspan class="grp-pct"> · 64%</tspan></text>
+<rect class="tile-frame tm-grp0" x="396.5" y="1.0" width="405.4" height="356.9" rx="4"/>
+<text class="grp-head" x="402.5" y="17.0" font-size="12">Match flow and player states<tspan class="grp-pct"> · 74%</tspan></text>
 </g>
 <g><title>Items, inventory and loot
 33.3% complete (5/15)
 effort weight 15 | source: equal-weight server implementation checks
 </title>
-<rect class="tile-frame tm-grp0" x="767.5" y="1.0" width="231.5" height="322.8" rx="4"/>
-<text class="grp-head" x="773.5" y="17.0" font-size="12">Items, inventory and loot<tspan class="grp-pct"> · 33%</tspan></text>
+<rect class="tile-frame tm-grp0" x="803.9" y="1.0" width="195.1" height="356.9" rx="4"/>
+<text class="grp-head" x="809.9" y="17.0" font-size="12">Items, inventory and loot</text>
+<text class="grp-head" x="809.9" y="31.0" font-size="12"><tspan class="grp-pct">· 33%</tspan></text>
 </g>
 <g><title>Weapons and gunplay
 46.2% complete (6/13)
 effort weight 13 | source: equal-weight server implementation checks
 </title>
-<rect class="tile-frame tm-grp0" x="425.0" y="325.8" width="211.9" height="305.2" rx="4"/>
-<text class="grp-head" x="431.0" y="341.8" font-size="12">Weapons and gunplay<tspan class="grp-pct"> · 46%</tspan></text>
+<rect class="tile-frame tm-grp0" x="396.5" y="359.9" width="222.5" height="271.1" rx="4"/>
+<text class="grp-head" x="402.5" y="375.9" font-size="12">Weapons and gunplay<tspan class="grp-pct"> · 46%</tspan></text>
 </g>
 <g><title>Map, environment and objectives
 14.3% complete (1/7)
 effort weight 7 | source: equal-weight server implementation checks
 </title>
-<rect class="tile-frame tm-grp0" x="638.9" y="325.8" width="211.9" height="163.4" rx="4"/>
-<text class="grp-head" x="644.9" y="341.8" font-size="12">Map, environment and</text>
-<text class="grp-head" x="644.9" y="355.8" font-size="12">objectives<tspan class="grp-pct"> · 14%</tspan></text>
+<rect class="tile-frame tm-grp0" x="621.0" y="359.9" width="222.5" height="145.0" rx="4"/>
+<text class="grp-head" x="627.0" y="375.9" font-size="12">Map, environment and</text>
+<text class="grp-head" x="627.0" y="389.9" font-size="12">objectives<tspan class="grp-pct"> · 14%</tspan></text>
 </g>
 <g><title>Animations and networking
 16.7% complete (1/6)
 effort weight 6 | source: equal-weight server implementation checks
 </title>
-<rect class="tile-frame tm-grp0" x="638.9" y="491.2" width="211.9" height="139.8" rx="4"/>
-<text class="grp-head" x="644.9" y="507.2" font-size="12">Animations and networking</text>
-<text class="grp-head" x="644.9" y="521.2" font-size="12"><tspan class="grp-pct">· 17%</tspan></text>
+<rect class="tile-frame tm-grp0" x="621.0" y="507.0" width="222.5" height="124.0" rx="4"/>
+<text class="grp-head" x="627.0" y="523.0" font-size="12">Animations and networking</text>
+<text class="grp-head" x="627.0" y="537.0" font-size="12"><tspan class="grp-pct">· 17%</tspan></text>
 </g>
 <g><title>AI, bots and bosses
 0.0% complete (0/5)
 effort weight 5 | source: equal-weight server implementation checks
 </title>
-<rect class="tile-frame tm-grp0" x="852.9" y="325.8" width="146.1" height="168.7" rx="4"/>
-<text class="grp-head" x="858.9" y="341.8" font-size="12">AI, bots and</text>
-<text class="grp-head" x="858.9" y="355.8" font-size="12">bosses<tspan class="grp-pct"> · 0.0%</tspan></text>
+<rect class="tile-frame tm-grp0" x="845.6" y="359.9" width="153.4" height="149.7" rx="4"/>
+<text class="grp-head" x="851.6" y="375.9" font-size="12">AI, bots and bosses</text>
+<text class="grp-head" x="851.6" y="389.9" font-size="12"><tspan class="grp-pct">· 0.0%</tspan></text>
 </g>
 <g><title>HUD, UI and feedback
 0.0% complete (0/4)
 effort weight 4 | source: equal-weight server implementation checks
 </title>
-<rect class="tile-frame tm-grp0" x="852.9" y="496.5" width="146.1" height="134.5" rx="4"/>
-<text class="grp-head" x="858.9" y="512.5" font-size="12">HUD, UI and</text>
-<text class="grp-head" x="858.9" y="526.5" font-size="12">feedback<tspan class="grp-pct"> · 0.0%</tspan></text>
+<rect class="tile-frame tm-grp0" x="845.6" y="511.6" width="153.4" height="119.4" rx="4"/>
+<text class="grp-head" x="851.6" y="527.6" font-size="12">HUD, UI and</text>
+<text class="grp-head" x="851.6" y="541.6" font-size="12">feedback<tspan class="grp-pct"> · 0.0%</tspan></text>
 </g>
 <g><title>In-match cosmetics
 44.4% complete (4/9)
@@ -92,14 +93,14 @@ Open: Apply per-item styles to gliders, harvesting tools and back bling in a mat
 Open: Play equipped emotes and replicate them in a match
 Open: Use and replicate equipped sprays, emoticons and toys in a match
 Open: Carry reactive or progression-linked cosmetic changes through match events</title>
-<rect class="tile-body" x="5.0" y="25.0" width="265.4" height="157.5" rx="4"/>
-<clipPath id="servertm-c0"><rect x="5.00" y="25.00" width="265.43" height="157.55" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c0)"><rect class="tile-fill" x="5.00" y="112.53" width="265.43" height="70.02"/>
-<rect class="tile-edge" x="5.00" y="111.53" width="265.43" height="2"/>
+<rect class="tile-body" x="5.0" y="25.0" width="247.1" height="157.5" rx="4"/>
+<clipPath id="servertm-c0"><rect x="5.00" y="25.00" width="247.12" height="157.55" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c0)"><rect class="tile-fill" x="5.00" y="112.53" width="247.12" height="70.02"/>
+<rect class="tile-edge" x="5.00" y="111.53" width="247.12" height="2"/>
 </g>
 <text class="leaf-label" x="10.0" y="40.0" font-size="11">In-match cosmetics</text>
 <text class="leaf-pct" x="10.0" y="53.0" font-size="12">44%</text>
-<rect class="tile-frame" x="5.0" y="25.0" width="265.4" height="157.5" rx="4"/>
+<rect class="tile-frame" x="5.0" y="25.0" width="247.1" height="157.5" rx="4"/>
 </g>
 <g><title>Locker and cosmetic styles
 80.0% complete (4/5)
@@ -109,15 +110,15 @@ Verified: Exercise profile loadout selection and persistence
 Verified: Exercise per-slot wrap updates and persistence
 Verified: Exercise persisted cosmetic variant changes
 Open: Persist and reselect presets, style choices and randomized slots across original-client reconnects</title>
-<rect class="tile-body" x="272.4" y="25.0" width="146.6" height="157.5" rx="4"/>
-<clipPath id="servertm-c1"><rect x="272.43" y="25.00" width="146.57" height="157.55" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c1)"><rect class="tile-fill" x="272.43" y="56.51" width="146.57" height="126.04"/>
-<rect class="tile-edge" x="272.43" y="55.51" width="146.57" height="2"/>
+<rect class="tile-body" x="254.1" y="25.0" width="136.4" height="157.5" rx="4"/>
+<clipPath id="servertm-c1"><rect x="254.12" y="25.00" width="136.40" height="157.55" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c1)"><rect class="tile-fill" x="254.12" y="56.51" width="136.40" height="126.04"/>
+<rect class="tile-edge" x="254.12" y="55.51" width="136.40" height="2"/>
 </g>
-<text class="leaf-label" x="277.4" y="40.0" font-size="11">Locker and cosmetic</text>
-<text class="leaf-label" x="277.4" y="53.0" font-size="11">styles</text>
-<text class="leaf-pct" x="277.4" y="66.0" font-size="12">80%</text>
-<rect class="tile-frame" x="272.4" y="25.0" width="146.6" height="157.5" rx="4"/>
+<text class="leaf-label" x="259.1" y="40.0" font-size="11">Locker and</text>
+<text class="leaf-label" x="259.1" y="53.0" font-size="11">cosmetic styles</text>
+<text class="leaf-pct" x="259.1" y="66.0" font-size="12">80%</text>
+<rect class="tile-frame" x="254.1" y="25.0" width="136.4" height="157.5" rx="4"/>
 </g>
 <g><title>Quests and challenges
 60.0% complete (3/5)
@@ -127,15 +128,15 @@ Verified: Exercise quest claim and reward paths
 Verified: Exercise weekly quest handling
 Open: Complete and persist daily, weekly, location, collectible and event objectives in an original-client match
 Open: Verify prerequisite chains, faction and style rewards, and notifications through the original client</title>
-<rect class="tile-body" x="5.0" y="184.5" width="158.0" height="146.2" rx="4"/>
-<clipPath id="servertm-c2"><rect x="5.00" y="184.55" width="158.00" height="146.15" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c2)"><rect class="tile-fill" x="5.00" y="243.01" width="158.00" height="87.69"/>
-<rect class="tile-edge" x="5.00" y="242.01" width="158.00" height="2"/>
+<rect class="tile-body" x="5.0" y="184.5" width="147.0" height="146.2" rx="4"/>
+<clipPath id="servertm-c2"><rect x="5.00" y="184.55" width="147.05" height="146.15" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c2)"><rect class="tile-fill" x="5.00" y="243.01" width="147.05" height="87.69"/>
+<rect class="tile-edge" x="5.00" y="242.01" width="147.05" height="2"/>
 </g>
 <text class="leaf-label" x="10.0" y="199.5" font-size="11">Quests and</text>
 <text class="leaf-label" x="10.0" y="212.5" font-size="11">challenges</text>
 <text class="leaf-pct" x="10.0" y="225.5" font-size="12">60%</text>
-<rect class="tile-frame" x="5.0" y="184.5" width="158.0" height="146.2" rx="4"/>
+<rect class="tile-frame" x="5.0" y="184.5" width="147.0" height="146.2" rx="4"/>
 </g>
 <g><title>Login and identity
 75.0% complete (3/4)
@@ -144,15 +145,15 @@ Verified: Exercise OAuth exchange-code handling against the local service
 Verified: Exercise username login and locker access at the backend boundary
 Verified: Launch through ProjectChrono under Wine and reach login and XMPP with two clients
 Open: Verify fresh ProjectChrono login, token refresh and reconnect on native Windows</title>
-<rect class="tile-body" x="165.0" y="184.5" width="126.0" height="146.2" rx="4"/>
-<clipPath id="servertm-c3"><rect x="165.00" y="184.55" width="126.00" height="146.15" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c3)"><rect class="tile-fill" x="165.00" y="221.08" width="126.00" height="109.61"/>
-<rect class="tile-edge" x="165.00" y="220.08" width="126.00" height="2"/>
+<rect class="tile-body" x="154.0" y="184.5" width="117.2" height="146.2" rx="4"/>
+<clipPath id="servertm-c3"><rect x="154.05" y="184.55" width="117.24" height="146.15" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c3)"><rect class="tile-fill" x="154.05" y="221.08" width="117.24" height="109.61"/>
+<rect class="tile-edge" x="154.05" y="220.08" width="117.24" height="2"/>
 </g>
-<text class="leaf-label" x="170.0" y="199.5" font-size="11">Login and</text>
-<text class="leaf-label" x="170.0" y="212.5" font-size="11">identity</text>
-<text class="leaf-pct" x="170.0" y="225.5" font-size="12">75%</text>
-<rect class="tile-frame" x="165.0" y="184.5" width="126.0" height="146.2" rx="4"/>
+<text class="leaf-label" x="159.0" y="199.5" font-size="11">Login and</text>
+<text class="leaf-label" x="159.0" y="212.5" font-size="11">identity</text>
+<text class="leaf-pct" x="159.0" y="225.5" font-size="12">75%</text>
+<rect class="tile-frame" x="154.0" y="184.5" width="117.2" height="146.2" rx="4"/>
 </g>
 <g><title>Friends, parties and lobby
 50.0% complete (2/4)
@@ -161,15 +162,15 @@ Verified: Exercise friend acceptance and presence propagation in the backend
 Verified: Exercise backend party lifecycle operations
 Open: Use invitations, ready states, leader changes, playlist selection and reconnect from multiple lobbies
 Open: Verify squad presence, chat and XMPP notifications across clients</title>
-<rect class="tile-body" x="293.0" y="184.5" width="126.0" height="146.2" rx="4"/>
-<clipPath id="servertm-c4"><rect x="293.00" y="184.55" width="126.00" height="146.15" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c4)"><rect class="tile-fill" x="293.00" y="257.62" width="126.00" height="73.08"/>
-<rect class="tile-edge" x="293.00" y="256.62" width="126.00" height="2"/>
+<rect class="tile-body" x="273.3" y="184.5" width="117.2" height="146.2" rx="4"/>
+<clipPath id="servertm-c4"><rect x="273.28" y="184.55" width="117.24" height="146.15" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c4)"><rect class="tile-fill" x="273.28" y="257.62" width="117.24" height="73.08"/>
+<rect class="tile-edge" x="273.28" y="256.62" width="117.24" height="2"/>
 </g>
-<text class="leaf-label" x="298.0" y="199.5" font-size="11">Friends, parties</text>
-<text class="leaf-label" x="298.0" y="212.5" font-size="11">and lobby</text>
-<text class="leaf-pct" x="298.0" y="225.5" font-size="12">50%</text>
-<rect class="tile-frame" x="293.0" y="184.5" width="126.0" height="146.2" rx="4"/>
+<text class="leaf-label" x="278.3" y="199.5" font-size="11">Friends, parties</text>
+<text class="leaf-label" x="278.3" y="212.5" font-size="11">and lobby</text>
+<text class="leaf-pct" x="278.3" y="225.5" font-size="12">50%</text>
+<rect class="tile-frame" x="273.3" y="184.5" width="117.2" height="146.2" rx="4"/>
 </g>
 <g><title>Battle Pass and progression
 50.0% complete (2/4)
@@ -178,16 +179,16 @@ Verified: Exercise Battle Pass profile behavior
 Verified: Exercise XP and leveling service logic
 Open: Earn match XP, unlock a tier and claim a reward through the original client
 Open: Verify entitlements, rewards and levels persist across profile reload and reconnect</title>
-<rect class="tile-body" x="5.0" y="332.7" width="110.0" height="167.3" rx="4"/>
-<clipPath id="servertm-c5"><rect x="5.00" y="332.70" width="110.00" height="167.32" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c5)"><rect class="tile-fill" x="5.00" y="416.36" width="110.00" height="83.66"/>
-<rect class="tile-edge" x="5.00" y="415.36" width="110.00" height="2"/>
+<rect class="tile-body" x="5.0" y="332.7" width="102.3" height="167.3" rx="4"/>
+<clipPath id="servertm-c5"><rect x="5.00" y="332.70" width="102.33" height="167.32" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c5)"><rect class="tile-fill" x="5.00" y="416.36" width="102.33" height="83.66"/>
+<rect class="tile-edge" x="5.00" y="415.36" width="102.33" height="2"/>
 </g>
 <text class="leaf-label" x="10.0" y="347.7" font-size="11">Battle Pass</text>
 <text class="leaf-label" x="10.0" y="360.7" font-size="11">and</text>
 <text class="leaf-label" x="10.0" y="373.7" font-size="11">progression</text>
 <text class="leaf-pct" x="10.0" y="386.7" font-size="12">50%</text>
-<rect class="tile-frame" x="5.0" y="332.7" width="110.0" height="167.3" rx="4"/>
+<rect class="tile-frame" x="5.0" y="332.7" width="102.3" height="167.3" rx="4"/>
 </g>
 <g><title>Account API
 66.7% complete (2/3)
@@ -195,14 +196,14 @@ effort weight 3 | source: equal-weight server implementation checks
 Verified: Serve account lookup by ID, display name and batches of IDs
 Verified: Validate a profile token against a known local account
 Open: Exercise account lookup and profile-token requests from the original client</title>
-<rect class="tile-body" x="5.0" y="502.0" width="110.0" height="125.0" rx="4"/>
-<clipPath id="servertm-c6"><rect x="5.00" y="502.01" width="110.00" height="124.99" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c6)"><rect class="tile-fill" x="5.00" y="543.68" width="110.00" height="83.32"/>
-<rect class="tile-edge" x="5.00" y="542.68" width="110.00" height="2"/>
+<rect class="tile-body" x="5.0" y="502.0" width="102.3" height="125.0" rx="4"/>
+<clipPath id="servertm-c6"><rect x="5.00" y="502.01" width="102.33" height="124.99" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c6)"><rect class="tile-fill" x="5.00" y="543.68" width="102.33" height="83.32"/>
+<rect class="tile-edge" x="5.00" y="542.68" width="102.33" height="2"/>
 </g>
 <text class="leaf-label" x="10.0" y="517.0" font-size="11">Account API</text>
 <text class="leaf-pct" x="10.0" y="530.0" font-size="12">67%</text>
-<rect class="tile-frame" x="5.0" y="502.0" width="110.0" height="125.0" rx="4"/>
+<rect class="tile-frame" x="5.0" y="502.0" width="102.3" height="125.0" rx="4"/>
 </g>
 <g><title>Service status and content
 66.7% complete (2/3)
@@ -210,15 +211,16 @@ effort weight 3 | source: equal-weight server implementation checks
 Verified: Serve lightswitch status, maintenance state and version-check responses
 Verified: Serve the configured lobby page, locale data and snapshot assets
 Open: Load status, lobby content and news through an unmodified original-client flow</title>
-<rect class="tile-body" x="117.0" y="332.7" width="142.0" height="96.8" rx="4"/>
-<clipPath id="servertm-c7"><rect x="117.00" y="332.70" width="142.00" height="96.77" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c7)"><rect class="tile-fill" x="117.00" y="364.95" width="142.00" height="64.51"/>
-<rect class="tile-edge" x="117.00" y="363.95" width="142.00" height="2"/>
+<rect class="tile-body" x="109.3" y="332.7" width="92.4" height="138.4" rx="4"/>
+<clipPath id="servertm-c7"><rect x="109.33" y="332.70" width="92.40" height="138.35" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c7)"><rect class="tile-fill" x="109.33" y="378.82" width="92.40" height="92.24"/>
+<rect class="tile-edge" x="109.33" y="377.82" width="92.40" height="2"/>
 </g>
-<text class="leaf-label" x="122.0" y="347.7" font-size="11">Service status and</text>
-<text class="leaf-label" x="122.0" y="360.7" font-size="11">content</text>
-<text class="leaf-pct" x="122.0" y="373.7" font-size="12">67%</text>
-<rect class="tile-frame" x="117.0" y="332.7" width="142.0" height="96.8" rx="4"/>
+<text class="leaf-label" x="114.3" y="347.7" font-size="11">Service</text>
+<text class="leaf-label" x="114.3" y="360.7" font-size="11">status and</text>
+<text class="leaf-label" x="114.3" y="373.7" font-size="11">content</text>
+<text class="leaf-pct" x="114.3" y="386.7" font-size="12">67%</text>
+<rect class="tile-frame" x="109.3" y="332.7" width="92.4" height="138.4" rx="4"/>
 </g>
 <g><title>Cloud storage
 66.7% complete (2/3)
@@ -226,14 +228,15 @@ effort weight 3 | source: equal-weight server implementation checks
 Verified: List and return configured system files with correct response bytes
 Verified: Round-trip user cloud files with account access checks
 Open: Save and reload original-client settings through user cloud storage after reconnect</title>
-<rect class="tile-body" x="117.0" y="431.5" width="142.0" height="96.8" rx="4"/>
-<clipPath id="servertm-c8"><rect x="117.00" y="431.47" width="142.00" height="96.77" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c8)"><rect class="tile-fill" x="117.00" y="463.72" width="142.00" height="64.51"/>
-<rect class="tile-edge" x="117.00" y="462.72" width="142.00" height="2"/>
+<rect class="tile-body" x="203.7" y="332.7" width="92.4" height="138.4" rx="4"/>
+<clipPath id="servertm-c8"><rect x="203.73" y="332.70" width="92.40" height="138.35" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c8)"><rect class="tile-fill" x="203.73" y="378.82" width="92.40" height="92.24"/>
+<rect class="tile-edge" x="203.73" y="377.82" width="92.40" height="2"/>
 </g>
-<text class="leaf-label" x="122.0" y="446.5" font-size="11">Cloud storage</text>
-<text class="leaf-pct" x="122.0" y="459.5" font-size="12">67%</text>
-<rect class="tile-frame" x="117.0" y="431.5" width="142.0" height="96.8" rx="4"/>
+<text class="leaf-label" x="208.7" y="347.7" font-size="11">Cloud</text>
+<text class="leaf-label" x="208.7" y="360.7" font-size="11">storage</text>
+<text class="leaf-pct" x="208.7" y="373.7" font-size="12">67%</text>
+<rect class="tile-frame" x="203.7" y="332.7" width="92.4" height="138.4" rx="4"/>
 </g>
 <g><title>Calendar and events
 66.7% complete (2/3)
@@ -241,15 +244,15 @@ effort weight 3 | source: equal-weight server implementation checks
 Verified: Serve local calendar timeline and active event flags
 Verified: Serve the authenticated competition-download response for local accounts
 Open: Populate and exercise eligible competition events, scores and payouts</title>
-<rect class="tile-body" x="117.0" y="530.2" width="142.0" height="96.8" rx="4"/>
-<clipPath id="servertm-c9"><rect x="117.00" y="530.23" width="142.00" height="96.77" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c9)"><rect class="tile-fill" x="117.00" y="562.49" width="142.00" height="64.51"/>
-<rect class="tile-edge" x="117.00" y="561.49" width="142.00" height="2"/>
+<rect class="tile-body" x="298.1" y="332.7" width="92.4" height="138.4" rx="4"/>
+<clipPath id="servertm-c9"><rect x="298.13" y="332.70" width="92.40" height="138.35" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c9)"><rect class="tile-fill" x="298.13" y="378.82" width="92.40" height="92.24"/>
+<rect class="tile-edge" x="298.13" y="377.82" width="92.40" height="2"/>
 </g>
-<text class="leaf-label" x="122.0" y="545.2" font-size="11">Calendar and</text>
-<text class="leaf-label" x="122.0" y="558.2" font-size="11">events</text>
-<text class="leaf-pct" x="122.0" y="571.2" font-size="12">67%</text>
-<rect class="tile-frame" x="117.0" y="530.2" width="142.0" height="96.8" rx="4"/>
+<text class="leaf-label" x="303.1" y="347.7" font-size="11">Calendar</text>
+<text class="leaf-label" x="303.1" y="360.7" font-size="11">and events</text>
+<text class="leaf-pct" x="303.1" y="373.7" font-size="12">67%</text>
+<rect class="tile-frame" x="298.1" y="332.7" width="92.4" height="138.4" rx="4"/>
 </g>
 <g><title>Catalog and purchases
 66.7% complete (2/3)
@@ -257,15 +260,16 @@ effort weight 3 | source: equal-weight server implementation checks
 Verified: Return the local storefront catalog response
 Verified: Process catalog purchase and profile mutation in the local service
 Open: Open the store in the original client and buy, equip and retain an offer</title>
-<rect class="tile-body" x="261.0" y="332.7" width="158.0" height="86.9" rx="4"/>
-<clipPath id="servertm-c10"><rect x="261.00" y="332.70" width="158.00" height="86.89" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c10)"><rect class="tile-fill" x="261.00" y="361.66" width="158.00" height="57.93"/>
-<rect class="tile-edge" x="261.00" y="360.66" width="158.00" height="2"/>
+<rect class="tile-body" x="109.3" y="473.1" width="83.0" height="153.9" rx="4"/>
+<clipPath id="servertm-c10"><rect x="109.33" y="473.05" width="82.96" height="153.95" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c10)"><rect class="tile-fill" x="109.33" y="524.37" width="82.96" height="102.63"/>
+<rect class="tile-edge" x="109.33" y="523.37" width="82.96" height="2"/>
 </g>
-<text class="leaf-label" x="266.0" y="347.7" font-size="11">Catalog and</text>
-<text class="leaf-label" x="266.0" y="360.7" font-size="11">purchases</text>
-<text class="leaf-pct" x="266.0" y="373.7" font-size="12">67%</text>
-<rect class="tile-frame" x="261.0" y="332.7" width="158.0" height="86.9" rx="4"/>
+<text class="leaf-label" x="114.3" y="488.1" font-size="11">Catalog</text>
+<text class="leaf-label" x="114.3" y="501.1" font-size="11">and</text>
+<text class="leaf-label" x="114.3" y="514.1" font-size="11">purchases</text>
+<text class="leaf-pct" x="114.3" y="527.1" font-size="12">67%</text>
+<rect class="tile-frame" x="109.3" y="473.1" width="83.0" height="153.9" rx="4"/>
 </g>
 <g><title>Gifting
 66.7% complete (2/3)
@@ -273,60 +277,71 @@ effort weight 3 | source: equal-weight server implementation checks
 Verified: Validate gift eligibility, recipients and messages before debiting
 Verified: Persist gifts and claim them from the recipient account
 Open: Send and claim gifts between two original clients and verify the notifications</title>
-<rect class="tile-body" x="261.0" y="421.6" width="158.0" height="86.9" rx="4"/>
-<clipPath id="servertm-c11"><rect x="261.00" y="421.59" width="158.00" height="86.89" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c11)"><rect class="tile-fill" x="261.00" y="450.55" width="158.00" height="57.93"/>
-<rect class="tile-edge" x="261.00" y="449.55" width="158.00" height="2"/>
+<rect class="tile-body" x="194.3" y="473.1" width="83.0" height="153.9" rx="4"/>
+<clipPath id="servertm-c11"><rect x="194.29" y="473.05" width="82.96" height="153.95" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c11)"><rect class="tile-fill" x="194.29" y="524.37" width="82.96" height="102.63"/>
+<rect class="tile-edge" x="194.29" y="523.37" width="82.96" height="2"/>
 </g>
-<text class="leaf-label" x="266.0" y="436.6" font-size="11">Gifting</text>
-<text class="leaf-pct" x="266.0" y="449.6" font-size="12">67%</text>
-<rect class="tile-frame" x="261.0" y="421.6" width="158.0" height="86.9" rx="4"/>
+<text class="leaf-label" x="199.3" y="488.1" font-size="11">Gifting</text>
+<text class="leaf-pct" x="199.3" y="501.1" font-size="12">67%</text>
+<rect class="tile-frame" x="194.3" y="473.1" width="83.0" height="153.9" rx="4"/>
 </g>
 <g><title>Currency
 50.0% complete (1/2)
 effort weight 2 | source: equal-weight server implementation checks
 Verified: Persist a local operator credit and reject writes to active state
 Open: Verify the original client balance updates after purchases, gifting and reconnect</title>
-<rect class="tile-body" x="261.0" y="510.5" width="78.0" height="116.5" rx="4"/>
-<clipPath id="servertm-c12"><rect x="261.00" y="510.48" width="78.00" height="116.52" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c12)"><rect class="tile-fill" x="261.00" y="568.74" width="78.00" height="58.26"/>
-<rect class="tile-edge" x="261.00" y="567.74" width="78.00" height="2"/>
+<rect class="tile-body" x="279.2" y="473.1" width="111.3" height="76.0" rx="4"/>
+<clipPath id="servertm-c12"><rect x="279.25" y="473.05" width="111.28" height="75.97" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c12)"><rect class="tile-fill" x="279.25" y="511.04" width="111.28" height="37.99"/>
+<rect class="tile-edge" x="279.25" y="510.04" width="111.28" height="2"/>
 </g>
-<text class="leaf-label" x="266.0" y="525.5" font-size="11">Currency</text>
-<text class="leaf-pct" x="266.0" y="538.5" font-size="12">50%</text>
-<rect class="tile-frame" x="261.0" y="510.5" width="78.0" height="116.5" rx="4"/>
+<text class="leaf-label" x="284.2" y="488.1" font-size="11">Currency</text>
+<text class="leaf-pct" x="284.2" y="501.1" font-size="12">50%</text>
+<rect class="tile-frame" x="279.2" y="473.1" width="111.3" height="76.0" rx="4"/>
 </g>
 <g><title>Matchmaking and sessions
 50.0% complete (1/2)
 effort weight 2 | source: equal-weight server implementation checks
 Verified: Exercise dedicated-server registration in the local registry
 Open: Queue a party through the original client, assign one session and join together</title>
-<rect class="tile-body" x="341.0" y="510.5" width="78.0" height="116.5" rx="4"/>
-<clipPath id="servertm-c13"><rect x="341.00" y="510.48" width="78.00" height="116.52" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c13)"><rect class="tile-fill" x="341.00" y="568.74" width="78.00" height="58.26"/>
-<rect class="tile-edge" x="341.00" y="567.74" width="78.00" height="2"/>
+<rect class="tile-body" x="279.2" y="551.0" width="111.3" height="76.0" rx="4"/>
+<clipPath id="servertm-c13"><rect x="279.25" y="551.03" width="111.28" height="75.97" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c13)"><rect class="tile-fill" x="279.25" y="589.01" width="111.28" height="37.99"/>
+<rect class="tile-edge" x="279.25" y="588.01" width="111.28" height="2"/>
 </g>
-<text class="leaf-pct" x="346.0" y="526.5" font-size="12">50%</text>
-<rect class="tile-frame" x="341.0" y="510.5" width="78.0" height="116.5" rx="4"/>
+<text class="leaf-label" x="284.2" y="566.0" font-size="11">Matchmaking</text>
+<text class="leaf-label" x="284.2" y="579.0" font-size="11">and sessions</text>
+<text class="leaf-pct" x="284.2" y="592.0" font-size="12">50%</text>
+<rect class="tile-frame" x="279.2" y="551.0" width="111.3" height="76.0" rx="4"/>
 </g>
 <g><title>DBNO
-85.7% complete (6/7)
-effort weight 7 | source: equal-weight server implementation checks
+93.8% complete (15/16)
+effort weight 16 | source: equal-weight server implementation checks
 Verified: Knock a player with a standing teammate and eliminate the last standing teammate
 Verified: Queue a crawl stance on knock
 Verified: Drain downed health and resolve a squad wipe on the bleed timer
 Verified: Pick up and drop a downed teammate
 Verified: Apply configured forward and upward throw velocity
 Verified: Complete and cancel a timed teammate revive
+Verified: Suppress knocks when a team playlist disables DBNO
+Verified: Allow a knock when storm damage prevents a conditional respawn
+Verified: Block jumping when the downed movement update clears crouch
+Verified: Use a crawl speed fallback and cap analog movement
+Verified: Pick up a downed player through the dedicated hoist RPC
+Verified: Update local carry flags when replication callbacks run
+Verified: Use the configured drop height
+Verified: Release a carried player immediately when the carrier loses possession
+Verified: Cancel a revive when the target leaves range and allow a retry
 Open: Match crawl, carry, throw and revive state on two original clients</title>
-<rect class="tile-body" x="429.0" y="25.0" width="195.7" height="157.8" rx="4"/>
-<clipPath id="servertm-c14"><rect x="429.00" y="25.00" width="195.65" height="157.80" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c14)"><rect class="tile-fill" x="429.00" y="47.54" width="195.65" height="135.26"/>
-<rect class="tile-edge" x="429.00" y="46.54" width="195.65" height="2"/>
+<rect class="tile-body" x="400.5" y="25.0" width="204.1" height="328.9" rx="4"/>
+<clipPath id="servertm-c14"><rect x="400.52" y="25.00" width="204.12" height="328.91" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c14)"><rect class="tile-fill" x="400.52" y="45.56" width="204.12" height="308.36"/>
+<rect class="tile-edge" x="400.52" y="44.56" width="204.12" height="2"/>
 </g>
-<text class="leaf-label" x="434.0" y="40.0" font-size="11">DBNO</text>
-<text class="leaf-pct" x="434.0" y="53.0" font-size="12">86%</text>
-<rect class="tile-frame" x="429.0" y="25.0" width="195.7" height="157.8" rx="4"/>
+<text class="leaf-label" x="405.5" y="40.0" font-size="11">DBNO</text>
+<text class="leaf-pct" x="405.5" y="53.0" font-size="12">94%</text>
+<rect class="tile-frame" x="400.5" y="25.0" width="204.1" height="328.9" rx="4"/>
 </g>
 <g><title>Win and spectating
 50.0% complete (3/6)
@@ -337,14 +352,14 @@ Implemented: Select an initial living spectator target after elimination
 Open: Switch between eligible teammates or the eliminator
 Open: Trigger victory results and synchronized slow motion in a multiplayer match
 Open: Return to lobby, requeue and clear previous match state</title>
-<rect class="tile-body" x="429.0" y="184.8" width="195.7" height="135.0" rx="4"/>
-<clipPath id="servertm-c15"><rect x="429.00" y="184.80" width="195.65" height="134.97" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c15)"><rect class="tile-fill" x="429.00" y="252.29" width="195.65" height="67.49"/>
-<rect class="tile-edge" x="429.00" y="251.29" width="195.65" height="2"/>
+<rect class="tile-body" x="606.6" y="25.0" width="191.2" height="130.4" rx="4"/>
+<clipPath id="servertm-c15"><rect x="606.65" y="25.00" width="191.24" height="130.37" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c15)"><rect class="tile-fill" x="606.65" y="90.18" width="191.24" height="65.18"/>
+<rect class="tile-edge" x="606.65" y="89.18" width="191.24" height="2"/>
 </g>
-<text class="leaf-label" x="434.0" y="199.8" font-size="11">Win and spectating</text>
-<text class="leaf-pct" x="434.0" y="212.8" font-size="12">50%</text>
-<rect class="tile-frame" x="429.0" y="184.8" width="195.7" height="135.0" rx="4"/>
+<text class="leaf-label" x="611.6" y="40.0" font-size="11">Win and spectating</text>
+<text class="leaf-pct" x="611.6" y="53.0" font-size="12">50%</text>
+<rect class="tile-frame" x="606.6" y="25.0" width="191.2" height="130.4" rx="4"/>
 </g>
 <g><title>Elimination and reboot
 25.0% complete (1/4)
@@ -353,15 +368,15 @@ Implemented: Spawn elimination inventory drops
 Open: Spawn, collect and expire a Reboot Card in a match
 Open: Consume a card and respawn eligible teammates through the van interaction channel
 Open: Replicate van cooldown and activation audio events</title>
-<rect class="tile-body" x="626.7" y="25.0" width="134.8" height="129.9" rx="4"/>
-<clipPath id="servertm-c16"><rect x="626.65" y="25.00" width="134.84" height="129.90" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c16)"><rect class="tile-fill" x="626.65" y="122.43" width="134.84" height="32.48"/>
-<rect class="tile-edge" x="626.65" y="121.43" width="134.84" height="2"/>
+<rect class="tile-body" x="606.6" y="157.4" width="108.4" height="152.4" rx="4"/>
+<clipPath id="servertm-c16"><rect x="606.65" y="157.37" width="108.42" height="152.43" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c16)"><rect class="tile-fill" x="606.65" y="271.69" width="108.42" height="38.11"/>
+<rect class="tile-edge" x="606.65" y="270.69" width="108.42" height="2"/>
 </g>
-<text class="leaf-label" x="631.7" y="40.0" font-size="11">Elimination and</text>
-<text class="leaf-label" x="631.7" y="53.0" font-size="11">reboot</text>
-<text class="leaf-pct" x="631.7" y="66.0" font-size="12">25%</text>
-<rect class="tile-frame" x="626.7" y="25.0" width="134.8" height="129.9" rx="4"/>
+<text class="leaf-label" x="611.6" y="172.4" font-size="11">Elimination</text>
+<text class="leaf-label" x="611.6" y="185.4" font-size="11">and reboot</text>
+<text class="leaf-pct" x="611.6" y="198.4" font-size="12">25%</text>
+<rect class="tile-frame" x="606.6" y="157.4" width="108.4" height="152.4" rx="4"/>
 </g>
 <g><title>Hosting and drop
 66.7% complete (2/3)
@@ -369,27 +384,28 @@ effort weight 3 | source: equal-weight server implementation checks
 Verified: Build and boot the Linux dedicated target and run headless automation
 Verified: Join the local server with the original client and enter Apollo
 Open: Populate a match with multiple original clients and complete the bus drop for each</title>
-<rect class="tile-body" x="626.7" y="156.9" width="134.8" height="96.9" rx="4"/>
-<clipPath id="servertm-c17"><rect x="626.65" y="156.90" width="134.84" height="96.93" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c17)"><rect class="tile-fill" x="626.65" y="189.21" width="134.84" height="64.62"/>
-<rect class="tile-edge" x="626.65" y="188.21" width="134.84" height="2"/>
+<rect class="tile-body" x="717.1" y="157.4" width="80.8" height="152.4" rx="4"/>
+<clipPath id="servertm-c17"><rect x="717.07" y="157.37" width="80.82" height="152.43" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c17)"><rect class="tile-fill" x="717.07" y="208.17" width="80.82" height="101.62"/>
+<rect class="tile-edge" x="717.07" y="207.17" width="80.82" height="2"/>
 </g>
-<text class="leaf-label" x="631.7" y="171.9" font-size="11">Hosting and drop</text>
-<text class="leaf-pct" x="631.7" y="184.9" font-size="12">67%</text>
-<rect class="tile-frame" x="626.7" y="156.9" width="134.8" height="96.9" rx="4"/>
+<text class="leaf-label" x="722.1" y="172.4" font-size="11">Hosting</text>
+<text class="leaf-label" x="722.1" y="185.4" font-size="11">and drop</text>
+<text class="leaf-pct" x="722.1" y="198.4" font-size="12">67%</text>
+<rect class="tile-frame" x="717.1" y="157.4" width="80.8" height="152.4" rx="4"/>
 </g>
 <g><title>Bus driver
 100.0% complete (2/2)
 effort weight 2 | source: equal-weight server implementation checks
 Implemented: Record one thanks per player through the server RPC
 Implemented: Replicate the thanks flag on PlayerState for the original client&#x27;s bus-driver message</title>
-<rect class="tile-body" x="626.7" y="255.8" width="134.8" height="64.0" rx="4"/>
-<clipPath id="servertm-c18"><rect x="626.65" y="255.83" width="134.84" height="63.95" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c18)"><rect class="tile-fill" x="626.65" y="255.83" width="134.84" height="63.95"/>
+<rect class="tile-body" x="606.6" y="311.8" width="191.2" height="42.1" rx="4"/>
+<clipPath id="servertm-c18"><rect x="606.65" y="311.79" width="191.24" height="42.12" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c18)"><rect class="tile-fill" x="606.65" y="311.79" width="191.24" height="42.12"/>
 </g>
-<text class="leaf-label" x="631.7" y="270.8" font-size="11">Bus driver</text>
-<text class="leaf-pct" x="631.7" y="283.8" font-size="12">100%</text>
-<rect class="tile-frame" x="626.7" y="255.8" width="134.8" height="64.0" rx="4"/>
+<text class="leaf-label" x="611.6" y="326.8" font-size="11">Bus driver</text>
+<text class="leaf-pct" x="611.6" y="339.8" font-size="12">100%</text>
+<rect class="tile-frame" x="606.6" y="311.8" width="191.2" height="42.1" rx="4"/>
 </g>
 <g><title>Inventory operations
 20.0% complete (1/5)
@@ -399,15 +415,14 @@ Open: Verify five loadout slots and separate pickaxe, trap and material storage
 Open: Verify slot reorder, stack split and auto-pickup rules on two clients
 Open: Verify item use and gain, spend or loss reconcile with inventory
 Open: Upgrade a weapon at a bench and charge the correct materials</title>
-<rect class="tile-body" x="771.5" y="25.0" width="110.8" height="195.9" rx="4"/>
-<clipPath id="servertm-c19"><rect x="771.49" y="25.00" width="110.76" height="195.85" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c19)"><rect class="tile-fill" x="771.49" y="181.68" width="110.76" height="39.17"/>
-<rect class="tile-edge" x="771.49" y="180.68" width="110.76" height="2"/>
+<rect class="tile-body" x="807.9" y="39.0" width="187.1" height="103.6" rx="4"/>
+<clipPath id="servertm-c19"><rect x="807.89" y="39.00" width="187.11" height="103.64" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c19)"><rect class="tile-fill" x="807.89" y="121.91" width="187.11" height="20.73"/>
+<rect class="tile-edge" x="807.89" y="120.91" width="187.11" height="2"/>
 </g>
-<text class="leaf-label" x="776.5" y="40.0" font-size="11">Inventory</text>
-<text class="leaf-label" x="776.5" y="53.0" font-size="11">operations</text>
-<text class="leaf-pct" x="776.5" y="66.0" font-size="12">20%</text>
-<rect class="tile-frame" x="771.5" y="25.0" width="110.8" height="195.9" rx="4"/>
+<text class="leaf-label" x="812.9" y="54.0" font-size="11">Inventory operations</text>
+<text class="leaf-pct" x="812.9" y="67.0" font-size="12">20%</text>
+<rect class="tile-frame" x="807.9" y="39.0" width="187.1" height="103.6" rx="4"/>
 </g>
 <g><title>Loot sources
 40.0% complete (2/5)
@@ -417,14 +432,14 @@ Implemented: Search a chest and replicate its searched state
 Open: Verify chest, ammo crate and world loot contents and contested pickups
 Open: Find and search a Loot Llama and validate its drops
 Open: Spawn, land and open a supply drop, then verify its loot</title>
-<rect class="tile-body" x="884.2" y="25.0" width="110.8" height="195.9" rx="4"/>
-<clipPath id="servertm-c20"><rect x="884.24" y="25.00" width="110.76" height="195.85" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c20)"><rect class="tile-fill" x="884.24" y="142.51" width="110.76" height="78.34"/>
-<rect class="tile-edge" x="884.24" y="141.51" width="110.76" height="2"/>
+<rect class="tile-body" x="807.9" y="144.6" width="187.1" height="103.6" rx="4"/>
+<clipPath id="servertm-c20"><rect x="807.89" y="144.64" width="187.11" height="103.64" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c20)"><rect class="tile-fill" x="807.89" y="206.82" width="187.11" height="41.46"/>
+<rect class="tile-edge" x="807.89" y="205.82" width="187.11" height="2"/>
 </g>
-<text class="leaf-label" x="889.2" y="40.0" font-size="11">Loot sources</text>
-<text class="leaf-pct" x="889.2" y="53.0" font-size="12">40%</text>
-<rect class="tile-frame" x="884.2" y="25.0" width="110.8" height="195.9" rx="4"/>
+<text class="leaf-label" x="812.9" y="159.6" font-size="11">Loot sources</text>
+<text class="leaf-pct" x="812.9" y="172.6" font-size="12">40%</text>
+<rect class="tile-frame" x="807.9" y="144.6" width="187.1" height="103.6" rx="4"/>
 </g>
 <g><title>World items and traversal
 40.0% complete (2/5)
@@ -434,14 +449,14 @@ Open: Use all supported small and large shield and healing items from inventory
 Open: Deploy and use crash pads and launch pads with replicated movement
 Implemented: Handle server zipline interaction RPCs
 Open: Verify zipline mount and dismount and representative map interactables</title>
-<rect class="tile-body" x="771.5" y="222.9" width="223.5" height="96.9" rx="4"/>
-<clipPath id="servertm-c21"><rect x="771.49" y="222.85" width="223.51" height="96.93" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c21)"><rect class="tile-fill" x="771.49" y="281.01" width="223.51" height="38.77"/>
-<rect class="tile-edge" x="771.49" y="280.01" width="223.51" height="2"/>
+<rect class="tile-body" x="807.9" y="250.3" width="187.1" height="103.6" rx="4"/>
+<clipPath id="servertm-c21"><rect x="807.89" y="250.28" width="187.11" height="103.64" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c21)"><rect class="tile-fill" x="807.89" y="312.46" width="187.11" height="41.46"/>
+<rect class="tile-edge" x="807.89" y="311.46" width="187.11" height="2"/>
 </g>
-<text class="leaf-label" x="776.5" y="237.9" font-size="11">World items and traversal</text>
-<text class="leaf-pct" x="776.5" y="250.9" font-size="12">40%</text>
-<rect class="tile-frame" x="771.5" y="222.9" width="223.5" height="96.9" rx="4"/>
+<text class="leaf-label" x="812.9" y="265.3" font-size="11">World items and traversal</text>
+<text class="leaf-pct" x="812.9" y="278.3" font-size="12">40%</text>
+<rect class="tile-frame" x="807.9" y="250.3" width="187.1" height="103.6" rx="4"/>
 </g>
 <g><title>Damage execution
 80.0% complete (4/5)
@@ -451,14 +466,15 @@ Verified: Resolve radial damage and shield overflow
 Verified: Apply a cooked explosive damage effect
 Verified: Route authoritative damage to AI pawns and supported structures
 Open: Confirm damage per weapon and rarity against players, structures and entities</title>
-<rect class="tile-body" x="429.0" y="349.8" width="203.9" height="105.4" rx="4"/>
-<clipPath id="servertm-c22"><rect x="429.00" y="349.78" width="203.94" height="105.39" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c22)"><rect class="tile-fill" x="429.00" y="370.86" width="203.94" height="84.31"/>
-<rect class="tile-edge" x="429.00" y="369.86" width="203.94" height="2"/>
+<rect class="tile-body" x="400.5" y="383.9" width="106.3" height="186.5" rx="4"/>
+<clipPath id="servertm-c22"><rect x="400.52" y="383.91" width="106.26" height="186.53" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c22)"><rect class="tile-fill" x="400.52" y="421.22" width="106.26" height="149.22"/>
+<rect class="tile-edge" x="400.52" y="420.22" width="106.26" height="2"/>
 </g>
-<text class="leaf-label" x="434.0" y="364.8" font-size="11">Damage execution</text>
-<text class="leaf-pct" x="434.0" y="377.8" font-size="12">80%</text>
-<rect class="tile-frame" x="429.0" y="349.8" width="203.9" height="105.4" rx="4"/>
+<text class="leaf-label" x="405.5" y="398.9" font-size="11">Damage</text>
+<text class="leaf-label" x="405.5" y="411.9" font-size="11">execution</text>
+<text class="leaf-pct" x="405.5" y="424.9" font-size="12">80%</text>
+<rect class="tile-frame" x="400.5" y="383.9" width="106.3" height="186.5" rx="4"/>
 </g>
 <g><title>Hit model
 20.0% complete (1/5)
@@ -468,29 +484,28 @@ Open: Check hitscan hits against server geometry and valid targets
 Open: Measure projectile speed, drop and impact over known distances
 Open: Measure first-shot accuracy reset, sustained bloom and spread recovery
 Open: Count shotgun pellets and compare their server hit distribution</title>
-<rect class="tile-body" x="429.0" y="457.2" width="126.7" height="169.8" rx="4"/>
-<clipPath id="servertm-c23"><rect x="429.00" y="457.17" width="126.71" height="169.83" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c23)"><rect class="tile-fill" x="429.00" y="593.03" width="126.71" height="33.97"/>
-<rect class="tile-edge" x="429.00" y="592.03" width="126.71" height="2"/>
+<rect class="tile-body" x="508.8" y="383.9" width="106.3" height="186.5" rx="4"/>
+<clipPath id="servertm-c23"><rect x="508.78" y="383.91" width="106.26" height="186.53" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c23)"><rect class="tile-fill" x="508.78" y="533.14" width="106.26" height="37.31"/>
+<rect class="tile-edge" x="508.78" y="532.14" width="106.26" height="2"/>
 </g>
-<text class="leaf-label" x="434.0" y="472.2" font-size="11">Hit model</text>
-<text class="leaf-pct" x="434.0" y="485.2" font-size="12">20%</text>
-<rect class="tile-frame" x="429.0" y="457.2" width="126.7" height="169.8" rx="4"/>
+<text class="leaf-label" x="513.8" y="398.9" font-size="11">Hit model</text>
+<text class="leaf-pct" x="513.8" y="411.9" font-size="12">20%</text>
+<rect class="tile-frame" x="508.8" y="383.9" width="106.3" height="186.5" rx="4"/>
 </g>
 <g><title>Weapon lifecycle
 50.0% complete (1/2)
 effort weight 2 | source: equal-weight server implementation checks
 Implemented: Maintain authoritative ammo and reload state
 Open: Equip, fire and reload one representative of every supported gun and rarity</title>
-<rect class="tile-body" x="557.7" y="457.2" width="75.2" height="112.6" rx="4"/>
-<clipPath id="servertm-c24"><rect x="557.71" y="457.17" width="75.23" height="112.55" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c24)"><rect class="tile-fill" x="557.71" y="513.45" width="75.23" height="56.28"/>
-<rect class="tile-edge" x="557.71" y="512.45" width="75.23" height="2"/>
+<rect class="tile-body" x="400.5" y="572.4" width="142.3" height="54.6" rx="4"/>
+<clipPath id="servertm-c24"><rect x="400.52" y="572.44" width="142.35" height="54.56" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c24)"><rect class="tile-fill" x="400.52" y="599.72" width="142.35" height="27.28"/>
+<rect class="tile-edge" x="400.52" y="598.72" width="142.35" height="2"/>
 </g>
-<text class="leaf-label" x="562.7" y="472.2" font-size="11">Weapon</text>
-<text class="leaf-label" x="562.7" y="485.2" font-size="11">lifecycle</text>
-<text class="leaf-pct" x="562.7" y="498.2" font-size="12">50%</text>
-<rect class="tile-frame" x="557.7" y="457.2" width="75.2" height="112.6" rx="4"/>
+<text class="leaf-label" x="405.5" y="587.4" font-size="11">Weapon lifecycle</text>
+<text class="leaf-pct" x="405.5" y="600.4" font-size="12">50%</text>
+<rect class="tile-frame" x="400.5" y="572.4" width="142.3" height="54.6" rx="4"/>
 </g>
 <g><title>Aiming and camera
 0.0% complete (0/1)
@@ -498,12 +513,9 @@ effort weight 1 | source: equal-weight server implementation checks
 Open: Verify aim state and scoped firing reconcile with server shot origin
 Client only: Check shoulder camera positioning, ADS zoom and first-person scope transitions
 Client only: Check recoil presentation and controller aim-assist response</title>
-<rect class="tile-body" x="557.7" y="571.7" width="75.2" height="55.3" rx="4"/>
-<text class="leaf-label" x="562.7" y="585.7" font-size="10">Aiming</text>
-<text class="leaf-label" x="562.7" y="597.7" font-size="10">and</text>
-<text class="leaf-label" x="562.7" y="609.7" font-size="10">camera</text>
-<text class="leaf-pct" x="562.7" y="621.7" font-size="12">0.0%</text>
-<rect class="tile-frame" x="557.7" y="571.7" width="75.2" height="55.3" rx="4"/>
+<rect class="tile-body" x="544.9" y="572.4" width="70.2" height="54.6" rx="4"/>
+<text class="leaf-pct" x="549.9" y="588.4" font-size="12">0.0%</text>
+<rect class="tile-frame" x="544.9" y="572.4" width="70.2" height="54.6" rx="4"/>
 </g>
 <g><title>Environmental simulation
 25.0% complete (1/4)
@@ -512,15 +524,15 @@ Implemented: Route storm deaths through server match logic
 Open: Run all normal storm phases with boundary, timing and damage checks
 Open: Measure fall damage across height thresholds and exemptions
 Open: Verify map boundaries, wind tunnels and environmental forces on two clients</title>
-<rect class="tile-body" x="642.9" y="363.8" width="115.7" height="121.4" rx="4"/>
-<clipPath id="servertm-c26"><rect x="642.94" y="363.78" width="115.68" height="121.43" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c26)"><rect class="tile-fill" x="642.94" y="454.85" width="115.68" height="30.36"/>
-<rect class="tile-edge" x="642.94" y="453.85" width="115.68" height="2"/>
+<rect class="tile-body" x="625.0" y="397.9" width="121.7" height="103.0" rx="4"/>
+<clipPath id="servertm-c26"><rect x="625.04" y="397.91" width="121.73" height="103.05" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c26)"><rect class="tile-fill" x="625.04" y="475.20" width="121.73" height="25.76"/>
+<rect class="tile-edge" x="625.04" y="474.20" width="121.73" height="2"/>
 </g>
-<text class="leaf-label" x="647.9" y="378.8" font-size="11">Environmental</text>
-<text class="leaf-label" x="647.9" y="391.8" font-size="11">simulation</text>
-<text class="leaf-pct" x="647.9" y="404.8" font-size="12">25%</text>
-<rect class="tile-frame" x="642.9" y="363.8" width="115.7" height="121.4" rx="4"/>
+<text class="leaf-label" x="630.0" y="412.9" font-size="11">Environmental</text>
+<text class="leaf-label" x="630.0" y="425.9" font-size="11">simulation</text>
+<text class="leaf-pct" x="630.0" y="438.9" font-size="12">25%</text>
+<rect class="tile-frame" x="625.0" y="397.9" width="121.7" height="103.0" rx="4"/>
 </g>
 <g><title>World coverage
 0.0% complete (0/3)
@@ -528,11 +540,11 @@ effort weight 3 | source: equal-weight server implementation checks
 Open: Load and traverse every named POI and verify collisions and streaming transitions
 Open: Award location discovery and sync map unlocks with the account
 Open: Verify supported vault doors accept the correct keycard and replicate unlock</title>
-<rect class="tile-body" x="760.6" y="363.8" width="86.3" height="121.4" rx="4"/>
-<text class="leaf-label" x="765.6" y="378.8" font-size="11">World</text>
-<text class="leaf-label" x="765.6" y="391.8" font-size="11">coverage</text>
-<text class="leaf-pct" x="765.6" y="404.8" font-size="12">0.0%</text>
-<rect class="tile-frame" x="760.6" y="363.8" width="86.3" height="121.4" rx="4"/>
+<rect class="tile-body" x="748.8" y="397.9" width="90.8" height="103.0" rx="4"/>
+<text class="leaf-label" x="753.8" y="412.9" font-size="11">World</text>
+<text class="leaf-label" x="753.8" y="425.9" font-size="11">coverage</text>
+<text class="leaf-pct" x="753.8" y="438.9" font-size="12">0.0%</text>
+<rect class="tile-frame" x="748.8" y="397.9" width="90.8" height="103.0" rx="4"/>
 </g>
 <g><title>Replicated actions
 50.0% complete (1/2)
@@ -540,31 +552,34 @@ effort weight 2 | source: equal-weight server implementation checks
 Implemented: Replicate server-driven pickup toss trajectory
 Open: Match remote movement, pickup, loot spread, building and firing state across clients
 Client only: Check visual animation timing and blending for player and item actions</title>
-<rect class="tile-body" x="642.9" y="529.2" width="66.6" height="97.8" rx="4"/>
-<clipPath id="servertm-c28"><rect x="642.94" y="529.21" width="66.65" height="97.79" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c28)"><rect class="tile-fill" x="642.94" y="578.10" width="66.65" height="48.90"/>
-<rect class="tile-edge" x="642.94" y="577.10" width="66.65" height="2"/>
+<rect class="tile-body" x="625.0" y="545.0" width="70.2" height="82.0" rx="4"/>
+<clipPath id="servertm-c28"><rect x="625.04" y="544.96" width="70.17" height="82.04" rx="4"/></clipPath>
+<g clip-path="url(#servertm-c28)"><rect class="tile-fill" x="625.04" y="585.98" width="70.17" height="41.02"/>
+<rect class="tile-edge" x="625.04" y="584.98" width="70.17" height="2"/>
 </g>
-<text class="leaf-pct" x="647.9" y="545.2" font-size="12">50%</text>
-<rect class="tile-frame" x="642.9" y="529.2" width="66.6" height="97.8" rx="4"/>
+<text class="leaf-pct" x="630.0" y="561.0" font-size="12">50%</text>
+<rect class="tile-frame" x="625.0" y="545.0" width="70.2" height="82.0" rx="4"/>
 </g>
 <g><title>Prediction and reconciliation
 0.0% complete (0/2)
 effort weight 2 | source: equal-weight server implementation checks
 Open: Check rewind hit registration against recorded targets under injected latency
 Open: Measure movement and firing prediction corrections under latency and packet loss</title>
-<rect class="tile-body" x="711.6" y="529.2" width="66.6" height="97.8" rx="4"/>
-<text class="leaf-pct" x="716.6" y="545.2" font-size="12">0.0%</text>
-<rect class="tile-frame" x="711.6" y="529.2" width="66.6" height="97.8" rx="4"/>
+<rect class="tile-body" x="697.2" y="545.0" width="70.2" height="82.0" rx="4"/>
+<text class="leaf-pct" x="702.2" y="561.0" font-size="12">0.0%</text>
+<rect class="tile-frame" x="697.2" y="545.0" width="70.2" height="82.0" rx="4"/>
 </g>
 <g><title>Tick rate and relevance
 0.0% complete (0/2)
 effort weight 2 | source: equal-weight server implementation checks
 Open: Record server tick-time distribution and packet load during a sustained multiplayer match
 Open: Check nearby actors replicate and distant irrelevant actors leave network relevance</title>
-<rect class="tile-body" x="780.2" y="529.2" width="66.6" height="97.8" rx="4"/>
-<text class="leaf-pct" x="785.2" y="545.2" font-size="12">0.0%</text>
-<rect class="tile-frame" x="780.2" y="529.2" width="66.6" height="97.8" rx="4"/>
+<rect class="tile-body" x="769.4" y="545.0" width="70.2" height="82.0" rx="4"/>
+<text class="leaf-label" x="774.4" y="559.0" font-size="10">Tick rate</text>
+<text class="leaf-label" x="774.4" y="571.0" font-size="10">and</text>
+<text class="leaf-label" x="774.4" y="583.0" font-size="10">relevance</text>
+<text class="leaf-pct" x="774.4" y="595.0" font-size="12">0.0%</text>
+<rect class="tile-frame" x="769.4" y="545.0" width="70.2" height="82.0" rx="4"/>
 </g>
 <g><title>Guards and bosses
 0.0% complete (0/3)
@@ -572,23 +587,22 @@ effort weight 3 | source: equal-weight server implementation checks
 Open: Spawn guards and bosses at the expected locations with patrol routes
 Open: Verify perception, alert transitions, target selection and combat
 Open: Eliminate a boss and verify Mythic loot and vault-key drops</title>
-<rect class="tile-body" x="856.9" y="363.8" width="82.1" height="126.7" rx="4"/>
-<text class="leaf-label" x="861.9" y="378.8" font-size="11">Guards</text>
-<text class="leaf-label" x="861.9" y="391.8" font-size="11">and</text>
-<text class="leaf-label" x="861.9" y="404.8" font-size="11">bosses</text>
-<text class="leaf-pct" x="861.9" y="417.8" font-size="12">0.0%</text>
-<rect class="tile-frame" x="856.9" y="363.8" width="82.1" height="126.7" rx="4"/>
+<rect class="tile-body" x="849.6" y="397.9" width="86.5" height="107.7" rx="4"/>
+<text class="leaf-label" x="854.6" y="412.9" font-size="11">Guards and</text>
+<text class="leaf-label" x="854.6" y="425.9" font-size="11">bosses</text>
+<text class="leaf-pct" x="854.6" y="438.9" font-size="12">0.0%</text>
+<rect class="tile-frame" x="849.6" y="397.9" width="86.5" height="107.7" rx="4"/>
 </g>
 <g><title>Match bots
 0.0% complete (0/2)
 effort weight 2 | source: equal-weight server implementation checks
 Open: Add bots to a lobby and count them correctly in teams and match population
 Open: Observe bots dropping, navigating, looting, fighting and participating in elimination</title>
-<rect class="tile-body" x="941.0" y="363.8" width="54.0" height="126.7" rx="4"/>
-<text class="leaf-label" x="946.0" y="378.8" font-size="11">Match</text>
-<text class="leaf-label" x="946.0" y="391.8" font-size="11">bots</text>
-<text class="leaf-pct" x="946.0" y="404.8" font-size="12">0.0%</text>
-<rect class="tile-frame" x="941.0" y="363.8" width="54.0" height="126.7" rx="4"/>
+<rect class="tile-body" x="938.0" y="397.9" width="57.0" height="107.7" rx="4"/>
+<text class="leaf-label" x="943.0" y="412.9" font-size="11">Match</text>
+<text class="leaf-label" x="943.0" y="425.9" font-size="11">bots</text>
+<text class="leaf-pct" x="943.0" y="438.9" font-size="12">0.0%</text>
+<rect class="tile-frame" x="938.0" y="397.9" width="57.0" height="107.7" rx="4"/>
 </g>
 <g><title>Combat feedback
 0.0% complete (0/2)
@@ -596,29 +610,29 @@ effort weight 2 | source: equal-weight server implementation checks
 Open: Send authoritative hit, shield break, headshot and directional damage events
 Open: Replicate kill-feed attribution including finishes and environmental deaths
 Client only: Check crosshairs, hitmarker colors, floating numbers and directional indicators against events</title>
-<rect class="tile-body" x="856.9" y="534.5" width="68.1" height="92.5" rx="4"/>
-<text class="leaf-label" x="861.9" y="548.5" font-size="10">Combat</text>
-<text class="leaf-label" x="861.9" y="560.5" font-size="10">feedback</text>
-<text class="leaf-pct" x="861.9" y="572.5" font-size="12">0.0%</text>
-<rect class="tile-frame" x="856.9" y="534.5" width="68.1" height="92.5" rx="4"/>
+<rect class="tile-body" x="849.6" y="549.6" width="71.7" height="77.4" rx="4"/>
+<text class="leaf-label" x="854.6" y="564.6" font-size="11">Combat</text>
+<text class="leaf-label" x="854.6" y="577.6" font-size="11">feedback</text>
+<text class="leaf-pct" x="854.6" y="590.6" font-size="12">0.0%</text>
+<rect class="tile-frame" x="849.6" y="549.6" width="71.7" height="77.4" rx="4"/>
 </g>
 <g><title>Map and squad pings
 0.0% complete (0/1)
 effort weight 1 | source: equal-weight server implementation checks
 Open: Replicate squad markers and enemy, item and danger pings to the proper recipients
 Client only: Verify minimap, full-screen map and squad communication wheel behavior</title>
-<rect class="tile-body" x="926.9" y="534.5" width="68.1" height="45.3" rx="4"/>
-<text class="leaf-pct" x="931.9" y="550.5" font-size="12">0.0%</text>
-<rect class="tile-frame" x="926.9" y="534.5" width="68.1" height="45.3" rx="4"/>
+<rect class="tile-body" x="923.3" y="549.6" width="71.7" height="37.7" rx="4"/>
+<text class="leaf-pct" x="928.3" y="565.6" font-size="12">0.0%</text>
+<rect class="tile-frame" x="923.3" y="549.6" width="71.7" height="37.7" rx="4"/>
 </g>
 <g><title>Accessibility and audio
 0.0% complete (0/1)
 effort weight 1 | source: equal-weight server implementation checks
 Open: Verify remote footsteps, chests, glides, shots and vehicles produce the expected cues
 Client only: Check Visualize Sound Effects displays correct direction and cue types</title>
-<rect class="tile-body" x="926.9" y="581.7" width="68.1" height="45.3" rx="4"/>
-<text class="leaf-pct" x="931.9" y="597.7" font-size="12">0.0%</text>
-<rect class="tile-frame" x="926.9" y="581.7" width="68.1" height="45.3" rx="4"/>
+<rect class="tile-body" x="923.3" y="589.3" width="71.7" height="37.7" rx="4"/>
+<text class="leaf-pct" x="928.3" y="605.3" font-size="12">0.0%</text>
+<rect class="tile-frame" x="923.3" y="589.3" width="71.7" height="37.7" rx="4"/>
 </g></g>
 <text x="12" y="710" font-size="11" class="tm-head">Tile area is check count. Blue is implementation coverage. Client-only checks are listed on the board.</text>
 </svg>
