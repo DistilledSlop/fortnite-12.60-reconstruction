@@ -14,7 +14,8 @@ class ULevel;
 // Add LootDeliveryCrate to a marker with a movable root to descend to the authored transform
 // and unlock the container for normal search on landing.
 // GroundLootCacheCandidate markers are selected randomly from visible levels when play starts.
-// GroundLootCacheCount sets the match count (default one). Add BreakableLootContainer to enable lethal-hit opening.
+// GroundLootCacheCount caps activations per match (default one) as candidate levels become visible.
+// Add BreakableLootContainer to enable lethal-hit opening.
 namespace FortAthenaLootWorld
 {
 	// Gated behind -FortniteOriginalClient.

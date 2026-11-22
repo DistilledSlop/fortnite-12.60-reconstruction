@@ -42,7 +42,7 @@ namespace
 		TMap<TWeakObjectPtr<ABuildingContainer>, bool> GroundCacheCandidates;
 		TMap<FString, TArray<FName>> ConfiguredMarkerTags;
 		TMap<FString, TWeakObjectPtr<ABuildingContainer>> SeenConfiguredMarkers;
-		bool bGroundCachesSelected = false;
+		int32 ActivatedGroundCacheCount = 0;
 		bool bReportedMissingMarkers = false;
 		float DeliveryStartTime = -1.0f;
 		bool bLoggedWaitingForData = false;
@@ -85,11 +85,22 @@ namespace
 		S.PendingSpawnRetries.Reset();
 		S.ScheduledDeliveries.Reset();
 		S.GroundCacheCandidates.Reset();
-		S.bGroundCachesSelected = false;
+		S.ActivatedGroundCacheCount = 0;
 		S.bReportedMissingMarkers = false;
 		S.DeliveryStartTime = -1.0f;
 		S.bLoggedWaitingForData = false;
 		UE_LOG(LogTemp, Display, TEXT("LootWorld: reset state for world=%s"), *GetNameSafe(World));
+	}
+
+	int32 GetGroundCacheLimit()
+	{
+		static const int32 Limit = []
+		{
+			int32 Count = 1;
+			FParse::Value(FCommandLine::Get(), TEXT("GroundLootCacheCount="), Count);
+			return FMath::Max(0, Count);
+		}();
+		return Limit;
 	}
 
 	bool IsFloorLootMarkerCandidate(const ABuildingContainer* Container)
@@ -188,7 +199,7 @@ void FortAthenaLootWorld::Reset()
 	S.PendingSpawnRetries.Reset();
 	S.ScheduledDeliveries.Reset();
 	S.GroundCacheCandidates.Reset();
-	S.bGroundCachesSelected = false;
+	S.ActivatedGroundCacheCount = 0;
 	S.bReportedMissingMarkers = false;
 	S.DeliveryStartTime = -1.0f;
 	S.bLoggedWaitingForData = false;
@@ -257,7 +268,7 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 
 		if (Container->ActorHasTag(GroundCacheTag))
 		{
-			if (S.bGroundCachesSelected)
+			if (S.ActivatedGroundCacheCount >= GetGroundCacheLimit())
 				S.ProcessedContainers.Add(Marker);
 			else
 				S.GroundCacheCandidates.Add(Marker, Container->GetActorEnableCollision());
@@ -401,7 +412,8 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 		}
 	}
 
-	if (bMatchStarted && !S.bGroundCachesSelected && S.GroundCacheCandidates.Num() > 0)
+	const int32 GroundCacheLimit = GetGroundCacheLimit();
+	if (bMatchStarted && S.ActivatedGroundCacheCount < GroundCacheLimit && S.GroundCacheCandidates.Num() > 0)
 	{
 		TArray<TWeakObjectPtr<ABuildingContainer>> Candidates;
 		for (auto It = S.GroundCacheCandidates.CreateIterator(); It; ++It)
@@ -413,28 +425,30 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 				Candidates.Add(It.Key());
 		}
 
-		// Candidate levels can stream in after the match starts.
-		if (Candidates.Num() > 0)
+		const int32 Count = FMath::Min(GroundCacheLimit - S.ActivatedGroundCacheCount, Candidates.Num());
+		for (int32 Index = 0; Index < Count; ++Index)
 		{
-			S.bGroundCachesSelected = true;
+			Candidates.Swap(Index, FMath::RandRange(Index, Candidates.Num() - 1));
+			const TWeakObjectPtr<ABuildingContainer>& Selected = Candidates[Index];
+			if (ABuildingContainer* Container = Selected.Get())
+			{
+				const bool bEnableCollision = S.GroundCacheCandidates.FindChecked(Selected);
+				S.GroundCacheCandidates.Remove(Selected);
+				S.ProcessedContainers.Add(Selected);
+				++S.ActivatedGroundCacheCount;
+
+				Container->bStartAlreadySearched_Athena = false;
+				Container->SetActorHiddenInGame(false);
+				Container->SetActorEnableCollision(bEnableCollision);
+				Container->ForceNetUpdate();
+			}
+		}
+
+		// Keep pending candidates until the quota is filled by visible levels.
+		if (S.ActivatedGroundCacheCount >= GroundCacheLimit)
+		{
 			for (const auto& Entry : S.GroundCacheCandidates)
 				S.ProcessedContainers.Add(Entry.Key);
-
-			int32 RequestedCount = 1;
-			FParse::Value(FCommandLine::Get(), TEXT("GroundLootCacheCount="), RequestedCount);
-			const int32 Count = FMath::Clamp(RequestedCount, 0, Candidates.Num());
-			for (int32 Index = 0; Index < Count; ++Index)
-			{
-				Candidates.Swap(Index, FMath::RandRange(Index, Candidates.Num() - 1));
-				const TWeakObjectPtr<ABuildingContainer>& Selected = Candidates[Index];
-				if (ABuildingContainer* Container = Selected.Get())
-				{
-					Container->bStartAlreadySearched_Athena = false;
-					Container->SetActorHiddenInGame(false);
-					Container->SetActorEnableCollision(S.GroundCacheCandidates.FindChecked(Selected));
-					Container->ForceNetUpdate();
-				}
-			}
 			S.GroundCacheCandidates.Reset();
 		}
 	}
