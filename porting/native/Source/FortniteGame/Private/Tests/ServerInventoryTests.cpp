@@ -1,17 +1,21 @@
 #if WITH_DEV_AUTOMATION_TESTS
 
+#include "ABuildingWall.h"
 #include "AbilitySystemComponent.h"
 #include "AFortInventory.h"
 #include "AFortPickupAthena.h"
 #include "AFortPlayerPawnAthena.h"
 #include "AFortWeapon.h"
 #include "AFortPlayerControllerAthena.h"
+#include "AFortPlayerStateAthena.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "EWorldItemDropBehavior.h"
+#include "FortAthenaBuildDamage.h"
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaLootTransfer.h"
+#include "FortHarvestBuilding.h"
 #include "Misc/AutomationTest.h"
 #include "Misc/ScopeExit.h"
 #include "UFortGameplayAbility.h"
@@ -258,6 +262,43 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 		It->Destroy();
 	}
 	TestEqual(TEXT("Elimination creates one new pickup"), WeaponPickups, 1);
+
+	ABuildingWall* Wall = World->SpawnActor<ABuildingWall>(
+		Pawn->GetActorLocation() + FVector(150, 0, 0), FRotator::ZeroRotator);
+	AFortPlayerStateAthena* PlayerState = Cast<AFortPlayerStateAthena>(Controller->PlayerState);
+	ON_SCOPE_EXIT { if (Wall) { Wall->Destroy(); } };
+	if (!TestNotNull(TEXT("Repair test wall"), Wall) || !TestNotNull(TEXT("Repairing player state"), PlayerState))
+	{
+		return false;
+	}
+	Controller->bCraftFree = false;
+	Wall->bPlayerPlaced = true;
+	Wall->SetTeam(PlayerState->TeamIndex);
+	Wall->ResourceType = EFortResourceType::Wood;
+	Wall->MaxHealthInitializationValue = 100.0f;
+	FortHarvest::InitializeBuildingHealth(Wall);
+	FortHarvest::ForceBuildingHealth(Wall, 50.0f);
+	const int32 RepairCost = FortAthenaBuildDamage::ComputeRepairCost(Wall);
+	if (!TestTrue(TEXT("The damaged wall has a material cost"), RepairCost > 0))
+	{
+		return false;
+	}
+	Definition->ResourceType = EFortResourceType::Stone;
+	TestFalse(TEXT("Repair rejects the wrong material"), FortAthenaBuildDamage::RepairBuildingActor(Controller, Wall));
+	TestEqual(TEXT("Rejected repair leaves the wall damaged"), FortHarvest::GetBuildingHealth(Wall), 50.0f);
+	TestEqual(TEXT("Rejected repair preserves the unrelated stack"), ProtectedItem->ItemEntry.Count, 3);
+
+	UFortResourceItemDefinition* RepairMaterial = NewObject<UFortResourceItemDefinition>(Inventory);
+	RepairMaterial->ResourceType = EFortResourceType::Wood;
+	RepairMaterial->MaxStackSize = FScalableFloat(static_cast<float>(RepairCost + 1));
+	UFortWorldItem* RepairStack = FortAthenaInventory::GiveItem(Controller, RepairMaterial, RepairCost + 1);
+	if (!TestNotNull(TEXT("Repair material stack"), RepairStack))
+	{
+		return false;
+	}
+	TestTrue(TEXT("Repair starts after the material debit"), FortAthenaBuildDamage::RepairBuildingActor(Controller, Wall));
+	TestEqual(TEXT("Repair removes exactly its cost"), RepairStack->ItemEntry.Count, 1);
+	TestEqual(TEXT("Repair preserves unrelated materials"), ProtectedItem->ItemEntry.Count, 3);
 	return true;
 }
 
