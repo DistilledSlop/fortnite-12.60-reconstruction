@@ -441,7 +441,7 @@ FName FortAthenaLootSearch::ResolveContainerLootTierGroup(const ABuildingContain
 	return NAME_None;
 }
 
-bool FortAthenaLootSearch::RollAndSpawnContainerLoot(
+FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnContainerLoot(
 	AFortGameModeAthena* GameMode,
 	ABuildingContainer* Container,
 	FName TierGroup,
@@ -450,17 +450,17 @@ bool FortAthenaLootSearch::RollAndSpawnContainerLoot(
 	TArray<AFortPickupAthena*>* OutPickups)
 {
 	if (!IsEnabled() || !GameMode || !GameMode->HasAuthority() || !Container || TierGroup == NAME_None)
-		return false;
+		return EContainerLootResult::RollFailed;
 
 	UWorld* World = Container->GetWorld();
 	if (!World || World->GetNetMode() == NM_Client)
-		return false;
+		return EContainerLootResult::RollFailed;
 
 	if (!FortAthenaLootData::IsReady(GameMode))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("LootSearch: cannot roll container=%s group=%s (loot data not ready)"),
 			*Container->GetName(), *TierGroup.ToString());
-		return false;
+		return EContainerLootResult::RollFailed;
 	}
 
 	FortAthenaLootRoll::FRequest Req;
@@ -512,7 +512,7 @@ bool FortAthenaLootSearch::RollAndSpawnContainerLoot(
 	{
 		UE_LOG(LogTemp, Warning, TEXT("LootSearch: roll failed container=%s group=%s worldLevel=%d tier=%d err=%s"),
 			*Container->GetName(), *TierGroup.ToString(), Req.WorldLevel, Req.LootTier, *RollError);
-		return false;
+		return EContainerLootResult::RollFailed;
 	}
 
 	TArray<AFortPickupAthena*> SpawnedPickups;
@@ -539,7 +539,7 @@ bool FortAthenaLootSearch::RollAndSpawnContainerLoot(
 			}
 			UE_LOG(LogTemp, Warning, TEXT("LootSearch: pickup spawn failed container=%s group=%s item=%s"),
 				*GetNameSafe(Container), *TierGroup.ToString(), *GetNameSafe(Drop.Definition));
-			return false;
+			return EContainerLootResult::SpawnFailed;
 		}
 		SpawnedPickups.Add(Pickup);
 		UE_LOG(LogTemp, Display, TEXT("LootSearch:  spawned item=%s count=%d level=%d ammo=%d loc=(%.0f,%.0f,%.0f)"),
@@ -563,7 +563,7 @@ bool FortAthenaLootSearch::RollAndSpawnContainerLoot(
 		UE_LOG(LogTemp, Display, TEXT("LootSearch: rolled container=%s group=%s worldLevel=%d drops=%d spawned=%d"),
 			*Container->GetName(), *TierGroup.ToString(), Req.WorldLevel, Drops.Num(), SpawnedCount);
 	}
-	return true;
+	return EContainerLootResult::Success;
 }
 
 bool FortAthenaLootSearch::TrySearchContainer(AFortPlayerController* Controller, ABuildingContainer* Container)
@@ -636,7 +636,7 @@ bool FortAthenaLootSearch::TrySearchContainer(AFortPlayerController* Controller,
 	ContainersBeingSearched.Add(Container);
 	ON_SCOPE_EXIT { ContainersBeingSearched.Remove(Container); };
 
-	if (!RollAndSpawnContainerLoot(GameMode, Container, TierGroup, WorldSpawn, ScatterRadius))
+	if (RollAndSpawnContainerLoot(GameMode, Container, TierGroup, WorldSpawn, ScatterRadius) != EContainerLootResult::Success)
 		return false;
 
 	// Only mark searched / destroy once roll succeeded so unready data does not silently eat chests.

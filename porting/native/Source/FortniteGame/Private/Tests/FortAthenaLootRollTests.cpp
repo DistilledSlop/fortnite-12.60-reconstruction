@@ -14,6 +14,7 @@
 #include "Engine/World.h"
 #include "FortAthenaLootData.h"
 #include "FortAthenaLootSearch.h"
+#include "FortAthenaLootWorld.h"
 #include "Misc/ScopeExit.h"
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FFortLootContractTest, "Fortnite.Server.Loot.ReconstructedContract",
@@ -105,12 +106,14 @@ bool FFortContainerSearchTransactionTest::RunTest(const FString&)
     AFortPlayerPawnAthena* Pawn = World->SpawnActor<AFortPlayerPawnAthena>(FVector::ZeroVector, FRotator::ZeroRotator);
     ABuildingContainer* Chest = World->SpawnActor<ABuildingContainer>();
     ABuildingContainer* Ammo = World->SpawnActor<ABuildingContainer>();
+    ABuildingContainer* FloorMarker = nullptr;
     TArray<AFortPickupAthena*> Pickups;
     ON_SCOPE_EXIT
     {
         for (AFortPickupAthena* Pickup : Pickups) if (IsValid(Pickup)) Pickup->Destroy();
         if (IsValid(Chest)) Chest->Destroy();
         if (IsValid(Ammo)) Ammo->Destroy();
+        if (IsValid(FloorMarker)) FloorMarker->Destroy();
         if (IsValid(Controller)) Controller->Destroy();
         if (IsValid(Pawn)) Pawn->Destroy();
     };
@@ -123,7 +126,7 @@ bool FFortContainerSearchTransactionTest::RunTest(const FString&)
     Ammo->SearchLootTierGroup = FName(TEXT("Loot_AthenaAmmoLarge"));
     Ammo->bDestroyContainerOnSearch = false;
 
-    bool bFailSecond = true;
+    int32 FailSpawnNumber = 2;
     int32 SpawnCount = 0;
     const FDelegateHandle SpawnCallback = World->AddOnActorSpawnedHandler(FOnActorSpawned::FDelegate::CreateLambda([&](AActor* Actor)
     {
@@ -131,7 +134,7 @@ bool FFortContainerSearchTransactionTest::RunTest(const FString&)
         {
             Pickups.Add(Pickup);
             ++SpawnCount;
-            if (bFailSecond && SpawnCount == 2) Pickup->Destroy();
+            if (SpawnCount == FailSpawnNumber) Pickup->Destroy();
         }
     }));
     ON_SCOPE_EXIT { World->RemoveOnActorSpawnedHandler(SpawnCallback); };
@@ -142,7 +145,7 @@ bool FFortContainerSearchTransactionTest::RunTest(const FString&)
     for (AFortPickupAthena* Pickup : Pickups)
         TestFalse(TEXT("Failed search leaves no live pickup"), IsValid(Pickup) && !Pickup->IsActorBeingDestroyed());
 
-    bFailSecond = false;
+    FailSpawnNumber = 0;
     const int32 BeforeRetry = SpawnCount;
     TestTrue(TEXT("Chest search can be retried"), FortAthenaLootSearch::TrySearchContainer(Controller, Chest));
     TestTrue(TEXT("Successful chest is marked searched"), Chest->bAlreadySearched != 0);
@@ -163,6 +166,26 @@ bool FFortContainerSearchTransactionTest::RunTest(const FString&)
     const int32 AfterAmmo = SpawnCount;
     TestFalse(TEXT("Searched ammo container cannot be searched again"), FortAthenaLootSearch::TrySearchContainer(Controller, Ammo));
     TestEqual(TEXT("Repeated ammo search creates no pickups"), SpawnCount, AfterAmmo);
+    FloorMarker = World->SpawnActor<ABuildingContainer>();
+    if (!TestNotNull(TEXT("Floor loot marker"), FloorMarker)) return false;
+    FloorMarker->SearchLootTierGroup = Chest->SearchLootTierGroup;
+    FloorMarker->bStartAlreadySearched_Athena = true;
+    FloorMarker->bDestroyContainerOnSearch = false;
+
+    FailSpawnNumber = SpawnCount + 2;
+    FortAthenaLootWorld::PopulateLoadedMarkers(Mode, FloorMarker->GetLevel());
+    TestEqual(TEXT("Floor loot failure was injected"), SpawnCount, FailSpawnNumber);
+    TestFalse(TEXT("Failed floor loot marker remains unsearched"), FloorMarker->bAlreadySearched != 0);
+    for (int32 Index = AfterAmmo; Index < Pickups.Num(); ++Index)
+        TestFalse(TEXT("Failed floor loot leaves no live pickup"), IsValid(Pickups[Index]));
+
+    const int32 BeforeFloorRetry = SpawnCount;
+    FortAthenaLootWorld::Tick(Mode);
+    TestTrue(TEXT("Floor loot retry populates the marker"), FloorMarker->bAlreadySearched != 0);
+    TestTrue(TEXT("Floor loot retry creates pickups"), SpawnCount > BeforeFloorRetry);
+    const int32 AfterFloorRetry = SpawnCount;
+    FortAthenaLootWorld::Tick(Mode);
+    TestEqual(TEXT("Successful floor loot is not spawned twice"), SpawnCount, AfterFloorRetry);
     return true;
 }
 #endif

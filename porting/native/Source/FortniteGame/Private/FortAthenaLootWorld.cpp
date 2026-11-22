@@ -18,6 +18,7 @@ namespace
 		TWeakObjectPtr<UWorld> ActiveWorld;
 		TSet<TWeakObjectPtr<ABuildingContainer>> ProcessedContainers;
 		TSet<TWeakObjectPtr<ULevel>> ScannedLevels;
+		TArray<TWeakObjectPtr<ABuildingContainer>> PendingSpawnRetries;
 		bool bLoggedWaitingForData = false;
 	};
 
@@ -36,6 +37,7 @@ namespace
 		S.ActiveWorld = World;
 		S.ProcessedContainers.Reset();
 		S.ScannedLevels.Reset();
+		S.PendingSpawnRetries.Reset();
 		S.bLoggedWaitingForData = false;
 		UE_LOG(LogTemp, Display, TEXT("LootWorld: reset state for world=%s"), *GetNameSafe(World));
 	}
@@ -58,7 +60,7 @@ namespace
 
 	// stand-in: populates markers immediately once loot data is ready and destroys bDestroyContainerOnSearch markers
 	// rather than reproducing the unrecovered FortWorldManager / match-phase floor-loot batch schedule.
-	int32 PopulateCandidates(AFortGameModeAthena* GameMode, const TArray<ABuildingContainer*>& Candidates, const TCHAR* ScopeName)
+	int32 PopulateCandidates(AFortGameModeAthena* GameMode, const TArray<ABuildingContainer*>& Candidates, const TCHAR* ScopeName, bool bAllowRetry = true)
 	{
 		FWorldLootState& S = LootWorldState();
 		int32 PopulatedMarkers = 0;
@@ -69,7 +71,7 @@ namespace
 
 		for (ABuildingContainer* Container : Candidates)
 		{
-			if (!IsValid(Container) || Container->IsPendingKill())
+			if (!IsValid(Container) || Container->bAlreadySearched || Container->bDestroyed)
 				continue;
 
 			const TWeakObjectPtr<ABuildingContainer> WeakContainer(Container);
@@ -91,9 +93,12 @@ namespace
 				: 35.0f; // stand-in: compact multi-drop offset for weapon+ammo pairs
 
 			TArray<AFortPickupAthena*> Spawned;
-			if (!FortAthenaLootSearch::RollAndSpawnContainerLoot(GameMode, Container, TierGroup, WorldSpawn, ScatterRadius, &Spawned))
+			const auto Result = FortAthenaLootSearch::RollAndSpawnContainerLoot(GameMode, Container, TierGroup, WorldSpawn, ScatterRadius, &Spawned);
+			if (Result != FortAthenaLootSearch::EContainerLootResult::Success)
 			{
 				++FailedMarkers;
+				if (bAllowRetry && Result == FortAthenaLootSearch::EContainerLootResult::SpawnFailed)
+					S.PendingSpawnRetries.Add(WeakContainer);
 				continue;
 			}
 
@@ -128,6 +133,7 @@ void FortAthenaLootWorld::Reset()
 	S.ActiveWorld.Reset();
 	S.ProcessedContainers.Reset();
 	S.ScannedLevels.Reset();
+	S.PendingSpawnRetries.Reset();
 	S.bLoggedWaitingForData = false;
 }
 
@@ -202,6 +208,21 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 	}
 
 	S.bLoggedWaitingForData = false;
+
+	if (S.PendingSpawnRetries.Num() > 0)
+	{
+		TArray<ABuildingContainer*> RetryCandidates;
+		for (const TWeakObjectPtr<ABuildingContainer>& WeakContainer : S.PendingSpawnRetries)
+		{
+			if (ABuildingContainer* Container = WeakContainer.Get())
+			{
+				S.ProcessedContainers.Remove(WeakContainer);
+				RetryCandidates.Add(Container);
+			}
+		}
+		S.PendingSpawnRetries.Reset();
+		PopulateCandidates(GameMode, RetryCandidates, TEXT("spawn retry"), false);
+	}
 
 	// Visit each visible level once (catches persistent + already-loaded levels + streamed-in POIs).
 	const TArray<ULevel*>& Levels = World->GetLevels();

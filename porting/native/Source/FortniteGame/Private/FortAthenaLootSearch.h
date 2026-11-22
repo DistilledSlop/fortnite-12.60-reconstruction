@@ -32,8 +32,14 @@ namespace FortAthenaLootSearch
 	FName ResolveContainerLootTierGroup(const ABuildingContainer* Container);
 
 	// Rolls TierGroup via FortAthenaLootRoll::RollForMode and spawns AFortPickupAthena drops around WorldOrigin.
-	// Note: loot toss velocity / PickupLocationData flight is unrecovered (spawns with small radial stand-in scatter).
-	bool RollAndSpawnContainerLoot(
+	enum class EContainerLootResult : uint8
+	{
+		Success,
+		RollFailed,
+		SpawnFailed
+	};
+
+	EContainerLootResult RollAndSpawnContainerLoot(
 		AFortGameModeAthena* GameMode,
 		ABuildingContainer* Container,
 		FName TierGroup,
