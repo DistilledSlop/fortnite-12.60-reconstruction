@@ -575,16 +575,17 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 						}
 					}
 					TWeakObjectPtr<AFortPawn> WeakPawn(PawnAtChange);
+					const bool bWasDowned = PawnAtChange->bIsDBNO;
 					// The health delegate can fire inside GAS before the HealthSet's
 					// synchronous DBNO interception. Recheck after that stack returns.
 					World->GetTimerManager().SetTimerForNextTick(FTimerDelegate::CreateLambda(
-						[WeakASC, WeakPawn, WeakInstigator, WeakCauser, ChangeSerial, Serial, DeathTags, LethalDamage]()
+						[WeakASC, WeakPawn, WeakInstigator, WeakCauser, ChangeSerial, Serial, DeathTags, LethalDamage, bWasDowned]()
 						{
 							UAbilitySystemComponent* CurrentASC = WeakASC.Get();
 							AFortPawn* CurrentPawn = WeakPawn.Get();
 							if (*ChangeSerial != Serial || !CurrentASC || !CurrentPawn ||
 								CurrentASC->GetAvatarActor() != CurrentPawn || CurrentPawn->bIsDying ||
-								CurrentPawn->bIsDBNO || CurrentPawn->GetHealth() > 0.0f) { return; }
+								(!bWasDowned && CurrentPawn->bIsDBNO) || CurrentPawn->GetHealth() > 0.0f) { return; }
 							FortAthenaHealth::HandlePlayerEliminated(CurrentPawn, DeathTags, WeakInstigator.Get(), WeakCauser.Get(), LethalDamage);
 						}));
 				});
@@ -696,6 +697,7 @@ void FortAthenaHealth::ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, co
 
 	const float CurrentShield = VictimPawn->GetShield();
 	const float OldHealth = VictimPawn->GetHealth();
+	const bool bWasDowned = VictimPawn->bIsDBNO;
 
 	// GAS captures source tags and attributes from the actor in the effect context.
 	// Keep controller attribution separately for elimination and match statistics.
@@ -736,7 +738,8 @@ void FortAthenaHealth::ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, co
 	SharedCues.Magnitude = DamageAmount;
 	SharedCues.bIsShield = (ShieldDamage > 0.0f);
 	SharedCues.bIsShieldDestroyed = (ShieldDamage > 0.0f && VictimPawn->GetShield() <= 0.0f);
-	SharedCues.bIsFatal = (NewHealth <= 0.0f);
+	const bool bFatal = NewHealth <= 0.0f && (bWasDowned || !VictimPawn->bIsDBNO);
+	SharedCues.bIsFatal = bFatal;
 	SharedCues.bIsValid = true;
 
 	FAthenaBatchedDamageGameplayCues_NonShared NonSharedCues{};
@@ -756,7 +759,7 @@ void FortAthenaHealth::ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, co
 	UE_LOG(LogFortHealth, Display, TEXT("Health: Damage %.1f applied to %s (Shield: -%.1f, Health: -%.1f) -> Health: %.1f, Shield: %.1f"),
 		DamageAmount, *VictimPawn->GetName(), ShieldDamage, HealthDamage, NewHealth, VictimPawn->GetShield());
 
-	if (NewHealth <= 0.0f && !VictimPawn->bIsDying)
+	if (bFatal && !VictimPawn->bIsDying)
 	{
 		HandlePlayerEliminated(VictimPawn, DamageTags, InstigatedBy, DamageCauser, DamageAmount);
 	}
