@@ -41,6 +41,7 @@ namespace
 		TMap<TWeakObjectPtr<ABuildingContainer>, FScheduledDelivery> ScheduledDeliveries;
 		TMap<TWeakObjectPtr<ABuildingContainer>, bool> GroundCacheCandidates;
 		TMap<FString, TArray<FName>> ConfiguredMarkerTags;
+		TMap<FString, TWeakObjectPtr<ABuildingContainer>> SeenConfiguredMarkers;
 		bool bGroundCachesSelected = false;
 		float DeliveryStartTime = -1.0f;
 		bool bLoggedWaitingForData = false;
@@ -60,6 +61,7 @@ namespace
 
 		S.ActiveWorld = World;
 		S.ConfiguredMarkerTags.Reset();
+		S.SeenConfiguredMarkers.Reset();
 		if (GConfig)
 		{
 			TArray<FString> Settings;
@@ -178,6 +180,7 @@ void FortAthenaLootWorld::Reset()
 	FWorldLootState& S = LootWorldState();
 	S.ActiveWorld.Reset();
 	S.ConfiguredMarkerTags.Reset();
+	S.SeenConfiguredMarkers.Reset();
 	S.ProcessedContainers.Reset();
 	S.ScannedLevels.Reset();
 	S.PendingSpawnRetries.Reset();
@@ -215,6 +218,29 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 	TArray<ABuildingContainer*> Candidates;
 	const auto AddMarker = [&S, &Candidates](ABuildingContainer* Container)
 	{
+		if (IsValid(Container) && S.ConfiguredMarkerTags.Num() > 0)
+		{
+			const FString ActorPath = Container->GetPathName();
+			if (const TArray<FName>* Tags = S.ConfiguredMarkerTags.Find(ActorPath))
+			{
+				TWeakObjectPtr<ABuildingContainer>& Seen = S.SeenConfiguredMarkers.FindOrAdd(ActorPath);
+				if (Seen.Get() != Container)
+				{
+					Seen = Container;
+					if (IsFloorLootMarkerCandidate(Container))
+					{
+						for (const FName& Tag : *Tags)
+							Container->Tags.AddUnique(Tag);
+						UE_LOG(LogTemp, Display, TEXT("LootWorld: configured marker %s tags=%d"), *ActorPath, Tags->Num());
+					}
+					else
+					{
+						UE_LOG(LogTemp, Warning, TEXT("LootWorld: configured actor %s is not an available world loot marker"), *ActorPath);
+					}
+				}
+			}
+		}
+
 		if (!IsFloorLootMarkerCandidate(Container))
 			return;
 
@@ -225,14 +251,6 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 			return;
 		}
 
-		if (S.ConfiguredMarkerTags.Num() > 0)
-		{
-			if (const TArray<FName>* Tags = S.ConfiguredMarkerTags.Find(Container->GetPathName()))
-			{
-				for (const FName& Tag : *Tags)
-					Container->Tags.AddUnique(Tag);
-			}
-		}
 
 		if (Container->ActorHasTag(GroundCacheTag))
 		{
@@ -397,6 +415,12 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 			}
 		}
 		S.GroundCacheCandidates.Reset();
+
+		for (const auto& Entry : S.ConfiguredMarkerTags)
+		{
+			if (!S.SeenConfiguredMarkers.Contains(Entry.Key))
+				UE_LOG(LogTemp, Warning, TEXT("LootWorld: configured marker %s was not present at match start"), *Entry.Key);
+		}
 	}
 
 	if (GameState->GamePhase != EAthenaGamePhase::SafeZones)
@@ -443,6 +467,7 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 			Marker->bStartAlreadySearched_Athena = false;
 			Marker->SetActorEnableCollision(Delivery.bRestoreCollision);
 			Marker->ForceNetUpdate();
+			UE_LOG(LogTemp, Display, TEXT("LootWorld: delivery crate landed %s"), *Marker->GetPathName());
 			It.RemoveCurrent();
 		}
 	}
