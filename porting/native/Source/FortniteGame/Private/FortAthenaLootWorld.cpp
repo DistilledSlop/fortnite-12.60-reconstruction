@@ -115,20 +115,15 @@ namespace
 		return Limit;
 	}
 
+	bool IsAvailableLootContainer(const ABuildingContainer* Container)
+	{
+		return IsValid(Container) && !Container->IsPendingKill() && !Container->bDestroyed && !Container->bAlreadySearched;
+	}
+
 	bool IsFloorLootMarkerCandidate(const ABuildingContainer* Container)
 	{
-		if (!IsValid(Container) || Container->IsPendingKill() || Container->bDestroyed)
-			return false;
-
-		// Cooked data fact: Tiered_Athena_FloorLoot_01_C and Tiered_Athena_FloorLoot_Warmup_C set
-		// bStartAlreadySearched_Athena=True, whereas chests and ammo boxes leave it False.
-		if (!Container->bStartAlreadySearched_Athena)
-			return false;
-
-		if (Container->bAlreadySearched)
-			return false;
-
-		return FortAthenaLootSearch::ResolveContainerLootTierGroup(Container) != NAME_None;
+		return IsAvailableLootContainer(Container) && Container->bStartAlreadySearched_Athena &&
+			FortAthenaLootSearch::ResolveContainerLootTierGroup(Container) != NAME_None;
 	}
 
 	// stand-in: populates markers immediately once loot data is ready and destroys bDestroyContainerOnSearch markers
@@ -263,7 +258,7 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 				if (Seen.Get() != Container)
 				{
 					Seen = Container;
-					if (IsFloorLootMarkerCandidate(Container))
+					if (IsAvailableLootContainer(Container) && FortAthenaLootSearch::ResolveContainerLootTierGroup(Container) != NAME_None)
 					{
 						for (const FName& Tag : *Tags)
 							Container->Tags.AddUnique(Tag);
@@ -277,7 +272,7 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 			}
 		}
 
-		if (!IsFloorLootMarkerCandidate(Container))
+		if (!IsAvailableLootContainer(Container))
 			return;
 
 		const TWeakObjectPtr<ABuildingContainer> Marker(Container);
@@ -290,7 +285,8 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 		if (S.ConfiguredMarkerClassTags.Num() > 0)
 		{
 			const FString ClassPath = Container->GetClass()->GetPathName();
-			if (const TArray<FName>* Tags = S.ConfiguredMarkerClassTags.Find(ClassPath))
+			if (const TArray<FName>* Tags = S.ConfiguredMarkerClassTags.Find(ClassPath);
+				Tags && FortAthenaLootSearch::ResolveContainerLootTierGroup(Container) != NAME_None)
 			{
 				if (!S.MatchedMarkerClasses.Contains(ClassPath))
 				{
@@ -304,6 +300,10 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 
 		if (Container->ActorHasTag(GroundCacheTag))
 		{
+			if (FortAthenaLootSearch::ResolveContainerLootTierGroup(Container) == NAME_None)
+				return;
+
+			Container->bStartAlreadySearched_Athena = true;
 			if (S.ActivatedGroundCacheCount >= GetGroundCacheLimit())
 				S.ProcessedContainers.Add(Marker);
 			else
@@ -326,6 +326,10 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 			float Delay = 0.0f;
 			if (FDefaultValueHelper::ParseFloat(TagText.Mid(FCString::Strlen(Prefix)), Delay) && FMath::IsFinite(Delay) && Delay >= 0.0f)
 			{
+				if (FortAthenaLootSearch::ResolveContainerLootTierGroup(Container) == NAME_None)
+					return;
+
+				Container->bStartAlreadySearched_Athena = true;
 				FScheduledDelivery Delivery;
 				Delivery.Delay = Delay;
 				Delivery.bSearchableCrate = Container->ActorHasTag(DeliveryCrateTag);
@@ -361,7 +365,8 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 			return;
 		}
 
-		Candidates.Add(Container);
+		if (IsFloorLootMarkerCandidate(Container))
+			Candidates.Add(Container);
 	};
 	if (OptionalLevel)
 	{
