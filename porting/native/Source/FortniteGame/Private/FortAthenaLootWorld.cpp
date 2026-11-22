@@ -4,6 +4,7 @@
 #include "AFortGameModeAthena.h"
 #include "AFortGameStateAthena.h"
 #include "EAthenaGamePhase.h"
+#include "Components/SceneComponent.h"
 #include "AFortPickupAthena.h"
 #include "Engine/Level.h"
 #include "Engine/World.h"
@@ -16,13 +17,26 @@
 
 namespace
 {
+	const FName DeliveryCrateTag(TEXT("LootDeliveryCrate"));
+	constexpr float DeliveryHeight = 1800.0f;
+	constexpr float DeliveryDuration = 6.0f;
+
+	struct FScheduledDelivery
+	{
+		float Delay = 0.0f;
+		float DescentStartTime = -1.0f;
+		FVector LandingLocation = FVector::ZeroVector;
+		bool bSearchableCrate = false;
+		bool bRestoreCollision = false;
+	};
+
 	struct FWorldLootState
 	{
 		TWeakObjectPtr<UWorld> ActiveWorld;
 		TSet<TWeakObjectPtr<ABuildingContainer>> ProcessedContainers;
 		TSet<TWeakObjectPtr<ULevel>> ScannedLevels;
 		TArray<TWeakObjectPtr<ABuildingContainer>> PendingSpawnRetries;
-		TMap<TWeakObjectPtr<ABuildingContainer>, float> ScheduledDeliveries;
+		TMap<TWeakObjectPtr<ABuildingContainer>, FScheduledDelivery> ScheduledDeliveries;
 		float DeliveryStartTime = -1.0f;
 		bool bLoggedWaitingForData = false;
 	};
@@ -190,7 +204,30 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 			float Delay = 0.0f;
 			if (FDefaultValueHelper::ParseFloat(TagText.Mid(FCString::Strlen(Prefix)), Delay) && FMath::IsFinite(Delay) && Delay >= 0.0f)
 			{
-				S.ScheduledDeliveries.Add(Marker, Delay);
+				FScheduledDelivery Delivery;
+				Delivery.Delay = Delay;
+				Delivery.bSearchableCrate = Container->ActorHasTag(DeliveryCrateTag);
+				if (Delivery.bSearchableCrate)
+				{
+					const USceneComponent* Root = Container->GetRootComponent();
+					if (!Root || Root->Mobility != EComponentMobility::Movable)
+					{
+						S.ProcessedContainers.Add(Marker);
+						UE_LOG(LogTemp, Warning, TEXT("LootWorld: delivery crate %s needs a movable root"), *Container->GetName());
+						return;
+					}
+					Delivery.LandingLocation = Container->GetActorLocation();
+					Delivery.bRestoreCollision = Container->GetActorEnableCollision();
+				}
+				S.ScheduledDeliveries.Add(Marker, Delivery);
+				if (Delivery.bSearchableCrate)
+				{
+					Container->SetReplicates(true);
+					Container->SetReplicateMovement(true);
+					Container->SetActorEnableCollision(false);
+					Container->SetActorHiddenInGame(true);
+					Container->ForceNetUpdate();
+				}
 			}
 			else
 			{
@@ -285,13 +322,39 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 	for (auto It = S.ScheduledDeliveries.CreateIterator(); It; ++It)
 	{
 		ABuildingContainer* Marker = It.Key().Get();
-		if (!Marker)
+		if (!IsFloorLootMarkerCandidate(Marker))
 		{
 			It.RemoveCurrent();
+			continue;
 		}
-		else if (Now - S.DeliveryStartTime >= It.Value() && Marker->GetLevel()->bIsVisible)
+
+		FScheduledDelivery& Delivery = It.Value();
+		if (Now - S.DeliveryStartTime < Delivery.Delay || !Marker->GetLevel()->bIsVisible)
+			continue;
+
+		if (!Delivery.bSearchableCrate)
 		{
 			DueMarkers.Add(Marker);
+			It.RemoveCurrent();
+			continue;
+		}
+
+		if (Delivery.DescentStartTime < 0.0f)
+		{
+			Delivery.DescentStartTime = Now;
+			Marker->SetActorLocation(Delivery.LandingLocation + FVector::UpVector * DeliveryHeight);
+			Marker->SetActorHiddenInGame(false);
+			Marker->ForceNetUpdate();
+			continue;
+		}
+
+		const float Progress = FMath::Clamp((Now - Delivery.DescentStartTime) / DeliveryDuration, 0.0f, 1.0f);
+		Marker->SetActorLocation(Delivery.LandingLocation + FVector::UpVector * (DeliveryHeight * (1.0f - Progress)));
+		if (Progress >= 1.0f)
+		{
+			Marker->bStartAlreadySearched_Athena = false;
+			Marker->SetActorEnableCollision(Delivery.bRestoreCollision);
+			Marker->ForceNetUpdate();
 			It.RemoveCurrent();
 		}
 	}

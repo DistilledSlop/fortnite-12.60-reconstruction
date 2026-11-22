@@ -11,6 +11,8 @@ class ULevel;
 // FortAthenaLootRoll / FortAthenaLootSearch, and spawns AFortPickupAthena at the marker transform.
 // A map-authored actor tag LootDeliverySeconds=<delay> schedules the marker relative to the
 // start of the safe-zone phase. The marker needs an assigned loot tier group.
+// Add LootDeliveryCrate to a marker with a movable root to descend to the authored transform
+// and unlock the container for normal search on landing.
 namespace FortAthenaLootWorld
 {
 	// Gated behind -FortniteOriginalClient.
