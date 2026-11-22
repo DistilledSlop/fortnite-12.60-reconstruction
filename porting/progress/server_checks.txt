@@ -88,12 +88,11 @@ Tick rate and relevance|open|Check nearby actors replicate and distant irrelevan
 ## Lobby, accounts and Epic service compatibility
 Login and identity|verified|Exercise OAuth exchange-code handling against the local service|porting/server/tests/test_oauth_exchange_codes.py
 Login and identity|verified|Exercise username login and locker access at the backend boundary|porting/server/tests/test_username_locker_flow.py
-Login and identity|open|Sign in from a fresh original client, refresh login and reconnect without probe bypasses
+Login and identity|verified|Launch through ProjectChrono under Wine and reach login and XMPP with two clients|porting/server/EVIDENCE.md
+Login and identity|open|Verify fresh ProjectChrono login, token refresh and reconnect on native Windows
 Account API|verified|Serve account lookup by ID, display name and batches of IDs|porting/server/tests/test_services.py
 Account API|verified|Validate a profile token against a known local account|porting/server/tests/test_services.py
 Account API|open|Exercise account lookup and profile-token requests from the original client
-Entitlements|open|Satisfy the original client AppES entitlement gate through local services without a diagnostic bypass
-Entitlements|open|Verify launcher ownership and entitlement refresh across reconnects
 Service status and content|verified|Serve lightswitch status, maintenance state and version-check responses|porting/server/tests/test_services.py
 Service status and content|verified|Serve the configured lobby page, locale data and snapshot assets|porting/server/tests/test_lobby_content.py
 Service status and content|open|Load status, lobby content and news through an unmodified original-client flow
