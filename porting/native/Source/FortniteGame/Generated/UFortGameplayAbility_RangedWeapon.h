@@ -18,6 +18,8 @@ class FORTNITEGAME_API UFortGameplayAbility_RangedWeapon : public UFortGameplayA
 	GENERATED_BODY()
 
 public:
+	virtual bool CanActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayTagContainer* SourceTags, const FGameplayTagContainer* TargetTags, FGameplayTagContainer* OptionalRelevantTags) const override;
+
 	// table index 3, flags 0x10000000010015
 	UPROPERTY()
 	float FiringNoiseRange;

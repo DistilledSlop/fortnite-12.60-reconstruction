@@ -50,6 +50,7 @@
 #include "FortNativeGameplayTagsRuntime.h"
 #include "UFortAbilitySet.h"
 #include "UFortAbilitySystemComponent.h"
+#include "UFortGameplayAbility_RangedWeapon.h"
 #include "UFortAbilitySystemComponentAthena.h"
 #include "UFortCharacterAttrSet.h"
 #include "UFortPlayerAttrSet.h"
@@ -396,6 +397,21 @@ namespace
 		ReleaseCarryConnections(Player);
 		Player->bWasCrouchedBeforeDBNO = Player->bIsCrouched;
 		Player->bIsDBNO = true;
+		if (UAbilitySystemComponent* AbilitySystem = Player->GetAbilitySystemComponent())
+		{
+			TArray<FGameplayAbilitySpecHandle> ActiveAttacks;
+			for (const FGameplayAbilitySpec& Spec : AbilitySystem->GetActivatableAbilities())
+			{
+				if (Spec.IsActive() && Cast<UFortGameplayAbility_RangedWeapon>(Spec.Ability))
+				{
+					ActiveAttacks.Add(Spec.Handle);
+				}
+			}
+			for (const FGameplayAbilitySpecHandle& Handle : ActiveAttacks)
+			{
+				AbilitySystem->CancelAbilityHandle(Handle);
+			}
+		}
 		Player->StopJumping();
 		Player->GetCharacterMovement()->bWantsToCrouch = true;
 		const float KnockTime = World->GetTimeSeconds();

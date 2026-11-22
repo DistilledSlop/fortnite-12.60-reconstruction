@@ -99737,5 +99737,18 @@
     "confidence": "medium",
     "status": "ported",
     "notes": "Registers an engine GAS snapshot for the source base damage attribute."
+  },
+  {
+    "class": "UFortGameplayAbility_RangedWeapon",
+    "function": "CanActivateAbility",
+    "kind": "helper",
+    "signature": "bool CanActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayTagContainer* SourceTags, const FGameplayTagContainer* TargetTags, FGameplayTagContainer* OptionalRelevantTags) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "override": true,
+    "inc_path": "porting/behavior/UFortGameplayAbility_RangedWeapon/CanActivateAbility.inc",
+    "status": "ported",
+    "confidence": "medium"
   }
 ]

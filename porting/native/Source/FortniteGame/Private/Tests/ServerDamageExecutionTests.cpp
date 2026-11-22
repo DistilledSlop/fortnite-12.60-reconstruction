@@ -24,6 +24,7 @@
 #include "UFortDamageFormulaExecutionCalculation.h"
 #include "UFortDamageSet.h"
 #include "UFortHealthSet.h"
+#include "UFortGameplayAbility_RangedWeapon.h"
 #include "UFortPlaylistAthena.h"
 #include "UFortMovementComp_CharacterAthena.h"
 
@@ -575,6 +576,13 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	FortAthenaHealth::ApplyDamage(ThirdPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
 	TestTrue(TEXT("A team playlist with DBNO disabled eliminates a player with standing teammates"),
 		ThirdPawn->bIsDying && !ThirdPawn->bIsDBNO);
+	UFortAbilitySystemComponent* FirstASC = FirstPawn->AbilitySystemComponent;
+	const FGameplayAbilitySpecHandle RangedAbilityHandle = FirstASC->GiveAbility(
+		FGameplayAbilitySpec(UFortGameplayAbility_RangedWeapon::StaticClass()));
+	const UGameplayAbility* RangedAbility = GetDefault<UFortGameplayAbility_RangedWeapon>();
+	TestTrue(TEXT("A standing player can activate a ranged ability"),
+		RangedAbility->CanActivateAbility(RangedAbilityHandle, FirstASC->AbilityActorInfo.Get()));
+
 	TeamPlaylist->DBNOType = EDBNOType::NotWhenRespawning;
 	TeamPlaylist->RespawnType = EAthenaRespawnType::InfiniteRespawnExceptStorm;
 	const FGameplayTag StormTag = FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x360);
@@ -585,6 +593,8 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TeamPlaylist->DBNOType = EDBNOType::On;
 	TeamPlaylist->RespawnType = EAthenaRespawnType::None;
 	TestEqual(TEXT("A knock fills the downed health pool"), FirstPawn->GetHealth(), 100.0f);
+	TestFalse(TEXT("A downed player cannot activate a ranged ability"),
+		RangedAbility->CanActivateAbility(RangedAbilityHandle, FirstASC->AbilityActorInfo.Get()));
 	TestTrue(TEXT("A knock queues the crawl stance immediately"), FirstPawn->GetCharacterMovement()->bWantsToCrouch != 0);
 	SecondPawn->bAllowDBNOCarry = true;
 	TestTrue(TEXT("A standing teammate can carry the knocked player"),
