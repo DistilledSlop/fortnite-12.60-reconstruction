@@ -65,6 +65,14 @@ if ((i == 300)); then echo 'Wine prefix still busy after 300 seconds.' >&2; exit
 # Record existing server PIDs so an unrelated server is never captured or stopped.
 old_servers=" $(pgrep -x FortniteLinuxSe | tr '\n' ' ') "
 server="$porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Binaries/Linux/FortniteLinuxServer"
+if [[ -n ${FN_SERVER_BINARY:-} ]]; then
+    server=$(realpath -- "$FN_SERVER_BINARY") || exit 2
+    if [[ ! -f $server || ! -x $server ]]; then
+        printf 'Server binary is not executable: %s\n' "$server" >&2
+        exit 2
+    fi
+fi
+printf '%s\n' "$server" > "$out/server-binary.txt"
 if [[ $registered_mode == 1 ]]; then
     unset FORTNITE_NET_ENCRYPTION_KEY FORTNITE_NET_ENCRYPTION_KEY_FILE
 else
