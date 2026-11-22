@@ -680,13 +680,22 @@ int32 FortAthenaInventory::ConsumeAmmo(AFortPlayerController* Controller, UFortI
 void FortAthenaInventory::SetLoadedAmmo(AFortPlayerController* Controller, const FGuid& WeaponItemGuid, int32 LoadedAmmo)
 {
 	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
-	if (!Inventory)
+	if (!Inventory || !Inventory->HasAuthority())
 	{
 		return;
 	}
 	if (UFortWorldItem* Item = FindItemByGuid(Inventory, WeaponItemGuid))
 	{
 		Item->ItemEntry.LoadedAmmo = LoadedAmmo;
+		if (FFortItemEntry* Replicated = FindReplicatedEntry(Inventory, WeaponItemGuid))
+		{
+			if (Replicated->LoadedAmmo != LoadedAmmo)
+			{
+				Replicated->LoadedAmmo = LoadedAmmo;
+				Inventory->Inventory.MarkItemDirty(*Replicated);
+				Inventory->NativeNotifyInventoryChanged();
+			}
+		}
 	}
 }
 
@@ -896,6 +905,13 @@ namespace
 		}
 		return Total >= MAX_int32 ? MAX_int32 : static_cast<int32>(FMath::CeilToDouble(Total));
 	}
+
+	bool CanDebitSourceStack(const AFortPlayerController* Controller, const AFortWeapon& Weapon, int32 Cost)
+	{
+		AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
+		const UFortWorldItem* Item = Inventory ? Inventory->NativeFindItemByGuid(Weapon.ItemEntryGuid) : nullptr;
+		return Item && Item->ItemEntry.ItemDefinition == Weapon.WeaponData && Item->ItemEntry.Count >= Cost;
+	}
 }
 
 bool UFortGameplayAbility::CheckCost(FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
@@ -918,9 +934,7 @@ bool UFortGameplayAbility::CheckCost(FGameplayAbilitySpecHandle Handle, const FG
 	}
 
 	AFortPlayerController* Controller = Cast<AFortPlayerController>(ActorInfo->PlayerController.Get());
-	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
-	const UFortWorldItem* Item = Inventory ? Inventory->NativeFindItemByGuid(Weapon->ItemEntryGuid) : nullptr;
-	return Item && Item->ItemEntry.ItemDefinition == Weapon->WeaponData && Item->ItemEntry.Count >= Cost;
+	return CanDebitSourceStack(Controller, *Weapon, Cost);
 }
 
 void UFortGameplayAbility::ApplyCost(FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
@@ -937,6 +951,9 @@ void UFortGameplayAbility::ApplyCost(FGameplayAbilitySpecHandle Handle, const FG
 	if (Cost > 0)
 	{
 		AFortPlayerController* Controller = Cast<AFortPlayerController>(ActorInfo->PlayerController.Get());
-		FortAthenaInventory::RemoveItem(Controller, Weapon->ItemEntryGuid, Cost, true);
+		if (CanDebitSourceStack(Controller, *Weapon, Cost))
+		{
+			FortAthenaInventory::RemoveItem(Controller, Weapon->ItemEntryGuid, Cost, true);
+		}
 	}
 }

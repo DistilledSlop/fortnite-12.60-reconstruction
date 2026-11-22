@@ -791,7 +791,7 @@ bool ApplyBuildingDamage(
 	Building->OnDamageServer(ClampedDamage, DamageTags, Momentum, MutableHit, Instigator, Causer, EffectContext);
 	Building->OnDamaged.Broadcast(Building, ClampedDamage, Instigator, Causer, HitPoint, Hit.Component.Get(), Hit.BoneName, Momentum);
 
-	// 3. Resource calculation, inventory grant (999 stack cap + pickup overflow), and client feedback RPC.
+	// 3. Resource calculation, capped inventory grant, and client feedback RPC.
 	AFortPlayerController* PC = Cast<AFortPlayerController>(Instigator);
 	const EFortResourceType::Type ResType = Building->ResourceType.GetValue();
 	if (PC && ResType != EFortResourceType::None && FortAthenaBuildDamage::ShouldAllowResourceDrop(Building) && (Building->bAllowResourceDrop || IsLevelHarvestable(Building))
@@ -826,7 +826,7 @@ bool ApplyBuildingDamage(
 					UE_LOG(LogFortHarvestBuilding, Verbose, TEXT("Building: %d %s over the stack cap discarded"), OverflowCount, *ResourceDef->GetName());
 				}
 
-				PC->ClientReportDamagedResourceBuilding(Building, ResType, GrantedAmount, bKilledThisHit, bWeakSpot);
+				PC->ClientReportDamagedResourceBuilding(Building, ResType, AcceptedCount, bKilledThisHit, bWeakSpot);
 			}
 			else
 			{

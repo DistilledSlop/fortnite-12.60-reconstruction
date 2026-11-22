@@ -16,6 +16,7 @@
 #include "UFortGameplayAbility.h"
 #include "UFortResourceItemDefinition.h"
 #include "UFortWeaponItemDefinition.h"
+#include "UFortWeaponRangedItemDefinition.h"
 #include "UFortWorldItem.h"
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FServerInventoryStacksTest, "Fortnite.Server.Inventory.StackAccounting",
@@ -122,6 +123,10 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	TestTrue(TEXT("Pickup fills the existing stack"), FortAthenaLootTransfer::HandlePickup(Pawn, Pickup, 0.25f, FVector::ZeroVector, false));
 	TestEqual(TEXT("Inventory reaches its cap"), Second->ItemEntry.Count, 10);
 	TestEqual(TEXT("Two units stay on the ground"), Pickup->PrimaryPickupItemEntry.Count, 2);
+	TestFalse(TEXT("A retry at the stack cap accepts nothing"),
+		FortAthenaLootTransfer::HandlePickup(Pawn, Pickup, 0.25f, FVector::ZeroVector, false));
+	TestEqual(TEXT("Rejected pickup preserves the inventory total"), Second->ItemEntry.Count, 10);
+	TestEqual(TEXT("Rejected pickup preserves the ground remainder"), Pickup->PrimaryPickupItemEntry.Count, 2);
 
 	TestTrue(TEXT("Drop splits four units from the stack"), FortAthenaLootTransfer::AttemptInventoryDrop(Controller, SecondGuid, 4, false));
 	TestEqual(TEXT("Six units stay in inventory"), Second->ItemEntry.Count, 6);
@@ -143,6 +148,51 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	TestTrue(TEXT("Remaining ground units can be picked up after the split"), FortAthenaLootTransfer::HandlePickup(Pawn, Pickup, 0.25f, FVector::ZeroVector, false));
 	TestEqual(TEXT("Inventory, split drop and consumed ground stack account for all units"), Second->ItemEntry.Count, 8);
 	TestTrue(TEXT("Exhausted ground pickup is reserved for flight"), Pickup->bPickedUp);
+	TestFalse(TEXT("A claimed pickup cannot grant items again"),
+		FortAthenaLootTransfer::HandlePickup(Pawn, Pickup, 0.25f, FVector::ZeroVector, false));
+	TestEqual(TEXT("Claim retry preserves the inventory total"), Second->ItemEntry.Count, 8);
+	if (TestEqual(TEXT("Exactly one replicated stack survives the transfers"), Inventory->Inventory.ReplicatedEntries.Num(), 1))
+	{
+		const FFortItemEntry& Entry = Inventory->Inventory.ReplicatedEntries[0];
+		TestTrue(TEXT("Transfers keep the surviving stack GUID"), Entry.ItemGuid == SecondGuid);
+		TestEqual(TEXT("Transfers reconcile the replicated stack count"), Entry.Count, 8);
+	}
+
+	if (!TestTrue(TEXT("Discarding a whole stack succeeds"),
+		FortAthenaLootTransfer::AttemptInventoryDrop(Controller, SecondGuid, 8, true)))
+	{
+		return false;
+	}
+	TestNull(TEXT("Discarded stack is removed from the GUID index"), Inventory->NativeFindItemByGuid(SecondGuid));
+	TestEqual(TEXT("Discard clears the item instance"), Inventory->Inventory.ItemInstances.Num(), 0);
+	TestEqual(TEXT("Discard clears the replicated stack"), Inventory->Inventory.ReplicatedEntries.Num(), 0);
+	TestEqual(TEXT("Discarded units cannot be spent again"), FortAthenaInventory::ConsumeAmmo(Controller, Definition, 1), 0);
+	for (TActorIterator<AFortPickupAthena> It(World); It; ++It)
+	{
+		if (It->PawnWhoDroppedPickup == Pawn && It->PrimaryPickupItemEntry.ItemDefinition == Definition)
+		{
+			AddError(TEXT("Discard spawned a collectible pickup"));
+			break;
+		}
+	}
+
+	UFortWeaponRangedItemDefinition* WeaponDefinition = NewObject<UFortWeaponRangedItemDefinition>(Inventory);
+	UFortWorldItem* WeaponItem = FortAthenaInventory::GiveItem(Controller, WeaponDefinition, 1, 1, 5);
+	if (!TestNotNull(TEXT("Weapon inventory item"), WeaponItem))
+	{
+		return false;
+	}
+	const FGuid WeaponGuid = WeaponItem->NativeGetItemGuid();
+	FortAthenaInventory::SetLoadedAmmo(Controller, WeaponGuid, 4);
+	TestEqual(TEXT("Magazine spend updates the weapon item"), WeaponItem->ItemEntry.LoadedAmmo, 4);
+	if (TestEqual(TEXT("The weapon is the only replicated item"), Inventory->Inventory.ReplicatedEntries.Num(), 1))
+	{
+		const FFortItemEntry& Entry = Inventory->Inventory.ReplicatedEntries[0];
+		TestTrue(TEXT("Magazine spend keeps the weapon GUID"), Entry.ItemGuid == WeaponGuid);
+		TestEqual(TEXT("Magazine spend updates the replicated entry"), Entry.LoadedAmmo, 4);
+		FortAthenaInventory::SetLoadedAmmo(Controller, WeaponGuid, 0);
+		TestEqual(TEXT("An empty magazine replicates as zero"), Entry.LoadedAmmo, 0);
+	}
 	return true;
 }
 
@@ -252,6 +302,18 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 	TestTrue(TEXT("Commit can spend the last bandage"), AbilityCDO->CommitAbilityCost(Handle, &ActorInfo, ActivationInfo));
 	TestNull(TEXT("Depleted source stack is removed"), Inventory->NativeFindItemByGuid(Guid));
 	TestFalse(TEXT("Commit fails after the source stack is gone"), AbilityCDO->CommitAbilityCost(Handle, &ActorInfo, ActivationInfo));
+
+	UFortResourceItemDefinition* OtherDefinition = NewObject<UFortResourceItemDefinition>(Inventory);
+	OtherDefinition->MaxStackSize = FScalableFloat(10.0f);
+	UFortWorldItem* OtherItem = FortAthenaInventory::GiveItem(Controller, OtherDefinition, 2);
+	if (!TestNotNull(TEXT("Unrelated inventory stack"), OtherItem))
+	{
+		return false;
+	}
+	Weapon->ItemEntryGuid = OtherItem->NativeGetItemGuid();
+	TestFalse(TEXT("Commit rejects an unrelated source stack"), AbilityCDO->CommitAbilityCost(Handle, &ActorInfo, ActivationInfo));
+	AbilityCDO->ApplyCost(Handle, &ActorInfo, ActivationInfo);
+	TestEqual(TEXT("Applying the cost preserves the unrelated stack"), OtherItem->ItemEntry.Count, 2);
 	return true;
 }
 
