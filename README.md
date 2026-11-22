@@ -53,20 +53,7 @@ The [wiki](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki) 
 
 ## Dedicated-server progress
 
-| Server capability | Evidence so far | Open verification |
-|---|---|---|
-| Linux build and launch | Dedicated target builds and runs headless tests | Repeat build, staging, and launch on a clean host |
-| Client join and Battle Bus drop | Original 12.60 client joined and landed on Apollo in a local test | Repeat with multiple clients |
-| Storm and elimination | Storm death is wired. Headless tests cover last-standing and squad-wipe cases | Play through the storm and verify placement and spectating |
-| Results and requeue | A local test reached the results screen | Finish a multiplayer match, return to lobby, and requeue |
-| Damage, health, and shield | Headless tests cover point and radial damage, shield overflow, and selected gameplay effects | Exercise live weapons, consumables, hazards, and PvE |
-| Team knock and revive | Headless tests cover crawl stance, bleed-out, carry, throw, and timed revival | Verify prompts, animations, movement, and state across clients |
-| Loot and inventory | Loot-roll tests cover selection. Chest search and pickups are implemented | Verify contested pickups, swaps, and elimination drops |
-| Weapons and building | Server reload, projectile spawning, and placement checks are implemented | Verify weapon families, prediction, building edits, destruction, and resource costs |
-| World actors | Server damage coverage includes AI pawns and structures | Verify AI combat, vehicles, interactable props, and reboot stations |
-| Identity, profiles, and lobby | Backend route evidence and original-client probes are recorded | Verify account and party flows without diagnostic bypasses |
-| Matchmaking and sessions | Server registration and matchmaking have implementations and a smoke harness | Verify a party queues and joins the same session |
-| Replication and stability | A local client joined and entered the match | Measure state agreement and tick stability across a sustained multiplayer match |
+[![Dedicated-server reconstruction progress treemap](docs/progress/server/progress.svg)](docs/progress/server/index.html)
 
 [Detailed server board and evidence](docs/progress/server/index.html) · [Original client + server board](docs/index.html)
 
