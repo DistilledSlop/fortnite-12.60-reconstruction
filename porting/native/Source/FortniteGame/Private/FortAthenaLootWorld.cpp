@@ -2,6 +2,8 @@
 
 #include "ABuildingContainer.h"
 #include "AFortGameModeAthena.h"
+#include "AFortGameStateAthena.h"
+#include "EAthenaGamePhase.h"
 #include "AFortPickupAthena.h"
 #include "Engine/Level.h"
 #include "Engine/World.h"
@@ -9,6 +11,7 @@
 #include "FortAthenaLootData.h"
 #include "FortAthenaLootSearch.h"
 #include "Misc/CommandLine.h"
+#include "Misc/DefaultValueHelper.h"
 #include "Misc/Parse.h"
 
 namespace
@@ -19,6 +22,8 @@ namespace
 		TSet<TWeakObjectPtr<ABuildingContainer>> ProcessedContainers;
 		TSet<TWeakObjectPtr<ULevel>> ScannedLevels;
 		TArray<TWeakObjectPtr<ABuildingContainer>> PendingSpawnRetries;
+		TMap<TWeakObjectPtr<ABuildingContainer>, float> ScheduledDeliveries;
+		float DeliveryStartTime = -1.0f;
 		bool bLoggedWaitingForData = false;
 	};
 
@@ -38,6 +43,8 @@ namespace
 		S.ProcessedContainers.Reset();
 		S.ScannedLevels.Reset();
 		S.PendingSpawnRetries.Reset();
+		S.ScheduledDeliveries.Reset();
+		S.DeliveryStartTime = -1.0f;
 		S.bLoggedWaitingForData = false;
 		UE_LOG(LogTemp, Display, TEXT("LootWorld: reset state for world=%s"), *GetNameSafe(World));
 	}
@@ -134,6 +141,8 @@ void FortAthenaLootWorld::Reset()
 	S.ProcessedContainers.Reset();
 	S.ScannedLevels.Reset();
 	S.PendingSpawnRetries.Reset();
+	S.ScheduledDeliveries.Reset();
+	S.DeliveryStartTime = -1.0f;
 	S.bLoggedWaitingForData = false;
 }
 
@@ -162,25 +171,51 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 	S.bLoggedWaitingForData = false;
 
 	TArray<ABuildingContainer*> Candidates;
+	const auto AddMarker = [&S, &Candidates](ABuildingContainer* Container)
+	{
+		if (!IsFloorLootMarkerCandidate(Container))
+			return;
+
+		const TWeakObjectPtr<ABuildingContainer> Marker(Container);
+		if (S.ProcessedContainers.Contains(Marker) || S.ScheduledDeliveries.Contains(Marker))
+			return;
+
+		for (const FName& Tag : Container->Tags)
+		{
+			const FString TagText = Tag.ToString();
+			constexpr const TCHAR* Prefix = TEXT("LootDeliverySeconds=");
+			if (!TagText.StartsWith(Prefix))
+				continue;
+
+			float Delay = 0.0f;
+			if (FDefaultValueHelper::ParseFloat(TagText.Mid(FCString::Strlen(Prefix)), Delay) && FMath::IsFinite(Delay) && Delay >= 0.0f)
+			{
+				S.ScheduledDeliveries.Add(Marker, Delay);
+			}
+			else
+			{
+				S.ProcessedContainers.Add(Marker);
+				UE_LOG(LogTemp, Warning, TEXT("LootWorld: invalid delivery delay on %s"), *Container->GetName());
+			}
+			return;
+		}
+
+		Candidates.Add(Container);
+	};
 	if (OptionalLevel)
 	{
 		if (OptionalLevel->OwningWorld != World)
 			return 0;
 		for (AActor* Actor : OptionalLevel->Actors)
 		{
-			if (ABuildingContainer* Container = Cast<ABuildingContainer>(Actor))
-			{
-				if (IsFloorLootMarkerCandidate(Container))
-					Candidates.Add(Container);
-			}
+			AddMarker(Cast<ABuildingContainer>(Actor));
 		}
 		return PopulateCandidates(GameMode, Candidates, *OptionalLevel->GetOutermost()->GetName());
 	}
 
 	for (TActorIterator<ABuildingContainer> It(World); It; ++It)
 	{
-		if (IsFloorLootMarkerCandidate(*It))
-			Candidates.Add(*It);
+		AddMarker(*It);
 	}
 	return PopulateCandidates(GameMode, Candidates, *World->GetName());
 }
@@ -237,6 +272,31 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 		S.ScannedLevels.Add(WeakLevel);
 		PopulateLoadedMarkers(GameMode, Level);
 	}
+
+	const AFortGameStateAthena* GameState = GameMode->GetGameState<AFortGameStateAthena>();
+	if (!GameState || GameState->GamePhase != EAthenaGamePhase::SafeZones)
+		return;
+
+	const float Now = World->GetTimeSeconds();
+	if (S.DeliveryStartTime < 0.0f)
+		S.DeliveryStartTime = Now;
+
+	TArray<ABuildingContainer*> DueMarkers;
+	for (auto It = S.ScheduledDeliveries.CreateIterator(); It; ++It)
+	{
+		ABuildingContainer* Marker = It.Key().Get();
+		if (!Marker)
+		{
+			It.RemoveCurrent();
+		}
+		else if (Now - S.DeliveryStartTime >= It.Value() && Marker->GetLevel()->bIsVisible)
+		{
+			DueMarkers.Add(Marker);
+			It.RemoveCurrent();
+		}
+	}
+	if (DueMarkers.Num() > 0)
+		PopulateCandidates(GameMode, DueMarkers, TEXT("scheduled delivery"));
 }
 
 void FortAthenaLootWorld::OnLevelAdded(AFortGameModeAthena* GameMode, ULevel* Level)

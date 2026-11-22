@@ -9,6 +9,8 @@ class ULevel;
 // Identifies floor-loot marker containers (Tiered_Athena_FloorLoot_01_C, Tiered_Athena_FloorLoot_Warmup_C)
 // by bStartAlreadySearched_Athena and non-empty SearchLootTierGroup, rolls once per actor via
 // FortAthenaLootRoll / FortAthenaLootSearch, and spawns AFortPickupAthena at the marker transform.
+// A map-authored actor tag LootDeliverySeconds=<delay> schedules the marker relative to the
+// start of the safe-zone phase. The marker needs an assigned loot tier group.
 namespace FortAthenaLootWorld
 {
 	// Gated behind -FortniteOriginalClient.
