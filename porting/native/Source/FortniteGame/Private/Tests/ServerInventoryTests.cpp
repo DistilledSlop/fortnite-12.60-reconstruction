@@ -646,6 +646,15 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	Slots[2].AcceptedItemTypes.Add(EFortItemType::Consumable);
 	Slots[3].AcceptedItemTypes.Add(EFortItemType::WeaponRanged);
 
+	UFortWeaponRangedItemDefinition* BlockerDefinition = NewObject<UFortWeaponRangedItemDefinition>(Inventory);
+	BlockerDefinition->ItemType = EFortItemType::WeaponRanged;
+	BlockerDefinition->MaxStackSize = FScalableFloat(1.0f);
+	UFortWorldItem* Blocker = FortAthenaInventory::GiveItem(Controller, BlockerDefinition, 1);
+	if (!TestNotNull(TEXT("Weapon reserves the earlier slot"), Blocker))
+	{
+		return false;
+	}
+
 	FFortItemEntry WideEntry{};
 	WideEntry.ItemDefinition = WideWeapon;
 	WideEntry.Count = 1;
@@ -678,6 +687,8 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	{
 		return false;
 	}
+	TestEqual(TEXT("Removing the blocker frees an earlier slot before the swap"),
+		FortAthenaInventory::RemoveItem(Controller, Blocker->NativeGetItemGuid(), 1), 1);
 	WideWeapon->bCanBeDropped = true;
 	WideWeapon->DropBehavior = EWorldItemDropBehavior::DestroyOnDrop;
 	const FGuid HeldGuid = WideItem->NativeGetItemGuid();
@@ -706,6 +717,12 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	if (TestNotNull(TEXT("The replacement is granted"), Replacement))
 	{
 		TestEqual(TEXT("The replacement contains one item"), Replacement->ItemEntry.Count, 1);
+		TestTrue(TEXT("The replacement keeps the swapped slot when an earlier slot also fits"),
+			Controller->DelayedQuickBarActions.Items.ContainsByPredicate([&](const FDelayedQuickBarAction& Action)
+			{
+				return Action.Action == EFortDelayedQuickBarAction::Add && Action.ItemGuid == Replacement->ItemEntry.ItemGuid &&
+					Action.QuickBarType == EFortQuickBars::Primary && Action.QuickBarSlot == 2;
+			}));
 	}
 	TestEqual(TEXT("The replacement pickup is depleted"), SwapPickup->PrimaryPickupItemEntry.Count, 0);
 	return true;

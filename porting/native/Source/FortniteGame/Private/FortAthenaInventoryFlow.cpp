@@ -15,6 +15,7 @@
 //   Wall, Floor, Stair_W, RoofS (1 each), EditTool (1), WoodItemData (0).
 
 #include "FortAthenaInventoryFlow.h"
+#include "EFortQuickBars.h"
 #include "UFortGameplayAbility_Reload.h"
 #include "FortAthenaCombatEquip.h"
 #include "EngineUtils.h"
@@ -461,7 +462,8 @@ int32 FortAthenaInventory::NormalizeLoadedAmmo(const UFortItemDefinition* Defini
 	return LoadedAmmo;
 }
 
-UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller, UFortItemDefinition* Definition, int32 Count, int32 Level, int32 LoadedAmmo, int32* OutAcceptedCount)
+UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller, UFortItemDefinition* Definition, int32 Count, int32 Level, int32 LoadedAmmo,
+	int32* OutAcceptedCount, int32 PreferredPrimarySlot, bool bActivatePreferredSlot)
 {
 	if (OutAcceptedCount)
 		*OutAcceptedCount = 0;
@@ -567,7 +569,7 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 
 	UE_LOG(LogTemp, Display, TEXT("Inventory: granted %d x %s guid=%s level=%d to %s"),
 		Count, *Definition->GetName(), *Entry.ItemGuid.ToString(), Level, *Controller->GetName());
-	FortAthenaLootTransfer::OnItemGranted(Controller, Item);  // quickbar slot (replicated through DelayedQuickBarActions)
+	FortAthenaLootTransfer::OnItemGranted(Controller, Item, EFortQuickBars::Primary, PreferredPrimarySlot, bActivatePreferredSlot);
 	return Item;
 }
 

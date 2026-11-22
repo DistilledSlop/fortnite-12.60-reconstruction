@@ -682,7 +682,7 @@ namespace
 
 					int32 AcceptedCount = 0;
 					UFortWorldItem* GrantedItem = FortAthenaInventory::GiveItem(
-						PC, Def, SrcEntry.Count, Level, LoadedAmmo, &AcceptedCount);
+						PC, Def, SrcEntry.Count, Level, LoadedAmmo, &AcceptedCount, SwapSlot, bWasHoldingSwapped);
 					if (!GrantedItem || AcceptedCount <= 0)
 					{
 						UE_LOG(LogTemp, Warning, TEXT("LootTransfer: Swap GiveItem returned 0 after drop pc=%s def=%s"),
@@ -690,7 +690,6 @@ namespace
 						return 0;
 					}
 
-					FortAthenaLootTransfer::OnItemGranted(PC, GrantedItem, EFortQuickBars::Primary, SwapSlot, bWasHoldingSwapped);
 					const FGuid GrantedGuid = GrantedItem->NativeGetItemGuid();
 					const FSlotLocation GrantedSlot = FindItemSlot(State, GrantedGuid);
 					if (bWasHoldingSwapped && GrantedSlot.IsValid())

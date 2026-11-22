@@ -428,7 +428,7 @@ Implemented: Require contiguous compatible quickbar slots before accepting a pic
 Implemented: Preserve magazine ammo across partial pickups and prevent merges that would discard a loaded source while keeping self-ammo items stackable and out of magazine reloads
 Implemented: Reconcile manual drops with the quantity removed, clear quickbar slots and detach depleted stacks before weapon ability cancellation can re-enter inventory (callback ordering covered by the headless inventory suite)
 Implemented: Honor destroy-on-drop and debit only the requested target during explicit pickup swaps
-Implemented: Activate the actual assigned quickbar slot after replacing a held item
+Implemented: Prefer the outgoing quickbar slot on a pickup swap and activate the assigned slot when replacing the held item
 Verified: Exercise capped grants, partial-stack top-ups and multi-stack spending against replicated inventory
 Implemented: Reject swaps that cannot grant a single-stack item before dropping the outgoing item
 Verified: Exercise partial world pickup, split drop and remainder pickup on the dedicated server
