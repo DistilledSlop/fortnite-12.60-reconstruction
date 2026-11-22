@@ -1,8 +1,8 @@
 <div align="center">
 
-# Fortnite Chapter 2 Season 2 → Unreal Engine Project
+# Fortnite Chapter 2 Season 2 Dedicated Server Reconstruction
 
-Reconstructing Fortnite Chapter 2 Season 2 as an Unreal Engine project, with recovered C++ source, a dedicated server, and local backend services.
+Reconstructing the Fortnite Chapter 2 Season 2 dedicated server and local backend services for the original 12.60 client.
 
 [Wiki](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki) ·
 [Source reference](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Source-and-API-Index) ·
@@ -26,21 +26,19 @@ Reconstructing Fortnite Chapter 2 Season 2 as an Unreal Engine project, with rec
 
 </div>
 
-The reference build is **12.60, CL 13477524**. The current development environment uses Unreal Engine 4.25 on Linux; the project's goal is to recover the game as an Unreal Engine project. It is under active reconstruction and is not yet a complete, playable release.
+The reference build is **12.60, CL 13477524**. The dedicated server runs on Unreal Engine 4.25 on Linux. The current goal is full server parity with the reference build. Reconstruction is ongoing.
 
-## Join a local match
+## Run a local match
 
-The original 12.60 client can join the reconstructed dedicated server and drop from the Battle Bus onto the Apollo island. Full-match gameplay is still in development.
+Run the reconstructed Linux dedicated server and local backend, then connect with the original 12.60 client. You can join a match, jump from the Battle Bus, and land on Apollo. Full-match gameplay is still in development. [Setup and workflow](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Setup-and-Workflow)
 
-![Victory Royale screen in the original 12.60 client during a local server test on November 15](docs/screenshots/2026-11-15/vanilla-client-local-test-results.png)
+![Original 12.60 client on Apollo during a local dedicated-server test](docs/screenshots/2026-11-13/vanilla-client-real-island-lit.png)
 
 ## Scope
 
-- Recover the client's classes, function behavior, assets pipeline, frontend, and world systems from the supplied build.
-- Reconstruct the dedicated server and local account, profile, matchmaking, session, party, and XMPP services.
-- Verify the rebuilt client through the main menu, lobby, matchmaking, and a full match with working audio and visuals.
-
-The original executable is a reference for analysis. The deliverable is the rebuilt Unreal Engine project and its services.
+- Reconstruct dedicated-server behavior, including match flow, gameplay, world simulation, and replication.
+- Reconstruct the local account, profile, matchmaking, session, party, and XMPP services.
+- Verify server behavior with the original 12.60 client. Rebuilding the client is deferred.
 
 ## Documentation
 
