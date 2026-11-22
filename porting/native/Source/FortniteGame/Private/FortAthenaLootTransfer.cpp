@@ -874,6 +874,7 @@ namespace
 				{
 					TotalAccepted += Accepted;
 					Entry.Count -= Accepted;
+					Entry.LoadedAmmo = 0; // The grant already used the entry's magazine.
 					if (Entry.Count <= 0)
 					{
 						Pickup->MultiItemPickupEntries.RemoveAt(i);
@@ -918,6 +919,7 @@ namespace
 		Pickup->PrimaryPickupItemEntry.Count -= Accepted;
 		if (Pickup->PrimaryPickupItemEntry.Count > 0)
 		{
+			Pickup->PrimaryPickupItemEntry.LoadedAmmo = 0; // Keep the magazine with the first grant.
 			Pickup->ForceNetUpdate();
 			UE_LOG(LogTemp, Display, TEXT("LootTransfer: Partial pickup pc=%s pickup=%s accepted=%d remainder=%d"),
 				*PC->GetName(), *Pickup->GetName(), Accepted, Pickup->PrimaryPickupItemEntry.Count);

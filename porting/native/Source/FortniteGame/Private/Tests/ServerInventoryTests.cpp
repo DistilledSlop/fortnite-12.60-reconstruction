@@ -261,6 +261,31 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	UFortWeaponRangedItemDefinition* WeaponDefinition = NewObject<UFortWeaponRangedItemDefinition>(Inventory);
 	WeaponDefinition->bCanBeDropped = true;
 	WeaponDefinition->DropBehavior = EWorldItemDropBehavior::DropAsPickup;
+	WeaponDefinition->MaxStackSize = FScalableFloat(1.0f);
+	FFortItemEntry LoadedBundle{};
+	LoadedBundle.ItemDefinition = WeaponDefinition;
+	LoadedBundle.Count = 2;
+	LoadedBundle.LoadedAmmo = 5;
+	AFortPickupAthena* LoadedPickup = FortAthenaLootTransfer::SpawnTossedPickupFromEntry(
+		World, LoadedBundle, Pawn->GetActorLocation(), FVector::ForwardVector, nullptr, 0, EFortPickupSpawnSource::Unset);
+	if (!TestNotNull(TEXT("Loaded pickup bundle"), LoadedPickup))
+	{
+		return false;
+	}
+	ON_SCOPE_EXIT { LoadedPickup->Destroy(); };
+	if (!TestTrue(TEXT("One weapon can be collected from the bundle"),
+		FortAthenaLootTransfer::HandlePickup(Pawn, LoadedPickup, 0.25f, FVector::ZeroVector, false)) ||
+		!TestEqual(TEXT("One loaded weapon enters inventory"), Inventory->Inventory.ReplicatedEntries.Num(), 1))
+	{
+		return false;
+	}
+	const FFortItemEntry& LoadedWeapon = Inventory->Inventory.ReplicatedEntries[0];
+	TestEqual(TEXT("First grant keeps the original magazine"), LoadedWeapon.LoadedAmmo, 5);
+	TestEqual(TEXT("One weapon remains in the world"), LoadedPickup->PrimaryPickupItemEntry.Count, 1);
+	TestEqual(TEXT("Remainder does not duplicate the magazine"), LoadedPickup->PrimaryPickupItemEntry.LoadedAmmo, 0);
+	const FGuid LoadedGuid = LoadedWeapon.ItemGuid;
+	TestEqual(TEXT("Remove the weapon from the partial pickup fixture"), FortAthenaInventory::RemoveItem(Controller, LoadedGuid, 1), 1);
+
 	UFortWorldItem* WeaponItem = FortAthenaInventory::GiveItem(Controller, WeaponDefinition, 1, 1, 5);
 	if (!TestNotNull(TEXT("Weapon inventory item"), WeaponItem))
 	{
