@@ -106,7 +106,8 @@ namespace
 		const FVector& WorldOrigin,
 		int32 DropIndex,
 		int32 TotalDrops,
-		float ScatterRadius)
+		float ScatterRadius,
+		FRandomStream& Random)
 	{
 		if (TotalDrops <= 1 || ScatterRadius <= 0.0f)
 			return WorldOrigin;
@@ -121,8 +122,7 @@ namespace
 			? (static_cast<float>(DropIndex) / static_cast<float>(TotalDrops - 1)) - 0.5f
 			: 0.0f;
 		const float AngleRad = FMath::DegreesToRadians(BaseYawDeg + StepFraction * 2.0f * HalfConeDeg);
-		// Retail chest loot lands roughly 1-2.5 m from the chest (LootTossSpeed_Athena 550 over the toss flight), not on top of it.
-		const float Radius = FMath::FRandRange(110.0f, 250.0f);
+		const float Radius = Random.FRandRange(ScatterRadius * 0.44f, ScatterRadius);
 		return WorldOrigin + FVector(FMath::Cos(AngleRad) * Radius, FMath::Sin(AngleRad) * Radius, 6.0f);
 	}
 
@@ -539,7 +539,7 @@ FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnCon
 			continue;
 
 		const int32 LoadedAmmo = ResolveLoadedAmmo(Drop.Definition);
-		const FVector SpawnLoc = ComputeDropSpawnLocation(Container, WorldOrigin, Index, Drops.Num(), ScatterRadius);
+		const FVector SpawnLoc = ComputeDropSpawnLocation(Container, WorldOrigin, Index, Drops.Num(), ScatterRadius, Random);
 		AFortPickupAthena* Pickup = Cast<AFortPickupAthena>(FortAthenaLoot::SpawnResolvedPickup(
 			World, SpawnLoc, Drop.Definition, Drop.Count, Drop.Level, LoadedAmmo, &WorldOrigin));
 		const bool bPickupSpawned = IsValid(Pickup);
@@ -614,8 +614,8 @@ namespace
 		// Transform container-local LootSpawnLocation_Athena (e.g. Chest=(0,50,30), Ammo=(0,35,10)) to world space.
 		const FVector WorldSpawn = Container->GetActorTransform().TransformPosition(Container->LootSpawnLocation_Athena);
 		const float ScatterRadius = Container->SearchBounceRadiusOverride > 0.0f
-			? FMath::Min(Container->SearchBounceRadiusOverride, 80.0f)
-			: 45.0f; // stand-in: container toss scatter when LootTossSpeed_Athena flight isn't active
+			? FMath::Min(Container->SearchBounceRadiusOverride, 250.0f)
+			: 250.0f; // Default maximum scatter for searched containers.
 
 		UE_LOG(LogTemp, Display, TEXT("LootSearch: rolling container=%s class=%s group=%s upgrade=%d tossSpeed=%.0f tossCone=%.0f"),
 			*Container->GetName(), *GetNameSafe(Container->GetClass()), *TierGroup.ToString(),
