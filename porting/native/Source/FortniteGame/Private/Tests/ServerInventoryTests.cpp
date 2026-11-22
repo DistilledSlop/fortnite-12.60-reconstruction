@@ -12,6 +12,8 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
+#include "EFortItemType.h"
+#include "EFortQuickBars.h"
 #include "EWorldItemDropBehavior.h"
 #include "FortAthenaBuildDamage.h"
 #include "FortAthenaHealth.h"
@@ -561,6 +563,36 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	Query.ItemDefinition = BundleSecond;
 	Library->ProcessEvent(QueryFunction, &Query);
 	TestEqual(TEXT("Blueprint remove-all preserves an unrelated stack"), Query.ReturnValue, BundleStackCount);
+
+	UFortWeaponRangedItemDefinition* WideWeapon = NewObject<UFortWeaponRangedItemDefinition>(Inventory);
+	WideWeapon->ItemType = EFortItemType::WeaponRanged;
+	WideWeapon->MaxStackSize = FScalableFloat(1.0f);
+	WideWeapon->NumberOfSlotsToTake = 2;
+	auto& Slots = Controller->QuickBarDefinitions[static_cast<int32>(EFortQuickBars::Primary)].QuickbarSlots;
+	Slots.Reset();
+	Slots.SetNum(4);
+	Slots[1].AcceptedItemTypes.Add(EFortItemType::WeaponRanged);
+	Slots[2].AcceptedItemTypes.Add(EFortItemType::Consumable);
+	Slots[3].AcceptedItemTypes.Add(EFortItemType::WeaponRanged);
+
+	FFortItemEntry WideEntry{};
+	WideEntry.ItemDefinition = WideWeapon;
+	WideEntry.Count = 1;
+	AFortPickupAthena* WidePickup = FortAthenaLootTransfer::SpawnTossedPickupFromEntry(
+		World, WideEntry, Pawn->GetActorLocation(), FVector::ForwardVector, nullptr, 0, EFortPickupSpawnSource::Unset);
+	if (!TestNotNull(TEXT("Two-slot weapon pickup"), WidePickup))
+	{
+		return false;
+	}
+	ON_SCOPE_EXIT { WidePickup->Destroy(); };
+	TestFalse(TEXT("An incompatible middle slot blocks the two-slot pickup"),
+		FortAthenaLootTransfer::HandlePickup(Pawn, WidePickup, 0.25f, FVector::ZeroVector, false));
+	TestNull(TEXT("Rejected pickup creates no inventory stack"), Inventory->NativeFindWorldItemByDefinition(WideWeapon, true));
+	TestEqual(TEXT("Rejected pickup retains its world count"), WidePickup->PrimaryPickupItemEntry.Count, 1);
+	Slots[2].AcceptedItemTypes.Add(EFortItemType::WeaponRanged);
+	TestTrue(TEXT("The same pickup succeeds once contiguous slots accept it"),
+		FortAthenaLootTransfer::HandlePickup(Pawn, WidePickup, 0.25f, FVector::ZeroVector, false));
+	TestNotNull(TEXT("Accepted pickup grants the two-slot weapon"), Inventory->NativeFindWorldItemByDefinition(WideWeapon, true));
 	return true;
 }
 
