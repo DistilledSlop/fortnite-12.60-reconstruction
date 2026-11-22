@@ -3,6 +3,7 @@
 #include "ABuildingWall.h"
 #include "AbilitySystemComponent.h"
 #include "AFortInventory.h"
+#include "AFortGameModeAthena.h"
 #include "AFortPickupAthena.h"
 #include "AFortPlayerPawnAthena.h"
 #include "AFortWeapon.h"
@@ -13,11 +14,15 @@
 #include "EngineUtils.h"
 #include "EWorldItemDropBehavior.h"
 #include "FortAthenaBuildDamage.h"
+#include "FortAthenaHealth.h"
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaLootTransfer.h"
 #include "FortHarvestBuilding.h"
 #include "Misc/AutomationTest.h"
+#include "Misc/CommandLine.h"
+#include "Misc/Parse.h"
 #include "Misc/ScopeExit.h"
+#include "UFortAbilitySystemComponent.h"
 #include "UFortGameplayAbility.h"
 #include "UFortKismetLibrary.h"
 #include "UFortResourceItemDefinition.h"
@@ -522,11 +527,21 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 	AFortPlayerControllerAthena* Controller = World->SpawnActor<AFortPlayerControllerAthena>();
 	AFortInventory* Inventory = World->SpawnActor<AFortInventory>();
 	AFortWeapon* Weapon = World->SpawnActor<AFortWeapon>();
+	AFortPlayerPawnAthena* Pawn = nullptr;
+	bool bCleanupQueued = false;
 	ON_SCOPE_EXIT
 	{
 		if (Weapon)
 		{
 			Weapon->Destroy();
+		}
+		if (bCleanupQueued)
+		{
+			return;
+		}
+		if (Pawn)
+		{
+			Pawn->Destroy();
 		}
 		if (Controller)
 		{
@@ -585,6 +600,77 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 	TestFalse(TEXT("Commit rejects an unrelated source stack"), AbilityCDO->CommitAbilityCost(Handle, &ActorInfo, ActivationInfo));
 	AbilityCDO->ApplyCost(Handle, &ActorInfo, ActivationInfo);
 	TestEqual(TEXT("Applying the cost preserves the unrelated stack"), OtherItem->ItemEntry.Count, 2);
+	if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteInventoryAbilities")))
+	{
+		AddInfo(TEXT("Equip-and-use coverage requires -FortniteInventoryAbilities."));
+		return true;
+	}
+	Pawn = World->SpawnActor<AFortPlayerPawnAthena>(FVector(0, 0, 16000), FRotator::ZeroRotator);
+	AFortGameModeAthena* GameMode = World->GetAuthGameMode<AFortGameModeAthena>();
+	if (!TestNotNull(TEXT("Consumable pawn"), Pawn) || !TestNotNull(TEXT("Athena game mode"), GameMode))
+	{
+		return false;
+	}
+	Controller->Possess(Pawn);
+	FortAthenaHealth::SetupPlayer(GameMode, Controller);
+	UFortAbilitySystemComponent* PawnASC = Pawn->AbilitySystemComponent;
+	if (!TestNotNull(TEXT("Consumable pawn ability system"), PawnASC) ||
+		!TestTrue(TEXT("Consumable pawn has initialized health"), Pawn->bHealthSynced))
+	{
+		return false;
+	}
+	Pawn->SetMaxHealth(100.0f);
+	Pawn->SetHealth(50.0f);
+
+	UFortWorldItem* LastBandage = FortAthenaInventory::GiveItem(Controller, Bandage, 1);
+	if (!TestNotNull(TEXT("Last bandage for activation"), LastBandage))
+	{
+		return false;
+	}
+	const FGuid LastBandageGuid = LastBandage->NativeGetItemGuid();
+	FortAthenaInventory::ExecuteInventoryItem(Controller, LastBandageGuid);
+	AFortWeapon* Equipped = Pawn->CurrentWeapon;
+	if (!TestTrue(TEXT("Inventory equips the bandage and grants its primary ability"),
+		Equipped && Equipped->ItemEntryGuid == LastBandageGuid && Equipped->PrimaryAbilitySpecHandle.IsValid()))
+	{
+		return false;
+	}
+	{
+		// Use the headless GAS authority path for a locally predicted ability.
+		TGuardValue<TWeakObjectPtr<APlayerController>> LocalActivation(
+			PawnASC->AbilityActorInfo->PlayerController, TWeakObjectPtr<APlayerController>());
+		if (!TestTrue(TEXT("Equipped bandage ability activates"), PawnASC->TryActivateAbility(Equipped->PrimaryAbilitySpecHandle, false)))
+		{
+			return false;
+		}
+	}
+
+	bCleanupQueued = true;
+	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakPawn(Pawn);
+	const TWeakObjectPtr<AFortPlayerControllerAthena> WeakController(Controller);
+	const TWeakObjectPtr<AFortInventory> WeakInventory(Inventory);
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakPawn, WeakController, WeakInventory, LastBandageGuid]()
+	{
+		if (AFortPlayerPawnAthena* LivePawn = WeakPawn.Get())
+		{
+			TestEqual(TEXT("Using the bandage restores the expected health"), LivePawn->GetHealth(), 65.0f);
+			LivePawn->Destroy();
+		}
+		else
+		{
+			AddError(TEXT("Consumable pawn disappeared before the use check"));
+		}
+		if (AFortPlayerControllerAthena* LiveController = WeakController.Get())
+		{
+			LiveController->WorldInventory = nullptr;
+			LiveController->Destroy();
+		}
+		if (TestNotNull(TEXT("Consumable inventory after the use"), WeakInventory.Get()))
+		{
+			TestNull(TEXT("Successful use removes the last bandage"), WeakInventory->NativeFindItemByGuid(LastBandageGuid));
+			WeakInventory->Destroy();
+		}
+	}), 8.0f));
 	return true;
 }
 
