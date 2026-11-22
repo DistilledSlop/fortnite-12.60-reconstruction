@@ -2,7 +2,6 @@
 """Generate the server treemap and evidence table from one acceptance ledger."""
 import argparse
 from collections import Counter
-from hashlib import sha256
 from html import escape
 from pathlib import Path
 import re
@@ -10,7 +9,6 @@ import re
 import progress
 
 ROOT = Path(__file__).resolve().parents[2]
-README = ROOT / "README.md"
 LEDGER = ROOT / "porting/progress/server_checks.txt"
 BOARD = ROOT / "docs/progress/server/index.html"
 OUTPUT = BOARD.with_name("server-implementation-treemap-v5.svg")
@@ -139,19 +137,7 @@ def main():
     args = parser.parse_args()
     areas = read_checks()
     groups, counts = measure(areas)
-    svg = render_svg(groups, counts)
-    version = sha256(svg.encode()).hexdigest()[:12]
-    readme = README.read_text()
-    svg_path = OUTPUT.relative_to(ROOT).as_posix()
-    embed = f"[![Dedicated-server reconstruction progress treemap]({svg_path}?v={version})]"
-    readme, matches = re.subn(
-        r"\[!\[Dedicated-server reconstruction progress treemap\]\(" + re.escape(svg_path) + r"(?:\?v=[0-9a-f]+)?\)\]",
-        lambda _: embed,
-        readme,
-    )
-    if matches != 1:
-        parser.exit(1, "Expected one embedded dedicated-server treemap in README.md\n")
-    outputs = {OUTPUT: svg, BOARD: render_board(areas, groups, counts), README: readme}
+    outputs = {OUTPUT: render_svg(groups, counts), BOARD: render_board(areas, groups, counts)}
     for path, content in outputs.items():
         if args.check:
             if not path.is_file() or path.read_text() != content:
