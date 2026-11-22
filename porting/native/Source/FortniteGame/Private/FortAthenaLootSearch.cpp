@@ -623,15 +623,18 @@ namespace
 
 } // namespace
 
-void FortAthenaLootSearch::ReleaseLootBeforeDestruction(ABuildingContainer* Container)
+bool FortAthenaLootSearch::CanDamageContainer(const ABuildingContainer* Container)
 {
 	static const FName BreakableLootTag(TEXT("BreakableLootContainer"));
-	FString RejectReason;
-	if (!IsEnabled() || !IsInteractableContainer(Container, RejectReason) ||
-		!Container->HasAuthority() || !Container->ActorHasTag(BreakableLootTag))
-	{
+	return IsEnabled() && IsValid(Container) && Container->HasAuthority() &&
+		!Container->bDestroyed && !Container->bStartAlreadySearched_Athena &&
+		!Container->IsHidden() && Container->ActorHasTag(BreakableLootTag);
+}
+
+void FortAthenaLootSearch::ReleaseLootBeforeDestruction(ABuildingContainer* Container)
+{
+	if (!CanDamageContainer(Container) || Container->bAlreadySearched)
 		return;
-	}
 
 	if (TryReleaseContainerLoot(Container))
 	{

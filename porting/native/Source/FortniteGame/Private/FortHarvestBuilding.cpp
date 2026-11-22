@@ -710,11 +710,11 @@ bool ApplyBuildingDamage(
 	{
 		return false;
 	}
-	// Loot containers (chests, ammo boxes) are opened, not broken: a pickaxe swing at one while trying to search it
-	// destroyed it (user run: six applied hits on Tiered_Chest_Athena) and left nothing to loot.
-	if (!Building->bPlayerPlaced && Cast<ABuildingContainer>(Building))
+	// Only active containers explicitly authored as breakable accept building damage.
+	if (const ABuildingContainer* Container = Cast<ABuildingContainer>(Building))
 	{
-		return false;
+		if (!Building->bPlayerPlaced && !FortAthenaLootSearch::CanDamageContainer(Container))
+			return false;
 	}
 	if (Building->bPlayerPlaced)
 	{
