@@ -38,11 +38,6 @@ namespace
 	constexpr float DefaultInteractValidationDistance = 500.0f;
 	TSet<ABuildingContainer*> ContainersBeingSearched;
 
-	double SampleUnitRandom()
-	{
-		return static_cast<double>(FMath::RandRange(0, 999999)) / 1000000.0;
-	}
-
 	bool IsInteractableContainer(const ABuildingContainer* Container, FString& OutReason)
 	{
 		if (!IsValid(Container) || Container->IsPendingKill())
@@ -469,6 +464,20 @@ FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnCon
 		return EContainerLootResult::RollFailed;
 	}
 
+	// Reuse the random stream if a pickup spawn forced the batch to roll back.
+	static TWeakObjectPtr<UWorld> RetryWorld;
+	static TMap<TWeakObjectPtr<ABuildingContainer>, int32> RetrySeeds;
+	if (RetryWorld.Get() != World)
+	{
+		RetryWorld = World;
+		RetrySeeds.Reset();
+	}
+	const TWeakObjectPtr<ABuildingContainer> ContainerKey(Container);
+	int32 Seed;
+	if (!RetrySeeds.RemoveAndCopyValue(ContainerKey, Seed))
+		Seed = FMath::Rand();
+	FRandomStream Random(Seed);
+
 	FortAthenaLootRoll::FRequest Req;
 	Req.Group = TierGroup;
 	Req.WorldLevel = FortAthenaLootData::GetLootLevel(GameMode);
@@ -483,10 +492,10 @@ FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnCon
 	bool bRolled = FortAthenaLootRoll::RollForMode(
 		GameMode,
 		Req,
-		[]() { return SampleUnitRandom(); },
-		[LevelTable](UFortItemDefinition* Def, int32 LootLvl, int32& OutLvl)
+		[&Random]() { return Random.GetFraction(); },
+		[LevelTable, &Random](UFortItemDefinition* Def, int32 LootLvl, int32& OutLvl)
 		{
-			return ResolveItemLevel(LevelTable, Def, LootLvl, SampleUnitRandom(), OutLvl);
+			return ResolveItemLevel(LevelTable, Def, LootLvl, Random.GetFraction(), OutLvl);
 		},
 		Drops,
 		RollError);
@@ -505,10 +514,10 @@ FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnCon
 		bRolled = FortAthenaLootRoll::RollForMode(
 			GameMode,
 			Req,
-			[]() { return SampleUnitRandom(); },
-			[LevelTable](UFortItemDefinition* Def, int32 LootLvl, int32& OutLvl)
+			[&Random]() { return Random.GetFraction(); },
+			[LevelTable, &Random](UFortItemDefinition* Def, int32 LootLvl, int32& OutLvl)
 			{
-				return ResolveItemLevel(LevelTable, Def, LootLvl, SampleUnitRandom(), OutLvl);
+				return ResolveItemLevel(LevelTable, Def, LootLvl, Random.GetFraction(), OutLvl);
 			},
 			Drops,
 			RollError);
@@ -553,6 +562,8 @@ FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnCon
 			}
 			UE_LOG(LogTemp, Warning, TEXT("LootSearch: pickup spawn failed container=%s group=%s item=%s pickupSpawned=%d containerAvailable=%d"),
 				*GetNameSafe(Container), *TierGroup.ToString(), *GetNameSafe(Drop.Definition), bPickupSpawned, bContainerAvailable);
+			if (bContainerAvailable)
+				RetrySeeds.Add(ContainerKey, Seed);
 			return bContainerAvailable ? EContainerLootResult::SpawnFailed : EContainerLootResult::RollFailed;
 		}
 		UE_LOG(LogTemp, Display, TEXT("LootSearch:  spawned item=%s count=%d level=%d ammo=%d loc=(%.0f,%.0f,%.0f)"),
