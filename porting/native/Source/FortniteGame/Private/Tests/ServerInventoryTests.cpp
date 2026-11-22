@@ -413,7 +413,7 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	FortHarvest::InitializeBuildingHealth(Wall);
 	FortHarvest::ForceBuildingHealth(Wall, 50.0f);
 	const int32 RepairCost = FortAthenaBuildDamage::ComputeRepairCost(Wall);
-	if (!TestTrue(TEXT("The damaged wall has a material cost"), RepairCost > 0))
+	if (!TestTrue(TEXT("The damaged wall costs enough to test split payment"), RepairCost > 1))
 	{
 		return false;
 	}
@@ -425,13 +425,29 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	UFortResourceItemDefinition* RepairMaterial = NewObject<UFortResourceItemDefinition>(Inventory);
 	RepairMaterial->ResourceType = EFortResourceType::Wood;
 	RepairMaterial->MaxStackSize = FScalableFloat(static_cast<float>(RepairCost + 1));
-	UFortWorldItem* RepairStack = FortAthenaInventory::GiveItem(Controller, RepairMaterial, RepairCost + 1);
-	if (!TestNotNull(TEXT("Repair material stack"), RepairStack))
+	UFortWorldItem* FirstRepairStack = FortAthenaInventory::GiveItem(Controller, RepairMaterial, RepairCost - 1);
+	if (!TestNotNull(TEXT("First repair material stack"), FirstRepairStack))
 	{
 		return false;
 	}
-	TestTrue(TEXT("Repair starts after the material debit"), FortAthenaBuildDamage::RepairBuildingActor(Controller, Wall));
-	TestEqual(TEXT("Repair removes exactly its cost"), RepairStack->ItemEntry.Count, 1);
+	const FGuid FirstRepairGuid = FirstRepairStack->NativeGetItemGuid();
+	TestFalse(TEXT("Repair rejects a matching but insufficient material balance"),
+		FortAthenaBuildDamage::RepairBuildingActor(Controller, Wall));
+	TestEqual(TEXT("Rejected repair preserves the partial payment"), FirstRepairStack->ItemEntry.Count, RepairCost - 1);
+	TestEqual(TEXT("Rejected repair leaves building health unchanged"), FortHarvest::GetBuildingHealth(Wall), 50.0f);
+
+	UFortResourceItemDefinition* OtherWood = NewObject<UFortResourceItemDefinition>(Inventory);
+	OtherWood->ResourceType = EFortResourceType::Wood;
+	OtherWood->MaxStackSize = FScalableFloat(2.0f);
+	UFortWorldItem* SecondRepairStack = FortAthenaInventory::GiveItem(Controller, OtherWood, 2);
+	if (!TestNotNull(TEXT("Second repair material stack"), SecondRepairStack))
+	{
+		return false;
+	}
+	TestTrue(TEXT("Repair accepts payment across matching resource definitions"),
+		FortAthenaBuildDamage::RepairBuildingActor(Controller, Wall));
+	TestNull(TEXT("Repair removes the depleted first stack"), Inventory->NativeFindItemByGuid(FirstRepairGuid));
+	TestEqual(TEXT("Repair takes only the remainder of its cost from the second stack"), SecondRepairStack->ItemEntry.Count, 1);
 	TestEqual(TEXT("Repair preserves unrelated materials"), ProtectedItem->ItemEntry.Count, 3);
 
 	constexpr int32 BundleStackCount = 1 << 30;
