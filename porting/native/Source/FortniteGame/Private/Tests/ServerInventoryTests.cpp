@@ -16,6 +16,7 @@
 #include "FortAthenaBuildDamage.h"
 #include "FortAthenaHealth.h"
 #include "FortAthenaInventoryFlow.h"
+#include "FortAthenaLootSearch.h"
 #include "FortAthenaLootTransfer.h"
 #include "FortHarvestBuilding.h"
 #include "Misc/AutomationTest.h"
@@ -546,6 +547,7 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 	}
 	TestEqual(TEXT("Bandage stack cap resolves from game data"), Bandage->NativeGetMaxStackSize(nullptr), 15);
 	TestTrue(TEXT("Bandage uses its inventory definition as ammo"), Bandage->GetAmmoWorldItemDefinitionNative() == Bandage);
+	TestEqual(TEXT("Bandage loot has no separate magazine"), FortAthenaLootSearch::ResolveLoadedAmmo(Bandage), 0);
 
 	const UClass* AbilityClass = Bandage->GetPrimaryFireAbility();
 	const UFortGameplayAbility* Ability = AbilityClass ? AbilityClass->GetDefaultObject<UFortGameplayAbility>() : nullptr;

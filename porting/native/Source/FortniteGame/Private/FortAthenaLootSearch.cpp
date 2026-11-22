@@ -378,7 +378,8 @@ bool FortAthenaLootSearch::ResolveItemLevel(
 int32 FortAthenaLootSearch::ResolveLoadedAmmo(const UFortItemDefinition* Definition)
 {
 	const UFortWeaponItemDefinition* WeaponDef = Cast<const UFortWeaponItemDefinition>(Definition);
-	if (!WeaponDef)
+	// Self-ammo items spend their inventory count. Clip size does not create a second ammo pool.
+	if (!WeaponDef || WeaponDef->GetAmmoWorldItemDefinitionNative() == WeaponDef)
 		return 0;
 
 	const FDataTableRowHandle& StatHandle = WeaponDef->GetWeaponStatHandle();

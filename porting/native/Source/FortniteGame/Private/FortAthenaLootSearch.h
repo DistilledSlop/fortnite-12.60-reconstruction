@@ -24,7 +24,7 @@ namespace FortAthenaLootSearch
 	// UFortWorldItemDefinition::MinLevel/MaxLevel. Confidence: medium (data-driven from LootLevelData).
 	bool ResolveItemLevel(const UDataTable* LevelTable, UFortItemDefinition* Definition, int32 LootLevel, double Random01, int32& OutLevel);
 
-	// Resolves initial LoadedAmmo from UFortWeaponItemDefinition::WeaponStatHandle -> FFortBaseWeaponStats::ClipSize.
+	// Resolves initial magazine ammo from weapon stats. Self-ammo items use stack count.
 	int32 ResolveLoadedAmmo(const UFortItemDefinition* Definition);
 
 	// Resolves Container's active loot tier group, respecting ChosenRandomUpgrade if set.
