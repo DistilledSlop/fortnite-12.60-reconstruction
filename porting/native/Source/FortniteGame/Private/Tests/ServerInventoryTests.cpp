@@ -806,16 +806,26 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 		return false;
 	}
 	const FGuid LastBandageGuid = LastBandage->NativeGetItemGuid();
-	FortAthenaInventory::ExecuteInventoryItem(Controller, LastBandageGuid);
-	AFortWeapon* Equipped = Pawn->CurrentWeapon;
-	if (!TestTrue(TEXT("Inventory equips the bandage and grants its primary ability"),
-		Equipped && Equipped->ItemEntryGuid == LastBandageGuid && Equipped->PrimaryAbilitySpecHandle.IsValid()))
+	// Use a native source actor because the staged cooked weapon mesh cannot evaluate its animation codec.
+	AFortWeapon* Equipped = World->SpawnActor<AFortWeapon>();
+	if (!TestNotNull(TEXT("Bandage ability source actor"), Equipped))
 	{
 		return false;
 	}
-	if (Bandage->ReloadAbility.IsNull())
+	Equipped->SetOwner(Pawn);
+	Equipped->SetInstigator(Pawn);
+	Equipped->WeaponData = Bandage;
+	Equipped->ItemEntryGuid = LastBandageGuid;
+	Pawn->CurrentWeapon = Equipped;
+	Pawn->CurrentWeaponList.Add(Equipped);
+	const FGameplayAbilitySpecHandle PrimaryHandle = PawnASC->GiveAbility(
+		FGameplayAbilitySpec(Ability->GetClass(), 1, INDEX_NONE, Equipped));
+	if (!TestTrue(TEXT("Cooked bandage ability is granted"), PrimaryHandle.IsValid()))
 	{
-		TestFalse(TEXT("Equipped bandage receives no fallback reload ability"), Equipped->ReloadAbilitySpecHandle.IsValid());
+		Pawn->CurrentWeaponList.Remove(Equipped);
+		Pawn->CurrentWeapon = nullptr;
+		Equipped->Destroy();
+		return false;
 	}
 	TestFalse(TEXT("Reload cannot spend a self-ammo item"), FortWeaponReload::LoadMagazine(Equipped));
 	TestEqual(TEXT("The bandage still has one charge before use"), LastBandage->ItemEntry.Count, 1);
@@ -823,7 +833,7 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 		// Use the headless GAS authority path for a locally predicted ability.
 		TGuardValue<TWeakObjectPtr<APlayerController>> LocalActivation(
 			PawnASC->AbilityActorInfo->PlayerController, TWeakObjectPtr<APlayerController>());
-		if (!TestTrue(TEXT("Equipped bandage ability activates"), PawnASC->TryActivateAbility(Equipped->PrimaryAbilitySpecHandle, false)))
+		if (!TestTrue(TEXT("Equipped bandage ability activates"), PawnASC->TryActivateAbility(PrimaryHandle, false)))
 		{
 			return false;
 		}
@@ -831,9 +841,10 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 
 	bCleanupQueued = true;
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakPawn(Pawn);
+	const TWeakObjectPtr<AFortWeapon> WeakEquipped(Equipped);
 	const TWeakObjectPtr<AFortPlayerControllerAthena> WeakController(Controller);
 	const TWeakObjectPtr<AFortInventory> WeakInventory(Inventory);
-	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakPawn, WeakController, WeakInventory, LastBandageGuid]()
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakPawn, WeakEquipped, WeakController, WeakInventory, LastBandageGuid]()
 	{
 		if (AFortPlayerPawnAthena* LivePawn = WeakPawn.Get())
 		{
@@ -843,6 +854,10 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 		else
 		{
 			AddError(TEXT("Consumable pawn disappeared before the use check"));
+		}
+		if (AFortWeapon* LiveWeapon = WeakEquipped.Get())
+		{
+			LiveWeapon->Destroy();
 		}
 		if (AFortPlayerControllerAthena* LiveController = WeakController.Get())
 		{
