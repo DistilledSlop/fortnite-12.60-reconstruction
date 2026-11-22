@@ -50,6 +50,7 @@ class FORTNITEGAME_API AFortPlayerPawnAthena : public AFortPlayerPawn
 
 public:
     AFortPlayerPawnAthena(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	virtual void UnPossessed() override;
 
 	// table index 97, flags 0x10000010080000
 	UPROPERTY()

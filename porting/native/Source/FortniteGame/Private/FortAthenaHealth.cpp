@@ -1383,6 +1383,14 @@ void FortAthenaHealth::InstallRpcOverrides()
 }
 
 // Global-namespace wrappers for behaviour snippets (.inc bodies).
+void FortAthenaHealth_ReleaseCarryOnUnPossess(AFortPawn* Pawn)
+{
+	if (Pawn->HasAuthority() && FortAthenaHealth::IsEnabled())
+	{
+		ReleaseCarryConnections(Pawn);
+	}
+}
+
 void FortAthenaHealth_ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, const FGameplayTagContainer& DamageTags,
                                  AController* InstigatedBy, AActor* DamageCauser, bool bIgnoreShield)
 {

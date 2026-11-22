@@ -78830,6 +78830,20 @@
     "notes": "Derives the transient carried state from the replicated hoister."
   },
   {
+    "class": "AFortPlayerPawnAthena",
+    "function": "UnPossessed",
+    "kind": "helper",
+    "signature": "void UnPossessed()",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "override": true,
+    "inc_path": "porting/behavior/AFortPlayerPawnAthena/UnPossessed.inc",
+    "status": "ported",
+    "confidence": "medium",
+    "notes": "Releases server-side carry relationships when a pawn loses its controller."
+  },
+  {
     "class": "AFortPlayerStartupController",
     "function": "HandleAllInCountdownInitiated_Implementation",
     "kind": "native_event_impl",

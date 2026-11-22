@@ -215,6 +215,15 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 			TestEqual(TEXT("A completed revive restores 30 health"), Player->GetHealth(), 30.0f);
 			TestTrue(TEXT("A completed revive clears both interaction states"),
 				!Helper->ItemInteractionActor && Player->DBNORevivalStacking == 0);
+			AController* Reviver = CastChecked<AController>(Fixtures[0].Get());
+			Player->bIsDBNO = true;
+			if (TestTrue(TEXT("The helper can pick up the downed player again"), FortAthenaHealth::TryCarryDownedPlayer(Reviver, Player)))
+			{
+				Reviver->UnPossess();
+				TestTrue(TEXT("Unpossessing the carrier releases the downed player immediately"),
+					!Helper->DBNOHoistee && !Player->GetAttachParentActor() &&
+					!Player->bIsBeingDBNOCarried && Player->GetCharacterMovement()->IsFalling());
+			}
 		}
 		for (const TWeakObjectPtr<AActor>& Fixture : Fixtures)
 		{

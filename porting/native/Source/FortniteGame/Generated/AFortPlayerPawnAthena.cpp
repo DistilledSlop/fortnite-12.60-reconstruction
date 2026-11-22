@@ -19,6 +19,13 @@
 #include "UFortPooledSkelMeshComponent.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortPlayerPawnAthena::UnPossessed()
+{
+	extern void FortAthenaHealth_ReleaseCarryOnUnPossess(AFortPawn* Pawn);
+	FortAthenaHealth_ReleaseCarryOnUnPossess(this);
+	Super::UnPossessed();
+}
+
 void AFortPlayerPawnAthena::FastSharedReplication_Implementation(const FSharedRepMovement& SharedRepMovement)
 {
 	// Body not recovered: reflection-derived stub.
