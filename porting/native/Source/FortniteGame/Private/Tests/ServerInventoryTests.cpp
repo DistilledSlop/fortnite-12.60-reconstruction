@@ -860,6 +860,68 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 			}));
 	}
 
+	const UClass* CookedBenchClass = LoadClass<ABuildingItemWeaponUpgradeActor>(nullptr,
+		TEXT("/Game/Athena/Items/Gameplay/Wumba/B_Athena_Wumba.B_Athena_Wumba_C"));
+	const ABuildingItemWeaponUpgradeActor* CookedBench = CookedBenchClass
+		? CookedBenchClass->GetDefaultObject<ABuildingItemWeaponUpgradeActor>() : nullptr;
+	if (!TestNotNull(TEXT("Cooked bench defaults for the interaction fixture"), CookedBench) ||
+		!TestNotNull(TEXT("Cooked bench recipe table"), CookedBench->UpgradeTable))
+	{
+		return false;
+	}
+	const FWeaponUpgradeItemRow* Sidegrade = CookedBench->UpgradeTable->FindRow<FWeaponUpgradeItemRow>(
+		TEXT("1001"), TEXT("Sidegrade interaction test"));
+	if (!TestNotNull(TEXT("Cooked rifle sidegrade"), Sidegrade) ||
+		!TestNotNull(TEXT("Cooked sidegrade source"), Sidegrade->CurrentWeaponDef) ||
+		!TestNotNull(TEXT("Cooked sidegrade result"), Sidegrade->UpgradedWeaponDef))
+	{
+		return false;
+	}
+	Bench->UpgradeTable = CookedBench->UpgradeTable;
+	Bench->HorizontalWoodCostCurve = CookedBench->HorizontalWoodCostCurve;
+	Bench->HorizontalMetalCostCurve = CookedBench->HorizontalMetalCostCurve;
+	Bench->HorizontalBrickCostCurve = CookedBench->HorizontalBrickCostCurve;
+	Bench->WoodItem = CookedBench->WoodItem;
+	Bench->MetalItem = CookedBench->MetalItem;
+	Bench->BrickItem = CookedBench->BrickItem;
+	UFortWorldItem* Rifle = FortAthenaInventory::GiveItem(Controller, Sidegrade->CurrentWeaponDef, 1);
+	UFortWorldItem* SidegradeWood = FortAthenaInventory::GiveItem(Controller, Bench->WoodItem, 25);
+	UFortWorldItem* SidegradeMetal = FortAthenaInventory::GiveItem(Controller, Bench->MetalItem, 26);
+	UFortWorldItem* SidegradeBrick = FortAthenaInventory::GiveItem(Controller, Bench->BrickItem, 27);
+	if (!TestNotNull(TEXT("Cooked rifle inventory entry"), Rifle) ||
+		!TestNotNull(TEXT("Cooked wood"), SidegradeWood) ||
+		!TestNotNull(TEXT("Cooked metal"), SidegradeMetal) ||
+		!TestNotNull(TEXT("Cooked brick"), SidegradeBrick))
+	{
+		return false;
+	}
+	const FGuid RifleGuid = Rifle->NativeGetItemGuid();
+	TestTrue(TEXT("The cooked rifle receives a primary quickbar slot"),
+		Controller->DelayedQuickBarActions.Items.ContainsByPredicate([&](const FDelayedQuickBarAction& Action)
+		{
+			return Action.Action == EFortDelayedQuickBarAction::Add && Action.ItemGuid == RifleGuid &&
+				Action.QuickBarType == EFortQuickBars::Primary;
+		}));
+	HeldWeapon->ItemEntryGuid = RifleGuid;
+	Pawn->CurrentWeapon = HeldWeapon;
+	{
+		// The dedicated fixture lacks the cooked actor's audiovisual dependencies.
+		TGuardValue<TSoftClassPtr<AFortWeapon>> ActorClass(Sidegrade->UpgradedWeaponDef->WeaponActorClass,
+			TSoftClassPtr<AFortWeapon>(AFortWeapon::StaticClass()));
+		Interaction->ServerAttemptInteract(Bench, nullptr, TInteractionType::IT_LongPress, nullptr,
+			EInteractionBeingAttempted::SecondInteraction, 3);
+	}
+	TestNull(TEXT("The second interaction consumes the original rifle"), Inventory->NativeFindItemByGuid(RifleGuid));
+	TestEqual(TEXT("The cooked sidegrade charges 20 wood"), SidegradeWood->ItemEntry.Count, 5);
+	TestEqual(TEXT("The cooked sidegrade charges 20 metal"), SidegradeMetal->ItemEntry.Count, 6);
+	TestEqual(TEXT("The cooked sidegrade charges 20 brick"), SidegradeBrick->ItemEntry.Count, 7);
+	const UFortWorldItem* HeavyRifle = Inventory->NativeFindWorldItemByDefinition(Sidegrade->UpgradedWeaponDef, true);
+	if (TestNotNull(TEXT("The second interaction grants the cooked heavy rifle"), HeavyRifle))
+	{
+		TestTrue(TEXT("The sidegrade equips the resulting inventory GUID"),
+			Pawn->CurrentWeapon && Pawn->CurrentWeapon->GetInventoryGUID() == HeavyRifle->ItemEntry.ItemGuid);
+	}
+
 	return true;
 }
 

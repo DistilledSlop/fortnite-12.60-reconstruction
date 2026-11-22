@@ -114,8 +114,16 @@ bool FortWeaponUpgrade::TryUpgradeEquippedWeapon(ABuildingItemWeaponUpgradeActor
 	const UFortWeaponItemDefinition* Definition = Source ? Cast<UFortWeaponItemDefinition>(Source->ItemEntry.ItemDefinition) : nullptr;
 	const FWeaponUpgradeItemRow* Recipe = FWeaponUpgradeItemRow::FindRecipe(Bench.UpgradeTable, Definition, Direction);
 	FIntVector Costs;
-	if (!Recipe || Source->ItemEntry.Count != 1 || Recipe->UpgradedWeaponDef->IsStackable() ||
+	if (!Recipe || Source->ItemEntry.Count != 1 || Recipe->UpgradedWeaponDef->NativeGetMaxStackSize(nullptr) > 1 ||
 		!Recipe->TryResolveMaterialCosts(Bench, Costs))
+	{
+		return false;
+	}
+
+	// Some cooked ranged definitions omit the stack cap. GiveItem clamps their capacity
+	// to one, but still follows the single-stack rule when IsStackable reports true.
+	if (Recipe->UpgradedWeaponDef->IsStackable() && !Recipe->UpgradedWeaponDef->bAllowMultipleStacks &&
+		Inventory->NativeFindWorldItemByDefinition(Recipe->UpgradedWeaponDef, true))
 	{
 		return false;
 	}

@@ -451,7 +451,7 @@ Verified: Reject item-use charges against an unrelated inventory stack
 Verified: Activate the cooked bandage primary ability with a native weapon source, restore 15 health and remove its last stack unit through authoritative GAS without a cached controller at activation
 Implemented: Resolve cooked upgrade recipes by weapon and direction and evaluate their material selectors against the bench curves. Headless checks cover a pistol upgrade, a rifle sidegrade and invalid selectors
 Implemented: Expose cooked recipe lookup to the upgrade bench actor and its Blueprints
-Implemented: Process bench interactions on the server, preflight and charge all three materials across stacks, and replace the equipped weapon in its quickbar slot. Headless RPC coverage uses a fixture bench</title>
+Implemented: Process bench interactions on the server, preflight and charge all three materials across stacks, and replace the equipped weapon in its quickbar slot. Headless RPC checks cover insufficient funds, a fixture upgrade and a cooked rifle sidegrade using a native weapon actor</title>
 <rect class="tile-body" x="566.8" y="25.0" width="328.2" height="318.4" rx="4"/>
 <clipPath id="servertm-c19"><rect x="566.80" y="25.00" width="328.16" height="318.41" rx="4"/></clipPath>
 <g clip-path="url(#servertm-c19)"><rect class="tile-fill" x="566.80" y="34.65" width="328.16" height="308.76"/>

@@ -25,6 +25,7 @@
 #include "Misc/ScopeExit.h"
 #include "TimerManager.h"
 #include "UFortItemDefinition.h"
+#include "UFortWeaponRangedItemDefinition.h"
 #include "UFortWorldItem.h"
 #include "UFortWorldItemDefinition.h"
 #include "UObject/ScriptMacros.h"
@@ -99,6 +100,18 @@ namespace
 		return Entry.ItemDefinition;
 	}
 
+	EFortItemType GetQuickBarItemType(const UFortItemDefinition* Definition)
+	{
+		const EFortItemType Type = Definition->NativeGetItemType();
+		// Cooked ranged assets may inherit an untyped or base weapon value when ItemType is omitted.
+		if ((Type == EFortItemType::WorldItem || Type == EFortItemType::Max_None || Type == EFortItemType::WeaponMelee) &&
+			Definition->IsA<UFortWeaponRangedItemDefinition>())
+		{
+			return EFortItemType::WeaponRanged;
+		}
+		return Type;
+	}
+
 	bool IsQuickBarEligibleType(EFortItemType ItemType, const UFortWorldItemDefinition* WorldDef)
 	{
 		switch (ItemType)
@@ -143,7 +156,7 @@ namespace
 		}
 
 		const UFortWorldItemDefinition* WorldDef = Cast<UFortWorldItemDefinition>(Def);
-		const EFortItemType ItemType = Def->NativeGetItemType();
+		const EFortItemType ItemType = GetQuickBarItemType(Def);
 		if (!IsQuickBarEligibleType(ItemType, WorldDef))
 		{
 			return false;
@@ -595,7 +608,7 @@ namespace
 			const int32 StackHeadroom = LoadedAmmo > 0 ? 0 : ComputeExistingStackHeadroom(PC, Def, Level, SrcEntry.Durability);
 			const UFortWorldItemDefinition* WorldDef = Cast<UFortWorldItemDefinition>(Def);
 			const int32 Span = WorldDef ? FMath::Max(1, static_cast<int32>(WorldDef->NumberOfSlotsToTake)) : 1;
-			const int32 FreeSlot = Slots ? FindFreeSlotRange(*Slots, MinSlot, MaxSlot, Span, BarDefinition, Def->NativeGetItemType()) : INDEX_NONE;
+			const int32 FreeSlot = Slots ? FindFreeSlotRange(*Slots, MinSlot, MaxSlot, Span, BarDefinition, GetQuickBarItemType(Def)) : INDEX_NONE;
 
 			if (FreeSlot == INDEX_NONE)
 			{
@@ -627,7 +640,7 @@ namespace
 
 					TArray<FGuid> SlotsAfterSwap = State.PrimarySlots;
 					ClearGuidFromSlots(SlotsAfterSwap, SwapGuid);
-					if (FindFreeSlotRange(SlotsAfterSwap, MinSlot, MaxSlot, Span, BarDefinition, Def->NativeGetItemType()) == INDEX_NONE)
+					if (FindFreeSlotRange(SlotsAfterSwap, MinSlot, MaxSlot, Span, BarDefinition, GetQuickBarItemType(Def)) == INDEX_NONE)
 					{
 						return 0;
 					}
@@ -1127,12 +1140,12 @@ bool FortAthenaLootTransfer::OnItemGranted(AFortPlayerController* Controller, UF
 	int32 ChosenSlot = INDEX_NONE;
 	if (PreferredBar == TargetBar && PreferredSlot >= MinSlot && PreferredSlot <= MaxSlot - Span + 1)
 	{
-		ChosenSlot = FindFreeSlotRange(*Slots, PreferredSlot, PreferredSlot + Span - 1, Span, BarDefinition, Def->NativeGetItemType());
+		ChosenSlot = FindFreeSlotRange(*Slots, PreferredSlot, PreferredSlot + Span - 1, Span, BarDefinition, GetQuickBarItemType(Def));
 	}
 
 	if (ChosenSlot == INDEX_NONE)
 	{
-		ChosenSlot = FindFreeSlotRange(*Slots, MinSlot, MaxSlot, Span, BarDefinition, Def->NativeGetItemType());
+		ChosenSlot = FindFreeSlotRange(*Slots, MinSlot, MaxSlot, Span, BarDefinition, GetQuickBarItemType(Def));
 	}
 	if (ChosenSlot == INDEX_NONE)
 	{
@@ -1175,7 +1188,7 @@ int32 FortAthenaLootTransfer::FindReplacementPrimarySlot(AFortPlayerController* 
 	}
 	TArray<FGuid> Slots = State->PrimarySlots;
 	ClearGuidFromSlots(Slots, ItemGuid);
-	return FindFreeSlotRange(Slots, Existing.Slot, Existing.Slot + Span - 1, Span, BarDefinition, Replacement->NativeGetItemType());
+	return FindFreeSlotRange(Slots, Existing.Slot, Existing.Slot + Span - 1, Span, BarDefinition, GetQuickBarItemType(Replacement));
 }
 
 void FortAthenaLootTransfer::OnItemRemoved(AFortPlayerController* Controller, const FGuid& ItemGuid)
