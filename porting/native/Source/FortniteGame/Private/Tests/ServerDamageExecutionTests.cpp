@@ -589,9 +589,20 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TestTrue(TEXT("A standing teammate can carry the knocked player"),
 		FortAthenaHealth::TryCarryDownedPlayer(Second, FirstPawn));
 
+	const TSharedRef<TOptional<float>> HealthAfterFirstBleed = MakeShared<TOptional<float>>();
+	const FGameplayAttribute HealthAttribute(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Health")));
+	FirstPawn->AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(HealthAttribute).AddLambda(
+		[HealthAfterFirstBleed](const FOnAttributeChangeData& Change)
+		{
+			if (!HealthAfterFirstBleed->IsSet() && Change.NewValue < Change.OldValue)
+			{
+				*HealthAfterFirstBleed = Change.NewValue;
+			}
+		});
+
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakFirstPawn(FirstPawn);
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakSecondPawn(SecondPawn);
-	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakSecondPawn]()
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakSecondPawn, HealthAfterFirstBleed]()
 	{
 		AFortPlayerPawnAthena* DownedPawn = WeakFirstPawn.Get();
 		AFortPlayerPawnAthena* StandingPawn = WeakSecondPawn.Get();
@@ -599,7 +610,8 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 			TestNotNull(TEXT("Standing team fixture survives until the lethal hit"), StandingPawn))
 		{
 			TestTrue(TEXT("Bleed ticks drain downed health while a teammate stands"),
-				DownedPawn->bIsDBNO && !DownedPawn->bIsDying && DownedPawn->GetHealth() < 100.0f);
+				DownedPawn->bIsDBNO && !DownedPawn->bIsDying);
+			TestEqual(TEXT("The first bleed tick removes two downed health"), HealthAfterFirstBleed->Get(0.0f), 98.0f);
 			TestTrue(TEXT("Bleed continues while the downed player is carried"),
 				DownedPawn->GetAttachParentActor() == StandingPawn && DownedPawn->bIsBeingDBNOCarried);
 			FortAthenaHealth::ApplyDamage(StandingPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);

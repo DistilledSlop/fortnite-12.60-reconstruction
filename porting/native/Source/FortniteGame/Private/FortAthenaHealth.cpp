@@ -429,7 +429,8 @@ namespace
 					ReleaseCarryConnections(Downed);
 				}
 				const float Damage = HasStandingTeammate(Downed) ? 2.0f : Downed->GetHealth();
-				FortAthenaHealth::ApplyDamage(Downed, Damage, DamageTags, WeakInstigator.Get(), WeakCauser.Get(), true);
+				// Preserve kill credit without presenting the bleed tick as another hit from the original weapon.
+				FortAthenaHealth::ApplyDamage(Downed, Damage, DamageTags, WeakInstigator.Get(), WeakCauser.Get(), true, false);
 			}), 1.2f, true);
 		return true;
 	}
@@ -1015,7 +1016,7 @@ void FortAthenaHealth::RegisterAlivePlayer(AFortGameModeAthena* GameMode, AFortP
 }
 
 void FortAthenaHealth::ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, const FGameplayTagContainer& DamageTags,
-                                  AController* InstigatedBy, AActor* DamageCauser, bool bIgnoreShield)
+                                  AController* InstigatedBy, AActor* DamageCauser, bool bIgnoreShield, bool bEmitHitCue)
 {
 	if (!IsEnabled() || !VictimPawn || !VictimPawn->HasAuthority() || VictimPawn->bIsDying ||
 		!FMath::IsFinite(DamageAmount) || DamageAmount <= 0.0f)
@@ -1110,7 +1111,7 @@ void FortAthenaHealth::ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, co
 	// sends the batched cue (hit number / damage reaction) like other damage. Storm damage stays silent.
 	const FGameplayTag FallDamageTag = FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x358);
 	const bool bFallDamage = FallDamageTag.IsValid() && DamageTags.HasTag(FallDamageTag);
-	if (InstigatedBy || DamageCauser || bFallDamage)
+	if (bEmitHitCue && (InstigatedBy || DamageCauser || bFallDamage))
 	{
 		VictimPawn->NetMulticast_Athena_BatchedDamageCues(SharedCues, NonSharedCues);
 	}

@@ -30,7 +30,8 @@ namespace FortAthenaHealth
 	// Sends NetMulticast_Athena_BatchedDamageCues so the client displays hit markers and damage numbers.
 	// Calls HandlePlayerEliminated if health drops to 0.
 	void ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, const FGameplayTagContainer& DamageTags,
-	                 AController* InstigatedBy = nullptr, AActor* DamageCauser = nullptr, bool bIgnoreShield = false);
+	                 AController* InstigatedBy = nullptr, AActor* DamageCauser = nullptr,
+	                 bool bIgnoreShield = false, bool bEmitHitCue = true);
 
 	bool TryStartRevive(AController* Reviver, AFortPawn* Target);
 	bool TryCarryDownedPlayer(AController* Carrier, AFortPawn* Target);
