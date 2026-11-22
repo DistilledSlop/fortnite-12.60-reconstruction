@@ -186,6 +186,8 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 			EInteractionBeingAttempted::FirstInteraction, 3);
 		TestTrue(TEXT("The interaction RPC starts a timed revive for a standing teammate"),
 			Carrier->ItemInteractionActor == Downed && Downed->DBNORevivalStacking == 1);
+		TestTrue(TEXT("Starting a revive publishes its server time deadline"),
+			FMath::IsNearlyEqual(Downed->ServerWorldTimeRevivalTime, World->GetTimeSeconds() + Downed->ReviveFromDBNOTime));
 		Carrier->ServerSetInteractingItem(Downed, true);
 		TestNull(TEXT("Clearing interaction releases the reviver's target"), Carrier->ItemInteractionActor);
 		ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, Fixtures]()
@@ -196,6 +198,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 			{
 				TestTrue(TEXT("Cancellation leaves the player downed and clears revive progress"),
 					Player->bIsDBNO && Player->DBNORevivalStacking == 0);
+				TestEqual(TEXT("Cancellation clears the revive deadline"), Player->ServerWorldTimeRevivalTime, -1.0f);
 				TestEqual(TEXT("Cancellation leaves health unchanged"), Player->GetHealth(), 60.0f);
 				TestTrue(TEXT("A cancelled revive can be restarted"), FortAthenaHealth::TryStartRevive(Reviver, Player));
 				Player->SetActorLocation(FVector(600, 0, 12000));
@@ -241,6 +244,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 		if (Helper && Player && Fixtures[0].IsValid() && Fixtures[1].IsValid() && Fixtures[4].IsValid() && Fixtures[5].IsValid())
 		{
 			TestFalse(TEXT("A completed revive clears the downed state"), Player->bIsDBNO);
+			TestEqual(TEXT("A completed revive clears the revive deadline"), Player->ServerWorldTimeRevivalTime, -1.0f);
 			TestEqual(TEXT("A completed revive respects the standing health cap"), Player->GetHealth(), 20.0f);
 			TestTrue(TEXT("A completed revive clears both interaction states"),
 				!Helper->ItemInteractionActor && Player->DBNORevivalStacking == 0);

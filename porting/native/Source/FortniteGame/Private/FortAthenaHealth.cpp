@@ -470,6 +470,7 @@ namespace
 		const float KnockTime = World->GetTimeSeconds();
 		Player->DBNOStartTime = KnockTime;
 		Player->DBNORevivalStacking = 0;
+		Player->ServerWorldTimeRevivalTime = -1.0f;
 		Player->SetHealth(100.0f);
 		Player->OnPlayerStartDBNO.Broadcast();
 		Player->OnDBNOStateChanged.Broadcast(Player, true);
@@ -559,6 +560,7 @@ bool FortAthenaHealth::TryStartRevive(AController* Reviver, AFortPawn* Target)
 	HelperPawn->ItemInteractionActor = Downed;
 	HelperPawn->ForceNetUpdate();
 	Downed->DBNORevivalStacking = 1;
+	Downed->ServerWorldTimeRevivalTime = EndTime;
 	Downed->ForceNetUpdate();
 
 	const TSharedRef<FTimerHandle> Timer = MakeShared<FTimerHandle>();
@@ -598,6 +600,7 @@ bool FortAthenaHealth::TryStartRevive(AController* Reviver, AFortPawn* Target)
 			if (bSameKnock)
 			{
 				Player->DBNORevivalStacking = 0;
+				Player->ServerWorldTimeRevivalTime = -1.0f;
 				if (bCanContinue)
 				{
 					Player->SetHealth(FMath::Min(30.0f, Player->GetMaxHealth()));
