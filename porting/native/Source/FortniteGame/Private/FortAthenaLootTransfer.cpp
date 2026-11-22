@@ -571,6 +571,7 @@ namespace
 		const bool bNeedsQuickBar = ResolveQuickBarRange(PC, Def, TargetBar, MinSlot, MaxSlot, MaxSlotsInBar);
 
 		const int32 Level = SrcEntry.Level > 0 ? SrcEntry.Level : 1;
+		const int32 LoadedAmmo = FortAthenaInventory::NormalizeLoadedAmmo(Def, SrcEntry.LoadedAmmo);
 		int32 MaxGrantable = SrcEntry.Count;
 
 		if (bNeedsQuickBar)
@@ -581,7 +582,7 @@ namespace
 				Slots->SetNum(MaxSlotsInBar);
 			}
 
-			const int32 StackHeadroom = SrcEntry.LoadedAmmo > 0 ? 0 : ComputeExistingStackHeadroom(PC, Def);
+			const int32 StackHeadroom = LoadedAmmo > 0 ? 0 : ComputeExistingStackHeadroom(PC, Def);
 			const UFortWorldItemDefinition* WorldDef = Cast<UFortWorldItemDefinition>(Def);
 			const int32 Span = WorldDef ? FMath::Max(1, static_cast<int32>(WorldDef->NumberOfSlotsToTake)) : 1;
 			const int32 FreeSlot = Slots ? FindFreeSlotRange(*Slots, MinSlot, MaxSlot, Span) : INDEX_NONE;
@@ -674,7 +675,7 @@ namespace
 
 					int32 AcceptedCount = 0;
 					UFortWorldItem* GrantedItem = FortAthenaInventory::GiveItem(
-						PC, Def, SrcEntry.Count, Level, SrcEntry.LoadedAmmo, &AcceptedCount);
+						PC, Def, SrcEntry.Count, Level, LoadedAmmo, &AcceptedCount);
 					if (!GrantedItem || AcceptedCount <= 0)
 					{
 						UE_LOG(LogTemp, Warning, TEXT("LootTransfer: Swap GiveItem returned 0 after drop pc=%s def=%s"),
@@ -725,7 +726,7 @@ namespace
 
 		int32 AcceptedCount = 0;
 		UFortWorldItem* GrantedItem = FortAthenaInventory::GiveItem(
-			PC, Def, MaxGrantable, Level, SrcEntry.LoadedAmmo, &AcceptedCount);
+			PC, Def, MaxGrantable, Level, LoadedAmmo, &AcceptedCount);
 
 		if (AcceptedCount <= 0)
 		{

@@ -616,11 +616,15 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 		return false;
 	}
 	Controller->WorldInventory = Inventory;
-	UFortWorldItem* Item = FortAthenaInventory::GiveItem(Controller, Bandage, 2);
+	UFortWorldItem* Item = FortAthenaInventory::GiveItem(Controller, Bandage, 1, 1, 5);
 	if (!TestNotNull(TEXT("Bandage stack"), Item))
 	{
 		return false;
 	}
+	TestEqual(TEXT("Bandage grants clear legacy magazine values"), Item->ItemEntry.LoadedAmmo, 0);
+	TestTrue(TEXT("A legacy bandage grant can top up the same stack"),
+		FortAthenaInventory::GiveItem(Controller, Bandage, 1, 1, 5) == Item);
+	TestEqual(TEXT("Both bandage units are in the same stack"), Item->ItemEntry.Count, 2);
 	const FGuid Guid = Item->NativeGetItemGuid();
 	Weapon->WeaponData = Bandage;
 	Weapon->ItemEntryGuid = Guid;

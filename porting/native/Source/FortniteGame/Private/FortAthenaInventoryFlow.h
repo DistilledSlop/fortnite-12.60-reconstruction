@@ -27,6 +27,9 @@ namespace FortAthenaInventory
 	// server_systems/C-world-classes-and-abilities.md when the native game mode has none), then equips the pickaxe.
 	void SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller);
 
+	// Self-ammo definitions use stack count, including entries with an old magazine value.
+	int32 NormalizeLoadedAmmo(const UFortItemDefinition* Definition, int32 LoadedAmmo);
+
 	// Adds Count of Definition to the controller's WorldInventory (stacks onto an existing entry when the
 	// definition is stackable, otherwise creates a new entry with a new FGuid). Returns the world item, or nullptr.
 	// A returned existing item may have accepted only part of Count; OutAcceptedCount reports the actual grant.

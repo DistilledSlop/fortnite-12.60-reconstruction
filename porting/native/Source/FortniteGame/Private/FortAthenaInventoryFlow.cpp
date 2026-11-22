@@ -319,7 +319,7 @@ namespace
 		// stand-in for the retail weapon initialisation from its item entry: the magazine count replicates from the server weapon, and
 		// nothing else set it, so every spawned gun reached the client with an empty magazine. The item entry's LoadedAmmo (set when the
 		// pickup was rolled or dropped) is the starting count; later shots/reloads are tracked by the client (see FortHarvestFlow.cpp).
-		Weapon->AmmoCount = Item->ItemEntry.LoadedAmmo;
+		Weapon->AmmoCount = FortAthenaInventory::NormalizeLoadedAmmo(Definition, Item->ItemEntry.LoadedAmmo);
 		Weapon->FinishSpawning(SpawnTransform);
 		if (!IsValid(Weapon)) return nullptr;
 		Pawn->CurrentWeaponList.Insert(Weapon, 0);
@@ -444,6 +444,19 @@ namespace
 	};
 }
 
+int32 FortAthenaInventory::NormalizeLoadedAmmo(const UFortItemDefinition* Definition, int32 LoadedAmmo)
+{
+	if (LoadedAmmo > 0)
+	{
+		const UFortWeaponItemDefinition* WeaponDefinition = Cast<UFortWeaponItemDefinition>(Definition);
+		if (WeaponDefinition && WeaponDefinition->GetAmmoWorldItemDefinitionNative() == WeaponDefinition)
+		{
+			return 0;
+		}
+	}
+	return LoadedAmmo;
+}
+
 UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller, UFortItemDefinition* Definition, int32 Count, int32 Level, int32 LoadedAmmo, int32* OutAcceptedCount)
 {
 	if (OutAcceptedCount)
@@ -461,6 +474,7 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 		return nullptr;
 	}
 
+	LoadedAmmo = NormalizeLoadedAmmo(Definition, LoadedAmmo);
 	ScanInventory(Inventory, nullptr, TEXT("before"));
 	const int32 MaxStack = FMath::Max(1, Definition->NativeGetMaxStackSize(nullptr));
 	// Fill matching stacks before creating a new one.
@@ -563,7 +577,7 @@ int32 FortAthenaInventory::CombineStacks(AFortPlayerController* Controller, cons
 	UFortWorldItem* Target = FindItemByGuid(Inventory, TargetGuid);
 	UFortWorldItem* Source = FindItemByGuid(Inventory, SourceGuid);
 	if (!Target || !Source || Target->ItemEntry.ItemDefinition != Source->ItemEntry.ItemDefinition || !Target->ItemEntry.ItemDefinition
-		|| !Target->ItemEntry.ItemDefinition->IsStackable() || Source->ItemEntry.LoadedAmmo > 0)
+		|| !Target->ItemEntry.ItemDefinition->IsStackable() || NormalizeLoadedAmmo(Source->ItemEntry.ItemDefinition, Source->ItemEntry.LoadedAmmo) > 0)
 	{
 		UE_LOG(LogTemp, Display, TEXT("Inventory: combine %s <- %s rejected (incompatible stacks or loaded source)"), *TargetGuid.ToString(), *SourceGuid.ToString());
 		return 0;
@@ -694,6 +708,7 @@ void FortAthenaInventory::SetLoadedAmmo(AFortPlayerController* Controller, const
 	}
 	if (UFortWorldItem* Item = FindItemByGuid(Inventory, WeaponItemGuid))
 	{
+		LoadedAmmo = NormalizeLoadedAmmo(Item->ItemEntry.ItemDefinition, LoadedAmmo);
 		Item->ItemEntry.LoadedAmmo = LoadedAmmo;
 		if (FFortItemEntry* Replicated = FindReplicatedEntry(Inventory, WeaponItemGuid))
 		{
