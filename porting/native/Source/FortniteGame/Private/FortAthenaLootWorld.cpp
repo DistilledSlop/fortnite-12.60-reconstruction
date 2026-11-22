@@ -373,15 +373,19 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 	if (S.PendingSpawnRetries.Num() > 0)
 	{
 		TArray<ABuildingContainer*> RetryCandidates;
-		for (const TWeakObjectPtr<ABuildingContainer>& WeakContainer : S.PendingSpawnRetries)
+		for (auto It = S.PendingSpawnRetries.CreateIterator(); It; ++It)
 		{
-			if (ABuildingContainer* Container = WeakContainer.Get())
+			ABuildingContainer* Container = It->Get();
+			if (Container && !Container->GetLevel()->bIsVisible)
+				continue;
+
+			if (Container)
 			{
-				S.ProcessedContainers.Remove(WeakContainer);
+				S.ProcessedContainers.Remove(*It);
 				RetryCandidates.Add(Container);
 			}
+			It.RemoveCurrent();
 		}
-		S.PendingSpawnRetries.Reset();
 		PopulateCandidates(GameMode, RetryCandidates, TEXT("spawn retry"), false);
 	}
 
