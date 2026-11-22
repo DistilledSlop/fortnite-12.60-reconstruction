@@ -629,6 +629,22 @@ int32 FortAthenaInventory::RemoveItem(AFortPlayerController* Controller, const F
 	}
 	else
 	{
+		FortAthenaLootTransfer::OnItemRemoved(Controller, ItemGuid);
+		Inventory->Inventory.NativeEntriesByGuid.Remove(ItemGuid);
+		for (int32 Index = 0; Index < Inventory->Inventory.ReplicatedEntries.Num(); ++Index)
+		{
+			if (Inventory->Inventory.ReplicatedEntries[Index].ItemGuid == ItemGuid)
+			{
+				Inventory->Inventory.ReplicatedEntries.RemoveAt(Index);
+				break;
+			}
+		}
+		Inventory->Inventory.ItemInstances.Remove(Item);
+		Item->NativeDetachFromInventory();
+		RebuildGuidIndex(Inventory);
+		Inventory->Inventory.MarkArrayDirty();
+
+		// Ability cancellation can call back into inventory. Publish the removal before clearing its grants.
 		if (AFortPawn* Pawn = GetControllerPawn(Controller))
 		{
 			const TArray<AFortWeapon*> Weapons = Pawn->CurrentWeaponList;
@@ -656,20 +672,6 @@ int32 FortAthenaInventory::RemoveItem(AFortPlayerController* Controller, const F
 				}
 			}
 		}
-		FortAthenaLootTransfer::OnItemRemoved(Controller, ItemGuid);
-		Inventory->Inventory.NativeEntriesByGuid.Remove(ItemGuid);
-		for (int32 Index = 0; Index < Inventory->Inventory.ReplicatedEntries.Num(); ++Index)
-		{
-			if (Inventory->Inventory.ReplicatedEntries[Index].ItemGuid == ItemGuid)
-			{
-				Inventory->Inventory.ReplicatedEntries.RemoveAt(Index);
-				break;
-			}
-		}
-		Inventory->Inventory.ItemInstances.Remove(Item);
-		Item->NativeDetachFromInventory();
-		RebuildGuidIndex(Inventory);
-		Inventory->Inventory.MarkArrayDirty();
 	}
 	Inventory->NativeNotifyInventoryChanged();
 	UE_LOG(LogTemp, Display, TEXT("Inventory: removed %d of %s"), Removed, *ItemGuid.ToString());
