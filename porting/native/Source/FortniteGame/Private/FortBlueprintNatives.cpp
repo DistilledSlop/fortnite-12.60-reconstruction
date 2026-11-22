@@ -371,6 +371,23 @@ namespace
 		P_NATIVE_END;
 	}
 
+	DEFINE_FUNCTION(ExecK2_RemoveItemFromPlayerByGuid)
+	{
+		P_GET_OBJECT(AFortPlayerController, PlayerController);
+		P_GET_STRUCT(FGuid, ItemGuid);
+		P_GET_PROPERTY(FIntProperty, AmountToRemove);
+		P_GET_UBOOL(bForceRemoval);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		int32 Removed = 0;
+		if (PlayerController && ItemGuid.IsValid() && AmountToRemove != 0)
+		{
+			Removed = FortAthenaInventory::RemoveItem(PlayerController, ItemGuid, AmountToRemove);
+		}
+		*static_cast<int32*>(RESULT_PARAM) = Removed;
+		P_NATIVE_END;
+	}
+
 	DEFINE_FUNCTION(ExecK2_GetItemQuantityOnPlayer)
 	{
 		P_GET_OBJECT(AFortPlayerController, PlayerController);
@@ -2256,6 +2273,7 @@ namespace
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("GiveItemToInventoryOwner"), &ExecGiveItemToInventoryOwner },
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("K2_RemoveItemFromPlayer"), &ExecK2_RemoveItemFromPlayer },
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("K2_RemoveFortItemFromPlayer"), &ExecK2_RemoveFortItemFromPlayer },
+		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("K2_RemoveItemFromPlayerByGuid"), &ExecK2_RemoveItemFromPlayerByGuid },
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("K2_GetItemQuantityOnPlayer"), &ExecK2_GetItemQuantityOnPlayer },
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("K2_SpawnPickupInWorld"), &ExecK2_SpawnPickupInWorld },
 		{ TEXT("/Script/FortniteGame.FortKismetLibrary"), TEXT("K2_SpawnPickupInWorldWithClass"), &ExecK2_SpawnPickupInWorldWithClass },
