@@ -370,6 +370,8 @@ namespace
 		const AFortGameStateAthena* State = World ? World->GetGameState<AFortGameStateAthena>() : nullptr;
 		const UFortPlaylistAthena* Playlist = State ? State->GetCurrentPlaylistAthena() : nullptr;
 		if (!Mode || RosterMode.Get() != Mode || !Playlist || Playlist->MaxTeamSize <= 1 ||
+			Playlist->DBNOType == EDBNOType::Off ||
+			(Playlist->DBNOType == EDBNOType::NotWhenRespawning && Playlist->RespawnType != EAthenaRespawnType::None) ||
 			Player->bIsDBNO || Player->bIsDying || !Player->HasAuthority())
 		{
 			return false;

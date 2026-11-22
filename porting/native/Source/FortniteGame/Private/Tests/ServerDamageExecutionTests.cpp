@@ -516,36 +516,44 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 
 	AFortPlayerControllerAthena* First = World->SpawnActor<AFortPlayerControllerAthena>();
 	AFortPlayerControllerAthena* Second = World->SpawnActor<AFortPlayerControllerAthena>();
+	AFortPlayerControllerAthena* Third = World->SpawnActor<AFortPlayerControllerAthena>();
 	AFortPlayerPawnAthena* FirstPawn = World->SpawnActor<AFortPlayerPawnAthena>(
 		FVector(0, 0, 14000), FRotator::ZeroRotator, SpawnParameters);
 	AFortPlayerPawnAthena* SecondPawn = World->SpawnActor<AFortPlayerPawnAthena>(
 		FVector(200, 0, 14000), FRotator::ZeroRotator, SpawnParameters);
+	AFortPlayerPawnAthena* ThirdPawn = World->SpawnActor<AFortPlayerPawnAthena>(
+		FVector(400, 0, 14000), FRotator::ZeroRotator, SpawnParameters);
 	if (!TestNotNull(TEXT("First team fixture controller"), First) ||
 		!TestNotNull(TEXT("Second team fixture controller"), Second) ||
 		!TestNotNull(TEXT("First team fixture pawn"), FirstPawn) ||
-		!TestNotNull(TEXT("Second team fixture pawn"), SecondPawn))
+		!TestNotNull(TEXT("Second team fixture pawn"), SecondPawn) ||
+		!TestNotNull(TEXT("Third team fixture controller"), Third) ||
+		!TestNotNull(TEXT("Third team fixture pawn"), ThirdPawn))
 	{
 		return false;
 	}
 
 	AFortPlayerStateAthena* FirstState = Cast<AFortPlayerStateAthena>(First->PlayerState);
 	AFortPlayerStateAthena* SecondState = Cast<AFortPlayerStateAthena>(Second->PlayerState);
+	AFortPlayerStateAthena* ThirdState = Cast<AFortPlayerStateAthena>(Third->PlayerState);
 	if (!TestNotNull(TEXT("First team fixture player state"), FirstState) ||
-		!TestNotNull(TEXT("Second team fixture player state"), SecondState))
+		!TestNotNull(TEXT("Second team fixture player state"), SecondState) ||
+		!TestNotNull(TEXT("Third team fixture player state"), ThirdState))
 	{
 		return false;
 	}
 
 	const TWeakObjectPtr<UFortPlaylistAthena> PreviousPlaylist(State->CurrentPlaylistInfo.OverridePlaylist);
 	UFortPlaylistAthena* TeamPlaylist = NewObject<UFortPlaylistAthena>(State);
-	TeamPlaylist->MaxTeamSize = 2;
+	TeamPlaylist->MaxTeamSize = 3;
 	State->CurrentPlaylistInfo.OverridePlaylist = TeamPlaylist;
-	FirstState->TeamIndex = SecondState->TeamIndex = 30;
+	FirstState->TeamIndex = SecondState->TeamIndex = ThirdState->TeamIndex = 30;
 	First->Possess(FirstPawn);
 	Second->Possess(SecondPawn);
+	Third->Possess(ThirdPawn);
 	FirstPawn->GetCharacterMovement()->SetComponentTickEnabled(false);
 	SecondPawn->GetCharacterMovement()->SetComponentTickEnabled(false);
-	for (AFortPlayerPawnAthena* TeamPawn : {FirstPawn, SecondPawn})
+	for (AFortPlayerPawnAthena* TeamPawn : {FirstPawn, SecondPawn, ThirdPawn})
 	{
 		UFortAbilitySystemComponent* TeamASC = NewObject<UFortAbilitySystemComponent>(TeamPawn);
 		TeamPawn->AbilitySystemComponent = TeamASC;
@@ -559,6 +567,13 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	}
 	FortAthenaHealth::RegisterAlivePlayer(Mode, First);
 	FortAthenaHealth::RegisterAlivePlayer(Mode, Second);
+	FortAthenaHealth::RegisterAlivePlayer(Mode, Third);
+
+	TeamPlaylist->DBNOType = EDBNOType::Off;
+	FortAthenaHealth::ApplyDamage(ThirdPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
+	TestTrue(TEXT("A team playlist with DBNO disabled eliminates a player with standing teammates"),
+		ThirdPawn->bIsDying && !ThirdPawn->bIsDBNO);
+	TeamPlaylist->DBNOType = EDBNOType::On;
 
 	FortAthenaHealth::ApplyDamage(FirstPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
 	TestTrue(TEXT("Lethal damage knocks a player with a standing teammate"), FirstPawn->bIsDBNO && !FirstPawn->bIsDying);
@@ -592,7 +607,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	}), 1.5f));
 
 	const TWeakObjectPtr<AFortGameStateAthena> WeakState(State);
-	const TArray<TWeakObjectPtr<AActor>> TeamFixtures = {First, Second, FirstPawn, SecondPawn};
+	const TArray<TWeakObjectPtr<AActor>> TeamFixtures = {First, Second, Third, FirstPawn, SecondPawn, ThirdPawn};
 	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakState, PreviousPlaylist, TeamFixtures]()
 	{
 		AFortPlayerPawnAthena* DownedPawn = WeakFirstPawn.Get();
