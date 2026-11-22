@@ -409,7 +409,8 @@ namespace
 	}
 
 	AFortPickup* SpawnPickupCommon(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 NumberToSpawn,
-		const FVector& Position, const FVector& Direction, bool bToss, EFortPickupSourceTypeFlag SourceType,
+		const FVector& Position, const FVector& Direction, bool bToss, bool bRandomRotation,
+		EFortPickupSourceTypeFlag SourceType,
 		EFortPickupSpawnSource Source, AFortPlayerController* Owner, bool bOnlyRelevantToOwner,
 		TSubclassOf<AFortPickup> PickupClass = nullptr)
 	{
@@ -425,6 +426,7 @@ namespace
 			bToss ? &Position : nullptr, Owner, bOnlyRelevantToOwner, PickupClass);
 		if (Pickup)
 		{
+			Pickup->bRandomRotation = bRandomRotation;
 			Pickup->PickupSourceTypeFlags = SourceType;
 			Pickup->PickupSpawnSource = Source;
 		}
@@ -450,7 +452,7 @@ namespace
 		P_FINISH;
 		P_NATIVE_BEGIN;
 		*static_cast<AFortPickup**>(RESULT_PARAM) = SpawnPickupCommon(WorldContextObject, ItemDefinition, NumberToSpawn,
-			Position, Direction, bToss, SourceType, Source, OptionalOwnerPC, bPickupOnlyRelevantToOwner);
+			Position, Direction, bToss, bRandomRotation, SourceType, Source, OptionalOwnerPC, bPickupOnlyRelevantToOwner);
 		P_NATIVE_END;
 	}
 
@@ -474,7 +476,7 @@ namespace
 		P_FINISH;
 		P_NATIVE_BEGIN;
 		*static_cast<AFortPickup**>(RESULT_PARAM) = SpawnPickupCommon(WorldContextObject, ItemDefinition, NumberToSpawn,
-			Position, Direction, bToss, SourceType, Source, OptionalOwnerPC, bPickupOnlyRelevantToOwner, PickupClass);
+			Position, Direction, bToss, bRandomRotation, SourceType, Source, OptionalOwnerPC, bPickupOnlyRelevantToOwner, PickupClass);
 		P_NATIVE_END;
 	}
 

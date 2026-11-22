@@ -90,11 +90,11 @@ bool FServerBlueprintPickupTossTest::RunTest(const FString&)
 		EFortPickupSourceTypeFlag SourceType; EFortPickupSpawnSource Source;
 		AFortPlayerController* OptionalOwnerPC; bool bPickupOnlyRelevantToOwner; AFortPickup* ReturnValue;
 	};
-	FSpawnParams Toss{World, Definition, 1, Position, Direction, 0, true, false, false, 0,
+	FSpawnParams Toss{World, Definition, 1, Position, Direction, 0, true, true, false, 0,
 		EFortPickupSourceTypeFlag::Container, EFortPickupSpawnSource::Chest, nullptr, false, nullptr};
 	Library->ProcessEvent(Spawn, &Toss);
 	FSpawnWithClassParams WithClass{World, Definition, AFortPickupBackpack::StaticClass(), 1, Position, Direction, 0,
-		true, false, false, 0, EFortPickupSourceTypeFlag::Player, EFortPickupSpawnSource::PlayerElimination, nullptr, false, nullptr};
+		true, true, false, 0, EFortPickupSourceTypeFlag::Player, EFortPickupSpawnSource::PlayerElimination, nullptr, false, nullptr};
 	Library->ProcessEvent(SpawnWithClass, &WithClass);
 	FSpawnWithClassParams WithoutClass = WithClass;
 	WithoutClass.PickupClass = nullptr;
@@ -105,12 +105,14 @@ bool FServerBlueprintPickupTossTest::RunTest(const FString&)
 		TestTrue(TEXT("Blueprint pickup defaults to the exact Athena class"), Toss.ReturnValue->GetClass() == AFortPickupAthena::StaticClass());
 		TestTrue(TEXT("Blueprint pickup preserves source type"), Toss.ReturnValue->PickupSourceTypeFlags == Toss.SourceType);
 		TestTrue(TEXT("Blueprint pickup preserves spawn source"), Toss.ReturnValue->PickupSpawnSource == Toss.Source);
+		TestTrue(TEXT("Blueprint pickup preserves random rotation"), Toss.ReturnValue->bRandomRotation);
 	}
 	if (WithClass.ReturnValue)
 	{
 		TestTrue(TEXT("Blueprint pickup uses the exact requested backpack class"), WithClass.ReturnValue->GetClass() == AFortPickupBackpack::StaticClass());
 		TestTrue(TEXT("Blueprint pickup with class preserves source type"), WithClass.ReturnValue->PickupSourceTypeFlags == WithClass.SourceType);
 		TestTrue(TEXT("Blueprint pickup with class preserves spawn source"), WithClass.ReturnValue->PickupSpawnSource == WithClass.Source);
+		TestTrue(TEXT("Blueprint pickup with class preserves random rotation"), WithClass.ReturnValue->bRandomRotation);
 	}
 	if (WithoutClass.ReturnValue)
 	{
@@ -129,12 +131,14 @@ bool FServerBlueprintPickupTossTest::RunTest(const FString&)
 		}
 	}
 	Toss.bToss = false;
+	Toss.bRandomRotation = false;
 	Toss.ReturnValue = nullptr;
 	Library->ProcessEvent(Spawn, &Toss);
 	if (TestNotNull(TEXT("Blueprint stationary pickup spawned"), Toss.ReturnValue))
 	{
 		TestTrue(TEXT("Stationary pickup remains at the requested position"), Toss.ReturnValue->GetActorLocation().Equals(Position));
 		TestTrue(TEXT("Stationary pickup does not start a toss"), Toss.ReturnValue->PickupLocationData.TossState != EFortPickupTossState::InProgress);
+		TestFalse(TEXT("Stationary pickup preserves disabled random rotation"), Toss.ReturnValue->bRandomRotation);
 		Toss.ReturnValue->Destroy();
 	}
 	Toss.bToss = true;
