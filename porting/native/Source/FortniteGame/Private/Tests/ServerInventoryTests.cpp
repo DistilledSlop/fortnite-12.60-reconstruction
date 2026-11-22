@@ -9,6 +9,7 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
+#include "EWorldItemDropBehavior.h"
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaLootTransfer.h"
 #include "Misc/AutomationTest.h"
@@ -178,6 +179,7 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 
 	UFortWeaponRangedItemDefinition* WeaponDefinition = NewObject<UFortWeaponRangedItemDefinition>(Inventory);
 	WeaponDefinition->bCanBeDropped = true;
+	WeaponDefinition->DropBehavior = EWorldItemDropBehavior::DropAsPickup;
 	UFortWorldItem* WeaponItem = FortAthenaInventory::GiveItem(Controller, WeaponDefinition, 1, 1, 5);
 	if (!TestNotNull(TEXT("Weapon inventory item"), WeaponItem))
 	{
@@ -203,24 +205,60 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 		return false;
 	}
 	TestNull(TEXT("The dropped weapon leaves inventory"), Inventory->NativeFindItemByGuid(WeaponGuid));
+	AFortPickupAthena* DroppedWeapon = nullptr;
 	for (TActorIterator<AFortPickupAthena> It(World); It; ++It)
 	{
 		if (It->PawnWhoDroppedPickup == Pawn && It->PrimaryPickupItemEntry.ItemDefinition == WeaponDefinition)
 		{
-			AFortPickupAthena* DroppedWeapon = *It;
-			ON_SCOPE_EXIT { DroppedWeapon->Destroy(); };
-			TestEqual(TEXT("The ground weapon retains its empty magazine"), DroppedWeapon->PrimaryPickupItemEntry.LoadedAmmo, 0);
-			if (TestTrue(TEXT("The ground weapon can be picked up again"),
-				FortAthenaLootTransfer::HandlePickup(Pawn, DroppedWeapon, 0.25f, FVector::ZeroVector, false)) &&
-				TestEqual(TEXT("Exactly one weapon is back in inventory"), Inventory->Inventory.ReplicatedEntries.Num(), 1))
-			{
-				TestEqual(TEXT("Pickup does not refill the magazine"), Inventory->Inventory.ReplicatedEntries[0].LoadedAmmo, 0);
-			}
-			return true;
+			DroppedWeapon = *It;
+			break;
 		}
 	}
-	AddError(TEXT("Dropping the weapon did not produce a pickup"));
-	return false;
+	if (!TestNotNull(TEXT("Dropping the weapon produces a pickup"), DroppedWeapon))
+	{
+		return false;
+	}
+	ON_SCOPE_EXIT { DroppedWeapon->Destroy(); };
+	TestEqual(TEXT("The ground weapon retains its empty magazine"), DroppedWeapon->PrimaryPickupItemEntry.LoadedAmmo, 0);
+	if (!TestTrue(TEXT("The ground weapon can be picked up again"),
+		FortAthenaLootTransfer::HandlePickup(Pawn, DroppedWeapon, 0.25f, FVector::ZeroVector, false)) ||
+		!TestEqual(TEXT("Exactly one weapon is back in inventory"), Inventory->Inventory.ReplicatedEntries.Num(), 1))
+	{
+		return false;
+	}
+	TestEqual(TEXT("Pickup does not refill the magazine"), Inventory->Inventory.ReplicatedEntries[0].LoadedAmmo, 0);
+	const FGuid RecoveredGuid = Inventory->Inventory.ReplicatedEntries[0].ItemGuid;
+
+	Definition->bCanBeDropped = false;
+	Definition->DropBehavior = EWorldItemDropBehavior::DropAsPickup;
+	UFortWorldItem* ProtectedItem = FortAthenaInventory::GiveItem(Controller, Definition, 3);
+	if (!TestNotNull(TEXT("Protected inventory item"), ProtectedItem))
+	{
+		return false;
+	}
+	const FGuid ProtectedGuid = ProtectedItem->NativeGetItemGuid();
+	TestEqual(TEXT("Elimination drops only the eligible weapon"), FortAthenaLootTransfer::DropAllOnDeath(Controller, Pawn), 1);
+	TestNull(TEXT("Elimination removes the dropped weapon from inventory"), Inventory->NativeFindItemByGuid(RecoveredGuid));
+	if (TestEqual(TEXT("Only the protected stack stays in replicated inventory"), Inventory->Inventory.ReplicatedEntries.Num(), 1))
+	{
+		const FFortItemEntry& Entry = Inventory->Inventory.ReplicatedEntries[0];
+		TestTrue(TEXT("The protected stack retains its GUID"), Entry.ItemGuid == ProtectedGuid);
+		TestEqual(TEXT("Elimination preserves the protected stack quantity"), Entry.Count, 3);
+	}
+	int32 WeaponPickups = 0;
+	for (TActorIterator<AFortPickupAthena> It(World); It; ++It)
+	{
+		if (It->PawnWhoDroppedPickup != Pawn || *It == DroppedWeapon)
+		{
+			continue;
+		}
+		TestTrue(TEXT("Elimination loot contains no protected item"), It->PrimaryPickupItemEntry.ItemDefinition == WeaponDefinition);
+		TestEqual(TEXT("Elimination transfers exactly one weapon"), It->PrimaryPickupItemEntry.Count, 1);
+		++WeaponPickups;
+		It->Destroy();
+	}
+	TestEqual(TEXT("Elimination creates one new pickup"), WeaponPickups, 1);
+	return true;
 }
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FServerConsumableCostDataTest, "Fortnite.Server.Inventory.ConsumableCostData",

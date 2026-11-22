@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "24253be0633bd7192e0f1057063793f79046e96b",
- "subject": "Cover empty-magazine transfers and publish inventory progress",
- "date": "2026-11-22T09:36:55-05:00",
+ "head": "b1f524a4637719070c963e6fdea501f891c9f610",
+ "subject": "Honor inventory drop restrictions on elimination",
+ "date": "2026-11-22T09:37:42-05:00",
  "overall_pct": 31.122,
  "measured_pct": 28.775,
  "objective_pct": 28.774,
