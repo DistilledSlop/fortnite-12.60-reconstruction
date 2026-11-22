@@ -34,7 +34,7 @@ namespace FortAthenaHealth
 	// Runs the server death sequence (D6 §2): death report, DeathInfo replication, ClientOnPawnDied,
 	// alive player removal (R3), placement calculation, client match/team stats, and win check.
 	void HandlePlayerEliminated(AFortPawn* VictimPawn, const FGameplayTagContainer& DamageTags,
-	                            AController* InstigatedBy = nullptr, AActor* DamageCauser = nullptr);
+	                            AController* InstigatedBy = nullptr, AActor* DamageCauser = nullptr, float LethalDamage = 0.0f);
 
 	// Stand-in RPC overrides (e.g. ServerSuicide, ServerResetAbilitySystemComponent) rebound via UFunction::SetNativeFunc.
 	void InstallRpcOverrides();

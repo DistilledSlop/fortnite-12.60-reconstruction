@@ -552,6 +552,7 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 					FGameplayTagContainer DeathTags;
 					TWeakObjectPtr<AController> WeakInstigator;
 					TWeakObjectPtr<AActor> WeakCauser;
+					const float LethalDamage = FMath::Max(0.0f, Data.OldValue - Data.NewValue);
 					if (Data.GEModData)
 					{
 						const FGameplayEffectSpec& Spec = Data.GEModData->EffectSpec;
@@ -577,14 +578,14 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 					// The health delegate can fire inside GAS before the HealthSet's
 					// synchronous DBNO interception. Recheck after that stack returns.
 					World->GetTimerManager().SetTimerForNextTick(FTimerDelegate::CreateLambda(
-						[WeakASC, WeakPawn, WeakInstigator, WeakCauser, ChangeSerial, Serial, DeathTags]()
+						[WeakASC, WeakPawn, WeakInstigator, WeakCauser, ChangeSerial, Serial, DeathTags, LethalDamage]()
 						{
 							UAbilitySystemComponent* CurrentASC = WeakASC.Get();
 							AFortPawn* CurrentPawn = WeakPawn.Get();
 							if (*ChangeSerial != Serial || !CurrentASC || !CurrentPawn ||
 								CurrentASC->GetAvatarActor() != CurrentPawn || CurrentPawn->bIsDying ||
 								CurrentPawn->bIsDBNO || CurrentPawn->GetHealth() > 0.0f) { return; }
-							FortAthenaHealth::HandlePlayerEliminated(CurrentPawn, DeathTags, WeakInstigator.Get(), WeakCauser.Get());
+							FortAthenaHealth::HandlePlayerEliminated(CurrentPawn, DeathTags, WeakInstigator.Get(), WeakCauser.Get(), LethalDamage);
 						}));
 				});
 		}
@@ -757,13 +758,13 @@ void FortAthenaHealth::ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, co
 
 	if (NewHealth <= 0.0f && !VictimPawn->bIsDying)
 	{
-		HandlePlayerEliminated(VictimPawn, DamageTags, InstigatedBy, DamageCauser);
+		HandlePlayerEliminated(VictimPawn, DamageTags, InstigatedBy, DamageCauser, DamageAmount);
 	}
 }
 
 namespace
 {
-	void NotifyPawnDeath(AFortPawn* VictimPawn, AController* InstigatedBy, AActor* DamageCauser)
+	void NotifyPawnDeath(AFortPawn* VictimPawn, AController* InstigatedBy, AActor* DamageCauser, float LethalDamage)
 	{
 		VictimPawn->bWasDBNOOnDeath = VictimPawn->bIsDBNO;
 		if (UCharacterMovementComponent* MoveComp = VictimPawn->GetCharacterMovement())
@@ -771,12 +772,12 @@ namespace
 			MoveComp->DisableMovement();
 		}
 		VictimPawn->SetCanBeDamaged(false);
-		VictimPawn->OnDied.Broadcast(VictimPawn, 0.0f, InstigatedBy, DamageCauser, VictimPawn->GetActorLocation(), nullptr, NAME_None, FVector::ZeroVector);
+		VictimPawn->OnDied.Broadcast(VictimPawn, LethalDamage, InstigatedBy, DamageCauser, VictimPawn->GetActorLocation(), nullptr, NAME_None, FVector::ZeroVector);
 	}
 }
 
 void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGameplayTagContainer& DamageTags,
-                                             AController* InstigatedBy, AActor* DamageCauser)
+                                             AController* InstigatedBy, AActor* DamageCauser, float LethalDamage)
 {
 	if (!IsEnabled() || !VictimPawn || VictimPawn->bIsDying)
 	{
@@ -793,7 +794,7 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 	if (!VictimPC && !VictimState && !Cast<APlayerController>(VictimPawn->GetController()))
 	{
 		VictimPawn->bIsDying = true;
-		NotifyPawnDeath(VictimPawn, InstigatedBy, DamageCauser);
+		NotifyPawnDeath(VictimPawn, InstigatedBy, DamageCauser, LethalDamage);
 		return;
 	}
 	UWorld* World = VictimPawn->GetWorld();
@@ -817,7 +818,7 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 		GameState->PlayersLeft = NewPlayersLeft;
 		GameState->OnRep_PlayersLeft();
 	}
-	NotifyPawnDeath(VictimPawn, InstigatedBy, DamageCauser);
+	NotifyPawnDeath(VictimPawn, InstigatedBy, DamageCauser, LethalDamage);
 
 	AFortPlayerStateAthena* KillerState = InstigatedBy ? Cast<AFortPlayerStateAthena>(InstigatedBy->PlayerState) : nullptr;
 	AFortPawn* KillerPawn = InstigatedBy ? Cast<AFortPawn>(InstigatedBy->GetPawn()) : nullptr;
@@ -832,7 +833,7 @@ void FortAthenaHealth::HandlePlayerEliminated(AFortPawn* VictimPawn, const FGame
 	FFortPlayerDeathReport Report{};
 	Report.ServerTimeForRespawn = -1.0f;
 	Report.ServerTimeForResurrect = -1.0f;
-	Report.LethalDamage = 100.0f;
+	Report.LethalDamage = LethalDamage;
 	Report.KillerPlayerState = KillerState;
 	Report.KillerPawn = KillerPawn;
 	Report.KillerHealthPercent = KillerPawn ? KillerPawn->GetHealthPercent() : 0.0f;
