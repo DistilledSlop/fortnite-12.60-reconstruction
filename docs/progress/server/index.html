@@ -21,10 +21,10 @@ td:nth-child(2) { white-space: nowrap; }
 <main>
 <nav aria-label="Progress boards"><a href="../../combined.html">Original client + server board</a></nav>
 <h1>Fortnite 12.60 dedicated-server progress</h1>
-<img src="server-implementation-treemap-v2.svg" width="1000" height="720" style="max-width:100%;height:auto" alt="Dedicated-server progress treemap">
+<img src="server-implementation-treemap-v3.svg" width="1000" height="720" style="max-width:100%;height:auto" alt="Dedicated-server progress treemap">
 <p>The server can host a local match for the original 12.60 client, including a Battle Bus drop onto Apollo. The goal is a complete multiplayer match with authoritative gameplay, replication, and the backend services the original client uses.</p>
 <!-- checks:start -->
-<p><strong>41/102 server checks implemented (40.2%).</strong> 29 are verified, 12 await verification, 61 remain open, and 6 client-only checks are tracked outside the server score.</p>
+<p><strong>54/122 server checks implemented (44.3%).</strong> 42 are verified, 12 await verification, 68 remain open, and 6 client-only checks are tracked outside the server score.</p>
 <p>Coverage = (implemented checks + verified checks) ÷ all server checks. Area and capability scores use the same formula. Every check has equal weight. Verified means the stated behavior has a recorded headless test, service test, or original-client observation. Implementation-only checks have a source reference. Each check contributes at most one point.</p>
 <h2>Match flow and player states <small>14/22 implemented (63.6%)</small></h2>
 <div class="table"><table aria-label="Match flow and player states">
@@ -132,14 +132,34 @@ td:nth-child(2) { white-space: nowrap; }
 <tr><th scope="row">Tick rate and relevance</th><td>Open</td><td>Record server tick-time distribution and packet load during a sustained multiplayer match</td><td>—</td></tr>
 <tr><th scope="row">Tick rate and relevance</th><td>Open</td><td>Check nearby actors replicate and distant irrelevant actors leave network relevance</td><td>—</td></tr>
 </tbody></table></div>
-<h2>Lobby, accounts and Epic service compatibility <small>14/30 implemented (46.7%)</small></h2>
+<h2>Lobby, accounts and Epic service compatibility <small>27/50 implemented (54.0%)</small></h2>
 <div class="table"><table aria-label="Lobby, accounts and Epic service compatibility">
 <thead><tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Acceptance check</th><th scope="col">Evidence</th></tr></thead><tbody>
 <tr><th scope="row">Login and identity</th><td>Verified</td><td>Exercise OAuth exchange-code handling against the local service</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_oauth_exchange_codes.py">Source</a></td></tr>
 <tr><th scope="row">Login and identity</th><td>Verified</td><td>Exercise username login and locker access at the backend boundary</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_username_locker_flow.py">Source</a></td></tr>
 <tr><th scope="row">Login and identity</th><td>Open</td><td>Sign in from a fresh original client, refresh login and reconnect without probe bypasses</td><td>—</td></tr>
-<tr><th scope="row">Epic service compatibility</th><td>Open</td><td>Verify original-client local equivalents for account, entitlement, content and cloud-storage calls</td><td>—</td></tr>
-<tr><th scope="row">Epic service compatibility</th><td>Open</td><td>Verify calendar, event, catalog, store, gifting and currency flows through the client</td><td>—</td></tr>
+<tr><th scope="row">Account API</th><td>Verified</td><td>Serve account lookup by ID, display name and batches of IDs</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_services.py">Source</a></td></tr>
+<tr><th scope="row">Account API</th><td>Verified</td><td>Validate a profile token against a known local account</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_services.py">Source</a></td></tr>
+<tr><th scope="row">Account API</th><td>Open</td><td>Exercise account lookup and profile-token requests from the original client</td><td>—</td></tr>
+<tr><th scope="row">Entitlements</th><td>Open</td><td>Satisfy the original client AppES entitlement gate through local services without a diagnostic bypass</td><td>—</td></tr>
+<tr><th scope="row">Entitlements</th><td>Open</td><td>Verify launcher ownership and entitlement refresh across reconnects</td><td>—</td></tr>
+<tr><th scope="row">Service status and content</th><td>Verified</td><td>Serve lightswitch status, maintenance state and version-check responses</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_services.py">Source</a></td></tr>
+<tr><th scope="row">Service status and content</th><td>Verified</td><td>Serve the configured lobby page, locale data and snapshot assets</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_lobby_content.py">Source</a></td></tr>
+<tr><th scope="row">Service status and content</th><td>Open</td><td>Load status, lobby content and news through an unmodified original-client flow</td><td>—</td></tr>
+<tr><th scope="row">Cloud storage</th><td>Verified</td><td>List and return configured system files with correct response bytes</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_services.py">Source</a></td></tr>
+<tr><th scope="row">Cloud storage</th><td>Verified</td><td>Round-trip user cloud files with account access checks</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_services.py">Source</a></td></tr>
+<tr><th scope="row">Cloud storage</th><td>Open</td><td>Save and reload original-client settings through user cloud storage after reconnect</td><td>—</td></tr>
+<tr><th scope="row">Calendar and events</th><td>Verified</td><td>Serve local calendar timeline and active event flags</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_services.py">Source</a></td></tr>
+<tr><th scope="row">Calendar and events</th><td>Verified</td><td>Serve the authenticated competition-download response for local accounts</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_events_service.py">Source</a></td></tr>
+<tr><th scope="row">Calendar and events</th><td>Open</td><td>Populate and exercise eligible competition events, scores and payouts</td><td>—</td></tr>
+<tr><th scope="row">Catalog and purchases</th><td>Verified</td><td>Return the local storefront catalog response</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_services.py">Source</a></td></tr>
+<tr><th scope="row">Catalog and purchases</th><td>Verified</td><td>Process catalog purchase and profile mutation in the local service</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_profile_purchase.py">Source</a></td></tr>
+<tr><th scope="row">Catalog and purchases</th><td>Open</td><td>Open the store in the original client and buy, equip and retain an offer</td><td>—</td></tr>
+<tr><th scope="row">Gifting</th><td>Verified</td><td>Validate gift eligibility, recipients and messages before debiting</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_gifting_service.py">Source</a></td></tr>
+<tr><th scope="row">Gifting</th><td>Verified</td><td>Persist gifts and claim them from the recipient account</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_gifting_service.py">Source</a></td></tr>
+<tr><th scope="row">Gifting</th><td>Open</td><td>Send and claim gifts between two original clients and verify the notifications</td><td>—</td></tr>
+<tr><th scope="row">Currency</th><td>Verified</td><td>Persist a local operator credit and reject writes to active state</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_local_currency.py">Source</a></td></tr>
+<tr><th scope="row">Currency</th><td>Open</td><td>Verify the original client balance updates after purchases, gifting and reconnect</td><td>—</td></tr>
 <tr><th scope="row">Friends, parties and lobby</th><td>Verified</td><td>Exercise friend acceptance and presence propagation in the backend</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_friend_accept_presence.py">Source</a></td></tr>
 <tr><th scope="row">Friends, parties and lobby</th><td>Verified</td><td>Exercise backend party lifecycle operations</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_party_lifecycle.py">Source</a></td></tr>
 <tr><th scope="row">Friends, parties and lobby</th><td>Open</td><td>Use invitations, ready states, leader changes, playlist selection and reconnect from multiple lobbies</td><td>—</td></tr>

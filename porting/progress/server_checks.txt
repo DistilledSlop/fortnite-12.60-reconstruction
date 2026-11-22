@@ -89,8 +89,28 @@ Tick rate and relevance|open|Check nearby actors replicate and distant irrelevan
 Login and identity|verified|Exercise OAuth exchange-code handling against the local service|porting/server/tests/test_oauth_exchange_codes.py
 Login and identity|verified|Exercise username login and locker access at the backend boundary|porting/server/tests/test_username_locker_flow.py
 Login and identity|open|Sign in from a fresh original client, refresh login and reconnect without probe bypasses
-Epic service compatibility|open|Verify original-client local equivalents for account, entitlement, content and cloud-storage calls
-Epic service compatibility|open|Verify calendar, event, catalog, store, gifting and currency flows through the client
+Account API|verified|Serve account lookup by ID, display name and batches of IDs|porting/server/tests/test_services.py
+Account API|verified|Validate a profile token against a known local account|porting/server/tests/test_services.py
+Account API|open|Exercise account lookup and profile-token requests from the original client
+Entitlements|open|Satisfy the original client AppES entitlement gate through local services without a diagnostic bypass
+Entitlements|open|Verify launcher ownership and entitlement refresh across reconnects
+Service status and content|verified|Serve lightswitch status, maintenance state and version-check responses|porting/server/tests/test_services.py
+Service status and content|verified|Serve the configured lobby page, locale data and snapshot assets|porting/server/tests/test_lobby_content.py
+Service status and content|open|Load status, lobby content and news through an unmodified original-client flow
+Cloud storage|verified|List and return configured system files with correct response bytes|porting/server/tests/test_services.py
+Cloud storage|verified|Round-trip user cloud files with account access checks|porting/server/tests/test_services.py
+Cloud storage|open|Save and reload original-client settings through user cloud storage after reconnect
+Calendar and events|verified|Serve local calendar timeline and active event flags|porting/server/tests/test_services.py
+Calendar and events|verified|Serve the authenticated competition-download response for local accounts|porting/server/tests/test_events_service.py
+Calendar and events|open|Populate and exercise eligible competition events, scores and payouts
+Catalog and purchases|verified|Return the local storefront catalog response|porting/server/tests/test_services.py
+Catalog and purchases|verified|Process catalog purchase and profile mutation in the local service|porting/server/tests/test_profile_purchase.py
+Catalog and purchases|open|Open the store in the original client and buy, equip and retain an offer
+Gifting|verified|Validate gift eligibility, recipients and messages before debiting|porting/server/tests/test_gifting_service.py
+Gifting|verified|Persist gifts and claim them from the recipient account|porting/server/tests/test_gifting_service.py
+Gifting|open|Send and claim gifts between two original clients and verify the notifications
+Currency|verified|Persist a local operator credit and reject writes to active state|porting/server/tests/test_local_currency.py
+Currency|open|Verify the original client balance updates after purchases, gifting and reconnect
 Friends, parties and lobby|verified|Exercise friend acceptance and presence propagation in the backend|porting/server/tests/test_friend_accept_presence.py
 Friends, parties and lobby|verified|Exercise backend party lifecycle operations|porting/server/tests/test_party_lifecycle.py
 Friends, parties and lobby|open|Use invitations, ready states, leader changes, playlist selection and reconnect from multiple lobbies
