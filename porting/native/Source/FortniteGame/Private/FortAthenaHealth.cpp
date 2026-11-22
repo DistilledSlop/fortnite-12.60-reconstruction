@@ -30,7 +30,9 @@
 #include "Engine/Engine.h"
 #include "UObject/ScriptMacros.h"
 
+#include "AFortAthenaMutator_DBNOSetting.h"
 #include "AFortGameModeAthena.h"
+#include "UFortMutatorOwner.h"
 #include "AFortGameStateAthena.h"
 #include "AFortPawn.h"
 #include "AFortPlayerControllerAthena.h"
@@ -375,22 +377,58 @@ namespace
 		});
 	}
 
+	EDBNOType ResolveDBNOType(AFortPlayerPawnAthena* Player, AFortGameStateAthena* State, const UFortPlaylistAthena* Playlist)
+	{
+		TArray<UObject*> Owners;
+		AFortPlayerStateAthena* PlayerState = Player->GetPlayerState<AFortPlayerStateAthena>();
+		if (PlayerState)
+		{
+			PlayerState->NativeAppendContextOwners(Owners);
+		}
+		Owners.AddUnique(State);
+
+		for (UObject* Owner : Owners)
+		{
+			if (IFortMutatorOwner* MutatorOwner = Cast<IFortMutatorOwner>(Owner))
+			{
+				TArray<AFortGameplayMutator*> Mutators;
+				MutatorOwner->NativeAppendOwnerMutators(Mutators, PlayerState);
+				for (AFortGameplayMutator* Candidate : Mutators)
+				{
+					const AFortAthenaMutator_DBNOSetting* Setting = Cast<AFortAthenaMutator_DBNOSetting>(Candidate);
+					if (IsValid(Setting) && (Setting->bMutatorActiveInternal || Setting->bMutatorActive))
+					{
+						if (Setting->DBNOSetting == EDBNOMutatorType::On)
+							return EDBNOType::On;
+						if (Setting->DBNOSetting == EDBNOMutatorType::Off)
+							return EDBNOType::Off;
+					}
+				}
+			}
+		}
+		return Playlist->DBNOType;
+	}
+
 	bool TryKnockPlayer(AFortPawn* Pawn, const FGameplayTagContainer& DamageTags,
 	                    AController* InstigatedBy, AActor* DamageCauser)
 	{
 		AFortPlayerPawnAthena* Player = Cast<AFortPlayerPawnAthena>(Pawn);
 		UWorld* World = Player ? Player->GetWorld() : nullptr;
 		AFortGameModeAthena* Mode = World ? Cast<AFortGameModeAthena>(World->GetAuthGameMode()) : nullptr;
-		const AFortGameStateAthena* State = World ? World->GetGameState<AFortGameStateAthena>() : nullptr;
+		AFortGameStateAthena* State = World ? World->GetGameState<AFortGameStateAthena>() : nullptr;
 		const UFortPlaylistAthena* Playlist = State ? State->GetCurrentPlaylistAthena() : nullptr;
 		if (!Mode || RosterMode.Get() != Mode || !Playlist || Playlist->MaxTeamSize <= 1 ||
-			Playlist->DBNOType == EDBNOType::Off ||
 			Player->bIsDBNO || Player->bIsDying || !Player->HasAuthority())
 		{
 			return false;
 		}
 
-		if (Playlist->DBNOType == EDBNOType::NotWhenRespawning)
+		const EDBNOType DBNOType = ResolveDBNOType(Player, State, Playlist);
+		if (DBNOType == EDBNOType::Off)
+		{
+			return false;
+		}
+		if (DBNOType == EDBNOType::NotWhenRespawning)
 		{
 			const FGameplayTag StormTag = FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0x360);
 			const bool bCanRespawn = Playlist->RespawnType == EAthenaRespawnType::InfiniteRespawn ||
