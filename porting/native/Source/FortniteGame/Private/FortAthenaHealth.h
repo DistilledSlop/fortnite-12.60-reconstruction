@@ -31,6 +31,8 @@ namespace FortAthenaHealth
 	void ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, const FGameplayTagContainer& DamageTags,
 	                 AController* InstigatedBy = nullptr, AActor* DamageCauser = nullptr, bool bIgnoreShield = false);
 
+	bool TryStartRevive(AController* Reviver, AFortPawn* Target);
+
 	// Runs the server death sequence (D6 §2): death report, DeathInfo replication, ClientOnPawnDied,
 	// alive player removal (R3), placement calculation, client match/team stats, and win check.
 	void HandlePlayerEliminated(AFortPawn* VictimPawn, const FGameplayTagContainer& DamageTags,

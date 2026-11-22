@@ -12,6 +12,7 @@
 #include "Engine/World.h"
 #include "FFortBaseWeaponStats.h"
 #include "FFortLootLevelData.h"
+#include "FortAthenaHealth.h"
 #include "FortAthenaLoot.h"
 #include "FortHarvestBuilding.h"
 #include "FortAthenaLootData.h"
@@ -182,6 +183,16 @@ namespace
 		UFortControllerComponent_Interaction* Component = Cast<UFortControllerComponent_Interaction>(Context);
 		if (!Component)
 			return;
+
+		if (AFortPawn* TargetPawn = Cast<AFortPawn>(ReceivingActor))
+		{
+			if (TargetPawn->bIsDBNO && InteractionBeingAttempted != EInteractionBeingAttempted::SecondInteraction &&
+				(InteractType == TInteractionType::IT_Simple || InteractType == TInteractionType::IT_LongPress) &&
+				FortAthenaHealth::TryStartRevive(Cast<AController>(Component->GetOwner()), TargetPawn))
+			{
+				return;
+			}
+		}
 
 		ABuildingContainer* Container = Cast<ABuildingContainer>(ReceivingActor);
 		if (!FortAthenaLootSearch::IsEnabled() || !Container)

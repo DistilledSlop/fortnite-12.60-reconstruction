@@ -237,6 +237,7 @@ namespace
 		Player->bIsDBNO = true;
 		const float KnockTime = World->GetTimeSeconds();
 		Player->DBNOStartTime = KnockTime;
+		Player->DBNORevivalStacking = 0;
 		Player->SetHealth(100.0f);
 		Player->OnPlayerStartDBNO.Broadcast();
 		Player->OnDBNOStateChanged.Broadcast(Player, true);
@@ -263,6 +264,84 @@ namespace
 			}), 1.2f, true);
 		return true;
 	}
+}
+
+namespace
+{
+	bool CanRevive(AController* Reviver, AFortPlayerPawnAthena* Target)
+	{
+		const AFortPawn* Helper = Reviver ? Cast<AFortPawn>(Reviver->GetPawn()) : nullptr;
+		if (!IsValid(Target) || !IsValid(Helper) || Helper == Target || !Target->HasAuthority() ||
+			!Target->bIsDBNO || Target->bIsDying || !Target->GetController() ||
+			Helper->bIsDBNO || Helper->bIsDying || Helper->GetHealth() <= 0.0f ||
+			Helper->GetWorld() != Target->GetWorld())
+		{
+			return false;
+		}
+
+		const AFortPlayerStateAthena* HelperState = Cast<AFortPlayerStateAthena>(Helper->GetPlayerState());
+		const AFortPlayerStateAthena* TargetState = Cast<AFortPlayerStateAthena>(Target->GetPlayerState());
+		constexpr float ReviveRange = 250.0f;
+		return HelperState && TargetState && HelperState->TeamIndex == TargetState->TeamIndex &&
+			FVector::DistSquared(Helper->GetActorLocation(), Target->GetActorLocation()) <= FMath::Square(ReviveRange) &&
+			Reviver->LineOfSightTo(Target);
+	}
+}
+
+bool FortAthenaHealth::TryStartRevive(AController* Reviver, AFortPawn* Target)
+{
+	AFortPlayerPawnAthena* Downed = Cast<AFortPlayerPawnAthena>(Target);
+	if (!IsEnabled() || !CanRevive(Reviver, Downed) || Downed->DBNORevivalStacking != 0)
+	{
+		return false;
+	}
+
+	UWorld* World = Downed->GetWorld();
+	const float ReviveDuration = Downed->ReviveFromDBNOTime > 0.0f ? Downed->ReviveFromDBNOTime : 10.0f;
+	const float EndTime = World->GetTimeSeconds() + ReviveDuration;
+	const float KnockTime = Downed->DBNOStartTime;
+	Downed->DBNORevivalStacking = 1;
+	Downed->ForceNetUpdate();
+
+	const TSharedRef<FTimerHandle> Timer = MakeShared<FTimerHandle>();
+	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakTarget(Downed);
+	const TWeakObjectPtr<AController> WeakReviver(Reviver);
+	const TWeakObjectPtr<APawn> WeakHelper(Reviver->GetPawn());
+	const TWeakObjectPtr<UWorld> WeakWorld(World);
+	World->GetTimerManager().SetTimer(*Timer, FTimerDelegate::CreateLambda(
+		[Timer, WeakWorld, WeakTarget, WeakReviver, WeakHelper, EndTime, KnockTime]()
+		{
+			UWorld* CurrentWorld = WeakWorld.Get();
+			if (!CurrentWorld)
+			{
+				return;
+			}
+
+			AFortPlayerPawnAthena* Player = WeakTarget.Get();
+			AController* Helper = WeakReviver.Get();
+			const bool bSameKnock = Player && Player->DBNOStartTime == KnockTime;
+			const bool bCanContinue = bSameKnock && Helper && Helper->GetPawn() == WeakHelper.Get() && CanRevive(Helper, Player);
+			const bool bFinished = CurrentWorld->GetTimeSeconds() >= EndTime;
+			if (bCanContinue && !bFinished)
+			{
+				return;
+			}
+
+			CurrentWorld->GetTimerManager().ClearTimer(*Timer);
+			if (bSameKnock)
+			{
+				Player->DBNORevivalStacking = 0;
+				if (bCanContinue)
+				{
+					Player->SetHealth(30.0f);
+					Player->bIsDBNO = false;
+					Player->bPlayedDying = false;
+					Player->OnDBNOStateChanged.Broadcast(Player, false);
+				}
+				Player->ForceNetUpdate();
+			}
+		}), 0.1f, true);
+	return true;
 }
 
 bool FortAthenaHealth::GetSingleAliveTeam(AFortGameModeAthena* GameMode, TArray<AFortPlayerControllerAthena*>& OutTeam)
