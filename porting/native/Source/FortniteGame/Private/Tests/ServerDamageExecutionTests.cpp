@@ -119,7 +119,10 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 			TestTrue(TEXT("Carry replication callbacks set both local flags"),
 				Carrier->bIsDBNOCarrying && Downed->bIsBeingDBNOCarried);
 			PreviousHoisterData = Downed->DBNOHoisterData;
+			Carrier->DropCarriedPlayerHeightOffset = 30.0f;
 			Carrier->ServerDropCarriedPlayer();
+			TestEqual(TEXT("A drop uses the configured height above the carrier's capsule center"),
+				Downed->GetActorLocation().Z - Carrier->GetActorLocation().Z, 30.0f);
 			TestTrue(TEXT("The drop RPC removes the carry links and attachment"),
 				!Carrier->DBNOHoistee && !Downed->DBNOHoisterData.DBNOHoister && !Downed->GetAttachParentActor());
 			Carrier->bIsDBNOCarrying = true;

@@ -226,6 +226,12 @@ namespace
 				const FVector Forward = Carrier->GetActorForwardVector().GetSafeNormal2D();
 				const float Distance = Carrier->DropCarriedPlayerForwardOffset > 0.0f ? Carrier->DropCarriedPlayerForwardOffset : 100.0f;
 				Target->SetActorLocation(Target->GetActorLocation() + Forward * Distance, true);
+				if (!bThrow)
+				{
+					FVector DropLocation = Target->GetActorLocation();
+					DropLocation.Z = Carrier->GetActorLocation().Z + Carrier->DropCarriedPlayerHeightOffset;
+					Target->SetActorLocation(DropLocation, true);
+				}
 				if (bThrow)
 				{
 					const float Speed = Carrier->ThrowCarriedPlayerStrengthXY > 0.0f ? Carrier->ThrowCarriedPlayerStrengthXY : 750.0f;
