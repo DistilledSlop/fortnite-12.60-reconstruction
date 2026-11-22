@@ -51,10 +51,11 @@ void UServerDamageExecution::Execute_Implementation(const FGameplayEffectCustomE
 	}
 
 	const FGameplayEffectSpec& Spec = Parameters.GetOwningSpec();
+	const bool bShieldOnly = Spec.GetSetByCallerMagnitude(FName(TEXT("ShieldOnly")), false) > 0.0f;
 	const FServerDamage Damage = FServerDamage::Resolve(
 		Spec.GetSetByCallerMagnitude(FName(TEXT("Damage")), false),
-		Target->GetNumericAttribute(Health), Target->GetNumericAttribute(Shield),
-		Spec.GetSetByCallerMagnitude(FName(TEXT("IgnoreShield")), false) > 0.0f);
+		bShieldOnly ? 0.0f : Target->GetNumericAttribute(Health), Target->GetNumericAttribute(Shield),
+		!bShieldOnly && Spec.GetSetByCallerMagnitude(FName(TEXT("IgnoreShield")), false) > 0.0f);
 	if (Damage.Shield > 0.0f)
 	{
 		Output.AddOutputModifier(FGameplayModifierEvaluatedData(Shield, EGameplayModOp::Additive, -Damage.Shield));
@@ -75,31 +76,38 @@ UServerDamageEffect::UServerDamageEffect()
 void UServerDamageEffect::BindDamageAttribute(UAbilitySystemComponent& ASC)
 {
 	static const FGameplayAttribute Damage(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Damage")));
-	TWeakObjectPtr<UAbilitySystemComponent> WeakASC(&ASC);
-	ASC.GetGameplayAttributeValueChangeDelegate(Damage).AddLambda([WeakASC](const FOnAttributeChangeData& Change)
+	static const FGameplayAttribute ShieldDamage(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("ShieldDamage")));
+	const auto Bind = [&ASC](const FGameplayAttribute& Attribute, bool bShieldOnly)
 	{
-		UAbilitySystemComponent* Target = WeakASC.Get();
-		const AFortPawn* Pawn = Target ? Cast<AFortPawn>(Target->GetAvatarActor()) : nullptr;
-		if (!Pawn || !Pawn->HasAuthority() || !Change.GEModData || Change.NewValue == 0.0f)
+		TWeakObjectPtr<UAbilitySystemComponent> WeakASC(&ASC);
+		ASC.GetGameplayAttributeValueChangeDelegate(Attribute).AddLambda([WeakASC, Attribute, bShieldOnly](const FOnAttributeChangeData& Change)
 		{
-			return;
-		}
+			UAbilitySystemComponent* Target = WeakASC.Get();
+			const AFortPawn* Pawn = Target ? Cast<AFortPawn>(Target->GetAvatarActor()) : nullptr;
+			if (!Pawn || !Pawn->HasAuthority() || !Change.GEModData || Change.NewValue == 0.0f)
+			{
+				return;
+			}
 
-		const FGameplayEffectSpec& Authored = Change.GEModData->EffectSpec;
-		const float Amount = Change.NewValue - Change.OldValue;
-		FGameplayEffectSpec Resolved(GetDefault<UServerDamageEffect>(), Authored.GetContext(), Authored.GetLevel());
-		Authored.GetAllAssetTags(Resolved.DynamicAssetTags);
-		Resolved.SetSetByCallerMagnitude(FName(TEXT("Damage")), Amount);
-		Resolved.SetSetByCallerMagnitude(FName(TEXT("IgnoreShield")),
-			Authored.GetSetByCallerMagnitude(FName(TEXT("IgnoreShield")), false));
+			const FGameplayEffectSpec& Authored = Change.GEModData->EffectSpec;
+			const float Amount = Change.NewValue - Change.OldValue;
+			FGameplayEffectSpec Resolved(GetDefault<UServerDamageEffect>(), Authored.GetContext(), Authored.GetLevel());
+			Authored.GetAllAssetTags(Resolved.DynamicAssetTags);
+			Resolved.SetSetByCallerMagnitude(FName(TEXT("Damage")), Amount);
+			Resolved.SetSetByCallerMagnitude(FName(TEXT("ShieldOnly")), bShieldOnly ? 1.0f : 0.0f);
+			Resolved.SetSetByCallerMagnitude(FName(TEXT("IgnoreShield")),
+				Authored.GetSetByCallerMagnitude(FName(TEXT("IgnoreShield")), false));
 
-		// Consume the meta attribute even when the actor cannot take damage.
-		Target->SetNumericAttributeBase(Damage, 0.0f);
-		if (Pawn->CanBeDamaged() && FMath::IsFinite(Amount) && Amount > 0.0f)
-		{
-			Target->ApplyGameplayEffectSpecToSelf(Resolved);
-		}
-	});
+			// Consume the meta attribute even when the actor cannot take damage.
+			Target->SetNumericAttributeBase(Attribute, 0.0f);
+			if (Pawn->CanBeDamaged() && FMath::IsFinite(Amount) && Amount > 0.0f)
+			{
+				Target->ApplyGameplayEffectSpecToSelf(Resolved);
+			}
+		});
+	};
+	Bind(Damage, false);
+	Bind(ShieldDamage, true);
 }
 
 UServerRecoveryEffect::UServerRecoveryEffect()

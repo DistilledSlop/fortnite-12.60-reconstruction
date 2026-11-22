@@ -124,6 +124,15 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TestEqual(TEXT("Authored Damage preserves health while shield remains"), Pawn->GetHealth(), 75.0f);
 	TestEqual(TEXT("Damage accumulator clears after each effect"), ASC->GetNumericAttribute(Damage), 0.0f);
 
+	const FGameplayAttribute ShieldDamage(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("ShieldDamage")));
+	UGameplayEffect* AuthoredShieldDamage = NewObject<UGameplayEffect>(GetTransientPackage());
+	AuthoredShieldDamage->Modifiers[AuthoredShieldDamage->Modifiers.Add(DamageModifier)].Attribute = ShieldDamage;
+	FGameplayEffectSpec ShieldDamageSpec(AuthoredShieldDamage, ASC->MakeEffectContext(), 1.0f);
+	ASC->ApplyGameplayEffectSpecToSelf(ShieldDamageSpec);
+	TestEqual(TEXT("Authored ShieldDamage drains remaining shield"), Pawn->GetShield(), 0.0f);
+	TestEqual(TEXT("Authored ShieldDamage has no health overflow"), Pawn->GetHealth(), 75.0f);
+	TestEqual(TEXT("ShieldDamage accumulator clears after each effect"), ASC->GetNumericAttribute(ShieldDamage), 0.0f);
+
 	ASC->SetNumericAttributeBase(Shield, 30);
 	FortAthenaHealth::ApplyDamage(Pawn, 5, FGameplayTagContainer(), nullptr, nullptr, true);
 	TestEqual(TEXT("Bypass preserves shield"), Pawn->GetShield(), 30.0f);
