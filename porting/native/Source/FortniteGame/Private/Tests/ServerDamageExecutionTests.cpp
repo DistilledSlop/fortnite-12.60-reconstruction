@@ -102,10 +102,18 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 			Downed->SetActorLocation(FVector(175, 0, 12000));
 			if (TestTrue(TEXT("A dropped player can be picked up again"), FortAthenaHealth::TryCarryDownedPlayer(CarryController, Downed)))
 			{
+				Carrier->ThrowCarriedPlayerStrengthXY = 900.0f;
+				Carrier->ThrowCarriedPlayerStrengthZ = 450.0f;
+				Carrier->SetActorRotation(FRotator(0.0f, 90.0f, 0.0f));
 				Carrier->ServerThrowCarriedPlayer();
 				TestTrue(TEXT("The throw RPC releases the player with the thrown event"),
 					!Carrier->DBNOHoistee && !Downed->GetAttachParentActor() &&
 					Downed->DBNOHoisterData.DBNOCarryEvent == EFortDBNOCarryEvent::Thrown);
+				UCharacterMovementComponent* Movement = Downed->GetCharacterMovement();
+				TestTrue(TEXT("The throw queues a character launch"), Movement->HandlePendingLaunch());
+				TestTrue(TEXT("The throw applies the configured forward and upward velocities"),
+					Movement->Velocity.Equals(FVector(0.0f, 900.0f, 450.0f), 0.1f));
+				Movement->StopMovementImmediately();
 			}
 		}
 	}
