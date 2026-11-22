@@ -72,7 +72,7 @@ Inventory operations|implemented|Cap new inventory stacks and report the quantit
 Inventory operations|implemented|Fill existing partial stacks before allocating a new stack|porting/native/Source/FortniteGame/Private/FortAthenaInventoryFlow.cpp
 Inventory operations|implemented|Check and spend building materials across matching inventory stacks|porting/native/Source/FortniteGame/Private/FortAthenaBuilding.cpp
 Inventory operations|implemented|Require enough contiguous quickbar slots before accepting a pickup or swapping an item|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
-Inventory operations|implemented|Keep loaded magazine ammo with the first grant during partial pickup|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
+Inventory operations|implemented|Preserve magazine ammo across partial pickups and prevent merges that would discard a loaded source|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
 Inventory operations|implemented|Reconcile manual drops with the quantity removed and clear slots through inventory removal|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
 Inventory operations|implemented|Honor destroy-on-drop and the outgoing inventory debit during pickup swaps|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
 Inventory operations|implemented|Activate the actual assigned quickbar slot after replacing a held item|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp

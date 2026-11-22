@@ -472,6 +472,15 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 			{
 				continue;
 			}
+			// A magazine belongs to its source entry. Topping up another stack would lose it.
+			if (LoadedAmmo > 0)
+			{
+				if (!Definition->bAllowMultipleStacks)
+				{
+					return nullptr;
+				}
+				continue;
+			}
 			const int32 Room = FMath::Max(0, MaxStack - Existing->ItemEntry.Count);
 			const int32 Added = FMath::Min(Room, Count);
 			if (Added > 0)
@@ -554,9 +563,9 @@ int32 FortAthenaInventory::CombineStacks(AFortPlayerController* Controller, cons
 	UFortWorldItem* Target = FindItemByGuid(Inventory, TargetGuid);
 	UFortWorldItem* Source = FindItemByGuid(Inventory, SourceGuid);
 	if (!Target || !Source || Target->ItemEntry.ItemDefinition != Source->ItemEntry.ItemDefinition || !Target->ItemEntry.ItemDefinition
-		|| !Target->ItemEntry.ItemDefinition->IsStackable())
+		|| !Target->ItemEntry.ItemDefinition->IsStackable() || Source->ItemEntry.LoadedAmmo > 0)
 	{
-		UE_LOG(LogTemp, Display, TEXT("Inventory: combine %s <- %s rejected (missing item, different definition or not stackable)"), *TargetGuid.ToString(), *SourceGuid.ToString());
+		UE_LOG(LogTemp, Display, TEXT("Inventory: combine %s <- %s rejected (incompatible stacks or loaded source)"), *TargetGuid.ToString(), *SourceGuid.ToString());
 		return 0;
 	}
 	// stand-in: the original combine rules are not recovered; this is the plain stack merge bounded by the max stack size.

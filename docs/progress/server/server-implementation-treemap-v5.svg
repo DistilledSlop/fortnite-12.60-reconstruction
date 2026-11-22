@@ -425,7 +425,7 @@ Implemented: Cap new inventory stacks and report the quantity accepted from pick
 Implemented: Fill existing partial stacks before allocating a new stack
 Implemented: Check and spend building materials across matching inventory stacks
 Implemented: Require enough contiguous quickbar slots before accepting a pickup or swapping an item
-Implemented: Keep loaded magazine ammo with the first grant during partial pickup
+Implemented: Preserve magazine ammo across partial pickups and prevent merges that would discard a loaded source
 Implemented: Reconcile manual drops with the quantity removed and clear slots through inventory removal
 Implemented: Honor destroy-on-drop and the outgoing inventory debit during pickup swaps
 Implemented: Activate the actual assigned quickbar slot after replacing a held item

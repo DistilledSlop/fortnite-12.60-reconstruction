@@ -581,7 +581,7 @@ namespace
 				Slots->SetNum(MaxSlotsInBar);
 			}
 
-			const int32 StackHeadroom = ComputeExistingStackHeadroom(PC, Def);
+			const int32 StackHeadroom = SrcEntry.LoadedAmmo > 0 ? 0 : ComputeExistingStackHeadroom(PC, Def);
 			const UFortWorldItemDefinition* WorldDef = Cast<UFortWorldItemDefinition>(Def);
 			const int32 Span = WorldDef ? FMath::Max(1, static_cast<int32>(WorldDef->NumberOfSlotsToTake)) : 1;
 			const int32 FreeSlot = Slots ? FindFreeSlotRange(*Slots, MinSlot, MaxSlot, Span) : INDEX_NONE;

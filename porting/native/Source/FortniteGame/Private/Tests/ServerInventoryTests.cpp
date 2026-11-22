@@ -286,6 +286,25 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	const FGuid LoadedGuid = LoadedWeapon.ItemGuid;
 	TestEqual(TEXT("Remove the weapon from the partial pickup fixture"), FortAthenaInventory::RemoveItem(Controller, LoadedGuid, 1), 1);
 
+	WeaponDefinition->MaxStackSize = FScalableFloat(2.0f);
+	WeaponDefinition->bAllowMultipleStacks = true;
+	UFortWorldItem* EmptyStack = FortAthenaInventory::GiveItem(Controller, WeaponDefinition, 1, 1, 0);
+	UFortWorldItem* LoadedStack = FortAthenaInventory::GiveItem(Controller, WeaponDefinition, 1, 1, 5);
+	if (!TestNotNull(TEXT("Empty weapon stack"), EmptyStack) ||
+		!TestNotNull(TEXT("Loaded weapon stack"), LoadedStack) ||
+		!TestTrue(TEXT("A loaded grant creates a separate entry"), EmptyStack != LoadedStack))
+	{
+		return false;
+	}
+	const FGuid EmptyStackGuid = EmptyStack->NativeGetItemGuid();
+	const FGuid LoadedStackGuid = LoadedStack->NativeGetItemGuid();
+	TestEqual(TEXT("Loaded grant retains its magazine"), LoadedStack->ItemEntry.LoadedAmmo, 5);
+	TestEqual(TEXT("Merging a loaded source is rejected"), FortAthenaInventory::CombineStacks(Controller, EmptyStackGuid, LoadedStackGuid), 0);
+	TestEqual(TEXT("An empty source can merge into a loaded destination"), FortAthenaInventory::CombineStacks(Controller, LoadedStackGuid, EmptyStackGuid), 1);
+	TestEqual(TEXT("The merge preserves the destination magazine"), LoadedStack->ItemEntry.LoadedAmmo, 5);
+	TestEqual(TEXT("Remove the merged fixture stack"), FortAthenaInventory::RemoveItem(Controller, LoadedStackGuid, 2), 2);
+	WeaponDefinition->MaxStackSize = FScalableFloat(1.0f);
+
 	UFortWorldItem* WeaponItem = FortAthenaInventory::GiveItem(Controller, WeaponDefinition, 1, 1, 5);
 	if (!TestNotNull(TEXT("Weapon inventory item"), WeaponItem))
 	{
