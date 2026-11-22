@@ -245,6 +245,17 @@ namespace
 		Target->ForceNetUpdate();
 	}
 
+	void ClearReviveInteraction(AFortPawn* Pawn)
+	{
+		AFortPlayerPawnAthena* Helper = Cast<AFortPlayerPawnAthena>(Pawn);
+		AFortPlayerPawnAthena* Target = Helper ? Cast<AFortPlayerPawnAthena>(Helper->ItemInteractionActor) : nullptr;
+		if (Target && Target->bIsDBNO && Target->DBNORevivalStacking > 0)
+		{
+			Helper->ItemInteractionActor = nullptr;
+			Helper->ForceNetUpdate();
+		}
+	}
+
 	void ReleaseCarryConnections(AFortPawn* Pawn)
 	{
 		if (AFortPlayerPawn* Player = Cast<AFortPlayerPawn>(Pawn))
@@ -397,6 +408,7 @@ namespace
 		}
 
 		ReleaseCarryConnections(Player);
+		ClearReviveInteraction(Player);
 		Player->bWasCrouchedBeforeDBNO = Player->bIsCrouched;
 		Player->bIsDBNO = true;
 		if (UAbilitySystemComponent* AbilitySystem = Player->GetAbilitySystemComponent())
@@ -1148,6 +1160,7 @@ namespace
 	void NotifyPawnDeath(AFortPawn* VictimPawn, AController* InstigatedBy, AActor* DamageCauser, float LethalDamage)
 	{
 		ReleaseCarryConnections(VictimPawn);
+		ClearReviveInteraction(VictimPawn);
 		VictimPawn->bWasDBNOOnDeath = VictimPawn->bIsDBNO;
 		if (UCharacterMovementComponent* MoveComp = VictimPawn->GetCharacterMovement())
 		{
@@ -1420,13 +1433,7 @@ void FortAthenaHealth_HandlePawnUnPossessed(AFortPawn* Pawn)
 	if (Pawn->HasAuthority() && FortAthenaHealth::IsEnabled())
 	{
 		ReleaseCarryConnections(Pawn);
-		AFortPlayerPawnAthena* Helper = Cast<AFortPlayerPawnAthena>(Pawn);
-		AFortPlayerPawnAthena* Target = Helper ? Cast<AFortPlayerPawnAthena>(Helper->ItemInteractionActor) : nullptr;
-		if (Target && Target->bIsDBNO && Target->DBNORevivalStacking > 0)
-		{
-			Helper->ItemInteractionActor = nullptr;
-			Helper->ForceNetUpdate();
-		}
+		ClearReviveInteraction(Pawn);
 	}
 }
 
