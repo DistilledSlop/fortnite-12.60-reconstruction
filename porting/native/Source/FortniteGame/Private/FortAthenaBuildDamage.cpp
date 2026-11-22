@@ -303,7 +303,7 @@ namespace
 			return 0;
 		}
 
-		int32 Total = 0;
+		int64 Total = 0;
 		for (const UFortWorldItem* Item : Inventory->Inventory.ItemInstances)
 		{
 			const UFortResourceItemDefinition* ResDef = Item
@@ -314,7 +314,7 @@ namespace
 				Total += Item->ItemEntry.Count;
 			}
 		}
-		return Total;
+		return static_cast<int32>(FMath::Min<int64>(Total, MAX_int32));
 	}
 
 	bool BuildDamageConsumeResourceFromInventory(AFortPlayerController* Controller, EFortResourceType::Type ResourceType, int32 AmountToConsume)
@@ -324,13 +324,8 @@ namespace
 			return true;
 		}
 
-		if (BuildDamageCountResourceInInventory(Controller, ResourceType) < AmountToConsume)
-		{
-			return false;
-		}
-
 		AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
-		if (!Inventory)
+		if (!Inventory || !Controller->HasAuthority() || !FortAthenaInventory::IsEnabled())
 		{
 			return false;
 		}
@@ -354,11 +349,16 @@ namespace
 			}
 		}
 
+		if (Remaining != 0)
+		{
+			return false;
+		}
+		int32 Removed = 0;
 		for (const TPair<FGuid, int32>& Step : Deductions)
 		{
-			FortAthenaInventory::RemoveItem(Controller, Step.Key, Step.Value);
+			Removed += FortAthenaInventory::RemoveItem(Controller, Step.Key, Step.Value);
 		}
-		return Remaining == 0;
+		return Removed == AmountToConsume;
 	}
 
 	float BuildDamageGetMaxInteractionDistance(const AFortPlayerController* Controller)
