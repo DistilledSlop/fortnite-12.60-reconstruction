@@ -433,7 +433,7 @@ Verified: Exercise capped grants, reject zero-quantity grants without creating e
 Implemented: Reject swaps that cannot grant a single-stack item before dropping the outgoing item
 Verified: Exercise partial world pickup, split drop and remainder pickup on the dedicated server
 Verified: Reject repeat and reentrant pickup claims, reconcile discarded stacks and preserve empty magazines through drop and pickup
-Verified: Transfer a split drop between two server-side players and reject repeat claims
+Verified: Transfer a split stack between two server-side players through the drop and pickup RPCs, reject zero-count drops and preserve quantities on repeat claims
 Verified: Collect multi-item pickups above the signed 32-bit total and reject retries that would grant an invalid bundle’s display entry
 Verified: Preserve Blueprint inventory quantity and removal results when matching stacks exceed a signed 32-bit count
 Verified: Require the owned inventory instance when removing items by object through Blueprint

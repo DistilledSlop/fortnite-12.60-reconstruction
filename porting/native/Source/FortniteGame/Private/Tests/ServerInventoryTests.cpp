@@ -239,7 +239,9 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	TestEqual(TEXT("Rejected pickup preserves the inventory total"), Second->ItemEntry.Count, 10);
 	TestEqual(TEXT("Rejected pickup preserves the ground remainder"), Pickup->PrimaryPickupItemEntry.Count, 2);
 
-	TestTrue(TEXT("Drop splits four units from the stack"), FortAthenaLootTransfer::AttemptInventoryDrop(Controller, SecondGuid, 4, false));
+	Controller->ServerAttemptInventoryDrop(SecondGuid, 0, false);
+	TestEqual(TEXT("A zero-count drop preserves the stack"), Second->ItemEntry.Count, 10);
+	Controller->ServerAttemptInventoryDrop(SecondGuid, 4, false);
 	TestEqual(TEXT("Six units stay in inventory"), Second->ItemEntry.Count, 6);
 	AFortPickupAthena* Dropped = nullptr;
 	for (TActorIterator<AFortPickupAthena> It(World); It; ++It)
@@ -293,14 +295,15 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	{
 		return false;
 	}
-	TestFalse(TEXT("A second player cannot collect a claimed pickup"),
-		FortAthenaLootTransfer::HandlePickup(ContenderPawn, Pickup, 0.25f, FVector::ZeroVector, false));
+	ContenderPawn->ServerHandlePickup(Pickup, 0.25f, FVector::ZeroVector, false);
 	TestEqual(TEXT("The losing contender receives no replicated items"), ContenderInventory->Inventory.ReplicatedEntries.Num(), 0);
-	if (!Dropped || !TestTrue(TEXT("The second player can collect the split drop"),
-		FortAthenaLootTransfer::HandlePickup(ContenderPawn, Dropped, 0.25f, FVector::ZeroVector, false)))
+	if (!Dropped)
 	{
 		return false;
 	}
+	ContenderPawn->ServerHandlePickup(Dropped, 0.25f, FVector::ZeroVector, false);
+	TestTrue(TEXT("The second player claims the split drop"), Dropped->bPickedUp);
+	ContenderPawn->ServerHandlePickup(Dropped, 0.25f, FVector::ZeroVector, false);
 	if (TestEqual(TEXT("The second player receives one replicated stack"), ContenderInventory->Inventory.ReplicatedEntries.Num(), 1))
 	{
 		const FFortItemEntry& Entry = ContenderInventory->Inventory.ReplicatedEntries[0];
