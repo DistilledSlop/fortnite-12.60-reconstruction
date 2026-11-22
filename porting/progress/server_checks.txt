@@ -12,6 +12,7 @@ DBNO|verified|Drain two downed health per bleed tick while a teammate stands and
 DBNO|verified|Pick up and drop a downed teammate|b3295a17
 DBNO|verified|Apply configured forward and upward throw velocity|d714d0e5
 DBNO|verified|Complete and cancel a timed teammate revive|2b0c4d87
+DBNO|verified|Keep revived health through the old bleed deadline and start a new bleed cycle on the next knock|2d2d3589
 DBNO|verified|Suppress knocks when a team playlist disables DBNO|ba715d19
 DBNO|verified|Allow a knock when storm damage prevents a conditional respawn|26846161
 DBNO|verified|Block jumping when the downed movement update clears crouch|d456d649
