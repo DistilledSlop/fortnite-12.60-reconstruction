@@ -122,3 +122,13 @@ Removed from the goal list: POIs (missing / no collision), styles (glider/emote/
 - **Archived match evidence (2026-11-17 UTC).** In `porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Saved/Logs/FortniteLinux-backup-2026.11.17-02.05.24.log` (lines 38163–38186), a rare chest spawned five items and the server granted a matching 30-wood pickup to the player two seconds later. In `porting/generated/chrono-server-logs/gameserver.log` (lines 38087–38160), a rare ammo crate spawned ten items and the server granted matching ammo and shield pickups shortly after. These runs predate the current rollback change and establish server-side grants in a connected match. Current-build client presentation and collection still need a smoke test.
 - **Llama and supply-drop startup evidence (2026-11-22 UTC).** The dedicated server reached loot automation after logging skipped Blueprint imports for the llama's playlist-loaded delegate and the supply drop's spawn-data accessor. The llama also references missing effect, map-icon, and material packages. The 2026-11-17 match log shows the same llama import and package errors. These logs establish load-time gaps. Spawn, search, and loot delivery still need runtime evidence.
 - **Public gameplay references.** Epic's release notes describe llamas as scarce containers placed at random and opened by searching. A later patch added opening by destruction, so an implementation with both triggers needs to commit the loot batch only once. Epic also describes supply drops descending, landing, and opening, with playlist-specific timing and balloon health. These are historical descriptions of the lifecycle. Drop counts, contents, timing, and health vary by release and mode. [Llama introduction](https://www.fortnite.com/news/v3-3-patch-notes), [destruction and landing behavior](https://www.fortnite.com/news/v3-5-patch-notes?lang=en-US), [playlist balloon settings](https://www.fortnite.com/news/v3-6-patch-notes).
+
+Server deployments can assign loot marker tags in Game.ini without recooking the level. Each entry uses the exact Unreal actor object path (including the streamed level, when applicable) and one tag. The actor must already be a world-loot marker with an assigned loot tier. A delivery crate also needs a movable root.
+
+```ini
+[WorldLoot]
++MarkerTag=/Game/Maps/MyMap.MyMap:PersistentLevel.Cache01|GroundLootCacheCandidate
++MarkerTag=/Game/Maps/MyMap.MyMap:PersistentLevel.Cache01|BreakableLootContainer
++MarkerTag=/Game/Maps/MyMap.MyMap:PersistentLevel.Delivery01|LootDeliverySeconds=90
++MarkerTag=/Game/Maps/MyMap.MyMap:PersistentLevel.Delivery01|LootDeliveryCrate
+```
