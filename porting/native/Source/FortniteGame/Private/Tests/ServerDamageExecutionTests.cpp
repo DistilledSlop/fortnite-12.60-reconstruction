@@ -7,12 +7,18 @@
 #include "AFortAthenaMutator_DBNOSetting.h"
 #include "AFortGameModeAthena.h"
 #include "AFortGameStateAthena.h"
+#include "AFortInventory.h"
+#include "AFortPickupAthena.h"
 #include "AFortPlayerControllerAthena.h"
 #include "AFortPlayerPawnAthena.h"
 #include "AFortPlayerStateAthena.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
+#include "EngineUtils.h"
+#include "EFortItemType.h"
+#include "EWorldItemDropBehavior.h"
 #include "FortAthenaHealth.h"
+#include "FortAthenaInventoryFlow.h"
 #include "FortAthenaLootSearch.h"
 #include "FortHarvestBuilding.h"
 #include "FortNativeGameplayTagsRuntime.h"
@@ -29,6 +35,8 @@
 #include "UFortPlaylistAthena.h"
 #include "UFortMutatorListComponent.h"
 #include "UFortMovementComp_CharacterAthena.h"
+#include "UFortResourceItemDefinition.h"
+#include "UFortWorldItem.h"
 
 // UE 4.25 discovers dedicated-server tests under ClientContext.
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FServerDamageExecutionTest, "Fortnite.Server.Damage.UnrealEvent",
@@ -621,12 +629,52 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TeamPlaylist->DBNOType = EDBNOType::On;
 	DBNOMutator->bMutatorActive = true;
 	DBNOMutator->DBNOSetting = EDBNOMutatorType::Off;
+	AFortInventory* RetainedInventory = World->SpawnActor<AFortInventory>();
+	FGuid RetainedGuid;
+	if (TestNotNull(TEXT("Elimination fixture world inventory"), RetainedInventory))
+	{
+		NoKnockController->WorldInventory = RetainedInventory;
+		UFortResourceItemDefinition* RetainedDefinition = NewObject<UFortResourceItemDefinition>(RetainedInventory);
+		RetainedDefinition->ItemType = EFortItemType::WorldResource;
+		RetainedDefinition->MaxStackSize = FScalableFloat(10.0f);
+		RetainedDefinition->bCanBeDropped = true;
+		RetainedDefinition->DropBehavior = EWorldItemDropBehavior::DropAsPickup;
+		UFortWorldItem* RetainedItem = FortAthenaInventory::GiveItem(NoKnockController, RetainedDefinition, 3);
+		if (TestNotNull(TEXT("Droppable item granted before elimination"), RetainedItem))
+		{
+			RetainedGuid = RetainedItem->NativeGetItemGuid();
+		}
+	}
+	NoKnockPawn->SetShouldDropItemsOnDeath(false);
 	{
 		TGuardValue<UFortMutatorListComponent*> MutatorListOverride(State->MutatorListComponent, MutatorList);
 		FortAthenaHealth::ApplyDamage(NoKnockPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
 	}
 	TestTrue(TEXT("An active Off mutator overrides a team playlist with DBNO enabled"),
 		NoKnockPawn->bIsDying && !NoKnockPawn->bIsDBNO);
+	if (RetainedInventory && RetainedGuid.IsValid())
+	{
+		UFortWorldItem* RetainedItem = RetainedInventory->NativeFindItemByGuid(RetainedGuid);
+		if (TestNotNull(TEXT("Elimination preserves the item when death drops are disabled"), RetainedItem))
+		{
+			TestEqual(TEXT("Elimination preserves the item quantity"), RetainedItem->ItemEntry.Count, 3);
+		}
+		if (TestEqual(TEXT("Elimination preserves the replicated inventory entry"), RetainedInventory->Inventory.ReplicatedEntries.Num(), 1))
+		{
+			const FFortItemEntry& Entry = RetainedInventory->Inventory.ReplicatedEntries[0];
+			TestTrue(TEXT("The replicated entry retains its GUID"), Entry.ItemGuid == RetainedGuid);
+			TestEqual(TEXT("The replicated entry retains its quantity"), Entry.Count, 3);
+		}
+	}
+	int32 SourcedPickups = 0;
+	for (TActorIterator<AFortPickupAthena> It(World); It; ++It)
+	{
+		if (It->PawnWhoDroppedPickup == NoKnockPawn)
+		{
+			++SourcedPickups;
+		}
+	}
+	TestEqual(TEXT("Elimination with death drops disabled creates no pickups from the pawn"), SourcedPickups, 0);
 	UFortAbilitySystemComponent* FirstASC = FirstPawn->AbilitySystemComponent;
 	const FGameplayAbilitySpecHandle RangedAbilityHandle = FirstASC->GiveAbility(
 		FGameplayAbilitySpec(UFortGameplayAbility_RangedWeapon::StaticClass()));
@@ -742,8 +790,9 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	}), 1.5f));
 
 	const TWeakObjectPtr<AFortGameStateAthena> WeakState(State);
-	const TArray<TWeakObjectPtr<AActor>> TeamFixtures = {First, Second, Third, NoKnockController, FirstPawn, SecondPawn, ThirdPawn, NoKnockPawn, Opponent, DBNOMutator};
-	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakOpponent, WeakState, PreviousPlaylist, TeamFixtures, MutatorList]()
+	const TWeakObjectPtr<AFortPlayerControllerAthena> WeakNoKnockController(NoKnockController);
+	const TArray<TWeakObjectPtr<AActor>> TeamFixtures = {First, Second, Third, NoKnockController, FirstPawn, SecondPawn, ThirdPawn, NoKnockPawn, Opponent, DBNOMutator, RetainedInventory};
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakOpponent, WeakState, WeakNoKnockController, PreviousPlaylist, TeamFixtures, MutatorList]()
 	{
 		AFortPlayerPawnAthena* DownedPawn = WeakFirstPawn.Get();
 		if (TestNotNull(TEXT("Downed team fixture after last teammate elimination"), DownedPawn))
@@ -765,6 +814,10 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 			CurrentState->CurrentPlaylistInfo.OverridePlaylist = PreviousPlaylist.Get();
 		}
 		MutatorList->DestroyComponent();
+		if (AFortPlayerControllerAthena* Controller = WeakNoKnockController.Get())
+		{
+			Controller->WorldInventory = nullptr;
+		}
 		for (const TWeakObjectPtr<AActor>& Fixture : TeamFixtures)
 		{
 			if (AActor* Actor = Fixture.Get())
