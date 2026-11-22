@@ -642,11 +642,18 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TestTrue(TEXT("A standing teammate can revive a player knocked by lethal damage"),
 		FortAthenaHealth::TryStartRevive(Second, FirstPawn));
 
+	AFortPlayerControllerAthena* Opponent = World->SpawnActor<AFortPlayerControllerAthena>();
+	AFortPlayerStateAthena* OpponentState = Opponent ? Cast<AFortPlayerStateAthena>(Opponent->PlayerState) : nullptr;
+	if (TestNotNull(TEXT("Knock instigator has an opposing player state"), OpponentState))
+	{
+		OpponentState->TeamIndex = 31;
+	}
+	const TWeakObjectPtr<AFortPlayerControllerAthena> WeakOpponent(Opponent);
 	const TSharedRef<TOptional<float>> HealthAfterFirstBleed = MakeShared<TOptional<float>>();
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakFirstPawn(FirstPawn);
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakSecondPawn(SecondPawn);
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakThirdPawn(ThirdPawn);
-	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakSecondPawn, HealthAfterFirstBleed]()
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakSecondPawn, WeakOpponent, HealthAfterFirstBleed]()
 	{
 		AFortPlayerPawnAthena* RevivedPawn = WeakFirstPawn.Get();
 		AFortPlayerPawnAthena* Teammate = WeakSecondPawn.Get();
@@ -656,7 +663,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 			TestFalse(TEXT("A teammate revive clears the real knock"), RevivedPawn->bIsDBNO);
 			TestEqual(TEXT("The original bleed timer leaves revived health intact"), RevivedPawn->GetHealth(), 30.0f);
 
-			FortAthenaHealth::ApplyDamage(RevivedPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
+			FortAthenaHealth::ApplyDamage(RevivedPawn, 200.0f, FGameplayTagContainer(), WeakOpponent.Get(), nullptr, true);
 			TestTrue(TEXT("Lethal damage can knock the revived player again"), RevivedPawn->bIsDBNO && !RevivedPawn->bIsDying);
 			Teammate->bAllowDBNOCarry = true;
 			TestTrue(TEXT("A standing teammate can carry the knocked player"),
@@ -708,13 +715,23 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	}), 1.5f));
 
 	const TWeakObjectPtr<AFortGameStateAthena> WeakState(State);
-	const TArray<TWeakObjectPtr<AActor>> TeamFixtures = {First, Second, Third, NoKnockController, FirstPawn, SecondPawn, ThirdPawn, NoKnockPawn};
-	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakState, PreviousPlaylist, TeamFixtures]()
+	const TArray<TWeakObjectPtr<AActor>> TeamFixtures = {First, Second, Third, NoKnockController, FirstPawn, SecondPawn, ThirdPawn, NoKnockPawn, Opponent};
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakOpponent, WeakState, PreviousPlaylist, TeamFixtures]()
 	{
 		AFortPlayerPawnAthena* DownedPawn = WeakFirstPawn.Get();
 		if (TestNotNull(TEXT("Downed team fixture after last teammate elimination"), DownedPawn))
 		{
 			TestTrue(TEXT("The next bleed tick finishes the downed squad member"), DownedPawn->bIsDying);
+			AFortPlayerControllerAthena* Attacker = WeakOpponent.Get();
+			AFortPlayerStateAthena* AttackerState = Attacker ? Cast<AFortPlayerStateAthena>(Attacker->PlayerState) : nullptr;
+			const AFortPlayerStateAthena* VictimState = DownedPawn->GetPlayerState<AFortPlayerStateAthena>();
+			if (TestNotNull(TEXT("Bleed-out retains the attacker's player state"), AttackerState) &&
+				TestNotNull(TEXT("The eliminated player has a death report"), VictimState))
+			{
+				TestTrue(TEXT("The death report attributes bleed-out to the knock instigator"),
+					VictimState->DeathInfo.FinisherOrDowner == AttackerState);
+				TestEqual(TEXT("Bleed-out awards one elimination to the knock instigator"), AttackerState->KillScore, 1);
+			}
 		}
 		if (AFortGameStateAthena* CurrentState = WeakState.Get())
 		{
