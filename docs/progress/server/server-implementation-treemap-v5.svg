@@ -466,7 +466,7 @@ Implemented: Process bench interactions on the server, preflight and charge all 
 effort weight 5 | source: equal-weight server implementation checks
 Verified: Exercise reconstructed loot selection with the loot contract test
 Implemented: Search a chest and replicate its searched state
-Open: Verify chest, ammo crate and world loot contents and contested pickups. Headless checks cover directional Blueprint pickup tosses and owner-only collection
+Open: Verify chest, ammo crate and world loot contents and contested pickups. Headless checks cover Blueprint pickup tosses, source metadata and owner-only collection
 Open: Find and search a Loot Llama and validate its drops
 Open: Spawn, land and open a supply drop, then verify its loot</title>
 <rect class="tile-body" x="897.0" y="25.0" width="98.0" height="158.2" rx="4"/>

@@ -409,7 +409,8 @@ namespace
 	}
 
 	AFortPickup* SpawnPickupCommon(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 NumberToSpawn,
-		const FVector& Position, const FVector& Direction, bool bToss, AFortPlayerController* Owner, bool bOnlyRelevantToOwner)
+		const FVector& Position, const FVector& Direction, bool bToss, EFortPickupSourceTypeFlag SourceType,
+		EFortPickupSpawnSource Source, AFortPlayerController* Owner, bool bOnlyRelevantToOwner)
 	{
 		UWorld* World = WorldOf(WorldContextObject);
 		if (!World || !ItemDefinition || NumberToSpawn <= 0)
@@ -419,8 +420,14 @@ namespace
 		// Use the same fallback distance as a tossed pickup without a pawn.
 		constexpr float TossDistance = 180.0f;
 		const FVector RestLocation = bToss ? Position + Direction.GetSafeNormal() * TossDistance : Position;
-		return FortAthenaLoot::SpawnResolvedPickup(World, RestLocation, ItemDefinition, NumberToSpawn, 1, 0,
+		AFortPickup* Pickup = FortAthenaLoot::SpawnResolvedPickup(World, RestLocation, ItemDefinition, NumberToSpawn, 1, 0,
 			bToss ? &Position : nullptr, Owner, bOnlyRelevantToOwner);
+		if (Pickup)
+		{
+			Pickup->PickupSourceTypeFlags = SourceType;
+			Pickup->PickupSpawnSource = Source;
+		}
+		return Pickup;
 	}
 
 	DEFINE_FUNCTION(ExecK2_SpawnPickupInWorld)
@@ -442,7 +449,7 @@ namespace
 		P_FINISH;
 		P_NATIVE_BEGIN;
 		*static_cast<AFortPickup**>(RESULT_PARAM) = SpawnPickupCommon(WorldContextObject, ItemDefinition, NumberToSpawn,
-			Position, Direction, bToss, OptionalOwnerPC, bPickupOnlyRelevantToOwner);
+			Position, Direction, bToss, SourceType, Source, OptionalOwnerPC, bPickupOnlyRelevantToOwner);
 		P_NATIVE_END;
 	}
 
@@ -467,7 +474,7 @@ namespace
 		P_NATIVE_BEGIN;
 		// stand-in: the pickup class override is ignored; the loot system spawns FortPickupAthena.
 		*static_cast<AFortPickup**>(RESULT_PARAM) = SpawnPickupCommon(WorldContextObject, ItemDefinition, NumberToSpawn,
-			Position, Direction, bToss, OptionalOwnerPC, bPickupOnlyRelevantToOwner);
+			Position, Direction, bToss, SourceType, Source, OptionalOwnerPC, bPickupOnlyRelevantToOwner);
 		P_NATIVE_END;
 	}
 

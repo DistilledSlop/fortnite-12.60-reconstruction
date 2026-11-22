@@ -90,11 +90,21 @@ bool FServerBlueprintPickupTossTest::RunTest(const FString&)
 		AFortPlayerController* OptionalOwnerPC; bool bPickupOnlyRelevantToOwner; AFortPickup* ReturnValue;
 	};
 	FSpawnParams Toss{World, Definition, 1, Position, Direction, 0, true, false, false, 0,
-		EFortPickupSourceTypeFlag::Other, EFortPickupSpawnSource::Unset, nullptr, false, nullptr};
+		EFortPickupSourceTypeFlag::Container, EFortPickupSpawnSource::Chest, nullptr, false, nullptr};
 	Library->ProcessEvent(Spawn, &Toss);
 	FSpawnWithClassParams WithClass{World, Definition, AFortPickupAthena::StaticClass(), 1, Position, Direction, 0,
-		true, false, false, 0, EFortPickupSourceTypeFlag::Other, EFortPickupSpawnSource::Unset, nullptr, false, nullptr};
+		true, false, false, 0, EFortPickupSourceTypeFlag::Player, EFortPickupSpawnSource::PlayerElimination, nullptr, false, nullptr};
 	Library->ProcessEvent(SpawnWithClass, &WithClass);
+	if (Toss.ReturnValue)
+	{
+		TestTrue(TEXT("Blueprint pickup preserves source type"), Toss.ReturnValue->PickupSourceTypeFlags == Toss.SourceType);
+		TestTrue(TEXT("Blueprint pickup preserves spawn source"), Toss.ReturnValue->PickupSpawnSource == Toss.Source);
+	}
+	if (WithClass.ReturnValue)
+	{
+		TestTrue(TEXT("Blueprint pickup with class preserves source type"), WithClass.ReturnValue->PickupSourceTypeFlags == WithClass.SourceType);
+		TestTrue(TEXT("Blueprint pickup with class preserves spawn source"), WithClass.ReturnValue->PickupSpawnSource == WithClass.Source);
+	}
 	for (AFortPickup* Pickup : {Toss.ReturnValue, WithClass.ReturnValue})
 	{
 		if (TestNotNull(TEXT("Blueprint directional toss spawned a pickup"), Pickup))
