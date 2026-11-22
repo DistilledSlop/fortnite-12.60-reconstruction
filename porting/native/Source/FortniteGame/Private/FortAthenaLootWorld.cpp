@@ -26,7 +26,8 @@ namespace
 	struct FScheduledDelivery
 	{
 		float Delay = 0.0f;
-		float DescentStartTime = -1.0f;
+		float LastDescentTick = -1.0f;
+		float DescentElapsed = 0.0f;
 		FVector LandingLocation = FVector::ZeroVector;
 		bool bSearchableCrate = false;
 		bool bRestoreCollision = false;
@@ -471,8 +472,13 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 		}
 
 		FScheduledDelivery& Delivery = It.Value();
-		if (Now - S.DeliveryStartTime < Delivery.Delay || !Marker->GetLevel()->bIsVisible)
+		if (Now - S.DeliveryStartTime < Delivery.Delay)
 			continue;
+		if (!Marker->GetLevel()->bIsVisible)
+		{
+			Delivery.LastDescentTick = -1.0f;
+			continue;
+		}
 
 		if (!Delivery.bSearchableCrate)
 		{
@@ -481,11 +487,11 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 			continue;
 		}
 
-		const bool bStartingDescent = Delivery.DescentStartTime < 0.0f;
-		if (bStartingDescent)
-			Delivery.DescentStartTime = Now;
+		if (Delivery.LastDescentTick >= 0.0f)
+			Delivery.DescentElapsed += Now - Delivery.LastDescentTick;
+		Delivery.LastDescentTick = Now;
 
-		const float Progress = FMath::Clamp((Now - Delivery.DescentStartTime) / DeliveryDuration, 0.0f, 1.0f);
+		const float Progress = FMath::Clamp(Delivery.DescentElapsed / DeliveryDuration, 0.0f, 1.0f);
 		const FVector Target = Delivery.LandingLocation + FVector::UpVector * (DeliveryHeight * (1.0f - Progress));
 		Marker->SetActorLocation(Target);
 		if (!Marker->GetActorLocation().Equals(Target, 1.0f))
@@ -498,7 +504,7 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 			continue;
 		}
 
-		if (bStartingDescent)
+		if (Marker->IsHidden())
 		{
 			Marker->SetActorHiddenInGame(false);
 			Marker->ForceNetUpdate();
