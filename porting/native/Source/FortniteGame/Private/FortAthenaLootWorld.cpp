@@ -43,6 +43,7 @@ namespace
 		TMap<FString, TArray<FName>> ConfiguredMarkerTags;
 		TMap<FString, TWeakObjectPtr<ABuildingContainer>> SeenConfiguredMarkers;
 		bool bGroundCachesSelected = false;
+		bool bReportedMissingMarkers = false;
 		float DeliveryStartTime = -1.0f;
 		bool bLoggedWaitingForData = false;
 	};
@@ -85,6 +86,7 @@ namespace
 		S.ScheduledDeliveries.Reset();
 		S.GroundCacheCandidates.Reset();
 		S.bGroundCachesSelected = false;
+		S.bReportedMissingMarkers = false;
 		S.DeliveryStartTime = -1.0f;
 		S.bLoggedWaitingForData = false;
 		UE_LOG(LogTemp, Display, TEXT("LootWorld: reset state for world=%s"), *GetNameSafe(World));
@@ -187,6 +189,7 @@ void FortAthenaLootWorld::Reset()
 	S.ScheduledDeliveries.Reset();
 	S.GroundCacheCandidates.Reset();
 	S.bGroundCachesSelected = false;
+	S.bReportedMissingMarkers = false;
 	S.DeliveryStartTime = -1.0f;
 	S.bLoggedWaitingForData = false;
 }
@@ -386,40 +389,53 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 	if (!GameState)
 		return;
 
-	if (!S.bGroundCachesSelected &&
-		(GameState->GamePhase == EAthenaGamePhase::Aircraft || GameState->GamePhase == EAthenaGamePhase::SafeZones))
+	const bool bMatchStarted = GameState->GamePhase == EAthenaGamePhase::Aircraft ||
+		GameState->GamePhase == EAthenaGamePhase::SafeZones;
+	if (bMatchStarted && !S.bReportedMissingMarkers)
 	{
-		S.bGroundCachesSelected = true;
-		TArray<TWeakObjectPtr<ABuildingContainer>> Candidates;
-		for (const auto& Entry : S.GroundCacheCandidates)
-		{
-			ABuildingContainer* Container = Entry.Key.Get();
-			if (IsFloorLootMarkerCandidate(Container) && Container->GetLevel()->bIsVisible)
-				Candidates.Add(Entry.Key);
-			S.ProcessedContainers.Add(Entry.Key);
-		}
-
-		int32 RequestedCount = 1;
-		FParse::Value(FCommandLine::Get(), TEXT("GroundLootCacheCount="), RequestedCount);
-		const int32 Count = FMath::Clamp(RequestedCount, 0, Candidates.Num());
-		for (int32 Index = 0; Index < Count; ++Index)
-		{
-			Candidates.Swap(Index, FMath::RandRange(Index, Candidates.Num() - 1));
-			const TWeakObjectPtr<ABuildingContainer>& Selected = Candidates[Index];
-			if (ABuildingContainer* Container = Selected.Get())
-			{
-				Container->bStartAlreadySearched_Athena = false;
-				Container->SetActorHiddenInGame(false);
-				Container->SetActorEnableCollision(S.GroundCacheCandidates.FindChecked(Selected));
-				Container->ForceNetUpdate();
-			}
-		}
-		S.GroundCacheCandidates.Reset();
-
+		S.bReportedMissingMarkers = true;
 		for (const auto& Entry : S.ConfiguredMarkerTags)
 		{
 			if (!S.SeenConfiguredMarkers.Contains(Entry.Key))
 				UE_LOG(LogTemp, Warning, TEXT("LootWorld: configured marker %s was not present at match start"), *Entry.Key);
+		}
+	}
+
+	if (bMatchStarted && !S.bGroundCachesSelected && S.GroundCacheCandidates.Num() > 0)
+	{
+		TArray<TWeakObjectPtr<ABuildingContainer>> Candidates;
+		for (auto It = S.GroundCacheCandidates.CreateIterator(); It; ++It)
+		{
+			ABuildingContainer* Container = It.Key().Get();
+			if (!IsFloorLootMarkerCandidate(Container))
+				It.RemoveCurrent();
+			else if (Container->GetLevel()->bIsVisible)
+				Candidates.Add(It.Key());
+		}
+
+		// Candidate levels can stream in after the match starts.
+		if (Candidates.Num() > 0)
+		{
+			S.bGroundCachesSelected = true;
+			for (const auto& Entry : S.GroundCacheCandidates)
+				S.ProcessedContainers.Add(Entry.Key);
+
+			int32 RequestedCount = 1;
+			FParse::Value(FCommandLine::Get(), TEXT("GroundLootCacheCount="), RequestedCount);
+			const int32 Count = FMath::Clamp(RequestedCount, 0, Candidates.Num());
+			for (int32 Index = 0; Index < Count; ++Index)
+			{
+				Candidates.Swap(Index, FMath::RandRange(Index, Candidates.Num() - 1));
+				const TWeakObjectPtr<ABuildingContainer>& Selected = Candidates[Index];
+				if (ABuildingContainer* Container = Selected.Get())
+				{
+					Container->bStartAlreadySearched_Athena = false;
+					Container->SetActorHiddenInGame(false);
+					Container->SetActorEnableCollision(S.GroundCacheCandidates.FindChecked(Selected));
+					Container->ForceNetUpdate();
+				}
+			}
+			S.GroundCacheCandidates.Reset();
 		}
 	}
 
