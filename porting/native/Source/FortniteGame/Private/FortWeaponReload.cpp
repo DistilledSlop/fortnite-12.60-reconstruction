@@ -60,6 +60,12 @@ namespace
 	bool LoadMagazineImpl(AFortWeapon* Weapon)
 	{
 		AFortPlayerController* Controller = ControllerOf(Weapon);
+		UFortWorldItemDefinition* AmmoDefinition = Weapon->WeaponData ? Weapon->WeaponData->GetAmmoWorldItemDefinitionNative() : nullptr;
+		if (AmmoDefinition && AmmoDefinition == Weapon->WeaponData)
+		{
+			// The ability spends the inventory stack directly. Reload must not drain it.
+			return false;
+		}
 		const int32 Capacity = Weapon->NativeGetBulletsPerClip14269b000();
 		const int32 Before = Weapon->AmmoCount;
 		if (!Controller || Capacity <= 0 || Before >= Capacity)
@@ -76,7 +82,7 @@ namespace
 		int32 Loaded = Take;
 		if (!bInfinite && Weapon->WeaponData)
 		{
-			Loaded = FortAthenaInventory::ConsumeAmmo(Controller, Weapon->WeaponData->GetAmmoWorldItemDefinitionNative(), Take);
+			Loaded = FortAthenaInventory::ConsumeAmmo(Controller, AmmoDefinition, Take);
 		}
 		if (Loaded <= 0)
 		{

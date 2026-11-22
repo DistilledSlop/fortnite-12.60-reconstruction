@@ -19,6 +19,7 @@
 #include "FortAthenaLootSearch.h"
 #include "FortAthenaLootTransfer.h"
 #include "FortHarvestBuilding.h"
+#include "FortWeaponReload.h"
 #include "Misc/AutomationTest.h"
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
@@ -696,6 +697,12 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 	{
 		return false;
 	}
+	if (Bandage->ReloadAbility.IsNull())
+	{
+		TestFalse(TEXT("Equipped bandage receives no fallback reload ability"), Equipped->ReloadAbilitySpecHandle.IsValid());
+	}
+	TestFalse(TEXT("Reload cannot spend a self-ammo item"), FortWeaponReload::LoadMagazine(Equipped));
+	TestEqual(TEXT("The bandage still has one charge before use"), LastBandage->ItemEntry.Count, 1);
 	{
 		// Use the headless GAS authority path for a locally predicted ability.
 		TGuardValue<TWeakObjectPtr<APlayerController>> LocalActivation(

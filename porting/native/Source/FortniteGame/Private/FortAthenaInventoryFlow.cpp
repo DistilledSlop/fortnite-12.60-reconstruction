@@ -167,9 +167,13 @@ namespace
 		// constructor, which is not recovered) is the native reload ability. Without a granted reload spec the weapon's replicated
 		// ReloadAbilitySpecHandle stays invalid and the client's reload start returns immediately, so ammo weapons fall back to it.
 		TSubclassOf<UFortGameplayAbility> ReloadAbilityClass = Definition->GetReloadAbility();
-		if (!ReloadAbilityClass && Definition->ReloadAbility.IsNull() && Definition->GetAmmoWorldItemDefinitionNative())
+		if (!ReloadAbilityClass && Definition->ReloadAbility.IsNull())
 		{
-			ReloadAbilityClass = UFortGameplayAbility_Reload::StaticClass();
+			const UFortWorldItemDefinition* AmmoDefinition = Definition->GetAmmoWorldItemDefinitionNative();
+			if (AmmoDefinition && AmmoDefinition != Definition)
+			{
+				ReloadAbilityClass = UFortGameplayAbility_Reload::StaticClass();
+			}
 		}
 		bResolved &= Add(ReloadAbilityClass, 2, !Definition->ReloadAbility.IsNull());
 		bResolved &= Add(Definition->GetOnHitAbility(), 3, !Definition->OnHitAbility.IsNull());
