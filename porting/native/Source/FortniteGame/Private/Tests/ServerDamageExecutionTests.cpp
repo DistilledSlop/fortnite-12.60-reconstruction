@@ -630,24 +630,41 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	RangedSpec = FirstASC->FindAbilitySpecFromHandle(RangedAbilityHandle);
 	TestTrue(TEXT("Knock cancels the active ranged ability"), RangedSpec && !RangedSpec->IsActive());
 	TestTrue(TEXT("A knock queues the crawl stance immediately"), FirstPawn->GetCharacterMovement()->bWantsToCrouch != 0);
-	SecondPawn->bAllowDBNOCarry = true;
-	TestTrue(TEXT("A standing teammate can carry the knocked player"),
-		FortAthenaHealth::TryCarryDownedPlayer(Second, FirstPawn));
+	FirstPawn->ReviveFromDBNOTime = 0.2f;
+	TestTrue(TEXT("A standing teammate can revive a player knocked by lethal damage"),
+		FortAthenaHealth::TryStartRevive(Second, FirstPawn));
 
 	const TSharedRef<TOptional<float>> HealthAfterFirstBleed = MakeShared<TOptional<float>>();
-	const FGameplayAttribute HealthAttribute(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Health")));
-	FirstPawn->AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(HealthAttribute).AddLambda(
-		[HealthAfterFirstBleed](const FOnAttributeChangeData& Change)
-		{
-			if (!HealthAfterFirstBleed->IsSet() && Change.NewValue < Change.OldValue)
-			{
-				*HealthAfterFirstBleed = Change.NewValue;
-			}
-		});
-
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakFirstPawn(FirstPawn);
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakSecondPawn(SecondPawn);
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakThirdPawn(ThirdPawn);
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakSecondPawn, HealthAfterFirstBleed]()
+	{
+		AFortPlayerPawnAthena* RevivedPawn = WeakFirstPawn.Get();
+		AFortPlayerPawnAthena* Teammate = WeakSecondPawn.Get();
+		if (TestNotNull(TEXT("Revived pawn survives its original bleed deadline"), RevivedPawn) &&
+			TestNotNull(TEXT("Reviver survives the first knock cycle"), Teammate))
+		{
+			TestFalse(TEXT("A teammate revive clears the real knock"), RevivedPawn->bIsDBNO);
+			TestEqual(TEXT("The original bleed timer leaves revived health intact"), RevivedPawn->GetHealth(), 30.0f);
+
+			FortAthenaHealth::ApplyDamage(RevivedPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
+			TestTrue(TEXT("Lethal damage can knock the revived player again"), RevivedPawn->bIsDBNO && !RevivedPawn->bIsDying);
+			Teammate->bAllowDBNOCarry = true;
+			TestTrue(TEXT("A standing teammate can carry the knocked player"),
+				FortAthenaHealth::TryCarryDownedPlayer(Teammate->GetController(), RevivedPawn));
+
+			const FGameplayAttribute HealthAttribute(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Health")));
+			RevivedPawn->AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(HealthAttribute).AddLambda(
+				[HealthAfterFirstBleed](const FOnAttributeChangeData& Change)
+				{
+					if (!HealthAfterFirstBleed->IsSet() && Change.NewValue < Change.OldValue)
+					{
+						*HealthAfterFirstBleed = Change.NewValue;
+					}
+				});
+		}
+	}), 1.5f));
 	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakSecondPawn, WeakThirdPawn, HealthAfterFirstBleed]()
 	{
 		AFortPlayerPawnAthena* DownedPawn = WeakFirstPawn.Get();
