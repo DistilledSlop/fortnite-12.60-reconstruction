@@ -55,6 +55,12 @@ namespace
 			OutReason = TEXT("already_destroyed");
 			return false;
 		}
+		// Floor-loot markers are populated by the world, including after a failed pickup spawn.
+		if (Container->bStartAlreadySearched_Athena)
+		{
+			OutReason = TEXT("world_loot_marker");
+			return false;
+		}
 		// bAllowInteract is a native constructor default (BuildingSMActor, OriginalDefaults.json) that is 0 on the placed
 		// chests at runtime (run 2026.11.15: every Tiered_Chest attempt was rejected as interact_disabled while the client
 		// offered the prompt). It is not replicated and no Blueprint clears it, so it is logged but not enforced here;
