@@ -99675,5 +99675,23 @@
     "static": false,
     "access": "public",
     "native_body_address": null
+  },
+  {
+    "class": "UFortDamageFormulaExecutionCalculation",
+    "function": "Execute_Implementation",
+    "kind": "helper",
+    "signature": "void Execute_Implementation(const FGameplayEffectCustomExecutionParameters& Parameters, FGameplayEffectCustomExecutionOutput& Output) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "override": true,
+    "inc_path": "porting/behavior/UFortDamageFormulaExecutionCalculation/Execute_Implementation.inc",
+    "address": "0x141fe2cc0",
+    "confidence": "low",
+    "status": "ported",
+    "includes": [
+      "GameplayEffect.h"
+    ],
+    "notes": "Compatibility implementation for explicit authored damage magnitudes."
   }
 ]

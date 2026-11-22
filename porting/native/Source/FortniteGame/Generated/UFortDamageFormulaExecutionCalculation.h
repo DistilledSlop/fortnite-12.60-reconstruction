@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortGameplayEffectExecutionCalculation.h"
 
+#include "GameplayEffect.h"
+#include "GameplayEffectExecutionCalculation.h"
+
 #include "UFortDamageFormulaExecutionCalculation.generated.h"
 
 UCLASS()
@@ -14,5 +17,9 @@ class FORTNITEGAME_API UFortDamageFormulaExecutionCalculation : public UFortGame
 	GENERATED_BODY()
 
 public:
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual void Execute_Implementation(const FGameplayEffectCustomExecutionParameters& Parameters, FGameplayEffectCustomExecutionOutput& Output) const override;
 };
 

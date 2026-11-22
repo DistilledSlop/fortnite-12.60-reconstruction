@@ -12,6 +12,7 @@
 #include "Misc/AutomationTest.h"
 #include "ServerDamageExecution.h"
 #include "UFortAbilitySystemComponent.h"
+#include "UFortDamageFormulaExecutionCalculation.h"
 #include "UFortHealthSet.h"
 
 // UE 4.25 discovers dedicated-server tests under ClientContext.
@@ -132,6 +133,14 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TestEqual(TEXT("Authored ShieldDamage drains remaining shield"), Pawn->GetShield(), 0.0f);
 	TestEqual(TEXT("Authored ShieldDamage has no health overflow"), Pawn->GetHealth(), 75.0f);
 	TestEqual(TEXT("ShieldDamage accumulator clears after each effect"), ASC->GetNumericAttribute(ShieldDamage), 0.0f);
+
+	UGameplayEffect* FormulaEffect = NewObject<UGameplayEffect>(GetTransientPackage());
+	FormulaEffect->Executions.AddDefaulted_GetRef().CalculationClass = UFortDamageFormulaExecutionCalculation::StaticClass();
+	FGameplayEffectSpec FormulaSpec(FormulaEffect, ASC->MakeEffectContext(), 1.0f);
+	FormulaSpec.SetSetByCallerMagnitude(FName(TEXT("Damage")), 12.0f);
+	ASC->SetNumericAttributeBase(Shield, 20.0f);
+	ASC->ApplyGameplayEffectSpecToSelf(FormulaSpec);
+	TestEqual(TEXT("Native execution emits explicit damage into the health set"), Pawn->GetShield(), 8.0f);
 
 	ASC->SetNumericAttributeBase(Shield, 30);
 	FortAthenaHealth::ApplyDamage(Pawn, 5, FGameplayTagContainer(), nullptr, nullptr, true);
