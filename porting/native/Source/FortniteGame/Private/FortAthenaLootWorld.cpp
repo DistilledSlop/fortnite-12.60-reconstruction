@@ -39,6 +39,7 @@ namespace
 		TSet<TWeakObjectPtr<ABuildingContainer>> ProcessedContainers;
 		TSet<TWeakObjectPtr<ULevel>> ScannedLevels;
 		TArray<TWeakObjectPtr<ABuildingContainer>> PendingSpawnRetries;
+		TMap<TWeakObjectPtr<ABuildingContainer>, FVector> DeliverySpawnLocations;
 		TMap<TWeakObjectPtr<ABuildingContainer>, FScheduledDelivery> ScheduledDeliveries;
 		TMap<TWeakObjectPtr<ABuildingContainer>, bool> GroundCacheCandidates;
 		TMap<FString, TArray<FName>> ConfiguredMarkerTags;
@@ -84,6 +85,7 @@ namespace
 		S.ProcessedContainers.Reset();
 		S.ScannedLevels.Reset();
 		S.PendingSpawnRetries.Reset();
+		S.DeliverySpawnLocations.Reset();
 		S.ScheduledDeliveries.Reset();
 		S.GroundCacheCandidates.Reset();
 		S.ActivatedGroundCacheCount = 0;
@@ -133,10 +135,12 @@ namespace
 
 		for (ABuildingContainer* Container : Candidates)
 		{
+			const TWeakObjectPtr<ABuildingContainer> WeakContainer(Container);
+			FVector WorldSpawn;
+			const bool bHasDeliveryLocation = S.DeliverySpawnLocations.RemoveAndCopyValue(WeakContainer, WorldSpawn);
 			if (!IsValid(Container) || Container->bAlreadySearched || Container->bDestroyed)
 				continue;
 
-			const TWeakObjectPtr<ABuildingContainer> WeakContainer(Container);
 			if (S.ProcessedContainers.Contains(WeakContainer))
 			{
 				++DuplicateSkipped;
@@ -149,7 +153,8 @@ namespace
 			if (TierGroup == NAME_None)
 				continue;
 
-			const FVector WorldSpawn = Container->GetActorTransform().TransformPosition(Container->LootSpawnLocation_Athena);
+			if (!bHasDeliveryLocation)
+				WorldSpawn = Container->GetActorTransform().TransformPosition(Container->LootSpawnLocation_Athena);
 			const float ScatterRadius = Container->SearchBounceRadiusOverride > 0.0f
 				? FMath::Min(Container->SearchBounceRadiusOverride * 0.25f, 50.0f)
 				: 35.0f; // stand-in: compact multi-drop offset for weapon+ammo pairs
@@ -160,7 +165,11 @@ namespace
 			{
 				++FailedMarkers;
 				if (bAllowRetry && Result == FortAthenaLootSearch::EContainerLootResult::SpawnFailed)
+				{
 					S.PendingSpawnRetries.Add(WeakContainer);
+					if (bHasDeliveryLocation)
+						S.DeliverySpawnLocations.Add(WeakContainer, WorldSpawn);
+				}
 				continue;
 			}
 
@@ -198,6 +207,7 @@ void FortAthenaLootWorld::Reset()
 	S.ProcessedContainers.Reset();
 	S.ScannedLevels.Reset();
 	S.PendingSpawnRetries.Reset();
+	S.DeliverySpawnLocations.Reset();
 	S.ScheduledDeliveries.Reset();
 	S.GroundCacheCandidates.Reset();
 	S.ActivatedGroundCacheCount = 0;
@@ -384,6 +394,10 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 				S.ProcessedContainers.Remove(*It);
 				RetryCandidates.Add(Container);
 			}
+			else
+			{
+				S.DeliverySpawnLocations.Remove(*It);
+			}
 			It.RemoveCurrent();
 		}
 		PopulateCandidates(GameMode, RetryCandidates, TEXT("spawn retry"), false);
@@ -502,10 +516,13 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 		Marker->SetActorLocation(Target);
 		if (!Marker->GetActorLocation().Equals(Target, 1.0f))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("LootWorld: delivery crate could not reach its position %s"), *Marker->GetPathName());
+			UE_LOG(LogTemp, Warning, TEXT("LootWorld: delivery crate %s could not move, spawning pickups at its landing point"), *Marker->GetPathName());
 			Marker->SetActorHiddenInGame(true);
 			Marker->ForceNetUpdate();
-			S.ProcessedContainers.Add(It.Key());
+			FTransform LandingTransform = Marker->GetActorTransform();
+			LandingTransform.SetLocation(Delivery.LandingLocation);
+			S.DeliverySpawnLocations.Add(It.Key(), LandingTransform.TransformPosition(Marker->LootSpawnLocation_Athena));
+			DueMarkers.Add(Marker);
 			It.RemoveCurrent();
 			continue;
 		}
