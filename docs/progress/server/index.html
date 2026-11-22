@@ -24,9 +24,9 @@ td:nth-child(2) { white-space: nowrap; }
 <img src="server-implementation-treemap-v5.svg" width="1000" height="720" style="max-width:100%;height:auto" alt="Dedicated-server progress treemap">
 <p>The server can host a local match for the original 12.60 client, including a Battle Bus drop onto Apollo. The goal is a complete multiplayer match with authoritative gameplay, replication, and the backend services the original client uses.</p>
 <!-- checks:start -->
-<p><strong>73/139 server checks implemented (52.5%).</strong> 56 are verified, 17 await verification, 66 remain open, and 6 client-only checks are tracked outside the server score.</p>
+<p><strong>74/139 server checks implemented (53.2%).</strong> 57 are verified, 17 await verification, 65 remain open, and 7 client-only checks are tracked outside the server score.</p>
 <p>Coverage = (implemented checks + verified checks) ÷ all server checks. Area and capability scores use the same formula. Every check has equal weight. Verified means the stated behavior has a recorded headless test, service test, or original-client observation. Implementation-only checks have a source reference. Each check contributes at most one point.</p>
-<h2>Match flow and player states <small>28/36 implemented (77.8%)</small></h2>
+<h2>Match flow and player states <small>29/36 implemented (80.6%)</small></h2>
 <div class="table"><table aria-label="Match flow and player states">
 <thead><tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Acceptance check</th><th scope="col">Evidence</th></tr></thead><tbody>
 <tr><th scope="row">Hosting and drop</th><td>Verified</td><td>Build and boot the Linux dedicated target and run headless automation</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/417bfc45">Source</a></td></tr>
@@ -50,11 +50,12 @@ td:nth-child(2) { white-space: nowrap; }
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Release a carried player immediately when the carrier loses possession</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/57bf159b">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Release a carried player on carrier knock and allow a standing teammate to pick them up</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/a709f6f7">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Cancel a revive when the target leaves range and allow a retry</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/d29161c5">Source</a></td></tr>
+<tr><th scope="row">DBNO</th><td>Verified</td><td>Cancel a revive on possession loss even if the reviver immediately repossesses</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/b5b068e5">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Implemented</td><td>Keep knock attribution on bleed damage without replaying weapon hit cues</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/6b2e9a77">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Cap revive health at the standing health maximum</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/2968c991">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Block ranged weapon ability activation while downed</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/a6403212">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Cancel an active ranged weapon ability when a player is knocked</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/2ac57536">Source</a></td></tr>
-<tr><th scope="row">DBNO</th><td>Open</td><td>Match crawl, carry, throw and revive state on two original clients</td><td>—</td></tr>
+<tr><th scope="row">DBNO</th><td>Client only</td><td>Check crawl, carry, throw and revive presentation in a two-client match</td><td>—</td></tr>
 <tr><th scope="row">Elimination and reboot</th><td>Implemented</td><td>Spawn elimination inventory drops</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/cd80d9ea">Source</a></td></tr>
 <tr><th scope="row">Elimination and reboot</th><td>Open</td><td>Spawn, collect and expire a Reboot Card in a match</td><td>—</td></tr>
 <tr><th scope="row">Elimination and reboot</th><td>Open</td><td>Consume a card and respawn eligible teammates through the van interaction channel</td><td>—</td></tr>

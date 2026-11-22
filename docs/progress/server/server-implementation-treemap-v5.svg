@@ -17,8 +17,8 @@
 .grp-head{fill:var(--tm-group-label);font-weight:600;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 .grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style>
 <rect class="tm-bg" width="1000" height="720"/>
-<text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: 52.5% implemented</text>
-<text x="12" y="48" font-size="12" class="tm-head">73 of 139 server checks implemented | 56 verified | 66 open</text>
+<text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: 53.2% implemented</text>
+<text x="12" y="48" font-size="12" class="tm-head">74 of 139 server checks implemented | 57 verified | 65 open</text>
 <g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Lobby, accounts and Epic service compatibility
 60.4% complete (32/53)
@@ -29,11 +29,11 @@ effort weight 53 | source: equal-weight server implementation checks
 <text class="grp-head" x="7.0" y="31.0" font-size="12"><tspan class="grp-pct">· 60%</tspan></text>
 </g>
 <g><title>Match flow and player states
-77.8% complete (28/36)
+80.6% complete (29/36)
 effort weight 36 | source: equal-weight server implementation checks
 </title>
 <rect class="tile-frame tm-grp0" x="382.3" y="1.0" width="434.7" height="372.8" rx="4"/>
-<text class="grp-head" x="388.3" y="17.0" font-size="12">Match flow and player states<tspan class="grp-pct"> · 78%</tspan></text>
+<text class="grp-head" x="388.3" y="17.0" font-size="12">Match flow and player states<tspan class="grp-pct"> · 81%</tspan></text>
 </g>
 <g><title>Items, inventory and loot
 33.3% complete (5/15)
@@ -313,7 +313,7 @@ Open: Queue a party through the original client, assign one session and join tog
 <rect class="tile-frame" x="304.9" y="515.8" width="71.4" height="111.2" rx="4"/>
 </g>
 <g><title>DBNO
-95.2% complete (20/21)
+100.0% complete (21/21)
 effort weight 21 | source: equal-weight server implementation checks
 Verified: Knock a player with a standing teammate and eliminate the last standing teammate
 Verified: Queue a crawl stance on knock
@@ -331,18 +331,18 @@ Verified: Use the configured drop height
 Verified: Release a carried player immediately when the carrier loses possession
 Verified: Release a carried player on carrier knock and allow a standing teammate to pick them up
 Verified: Cancel a revive when the target leaves range and allow a retry
+Verified: Cancel a revive on possession loss even if the reviver immediately repossesses
 Implemented: Keep knock attribution on bleed damage without replaying weapon hit cues
 Verified: Cap revive health at the standing health maximum
 Verified: Block ranged weapon ability activation while downed
 Verified: Cancel an active ranged weapon ability when a player is knocked
-Open: Match crawl, carry, throw and revive state on two original clients</title>
+Client only: Check crawl, carry, throw and revive presentation in a two-client match</title>
 <rect class="tile-body" x="386.3" y="25.0" width="248.1" height="344.8" rx="4"/>
 <clipPath id="servertm-c14"><rect x="386.29" y="25.00" width="248.09" height="344.79" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c14)"><rect class="tile-fill" x="386.29" y="41.42" width="248.09" height="328.37"/>
-<rect class="tile-edge" x="386.29" y="40.42" width="248.09" height="2"/>
+<g clip-path="url(#servertm-c14)"><rect class="tile-fill" x="386.29" y="25.00" width="248.09" height="344.79"/>
 </g>
 <text class="leaf-label" x="391.3" y="40.0" font-size="11">DBNO</text>
-<text class="leaf-pct" x="391.3" y="53.0" font-size="12">95%</text>
+<text class="leaf-pct" x="391.3" y="53.0" font-size="12">100%</text>
 <rect class="tile-frame" x="386.3" y="25.0" width="248.1" height="344.8" rx="4"/>
 </g>
 <g><title>Win and spectating
