@@ -400,7 +400,7 @@ namespace
 		{
 			return 0;
 		}
-		int32 Headroom = 0;
+		int64 Headroom = 0;
 		for (UFortWorldItem* Existing : Controller->WorldInventory->Inventory.ItemInstances)
 		{
 			if (!Existing || Existing->ItemEntry.ItemDefinition != Def)
@@ -409,10 +409,15 @@ namespace
 			}
 			if (Existing->ItemEntry.Count < MaxStack)
 			{
-				Headroom += (MaxStack - Existing->ItemEntry.Count);
+				Headroom += static_cast<int64>(MaxStack) - Existing->ItemEntry.Count;
+			}
+			if (!Def->bAllowMultipleStacks)
+			{
+				// GiveItem stops at the first matching stack for single-stack items.
+				break;
 			}
 		}
-		return Headroom;
+		return static_cast<int32>(FMath::Min<int64>(Headroom, MAX_int32));
 	}
 
 	bool IsGuidDroppablePrimary(AFortPlayerController* Controller, const FPlayerQuickBarState& State,
@@ -826,7 +831,8 @@ namespace
 			return false;
 		}
 		AFortPlayerController* PC = Cast<AFortPlayerController>(Pawn->GetController());
-		if (!PC || !PC->WorldInventory || !IsValid(Pickup) || Pickup->GetWorld() != Pawn->GetWorld() || Pickup->bPickedUp)
+		if (!PC || !PC->WorldInventory || !PC->WorldInventory->HasAuthority() ||
+			!IsValid(Pickup) || Pickup->GetWorld() != Pawn->GetWorld() || Pickup->bPickedUp)
 		{
 			return false;
 		}
