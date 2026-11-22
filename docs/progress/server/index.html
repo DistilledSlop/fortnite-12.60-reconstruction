@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fortnite 12.60 dedicated-server progress</title>
+<style>
+:root { color-scheme: light dark; font: 16px/1.5 system-ui, sans-serif; }
+body { margin: 0; }
+main { max-width: 78rem; margin: auto; padding: 2rem clamp(1rem, 5vw, 4rem); }
+h1 { line-height: 1.15; margin: 1rem 0 .5rem; }
+h2 { margin-top: 2rem; }
+nav { margin-bottom: 1rem; }
+table { border-collapse: collapse; width: 100%; text-align: left; }
+th, td { padding: .65rem .75rem; vertical-align: top; border-bottom: 1px solid GrayText; }
+td:nth-child(2) { white-space: nowrap; }
+.table { overflow-x: auto; }
+</style>
+</head>
+<body>
+<main>
+<nav aria-label="Progress boards"><a href="../../">Original client + server board</a></nav>
+<h1>Fortnite 12.60 dedicated-server progress</h1>
+<p>The server can host a local match for the original 12.60 client, including a Battle Bus drop onto Apollo. The goal is a complete multiplayer match with authoritative gameplay, replication, and the backend services the original client uses.</p>
+<p>Each row records the strongest evidence for a specific server capability and the next acceptance check. The rows have different scope and effort, so this board tracks evidence without an overall percentage.</p>
+
+<h2 id="match">Hosting and match flow</h2>
+<div class="table">
+<table aria-labelledby="match">
+<thead><tr><th scope="col">Capability</th><th scope="col">Evidence</th><th scope="col">Observed or implemented</th><th scope="col">Open acceptance check</th></tr></thead>
+<tbody>
+<tr><th scope="row">Linux build and launch</th><td>Server run</td><td>The dedicated target builds and runs headless automation with staged content. <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/tools/build_server.sh">Build script</a></td><td>Repeat the full build, staging and launch on a clean host.</td></tr>
+<tr><th scope="row">Client join and island drop</th><td>Local client run</td><td>The original client joined a local server and entered Apollo. <a href="../../screenshots/2026-11-13/vanilla-client-real-island-lit.png">Island capture</a></td><td>Repeat with separate clients and verify possession, movement and the drop for each.</td></tr>
+<tr><th scope="row">Storm and elimination</th><td>Partial server coverage</td><td>Storm death handling and elimination are wired. The damage suite exercises last-standing and squad-wipe cases. <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/65fc8d1b">Storm runtime</a>, <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/417bfc45">Squad test</a></td><td>Play through a full storm sequence and confirm placement and spectating on multiple clients.</td></tr>
+<tr><th scope="row">Results and replaying a match</th><td>Local client run</td><td>A local test reached the results screen. <a href="../../screenshots/2026-11-15/vanilla-client-local-test-results.png">Results capture</a></td><td>Complete a multiplayer match, return to lobby, and queue again with correct results and cleanup.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="gameplay">Authoritative gameplay</h2>
+<div class="table">
+<table aria-labelledby="gameplay">
+<thead><tr><th scope="col">Capability</th><th scope="col">Evidence</th><th scope="col">Observed or implemented</th><th scope="col">Open acceptance check</th></tr></thead>
+<tbody>
+<tr><th scope="row">Damage, health and shield</th><td>Headless tests</td><td>Point and radial damage, shield overflow, authored damage, and selected cooked damage and recovery effects are covered. <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/native/Source/FortniteGame/Private/Tests/ServerDamageExecutionTests.cpp">Damage tests</a></td><td>Exercise live weapons, consumables, environmental hazards and PvE across supported damage sources.</td></tr>
+<tr><th scope="row">Team knock and revive</th><td>Headless tests</td><td>Tests exercise knock eligibility, crawl stance, bleed, carry, drop, throw and timed revive. <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/2e88d5f1">Interaction RPC test</a>, <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/d3be2cfc">Carrier elimination test</a></td><td>Verify crawl movement, pickup and revive prompts, animations, and state on both clients.</td></tr>
+<tr><th scope="row">Loot and inventory</th><td>Partial server coverage</td><td>Loot-roll tests cover selection logic. Chest search, pickup spawning and item handling have server implementations. <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/native/Source/FortniteGame/Private/Tests/FortAthenaLootRollTests.cpp">Loot tests</a>, <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/eacae928">Chest changes</a></td><td>Check chest contents, pickup contention, inventory swaps and elimination drops from multiple clients.</td></tr>
+<tr><th scope="row">Weapons and building</th><td>Implemented paths</td><td>Server ammo and reload, projectile spawning, and building placement checks are implemented. <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/f030b322">Reload and ammo</a>, <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/a06e80e6">Projectile spawning</a>, <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/74e8b870">Placement validation</a></td><td>Check weapon families, firing and reload prediction, edits, destruction and resource costs in a multiplayer match.</td></tr>
+<tr><th scope="row">World actors and special mechanics</th><td>Open validation</td><td>Server damage coverage includes AI pawns and structures. <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/20666714">AI damage registration</a>, <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/29a2dd4c">Structure damage</a></td><td>Verify actor spawn and behavior across locations, including AI combat, vehicles, interactable props and reboot stations.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="services">Networking and backend</h2>
+<div class="table">
+<table aria-labelledby="services">
+<thead><tr><th scope="col">Capability</th><th scope="col">Evidence</th><th scope="col">Observed or implemented</th><th scope="col">Open acceptance check</th></tr></thead>
+<tbody>
+<tr><th scope="row">Identity, profiles and lobby</th><td>Route evidence and probes</td><td>The backend records route provenance and original-client probe results, including the diagnostic bypasses used. <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/EVIDENCE.md">Backend evidence</a></td><td>Verify fresh and returning accounts, profile mutations, party transitions and reconnects without diagnostic bypasses.</td></tr>
+<tr><th scope="row">Matchmaking and session assignment</th><td>Implemented paths</td><td>Server registration and matchmaking have implementation and a smoke harness. <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/85047c75">Registration and matchmaking</a>, <a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/smoke_matchmaking.py">Smoke harness</a></td><td>Verify a party queues, receives the same session, joins together and can requeue afterward.</td></tr>
+<tr><th scope="row">Replication and stability</th><td>Open validation</td><td>The local client run demonstrates enough replication to join and enter the match.</td><td>Measure actor and gameplay state agreement, correction rates and server tick stability across a sustained multi-client match.</td></tr>
+</tbody>
+</table>
+</div>
+</main>
+</body>
+</html>

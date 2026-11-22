@@ -12,6 +12,12 @@ here=$(cd "$(dirname "$0")" && pwd)
 out="$here/out"
 port="${1:-8765}"
 
+docs="$here/../../docs"
+mkdir -p "$out/progress/server" "$out/screenshots/2026-11-13" "$out/screenshots/2026-11-15"
+cp "$docs/progress/server/index.html" "$out/progress/server/"
+cp "$docs/screenshots/2026-11-13/vanilla-client-real-island-lit.png" "$out/screenshots/2026-11-13/"
+cp "$docs/screenshots/2026-11-15/vanilla-client-local-test-results.png" "$out/screenshots/2026-11-15/"
+
 if [ ! -f "$out/index.html" ]; then
   python3 -I "$here/progress.py" --quiet || true
 fi

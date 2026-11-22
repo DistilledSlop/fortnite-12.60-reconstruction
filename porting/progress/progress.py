@@ -1972,6 +1972,7 @@ def index_html(res, head, subject, date, model, when_note, grids=None):
 <body><main>
 <header>
 <h1>Fortnite 12.60 Linux port: progress</h1>
+<p><a href="progress/server/">Dedicated-server progress</a></p>
 <p class="meta">Measured at commit <code>{esc(head[:7])}</code> &middot; {esc(subject)} &middot; {esc(date)}.
 {esc(when_note)} &middot; <a href="history.html">history</a> &middot; <a href="progress.svg">progress.svg</a> &middot; <a href="progress.json">progress.json</a></p>
 </header>

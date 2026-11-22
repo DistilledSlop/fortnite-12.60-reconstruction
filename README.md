@@ -53,6 +53,8 @@ The [wiki](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki) 
 
 ## Progress
 
+The [dedicated-server progress board](docs/progress/server/index.html) tracks server capabilities, runtime evidence, and open verification. The original [client + server board](docs/index.html) tracks the broader reconstruction.
+
 [![Reconstruction progress by area](docs/progress.svg)](docs/progress.svg)
 
 <!-- progress:start -->

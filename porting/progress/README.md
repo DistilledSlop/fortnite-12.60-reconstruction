@@ -1,5 +1,8 @@
 # Port progress dashboard
 
+The [dedicated-server board](../../docs/progress/server/index.html) tracks server capabilities using implementation evidence, headless tests, and original-client runs. Update a row when its evidence or acceptance check changes. The generator described below continues to publish the original combined client + server dashboard.
+
+
 A generated dashboard for the Fortnite 12.60 Linux reconstruction: a squarified treemap of
 the whole effort (area = estimated effort weight, fill level = percent complete), a
 per-component table, `progress.json`, and a history page with one point per commit.
