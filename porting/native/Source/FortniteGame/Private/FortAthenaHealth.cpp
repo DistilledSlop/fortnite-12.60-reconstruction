@@ -322,7 +322,9 @@ bool FortAthenaHealth::TryCarryDownedPlayer(AController* Controller, AFortPawn* 
 		return false;
 	}
 	Downed->SetActorRelativeLocation(FVector(0.0f, 0.0f, 75.0f));
-	Downed->GetCharacterMovement()->DisableMovement();
+	UCharacterMovementComponent* Movement = Downed->GetCharacterMovement();
+	Movement->ClearAccumulatedForces();
+	Movement->DisableMovement();
 	Carrier->GetCapsuleComponent()->IgnoreActorWhenMoving(Downed, true);
 	Downed->GetCapsuleComponent()->IgnoreActorWhenMoving(Carrier, true);
 	Downed->DBNOHoisterData.DBNOHoister = Carrier;

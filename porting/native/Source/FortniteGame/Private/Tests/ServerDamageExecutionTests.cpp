@@ -149,6 +149,14 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 				TestTrue(TEXT("The throw applies the configured forward and upward velocities"),
 					Movement->Velocity.Equals(FVector(0.0f, 900.0f, 450.0f), 0.1f));
 				Movement->StopMovementImmediately();
+				Carrier->ServerHoistDBNOPlayer(Downed);
+				Carrier->ServerThrowCarriedPlayer();
+				Carrier->ServerHoistDBNOPlayer(Downed);
+				TestTrue(TEXT("A thrown player can be picked up again before the next movement tick"),
+					Carrier->DBNOHoistee == Downed && Downed->GetAttachParentActor() == Carrier);
+				TestFalse(TEXT("Picking up the thrown player cancels their pending launch"), Movement->HandlePendingLaunch());
+				TestTrue(TEXT("Movement remains disabled after picking the player up again"), Movement->MovementMode == MOVE_None);
+				Carrier->ServerDropCarriedPlayer();
 			}
 		}
 	}
