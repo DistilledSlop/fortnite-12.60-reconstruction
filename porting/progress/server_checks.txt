@@ -23,6 +23,8 @@ DBNO|verified|Release a carried player immediately when the carrier loses posses
 DBNO|verified|Cancel a revive when the target leaves range and allow a retry|d29161c5
 DBNO|implemented|Keep knock attribution on bleed damage without replaying weapon hit cues|6b2e9a77
 DBNO|verified|Cap revive health at the standing health maximum|2968c991
+DBNO|verified|Block ranged weapon ability activation while downed|a6403212
+DBNO|implemented|Cancel active ranged weapon abilities when a player is knocked|a6403212
 DBNO|open|Match crawl, carry, throw and revive state on two original clients
 Elimination and reboot|implemented|Spawn elimination inventory drops|cd80d9ea
 Elimination and reboot|open|Spawn, collect and expire a Reboot Card in a match
