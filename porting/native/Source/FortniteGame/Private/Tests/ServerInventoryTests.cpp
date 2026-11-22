@@ -16,6 +16,7 @@
 #include "EInteractionBeingAttempted.h"
 #include "EFortItemType.h"
 #include "EFortQuickBars.h"
+#include "EFortPickupTossState.h"
 #include "EWorldItemDropBehavior.h"
 #include "FortAthenaBuildDamage.h"
 #include "FortAthenaCombatEquip.h"
@@ -38,6 +39,93 @@
 #include "UFortWeaponRangedItemDefinition.h"
 #include "UFortWorldItem.h"
 #include "WeaponUpgradeItemRow.h"
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FServerBlueprintPickupTossTest, "Fortnite.Server.Inventory.BlueprintPickupToss",
+	EAutomationTestFlags::ClientContext | EAutomationTestFlags::ServerContext | EAutomationTestFlags::EngineFilter)
+
+bool FServerBlueprintPickupTossTest::RunTest(const FString&)
+{
+	if (!IsRunningDedicatedServer() || !FortAthenaInventory::IsEnabled())
+	{
+		AddInfo(TEXT("Requires a dedicated server launched with -FortniteOriginalClient."));
+		return true;
+	}
+	UWorld* World = nullptr;
+	for (const FWorldContext& Context : GEngine->GetWorldContexts())
+	{
+		if (Context.World() && Context.World()->GetNetMode() == NM_DedicatedServer)
+		{
+			World = Context.World();
+			break;
+		}
+	}
+	if (!TestNotNull(TEXT("Dedicated server world"), World))
+		return false;
+
+	UFortKismetLibrary* Library = GetMutableDefault<UFortKismetLibrary>();
+	UFunction* Spawn = Library->FindFunction(TEXT("K2_SpawnPickupInWorld"));
+	UFunction* SpawnWithClass = Library->FindFunction(TEXT("K2_SpawnPickupInWorldWithClass"));
+	if (!TestNotNull(TEXT("Blueprint pickup spawn function"), Spawn) ||
+		!TestNotNull(TEXT("Blueprint pickup spawn with class function"), SpawnWithClass))
+		return false;
+
+	UFortResourceItemDefinition* Definition = NewObject<UFortResourceItemDefinition>(World);
+	const FVector Position(1200.0f, 2300.0f, 16000.0f);
+	const FVector Direction(0.0f, 4.0f, 0.0f);
+	// These parameter layouts follow the generated reflected function declarations.
+	struct FSpawnParams
+	{
+		UObject* WorldContextObject; UFortWorldItemDefinition* ItemDefinition;
+		int32 NumberToSpawn; FVector Position; FVector Direction; int32 OverrideMaxStackCount;
+		bool bToss; bool bRandomRotation; bool bBlockedFromAutoPickup; int32 PickupInstigatorHandle;
+		EFortPickupSourceTypeFlag SourceType; EFortPickupSpawnSource Source;
+		AFortPlayerController* OptionalOwnerPC; bool bPickupOnlyRelevantToOwner; AFortPickup* ReturnValue;
+	};
+	struct FSpawnWithClassParams
+	{
+		UObject* WorldContextObject; UFortWorldItemDefinition* ItemDefinition; UClass* PickupClass;
+		int32 NumberToSpawn; FVector Position; FVector Direction; int32 OverrideMaxStackCount;
+		bool bToss; bool bRandomRotation; bool bBlockedFromAutoPickup; int32 PickupInstigatorHandle;
+		EFortPickupSourceTypeFlag SourceType; EFortPickupSpawnSource Source;
+		AFortPlayerController* OptionalOwnerPC; bool bPickupOnlyRelevantToOwner; AFortPickup* ReturnValue;
+	};
+	FSpawnParams Toss{World, Definition, 1, Position, Direction, 0, true, false, false, 0,
+		EFortPickupSourceTypeFlag::Other, EFortPickupSpawnSource::Unset, nullptr, false, nullptr};
+	Library->ProcessEvent(Spawn, &Toss);
+	FSpawnWithClassParams WithClass{World, Definition, AFortPickupAthena::StaticClass(), 1, Position, Direction, 0,
+		true, false, false, 0, EFortPickupSourceTypeFlag::Other, EFortPickupSpawnSource::Unset, nullptr, false, nullptr};
+	Library->ProcessEvent(SpawnWithClass, &WithClass);
+	for (AFortPickup* Pickup : {Toss.ReturnValue, WithClass.ReturnValue})
+	{
+		if (TestNotNull(TEXT("Blueprint directional toss spawned a pickup"), Pickup))
+		{
+			TestTrue(TEXT("Toss begins at the requested position"), Pickup->PickupLocationData.LootInitialPosition.Equals(Position));
+			TestTrue(TEXT("Toss travels 180 units along the normalized direction"),
+				Pickup->PickupLocationData.LootFinalPosition.Equals(Position + Direction.GetSafeNormal() * 180.0f));
+			TestTrue(TEXT("Pickup starts at the toss origin"), Pickup->GetActorLocation().Equals(Position));
+			Pickup->Destroy();
+		}
+	}
+	Toss.bToss = false;
+	Toss.ReturnValue = nullptr;
+	Library->ProcessEvent(Spawn, &Toss);
+	if (TestNotNull(TEXT("Blueprint stationary pickup spawned"), Toss.ReturnValue))
+	{
+		TestTrue(TEXT("Stationary pickup remains at the requested position"), Toss.ReturnValue->GetActorLocation().Equals(Position));
+		TestTrue(TEXT("Stationary pickup does not start a toss"), Toss.ReturnValue->PickupLocationData.TossState != EFortPickupTossState::InProgress);
+		Toss.ReturnValue->Destroy();
+	}
+	Toss.bToss = true;
+	Toss.Direction = FVector::ZeroVector;
+	Toss.ReturnValue = nullptr;
+	Library->ProcessEvent(Spawn, &Toss);
+	if (TestNotNull(TEXT("Blueprint zero-direction toss spawned"), Toss.ReturnValue))
+	{
+		TestTrue(TEXT("Zero-direction toss preserves its destination"), Toss.ReturnValue->PickupLocationData.LootFinalPosition.Equals(Position));
+		Toss.ReturnValue->Destroy();
+	}
+	return true;
+}
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FServerInventoryStacksTest, "Fortnite.Server.Inventory.StackAccounting",
 	EAutomationTestFlags::ClientContext | EAutomationTestFlags::ServerContext | EAutomationTestFlags::EngineFilter)
