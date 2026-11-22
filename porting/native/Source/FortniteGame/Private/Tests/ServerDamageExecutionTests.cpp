@@ -715,6 +715,26 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	{
 		OpponentState->TeamIndex = 31;
 	}
+	AFortInventory* DropInventory = World->SpawnActor<AFortInventory>();
+	UFortResourceItemDefinition* DropDefinition = nullptr;
+	FGuid DropGuid;
+	if (TestNotNull(TEXT("Enabled death-drop fixture world inventory"), DropInventory))
+	{
+		Third->WorldInventory = DropInventory;
+		DropDefinition = NewObject<UFortResourceItemDefinition>(DropInventory);
+		DropDefinition->ItemType = EFortItemType::WorldResource;
+		DropDefinition->MaxStackSize = FScalableFloat(10.0f);
+		DropDefinition->bCanBeDropped = true;
+		DropDefinition->DropBehavior = EWorldItemDropBehavior::DropAsPickup;
+		UFortWorldItem* DropItem = FortAthenaInventory::GiveItem(Third, DropDefinition, 3);
+		if (TestNotNull(TEXT("Droppable stack granted to the last standing teammate"), DropItem))
+		{
+			DropGuid = DropItem->NativeGetItemGuid();
+		}
+	}
+	ThirdPawn->SetShouldDropItemsOnDeath(true);
+	const TWeakObjectPtr<AFortInventory> WeakDropInventory(DropInventory);
+	const TWeakObjectPtr<UFortResourceItemDefinition> WeakDropDefinition(DropDefinition);
 	const TWeakObjectPtr<AFortPlayerControllerAthena> WeakOpponent(Opponent);
 	const TSharedRef<TOptional<float>> HealthAfterFirstBleed = MakeShared<TOptional<float>>();
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakFirstPawn(FirstPawn);
@@ -755,7 +775,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 				});
 		}
 	}), 1.5f));
-	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakSecondPawn, WeakThirdPawn, HealthAfterFirstBleed]()
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakSecondPawn, WeakThirdPawn, HealthAfterFirstBleed, WeakDropInventory, WeakDropDefinition, DropGuid]()
 	{
 		AFortPlayerPawnAthena* DownedPawn = WeakFirstPawn.Get();
 		AFortPlayerPawnAthena* CarrierPawn = WeakSecondPawn.Get();
@@ -781,6 +801,24 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 				FortAthenaHealth::TryCarryDownedPlayer(StandingPawn->GetController(), DownedPawn));
 			FortAthenaHealth::ApplyDamage(StandingPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
 			TestTrue(TEXT("The last standing member is eliminated without a knock"), StandingPawn->bIsDying && !StandingPawn->bIsDBNO);
+			AFortInventory* DropInventory = WeakDropInventory.Get();
+			if (TestNotNull(TEXT("World inventory survives elimination"), DropInventory) && DropGuid.IsValid())
+			{
+				TestNull(TEXT("Enabled death drops remove the stack from inventory"), DropInventory->NativeFindItemByGuid(DropGuid));
+				TestEqual(TEXT("Enabled death drops remove the replicated inventory entry"), DropInventory->Inventory.ReplicatedEntries.Num(), 0);
+			}
+			int32 DropPickupCount = 0;
+			for (TActorIterator<AFortPickupAthena> It(StandingPawn->GetWorld()); It; ++It)
+			{
+				if (It->PawnWhoDroppedPickup == StandingPawn)
+				{
+					++DropPickupCount;
+					TestTrue(TEXT("Death pickup retains the item definition"), It->PrimaryPickupItemEntry.ItemDefinition == WeakDropDefinition.Get());
+					TestEqual(TEXT("Death pickup retains the stack quantity"), It->PrimaryPickupItemEntry.Count, 3);
+					It->Destroy();
+				}
+			}
+			TestEqual(TEXT("Enabled death drops create exactly one pickup from the pawn"), DropPickupCount, 1);
 			TestTrue(TEXT("Eliminating the carrier releases the downed player and restores falling"),
 				!StandingPawn->DBNOHoistee && !StandingPawn->bIsDBNOCarrying &&
 				!DownedPawn->DBNOHoisterData.DBNOHoister && !DownedPawn->bIsBeingDBNOCarried &&
@@ -791,7 +829,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 
 	const TWeakObjectPtr<AFortGameStateAthena> WeakState(State);
 	const TWeakObjectPtr<AFortPlayerControllerAthena> WeakNoKnockController(NoKnockController);
-	const TArray<TWeakObjectPtr<AActor>> TeamFixtures = {First, Second, Third, NoKnockController, FirstPawn, SecondPawn, ThirdPawn, NoKnockPawn, Opponent, DBNOMutator, RetainedInventory};
+	const TArray<TWeakObjectPtr<AActor>> TeamFixtures = {First, Second, Third, NoKnockController, FirstPawn, SecondPawn, ThirdPawn, NoKnockPawn, Opponent, DBNOMutator, RetainedInventory, DropInventory};
 	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakOpponent, WeakState, WeakNoKnockController, PreviousPlaylist, TeamFixtures, MutatorList]()
 	{
 		AFortPlayerPawnAthena* DownedPawn = WeakFirstPawn.Get();
