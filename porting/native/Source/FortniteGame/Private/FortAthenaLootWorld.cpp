@@ -320,68 +320,77 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 		}
 
 		constexpr const TCHAR* Prefix = TEXT("LootDeliverySeconds=");
-		const auto FindDeliveryTag = [Prefix](const TArray<FName>* Tags, FString& OutTag)
+		bool bHasInvalidDelay = false;
+		const auto FindDeliveryDelay = [Prefix, &bHasInvalidDelay](const TArray<FName>* Tags, float& OutDelay)
 		{
 			if (!Tags)
 				return false;
 			for (const FName& Tag : *Tags)
 			{
 				const FString Text = Tag.ToString();
-				if (Text.StartsWith(Prefix))
+				if (!Text.StartsWith(Prefix))
+					continue;
+
+				float Delay = 0.0f;
+				if (FDefaultValueHelper::ParseFloat(Text.Mid(FCString::Strlen(Prefix)), Delay) &&
+					FMath::IsFinite(Delay) && Delay >= 0.0f)
 				{
-					OutTag = Text;
+					OutDelay = Delay;
 					return true;
 				}
+				bHasInvalidDelay = true;
 			}
 			return false;
 		};
 
-		FString TagText;
-		if (FindDeliveryTag(ActorTags, TagText) || FindDeliveryTag(ClassTags, TagText) ||
-			FindDeliveryTag(&Container->Tags, TagText))
-		{
-			float Delay = 0.0f;
-			if (FDefaultValueHelper::ParseFloat(TagText.Mid(FCString::Strlen(Prefix)), Delay) && FMath::IsFinite(Delay) && Delay >= 0.0f)
-			{
-				if (FortAthenaLootSearch::ResolveContainerLootTierGroup(Container) == NAME_None)
-					return;
+		float Delay = 0.0f;
+		const bool bHasDeliveryDelay = FindDeliveryDelay(ActorTags, Delay) ||
+			FindDeliveryDelay(ClassTags, Delay) || FindDeliveryDelay(&Container->Tags, Delay);
+		if (bHasInvalidDelay)
+			UE_LOG(LogTemp, Warning, TEXT("LootWorld: ignored invalid delivery delay on %s"), *Container->GetPathName());
 
-				const bool bWantsCrate = Container->ActorHasTag(DeliveryCrateTag);
-				const bool bHideDeliveryMarker = bWantsCrate || !Container->bStartAlreadySearched_Athena;
-				Container->bStartAlreadySearched_Athena = true;
-				FScheduledDelivery Delivery;
-				Delivery.Delay = Delay;
-				Delivery.bSearchableCrate = bWantsCrate;
-				if (Delivery.bSearchableCrate)
-				{
-					const USceneComponent* Root = Container->GetRootComponent();
-					if (!Root || Root->Mobility != EComponentMobility::Movable)
-					{
-						Delivery.bSearchableCrate = false;
-						UE_LOG(LogTemp, Warning, TEXT("LootWorld: delivery crate %s needs a movable root, using scheduled pickup delivery"), *Container->GetPathName());
-					}
-					else
-					{
-						Delivery.LandingLocation = Container->GetActorLocation();
-						Delivery.bRestoreCollision = Container->GetActorEnableCollision();
-					}
-				}
-				S.ScheduledDeliveries.Add(Marker, Delivery);
-				if (bHideDeliveryMarker)
-				{
-					Container->SetReplicates(true);
-					if (Delivery.bSearchableCrate)
-						Container->SetReplicateMovement(true);
-					Container->SetActorEnableCollision(false);
-					Container->SetActorHiddenInGame(true);
-					Container->ForceNetUpdate();
-				}
-			}
-			else
+		if (bHasDeliveryDelay)
+		{
+			if (FortAthenaLootSearch::ResolveContainerLootTierGroup(Container) == NAME_None)
+				return;
+
+			const bool bWantsCrate = Container->ActorHasTag(DeliveryCrateTag);
+			const bool bHideDeliveryMarker = bWantsCrate || !Container->bStartAlreadySearched_Athena;
+			Container->bStartAlreadySearched_Athena = true;
+			FScheduledDelivery Delivery;
+			Delivery.Delay = Delay;
+			Delivery.bSearchableCrate = bWantsCrate;
+			if (Delivery.bSearchableCrate)
 			{
-				S.ProcessedContainers.Add(Marker);
-				UE_LOG(LogTemp, Warning, TEXT("LootWorld: invalid delivery delay on %s"), *Container->GetName());
+				const USceneComponent* Root = Container->GetRootComponent();
+				if (!Root || Root->Mobility != EComponentMobility::Movable)
+				{
+					Delivery.bSearchableCrate = false;
+					UE_LOG(LogTemp, Warning, TEXT("LootWorld: delivery crate %s needs a movable root, using scheduled pickup delivery"), *Container->GetPathName());
+				}
+				else
+				{
+					Delivery.LandingLocation = Container->GetActorLocation();
+					Delivery.bRestoreCollision = Container->GetActorEnableCollision();
+				}
 			}
+			S.ScheduledDeliveries.Add(Marker, Delivery);
+			if (bHideDeliveryMarker)
+			{
+				Container->SetReplicates(true);
+				if (Delivery.bSearchableCrate)
+					Container->SetReplicateMovement(true);
+				Container->SetActorEnableCollision(false);
+				Container->SetActorHiddenInGame(true);
+				Container->ForceNetUpdate();
+			}
+			return;
+		}
+
+		if (bHasInvalidDelay || Container->ActorHasTag(DeliveryCrateTag))
+		{
+			S.ProcessedContainers.Add(Marker);
+			UE_LOG(LogTemp, Warning, TEXT("LootWorld: no usable delivery delay for %s"), *Container->GetPathName());
 			return;
 		}
 
