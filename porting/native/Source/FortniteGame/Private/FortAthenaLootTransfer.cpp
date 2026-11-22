@@ -22,6 +22,7 @@
 #include "FortAthenaInventoryFlow.h"
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
+#include "Misc/ScopeExit.h"
 #include "TimerManager.h"
 #include "UFortItemDefinition.h"
 #include "UFortWorldItem.h"
@@ -34,6 +35,8 @@ namespace
 	constexpr int32 SecondarySlotCount = 5; // Slots 0..3 = building pieces, Slot 4 = traps
 	constexpr int32 CreativeSlotCount = 8;
 	constexpr float MaxPickupRangeSq = 600.0f * 600.0f; // stand-in: range guard replacing bDoServerHandlePickupTrace
+
+	TSet<AFortPickup*> PickupsBeingGranted;
 
 	struct FSlotLocation
 	{
@@ -854,6 +857,14 @@ namespace
 				return false;
 			}
 		}
+
+		// Inventory changes can invoke callbacks before the pickup's remaining count is committed.
+		if (PickupsBeingGranted.Contains(Pickup))
+		{
+			return false;
+		}
+		PickupsBeingGranted.Add(Pickup);
+		ON_SCOPE_EXIT { PickupsBeingGranted.Remove(Pickup); };
 
 		// Ensure existing inventory items (e.g. SetupPlayer pickaxe & building pieces) are indexed first.
 		FortAthenaLootTransfer::SetupPlayerQuickBars(PC);

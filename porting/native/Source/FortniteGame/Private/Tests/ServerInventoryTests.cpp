@@ -732,8 +732,28 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 		FortAthenaLootTransfer::HandlePickupWithSwap(Pawn, SwapPickup, HeldGuid, 0.25f, FVector::ZeroVector, false, true));
 	TestTrue(TEXT("Rejected protected swap preserves its inventory item"), Inventory->NativeFindItemByGuid(HeldGuid) == WideItem);
 	WideWeapon->bCanBeDropped = true;
+	WideWeapon->DropBehavior = EWorldItemDropBehavior::DropAsPickup;
+	AFortPickupAthena* OutgoingPickup = nullptr;
+	const FDelegateHandle SpawnCallback = World->AddOnActorSpawnedHandler(FOnActorSpawned::FDelegate::CreateLambda([&](AActor* Actor)
+	{
+		if (!OutgoingPickup)
+		{
+			OutgoingPickup = Cast<AFortPickupAthena>(Actor);
+			if (OutgoingPickup)
+			{
+				TestFalse(TEXT("A swap spawn callback cannot claim the incoming pickup again"),
+					FortAthenaLootTransfer::HandlePickupWithSwap(Pawn, SwapPickup, HeldGuid, 0.25f, FVector::ZeroVector, false, true));
+			}
+		}
+	}));
 	TestTrue(TEXT("A valid explicit swap accepts the replacement"),
 		FortAthenaLootTransfer::HandlePickupWithSwap(Pawn, SwapPickup, HeldGuid, 0.25f, FVector::ZeroVector, false, true));
+	World->RemoveOnActorSpawnedHandler(SpawnCallback);
+	if (TestNotNull(TEXT("The swap spawns outgoing loot"), OutgoingPickup))
+	{
+		TestEqual(TEXT("The outgoing pickup holds exactly one weapon"), OutgoingPickup->PrimaryPickupItemEntry.Count, 1);
+		OutgoingPickup->Destroy();
+	}
 	TestNull(TEXT("The swap removes the exact outgoing inventory GUID"), Inventory->NativeFindItemByGuid(HeldGuid));
 	const UFortWorldItem* Replacement = Inventory->NativeFindWorldItemByDefinition(WideWeapon, true);
 	if (TestNotNull(TEXT("The replacement is granted"), Replacement))
