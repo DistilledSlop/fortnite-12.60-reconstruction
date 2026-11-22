@@ -572,6 +572,8 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 		}
 		if (Progress >= 1.0f)
 		{
+			// The actor still has its delivery tags when a streamed level is scanned again.
+			S.ProcessedContainers.Add(It.Key());
 			Marker->bStartAlreadySearched_Athena = false;
 			Marker->SetActorEnableCollision(Delivery.bRestoreCollision);
 			Marker->ForceNetUpdate();
