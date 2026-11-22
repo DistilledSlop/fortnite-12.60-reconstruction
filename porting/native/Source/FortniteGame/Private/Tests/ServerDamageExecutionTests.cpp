@@ -520,18 +520,23 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	AFortPlayerControllerAthena* First = World->SpawnActor<AFortPlayerControllerAthena>();
 	AFortPlayerControllerAthena* Second = World->SpawnActor<AFortPlayerControllerAthena>();
 	AFortPlayerControllerAthena* Third = World->SpawnActor<AFortPlayerControllerAthena>();
+	AFortPlayerControllerAthena* NoKnockController = World->SpawnActor<AFortPlayerControllerAthena>();
 	AFortPlayerPawnAthena* FirstPawn = World->SpawnActor<AFortPlayerPawnAthena>(
 		FVector(0, 0, 14000), FRotator::ZeroRotator, SpawnParameters);
 	AFortPlayerPawnAthena* SecondPawn = World->SpawnActor<AFortPlayerPawnAthena>(
 		FVector(200, 0, 14000), FRotator::ZeroRotator, SpawnParameters);
 	AFortPlayerPawnAthena* ThirdPawn = World->SpawnActor<AFortPlayerPawnAthena>(
 		FVector(400, 0, 14000), FRotator::ZeroRotator, SpawnParameters);
+	AFortPlayerPawnAthena* NoKnockPawn = World->SpawnActor<AFortPlayerPawnAthena>(
+		FVector(600, 0, 14000), FRotator::ZeroRotator, SpawnParameters);
 	if (!TestNotNull(TEXT("First team fixture controller"), First) ||
 		!TestNotNull(TEXT("Second team fixture controller"), Second) ||
 		!TestNotNull(TEXT("First team fixture pawn"), FirstPawn) ||
 		!TestNotNull(TEXT("Second team fixture pawn"), SecondPawn) ||
 		!TestNotNull(TEXT("Third team fixture controller"), Third) ||
-		!TestNotNull(TEXT("Third team fixture pawn"), ThirdPawn))
+		!TestNotNull(TEXT("Third team fixture pawn"), ThirdPawn) ||
+		!TestNotNull(TEXT("DBNO-disabled fixture controller"), NoKnockController) ||
+		!TestNotNull(TEXT("DBNO-disabled fixture pawn"), NoKnockPawn))
 	{
 		return false;
 	}
@@ -539,25 +544,27 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	AFortPlayerStateAthena* FirstState = Cast<AFortPlayerStateAthena>(First->PlayerState);
 	AFortPlayerStateAthena* SecondState = Cast<AFortPlayerStateAthena>(Second->PlayerState);
 	AFortPlayerStateAthena* ThirdState = Cast<AFortPlayerStateAthena>(Third->PlayerState);
+	AFortPlayerStateAthena* NoKnockState = Cast<AFortPlayerStateAthena>(NoKnockController->PlayerState);
 	if (!TestNotNull(TEXT("First team fixture player state"), FirstState) ||
 		!TestNotNull(TEXT("Second team fixture player state"), SecondState) ||
-		!TestNotNull(TEXT("Third team fixture player state"), ThirdState))
+		!TestNotNull(TEXT("Third team fixture player state"), ThirdState) ||
+		!TestNotNull(TEXT("DBNO-disabled fixture player state"), NoKnockState))
 	{
 		return false;
 	}
 
 	const TWeakObjectPtr<UFortPlaylistAthena> PreviousPlaylist(State->CurrentPlaylistInfo.OverridePlaylist);
 	UFortPlaylistAthena* TeamPlaylist = NewObject<UFortPlaylistAthena>(State);
-	TeamPlaylist->MaxTeamSize = 3;
+	TeamPlaylist->MaxTeamSize = 4;
 	State->CurrentPlaylistInfo.OverridePlaylist = TeamPlaylist;
-	FirstState->TeamIndex = SecondState->TeamIndex = ThirdState->TeamIndex = 30;
+	FirstState->TeamIndex = SecondState->TeamIndex = ThirdState->TeamIndex = NoKnockState->TeamIndex = 30;
 	First->Possess(FirstPawn);
 	Second->Possess(SecondPawn);
 	Third->Possess(ThirdPawn);
-	FirstPawn->GetCharacterMovement()->SetComponentTickEnabled(false);
-	SecondPawn->GetCharacterMovement()->SetComponentTickEnabled(false);
-	for (AFortPlayerPawnAthena* TeamPawn : {FirstPawn, SecondPawn, ThirdPawn})
+	NoKnockController->Possess(NoKnockPawn);
+	for (AFortPlayerPawnAthena* TeamPawn : {FirstPawn, SecondPawn, ThirdPawn, NoKnockPawn})
 	{
+		TeamPawn->GetCharacterMovement()->SetComponentTickEnabled(false);
 		UFortAbilitySystemComponent* TeamASC = NewObject<UFortAbilitySystemComponent>(TeamPawn);
 		TeamPawn->AbilitySystemComponent = TeamASC;
 		TeamASC->RegisterComponent();
@@ -571,11 +578,12 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	FortAthenaHealth::RegisterAlivePlayer(Mode, First);
 	FortAthenaHealth::RegisterAlivePlayer(Mode, Second);
 	FortAthenaHealth::RegisterAlivePlayer(Mode, Third);
+	FortAthenaHealth::RegisterAlivePlayer(Mode, NoKnockController);
 
 	TeamPlaylist->DBNOType = EDBNOType::Off;
-	FortAthenaHealth::ApplyDamage(ThirdPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
+	FortAthenaHealth::ApplyDamage(NoKnockPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
 	TestTrue(TEXT("A team playlist with DBNO disabled eliminates a player with standing teammates"),
-		ThirdPawn->bIsDying && !ThirdPawn->bIsDBNO);
+		NoKnockPawn->bIsDying && !NoKnockPawn->bIsDBNO);
 	UFortAbilitySystemComponent* FirstASC = FirstPawn->AbilitySystemComponent;
 	const FGameplayAbilitySpecHandle RangedAbilityHandle = FirstASC->GiveAbility(
 		FGameplayAbilitySpec(UFortGameplayAbility_RangedWeapon::StaticClass()));
@@ -623,18 +631,31 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakFirstPawn(FirstPawn);
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakSecondPawn(SecondPawn);
-	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakSecondPawn, HealthAfterFirstBleed]()
+	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakThirdPawn(ThirdPawn);
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakSecondPawn, WeakThirdPawn, HealthAfterFirstBleed]()
 	{
 		AFortPlayerPawnAthena* DownedPawn = WeakFirstPawn.Get();
-		AFortPlayerPawnAthena* StandingPawn = WeakSecondPawn.Get();
+		AFortPlayerPawnAthena* CarrierPawn = WeakSecondPawn.Get();
+		AFortPlayerPawnAthena* StandingPawn = WeakThirdPawn.Get();
 		if (TestNotNull(TEXT("Downed team fixture stays alive through first bleed tick"), DownedPawn) &&
+			TestNotNull(TEXT("Carrier survives until the lethal hit"), CarrierPawn) &&
 			TestNotNull(TEXT("Standing team fixture survives until the lethal hit"), StandingPawn))
 		{
 			TestTrue(TEXT("Bleed ticks drain downed health while a teammate stands"),
 				DownedPawn->bIsDBNO && !DownedPawn->bIsDying);
 			TestEqual(TEXT("The first bleed tick removes two downed health"), HealthAfterFirstBleed->Get(0.0f), 98.0f);
 			TestTrue(TEXT("Bleed continues while the downed player is carried"),
-				DownedPawn->GetAttachParentActor() == StandingPawn && DownedPawn->bIsBeingDBNOCarried);
+				DownedPawn->GetAttachParentActor() == CarrierPawn && DownedPawn->bIsBeingDBNOCarried);
+			FortAthenaHealth::ApplyDamage(CarrierPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
+			TestTrue(TEXT("A carrier with a standing teammate is knocked"), CarrierPawn->bIsDBNO && !CarrierPawn->bIsDying);
+			TestTrue(TEXT("Knocking the carrier immediately drops the downed player"),
+				!CarrierPawn->DBNOHoistee && !CarrierPawn->bIsDBNOCarrying &&
+				!DownedPawn->DBNOHoisterData.DBNOHoister && !DownedPawn->bIsBeingDBNOCarried &&
+				DownedPawn->DBNOHoisterData.DBNOCarryEvent == EFortDBNOCarryEvent::Dropped &&
+				!DownedPawn->GetAttachParentActor() && DownedPawn->GetCharacterMovement()->IsFalling());
+			StandingPawn->bAllowDBNOCarry = true;
+			TestTrue(TEXT("The last standing teammate can pick up the released player"),
+				FortAthenaHealth::TryCarryDownedPlayer(StandingPawn->GetController(), DownedPawn));
 			FortAthenaHealth::ApplyDamage(StandingPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
 			TestTrue(TEXT("The last standing member is eliminated without a knock"), StandingPawn->bIsDying && !StandingPawn->bIsDBNO);
 			TestTrue(TEXT("Eliminating the carrier releases the downed player and restores falling"),
@@ -646,7 +667,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	}), 1.5f));
 
 	const TWeakObjectPtr<AFortGameStateAthena> WeakState(State);
-	const TArray<TWeakObjectPtr<AActor>> TeamFixtures = {First, Second, Third, FirstPawn, SecondPawn, ThirdPawn};
+	const TArray<TWeakObjectPtr<AActor>> TeamFixtures = {First, Second, Third, NoKnockController, FirstPawn, SecondPawn, ThirdPawn, NoKnockPawn};
 	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakState, PreviousPlaylist, TeamFixtures]()
 	{
 		AFortPlayerPawnAthena* DownedPawn = WeakFirstPawn.Get();
