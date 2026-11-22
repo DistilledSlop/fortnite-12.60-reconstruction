@@ -20,6 +20,10 @@ void UFortDamageFormulaExecutionCalculation::Execute_Implementation(const FGamep
 			ExplicitDamage = Spec.SetByCallerNameMagnitudes.Find(FName(TEXT("Damage")));
 		}
 
+		FAggregatorEvaluateParameters Evaluation;
+		Evaluation.SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
+		Evaluation.TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
+
 		float Amount = 0.0f;
 		if (ExplicitDamage)
 		{
@@ -27,14 +31,21 @@ void UFortDamageFormulaExecutionCalculation::Execute_Implementation(const FGamep
 		}
 		else
 		{
-			FAggregatorEvaluateParameters Evaluation;
-			Evaluation.SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
-			Evaluation.TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
 			static const FGameplayEffectAttributeCaptureDefinition BaseDamage(
 				FGameplayAttribute(FindFProperty<FProperty>(UFortDamageSet::StaticClass(), TEXT("OutgoingBaseDamage"))),
 				EGameplayEffectAttributeCaptureSource::Source, true);
 			Parameters.AttemptCalculateCapturedAttributeMagnitude(BaseDamage, Evaluation, Amount);
 		}
+		static const FGameplayEffectAttributeCaptureDefinition Resistance(
+			FGameplayAttribute(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("DamageResistance"))),
+			EGameplayEffectAttributeCaptureSource::Target, false);
+		float ResistanceValue = 0.0f;
+		Parameters.AttemptCalculateCapturedAttributeMagnitude(Resistance, Evaluation, ResistanceValue);
+		if (FMath::IsFinite(ResistanceValue))
+		{
+			Amount *= 1.0f - FMath::Clamp(ResistanceValue, 0.0f, 0.95f);
+		}
+
 		if (FMath::IsFinite(Amount) && Amount > 0.0f)
 		{
 			static const FGameplayAttribute Damage(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("Damage")));
@@ -44,10 +55,13 @@ void UFortDamageFormulaExecutionCalculation::Execute_Implementation(const FGamep
 
 void UFortDamageFormulaExecutionCalculation::PostInitProperties()
 {
-	// CONFIDENCE: medium. Register the outgoing base damage snapshot for this execution.
+	// CONFIDENCE: medium. Register source base damage and live target resistance.
 	Super::PostInitProperties();
 	const FGameplayAttribute BaseDamage(FindFProperty<FProperty>(UFortDamageSet::StaticClass(), TEXT("OutgoingBaseDamage")));
 	RelevantAttributesToCapture.AddUnique(FGameplayEffectAttributeCaptureDefinition(
 		BaseDamage, EGameplayEffectAttributeCaptureSource::Source, true));
+	const FGameplayAttribute Resistance(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("DamageResistance")));
+	RelevantAttributesToCapture.AddUnique(FGameplayEffectAttributeCaptureDefinition(
+		Resistance, EGameplayEffectAttributeCaptureSource::Target, false));
 }
 

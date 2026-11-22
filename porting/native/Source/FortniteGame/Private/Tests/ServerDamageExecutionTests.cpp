@@ -173,6 +173,14 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	ASC->ApplyGameplayEffectSpecToSelf(ZeroDamage);
 	TestEqual(TEXT("Explicit zero suppresses source base damage"), Pawn->GetShield(), 13.0f);
 
+	const FGameplayAttribute Resistance(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("DamageResistance")));
+	FGameplayEffectSpec ResistedDamage(FormulaEffect, ASC->MakeEffectContext(), 1.0f);
+	ResistedDamage.SetSetByCallerMagnitude(FName(TEXT("Damage")), 8.0f);
+	ASC->SetNumericAttributeBase(Resistance, 0.5f);
+	ASC->ApplyGameplayEffectSpecToSelf(ResistedDamage);
+	TestEqual(TEXT("Target resistance applies at hit time"), Pawn->GetShield(), 9.0f);
+	ASC->SetNumericAttributeBase(Resistance, 0.0f);
+
 	ASC->SetNumericAttributeBase(Shield, 30);
 	FortAthenaHealth::ApplyDamage(Pawn, 5, FGameplayTagContainer(), nullptr, nullptr, true);
 	TestEqual(TEXT("Bypass preserves shield"), Pawn->GetShield(), 30.0f);
