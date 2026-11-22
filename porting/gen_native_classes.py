@@ -5116,6 +5116,15 @@ def promote(args):
 	virtual void ApplyCost(FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
 		FGameplayAbilityActivationInfo ActivationInfo) const override;
 """, 1)
+        if model.get("name") == "ABuildingItemWeaponUpgradeActor" and model.get("package") == "/Script/FortniteGame":
+            header = header.replace('#include "EFortWeaponUpgradeInteractionResult.h"',
+                                    '#include "EFortWeaponUpgradeDirection.h"\n#include "EFortWeaponUpgradeInteractionResult.h"')
+            header = header.replace("public:\n", """public:
+	UFUNCTION(BlueprintCallable)
+	UFortWeaponItemDefinition* GetUpgradedItemFromTable(UFortWeaponItemDefinition* ItemToUpgrade,
+		EFortWeaponUpgradeDirection UpgradeDirection) const;
+
+""", 1)
         header, cpp = _pawn_hand_socket_policy.finalize(model, header, cpp)
         header, cpp = _replicated_building_defaults_policy.finalize(model, header, cpp)
         header, cpp = _playlist_storm_defaults_policy.finalize(model, header, cpp)

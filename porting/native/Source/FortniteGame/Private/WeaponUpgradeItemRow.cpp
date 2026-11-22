@@ -1,5 +1,6 @@
 #include "WeaponUpgradeItemRow.h"
-#include "UFortWeaponItemDefinition.h"
+#include "ABuildingItemWeaponUpgradeActor.h"
+#include "UFortWeaponRangedItemDefinition.h"
 
 const FWeaponUpgradeItemRow* FWeaponUpgradeItemRow::FindRecipe(const UDataTable* Table,
 	const UFortWeaponItemDefinition* Weapon, EFortWeaponUpgradeDirection Direction)
@@ -28,4 +29,11 @@ const FWeaponUpgradeItemRow* FWeaponUpgradeItemRow::FindRecipe(const UDataTable*
 		}
 	}
 	return Result;
+}
+
+UFortWeaponItemDefinition* ABuildingItemWeaponUpgradeActor::GetUpgradedItemFromTable(
+	UFortWeaponItemDefinition* ItemToUpgrade, EFortWeaponUpgradeDirection UpgradeDirection) const
+{
+	const FWeaponUpgradeItemRow* Recipe = FWeaponUpgradeItemRow::FindRecipe(UpgradeTable, ItemToUpgrade, UpgradeDirection);
+	return Recipe ? Recipe->UpgradedWeaponDef : nullptr;
 }

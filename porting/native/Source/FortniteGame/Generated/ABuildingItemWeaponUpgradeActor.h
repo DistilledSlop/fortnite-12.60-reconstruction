@@ -8,6 +8,7 @@
 
 #include "AttributeSet.h"
 #include "EFortRarity.h"
+#include "EFortWeaponUpgradeDirection.h"
 #include "EFortWeaponUpgradeInteractionResult.h"
 
 class ABuildingSMActor;
@@ -24,6 +25,10 @@ class FORTNITEGAME_API ABuildingItemWeaponUpgradeActor : public ABuildingItemCol
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	UFortWeaponItemDefinition* GetUpgradedItemFromTable(UFortWeaponItemDefinition* ItemToUpgrade,
+		EFortWeaponUpgradeDirection UpgradeDirection) const;
+
 	// table index 27, flags 0x10000100002024
 	UPROPERTY(ReplicatedUsing=OnRep_AllowSecondInteraction, Transient)
 	bool bAllowSecondInteraction;

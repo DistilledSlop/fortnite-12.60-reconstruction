@@ -6,6 +6,7 @@
 #include "WeaponUpgradeItemRow.generated.h"
 
 class UFortWeaponItemDefinition;
+class UFortWeaponRangedItemDefinition;
 
 // Serialized by AthenaWumbaData. Reflection blocks 0x14790a5c8 and 0x1479092c0.
 UENUM()
@@ -47,10 +48,10 @@ struct FWeaponUpgradeItemRow : public FTableRowBase
 	GENERATED_BODY()
 
 	UPROPERTY()
-	UFortWeaponItemDefinition* CurrentWeaponDef = nullptr;
+	UFortWeaponRangedItemDefinition* CurrentWeaponDef = nullptr;
 
 	UPROPERTY()
-	UFortWeaponItemDefinition* UpgradedWeaponDef = nullptr;
+	UFortWeaponRangedItemDefinition* UpgradedWeaponDef = nullptr;
 
 	UPROPERTY()
 	EFortWeaponUpgradeCosts WoodCost = EFortWeaponUpgradeCosts::NotSet;
