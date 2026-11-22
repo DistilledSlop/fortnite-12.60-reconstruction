@@ -10,6 +10,7 @@
 #include "AFortWeapon.h"
 #include "AFortPlayerControllerAthena.h"
 #include "AFortPlayerStateAthena.h"
+#include "Components/BoxComponent.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -31,6 +32,7 @@
 #include "ServerDamageExecution.h"
 #include "TInteractionType.h"
 #include "UFortAbilitySystemComponent.h"
+#include "UFortAmmoItemDefinition.h"
 #include "UFortControllerComponent_Interaction.h"
 #include "UFortHealthSet.h"
 #include "UFortGameplayAbility.h"
@@ -439,6 +441,61 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 			ExtraPickup->Destroy();
 		}
 	}
+	// Exercise the client-facing drop RPC for other stackable item categories.
+	auto CheckPartialDrop = [&](UFortWorldItemDefinition* StackDefinition, EFortItemType Type, const TCHAR* Label)
+	{
+		StackDefinition->ItemType = Type;
+		StackDefinition->MaxStackSize = FScalableFloat(10.0f);
+		StackDefinition->bCanBeDropped = true;
+		StackDefinition->DropBehavior = EWorldItemDropBehavior::DropAsPickup;
+		UFortWorldItem* Stack = FortAthenaInventory::GiveItem(Controller, StackDefinition, 7);
+		if (!TestNotNull(FString::Printf(TEXT("%s split fixture"), Label), Stack))
+		{
+			return;
+		}
+		const FGuid Guid = Stack->NativeGetItemGuid();
+		const int32 ActionsBeforeDrop = Controller->DelayedQuickBarActions.Items.Num();
+		if (Type == EFortItemType::Consumable)
+		{
+			TestTrue(TEXT("Consumable has a primary loadout slot before splitting"),
+				Controller->DelayedQuickBarActions.Items.ContainsByPredicate([&](const FDelayedQuickBarAction& Action)
+				{
+					return Action.Action == EFortDelayedQuickBarAction::Add && Action.ItemGuid == Guid &&
+						Action.QuickBarType == EFortQuickBars::Primary;
+				}));
+		}
+		Controller->ServerAttemptInventoryDrop(Guid, 3, false);
+		TestTrue(FString::Printf(TEXT("%s split retains its live stack"), Label), Inventory->NativeFindItemByGuid(Guid) == Stack);
+		TestEqual(FString::Printf(TEXT("%s split retains four units"), Label), Stack->ItemEntry.Count, 4);
+		const FFortItemEntry* Replicated = Inventory->Inventory.ReplicatedEntries.FindByPredicate(
+			[Guid](const FFortItemEntry& Entry) { return Entry.ItemGuid == Guid; });
+		if (TestNotNull(FString::Printf(TEXT("%s split remains replicated"), Label), Replicated))
+		{
+			TestEqual(FString::Printf(TEXT("%s replicated split retains four units"), Label), Replicated->Count, 4);
+		}
+		if (Type == EFortItemType::Consumable)
+		{
+			TestEqual(TEXT("Splitting a consumable leaves its loadout actions unchanged"),
+				Controller->DelayedQuickBarActions.Items.Num(), ActionsBeforeDrop);
+		}
+		AFortPickupAthena* SplitPickup = nullptr;
+		for (TActorIterator<AFortPickupAthena> It(World); It; ++It)
+		{
+			if (It->PawnWhoDroppedPickup == Pawn && It->PrimaryPickupItemEntry.ItemDefinition == StackDefinition)
+			{
+				SplitPickup = *It;
+				break;
+			}
+		}
+		if (TestNotNull(FString::Printf(TEXT("%s split produces a pickup"), Label), SplitPickup))
+		{
+			TestEqual(FString::Printf(TEXT("%s pickup contains three units"), Label), SplitPickup->PrimaryPickupItemEntry.Count, 3);
+			SplitPickup->Destroy();
+		}
+		FortAthenaInventory::RemoveItem(Controller, Guid, 4);
+	};
+	CheckPartialDrop(NewObject<UFortAmmoItemDefinition>(Inventory), EFortItemType::Ammo, TEXT("Ammo"));
+	CheckPartialDrop(NewObject<UFortWeaponRangedItemDefinition>(Inventory), EFortItemType::Consumable, TEXT("Consumable"));
 	Definition->bCanBeDropped = true;
 	Definition->bAllowMultipleStacks = false;
 
@@ -453,7 +510,29 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	}
 	ON_SCOPE_EXIT { Pickup->Destroy(); };
 
-	TestTrue(TEXT("Pickup fills the existing stack"), FortAthenaLootTransfer::HandlePickup(Pawn, Pickup, 0.25f, FVector::ZeroVector, false));
+	TestFalse(TEXT("A pickup still in flight cannot be collected automatically"),
+		FortAthenaLootTransfer::TryAutoPickup(Pawn, Pickup));
+	Pickup->PickupLocationData.TossState = EFortPickupTossState::AtRest;
+	Pickup->SetActorLocation(Pawn->GetActorLocation() + FVector(100.0f, 0.0f, 0.0f));
+	AActor* Obstruction = World->SpawnActor<AActor>();
+	if (TestNotNull(TEXT("Auto-pickup visibility obstruction"), Obstruction))
+	{
+		UBoxComponent* Box = NewObject<UBoxComponent>(Obstruction);
+		Obstruction->SetRootComponent(Box);
+		Box->SetBoxExtent(FVector(10.0f, 30.0f, 30.0f));
+		Box->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+		Box->SetCollisionResponseToAllChannels(ECR_Ignore);
+		Box->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+		Box->RegisterComponent();
+		Obstruction->SetActorLocation(Pawn->GetActorLocation() + FVector(50.0f, 0.0f, 0.0f));
+		TestFalse(TEXT("Automatic pickup does not collect through blocking geometry"),
+			FortAthenaLootTransfer::TryAutoPickup(Pawn, Pickup));
+		TestEqual(TEXT("Blocked automatic pickup preserves the ground count"), Pickup->PrimaryPickupItemEntry.Count, 5);
+		Obstruction->Destroy();
+	}
+	Pickup->SetActorLocation(Pawn->GetActorLocation());
+	TestTrue(TEXT("Automatic resource pickup fills the existing stack"),
+		FortAthenaLootTransfer::TryAutoPickup(Pawn, Pickup));
 	TestEqual(TEXT("Inventory reaches its cap"), Second->ItemEntry.Count, 10);
 	TestEqual(TEXT("Two units stay on the ground"), Pickup->PrimaryPickupItemEntry.Count, 2);
 	TestFalse(TEXT("A retry at the stack cap accepts nothing"),
@@ -519,6 +598,9 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	}
 	ON_SCOPE_EXIT { if (Dropped) { Dropped->Destroy(); } };
 
+	FortAthenaLootTransfer::BlockAutoPickup(Pickup);
+	TestFalse(TEXT("An auto-pickup block keeps the remainder on the ground"),
+		FortAthenaLootTransfer::TryAutoPickup(Pawn, Pickup));
 	TestTrue(TEXT("Remaining ground units can be picked up after the split"), FortAthenaLootTransfer::HandlePickup(Pawn, Pickup, 0.25f, FVector::ZeroVector, false));
 	TestEqual(TEXT("Inventory, split drop and consumed ground stack account for all units"), Second->ItemEntry.Count, 8);
 	TestTrue(TEXT("Exhausted ground pickup is reserved for flight"), Pickup->bPickedUp);
@@ -1015,6 +1097,14 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 		return false;
 	}
 	ON_SCOPE_EXIT { SwapPickup->Destroy(); };
+	SwapPickup->PickupLocationData.TossState = EFortPickupTossState::AtRest;
+	SwapPickup->SetActorLocation(Pawn->GetActorLocation());
+	WideWeapon->bForceAutoPickup = true;
+	TestFalse(TEXT("Automatic pickup cannot swap out the held item to make room"),
+		FortAthenaLootTransfer::TryAutoPickup(Pawn, SwapPickup));
+	WideWeapon->bForceAutoPickup = false;
+	TestTrue(TEXT("Automatic pickup preserves the held item"), Inventory->NativeFindItemByGuid(HeldGuid) == WideItem);
+	TestEqual(TEXT("Automatic pickup preserves the ground stack when it cannot fit"), SwapPickup->PrimaryPickupItemEntry.Count, 1);
 	TestFalse(TEXT("A stale swap GUID cannot substitute the held weapon"),
 		FortAthenaLootTransfer::HandlePickupWithSwap(Pawn, SwapPickup, FGuid::NewGuid(), 0.25f, FVector::ZeroVector, false, true));
 	TestTrue(TEXT("Rejected swap preserves the held stack"), Inventory->NativeFindItemByGuid(HeldGuid) == WideItem);
