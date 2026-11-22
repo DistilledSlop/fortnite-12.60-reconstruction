@@ -668,10 +668,12 @@ namespace
 					}
 
 					FortAthenaLootTransfer::OnItemGranted(PC, GrantedItem, EFortQuickBars::Primary, SwapSlot, bWasHoldingSwapped);
-					if (bWasHoldingSwapped)
+					const FGuid GrantedGuid = GrantedItem->NativeGetItemGuid();
+					const FSlotLocation GrantedSlot = FindItemSlot(State, GrantedGuid);
+					if (bWasHoldingSwapped && GrantedSlot.IsValid())
 					{
-						FortAthenaInventory::ExecuteInventoryItem(PC, GrantedItem->NativeGetItemGuid());
-						PC->ClientActivateSlot(EFortQuickBars::Primary, SwapSlot, 0.0f, true, true);
+						FortAthenaInventory::ExecuteInventoryItem(PC, GrantedGuid);
+						PC->ClientActivateSlot(GrantedSlot.Bar, GrantedSlot.Slot, 0.0f, true, true);
 					}
 
 					OutPerformedSwap = true;
@@ -680,8 +682,8 @@ namespace
 						OutgoingEntry.ItemDefinition ? *OutgoingEntry.ItemDefinition->GetName() : TEXT("None"),
 						*SwapGuid.ToString(),
 						*Def->GetName(),
-						*GrantedItem->NativeGetItemGuid().ToString(),
-						SwapSlot,
+						*GrantedGuid.ToString(),
+						GrantedSlot.Slot,
 						AcceptedCount,
 						SrcEntry.Count - AcceptedCount);
 					return AcceptedCount;
