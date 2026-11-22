@@ -51,28 +51,24 @@ The [wiki](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki) 
 | [Maps and world](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Maps-and-world) | Apollo, streaming, terrain, wind, and remaining integration |
 | [Documentation index](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Documentation-Index) | Project and subsystem guides |
 
-## Progress
+## Dedicated-server progress
 
-The [dedicated-server progress board](docs/progress/server/index.html) tracks server capabilities, runtime evidence, and open verification. The original [client + server board](docs/index.html) tracks the broader reconstruction.
+| Server capability | Evidence so far | Open verification |
+|---|---|---|
+| Linux build and launch | Dedicated target builds and runs headless tests | Repeat build, staging, and launch on a clean host |
+| Client join and Battle Bus drop | Original 12.60 client joined and landed on Apollo in a local test | Repeat with multiple clients |
+| Storm and elimination | Storm death is wired. Headless tests cover last-standing and squad-wipe cases | Play through the storm and verify placement and spectating |
+| Results and requeue | A local test reached the results screen | Finish a multiplayer match, return to lobby, and requeue |
+| Damage, health, and shield | Headless tests cover point and radial damage, shield overflow, and selected gameplay effects | Exercise live weapons, consumables, hazards, and PvE |
+| Team knock and revive | Headless tests cover crawl stance, bleed-out, carry, throw, and timed revival | Verify prompts, animations, movement, and state across clients |
+| Loot and inventory | Loot-roll tests cover selection. Chest search and pickups are implemented | Verify contested pickups, swaps, and elimination drops |
+| Weapons and building | Server reload, projectile spawning, and placement checks are implemented | Verify weapon families, prediction, building edits, destruction, and resource costs |
+| World actors | Server damage coverage includes AI pawns and structures | Verify AI combat, vehicles, interactable props, and reboot stations |
+| Identity, profiles, and lobby | Backend route evidence and original-client probes are recorded | Verify account and party flows without diagnostic bypasses |
+| Matchmaking and sessions | Server registration and matchmaking have implementations and a smoke harness | Verify a party queues and joins the same session |
+| Replication and stability | A local client joined and entered the match | Measure state agreement and tick stability across a sustained multiplayer match |
 
-[![Reconstruction progress by area](docs/progress.svg)](docs/progress.svg)
-
-<!-- progress:start -->
-
-**Estimated reconstruction effort: 31.1%** · runtime milestones: 0/4 · snapshot `c55b2cbb` (2026-11-13)
-
-| Runtime milestone | Status |
-|---|---|
-| The rebuilt client reaches the main menu with feature parity to the 12.60 original | Open |
-| The client joins a lobby on the reconstructed server | Open |
-| The client matchmakes to the reconstructed UE dedicated server | Open |
-| A full match is played with audio and visuals working | Open |
-
-Percentages estimate implementation and verification effort. Recovered source, extracted assets, and offline checks do not prove a playable feature. [Dashboard methodology](porting/progress/README.md).
-
-<!-- progress:end -->
-
-The [interactive dashboard](docs/index.html) contains area estimates and evidence. To view it locally, run `porting/progress/serve.sh`. The dashboard refreshes after commits.
+[Detailed server board and evidence](docs/progress/server/index.html) · [Original client + server board](docs/index.html)
 
 ## Repository
 

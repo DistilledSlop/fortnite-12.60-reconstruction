@@ -2,7 +2,7 @@
 """Publish the rendered progress dashboard for GitHub.
 
 Copies the generated pages from porting/progress/out/ into docs/ (served by
-GitHub Pages) and rewrites the marked progress block in the root README.md
+GitHub Pages) and refreshes the marked badges in the root README.md
 from out/progress.json. Stdlib only, offline, deterministic for a given out/.
 
     python3 porting/progress/progress.py --no-record   # render HEAD first
@@ -21,7 +21,6 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "porting" / "progress" / "out"
 DOCS = ROOT / "docs"
 README = ROOT / "README.md"
-START, END = "<!-- progress:start -->", "<!-- progress:end -->"
 BSTART, BEND = "<!-- badges:start -->", "<!-- badges:end -->"
 PAGES = ["index.html", "history.html", "progress.svg", "progress.json"]
 
@@ -239,25 +238,11 @@ def badges(d):
     return "\n".join([BSTART, *(f'<p align="center">{" ".join(rows[i])}</p>' for i in order), BEND])
 
 
-def block(d):
-    lines = [START, "", f"**Estimated reconstruction effort: {d['overall_pct']:.1f}%** · "
-             f"runtime milestones: {d['milestones_done']}/{d['milestones_total']} · "
-             f"snapshot `{d['head'][:8]}` ({d['date'][:10]})", "",
-             "| Runtime milestone | Status |", "|---|---|"]
-    for m in d["milestones"]:
-        lines.append(f"| {m['text']} | {'Complete' if m['done'] else 'Open'} |")
-    lines += ["", "Percentages estimate implementation and verification effort. Recovered source, "
-              "extracted assets, and offline checks do not prove a playable feature. "
-              "[Dashboard methodology](porting/progress/README.md).", "", END]
-    return "\n".join(lines)
-
-
 def render_readme(d):
     text = README.read_text()
-    for (a, b), make in (((BSTART, BEND), badges), ((START, END), block)):
-        s, e = text.index(a), text.index(b) + len(b)
-        text = text[:s] + make(d) + text[e:]
-    return text
+    start = text.index(BSTART)
+    end = text.index(BEND, start) + len(BEND)
+    return text[:start] + badges(d) + text[end:]
 
 
 def main():
