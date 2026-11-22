@@ -78815,6 +78815,21 @@
     "notes": "Controller IsA AFortPlayerControllerGameplay then OnDBNOCarryPlayerChanged.Broadcast(DBNOHoistee != null)."
   },
   {
+    "class": "AFortPlayerPawn",
+    "function": "OnRep_DBNOHoisterData",
+    "kind": "exec",
+    "signature": "void OnRep_DBNOHoisterData(FFortDBNOCarryHoisterData& PreviousDBNOHoisterData)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortPlayerPawn/OnRep_DBNOHoisterData.inc",
+    "confidence": "medium",
+    "address": "0x142a7dc90",
+    "status": "ported",
+    "reflection_flags": "0x420401",
+    "static": false,
+    "access": "public",
+    "notes": "Derives the transient carried state from the replicated hoister."
+  },
+  {
     "class": "AFortPlayerStartupController",
     "function": "HandleAllInCountdownInitiated_Implementation",
     "kind": "native_event_impl",

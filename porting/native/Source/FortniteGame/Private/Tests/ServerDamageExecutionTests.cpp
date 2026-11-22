@@ -111,9 +111,23 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 			TestTrue(TEXT("Carry establishes both links and attaches the downed player"),
 				Carrier->DBNOHoistee == Downed && Downed->DBNOHoisterData.DBNOHoister == Carrier &&
 				Downed->GetAttachParentActor() == Carrier);
+			FFortDBNOCarryHoisterData PreviousHoisterData{};
+			Carrier->bIsDBNOCarrying = false;
+			Downed->bIsBeingDBNOCarried = false;
+			Carrier->OnRep_DBNOHoistee();
+			Downed->OnRep_DBNOHoisterData(PreviousHoisterData);
+			TestTrue(TEXT("Carry replication callbacks set both local flags"),
+				Carrier->bIsDBNOCarrying && Downed->bIsBeingDBNOCarried);
+			PreviousHoisterData = Downed->DBNOHoisterData;
 			Carrier->ServerDropCarriedPlayer();
 			TestTrue(TEXT("The drop RPC removes the carry links and attachment"),
 				!Carrier->DBNOHoistee && !Downed->DBNOHoisterData.DBNOHoister && !Downed->GetAttachParentActor());
+			Carrier->bIsDBNOCarrying = true;
+			Downed->bIsBeingDBNOCarried = true;
+			Carrier->OnRep_DBNOHoistee();
+			Downed->OnRep_DBNOHoisterData(PreviousHoisterData);
+			TestFalse(TEXT("Release replication callbacks clear both local flags"),
+				Carrier->bIsDBNOCarrying || Downed->bIsBeingDBNOCarried);
 			Downed->SetActorLocation(FVector(175, 0, 12000));
 			Carrier->ServerHoistDBNOPlayer(Downed);
 			if (TestTrue(TEXT("The hoist RPC can pick up a dropped player"), Carrier->DBNOHoistee == Downed))

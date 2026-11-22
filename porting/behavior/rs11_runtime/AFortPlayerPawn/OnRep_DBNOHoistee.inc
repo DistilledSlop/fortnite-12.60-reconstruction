@@ -4,6 +4,7 @@
 // controller+0x2470 = AFortPlayerControllerGameplay::OnDBNOCarryPlayerChanged (reflected InlineMulticastDelegate, one bool param).
 // Class gate: AFortPlayerControllerGameplay::StaticClass() (static getter 0x142a62c80) via IsA.
 // CONFIDENCE: HIGH
+bIsDBNOCarrying = IsValid(DBNOHoistee);
 if (Controller != nullptr && Controller->IsA(AFortPlayerControllerGameplay::StaticClass()))
 {
     AFortPlayerControllerGameplay* GameplayController = static_cast<AFortPlayerControllerGameplay*>(Controller);
