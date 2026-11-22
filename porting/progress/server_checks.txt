@@ -5,7 +5,7 @@ Hosting and drop|verified|Build and boot the Linux dedicated target and run head
 Hosting and drop|verified|Join the local server with the original client and enter Apollo|docs/screenshots/2026-11-13/vanilla-client-real-island-lit.png
 Hosting and drop|open|Populate a match with multiple original clients and complete the bus drop for each
 Bus driver|implemented|Record one thanks per player through the server RPC|94e5f612
-Bus driver|open|Show the corresponding bus-driver thanks message to the intended players
+Bus driver|implemented|Replicate the thanks flag on PlayerState for the original client's bus-driver message|porting/native/Source/FortniteGame/Generated/AFortPlayerStateAthena.cpp
 DBNO|verified|Knock a player with a standing teammate and eliminate the last standing teammate|417bfc45
 DBNO|verified|Queue a crawl stance on knock|c6645a88
 DBNO|verified|Drain downed health and resolve a squad wipe on the bleed timer|417bfc45

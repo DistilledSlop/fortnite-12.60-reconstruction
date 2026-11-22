@@ -17,8 +17,8 @@
 .grp-head{fill:var(--tm-group-label);font-weight:600;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 .grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style>
 <rect class="tm-bg" width="1000" height="720"/>
-<text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: 39.2% implemented</text>
-<text x="12" y="48" font-size="12" class="tm-head">40 of 102 server checks implemented | 29 verified | 62 open</text>
+<text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: 40.2% implemented</text>
+<text x="12" y="48" font-size="12" class="tm-head">41 of 102 server checks implemented | 29 verified | 61 open</text>
 <g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Lobby, accounts and Epic service compatibility
 46.7% complete (14/30)
@@ -28,11 +28,11 @@ effort weight 30 | source: equal-weight server implementation checks
 <text class="grp-head" x="7.0" y="17.0" font-size="12">Lobby, accounts and Epic service compatibility<tspan class="grp-pct"> · 47%</tspan></text>
 </g>
 <g><title>Match flow and player states
-59.1% complete (13/22)
+63.6% complete (14/22)
 effort weight 22 | source: equal-weight server implementation checks
 </title>
 <rect class="tile-frame tm-grp0" x="1.0" y="365.6" width="507.8" height="265.4" rx="4"/>
-<text class="grp-head" x="7.0" y="381.6" font-size="12">Match flow and player states<tspan class="grp-pct"> · 59%</tspan></text>
+<text class="grp-head" x="7.0" y="381.6" font-size="12">Match flow and player states<tspan class="grp-pct"> · 64%</tspan></text>
 </g>
 <g><title>Items, inventory and loot
 33.3% complete (5/15)
@@ -272,17 +272,16 @@ Open: Populate a match with multiple original clients and complete the bus drop 
 <rect class="tile-frame" x="301.5" y="496.0" width="121.2" height="131.0" rx="4"/>
 </g>
 <g><title>Bus driver
-50.0% complete (1/2)
+100.0% complete (2/2)
 effort weight 2 | source: equal-weight server implementation checks
 Implemented: Record one thanks per player through the server RPC
-Open: Show the corresponding bus-driver thanks message to the intended players</title>
+Implemented: Replicate the thanks flag on PlayerState for the original client&#x27;s bus-driver message</title>
 <rect class="tile-body" x="424.7" y="496.0" width="80.1" height="131.0" rx="4"/>
 <clipPath id="servertm-c12"><rect x="424.69" y="496.01" width="80.11" height="130.99" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c12)"><rect class="tile-fill" x="424.69" y="561.50" width="80.11" height="65.50"/>
-<rect class="tile-edge" x="424.69" y="560.50" width="80.11" height="2"/>
+<g clip-path="url(#servertm-c12)"><rect class="tile-fill" x="424.69" y="496.01" width="80.11" height="130.99"/>
 </g>
 <text class="leaf-label" x="429.7" y="511.0" font-size="11">Bus driver</text>
-<text class="leaf-pct" x="429.7" y="524.0" font-size="12">50%</text>
+<text class="leaf-pct" x="429.7" y="524.0" font-size="12">100%</text>
 <rect class="tile-frame" x="424.7" y="496.0" width="80.1" height="131.0" rx="4"/>
 </g>
 <g><title>Inventory operations
