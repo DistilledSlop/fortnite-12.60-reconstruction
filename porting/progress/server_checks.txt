@@ -88,7 +88,7 @@ Inventory operations|verified|Remove items from a single server inventory stack 
 Inventory operations|verified|Remove destroy-on-drop stacks during elimination without spawning pickups|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
 Inventory operations|verified|Transfer eligible elimination loot once and preserve protected stacks|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|verified|Charge the exact repair material cost and preserve unrelated stacks on acceptance and rejection|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
-Inventory operations|open|Verify five loadout slots and separate pickaxe, trap and material storage
+Inventory operations|verified|Verify five server loadout slots, separate pickaxe and trap slots, materials outside the quickbar and preservation of a rejected sixth weapon pickup|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|verified|Verify server stack merges preserve overflow, remove depleted sources and update replicated counts|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|open|Verify slot reorder, stack split and auto-pickup rules on two clients
 Inventory operations|verified|Confirm the cooked bandage ability charges one unit of its own inventory definition at commit|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp

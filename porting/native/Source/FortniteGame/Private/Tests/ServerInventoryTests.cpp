@@ -11,6 +11,7 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
+#include "EFortDelayedQuickBarAction.h"
 #include "EFortItemType.h"
 #include "EFortQuickBars.h"
 #include "EWorldItemDropBehavior.h"
@@ -80,6 +81,7 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	Controller->WorldInventory = Inventory;
 
 	UFortResourceItemDefinition* Definition = NewObject<UFortResourceItemDefinition>(Inventory);
+	Definition->ItemType = EFortItemType::WorldResource;
 	Definition->MaxStackSize = FScalableFloat(10.0f);
 	Definition->bAllowMultipleStacks = true;
 
@@ -145,6 +147,66 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	}
 	ON_SCOPE_EXIT { Pawn->Destroy(); };
 	Controller->Possess(Pawn);
+	{
+		for (FQuickBarData& Bar : Controller->QuickBarDefinitions)
+		{
+			Bar.QuickbarSlots.Reset();
+		}
+		TArray<FGuid> LayoutItems;
+		ON_SCOPE_EXIT
+		{
+			for (const FGuid& Guid : LayoutItems)
+			{
+				FortAthenaInventory::RemoveItem(Controller, Guid, 1);
+			}
+		};
+		auto GiveSlottedItem = [&](EFortItemType Type, EFortQuickBars Bar, int32 Slot)
+		{
+			UFortWeaponRangedItemDefinition* ItemDefinition = NewObject<UFortWeaponRangedItemDefinition>(Inventory);
+			ItemDefinition->ItemType = Type;
+			ItemDefinition->MaxStackSize = FScalableFloat(1.0f);
+			UFortWorldItem* Item = FortAthenaInventory::GiveItem(Controller, ItemDefinition, 1);
+			if (TestNotNull(TEXT("Quickbar item grant succeeds"), Item))
+			{
+				const FGuid Guid = Item->NativeGetItemGuid();
+				LayoutItems.Add(Guid);
+				TestTrue(TEXT("Quickbar add publishes the expected bar, slot and item GUID"),
+					Controller->DelayedQuickBarActions.Items.ContainsByPredicate([&](const FDelayedQuickBarAction& Action)
+					{
+						return Action.Action == EFortDelayedQuickBarAction::Add && Action.ItemGuid == Guid &&
+							Action.QuickBarType == Bar && Action.QuickBarSlot == Slot;
+					}));
+			}
+		};
+		GiveSlottedItem(EFortItemType::WeaponHarvest, EFortQuickBars::Primary, 0);
+		GiveSlottedItem(EFortItemType::Trap, EFortQuickBars::Secondary, 4);
+		for (int32 Slot = 1; Slot <= 5; ++Slot)
+		{
+			GiveSlottedItem(EFortItemType::WeaponRanged, EFortQuickBars::Primary, Slot);
+		}
+		TestFalse(TEXT("Materials remain in inventory without a quickbar slot"),
+			Controller->DelayedQuickBarActions.Items.ContainsByPredicate([&](const FDelayedQuickBarAction& Action)
+			{
+				return Action.Action == EFortDelayedQuickBarAction::Add && Action.ItemGuid == SecondGuid;
+			}));
+
+		UFortWeaponRangedItemDefinition* ExtraWeapon = NewObject<UFortWeaponRangedItemDefinition>(Inventory);
+		ExtraWeapon->ItemType = EFortItemType::WeaponRanged;
+		ExtraWeapon->MaxStackSize = FScalableFloat(1.0f);
+		FFortItemEntry ExtraEntry{};
+		ExtraEntry.ItemDefinition = ExtraWeapon;
+		ExtraEntry.Count = 1;
+		AFortPickupAthena* ExtraPickup = FortAthenaLootTransfer::SpawnTossedPickupFromEntry(
+			World, ExtraEntry, Pawn->GetActorLocation(), FVector::ForwardVector, nullptr, 0, EFortPickupSpawnSource::Unset);
+		if (TestNotNull(TEXT("Sixth weapon world pickup"), ExtraPickup))
+		{
+			TestFalse(TEXT("A sixth weapon cannot be picked up with all loadout slots occupied"),
+				FortAthenaLootTransfer::HandlePickup(Pawn, ExtraPickup, 0.25f, FVector::ZeroVector, false));
+			TestEqual(TEXT("Rejected weapon stays on the ground"), ExtraPickup->PrimaryPickupItemEntry.Count, 1);
+			TestNull(TEXT("Rejected weapon does not enter inventory"), Inventory->NativeFindWorldItemByDefinition(ExtraWeapon, true));
+			ExtraPickup->Destroy();
+		}
+	}
 	Definition->bCanBeDropped = true;
 	Definition->bAllowMultipleStacks = false;
 
