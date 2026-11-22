@@ -84,6 +84,7 @@ Inventory operations|verified|Confirm the cooked bandage ability charges one uni
 Inventory operations|verified|Debit the last bandage at authoritative ability cost commit and reject repayment from the depleted stack|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|verified|Resolve the cooked bandage stack cap of 15 and debit successive charges from the same stack|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|open|Verify item use and gain, spend or loss reconcile with inventory
+Inventory operations|implemented|Load the cooked upgrade bench table and resolve recipes by weapon and direction|porting/native/Source/FortniteGame/Private/WeaponUpgradeItemRow.cpp
 Inventory operations|open|Upgrade a weapon at a bench and charge the correct materials
 Loot sources|verified|Exercise reconstructed loot selection with the loot contract test|porting/native/Source/FortniteGame/Private/Tests/FortAthenaLootRollTests.cpp
 Loot sources|implemented|Search a chest and replicate its searched state|eacae928
