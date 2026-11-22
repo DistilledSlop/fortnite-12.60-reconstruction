@@ -1257,9 +1257,9 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FServerConsumableCostDataTest, "Fortnite.Server
 bool FServerConsumableCostDataTest::RunTest(const FString&)
 {
 	// The headless stage omits audiovisual packages referenced by these cooked assets.
-	AddExpectedError(TEXT("Couldn't find file for package (/Game/Athena/Sounds/Items/Item_Consumables_((Bandage|Medkit)_Apply_Cue|Shield_Potion_Mini_Drink(_Complete)?_Cue)|/Game/Effects/Fort_Effects/Effects/Characters/Generic/Consumables/P_Consumable_(ItemUseComplete(_Blue)?|MedKit_PourDecal)|/Game/Packages/Fortress_SharedMaterials/Base_Material/DEMO_Master|/Game/Sounds/Fort_GamePlay_Sounds/Loot/EatHealth_Restore_Athena_Cue) "), EAutomationExpectedErrorFlags::Contains, 0);
+	AddExpectedError(TEXT("Couldn't find file for package (/Game/Athena/Sounds/Items/Item_Consumables_((Bandage|Medkit)_Apply_Cue|Shield_Potion_(Mini_)?Drink(_Complete)?_Cue)|/Game/Effects/Fort_Effects/Effects/Characters/Generic/Consumables/P_Consumable_(ItemUseComplete(_Blue)?|MedKit_PourDecal)|/Game/Packages/Fortress_SharedMaterials/Base_Material/DEMO_Master|/Game/Sounds/Fort_GamePlay_Sounds/Loot/EatHealth_Restore_Athena_Cue) "), EAutomationExpectedErrorFlags::Contains, 0);
 	AddExpectedError(TEXT("Found 1 dependent packages"), EAutomationExpectedErrorFlags::Contains, 0);
-	AddExpectedError(TEXT("  /Game/(Animation/Game/MainPlayer/Montages/General/(ApplyMedkit|WrapBandages|ApplySmallShield)_Athena|Athena/Items/Consumables/Bandage/BandageCuff_Bandage_Roll_LOD0)$"), EAutomationExpectedErrorFlags::Contains, 0);
+	AddExpectedError(TEXT("  /Game/(Animation/Game/MainPlayer/Montages/General/(ApplyMedkit|WrapBandages|ApplySmallShield|ApplyShield)_Athena|Athena/Items/Consumables/Bandage/BandageCuff_Bandage_Roll_LOD0)$"), EAutomationExpectedErrorFlags::Contains, 0);
 	AddExpectedError(TEXT("Attempt to build nav collision data for /Game/Athena/Items/Consumables/Bandage/BandageCuff_Bandage_Roll_LOD0"), EAutomationExpectedErrorFlags::Contains, 0);
 
 	UFortWeaponItemDefinition* Bandage = LoadObject<UFortWeaponItemDefinition>(nullptr,
@@ -1506,38 +1506,39 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 
 	UFortWeaponItemDefinition* SmallShield = LoadObject<UFortWeaponItemDefinition>(nullptr,
 		TEXT("/Game/Athena/Items/Consumables/ShieldSmall/Athena_ShieldSmall.Athena_ShieldSmall"));
+	UFortWeaponItemDefinition* LargeShield = LoadObject<UFortWeaponItemDefinition>(nullptr,
+		TEXT("/Game/Athena/Items/Consumables/Shields/Athena_Shields.Athena_Shields"));
 	const UClass* ShieldAbilityClass = SmallShield ? SmallShield->GetPrimaryFireAbility() : nullptr;
 	TestNotNull(TEXT("Cooked small shield item"), SmallShield);
 	TestNotNull(TEXT("Cooked small shield primary ability"), ShieldAbilityClass);
+	TestNotNull(TEXT("Cooked large shield item"), LargeShield);
+	const UClass* LargeShieldAbilityClass = LargeShield ? LargeShield->GetPrimaryFireAbility() : nullptr;
+	TestNotNull(TEXT("Cooked large shield primary ability"), LargeShieldAbilityClass);
 
 	bCleanupQueued = true;
 	const TSharedRef<FGuid> ShieldGuid = MakeShared<FGuid>();
 	const TWeakObjectPtr<UFortWeaponItemDefinition> WeakSmallShield(SmallShield);
+	const TWeakObjectPtr<UFortWeaponItemDefinition> WeakLargeShield(LargeShield);
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakPawn(Pawn);
 	const TWeakObjectPtr<AFortWeapon> WeakEquipped(Equipped);
 	const TWeakObjectPtr<AFortPlayerControllerAthena> WeakController(Controller);
 	const TWeakObjectPtr<AFortInventory> WeakInventory(Inventory);
-	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakPawn, WeakEquipped, WeakController, WeakInventory, WeakSmallShield, ShieldGuid, LastBandageGuid]()
+	const auto ActivateShield = [this, WeakPawn, WeakEquipped, WeakController, ShieldGuid](UFortWeaponItemDefinition* Shield, const TCHAR* Name)
 	{
 		AFortPlayerPawnAthena* LivePawn = WeakPawn.Get();
 		AFortWeapon* LiveWeapon = WeakEquipped.Get();
 		AFortPlayerControllerAthena* LiveController = WeakController.Get();
-		AFortInventory* LiveInventory = WeakInventory.Get();
-		UFortWeaponItemDefinition* Shield = WeakSmallShield.Get();
-		if (!TestNotNull(TEXT("Consumable pawn after bandage use"), LivePawn) ||
-			!TestNotNull(TEXT("Consumable weapon after bandage use"), LiveWeapon) ||
-			!TestNotNull(TEXT("Consumable controller after bandage use"), LiveController) ||
-			!TestNotNull(TEXT("Consumable inventory after bandage use"), LiveInventory) ||
-			!TestNotNull(TEXT("Small shield definition after bandage use"), Shield))
+		if (!TestNotNull(TEXT("Consumable pawn for shield use"), LivePawn) ||
+			!TestNotNull(TEXT("Consumable weapon for shield use"), LiveWeapon) ||
+			!TestNotNull(TEXT("Consumable controller for shield use"), LiveController) ||
+			!TestNotNull(*FString::Printf(TEXT("%s shield definition"), Name), Shield))
 		{
 			return;
 		}
-		TestEqual(TEXT("Using the bandage restores the expected health"), LivePawn->GetHealth(), 65.0f);
-		TestNull(TEXT("Successful use removes the last bandage"), LiveInventory->NativeFindItemByGuid(LastBandageGuid));
 		UFortWorldItem* ShieldItem = FortAthenaInventory::GiveItem(LiveController, Shield, 2);
 		UClass* ShieldClass = Shield->GetPrimaryFireAbility();
-		if (!TestNotNull(TEXT("Small shield stack"), ShieldItem) ||
-			!TestNotNull(TEXT("Small shield ability class"), ShieldClass))
+		if (!TestNotNull(*FString::Printf(TEXT("%s shield stack"), Name), ShieldItem) ||
+			!TestNotNull(*FString::Printf(TEXT("%s shield ability class"), Name), ShieldClass))
 		{
 			return;
 		}
@@ -1549,29 +1550,57 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 		LivePawn->CurrentWeapon = LiveWeapon;
 		LivePawn->CurrentWeaponList.AddUnique(LiveWeapon);
 		UAbilitySystemComponent* LiveASC = LivePawn->GetAbilitySystemComponent();
-		if (!TestNotNull(TEXT("Small shield ability system"), LiveASC))
+		if (!TestNotNull(TEXT("Shield ability system"), LiveASC))
 		{
 			return;
 		}
 		const FGameplayAbilitySpecHandle ShieldHandle = LiveASC->GiveAbility(
 			FGameplayAbilitySpec(ShieldClass, 1, INDEX_NONE, LiveWeapon));
-		if (TestTrue(TEXT("Cooked small shield ability is granted"), ShieldHandle.IsValid()))
+		if (TestTrue(*FString::Printf(TEXT("Cooked %s shield ability is granted"), Name), ShieldHandle.IsValid()))
 		{
 			TGuardValue<TWeakObjectPtr<APlayerController>> LocalActivation(
 				LiveASC->AbilityActorInfo->PlayerController, TWeakObjectPtr<APlayerController>());
-			TestTrue(TEXT("Equipped small shield ability activates"), LiveASC->TryActivateAbility(ShieldHandle, false));
+			TestTrue(*FString::Printf(TEXT("Equipped %s shield ability activates"), Name), LiveASC->TryActivateAbility(ShieldHandle, false));
 		}
-	}), 8.0f));
-	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakPawn, WeakEquipped, WeakController, WeakInventory, ShieldGuid]()
+	};
+	const auto CheckShield = [this, WeakPawn, WeakInventory, ShieldGuid](const TCHAR* Name, float ExpectedShield)
 	{
+		if (TestNotNull(TEXT("Consumable pawn after shield use"), WeakPawn.Get()))
+		{
+			TestEqual(*FString::Printf(TEXT("Using a %s shield restores shield"), Name), WeakPawn->GetShield(), ExpectedShield);
+		}
+		if (TestNotNull(TEXT("Consumable inventory after shield use"), WeakInventory.Get()))
+		{
+			UFortWorldItem* RemainingShield = WeakInventory->NativeFindItemByGuid(*ShieldGuid);
+			if (TestNotNull(*FString::Printf(TEXT("%s shield stack remains after use"), Name), RemainingShield))
+			{
+				TestEqual(*FString::Printf(TEXT("Using a %s shield spends one unit"), Name), RemainingShield->ItemEntry.Count, 1);
+			}
+		}
+	};
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakPawn, WeakInventory, WeakSmallShield, LastBandageGuid, ActivateShield]()
+	{
+		if (TestNotNull(TEXT("Consumable pawn after bandage use"), WeakPawn.Get()))
+		{
+			TestEqual(TEXT("Using the bandage restores the expected health"), WeakPawn->GetHealth(), 65.0f);
+		}
+		if (TestNotNull(TEXT("Consumable inventory after bandage use"), WeakInventory.Get()))
+		{
+			TestNull(TEXT("Successful use removes the last bandage"), WeakInventory->NativeFindItemByGuid(LastBandageGuid));
+		}
+		ActivateShield(WeakSmallShield.Get(), TEXT("small"));
+	}), 8.0f));
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([WeakLargeShield, ActivateShield, CheckShield]()
+	{
+		CheckShield(TEXT("small"), 25.0f);
+		ActivateShield(WeakLargeShield.Get(), TEXT("large"));
+	}), 8.0f));
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([WeakPawn, WeakEquipped, WeakController, WeakInventory, CheckShield]()
+	{
+		CheckShield(TEXT("large"), 50.0f);
 		if (AFortPlayerPawnAthena* LivePawn = WeakPawn.Get())
 		{
-			TestEqual(TEXT("Using a small shield restores 25 shield"), LivePawn->GetShield(), 25.0f);
 			LivePawn->Destroy();
-		}
-		else
-		{
-			AddError(TEXT("Consumable pawn disappeared before the shield check"));
 		}
 		if (AFortWeapon* LiveWeapon = WeakEquipped.Get())
 		{
@@ -1582,14 +1611,9 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 			LiveController->WorldInventory = nullptr;
 			LiveController->Destroy();
 		}
-		if (TestNotNull(TEXT("Consumable inventory after shield use"), WeakInventory.Get()))
+		if (AFortInventory* LiveInventory = WeakInventory.Get())
 		{
-			UFortWorldItem* RemainingShield = WeakInventory->NativeFindItemByGuid(*ShieldGuid);
-			if (TestNotNull(TEXT("Small shield stack remains after use"), RemainingShield))
-			{
-				TestEqual(TEXT("Using a small shield spends one unit"), RemainingShield->ItemEntry.Count, 1);
-			}
-			WeakInventory->Destroy();
+			LiveInventory->Destroy();
 		}
 	}), 8.0f));
 	return true;
