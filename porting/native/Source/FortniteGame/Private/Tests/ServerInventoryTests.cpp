@@ -147,8 +147,8 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	if (TestNotNull(TEXT("Split stack produced a world pickup"), Dropped))
 	{
 		TestEqual(TEXT("Split drop contains exactly four units"), Dropped->PrimaryPickupItemEntry.Count, 4);
-		Dropped->Destroy();
 	}
+	ON_SCOPE_EXIT { if (Dropped) { Dropped->Destroy(); } };
 
 	TestTrue(TEXT("Remaining ground units can be picked up after the split"), FortAthenaLootTransfer::HandlePickup(Pawn, Pickup, 0.25f, FVector::ZeroVector, false));
 	TestEqual(TEXT("Inventory, split drop and consumed ground stack account for all units"), Second->ItemEntry.Count, 8);
@@ -190,6 +190,18 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	TestFalse(TEXT("A second player cannot collect a claimed pickup"),
 		FortAthenaLootTransfer::HandlePickup(ContenderPawn, Pickup, 0.25f, FVector::ZeroVector, false));
 	TestEqual(TEXT("The losing contender receives no replicated items"), ContenderInventory->Inventory.ReplicatedEntries.Num(), 0);
+	if (!Dropped || !TestTrue(TEXT("The second player can collect the split drop"),
+		FortAthenaLootTransfer::HandlePickup(ContenderPawn, Dropped, 0.25f, FVector::ZeroVector, false)))
+	{
+		return false;
+	}
+	if (TestEqual(TEXT("The second player receives one replicated stack"), ContenderInventory->Inventory.ReplicatedEntries.Num(), 1))
+	{
+		const FFortItemEntry& Entry = ContenderInventory->Inventory.ReplicatedEntries[0];
+		TestTrue(TEXT("The received stack retains its item definition"), Entry.ItemDefinition == Definition);
+		TestEqual(TEXT("The second player receives exactly the four dropped units"), Entry.Count, 4);
+	}
+	Dropped->Destroy();
 	TestEqual(TEXT("Claim retry preserves the inventory total"), Second->ItemEntry.Count, 8);
 	if (TestEqual(TEXT("Exactly one replicated stack survives the transfers"), Inventory->Inventory.ReplicatedEntries.Num(), 1))
 	{
