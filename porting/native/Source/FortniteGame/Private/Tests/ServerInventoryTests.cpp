@@ -85,7 +85,13 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	Definition->MaxStackSize = FScalableFloat(10.0f);
 	Definition->bAllowMultipleStacks = true;
 
-	int32 Accepted = 0;
+	int32 Accepted = -1;
+	TestNull(TEXT("A zero-quantity grant is rejected"),
+		FortAthenaInventory::GiveItem(Controller, Definition, 0, 1, 0, &Accepted));
+	TestEqual(TEXT("A rejected zero-quantity grant accepts nothing"), Accepted, 0);
+	TestEqual(TEXT("A rejected grant leaves no item instance"), Inventory->Inventory.ItemInstances.Num(), 0);
+	TestEqual(TEXT("A rejected grant leaves no replicated entry"), Inventory->Inventory.ReplicatedEntries.Num(), 0);
+
 	UFortWorldItem* First = FortAthenaInventory::GiveItem(Controller, Definition, 12, 1, 0, &Accepted);
 	if (!TestNotNull(TEXT("First stack"), First))
 	{

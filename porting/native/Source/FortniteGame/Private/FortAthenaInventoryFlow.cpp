@@ -473,7 +473,7 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 	}
 	FGcProbeScope GcProbe(Definition ? Definition->GetName() : FString(TEXT("null")));
 	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
-	if (!Inventory || !Inventory->HasAuthority() || !Definition || Count < 0)
+	if (!Inventory || !Inventory->HasAuthority() || !Definition || Count <= 0)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Inventory: GiveItem rejected (inventory=%d definition=%s count=%d)"),
 			Inventory ? 1 : 0, Definition ? *Definition->GetName() : TEXT("null"), Count);
@@ -484,7 +484,7 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 	ScanInventory(Inventory, nullptr, TEXT("before"));
 	const int32 MaxStack = FMath::Max(1, Definition->NativeGetMaxStackSize(nullptr));
 	// Fill matching stacks before creating a new one.
-	if (Count > 0 && Definition->IsStackable())
+	if (Definition->IsStackable())
 	{
 		for (UFortWorldItem* Existing : Inventory->Inventory.ItemInstances)
 		{
