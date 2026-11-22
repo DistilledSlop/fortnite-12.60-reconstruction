@@ -8,6 +8,7 @@ Bus driver|implemented|Record one thanks per player through the server RPC|94e5f
 Bus driver|implemented|Replicate the thanks flag on PlayerState for the original client's bus-driver message|porting/native/Source/FortniteGame/Generated/AFortPlayerStateAthena.cpp
 DBNO|verified|Knock a player with a standing teammate and eliminate the last standing teammate|417bfc45
 DBNO|verified|Queue a crawl stance on knock|c6645a88
+DBNO|open|Establish when post-knock protection applies to incoming damage and bleed-out
 DBNO|verified|Drain two downed health per bleed tick while a teammate stands and resolve squad wipes|6b2e9a77
 DBNO|verified|Pick up and drop a downed teammate|b3295a17
 DBNO|verified|Apply configured forward and upward throw velocity|d714d0e5
