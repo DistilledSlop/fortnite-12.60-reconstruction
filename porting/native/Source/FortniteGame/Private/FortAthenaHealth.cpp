@@ -313,7 +313,8 @@ bool FortAthenaHealth::TryCarryDownedPlayer(AController* Controller, AFortPawn* 
 	constexpr float CarryRange = 250.0f;
 	if (!IsEnabled() || !IsValid(Carrier) || !IsValid(Downed) || Carrier == Downed ||
 		!Carrier->HasAuthority() || !Carrier->bAllowDBNOCarry || Carrier->bIsDBNO || Carrier->bIsDying ||
-		Carrier->GetHealth() <= 0.0f || Carrier->ItemInteractionActor || Carrier->DBNOHoistee || !Downed->bIsDBNO || Downed->bIsDying ||
+		Carrier->GetHealth() <= 0.0f || Carrier->ItemInteractionActor || Carrier->DBNOHoistee ||
+		!Downed->bIsDBNO || Downed->bIsDying || Downed->GetHealth() <= 0.0f ||
 		Downed->bIsBeingDBNOCarried || Downed->DBNORevivalStacking != 0 ||
 		FVector::DistSquared(Carrier->GetActorLocation(), Downed->GetActorLocation()) > FMath::Square(CarryRange) ||
 		!Controller->LineOfSightTo(Downed))
