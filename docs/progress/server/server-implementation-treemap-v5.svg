@@ -482,7 +482,7 @@ Open: Spawn, land and open a supply drop, then verify its loot</title>
 40.0% complete (2/5)
 effort weight 5 | source: equal-weight server implementation checks
 Verified: Apply selected cooked consumable recovery effects with server caps
-Open: Use all supported small and large shield and healing items from inventory. Headless cooked ability checks cover bandages and one-unit spending for both shield potions
+Open: Use all supported small and large shield and healing items from inventory. Headless cooked ability checks cover bandages, medkits and one-unit spending for both shield potions
 Open: Deploy and use crash pads and launch pads with replicated movement
 Implemented: Handle server zipline interaction RPCs
 Open: Verify zipline mount and dismount and representative map interactables</title>

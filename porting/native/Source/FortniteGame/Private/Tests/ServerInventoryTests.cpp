@@ -1508,6 +1508,11 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 		TEXT("/Game/Athena/Items/Consumables/ShieldSmall/Athena_ShieldSmall.Athena_ShieldSmall"));
 	UFortWeaponItemDefinition* LargeShield = LoadObject<UFortWeaponItemDefinition>(nullptr,
 		TEXT("/Game/Athena/Items/Consumables/Shields/Athena_Shields.Athena_Shields"));
+	UFortWeaponItemDefinition* Medkit = LoadObject<UFortWeaponItemDefinition>(nullptr,
+		TEXT("/Game/Athena/Items/Consumables/Medkit/Athena_Medkit.Athena_Medkit"));
+	TestNotNull(TEXT("Cooked medkit item"), Medkit);
+	const UClass* MedkitAbilityClass = Medkit ? Medkit->GetPrimaryFireAbility() : nullptr;
+	TestNotNull(TEXT("Cooked medkit primary ability"), MedkitAbilityClass);
 	const UClass* ShieldAbilityClass = SmallShield ? SmallShield->GetPrimaryFireAbility() : nullptr;
 	TestNotNull(TEXT("Cooked small shield item"), SmallShield);
 	TestNotNull(TEXT("Cooked small shield primary ability"), ShieldAbilityClass);
@@ -1517,6 +1522,8 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 
 	bCleanupQueued = true;
 	const TSharedRef<FGuid> ShieldGuid = MakeShared<FGuid>();
+	const TSharedRef<FGuid> MedkitGuid = MakeShared<FGuid>();
+	const TWeakObjectPtr<UFortWeaponItemDefinition> WeakMedkit(Medkit);
 	const TWeakObjectPtr<UFortWeaponItemDefinition> WeakSmallShield(SmallShield);
 	const TWeakObjectPtr<UFortWeaponItemDefinition> WeakLargeShield(LargeShield);
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakPawn(Pawn);
@@ -1595,9 +1602,59 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 		CheckShield(TEXT("small"), 25.0f);
 		ActivateShield(WeakLargeShield.Get(), TEXT("large"));
 	}), 8.0f));
-	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([WeakPawn, WeakEquipped, WeakController, WeakInventory, CheckShield]()
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakPawn, WeakEquipped, WeakController, WeakMedkit, MedkitGuid, CheckShield]()
 	{
 		CheckShield(TEXT("large"), 50.0f);
+		AFortPlayerPawnAthena* LivePawn = WeakPawn.Get();
+		AFortWeapon* LiveWeapon = WeakEquipped.Get();
+		AFortPlayerControllerAthena* LiveController = WeakController.Get();
+		UFortWeaponItemDefinition* LiveMedkit = WeakMedkit.Get();
+		if (!TestNotNull(TEXT("Consumable pawn for medkit use"), LivePawn) ||
+			!TestNotNull(TEXT("Consumable weapon for medkit use"), LiveWeapon) ||
+			!TestNotNull(TEXT("Consumable controller for medkit use"), LiveController) ||
+			!TestNotNull(TEXT("Medkit definition"), LiveMedkit))
+		{
+			return;
+		}
+		UFortWorldItem* MedkitItem = FortAthenaInventory::GiveItem(LiveController, LiveMedkit, 2);
+		UClass* MedkitClass = LiveMedkit->GetPrimaryFireAbility();
+		UAbilitySystemComponent* LiveASC = LivePawn->GetAbilitySystemComponent();
+		if (!TestNotNull(TEXT("Medkit stack"), MedkitItem) ||
+			!TestNotNull(TEXT("Medkit ability class"), MedkitClass) ||
+			!TestNotNull(TEXT("Medkit ability system"), LiveASC))
+		{
+			return;
+		}
+		*MedkitGuid = MedkitItem->NativeGetItemGuid();
+		LivePawn->SetMaxHealth(100.0f);
+		LivePawn->SetHealth(50.0f);
+		LiveWeapon->WeaponData = LiveMedkit;
+		LiveWeapon->ItemEntryGuid = *MedkitGuid;
+		LivePawn->CurrentWeapon = LiveWeapon;
+		LivePawn->CurrentWeaponList.AddUnique(LiveWeapon);
+		const FGameplayAbilitySpecHandle MedkitHandle = LiveASC->GiveAbility(
+			FGameplayAbilitySpec(MedkitClass, 1, INDEX_NONE, LiveWeapon));
+		if (TestTrue(TEXT("Cooked medkit ability is granted"), MedkitHandle.IsValid()))
+		{
+			TGuardValue<TWeakObjectPtr<APlayerController>> LocalActivation(
+				LiveASC->AbilityActorInfo->PlayerController, TWeakObjectPtr<APlayerController>());
+			TestTrue(TEXT("Equipped medkit ability activates"), LiveASC->TryActivateAbility(MedkitHandle, false));
+		}
+	}), 8.0f));
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakPawn, WeakEquipped, WeakController, WeakInventory, MedkitGuid]()
+	{
+		if (TestNotNull(TEXT("Consumable pawn after medkit use"), WeakPawn.Get()))
+		{
+			TestEqual(TEXT("Using a medkit restores full health"), WeakPawn->GetHealth(), 100.0f);
+		}
+		if (TestNotNull(TEXT("Consumable inventory after medkit use"), WeakInventory.Get()))
+		{
+			UFortWorldItem* RemainingMedkit = WeakInventory->NativeFindItemByGuid(*MedkitGuid);
+			if (TestNotNull(TEXT("Medkit stack remains after use"), RemainingMedkit))
+			{
+				TestEqual(TEXT("Using a medkit spends one unit"), RemainingMedkit->ItemEntry.Count, 1);
+			}
+		}
 		if (AFortPlayerPawnAthena* LivePawn = WeakPawn.Get())
 		{
 			LivePawn->Destroy();
@@ -1615,7 +1672,7 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 		{
 			LiveInventory->Destroy();
 		}
-	}), 8.0f));
+	}), 12.0f));
 	return true;
 }
 
