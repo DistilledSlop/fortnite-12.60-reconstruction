@@ -22,6 +22,7 @@
 #include "FFortAttributeInitializationKey.h"
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaLoot.h"
+#include "FortAthenaLootSearch.h"
 #include "FortAttributeSetInitter.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Controller.h"
@@ -854,6 +855,13 @@ bool ApplyBuildingDamage(
 	}
 
 	// 5. Destruction / death sequence (original 0x141c0c330 -> 0x141c00e60 -> 0x141bac110 -> 0x141c0be60 -> 0x141babc20).
+	if (ABuildingContainer* Container = Cast<ABuildingContainer>(Building))
+	{
+		FortAthenaLootSearch::ReleaseLootBeforeDestruction(Container);
+		if (!IsValid(Building) || Building->bDestroyed)
+			return true;
+	}
+
 	Building->bDestroyed = 1;
 	Building->OnDeathServer(ClampedDamage, DamageTags, Momentum, MutableHit, Instigator, Causer, EffectContext);
 	Building->OnDied.Broadcast(Building, ClampedDamage, Instigator, Causer, HitPoint, Hit.Component.Get(), Hit.BoneName, Momentum);

@@ -50,4 +50,7 @@ namespace FortAthenaLootSearch
 	// Executes the authoritative container search transition (roll, spawn, mark searched / destroy).
 	// Confidence: medium (validation & state machine from 0x141d14c20 / 0x141be85b0; Roll/Spawn replace stripped 0x141bec430).
 	bool TrySearchContainer(AFortPlayerController* Controller, ABuildingContainer* Container);
+
+	// Releases unopened loot for an authored BreakableLootContainer on a lethal hit.
+	void ReleaseLootBeforeDestruction(ABuildingContainer* Container);
 }

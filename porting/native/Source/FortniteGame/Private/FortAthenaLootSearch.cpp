@@ -579,6 +579,67 @@ FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnCon
 	return EContainerLootResult::Success;
 }
 
+namespace
+{
+	bool TryReleaseContainerLoot(ABuildingContainer* Container)
+	{
+		UWorld* World = Container->GetWorld();
+		AFortGameModeAthena* GameMode = World ? World->GetAuthGameMode<AFortGameModeAthena>() : nullptr;
+		if (!GameMode || !FortAthenaLootData::IsReady(GameMode))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("LootSearch: rejected container=%s (loot data not initialized)"),
+				*Container->GetName());
+			return false;
+		}
+
+		const FName TierGroup = FortAthenaLootSearch::ResolveContainerLootTierGroup(Container);
+		if (TierGroup == NAME_None)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LootSearch: rejected container=%s empty_tier_group upgrade=%d"),
+				*Container->GetName(), Container->ChosenRandomUpgrade);
+			return false;
+		}
+
+		// Transform container-local LootSpawnLocation_Athena (e.g. Chest=(0,50,30), Ammo=(0,35,10)) to world space.
+		const FVector WorldSpawn = Container->GetActorTransform().TransformPosition(Container->LootSpawnLocation_Athena);
+		const float ScatterRadius = Container->SearchBounceRadiusOverride > 0.0f
+			? FMath::Min(Container->SearchBounceRadiusOverride, 80.0f)
+			: 45.0f; // stand-in: container toss scatter when LootTossSpeed_Athena flight isn't active
+
+		UE_LOG(LogTemp, Display, TEXT("LootSearch: rolling container=%s class=%s group=%s upgrade=%d tossSpeed=%.0f tossCone=%.0f"),
+			*Container->GetName(), *GetNameSafe(Container->GetClass()), *TierGroup.ToString(),
+			Container->ChosenRandomUpgrade, Container->LootTossSpeed_Athena, Container->LootTossConeHalfAngle_Athena);
+
+		if (ContainersBeingSearched.Contains(Container))
+		{
+			return false;
+		}
+		ContainersBeingSearched.Add(Container);
+		ON_SCOPE_EXIT { ContainersBeingSearched.Remove(Container); };
+
+		return FortAthenaLootSearch::RollAndSpawnContainerLoot(GameMode, Container, TierGroup, WorldSpawn, ScatterRadius)
+			== FortAthenaLootSearch::EContainerLootResult::Success;
+	}
+
+} // namespace
+
+void FortAthenaLootSearch::ReleaseLootBeforeDestruction(ABuildingContainer* Container)
+{
+	static const FName BreakableLootTag(TEXT("BreakableLootContainer"));
+	FString RejectReason;
+	if (!IsEnabled() || !IsInteractableContainer(Container, RejectReason) ||
+		!Container->HasAuthority() || !Container->ActorHasTag(BreakableLootTag))
+	{
+		return;
+	}
+
+	if (TryReleaseContainerLoot(Container))
+	{
+		// The building death path handles presentation and removal.
+		Container->bAlreadySearched = true;
+	}
+}
+
 bool FortAthenaLootSearch::TrySearchContainer(AFortPlayerController* Controller, ABuildingContainer* Container)
 {
 	if (!IsEnabled())
@@ -615,41 +676,7 @@ bool FortAthenaLootSearch::TrySearchContainer(AFortPlayerController* Controller,
 		return false;
 	}
 
-	UWorld* World = Container->GetWorld();
-	AFortGameModeAthena* GameMode = World ? World->GetAuthGameMode<AFortGameModeAthena>() : nullptr;
-	if (!GameMode || !FortAthenaLootData::IsReady(GameMode))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("LootSearch: rejected container=%s player=%s (loot data not initialized)"),
-			*Container->GetName(), *Controller->GetName());
-		return false;
-	}
-
-	const FName TierGroup = ResolveContainerLootTierGroup(Container);
-	if (TierGroup == NAME_None)
-	{
-		UE_LOG(LogTemp, Display, TEXT("LootSearch: rejected container=%s player=%s empty_tier_group upgrade=%d"),
-			*Container->GetName(), *Controller->GetName(), Container->ChosenRandomUpgrade);
-		return false;
-	}
-
-	// Transform container-local LootSpawnLocation_Athena (e.g. Chest=(0,50,30), Ammo=(0,35,10)) to world space.
-	const FVector WorldSpawn = Container->GetActorTransform().TransformPosition(Container->LootSpawnLocation_Athena);
-	const float ScatterRadius = Container->SearchBounceRadiusOverride > 0.0f
-		? FMath::Min(Container->SearchBounceRadiusOverride, 80.0f)
-		: 45.0f; // stand-in: container toss scatter when LootTossSpeed_Athena flight isn't active
-
-	UE_LOG(LogTemp, Display, TEXT("LootSearch: rolling container=%s class=%s group=%s upgrade=%d tossSpeed=%.0f tossCone=%.0f"),
-		*Container->GetName(), *GetNameSafe(Container->GetClass()), *TierGroup.ToString(),
-		Container->ChosenRandomUpgrade, Container->LootTossSpeed_Athena, Container->LootTossConeHalfAngle_Athena);
-
-	if (ContainersBeingSearched.Contains(Container))
-	{
-		return false;
-	}
-	ContainersBeingSearched.Add(Container);
-	ON_SCOPE_EXIT { ContainersBeingSearched.Remove(Container); };
-
-	if (RollAndSpawnContainerLoot(GameMode, Container, TierGroup, WorldSpawn, ScatterRadius) != EContainerLootResult::Success)
+	if (!TryReleaseContainerLoot(Container))
 		return false;
 
 	// Only mark searched / destroy once roll succeeded so unready data does not silently eat chests.
