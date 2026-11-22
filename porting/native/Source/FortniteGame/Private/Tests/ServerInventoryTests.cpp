@@ -509,9 +509,24 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 		if (TestNotNull(FString::Printf(TEXT("%s split produces a pickup"), Label), SplitPickup))
 		{
 			TestEqual(FString::Printf(TEXT("%s pickup contains three units"), Label), SplitPickup->PrimaryPickupItemEntry.Count, 3);
+			if (Type == EFortItemType::Ammo)
+			{
+				SplitPickup->PickupLocationData.TossState = EFortPickupTossState::AtRest;
+				SplitPickup->SetActorLocation(Pawn->GetActorLocation());
+				TestFalse(TEXT("The player cannot automatically collect ammo they dropped"),
+					FortAthenaLootTransfer::TryAutoPickup(Pawn, SplitPickup));
+				TestEqual(TEXT("Auto-pickup suppression preserves the dropped ammo"), SplitPickup->PrimaryPickupItemEntry.Count, 3);
+				TestEqual(TEXT("Auto-pickup suppression preserves the inventory count"), Stack->ItemEntry.Count, 4);
+
+				SplitPickup->PawnWhoDroppedPickup = nullptr;
+				TestTrue(TEXT("Nearby ammo without a dropper is collected automatically"),
+					FortAthenaLootTransfer::TryAutoPickup(Pawn, SplitPickup));
+				TestEqual(TEXT("Collecting the split ammo restores the original total"), Stack->ItemEntry.Count, 7);
+				TestTrue(TEXT("Collected ammo is marked picked up"), SplitPickup->bPickedUp);
+			}
 			SplitPickup->Destroy();
 		}
-		FortAthenaInventory::RemoveItem(Controller, Guid, 4);
+		FortAthenaInventory::RemoveItem(Controller, Guid, MAX_int32);
 	};
 	CheckPartialDrop(NewObject<UFortAmmoItemDefinition>(Inventory), EFortItemType::Ammo, TEXT("Ammo"));
 	CheckPartialDrop(NewObject<UFortWeaponRangedItemDefinition>(Inventory), EFortItemType::Consumable, TEXT("Consumable"));
