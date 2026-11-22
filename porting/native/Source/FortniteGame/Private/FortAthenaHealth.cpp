@@ -76,6 +76,7 @@
 
 #include "AbilitySystemComponent.h"
 #include "Engine/World.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameplayEffectExtension.h"
@@ -199,6 +200,124 @@ AFortPlayerControllerAthena* FortAthenaHealth::GetSoleSurvivor(AFortGameModeAthe
 
 namespace
 {
+	void ReleaseCarriedPlayer(AFortPlayerPawn* Carrier, AFortPlayerPawn* Target, bool bThrow)
+	{
+		if (IsValid(Carrier))
+		{
+			Carrier->GetCapsuleComponent()->IgnoreActorWhenMoving(Target, false);
+			Carrier->DBNOHoistee = nullptr;
+			Carrier->bIsDBNOCarrying = false;
+			Carrier->ForceNetUpdate();
+		}
+		if (!IsValid(Target))
+		{
+			return;
+		}
+
+		Target->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+		Target->DBNOHoisterData.DBNOHoister = nullptr;
+		Target->DBNOHoisterData.DBNOCarryEvent = bThrow ? EFortDBNOCarryEvent::Thrown : EFortDBNOCarryEvent::Dropped;
+		Target->bIsBeingDBNOCarried = false;
+		if (!Target->bIsDying)
+		{
+			Target->GetCharacterMovement()->SetMovementMode(MOVE_Falling);
+			if (IsValid(Carrier))
+			{
+				const FVector Forward = Carrier->GetActorForwardVector().GetSafeNormal2D();
+				const float Distance = Carrier->DropCarriedPlayerForwardOffset > 0.0f ? Carrier->DropCarriedPlayerForwardOffset : 100.0f;
+				Target->SetActorLocation(Target->GetActorLocation() + Forward * Distance, true);
+				if (bThrow)
+				{
+					const float Speed = Carrier->ThrowCarriedPlayerStrengthXY > 0.0f ? Carrier->ThrowCarriedPlayerStrengthXY : 750.0f;
+					const float Lift = Carrier->ThrowCarriedPlayerStrengthZ > 0.0f ? Carrier->ThrowCarriedPlayerStrengthZ : 750.0f;
+					Target->LaunchCharacter(Forward * Speed + FVector::UpVector * Lift, true, true);
+				}
+			}
+		}
+		Target->GetCapsuleComponent()->IgnoreActorWhenMoving(Carrier, false);
+		Target->ForceNetUpdate();
+	}
+
+	void ReleaseCarryConnections(AFortPawn* Pawn)
+	{
+		if (AFortPlayerPawn* Player = Cast<AFortPlayerPawn>(Pawn))
+		{
+			if (Player->DBNOHoistee)
+			{
+				ReleaseCarriedPlayer(Player, Player->DBNOHoistee, false);
+			}
+			if (Player->bIsBeingDBNOCarried)
+			{
+				ReleaseCarriedPlayer(Player->DBNOHoisterData.DBNOHoister, Player, false);
+			}
+		}
+	}
+
+	void ExecDropCarriedPlayer(UObject* Context, FFrame& Stack, RESULT_DECL)
+	{
+		P_FINISH;
+		AFortPlayerPawn* Carrier = Cast<AFortPlayerPawn>(Context);
+		if (Carrier && Carrier->HasAuthority() && Carrier->DBNOHoistee)
+		{
+			ReleaseCarriedPlayer(Carrier, Carrier->DBNOHoistee, false);
+		}
+	}
+
+	void ExecThrowCarriedPlayer(UObject* Context, FFrame& Stack, RESULT_DECL)
+	{
+		P_FINISH;
+		AFortPlayerPawn* Carrier = Cast<AFortPlayerPawn>(Context);
+		if (Carrier && Carrier->HasAuthority() && !Carrier->bIsDBNO && !Carrier->bIsDying && Carrier->DBNOHoistee)
+		{
+			ReleaseCarriedPlayer(Carrier, Carrier->DBNOHoistee, true);
+		}
+	}
+}
+
+bool FortAthenaHealth::TryCarryDownedPlayer(AController* Controller, AFortPawn* Target)
+{
+	AFortPlayerPawnAthena* Carrier = Controller ? Cast<AFortPlayerPawnAthena>(Controller->GetPawn()) : nullptr;
+	AFortPlayerPawnAthena* Downed = Cast<AFortPlayerPawnAthena>(Target);
+	constexpr float CarryRange = 250.0f;
+	if (!IsEnabled() || !IsValid(Carrier) || !IsValid(Downed) || Carrier == Downed ||
+		!Carrier->HasAuthority() || !Carrier->bAllowDBNOCarry || Carrier->bIsDBNO || Carrier->bIsDying ||
+		Carrier->GetHealth() <= 0.0f || Carrier->DBNOHoistee || !Downed->bIsDBNO || Downed->bIsDying ||
+		Downed->bIsBeingDBNOCarried || Downed->DBNORevivalStacking != 0 ||
+		FVector::DistSquared(Carrier->GetActorLocation(), Downed->GetActorLocation()) > FMath::Square(CarryRange) ||
+		!Controller->LineOfSightTo(Downed))
+	{
+		return false;
+	}
+
+	const AFortPlayerStateAthena* CarrierState = Cast<AFortPlayerStateAthena>(Carrier->GetPlayerState());
+	const AFortPlayerStateAthena* DownedState = Cast<AFortPlayerStateAthena>(Downed->GetPlayerState());
+	if (!CarrierState || !DownedState ||
+		(CarrierState->TeamIndex != DownedState->TeamIndex && !Carrier->bAllowDBNOCarryEnemies))
+	{
+		return false;
+	}
+
+	Downed->AttachToActor(Carrier, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	if (Downed->GetAttachParentActor() != Carrier)
+	{
+		return false;
+	}
+	Downed->SetActorRelativeLocation(FVector(0.0f, 0.0f, 75.0f));
+	Downed->GetCharacterMovement()->DisableMovement();
+	Carrier->GetCapsuleComponent()->IgnoreActorWhenMoving(Downed, true);
+	Downed->GetCapsuleComponent()->IgnoreActorWhenMoving(Carrier, true);
+	Downed->DBNOHoisterData.DBNOHoister = Carrier;
+	Downed->DBNOHoisterData.DBNOCarryEvent = EFortDBNOCarryEvent::PickedUp;
+	Downed->bIsBeingDBNOCarried = true;
+	Carrier->DBNOHoistee = Downed;
+	Carrier->bIsDBNOCarrying = true;
+	Carrier->ForceNetUpdate();
+	Downed->ForceNetUpdate();
+	return true;
+}
+
+namespace
+{
 	bool TryKnockPlayer(AFortPawn* Pawn, const FGameplayTagContainer& DamageTags,
 	                    AController* InstigatedBy, AActor* DamageCauser)
 	{
@@ -234,6 +353,7 @@ namespace
 			return false;
 		}
 
+		ReleaseCarryConnections(Player);
 		Player->bIsDBNO = true;
 		const float KnockTime = World->GetTimeSeconds();
 		Player->DBNOStartTime = KnockTime;
@@ -260,6 +380,11 @@ namespace
 					}
 					return;
 				}
+				if (Downed->bIsBeingDBNOCarried &&
+					(!IsValid(Downed->DBNOHoisterData.DBNOHoister) || !Downed->DBNOHoisterData.DBNOHoister->GetController()))
+				{
+					ReleaseCarryConnections(Downed);
+				}
 				FortAthenaHealth::ApplyDamage(Downed, 2.0f, DamageTags, WeakInstigator.Get(), WeakCauser.Get(), true);
 			}), 1.2f, true);
 		return true;
@@ -272,7 +397,7 @@ namespace
 	{
 		const AFortPawn* Helper = Reviver ? Cast<AFortPawn>(Reviver->GetPawn()) : nullptr;
 		if (!IsValid(Target) || !IsValid(Helper) || Helper == Target || !Target->HasAuthority() ||
-			!Target->bIsDBNO || Target->bIsDying || !Target->GetController() ||
+			!Target->bIsDBNO || Target->bIsDying || Target->bIsBeingDBNOCarried || !Target->GetController() ||
 			Helper->bIsDBNO || Helper->bIsDying || Helper->GetHealth() <= 0.0f ||
 			Helper->GetWorld() != Target->GetWorld())
 		{
@@ -920,6 +1045,7 @@ namespace
 {
 	void NotifyPawnDeath(AFortPawn* VictimPawn, AController* InstigatedBy, AActor* DamageCauser, float LethalDamage)
 	{
+		ReleaseCarryConnections(VictimPawn);
 		VictimPawn->bWasDBNOOnDeath = VictimPawn->bIsDBNO;
 		if (UCharacterMovementComponent* MoveComp = VictimPawn->GetCharacterMovement())
 		{
@@ -1163,6 +1289,15 @@ void FortAthenaHealth::InstallRpcOverrides()
 	else
 	{
 		UE_LOG(LogFortHealth, Warning, TEXT("Health: AFortPlayerPawn::ServerResetAbilitySystemComponent UFunction not found"));
+	}
+
+	if (UFunction* Drop = AFortPlayerPawn::StaticClass()->FindFunctionByName(TEXT("ServerDropCarriedPlayer")))
+	{
+		Drop->SetNativeFunc(&ExecDropCarriedPlayer);
+	}
+	if (UFunction* Throw = AFortPlayerPawn::StaticClass()->FindFunctionByName(TEXT("ServerThrowCarriedPlayer")))
+	{
+		Throw->SetNativeFunc(&ExecThrowCarriedPlayer);
 	}
 
 	bInstalled = true;

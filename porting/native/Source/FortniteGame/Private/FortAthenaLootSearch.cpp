@@ -186,6 +186,12 @@ namespace
 
 		if (AFortPawn* TargetPawn = Cast<AFortPawn>(ReceivingActor))
 		{
+			if (TargetPawn->bIsDBNO && InteractionBeingAttempted == EInteractionBeingAttempted::SecondInteraction &&
+				(InteractType == TInteractionType::IT_Simple || InteractType == TInteractionType::IT_LongPress) &&
+				FortAthenaHealth::TryCarryDownedPlayer(Cast<AController>(Component->GetOwner()), TargetPawn))
+			{
+				return;
+			}
 			if (TargetPawn->bIsDBNO && InteractionBeingAttempted != EInteractionBeingAttempted::SecondInteraction &&
 				(InteractType == TInteractionType::IT_Simple || InteractType == TInteractionType::IT_LongPress) &&
 				FortAthenaHealth::TryStartRevive(Cast<AController>(Component->GetOwner()), TargetPawn))

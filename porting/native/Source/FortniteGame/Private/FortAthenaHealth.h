@@ -32,6 +32,7 @@ namespace FortAthenaHealth
 	                 AController* InstigatedBy = nullptr, AActor* DamageCauser = nullptr, bool bIgnoreShield = false);
 
 	bool TryStartRevive(AController* Reviver, AFortPawn* Target);
+	bool TryCarryDownedPlayer(AController* Carrier, AFortPawn* Target);
 
 	// Runs the server death sequence (D6 §2): death report, DeathInfo replication, ClientOnPawnDied,
 	// alive player removal (R3), placement calculation, client match/team stats, and win check.
