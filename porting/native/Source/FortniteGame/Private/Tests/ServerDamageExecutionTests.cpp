@@ -288,6 +288,14 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	Recovery.SetSetByCallerMagnitude(FName(TEXT("RestoreShield")), 25.0f);
 	Recovery.SetSetByCallerMagnitude(FName(TEXT("ShieldCap")), 50.0f);
 	Recovery.SetSetByCallerMagnitude(FName(TEXT("RestoreHealth")), 50.0f);
+	Pawn->bIsDBNO = true;
+	ASC->ApplyGameplayEffectSpecToSelf(HealingSpec);
+	ASC->ApplyGameplayEffectSpecToSelf(Recovery);
+	TestEqual(TEXT("Recovery cannot refill downed health"), Pawn->GetHealth(), 85.0f);
+	TestEqual(TEXT("Recovery cannot add shield while downed"), Pawn->GetShield(), 30.0f);
+	TestEqual(TEXT("Blocked downed healing still clears the accumulator"), ASC->GetNumericAttribute(Healing), 0.0f);
+	Pawn->bIsDBNO = false;
+
 	ASC->ApplyGameplayEffectSpecToSelf(Recovery);
 	TestEqual(TEXT("Shield recovery respects the item cap"), Pawn->GetShield(), 50.0f);
 	TestEqual(TEXT("Health recovery respects the pawn maximum"), Pawn->GetHealth(), 100.0f);

@@ -144,7 +144,7 @@ void UServerRecoveryExecution::Execute_Implementation(const FGameplayEffectCusto
 {
 	UAbilitySystemComponent* Target = Parameters.GetTargetAbilitySystemComponent();
 	const AFortPawn* Pawn = Target ? Cast<AFortPawn>(Target->GetAvatarActor()) : nullptr;
-	if (!Pawn || !Pawn->HasAuthority() || Pawn->bIsDying)
+	if (!Pawn || !Pawn->HasAuthority() || Pawn->bIsDying || Pawn->bIsDBNO)
 	{
 		return;
 	}
