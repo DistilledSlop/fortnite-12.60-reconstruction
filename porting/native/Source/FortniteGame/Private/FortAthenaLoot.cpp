@@ -37,15 +37,13 @@ AFortPickup* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVector& L
 		Owner = nullptr;
 	}
 
-	// stand-in: native pickup selection, initialization and toss behavior still need recovery.
-	// The result is not connected to a table roll or a map spawner yet.
 	FActorSpawnParameters Parameters;
 	Parameters.Owner = Owner;
 	Parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	const FVector SpawnAt = TossFrom ? *TossFrom : Location;
 	UClass* SpawnClass = PickupClass ? PickupClass.Get() : AFortPickupAthena::StaticClass();
 	AFortPickup* Pickup = World->SpawnActor<AFortPickup>(SpawnClass, SpawnAt, FRotator::ZeroRotator, Parameters);
-	if (!Pickup)
+	if (!IsValid(Pickup) || Pickup->IsActorBeingDestroyed())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Loot: failed to spawn resolved pickup"));
 		return nullptr;

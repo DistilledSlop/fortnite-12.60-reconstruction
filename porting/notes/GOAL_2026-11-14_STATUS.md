@@ -118,4 +118,4 @@ Removed from the goal list: POIs (missing / no collision), styles (glider/emote/
 
 - **Open — supply drops.** The match flow skips supply-drop scheduling. Verify the full lifecycle from a scheduled drop through landing, search, and collectible item spawning.
 - **Open — loot llamas.** Verify that llamas appear in a live match and that opening one releases collectible loot once.
-- **Open — container verification.** The dedicated-server loot selection test passes. Verify a chest and an ammo crate through search and pickup in a connected match. Add coverage for the retry path in `08a8c33f` by forcing a pickup spawn to fail after an earlier pickup succeeds, then checking that the earlier pickup is removed and the container can be searched again.
+- **Open — container verification.** Dedicated-server automation passed for loot selection, chest and ammo crate searches, duplicate search rejection, and chest rollback and retry after a forced second-pickup failure. Verify a chest and an ammo crate through search and pickup in a connected match.

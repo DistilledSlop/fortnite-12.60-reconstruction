@@ -5,6 +5,16 @@
 #include "FFortLootTierData.h"
 #include "FFortLootPackageData.h"
 #include "UFortItemDefinition.h"
+#include "ABuildingContainer.h"
+#include "AFortGameModeAthena.h"
+#include "AFortPickupAthena.h"
+#include "AFortPlayerControllerAthena.h"
+#include "AFortPlayerPawnAthena.h"
+#include "Engine/Engine.h"
+#include "Engine/World.h"
+#include "FortAthenaLootData.h"
+#include "FortAthenaLootSearch.h"
+#include "Misc/ScopeExit.h"
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FFortLootContractTest, "Fortnite.Server.Loot.ReconstructedContract",
     EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::EngineFilter)
@@ -68,6 +78,91 @@ bool FFortLootContractTest::RunTest(const FString&)
     TestTrue(TEXT("named error reported"), Error.Contains(TEXT("named")));
     A.NamedWeightMult = NAME_None;
     TestFalse(TEXT("RNG upper endpoint rejected"), Run({1}));
+    return true;
+}
+// Exercises the production roll and search path with the dedicated server's initialized loot data.
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FFortContainerSearchTransactionTest, "Fortnite.Server.Loot.ContainerSearchTransaction",
+    EAutomationTestFlags::ClientContext | EAutomationTestFlags::ServerContext | EAutomationTestFlags::EngineFilter)
+
+bool FFortContainerSearchTransactionTest::RunTest(const FString&)
+{
+    if (!IsRunningDedicatedServer() || !FortAthenaLootSearch::IsEnabled())
+        return true;
+
+    UWorld* World = nullptr;
+    for (const FWorldContext& Context : GEngine->GetWorldContexts())
+        if (Context.World() && Context.World()->GetNetMode() == NM_DedicatedServer)
+        {
+            World = Context.World();
+            break;
+        }
+    if (!TestNotNull(TEXT("Dedicated server world"), World)) return false;
+    AFortGameModeAthena* Mode = World->GetAuthGameMode<AFortGameModeAthena>();
+    if (!TestNotNull(TEXT("Athena game mode"), Mode) ||
+        !TestTrue(TEXT("Loot data is initialized"), FortAthenaLootData::IsReady(Mode))) return false;
+
+    AFortPlayerControllerAthena* Controller = World->SpawnActor<AFortPlayerControllerAthena>();
+    AFortPlayerPawnAthena* Pawn = World->SpawnActor<AFortPlayerPawnAthena>(FVector::ZeroVector, FRotator::ZeroRotator);
+    ABuildingContainer* Chest = World->SpawnActor<ABuildingContainer>();
+    ABuildingContainer* Ammo = World->SpawnActor<ABuildingContainer>();
+    TArray<AFortPickupAthena*> Pickups;
+    ON_SCOPE_EXIT
+    {
+        for (AFortPickupAthena* Pickup : Pickups) if (IsValid(Pickup)) Pickup->Destroy();
+        if (IsValid(Chest)) Chest->Destroy();
+        if (IsValid(Ammo)) Ammo->Destroy();
+        if (IsValid(Controller)) Controller->Destroy();
+        if (IsValid(Pawn)) Pawn->Destroy();
+    };
+    if (!TestNotNull(TEXT("Controller"), Controller) || !TestNotNull(TEXT("Pawn"), Pawn) ||
+        !TestNotNull(TEXT("Chest"), Chest) || !TestNotNull(TEXT("Ammo container"), Ammo)) return false;
+    Controller->Possess(Pawn);
+    if (!TestTrue(TEXT("Controller possesses pawn"), Pawn->GetController() == Controller)) return false;
+    Chest->SearchLootTierGroup = FName(TEXT("Loot_AthenaTreasure"));
+    Chest->bDestroyContainerOnSearch = false;
+    Ammo->SearchLootTierGroup = FName(TEXT("Loot_AthenaAmmoLarge"));
+    Ammo->bDestroyContainerOnSearch = false;
+
+    bool bFailSecond = true;
+    int32 SpawnCount = 0;
+    const FDelegateHandle SpawnCallback = World->AddOnActorSpawnedHandler(FOnActorSpawned::FDelegate::CreateLambda([&](AActor* Actor)
+    {
+        if (AFortPickupAthena* Pickup = Cast<AFortPickupAthena>(Actor))
+        {
+            Pickups.Add(Pickup);
+            ++SpawnCount;
+            if (bFailSecond && SpawnCount == 2) Pickup->Destroy();
+        }
+    }));
+    ON_SCOPE_EXIT { World->RemoveOnActorSpawnedHandler(SpawnCallback); };
+
+    TestFalse(TEXT("A failed second pickup aborts the chest search"), FortAthenaLootSearch::TrySearchContainer(Controller, Chest));
+    TestEqual(TEXT("Failure was injected on the second pickup"), SpawnCount, 2);
+    TestFalse(TEXT("Failed chest remains unsearched"), Chest->bAlreadySearched != 0);
+    for (AFortPickupAthena* Pickup : Pickups)
+        TestFalse(TEXT("Failed search leaves no live pickup"), IsValid(Pickup) && !Pickup->IsActorBeingDestroyed());
+
+    bFailSecond = false;
+    const int32 BeforeRetry = SpawnCount;
+    TestTrue(TEXT("Chest search can be retried"), FortAthenaLootSearch::TrySearchContainer(Controller, Chest));
+    TestTrue(TEXT("Successful chest is marked searched"), Chest->bAlreadySearched != 0);
+    TestTrue(TEXT("Retry creates pickups"), SpawnCount > BeforeRetry);
+    for (int32 Index = BeforeRetry; Index < Pickups.Num(); ++Index)
+        if (TestTrue(TEXT("Retry pickup is live"), IsValid(Pickups[Index])))
+            TestTrue(TEXT("Retry pickup has a populated item"), Pickups[Index]->PrimaryPickupItemEntry.ItemDefinition && Pickups[Index]->PrimaryPickupItemEntry.Count > 0);
+    const int32 AfterChest = SpawnCount;
+    TestFalse(TEXT("Searched chest cannot be searched again"), FortAthenaLootSearch::TrySearchContainer(Controller, Chest));
+    TestEqual(TEXT("Repeated chest search creates no pickups"), SpawnCount, AfterChest);
+
+    TestTrue(TEXT("Ammo container search succeeds"), FortAthenaLootSearch::TrySearchContainer(Controller, Ammo));
+    TestTrue(TEXT("Ammo container is marked searched"), Ammo->bAlreadySearched != 0);
+    TestTrue(TEXT("Ammo search creates pickups"), SpawnCount > AfterChest);
+    for (int32 Index = AfterChest; Index < Pickups.Num(); ++Index)
+        if (TestTrue(TEXT("Ammo pickup is live"), IsValid(Pickups[Index])))
+            TestTrue(TEXT("Ammo pickup has a populated item"), Pickups[Index]->PrimaryPickupItemEntry.ItemDefinition && Pickups[Index]->PrimaryPickupItemEntry.Count > 0);
+    const int32 AfterAmmo = SpawnCount;
+    TestFalse(TEXT("Searched ammo container cannot be searched again"), FortAthenaLootSearch::TrySearchContainer(Controller, Ammo));
+    TestEqual(TEXT("Repeated ammo search creates no pickups"), SpawnCount, AfterAmmo);
     return true;
 }
 #endif
