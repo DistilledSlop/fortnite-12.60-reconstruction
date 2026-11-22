@@ -50,6 +50,10 @@ class FORTNITEGAME_API UFortGameplayAbility : public UGameplayAbility
 	GENERATED_BODY()
 
 public:
+	virtual bool CheckCost(FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
+		FGameplayTagContainer* OptionalRelevantTags = nullptr) const override;
+	virtual void ApplyCost(FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
+		FGameplayAbilityActivationInfo ActivationInfo) const override;
 	// Non-reflected field (behaviour kind "member_field", offset 0x388): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt32_0x388;
 

@@ -1,6 +1,8 @@
 #if WITH_DEV_AUTOMATION_TESTS
 
+#include "AbilitySystemComponent.h"
 #include "AFortInventory.h"
+#include "AFortWeapon.h"
 #include "AFortPlayerControllerAthena.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
@@ -106,7 +108,7 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 	AddExpectedError(TEXT("  /Game/(Animation/Game/MainPlayer/Montages/General/(ApplyMedkit|WrapBandages)_Athena|Athena/Items/Consumables/Bandage/BandageCuff_Bandage_Roll_LOD0)$"), EAutomationExpectedErrorFlags::Contains, 0);
 	AddExpectedError(TEXT("Attempt to build nav collision data for /Game/Athena/Items/Consumables/Bandage/BandageCuff_Bandage_Roll_LOD0"), EAutomationExpectedErrorFlags::Contains, 0);
 
-	const UFortWeaponItemDefinition* Bandage = LoadObject<UFortWeaponItemDefinition>(nullptr,
+	UFortWeaponItemDefinition* Bandage = LoadObject<UFortWeaponItemDefinition>(nullptr,
 		TEXT("/Game/Athena/Items/Consumables/Bandage/Athena_Bandage.Athena_Bandage"));
 	if (!TestNotNull(TEXT("Cooked bandage item"), Bandage))
 	{
@@ -128,6 +130,76 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 	{
 		TestEqual(TEXT("Bandage cost is one unit"), Cost->CostValue.GetValueAtLevel(1.0f), 1.0f);
 	}
+	if (!IsRunningDedicatedServer() || !FortAthenaInventory::IsEnabled())
+	{
+		return true;
+	}
+	UWorld* World = nullptr;
+	for (const FWorldContext& Context : GEngine->GetWorldContexts())
+	{
+		if (Context.World() && Context.World()->GetNetMode() == NM_DedicatedServer)
+		{
+			World = Context.World();
+			break;
+		}
+	}
+	if (!TestNotNull(TEXT("Dedicated server world"), World))
+	{
+		return false;
+	}
+
+	AFortPlayerControllerAthena* Controller = World->SpawnActor<AFortPlayerControllerAthena>();
+	AFortInventory* Inventory = World->SpawnActor<AFortInventory>();
+	AFortWeapon* Weapon = World->SpawnActor<AFortWeapon>();
+	ON_SCOPE_EXIT
+	{
+		if (Weapon)
+		{
+			Weapon->Destroy();
+		}
+		if (Controller)
+		{
+			Controller->WorldInventory = nullptr;
+			Controller->Destroy();
+		}
+		if (Inventory)
+		{
+			Inventory->Destroy();
+		}
+	};
+	if (!TestNotNull(TEXT("Consumable controller"), Controller) ||
+		!TestNotNull(TEXT("Consumable inventory"), Inventory) || !TestNotNull(TEXT("Consumable source"), Weapon))
+	{
+		return false;
+	}
+	Controller->WorldInventory = Inventory;
+	UFortWorldItem* Item = FortAthenaInventory::GiveItem(Controller, Bandage, 1);
+	if (!TestNotNull(TEXT("Bandage stack"), Item))
+	{
+		return false;
+	}
+	const FGuid Guid = Item->NativeGetItemGuid();
+	Weapon->WeaponData = Bandage;
+	Weapon->ItemEntryGuid = Guid;
+
+	UAbilitySystemComponent* ASC = NewObject<UAbilitySystemComponent>(Controller);
+	ASC->RegisterComponent();
+	ASC->InitAbilityActorInfo(Controller, Controller);
+	FGameplayAbilityActorInfo ActorInfo;
+	ActorInfo.InitFromActor(Controller, Controller, ASC);
+	ActorInfo.PlayerController = Controller;
+	const FGameplayAbilitySpecHandle Handle = ASC->GiveAbility(
+		FGameplayAbilitySpec(Ability->GetClass(), 1, INDEX_NONE, Weapon));
+	if (!TestTrue(TEXT("Bandage ability granted"), Handle.IsValid()))
+	{
+		return false;
+	}
+
+	UFortGameplayAbility* AbilityCDO = Ability->GetClass()->GetDefaultObject<UFortGameplayAbility>();
+	const FGameplayAbilityActivationInfo ActivationInfo(Controller);
+	TestTrue(TEXT("Commit can spend the last bandage"), AbilityCDO->CommitAbilityCost(Handle, &ActorInfo, ActivationInfo));
+	TestNull(TEXT("Depleted source stack is removed"), Inventory->NativeFindItemByGuid(Guid));
+	TestFalse(TEXT("Commit fails after the source stack is gone"), AbilityCDO->CommitAbilityCost(Handle, &ActorInfo, ActivationInfo));
 	return true;
 }
 

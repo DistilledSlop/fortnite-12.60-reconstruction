@@ -5109,6 +5109,13 @@ def promote(args):
         header, cpp = _world_profile_gate_policy.finalize(model, header, cpp)
         header, cpp = _movement_attribute_defaults_policy.finalize(model, header, cpp)
         header, cpp = _server_ground_sprint_policy.finalize(model, header, cpp)
+        if model.get("name") == "UFortGameplayAbility" and model.get("package") == "/Script/FortniteGame":
+            header = header.replace("public:\n", """public:
+	virtual bool CheckCost(FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
+		FGameplayTagContainer* OptionalRelevantTags = nullptr) const override;
+	virtual void ApplyCost(FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
+		FGameplayAbilityActivationInfo ActivationInfo) const override;
+""", 1)
         header, cpp = _pawn_hand_socket_policy.finalize(model, header, cpp)
         header, cpp = _replicated_building_defaults_policy.finalize(model, header, cpp)
         header, cpp = _playlist_storm_defaults_policy.finalize(model, header, cpp)

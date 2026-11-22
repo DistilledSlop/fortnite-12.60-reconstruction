@@ -34,7 +34,7 @@ namespace FortAthenaInventory
 
 	// Removes Count (<= 0 means the whole entry) of the item with this guid. Returns the number removed.
 	// Used by the drop/pickup slice; no RPC calls it yet.
-	int32 RemoveItem(AFortPlayerController* Controller, const FGuid& ItemGuid, int32 Count);
+	int32 RemoveItem(AFortPlayerController* Controller, const FGuid& ItemGuid, int32 Count, bool bDeferAbilityCleanup = false);
 
 	// Removes up to Count of the ammo item AmmoDefinition, taking from every stack of it. Returns the number removed.
 	int32 ConsumeAmmo(AFortPlayerController* Controller, UFortItemDefinition* AmmoDefinition, int32 Count);

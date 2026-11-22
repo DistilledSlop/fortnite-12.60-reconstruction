@@ -18,6 +18,7 @@
 #include "UFortGameplayAbility_Reload.h"
 #include "FortAthenaCombatEquip.h"
 #include "EngineUtils.h"
+#include "TimerManager.h"
 #include "UObject/ScriptMacros.h"
 
 #include "AFortGameModeAthena.h"
@@ -577,7 +578,7 @@ int32 FortAthenaInventory::CombineStacks(AFortPlayerController* Controller, cons
 	return Moved;
 }
 
-int32 FortAthenaInventory::RemoveItem(AFortPlayerController* Controller, const FGuid& ItemGuid, int32 Count)
+int32 FortAthenaInventory::RemoveItem(AFortPlayerController* Controller, const FGuid& ItemGuid, int32 Count, bool bDeferAbilityCleanup)
 {
 	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
 	if (!IsEnabled() || !Inventory)
@@ -606,8 +607,28 @@ int32 FortAthenaInventory::RemoveItem(AFortPlayerController* Controller, const F
 		{
 			const TArray<AFortWeapon*> Weapons = Pawn->CurrentWeaponList;
 			for (AFortWeapon* Weapon : Weapons)
-				if (Weapon && Weapon->ItemEntryGuid == ItemGuid)
+			{
+				if (!Weapon || Weapon->ItemEntryGuid != ItemGuid)
+				{
+					continue;
+				}
+				if (bDeferAbilityCleanup)
+				{
+					// The committing Blueprint still needs its source to finish the current call.
+					const TWeakObjectPtr<AFortWeapon> WeakWeapon(Weapon);
+					Pawn->GetWorldTimerManager().SetTimerForNextTick(FTimerDelegate::CreateLambda([WeakWeapon]()
+					{
+						if (AFortWeapon* LiveWeapon = WeakWeapon.Get())
+						{
+							FortAthenaCombatEquip::RemoveWeapon(LiveWeapon);
+						}
+					}));
+				}
+				else
+				{
 					FortAthenaCombatEquip::RemoveWeapon(Weapon);
+				}
+			}
 		}
 		FortAthenaLootTransfer::OnItemRemoved(Controller, ItemGuid);
 		Inventory->Inventory.NativeEntriesByGuid.Remove(ItemGuid);
@@ -849,5 +870,73 @@ void FortAthenaInventory::InstallRpcOverrides()
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Inventory: ServerExecuteInventoryItem UFunction not found; equip RPC stays empty"));
+	}
+}
+
+namespace
+{
+	int32 GetSourceStackCost(const UFortGameplayAbility& Ability, const AFortWeapon* Weapon, int32 Level)
+	{
+		if (!Weapon || !Weapon->WeaponData ||
+			Weapon->WeaponData->GetAmmoWorldItemDefinitionNative() != Weapon->WeaponData)
+		{
+			return 0;
+		}
+		double Total = 0.0;
+		for (const FFortAbilityCost& Cost : Ability.AbilityCosts)
+		{
+			if (Cost.CostSource == EFortAbilityCostSource::AmmoPrimary && !Cost.bOnlyApplyCostOnHit)
+			{
+				const float Value = Cost.CostValue.GetValueAtLevel(Level);
+				if (Value > 0.0f)
+				{
+					Total += Value;
+				}
+			}
+		}
+		return Total >= MAX_int32 ? MAX_int32 : static_cast<int32>(FMath::CeilToDouble(Total));
+	}
+}
+
+bool UFortGameplayAbility::CheckCost(FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
+	FGameplayTagContainer* OptionalRelevantTags) const
+{
+	if (!Super::CheckCost(Handle, ActorInfo, OptionalRelevantTags))
+	{
+		return false;
+	}
+	if (!ActorInfo || !ActorInfo->IsNetAuthority() || !FortAthenaInventory::IsEnabled())
+	{
+		return true;
+	}
+
+	const AFortWeapon* Weapon = Cast<AFortWeapon>(GetSourceObject(Handle, ActorInfo));
+	const int32 Cost = GetSourceStackCost(*this, Weapon, GetAbilityLevel(Handle, ActorInfo));
+	if (Cost <= 0)
+	{
+		return true;
+	}
+
+	AFortPlayerController* Controller = Cast<AFortPlayerController>(ActorInfo->PlayerController.Get());
+	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
+	const UFortWorldItem* Item = Inventory ? Inventory->NativeFindItemByGuid(Weapon->ItemEntryGuid) : nullptr;
+	return Item && Item->ItemEntry.ItemDefinition == Weapon->WeaponData && Item->ItemEntry.Count >= Cost;
+}
+
+void UFortGameplayAbility::ApplyCost(FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
+	FGameplayAbilityActivationInfo ActivationInfo) const
+{
+	Super::ApplyCost(Handle, ActorInfo, ActivationInfo);
+	if (!ActorInfo || !ActorInfo->IsNetAuthority() || !FortAthenaInventory::IsEnabled())
+	{
+		return;
+	}
+
+	const AFortWeapon* Weapon = Cast<AFortWeapon>(GetSourceObject(Handle, ActorInfo));
+	const int32 Cost = GetSourceStackCost(*this, Weapon, GetAbilityLevel(Handle, ActorInfo));
+	if (Cost > 0)
+	{
+		AFortPlayerController* Controller = Cast<AFortPlayerController>(ActorInfo->PlayerController.Get());
+		FortAthenaInventory::RemoveItem(Controller, Weapon->ItemEntryGuid, Cost, true);
 	}
 }
