@@ -427,6 +427,13 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 	SyncWorld(World);
 	FWorldLootState& S = LootWorldState();
 
+	const AFortGameStateAthena* GameState = GameMode->GetGameState<AFortGameStateAthena>();
+	const bool bSafeZones = GameState && GameState->GamePhase == EAthenaGamePhase::SafeZones;
+	const bool bMatchStarted = bSafeZones || (GameState && GameState->GamePhase == EAthenaGamePhase::Aircraft);
+	const float Now = World->GetTimeSeconds();
+	if (bSafeZones && S.DeliveryStartTime < 0.0f)
+		S.DeliveryStartTime = Now;
+
 	if (!FortAthenaLootData::IsReady(GameMode))
 	{
 		if (!S.bLoggedWaitingForData)
@@ -476,12 +483,6 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 		PopulateLoadedMarkers(GameMode, Level);
 	}
 
-	const AFortGameStateAthena* GameState = GameMode->GetGameState<AFortGameStateAthena>();
-	if (!GameState)
-		return;
-
-	const bool bMatchStarted = GameState->GamePhase == EAthenaGamePhase::Aircraft ||
-		GameState->GamePhase == EAthenaGamePhase::SafeZones;
 	if (bMatchStarted && !S.bReportedMissingMarkers)
 	{
 		S.bReportedMissingMarkers = true;
@@ -538,12 +539,8 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 		}
 	}
 
-	if (GameState->GamePhase != EAthenaGamePhase::SafeZones)
+	if (!bSafeZones)
 		return;
-
-	const float Now = World->GetTimeSeconds();
-	if (S.DeliveryStartTime < 0.0f)
-		S.DeliveryStartTime = Now;
 
 	TArray<ABuildingContainer*> DueMarkers;
 	for (auto It = S.ScheduledDeliveries.CreateIterator(); It; ++It)
