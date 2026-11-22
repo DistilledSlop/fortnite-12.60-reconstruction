@@ -43,6 +43,7 @@ namespace
 		TMap<TWeakObjectPtr<ABuildingContainer>, FScheduledDelivery> ScheduledDeliveries;
 		TMap<TWeakObjectPtr<ABuildingContainer>, bool> GroundCacheCandidates;
 		TMap<FString, TArray<FName>> ConfiguredMarkerTags;
+		TMap<FString, TArray<FName>> ConfiguredMarkerClassTags;
 		TMap<FString, TWeakObjectPtr<ABuildingContainer>> SeenConfiguredMarkers;
 		int32 ActivatedGroundCacheCount = 0;
 		bool bReportedMissingMarkers = false;
@@ -64,23 +65,29 @@ namespace
 
 		S.ActiveWorld = World;
 		S.ConfiguredMarkerTags.Reset();
+		S.ConfiguredMarkerClassTags.Reset();
 		S.SeenConfiguredMarkers.Reset();
 		if (GConfig)
 		{
-			TArray<FString> Settings;
-			GConfig->GetArray(TEXT("WorldLoot"), TEXT("MarkerTag"), Settings, GGameIni);
-			for (const FString& Setting : Settings)
+			const auto ReadTags = [](const TCHAR* Key, TMap<FString, TArray<FName>>& TagsByPath)
 			{
-				FString ActorPath;
-				FString Tag;
-				if (!Setting.Split(TEXT("|"), &ActorPath, &Tag))
-					continue;
+				TArray<FString> Settings;
+				GConfig->GetArray(TEXT("WorldLoot"), Key, Settings, GGameIni);
+				for (const FString& Setting : Settings)
+				{
+					FString Path;
+					FString Tag;
+					if (!Setting.Split(TEXT("|"), &Path, &Tag))
+						continue;
 
-				ActorPath.TrimStartAndEndInline();
-				Tag.TrimStartAndEndInline();
-				if (!ActorPath.IsEmpty() && !Tag.IsEmpty())
-					S.ConfiguredMarkerTags.FindOrAdd(ActorPath).AddUnique(FName(*Tag));
-			}
+					Path.TrimStartAndEndInline();
+					Tag.TrimStartAndEndInline();
+					if (!Path.IsEmpty() && !Tag.IsEmpty())
+						TagsByPath.FindOrAdd(Path).AddUnique(FName(*Tag));
+				}
+			};
+			ReadTags(TEXT("MarkerTag"), S.ConfiguredMarkerTags);
+			ReadTags(TEXT("MarkerClassTag"), S.ConfiguredMarkerClassTags);
 		}
 		S.ProcessedContainers.Reset();
 		S.ScannedLevels.Reset();
@@ -203,6 +210,7 @@ void FortAthenaLootWorld::Reset()
 	FWorldLootState& S = LootWorldState();
 	S.ActiveWorld.Reset();
 	S.ConfiguredMarkerTags.Reset();
+	S.ConfiguredMarkerClassTags.Reset();
 	S.SeenConfiguredMarkers.Reset();
 	S.ProcessedContainers.Reset();
 	S.ScannedLevels.Reset();
@@ -276,6 +284,15 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 			return;
 		}
 
+		if (S.ConfiguredMarkerClassTags.Num() > 0)
+		{
+			const FString ClassPath = Container->GetClass()->GetPathName();
+			if (const TArray<FName>* Tags = S.ConfiguredMarkerClassTags.Find(ClassPath))
+			{
+				for (const FName& Tag : *Tags)
+					Container->Tags.AddUnique(Tag);
+			}
+		}
 
 		if (Container->ActorHasTag(GroundCacheTag))
 		{
