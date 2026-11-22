@@ -17,8 +17,8 @@
 .grp-head{fill:var(--tm-group-label);font-weight:600;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 .grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style>
 <rect class="tm-bg" width="1000" height="720"/>
-<text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: 58.9% implemented</text>
-<text x="12" y="48" font-size="12" class="tm-head">96 of 163 server checks implemented | 65 verified | 67 open</text>
+<text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: 59.5% implemented</text>
+<text x="12" y="48" font-size="12" class="tm-head">97 of 163 server checks implemented | 66 verified | 66 open</text>
 <g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Lobby, accounts and Epic service compatibility
 60.4% complete (32/53)
@@ -36,11 +36,11 @@ effort weight 47 | source: equal-weight server implementation checks
 <text class="grp-head" x="332.2" y="17.0" font-size="12">Match flow and player states<tspan class="grp-pct"> · 83%</tspan></text>
 </g>
 <g><title>Items, inventory and loot
-60.7% complete (17/28)
+64.3% complete (18/28)
 effort weight 28 | source: equal-weight server implementation checks
 </title>
 <rect class="tile-frame tm-grp0" x="326.2" y="397.1" width="458.1" height="233.9" rx="4"/>
-<text class="grp-head" x="332.2" y="413.1" font-size="12">Items, inventory and loot<tspan class="grp-pct"> · 61%</tspan></text>
+<text class="grp-head" x="332.2" y="413.1" font-size="12">Items, inventory and loot<tspan class="grp-pct"> · 64%</tspan></text>
 </g>
 <g><title>Weapons and gunplay
 46.2% complete (6/13)
@@ -421,7 +421,7 @@ Implemented: Replicate the thanks flag on PlayerState for the original client&#x
 <rect class="tile-frame" x="724.6" y="270.4" width="55.7" height="120.7" rx="4"/>
 </g>
 <g><title>Inventory operations
-72.2% complete (13/18)
+77.8% complete (14/18)
 effort weight 18 | source: equal-weight server implementation checks
 Implemented: Handle quickbar selection, pickup, swap and drop on the server
 Implemented: Transfer successfully spawned elimination drops out of the victim inventory
@@ -438,16 +438,16 @@ Open: Verify five loadout slots and separate pickaxe, trap and material storage
 Open: Verify slot reorder, stack split and auto-pickup rules on two clients
 Verified: Confirm the cooked bandage ability charges one unit of its own inventory definition at commit
 Verified: Debit the last bandage at authoritative ability cost commit and reject repayment from the depleted stack
-Open: Resolve the cooked bandage stack limit in the headless server stage
+Verified: Resolve the cooked bandage stack cap of 15 and debit successive charges from the same stack
 Open: Verify item use and gain, spend or loss reconcile with inventory
 Open: Upgrade a weapon at a bench and charge the correct materials</title>
 <rect class="tile-body" x="330.2" y="421.1" width="288.7" height="205.9" rx="4"/>
 <clipPath id="servertm-c19"><rect x="330.15" y="421.05" width="288.65" height="205.95" rx="4"/></clipPath>
-<g clip-path="url(#servertm-c19)"><rect class="tile-fill" x="330.15" y="478.26" width="288.65" height="148.74"/>
-<rect class="tile-edge" x="330.15" y="477.26" width="288.65" height="2"/>
+<g clip-path="url(#servertm-c19)"><rect class="tile-fill" x="330.15" y="466.82" width="288.65" height="160.18"/>
+<rect class="tile-edge" x="330.15" y="465.82" width="288.65" height="2"/>
 </g>
 <text class="leaf-label" x="335.2" y="436.1" font-size="11">Inventory operations</text>
-<text class="leaf-pct" x="335.2" y="449.1" font-size="12">72%</text>
+<text class="leaf-pct" x="335.2" y="449.1" font-size="12">78%</text>
 <rect class="tile-frame" x="330.2" y="421.1" width="288.7" height="205.9" rx="4"/>
 </g>
 <g><title>Loot sources

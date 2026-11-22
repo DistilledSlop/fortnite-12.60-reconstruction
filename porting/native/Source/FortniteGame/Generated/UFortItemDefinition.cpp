@@ -408,4 +408,5 @@ UFortItemDefinition::UFortItemDefinition(const FObjectInitializer& ObjectInitial
     : Super(ObjectInitializer)
 {
     bAllowMultipleStacks = true;
+    MaxStackSize = FScalableFloat(1.0f);
 }

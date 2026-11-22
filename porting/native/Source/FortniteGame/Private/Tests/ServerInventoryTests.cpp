@@ -114,6 +114,7 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 	{
 		return false;
 	}
+	TestEqual(TEXT("Bandage stack cap resolves from game data"), Bandage->NativeGetMaxStackSize(nullptr), 15);
 	TestTrue(TEXT("Bandage uses its inventory definition as ammo"), Bandage->GetAmmoWorldItemDefinitionNative() == Bandage);
 
 	const UClass* AbilityClass = Bandage->GetPrimaryFireAbility();
@@ -173,7 +174,7 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 		return false;
 	}
 	Controller->WorldInventory = Inventory;
-	UFortWorldItem* Item = FortAthenaInventory::GiveItem(Controller, Bandage, 1);
+	UFortWorldItem* Item = FortAthenaInventory::GiveItem(Controller, Bandage, 2);
 	if (!TestNotNull(TEXT("Bandage stack"), Item))
 	{
 		return false;
@@ -197,6 +198,8 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 
 	UFortGameplayAbility* AbilityCDO = Ability->GetClass()->GetDefaultObject<UFortGameplayAbility>();
 	const FGameplayAbilityActivationInfo ActivationInfo(Controller);
+	TestTrue(TEXT("Commit spends one bandage"), AbilityCDO->CommitAbilityCost(Handle, &ActorInfo, ActivationInfo));
+	TestEqual(TEXT("One bandage remains"), Item->ItemEntry.Count, 1);
 	TestTrue(TEXT("Commit can spend the last bandage"), AbilityCDO->CommitAbilityCost(Handle, &ActorInfo, ActivationInfo));
 	TestNull(TEXT("Depleted source stack is removed"), Inventory->NativeFindItemByGuid(Guid));
 	TestFalse(TEXT("Commit fails after the source stack is gone"), AbilityCDO->CommitAbilityCost(Handle, &ActorInfo, ActivationInfo));

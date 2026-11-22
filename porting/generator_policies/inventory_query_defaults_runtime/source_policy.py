@@ -42,5 +42,10 @@ def finalize(model, header, cpp):
         end += 1
     if depth or re.search(r'\b' + field + r'\b', cpp[begin:end - 1]):
         raise ValueError(cls + ': conflicting initialization or unbalanced constructor')
-    cpp = cpp[:end - 1] + '    ' + field + ' = true;\n' + cpp[end - 1:]
+    defaults = '    ' + field + ' = true;\n'
+    if cls == 'UFortItemDefinition':
+        if header.count('FScalableFloat MaxStackSize;') != 1 or re.search(r'\bMaxStackSize\b', cpp[begin:end - 1]):
+            raise ValueError(cls + ': stack-size field or constructor initialization changed')
+        defaults += '    MaxStackSize = FScalableFloat(1.0f);\n'
+    cpp = cpp[:end - 1] + defaults + cpp[end - 1:]
     return header, cpp
