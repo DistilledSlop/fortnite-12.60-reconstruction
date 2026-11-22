@@ -38,6 +38,10 @@ forbidden_suffixes = {
     ".bin", ".zip", ".7z", ".rar", ".uproject", ".uplugin",
     ".upluginmanifest", ".usmap", ".locres", ".archive",
 }
+size_limits_mib = {
+    # The published dashboard embeds the full per-commit progress history.
+    "docs/history.html": 32,
+}
 
 entries = subprocess.check_output(
     ["git", "diff", "--cached", "--name-only", "--diff-filter=ACMR", "-z"]
@@ -55,8 +59,9 @@ for raw in filter(None, entries):
         size = int(subprocess.check_output(["git", "cat-file", "-s", ":" + path]))
     except subprocess.CalledProcessError:
         continue
-    if size > 10 * 1024 * 1024:
-        errors.append(f"over 10 MiB: {path}")
+    limit_mib = size_limits_mib.get(path, 10)
+    if size > limit_mib * 1024 * 1024:
+        errors.append(f"over {limit_mib} MiB: {path}")
 
 if errors:
     print("Commit blocked to protect supplied files:", file=sys.stderr)

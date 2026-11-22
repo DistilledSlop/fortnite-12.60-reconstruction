@@ -177,6 +177,7 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	}
 
 	UFortWeaponRangedItemDefinition* WeaponDefinition = NewObject<UFortWeaponRangedItemDefinition>(Inventory);
+	WeaponDefinition->bCanBeDropped = true;
 	UFortWorldItem* WeaponItem = FortAthenaInventory::GiveItem(Controller, WeaponDefinition, 1, 1, 5);
 	if (!TestNotNull(TEXT("Weapon inventory item"), WeaponItem))
 	{
@@ -190,10 +191,36 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 		const FFortItemEntry& Entry = Inventory->Inventory.ReplicatedEntries[0];
 		TestTrue(TEXT("Magazine spend keeps the weapon GUID"), Entry.ItemGuid == WeaponGuid);
 		TestEqual(TEXT("Magazine spend updates the replicated entry"), Entry.LoadedAmmo, 4);
-		FortAthenaInventory::SetLoadedAmmo(Controller, WeaponGuid, 0);
-		TestEqual(TEXT("An empty magazine replicates as zero"), Entry.LoadedAmmo, 0);
 	}
-	return true;
+	FortAthenaInventory::SetLoadedAmmo(Controller, WeaponGuid, 0);
+	if (TestEqual(TEXT("The empty weapon is still replicated"), Inventory->Inventory.ReplicatedEntries.Num(), 1))
+	{
+		TestEqual(TEXT("An empty magazine replicates as zero"), Inventory->Inventory.ReplicatedEntries[0].LoadedAmmo, 0);
+	}
+	if (!TestTrue(TEXT("Dropping the empty weapon succeeds"),
+		FortAthenaLootTransfer::AttemptInventoryDrop(Controller, WeaponGuid, 1, false)))
+	{
+		return false;
+	}
+	TestNull(TEXT("The dropped weapon leaves inventory"), Inventory->NativeFindItemByGuid(WeaponGuid));
+	for (TActorIterator<AFortPickupAthena> It(World); It; ++It)
+	{
+		if (It->PawnWhoDroppedPickup == Pawn && It->PrimaryPickupItemEntry.ItemDefinition == WeaponDefinition)
+		{
+			AFortPickupAthena* DroppedWeapon = *It;
+			ON_SCOPE_EXIT { DroppedWeapon->Destroy(); };
+			TestEqual(TEXT("The ground weapon retains its empty magazine"), DroppedWeapon->PrimaryPickupItemEntry.LoadedAmmo, 0);
+			if (TestTrue(TEXT("The ground weapon can be picked up again"),
+				FortAthenaLootTransfer::HandlePickup(Pawn, DroppedWeapon, 0.25f, FVector::ZeroVector, false)) &&
+				TestEqual(TEXT("Exactly one weapon is back in inventory"), Inventory->Inventory.ReplicatedEntries.Num(), 1))
+			{
+				TestEqual(TEXT("Pickup does not refill the magazine"), Inventory->Inventory.ReplicatedEntries[0].LoadedAmmo, 0);
+			}
+			return true;
+		}
+	}
+	AddError(TEXT("Dropping the weapon did not produce a pickup"));
+	return false;
 }
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FServerConsumableCostDataTest, "Fortnite.Server.Inventory.ConsumableCostData",
