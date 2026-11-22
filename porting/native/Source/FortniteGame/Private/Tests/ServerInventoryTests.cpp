@@ -346,6 +346,38 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	TestTrue(TEXT("Repair starts after the material debit"), FortAthenaBuildDamage::RepairBuildingActor(Controller, Wall));
 	TestEqual(TEXT("Repair removes exactly its cost"), RepairStack->ItemEntry.Count, 1);
 	TestEqual(TEXT("Repair preserves unrelated materials"), ProtectedItem->ItemEntry.Count, 3);
+
+	constexpr int32 BundleStackCount = 1 << 30;
+	UFortResourceItemDefinition* BundleFirst = NewObject<UFortResourceItemDefinition>(Inventory);
+	UFortResourceItemDefinition* BundleSecond = NewObject<UFortResourceItemDefinition>(Inventory);
+	BundleFirst->MaxStackSize = FScalableFloat(static_cast<float>(BundleStackCount));
+	BundleSecond->MaxStackSize = BundleFirst->MaxStackSize;
+	FFortItemEntry FirstBundleEntry{};
+	FirstBundleEntry.ItemDefinition = BundleFirst;
+	FirstBundleEntry.Count = BundleStackCount;
+	FFortItemEntry SecondBundleEntry = FirstBundleEntry;
+	SecondBundleEntry.ItemDefinition = BundleSecond;
+	AFortPickupAthena* Bundle = FortAthenaLootTransfer::SpawnTossedPickupFromEntry(
+		World, FirstBundleEntry, Pawn->GetActorLocation(), FVector::ForwardVector, nullptr, 0, EFortPickupSpawnSource::Unset);
+	if (!TestNotNull(TEXT("Multi-item pickup"), Bundle))
+	{
+		return false;
+	}
+	ON_SCOPE_EXIT { Bundle->Destroy(); };
+	Bundle->MultiItemPickupEntries = {FirstBundleEntry, SecondBundleEntry};
+	TestTrue(TEXT("Collecting a bundle with an aggregate count above int32 succeeds"),
+		FortAthenaLootTransfer::HandlePickup(Pawn, Bundle, 0.25f, FVector::ZeroVector, false));
+	TestTrue(TEXT("The fully collected bundle is reserved for flight"), Bundle->bPickedUp);
+	TestEqual(TEXT("No bundle entries remain on the ground"), Bundle->MultiItemPickupEntries.Num(), 0);
+	for (const UFortItemDefinition* BundleDefinition : {BundleFirst, BundleSecond})
+	{
+		const FFortItemEntry* Entry = Inventory->Inventory.ReplicatedEntries.FindByPredicate(
+			[BundleDefinition](const FFortItemEntry& Candidate) { return Candidate.ItemDefinition == BundleDefinition; });
+		if (TestNotNull(TEXT("The bundle entry is replicated"), Entry))
+		{
+			TestEqual(TEXT("The bundle entry keeps its full quantity"), Entry->Count, BundleStackCount);
+		}
+	}
 	return true;
 }
 
