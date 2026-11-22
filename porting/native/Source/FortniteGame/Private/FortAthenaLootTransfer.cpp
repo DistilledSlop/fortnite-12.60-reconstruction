@@ -607,7 +607,7 @@ namespace
 					}
 
 					UFortWorldItem* OutgoingItem = PC->WorldInventory->NativeFindItemByGuid(SwapGuid);
-					if (!OutgoingItem)
+					if (!OutgoingItem || OutgoingItem->ItemEntry.Count <= 0)
 					{
 						return 0;
 					}
@@ -616,27 +616,46 @@ namespace
 					const FGuid PreviouslyHeldGuid = Pawn->CurrentWeapon ? Pawn->CurrentWeapon->GetInventoryGUID() : FGuid();
 					const bool bWasHoldingSwapped = (PreviouslyHeldGuid == SwapGuid);
 
-					FVector TossStart, TossFinal, TossDir;
-					BuildTossLocations(Pawn, Pawn->GetActorForwardVector(), TossStart, TossFinal, TossDir);
-
-					const uint8 SourceFlags = static_cast<uint8>(EFortPickupSourceTypeFlag::Player) |
-						static_cast<uint8>(EFortPickupSourceTypeFlag::Tossed);
-					AFortPickupAthena* DroppedPickup = FortAthenaLootTransfer::SpawnTossedPickupFromEntry(
-						PC->GetWorld(), OutgoingEntry, TossStart, TossDir, Pawn, SourceFlags, EFortPickupSpawnSource::Unset);
-					if (!DroppedPickup)
+					const UFortWorldItemDefinition* OutgoingDef = Cast<UFortWorldItemDefinition>(OutgoingEntry.ItemDefinition);
+					if (!OutgoingDef || !OutgoingDef->bCanBeDropped)
 					{
-						UE_LOG(LogTemp, Warning, TEXT("LootTransfer: Swap aborted (failed to spawn outgoing pickup) pc=%s out=%s"),
-							*PC->GetName(), *OutgoingEntry.ItemGuid.ToString());
 						return 0;
 					}
-
-					EnqueueDelayedQuickBarAction(PC, State, EFortDelayedQuickBarAction::Remove,
-						SwapGuid, OutgoingItem->GetItemDefinitionBP(), EFortQuickBars::Primary, SwapSlot, true);
-					if (TArray<FGuid>* PrimarySlots = State.GetBarArray(EFortQuickBars::Primary))
+					AFortPickupAthena* DroppedPickup = nullptr;
+					if (OutgoingDef->DropBehavior != EWorldItemDropBehavior::DestroyOnDrop)
 					{
-						ClearGuidFromSlots(*PrimarySlots, SwapGuid);
+						FVector TossStart, TossFinal, TossDir;
+						BuildTossLocations(Pawn, Pawn->GetActorForwardVector(), TossStart, TossFinal, TossDir);
+
+						const uint8 SourceFlags = static_cast<uint8>(EFortPickupSourceTypeFlag::Player) |
+							static_cast<uint8>(EFortPickupSourceTypeFlag::Tossed);
+						DroppedPickup = FortAthenaLootTransfer::SpawnTossedPickupFromEntry(
+							PC->GetWorld(), OutgoingEntry, TossStart, TossDir, Pawn, SourceFlags, EFortPickupSpawnSource::Unset);
+						if (!DroppedPickup)
+						{
+							UE_LOG(LogTemp, Warning, TEXT("LootTransfer: Swap aborted (failed to spawn outgoing pickup) pc=%s out=%s"),
+								*PC->GetName(), *OutgoingEntry.ItemGuid.ToString());
+							return 0;
+						}
 					}
-					FortAthenaInventory::RemoveItem(PC, SwapGuid, OutgoingEntry.Count);
+
+					const int32 Removed = FortAthenaInventory::RemoveItem(PC, SwapGuid, OutgoingEntry.Count);
+					if (DroppedPickup)
+					{
+						if (Removed <= 0)
+						{
+							DroppedPickup->Destroy();
+						}
+						else if (Removed < OutgoingEntry.Count)
+						{
+							DroppedPickup->PrimaryPickupItemEntry.Count = Removed;
+							DroppedPickup->PrimaryPickupItemEntry.LoadedAmmo = 0;
+						}
+					}
+					if (Removed != OutgoingEntry.Count)
+					{
+						return 0;
+					}
 
 					int32 AcceptedCount = 0;
 					UFortWorldItem* GrantedItem = FortAthenaInventory::GiveItem(

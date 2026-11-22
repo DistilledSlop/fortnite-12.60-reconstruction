@@ -73,6 +73,7 @@ Inventory operations|implemented|Fill existing partial stacks before allocating 
 Inventory operations|implemented|Check and spend building materials across matching inventory stacks|porting/native/Source/FortniteGame/Private/FortAthenaBuilding.cpp
 Inventory operations|implemented|Require enough contiguous quickbar slots before accepting a pickup or swapping an item|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
 Inventory operations|implemented|Reconcile manual drops with the quantity removed and clear slots through inventory removal|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
+Inventory operations|implemented|Honor destroy-on-drop and the outgoing inventory debit during pickup swaps|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
 Inventory operations|open|Verify five loadout slots and separate pickaxe, trap and material storage
 Inventory operations|open|Verify slot reorder, stack split and auto-pickup rules on two clients
 Inventory operations|open|Verify item use and gain, spend or loss reconcile with inventory
