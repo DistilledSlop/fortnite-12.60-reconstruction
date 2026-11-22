@@ -22,6 +22,7 @@
 #include "Materials/MaterialInterface.h"
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
+#include "Misc/ScopeExit.h"
 #include "TInteractionType.h"
 #include "UFortControllerComponent_Interaction.h"
 #include "UFortItemDefinition.h"
@@ -35,6 +36,7 @@ namespace
 	// stand-in: 0x141d08ed0 reads URuntimeOptions+0x690 or InteractionComponent+0x168 (not in generated reflection);
 	// 500 cm matches standard BR search range before the 2x multiplier in 0x141d14c20.
 	constexpr float DefaultInteractValidationDistance = 500.0f;
+	TSet<ABuildingContainer*> ContainersBeingSearched;
 
 	double SampleUnitRandom()
 	{
@@ -513,7 +515,8 @@ bool FortAthenaLootSearch::RollAndSpawnContainerLoot(
 		return false;
 	}
 
-	int32 SpawnedCount = 0;
+	TArray<AFortPickupAthena*> SpawnedPickups;
+	SpawnedPickups.Reserve(Drops.Num());
 	for (int32 Index = 0; Index < Drops.Num(); ++Index)
 	{
 		const FortAthenaLootRoll::FDrop& Drop = Drops[Index];
@@ -524,15 +527,30 @@ bool FortAthenaLootSearch::RollAndSpawnContainerLoot(
 		const FVector SpawnLoc = ComputeDropSpawnLocation(Container, WorldOrigin, Index, Drops.Num(), ScatterRadius);
 		AFortPickupAthena* Pickup = Cast<AFortPickupAthena>(FortAthenaLoot::SpawnResolvedPickup(
 			World, SpawnLoc, Drop.Definition, Drop.Count, Drop.Level, LoadedAmmo, &WorldOrigin));
-		if (Pickup)
+		if (!IsValid(Pickup))
 		{
-			++SpawnedCount;
-			if (OutPickups)
-				OutPickups->Add(Pickup);
-			UE_LOG(LogTemp, Display, TEXT("LootSearch:  spawned item=%s count=%d level=%d ammo=%d loc=(%.0f,%.0f,%.0f)"),
-				*Drop.Definition->GetName(), Drop.Count, Drop.Level, LoadedAmmo, SpawnLoc.X, SpawnLoc.Y, SpawnLoc.Z);
+			// Keep a failed roll retryable without leaving part of its loot in the world.
+			for (AFortPickupAthena* Spawned : SpawnedPickups)
+			{
+				if (IsValid(Spawned))
+				{
+					Spawned->Destroy();
+				}
+			}
+			UE_LOG(LogTemp, Warning, TEXT("LootSearch: pickup spawn failed container=%s group=%s item=%s"),
+				*GetNameSafe(Container), *TierGroup.ToString(), *GetNameSafe(Drop.Definition));
+			return false;
 		}
+		SpawnedPickups.Add(Pickup);
+		UE_LOG(LogTemp, Display, TEXT("LootSearch:  spawned item=%s count=%d level=%d ammo=%d loc=(%.0f,%.0f,%.0f)"),
+			*Drop.Definition->GetName(), Drop.Count, Drop.Level, LoadedAmmo, SpawnLoc.X, SpawnLoc.Y, SpawnLoc.Z);
 	}
+
+	if (OutPickups)
+	{
+		OutPickups->Append(SpawnedPickups);
+	}
+	const int32 SpawnedCount = SpawnedPickups.Num();
 
 	// Floor-loot containers roll thousands of times per match; only chests, ammo boxes and the like are worth a Display line.
 	if (TierGroup.ToString().StartsWith(TEXT("Loot_AthenaFloorLoot")))
@@ -610,6 +628,13 @@ bool FortAthenaLootSearch::TrySearchContainer(AFortPlayerController* Controller,
 	UE_LOG(LogTemp, Display, TEXT("LootSearch: rolling container=%s class=%s group=%s upgrade=%d tossSpeed=%.0f tossCone=%.0f"),
 		*Container->GetName(), *GetNameSafe(Container->GetClass()), *TierGroup.ToString(),
 		Container->ChosenRandomUpgrade, Container->LootTossSpeed_Athena, Container->LootTossConeHalfAngle_Athena);
+
+	if (ContainersBeingSearched.Contains(Container))
+	{
+		return false;
+	}
+	ContainersBeingSearched.Add(Container);
+	ON_SCOPE_EXIT { ContainersBeingSearched.Remove(Container); };
 
 	if (!RollAndSpawnContainerLoot(GameMode, Container, TierGroup, WorldSpawn, ScatterRadius))
 		return false;
