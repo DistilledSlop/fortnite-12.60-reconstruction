@@ -851,7 +851,7 @@ namespace
 		// Ensure existing inventory items (e.g. SetupPlayer pickaxe & building pieces) are indexed first.
 		FortAthenaLootTransfer::SetupPlayerQuickBars(PC);
 
-		int32 TotalAccepted = 0;
+		int64 TotalAccepted = 0;
 		if (Pickup->MultiItemPickupEntries.Num() > 0)
 		{
 			bool bSwapUsed = false;
@@ -890,14 +890,14 @@ namespace
 			{
 				Pickup->PrimaryPickupItemEntry = Pickup->MultiItemPickupEntries[0];
 				Pickup->ForceNetUpdate();
-				UE_LOG(LogTemp, Display, TEXT("LootTransfer: Multi-pickup partial accept pc=%s pickup=%s accepted=%d remainingEntries=%d"),
+				UE_LOG(LogTemp, Display, TEXT("LootTransfer: Multi-pickup partial accept pc=%s pickup=%s accepted=%lld remainingEntries=%d"),
 					*PC->GetName(), *Pickup->GetName(), TotalAccepted, Pickup->MultiItemPickupEntries.Num());
 				return true;
 			}
 
 			Pickup->PrimaryPickupItemEntry.Count = 0;
 			BeginPickupFlightAndDestroy(Pickup, Pawn, InFlyTime, InStartDirection, bPlayPickupSound);
-			UE_LOG(LogTemp, Display, TEXT("LootTransfer: Multi-pickup completed pc=%s pickup=%s accepted=%d"),
+			UE_LOG(LogTemp, Display, TEXT("LootTransfer: Multi-pickup completed pc=%s pickup=%s accepted=%lld"),
 				*PC->GetName(), *Pickup->GetName(), TotalAccepted);
 			return true;
 		}
