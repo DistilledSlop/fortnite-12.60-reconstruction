@@ -1522,6 +1522,7 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 
 	bCleanupQueued = true;
 	const TSharedRef<FGuid> ShieldGuid = MakeShared<FGuid>();
+	const TSharedRef<FGameplayAbilitySpecHandle> ShieldHandle = MakeShared<FGameplayAbilitySpecHandle>();
 	const TSharedRef<FGuid> MedkitGuid = MakeShared<FGuid>();
 	const TWeakObjectPtr<UFortWeaponItemDefinition> WeakMedkit(Medkit);
 	const TWeakObjectPtr<UFortWeaponItemDefinition> WeakSmallShield(SmallShield);
@@ -1530,7 +1531,7 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 	const TWeakObjectPtr<AFortWeapon> WeakEquipped(Equipped);
 	const TWeakObjectPtr<AFortPlayerControllerAthena> WeakController(Controller);
 	const TWeakObjectPtr<AFortInventory> WeakInventory(Inventory);
-	const auto ActivateShield = [this, WeakPawn, WeakEquipped, WeakController, ShieldGuid](UFortWeaponItemDefinition* Shield, const TCHAR* Name)
+	const auto ActivateShield = [this, WeakPawn, WeakEquipped, WeakController, ShieldGuid, ShieldHandle](UFortWeaponItemDefinition* Shield, const TCHAR* Name, float StartingShield)
 	{
 		AFortPlayerPawnAthena* LivePawn = WeakPawn.Get();
 		AFortWeapon* LiveWeapon = WeakEquipped.Get();
@@ -1551,7 +1552,7 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 		}
 		*ShieldGuid = ShieldItem->NativeGetItemGuid();
 		LivePawn->SetMaxShield(100.0f);
-		LivePawn->SetShield(0.0f);
+		LivePawn->SetShield(StartingShield);
 		LiveWeapon->WeaponData = Shield;
 		LiveWeapon->ItemEntryGuid = *ShieldGuid;
 		LivePawn->CurrentWeapon = LiveWeapon;
@@ -1561,13 +1562,13 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 		{
 			return;
 		}
-		const FGameplayAbilitySpecHandle ShieldHandle = LiveASC->GiveAbility(
+		*ShieldHandle = LiveASC->GiveAbility(
 			FGameplayAbilitySpec(ShieldClass, 1, INDEX_NONE, LiveWeapon));
-		if (TestTrue(*FString::Printf(TEXT("Cooked %s shield ability is granted"), Name), ShieldHandle.IsValid()))
+		if (TestTrue(*FString::Printf(TEXT("Cooked %s shield ability is granted"), Name), ShieldHandle->IsValid()))
 		{
 			TGuardValue<TWeakObjectPtr<APlayerController>> LocalActivation(
 				LiveASC->AbilityActorInfo->PlayerController, TWeakObjectPtr<APlayerController>());
-			TestTrue(*FString::Printf(TEXT("Equipped %s shield ability activates"), Name), LiveASC->TryActivateAbility(ShieldHandle, false));
+			TestTrue(*FString::Printf(TEXT("Equipped %s shield ability activates"), Name), LiveASC->TryActivateAbility(*ShieldHandle, false));
 		}
 	};
 	const auto CheckShield = [this, WeakPawn, WeakInventory, ShieldGuid](const TCHAR* Name, float ExpectedShield)
@@ -1595,12 +1596,25 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 		{
 			TestNull(TEXT("Successful use removes the last bandage"), WeakInventory->NativeFindItemByGuid(LastBandageGuid));
 		}
-		ActivateShield(WeakSmallShield.Get(), TEXT("small"));
+		ActivateShield(WeakSmallShield.Get(), TEXT("small"), 40.0f);
+	}), 8.0f));
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakPawn, ShieldHandle, CheckShield]()
+	{
+		CheckShield(TEXT("small"), 50.0f);
+		AFortPlayerPawnAthena* LivePawn = WeakPawn.Get();
+		UAbilitySystemComponent* LiveASC = LivePawn ? LivePawn->GetAbilitySystemComponent() : nullptr;
+		if (TestNotNull(TEXT("Shield ability system at the small shield cap"), LiveASC) &&
+			TestTrue(TEXT("Small shield ability handle remains valid"), ShieldHandle->IsValid()))
+		{
+			TGuardValue<TWeakObjectPtr<APlayerController>> LocalActivation(
+				LiveASC->AbilityActorInfo->PlayerController, TWeakObjectPtr<APlayerController>());
+			TestFalse(TEXT("Small shield use is rejected at 50 shield"), LiveASC->TryActivateAbility(*ShieldHandle, false));
+		}
 	}), 8.0f));
 	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([WeakLargeShield, ActivateShield, CheckShield]()
 	{
-		CheckShield(TEXT("small"), 25.0f);
-		ActivateShield(WeakLargeShield.Get(), TEXT("large"));
+		CheckShield(TEXT("small"), 50.0f);
+		ActivateShield(WeakLargeShield.Get(), TEXT("large"), 0.0f);
 	}), 8.0f));
 	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakPawn, WeakEquipped, WeakController, WeakMedkit, MedkitGuid, CheckShield]()
 	{
