@@ -522,8 +522,8 @@ bool FortAthenaLootSearch::RollAndSpawnContainerLoot(
 
 		const int32 LoadedAmmo = ResolveLoadedAmmo(Drop.Definition);
 		const FVector SpawnLoc = ComputeDropSpawnLocation(Container, WorldOrigin, Index, Drops.Num(), ScatterRadius);
-		AFortPickupAthena* Pickup = FortAthenaLoot::SpawnResolvedPickup(
-			World, SpawnLoc, Drop.Definition, Drop.Count, Drop.Level, LoadedAmmo, &WorldOrigin);
+		AFortPickupAthena* Pickup = Cast<AFortPickupAthena>(FortAthenaLoot::SpawnResolvedPickup(
+			World, SpawnLoc, Drop.Definition, Drop.Count, Drop.Level, LoadedAmmo, &WorldOrigin));
 		if (Pickup)
 		{
 			++SpawnedCount;

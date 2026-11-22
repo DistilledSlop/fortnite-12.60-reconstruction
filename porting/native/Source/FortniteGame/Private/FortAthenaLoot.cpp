@@ -5,6 +5,7 @@
 #include "AFortPlayerPawn.h"
 #include "AFortPlayerController.h"
 #include "FortAthenaInventoryFlow.h"
+#include "FortAthenaLootTransfer.h"
 #include "UFortWorldItem.h"
 #include "UObject/ScriptMacros.h"
 #include "UFortItemDefinition.h"
@@ -15,19 +16,14 @@
 #include "TimerManager.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
-namespace FortAthenaLootTransfer
-{
-	void InitializeWorldPickup(AFortPickupAthena* Pickup, const FVector& Location);
-}
-
 bool FortAthenaLoot::IsEnabled()
 {
 	return FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient"));
 }
 
-AFortPickupAthena* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVector& Location,
+AFortPickup* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVector& Location,
 	UFortItemDefinition* Definition, int32 Count, int32 Level, int32 LoadedAmmo, const FVector* TossFrom,
-	AFortPlayerController* Owner, bool bOnlyRelevantToOwner)
+	AFortPlayerController* Owner, bool bOnlyRelevantToOwner, TSubclassOf<AFortPickup> PickupClass)
 {
 	if (!IsEnabled() || !World || World->GetNetMode() == NM_Client || !Definition || Count <= 0)
 		return nullptr;
@@ -47,7 +43,8 @@ AFortPickupAthena* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVec
 	Parameters.Owner = Owner;
 	Parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	const FVector SpawnAt = TossFrom ? *TossFrom : Location;
-	AFortPickupAthena* Pickup = World->SpawnActor<AFortPickupAthena>(SpawnAt, FRotator::ZeroRotator, Parameters);
+	UClass* SpawnClass = PickupClass ? PickupClass.Get() : AFortPickupAthena::StaticClass();
+	AFortPickup* Pickup = World->SpawnActor<AFortPickup>(SpawnClass, SpawnAt, FRotator::ZeroRotator, Parameters);
 	if (!Pickup)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Loot: failed to spawn resolved pickup"));
@@ -91,14 +88,6 @@ AFortPickupAthena* FortAthenaLoot::SpawnResolvedPickup(UWorld* World, const FVec
 	UE_LOG(LogTemp, Display, TEXT("Loot: spawned resolved pickup %s count=%d at (%.0f,%.0f,%.0f) root=%d"), *Definition->GetName(), Count,
 		Pickup->GetActorLocation().X, Pickup->GetActorLocation().Y, Pickup->GetActorLocation().Z, Pickup->GetRootComponent() ? 1 : 0);
 	return Pickup;
-}
-
-namespace FortAthenaLootTransfer
-{
-	void InstallRpcOverrides();
-	bool HandlePickup(AFortPlayerPawn* Pawn, AFortPickup* Pickup,
-		float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound);
-	void InitializeWorldPickup(AFortPickupAthena* Pickup, const FVector& Location);
 }
 
 namespace

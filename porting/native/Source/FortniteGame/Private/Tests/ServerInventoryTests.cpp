@@ -5,6 +5,7 @@
 #include "AbilitySystemComponent.h"
 #include "AFortInventory.h"
 #include "AFortPickupAthena.h"
+#include "AFortPickupBackpack.h"
 #include "AFortPlayerPawnAthena.h"
 #include "AFortWeapon.h"
 #include "AFortPlayerControllerAthena.h"
@@ -92,20 +93,31 @@ bool FServerBlueprintPickupTossTest::RunTest(const FString&)
 	FSpawnParams Toss{World, Definition, 1, Position, Direction, 0, true, false, false, 0,
 		EFortPickupSourceTypeFlag::Container, EFortPickupSpawnSource::Chest, nullptr, false, nullptr};
 	Library->ProcessEvent(Spawn, &Toss);
-	FSpawnWithClassParams WithClass{World, Definition, AFortPickupAthena::StaticClass(), 1, Position, Direction, 0,
+	FSpawnWithClassParams WithClass{World, Definition, AFortPickupBackpack::StaticClass(), 1, Position, Direction, 0,
 		true, false, false, 0, EFortPickupSourceTypeFlag::Player, EFortPickupSpawnSource::PlayerElimination, nullptr, false, nullptr};
 	Library->ProcessEvent(SpawnWithClass, &WithClass);
+	FSpawnWithClassParams WithoutClass = WithClass;
+	WithoutClass.PickupClass = nullptr;
+	WithoutClass.ReturnValue = nullptr;
+	Library->ProcessEvent(SpawnWithClass, &WithoutClass);
 	if (Toss.ReturnValue)
 	{
+		TestTrue(TEXT("Blueprint pickup defaults to the exact Athena class"), Toss.ReturnValue->GetClass() == AFortPickupAthena::StaticClass());
 		TestTrue(TEXT("Blueprint pickup preserves source type"), Toss.ReturnValue->PickupSourceTypeFlags == Toss.SourceType);
 		TestTrue(TEXT("Blueprint pickup preserves spawn source"), Toss.ReturnValue->PickupSpawnSource == Toss.Source);
 	}
 	if (WithClass.ReturnValue)
 	{
+		TestTrue(TEXT("Blueprint pickup uses the exact requested backpack class"), WithClass.ReturnValue->GetClass() == AFortPickupBackpack::StaticClass());
 		TestTrue(TEXT("Blueprint pickup with class preserves source type"), WithClass.ReturnValue->PickupSourceTypeFlags == WithClass.SourceType);
 		TestTrue(TEXT("Blueprint pickup with class preserves spawn source"), WithClass.ReturnValue->PickupSpawnSource == WithClass.Source);
 	}
-	for (AFortPickup* Pickup : {Toss.ReturnValue, WithClass.ReturnValue})
+	if (WithoutClass.ReturnValue)
+	{
+		TestTrue(TEXT("Blueprint pickup with no class override defaults to the exact Athena class"),
+			WithoutClass.ReturnValue->GetClass() == AFortPickupAthena::StaticClass());
+	}
+	for (AFortPickup* Pickup : {Toss.ReturnValue, WithClass.ReturnValue, WithoutClass.ReturnValue})
 	{
 		if (TestNotNull(TEXT("Blueprint directional toss spawned a pickup"), Pickup))
 		{

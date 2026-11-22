@@ -410,7 +410,8 @@ namespace
 
 	AFortPickup* SpawnPickupCommon(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 NumberToSpawn,
 		const FVector& Position, const FVector& Direction, bool bToss, EFortPickupSourceTypeFlag SourceType,
-		EFortPickupSpawnSource Source, AFortPlayerController* Owner, bool bOnlyRelevantToOwner)
+		EFortPickupSpawnSource Source, AFortPlayerController* Owner, bool bOnlyRelevantToOwner,
+		TSubclassOf<AFortPickup> PickupClass = nullptr)
 	{
 		UWorld* World = WorldOf(WorldContextObject);
 		if (!World || !ItemDefinition || NumberToSpawn <= 0)
@@ -421,7 +422,7 @@ namespace
 		constexpr float TossDistance = 180.0f;
 		const FVector RestLocation = bToss ? Position + Direction.GetSafeNormal() * TossDistance : Position;
 		AFortPickup* Pickup = FortAthenaLoot::SpawnResolvedPickup(World, RestLocation, ItemDefinition, NumberToSpawn, 1, 0,
-			bToss ? &Position : nullptr, Owner, bOnlyRelevantToOwner);
+			bToss ? &Position : nullptr, Owner, bOnlyRelevantToOwner, PickupClass);
 		if (Pickup)
 		{
 			Pickup->PickupSourceTypeFlags = SourceType;
@@ -472,9 +473,8 @@ namespace
 		P_GET_UBOOL(bPickupOnlyRelevantToOwner);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		// stand-in: the pickup class override is ignored; the loot system spawns FortPickupAthena.
 		*static_cast<AFortPickup**>(RESULT_PARAM) = SpawnPickupCommon(WorldContextObject, ItemDefinition, NumberToSpawn,
-			Position, Direction, bToss, SourceType, Source, OptionalOwnerPC, bPickupOnlyRelevantToOwner);
+			Position, Direction, bToss, SourceType, Source, OptionalOwnerPC, bPickupOnlyRelevantToOwner, PickupClass);
 		P_NATIVE_END;
 	}
 

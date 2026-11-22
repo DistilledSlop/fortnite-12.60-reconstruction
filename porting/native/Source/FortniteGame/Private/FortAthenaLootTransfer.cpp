@@ -538,7 +538,7 @@ namespace
 		}
 	}
 
-	void InitializeSpawnedPickupActor(AFortPickupAthena* Pickup, const FVector& InitialLocation)
+	void InitializeSpawnedPickupActor(AFortPickup* Pickup, const FVector& InitialLocation)
 	{
 		if (!Pickup)
 		{
@@ -1406,7 +1406,7 @@ void FortAthenaLootTransfer::AcknowledgeDelayedQuickBarActions(AFortPlayerContro
 	}
 }
 
-void FortAthenaLootTransfer::InitializeWorldPickup(AFortPickupAthena* Pickup, const FVector& Location)
+void FortAthenaLootTransfer::InitializeWorldPickup(AFortPickup* Pickup, const FVector& Location)
 {
 	InitializeSpawnedPickupActor(Pickup, Location);
 	// The pickup's projectile component has gravity on and nothing to collide with (its root is a plain scene component), so a
@@ -1423,7 +1423,7 @@ void FortAthenaLootTransfer::InitializeWorldPickup(AFortPickupAthena* Pickup, co
 	}
 }
 
-void FortAthenaLootTransfer::BeginServerToss(AFortPickupAthena* Pickup, const FVector& Start, const FVector& Final, float FlyTime)
+void FortAthenaLootTransfer::BeginServerToss(AFortPickup* Pickup, const FVector& Start, const FVector& Final, float FlyTime)
 {
 	UWorld* World = Pickup ? Pickup->GetWorld() : nullptr;
 	if (!World || !Pickup->GetRootComponent())
@@ -1451,10 +1451,10 @@ void FortAthenaLootTransfer::BeginServerToss(AFortPickupAthena* Pickup, const FV
 	}
 
 	FTimerHandle RestTimer;
-	TWeakObjectPtr<AFortPickupAthena> WeakPickup(Pickup);
+	TWeakObjectPtr<AFortPickup> WeakPickup(Pickup);
 	World->GetTimerManager().SetTimer(RestTimer, [WeakPickup, Final]()
 	{
-		AFortPickupAthena* Target = WeakPickup.Get();
+		AFortPickup* Target = WeakPickup.Get();
 		if (!IsValid(Target) || Target->bPickedUp)
 		{
 			return;
