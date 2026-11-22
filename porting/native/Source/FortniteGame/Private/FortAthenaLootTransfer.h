@@ -52,6 +52,11 @@ namespace FortAthenaLootTransfer
 	// (0x1423a83a0 / 0x1423684c0).
 	void OnItemRemoved(AFortPlayerController* Controller, const FGuid& ItemGuid);
 
+	// Swaps two loadout slots only when both still contain the expected items.
+	// An invalid destination GUID represents an empty slot.
+	bool SwapLoadoutSlots(AFortPlayerController* Controller, int32 SourceSlot, const FGuid& SourceGuid,
+		int32 DestinationSlot, const FGuid& DestinationGuid);
+
 	int32 FindReplacementPrimarySlot(AFortPlayerController* Controller, const FGuid& ItemGuid,
 		const UFortWorldItemDefinition* Replacement);
 

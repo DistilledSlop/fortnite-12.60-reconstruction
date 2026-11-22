@@ -1174,6 +1174,82 @@ bool FortAthenaLootTransfer::OnItemGranted(AFortPlayerController* Controller, UF
 	return true;
 }
 
+bool FortAthenaLootTransfer::SwapLoadoutSlots(AFortPlayerController* Controller, int32 SourceSlot,
+	const FGuid& SourceGuid, int32 DestinationSlot, const FGuid& DestinationGuid)
+{
+	if (!IsEnabled() || !Controller || !Controller->HasAuthority() || !Controller->WorldInventory ||
+		SourceSlot < 1 || SourceSlot >= PrimarySlotCount || DestinationSlot < 1 || DestinationSlot >= PrimarySlotCount ||
+		SourceSlot == DestinationSlot || !SourceGuid.IsValid() || SourceGuid == DestinationGuid)
+	{
+		return false;
+	}
+
+	FPlayerQuickBarState* State = GQuickBarStates.Find(Controller);
+	if (!State || State->PrimarySlots[SourceSlot] != SourceGuid || State->PrimarySlots[DestinationSlot] != DestinationGuid ||
+		FindItemSlot(*State, SourceGuid).Slot != SourceSlot ||
+		(DestinationGuid.IsValid() && FindItemSlot(*State, DestinationGuid).Slot != DestinationSlot))
+	{
+		return false;
+	}
+
+	constexpr EFortQuickBars Bar = EFortQuickBars::Primary;
+	struct FSlotMove
+	{
+		FGuid Guid;
+		int32 From;
+		int32 To;
+		UFortItemDefinition* Definition = nullptr;
+	};
+	FSlotMove Moves[] = {{SourceGuid, SourceSlot, DestinationSlot}, {DestinationGuid, DestinationSlot, SourceSlot}};
+
+	TArray<FGuid> ReorderedSlots = State->PrimarySlots;
+	ClearGuidFromSlots(ReorderedSlots, SourceGuid);
+	if (DestinationGuid.IsValid())
+	{
+		ClearGuidFromSlots(ReorderedSlots, DestinationGuid);
+	}
+
+	for (FSlotMove& Move : Moves)
+	{
+		if (!Move.Guid.IsValid())
+		{
+			continue;
+		}
+
+		UFortWorldItem* Item = Controller->WorldInventory->NativeFindItemByGuid(Move.Guid);
+		if (!Item || Item->ItemEntry.Count <= 0)
+		{
+			return false;
+		}
+		Move.Definition = Item->GetItemDefinitionBP();
+		EFortQuickBars AllowedBar;
+		int32 MinSlot, MaxSlot, NumSlots;
+		const FQuickBarData* BarDefinition;
+		const int32 Span = GetItemSlotSpan(Item);
+		if (!ResolveQuickBarRange(Controller, Move.Definition, AllowedBar, MinSlot, MaxSlot, NumSlots, BarDefinition) ||
+			AllowedBar != Bar || Move.To < MinSlot || Move.To + Span > FMath::Min(MaxSlot + 1, PrimarySlotCount) ||
+			FindFreeSlotRange(ReorderedSlots, Move.To, Move.To + Span - 1, Span, BarDefinition,
+				GetQuickBarItemType(Move.Definition)) != Move.To)
+		{
+			return false;
+		}
+		OccupySlots(ReorderedSlots, Move.To, Span, Move.Guid);
+	}
+
+	State->PrimarySlots = MoveTemp(ReorderedSlots);
+	for (const FSlotMove& Move : Moves)
+	{
+		EnqueueDelayedQuickBarAction(Controller, *State, EFortDelayedQuickBarAction::Remove,
+			Move.Guid, Move.Definition, Bar, Move.From, true);
+	}
+	for (const FSlotMove& Move : Moves)
+	{
+		EnqueueDelayedQuickBarAction(Controller, *State, EFortDelayedQuickBarAction::Add,
+			Move.Guid, Move.Definition, Bar, Move.To, false);
+	}
+	return true;
+}
+
 int32 FortAthenaLootTransfer::FindReplacementPrimarySlot(AFortPlayerController* Controller, const FGuid& ItemGuid,
 	const UFortWorldItemDefinition* Replacement)
 {

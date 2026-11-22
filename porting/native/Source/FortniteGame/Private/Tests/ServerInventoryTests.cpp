@@ -443,6 +443,38 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 				ActualRemainingIds == ExpectedRemainingIds);
 		}
 
+		if (TestEqual(TEXT("The loadout swap fixture has all seven items"), LayoutItems.Num(), 7))
+		{
+			const FGuid Pickaxe = LayoutItems[0];
+			const FGuid FirstWeapon = LayoutItems[2];
+			const FGuid FifthWeapon = LayoutItems[6];
+			const int32 BeforeSwap = PendingActions.Num();
+			TestFalse(TEXT("A loadout swap cannot move the pickaxe"),
+				FortAthenaLootTransfer::SwapLoadoutSlots(Controller, 0, Pickaxe, 5, FifthWeapon));
+			TestFalse(TEXT("A stale destination GUID cannot reorder the loadout"),
+				FortAthenaLootTransfer::SwapLoadoutSlots(Controller, 1, FirstWeapon, 5, FGuid::NewGuid()));
+			TestEqual(TEXT("Rejected swaps publish no updates"), PendingActions.Num(), BeforeSwap);
+
+			TestTrue(TEXT("The server swaps the first and fifth loadout slots"),
+				FortAthenaLootTransfer::SwapLoadoutSlots(Controller, 1, FirstWeapon, 5, FifthWeapon));
+			if (TestEqual(TEXT("A swap publishes two removals and two additions"), PendingActions.Num(), BeforeSwap + 4))
+			{
+				TestTrue(TEXT("Both removals precede the additions"),
+					PendingActions[BeforeSwap].Action == EFortDelayedQuickBarAction::Remove &&
+					PendingActions[BeforeSwap + 1].Action == EFortDelayedQuickBarAction::Remove);
+				const FDelayedQuickBarAction& FirstAdd = PendingActions[BeforeSwap + 2];
+				const FDelayedQuickBarAction& SecondAdd = PendingActions[BeforeSwap + 3];
+				TestTrue(TEXT("The updates place each weapon in its new slot"),
+					FirstAdd.Action == EFortDelayedQuickBarAction::Add && FirstAdd.QuickBarSlot == 5 &&
+					FirstAdd.ItemGuid == FirstWeapon && SecondAdd.Action == EFortDelayedQuickBarAction::Add &&
+					SecondAdd.QuickBarSlot == 1 && SecondAdd.ItemGuid == FifthWeapon);
+			}
+			TestFalse(TEXT("Replaying the swap with old occupants is rejected"),
+				FortAthenaLootTransfer::SwapLoadoutSlots(Controller, 1, FirstWeapon, 5, FifthWeapon));
+			TestTrue(TEXT("The new occupants can be swapped back"),
+				FortAthenaLootTransfer::SwapLoadoutSlots(Controller, 1, FifthWeapon, 5, FirstWeapon));
+		}
+
 		UFortWeaponRangedItemDefinition* ExtraWeapon = NewObject<UFortWeaponRangedItemDefinition>(Inventory);
 		ExtraWeapon->ItemType = EFortItemType::WeaponRanged;
 		ExtraWeapon->MaxStackSize = FScalableFloat(1.0f);
