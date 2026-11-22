@@ -181,6 +181,15 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	TestEqual(TEXT("Target resistance applies at hit time"), Pawn->GetShield(), 9.0f);
 	ASC->SetNumericAttributeBase(Resistance, 0.0f);
 
+	FGameplayEffectSpec StackedDamage(FormulaEffect, ASC->MakeEffectContext(), 1.0f);
+	StackedDamage.SetSetByCallerMagnitude(FName(TEXT("Damage")), 4.0f);
+	StackedDamage.StackCount = 3;
+	ASC->SetNumericAttributeBase(Shield, 8.0f);
+	ASC->ApplyGameplayEffectSpecToSelf(StackedDamage);
+	TestEqual(TEXT("Three damage stacks deplete eight shield"), Pawn->GetShield(), 0.0f);
+	TestEqual(TEXT("Only four stacked damage overflows into health"), Pawn->GetHealth(), 71.0f);
+	ASC->SetNumericAttributeBase(Health, 75.0f);
+
 	ASC->SetNumericAttributeBase(Shield, 30);
 	FortAthenaHealth::ApplyDamage(Pawn, 5, FGameplayTagContainer(), nullptr, nullptr, true);
 	TestEqual(TEXT("Bypass preserves shield"), Pawn->GetShield(), 30.0f);
