@@ -53,7 +53,7 @@ The [wiki](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki) 
 
 ## Dedicated-server progress
 
-[![Dedicated-server reconstruction progress treemap](docs/progress/server/server-checklist-treemap.svg)](docs/progress/server/index.html)
+[![Dedicated-server reconstruction progress treemap](docs/progress/server/server-implementation-treemap.svg)](docs/progress/server/index.html)
 
 [Detailed server board and evidence](docs/progress/server/index.html) · [Original client + server board](docs/combined.html)
 

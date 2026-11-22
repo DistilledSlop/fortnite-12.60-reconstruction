@@ -1,6 +1,6 @@
 # Port progress dashboard
 
-The [dedicated-server board](../../docs/progress/server/index.html) and README treemap share the [server acceptance ledger](server_checks.txt). Coverage is verified server checks divided by all server checks, with equal weight per check. Implementation-only and open checks remain in the denominator. Client-only checks are listed on the board and excluded from server coverage. Run `python3 porting/progress/render_server_progress.py` to refresh both views, or pass `--check` to check them. The rest of this guide describes the original combined dashboard.
+The [dedicated-server board](../../docs/progress/server/index.html) and README treemap share the [server acceptance ledger](server_checks.txt). Implementation coverage is the number of checks marked implemented or verified divided by all server checks, with equal weight per check. Verification is reported separately. Client-only checks are listed on the board and excluded from server coverage. Run `python3 porting/progress/render_server_progress.py` to refresh both views, or pass `--check` to check them. The rest of this guide describes the original combined dashboard.
 
 
 A generated dashboard for the Fortnite 12.60 Linux reconstruction: a squarified treemap of

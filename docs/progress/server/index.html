@@ -21,12 +21,12 @@ td:nth-child(2) { white-space: nowrap; }
 <main>
 <nav aria-label="Progress boards"><a href="../../combined.html">Original client + server board</a></nav>
 <h1>Fortnite 12.60 dedicated-server progress</h1>
-<img src="server-checklist-treemap.svg" width="1000" height="720" style="max-width:100%;height:auto" alt="Dedicated-server progress treemap">
+<img src="server-implementation-treemap.svg" width="1000" height="720" style="max-width:100%;height:auto" alt="Dedicated-server progress treemap">
 <p>The server can host a local match for the original 12.60 client, including a Battle Bus drop onto Apollo. The goal is a complete multiplayer match with authoritative gameplay, replication, and the backend services the original client uses.</p>
 <!-- checks:start -->
-<p><strong>29/102 server checks verified (28.4%).</strong> 11 implemented checks await verification, 62 remain open, and 6 client-only checks are tracked outside the server score.</p>
-<p>Coverage = verified server checks ÷ all server checks. Area and capability scores use the same formula. Every check has equal weight. Verified means the stated behavior has a recorded headless test, service test, or original-client observation. A check counts only at that evidence level. Implementation by itself earns zero verification credit.</p>
-<h2>Match flow and player states <small>9/22 verified (40.9%)</small></h2>
+<p><strong>40/102 server checks implemented (39.2%).</strong> 29 are verified, 11 await verification, 62 remain open, and 6 client-only checks are tracked outside the server score.</p>
+<p>Coverage = (implemented checks + verified checks) ÷ all server checks. Area and capability scores use the same formula. Every check has equal weight. Verified means the stated behavior has a recorded headless test, service test, or original-client observation. Implementation-only checks have a source reference. Each check contributes at most one point.</p>
+<h2>Match flow and player states <small>13/22 implemented (59.1%)</small></h2>
 <div class="table"><table aria-label="Match flow and player states">
 <thead><tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Acceptance check</th><th scope="col">Evidence</th></tr></thead><tbody>
 <tr><th scope="row">Hosting and drop</th><td>Verified</td><td>Build and boot the Linux dedicated target and run headless automation</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/417bfc45">Source</a></td></tr>
@@ -52,7 +52,7 @@ td:nth-child(2) { white-space: nowrap; }
 <tr><th scope="row">Win and spectating</th><td>Open</td><td>Trigger victory results and synchronized slow motion in a multiplayer match</td><td>—</td></tr>
 <tr><th scope="row">Win and spectating</th><td>Open</td><td>Return to lobby, requeue and clear previous match state</td><td>—</td></tr>
 </tbody></table></div>
-<h2>Weapons and gunplay <small>4/13 verified (30.8%)</small></h2>
+<h2>Weapons and gunplay <small>6/13 implemented (46.2%)</small></h2>
 <div class="table"><table aria-label="Weapons and gunplay">
 <thead><tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Acceptance check</th><th scope="col">Evidence</th></tr></thead><tbody>
 <tr><th scope="row">Weapon lifecycle</th><td>Implemented</td><td>Maintain authoritative ammo and reload state</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/f030b322">Source</a></td></tr>
@@ -71,7 +71,7 @@ td:nth-child(2) { white-space: nowrap; }
 <tr><th scope="row">Aiming and camera</th><td>Client only</td><td>Check shoulder camera positioning, ADS zoom and first-person scope transitions</td><td>—</td></tr>
 <tr><th scope="row">Aiming and camera</th><td>Client only</td><td>Check recoil presentation and controller aim-assist response</td><td>—</td></tr>
 </tbody></table></div>
-<h2>Items, inventory and loot <small>2/15 verified (13.3%)</small></h2>
+<h2>Items, inventory and loot <small>5/15 implemented (33.3%)</small></h2>
 <div class="table"><table aria-label="Items, inventory and loot">
 <thead><tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Acceptance check</th><th scope="col">Evidence</th></tr></thead><tbody>
 <tr><th scope="row">Inventory operations</th><td>Implemented</td><td>Handle quickbar selection, pickup, swap and drop on the server</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/01a191ca">Source</a></td></tr>
@@ -90,7 +90,7 @@ td:nth-child(2) { white-space: nowrap; }
 <tr><th scope="row">World items and traversal</th><td>Implemented</td><td>Handle server zipline interaction RPCs</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/01a191ca">Source</a></td></tr>
 <tr><th scope="row">World items and traversal</th><td>Open</td><td>Verify zipline mount and dismount and representative map interactables</td><td>—</td></tr>
 </tbody></table></div>
-<h2>Map, environment and objectives <small>0/7 verified (0.0%)</small></h2>
+<h2>Map, environment and objectives <small>1/7 implemented (14.3%)</small></h2>
 <div class="table"><table aria-label="Map, environment and objectives">
 <thead><tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Acceptance check</th><th scope="col">Evidence</th></tr></thead><tbody>
 <tr><th scope="row">World coverage</th><td>Open</td><td>Load and traverse every named POI and verify collisions and streaming transitions</td><td>—</td></tr>
@@ -101,7 +101,7 @@ td:nth-child(2) { white-space: nowrap; }
 <tr><th scope="row">Environmental simulation</th><td>Open</td><td>Measure fall damage across height thresholds and exemptions</td><td>—</td></tr>
 <tr><th scope="row">Environmental simulation</th><td>Open</td><td>Verify map boundaries, wind tunnels and environmental forces on two clients</td><td>—</td></tr>
 </tbody></table></div>
-<h2>AI, bots and bosses <small>0/5 verified (0.0%)</small></h2>
+<h2>AI, bots and bosses <small>0/5 implemented (0.0%)</small></h2>
 <div class="table"><table aria-label="AI, bots and bosses">
 <thead><tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Acceptance check</th><th scope="col">Evidence</th></tr></thead><tbody>
 <tr><th scope="row">Match bots</th><td>Open</td><td>Add bots to a lobby and count them correctly in teams and match population</td><td>—</td></tr>
@@ -110,7 +110,7 @@ td:nth-child(2) { white-space: nowrap; }
 <tr><th scope="row">Guards and bosses</th><td>Open</td><td>Verify perception, alert transitions, target selection and combat</td><td>—</td></tr>
 <tr><th scope="row">Guards and bosses</th><td>Open</td><td>Eliminate a boss and verify Mythic loot and vault-key drops</td><td>—</td></tr>
 </tbody></table></div>
-<h2>HUD, UI and feedback <small>0/4 verified (0.0%)</small></h2>
+<h2>HUD, UI and feedback <small>0/4 implemented (0.0%)</small></h2>
 <div class="table"><table aria-label="HUD, UI and feedback">
 <thead><tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Acceptance check</th><th scope="col">Evidence</th></tr></thead><tbody>
 <tr><th scope="row">Map and squad pings</th><td>Open</td><td>Replicate squad markers and enemy, item and danger pings to the proper recipients</td><td>—</td></tr>
@@ -121,7 +121,7 @@ td:nth-child(2) { white-space: nowrap; }
 <tr><th scope="row">Accessibility and audio</th><td>Open</td><td>Verify remote footsteps, chests, glides, shots and vehicles produce the expected cues</td><td>—</td></tr>
 <tr><th scope="row">Accessibility and audio</th><td>Client only</td><td>Check Visualize Sound Effects displays correct direction and cue types</td><td>—</td></tr>
 </tbody></table></div>
-<h2>Animations and networking <small>0/6 verified (0.0%)</small></h2>
+<h2>Animations and networking <small>1/6 implemented (16.7%)</small></h2>
 <div class="table"><table aria-label="Animations and networking">
 <thead><tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Acceptance check</th><th scope="col">Evidence</th></tr></thead><tbody>
 <tr><th scope="row">Replicated actions</th><td>Implemented</td><td>Replicate server-driven pickup toss trajectory</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/25cb9929">Source</a></td></tr>
@@ -132,7 +132,7 @@ td:nth-child(2) { white-space: nowrap; }
 <tr><th scope="row">Tick rate and relevance</th><td>Open</td><td>Record server tick-time distribution and packet load during a sustained multiplayer match</td><td>—</td></tr>
 <tr><th scope="row">Tick rate and relevance</th><td>Open</td><td>Check nearby actors replicate and distant irrelevant actors leave network relevance</td><td>—</td></tr>
 </tbody></table></div>
-<h2>Lobby, accounts and Epic service compatibility <small>14/30 verified (46.7%)</small></h2>
+<h2>Lobby, accounts and Epic service compatibility <small>14/30 implemented (46.7%)</small></h2>
 <div class="table"><table aria-label="Lobby, accounts and Epic service compatibility">
 <thead><tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Acceptance check</th><th scope="col">Evidence</th></tr></thead><tbody>
 <tr><th scope="row">Login and identity</th><td>Verified</td><td>Exercise OAuth exchange-code handling against the local service</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/server/tests/test_oauth_exchange_codes.py">Source</a></td></tr>

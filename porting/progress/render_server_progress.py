@@ -11,7 +11,7 @@ import progress
 ROOT = Path(__file__).resolve().parents[2]
 LEDGER = ROOT / "porting/progress/server_checks.txt"
 BOARD = ROOT / "docs/progress/server/index.html"
-OUTPUT = BOARD.with_name("server-checklist-treemap.svg")
+OUTPUT = BOARD.with_name("server-implementation-treemap.svg")
 REPO_URL = "https://github.com/DistilledSlop/fortnite-12.60-reconstruction"
 START = "<!-- checks:start -->"
 END = "<!-- checks:end -->"
@@ -48,12 +48,12 @@ def read_checks():
 
 
 def node(name, counts, **details):
-    done = counts["verified"]
+    done = counts["verified"] + counts["implemented"]
     total = counts.total() - counts["client"]
     if total <= 0:
         raise ValueError(f"No server acceptance checks in {name}")
     return dict(id=name, name=name, weight=total, pct=100 * done / total,
-                done=done, total=total, basis="equal-weight server verification checks", **details)
+                done=done, total=total, basis="equal-weight server implementation checks", **details)
 
 
 def measure(areas):
@@ -74,16 +74,16 @@ def measure(areas):
 
 def render_svg(groups, counts):
     total = counts.total() - counts["client"]
-    done = counts["verified"]
+    done = counts["verified"] + counts["implemented"]
     width, height = progress.STANDALONE_W, progress.STANDALONE_H
     body = progress.render_treemap(groups, width, height - 88, prefix="server")
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="{width}" height="{height}" role="img" aria-label="Dedicated-server verification treemap" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="{width}" height="{height}" role="img" aria-label="Dedicated-server implementation treemap" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
 <style>{progress.TREEMAP_CSS}</style>
 <rect class="tm-bg" width="{width}" height="{height}"/>
-<text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: {done / total:.1%} verified</text>
-<text x="12" y="48" font-size="12" class="tm-head">{done} of {total} server checks verified | {counts["implemented"]} implemented, awaiting verification | {counts["open"]} open</text>
+<text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: {done / total:.1%} implemented</text>
+<text x="12" y="48" font-size="12" class="tm-head">{done} of {total} server checks implemented | {counts["verified"]} verified | {counts["open"]} open</text>
 <g transform="translate(0,60)">{body}</g>
-<text x="12" y="{height - 10}" font-size="11" class="tm-head">Tile area is check count. Blue is verified coverage. Client-only checks are listed on the board.</text>
+<text x="12" y="{height - 10}" font-size="11" class="tm-head">Tile area is check count. Blue is implementation coverage. Client-only checks are listed on the board.</text>
 </svg>
 '''
 
@@ -100,20 +100,20 @@ def evidence_url(ref):
 
 def render_board(areas, groups, counts):
     total = counts.total() - counts["client"]
-    done = counts["verified"]
+    done = counts["verified"] + counts["implemented"]
     parts = [
         START,
-        f'<p><strong>{done}/{total} server checks verified ({done / total:.1%}).</strong> '
-        f'{counts["implemented"]} implemented checks await verification, {counts["open"]} remain open, '
+        f'<p><strong>{done}/{total} server checks implemented ({done / total:.1%}).</strong> '
+        f'{counts["verified"]} are verified, {counts["implemented"]} await verification, {counts["open"]} remain open, '
         f'and {counts["client"]} client-only checks are tracked outside the server score.</p>',
-        '<p>Coverage = verified server checks ÷ all server checks. Area and capability scores use the same formula. '
+        '<p>Coverage = (implemented checks + verified checks) ÷ all server checks. Area and capability scores use the same formula. '
         'Every check has equal weight. Verified means the stated behavior has a recorded headless test, '
-        'service test, or original-client observation. A check counts only at that evidence level. '
-        'Implementation by itself earns zero verification credit.</p>',
+        'service test, or original-client observation. Implementation-only checks have a source reference. '
+        'Each check contributes at most one point.</p>',
     ]
     for (area, entries), group in zip(areas.items(), groups, strict=True):
         parts.extend([
-            f'<h2>{escape(area)} <small>{group["done"]}/{group["total"]} verified ({group["pct"]:.1f}%)</small></h2>',
+            f'<h2>{escape(area)} <small>{group["done"]}/{group["total"]} implemented ({group["pct"]:.1f}%)</small></h2>',
             f'<div class="table"><table aria-label="{escape(area)}">',
             '<thead><tr><th scope="col">Capability</th><th scope="col">Status</th>'
             '<th scope="col">Acceptance check</th><th scope="col">Evidence</th></tr></thead><tbody>',
