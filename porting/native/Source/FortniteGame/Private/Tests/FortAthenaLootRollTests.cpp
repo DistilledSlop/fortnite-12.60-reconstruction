@@ -7,6 +7,7 @@
 #include "UFortItemDefinition.h"
 #include "ABuildingContainer.h"
 #include "AFortGameModeAthena.h"
+#include "AFortInventory.h"
 #include "AFortPickupAthena.h"
 #include "AFortPlayerControllerAthena.h"
 #include "AFortPlayerPawnAthena.h"
@@ -14,6 +15,7 @@
 #include "Engine/World.h"
 #include "FortAthenaLootData.h"
 #include "FortAthenaLootSearch.h"
+#include "FortAthenaLootTransfer.h"
 #include "FortAthenaLootWorld.h"
 #include "Misc/ScopeExit.h"
 
@@ -103,6 +105,7 @@ bool FFortContainerSearchTransactionTest::RunTest(const FString&)
         !TestTrue(TEXT("Loot data is initialized"), FortAthenaLootData::IsReady(Mode))) return false;
 
     AFortPlayerControllerAthena* Controller = World->SpawnActor<AFortPlayerControllerAthena>();
+    AFortInventory* Inventory = World->SpawnActor<AFortInventory>();
     AFortPlayerPawnAthena* Pawn = World->SpawnActor<AFortPlayerPawnAthena>(FVector::ZeroVector, FRotator::ZeroRotator);
     ABuildingContainer* Chest = World->SpawnActor<ABuildingContainer>();
     ABuildingContainer* Ammo = World->SpawnActor<ABuildingContainer>();
@@ -114,11 +117,17 @@ bool FFortContainerSearchTransactionTest::RunTest(const FString&)
         if (IsValid(Chest)) Chest->Destroy();
         if (IsValid(Ammo)) Ammo->Destroy();
         if (IsValid(FloorMarker)) FloorMarker->Destroy();
-        if (IsValid(Controller)) Controller->Destroy();
+        if (IsValid(Controller))
+        {
+            Controller->WorldInventory = nullptr;
+            Controller->Destroy();
+        }
+        if (IsValid(Inventory)) Inventory->Destroy();
         if (IsValid(Pawn)) Pawn->Destroy();
     };
     if (!TestNotNull(TEXT("Controller"), Controller) || !TestNotNull(TEXT("Pawn"), Pawn) ||
-        !TestNotNull(TEXT("Chest"), Chest) || !TestNotNull(TEXT("Ammo container"), Ammo)) return false;
+        !TestNotNull(TEXT("Inventory"), Inventory) || !TestNotNull(TEXT("Chest"), Chest) || !TestNotNull(TEXT("Ammo container"), Ammo)) return false;
+    Controller->WorldInventory = Inventory;
     Controller->Possess(Pawn);
     if (!TestTrue(TEXT("Controller possesses pawn"), Pawn->GetController() == Controller)) return false;
     Chest->SearchLootTierGroup = FName(TEXT("Loot_AthenaTreasure"));
@@ -166,6 +175,28 @@ bool FFortContainerSearchTransactionTest::RunTest(const FString&)
     const int32 AfterAmmo = SpawnCount;
     TestFalse(TEXT("Searched ammo container cannot be searched again"), FortAthenaLootSearch::TrySearchContainer(Controller, Ammo));
     TestEqual(TEXT("Repeated ammo search creates no pickups"), SpawnCount, AfterAmmo);
+
+    if (Pickups.IsValidIndex(AfterChest) && IsValid(Pickups[AfterChest]))
+    {
+        AFortPickupAthena* AmmoPickup = Pickups[AfterChest];
+        const FFortItemEntry GroundItem = AmmoPickup->PrimaryPickupItemEntry;
+        TestTrue(TEXT("The player can collect the ammo crate pickup"),
+            FortAthenaLootTransfer::HandlePickup(Pawn, AmmoPickup, 0.25f, FVector::ZeroVector, false));
+
+        auto CountCollected = [Inventory, &GroundItem]()
+        {
+            int32 Count = 0;
+            for (const FFortItemEntry& Entry : Inventory->Inventory.ReplicatedEntries)
+                if (Entry.ItemDefinition == GroundItem.ItemDefinition)
+                    Count += Entry.Count;
+            return Count;
+        };
+        TestEqual(TEXT("Inventory receives the quantity rolled by the ammo crate"), CountCollected(), GroundItem.Count);
+        TestFalse(TEXT("The same pickup cannot be collected twice"),
+            FortAthenaLootTransfer::HandlePickup(Pawn, AmmoPickup, 0.25f, FVector::ZeroVector, false));
+        TestEqual(TEXT("Repeated collection keeps the same inventory quantity"), CountCollected(), GroundItem.Count);
+    }
+
     FloorMarker = World->SpawnActor<ABuildingContainer>();
     if (!TestNotNull(TEXT("Floor loot marker"), FloorMarker)) return false;
     FloorMarker->SearchLootTierGroup = Chest->SearchLootTierGroup;
