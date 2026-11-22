@@ -489,6 +489,31 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 				FortAthenaLootTransfer::HandlePickup(Pawn, ExtraPickup, 0.25f, FVector::ZeroVector, false));
 			TestEqual(TEXT("Rejected weapon stays on the ground"), ExtraPickup->PrimaryPickupItemEntry.Count, 1);
 			TestNull(TEXT("Rejected weapon does not enter inventory"), Inventory->NativeFindWorldItemByDefinition(ExtraWeapon, true));
+			if (LayoutItems.Num() == 7)
+			{
+				const FGuid FirstWeapon = LayoutItems[2];
+				const FGuid FifthWeapon = LayoutItems[6];
+				TestEqual(TEXT("Removing the fifth weapon opens its slot"),
+					FortAthenaInventory::RemoveItem(Controller, FifthWeapon, 1), 1);
+				TestTrue(TEXT("The first weapon moves to the empty fifth slot"),
+					FortAthenaLootTransfer::SwapLoadoutSlots(Controller, 1, FirstWeapon, 5, FGuid()));
+				const int32 BeforePickup = PendingActions.Num();
+				TestTrue(TEXT("The freed first slot accepts the previously rejected pickup"),
+					FortAthenaLootTransfer::HandlePickup(Pawn, ExtraPickup, 0.25f, FVector::ZeroVector, false));
+				UFortWorldItem* NewWeapon = Inventory->NativeFindWorldItemByDefinition(ExtraWeapon, true);
+				if (TestNotNull(TEXT("The newly picked-up weapon is in inventory"), NewWeapon))
+				{
+					const FGuid NewGuid = NewWeapon->NativeGetItemGuid();
+					LayoutItems.Add(NewGuid);
+					if (TestEqual(TEXT("The pickup publishes one quickbar addition"), PendingActions.Num(), BeforePickup + 1))
+					{
+						const FDelayedQuickBarAction& Addition = PendingActions[BeforePickup];
+						TestTrue(TEXT("The pickup is added to the freed first slot"),
+							Addition.Action == EFortDelayedQuickBarAction::Add && Addition.ItemGuid == NewGuid &&
+							Addition.QuickBarType == EFortQuickBars::Primary && Addition.QuickBarSlot == 1);
+					}
+				}
+			}
 			ExtraPickup->Destroy();
 		}
 	}
