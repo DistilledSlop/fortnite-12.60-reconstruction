@@ -1744,7 +1744,16 @@ void AFortPlayerControllerAthena::ServerTeleportViaCreativePortal_Implementation
 
 void AFortPlayerControllerAthena::ServerThankBusDriver_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: MEDIUM
+	AFortPlayerStateAthena* AthenaPlayerState = Cast<AFortPlayerStateAthena>(PlayerState);
+	if (!HasAuthority() || !AthenaPlayerState || !AthenaPlayerState->bInAircraft ||
+	    AthenaPlayerState->bThankedBusDriver)
+	{
+	    return;
+	}
+
+	AthenaPlayerState->bThankedBusDriver = true;
+	AthenaPlayerState->ForceNetUpdate();
 }
 
 bool AFortPlayerControllerAthena::ServerThankBusDriver_Validate()
