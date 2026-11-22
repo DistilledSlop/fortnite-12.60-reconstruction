@@ -63,6 +63,10 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 		{
 			Move->SetMovementMode(MOVE_Walking, 0);
 			Crawler->bIsDBNO = true;
+			Crawler->PawnStatHandle = FDataTableRowHandle();
+			TestEqual(TEXT("A downed pawn without a movement stats row can crawl"), Move->GetMaxSpeed(), 100.0f);
+			Move->MinAnalogWalkSpeed = 200.0f;
+			TestEqual(TEXT("Analog input cannot exceed the crawl speed"), Move->GetMinAnalogSpeed(), 100.0f);
 			Move->bWantsToCrouch = false;
 			Move->UpdateCharacterStateBeforeMovement(0.0f);
 			TestTrue(TEXT("Downed movement keeps crouch requested"), Move->bWantsToCrouch != 0);

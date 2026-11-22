@@ -6,7 +6,7 @@ const FVector Forward = GetRootComponent() ? GetRootComponent()->GetForwardVecto
 const float ForwardDot = FVector::DotProduct(Forward, Direction);
 const FFortPawnStats* Stats = NativeGetPawnStats141a07b70();
 const float SpeedScale = MovementSet ? MovementSet->SpeedMultiplier.GetCurrentValue() : 1.0f;
-if (bIsDBNO) return Stats->SpeedDBNO;
+if (bIsDBNO) return Stats->SpeedDBNO > 0.0f ? Stats->SpeedDBNO : 100.0f;
 if (bMovingEmote) return EmoteWalkSpeed;
 float Speed = 0.0f;
 float DirectionScale = 1.0f;

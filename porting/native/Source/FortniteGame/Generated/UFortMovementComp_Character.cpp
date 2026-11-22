@@ -2469,7 +2469,9 @@ float UFortMovementComp_Character::GetMinAnalogSpeed() const
 			}
 		}
 	}
-	return Super::GetMinAnalogSpeed();
+	const float MinSpeed = Super::GetMinAnalogSpeed();
+	const AFortPlayerPawn* Player = Cast<AFortPlayerPawn>(CharacterOwner);
+	return Player && Player->bIsDBNO ? FMath::Min(MinSpeed, GetMaxSpeed()) : MinSpeed;
 }
 
 float UFortMovementComp_Character::GetMaxBrakingDeceleration() const
