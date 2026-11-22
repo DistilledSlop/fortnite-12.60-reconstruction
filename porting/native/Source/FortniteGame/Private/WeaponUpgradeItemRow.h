@@ -6,6 +6,7 @@
 #include "WeaponUpgradeItemRow.generated.h"
 
 class ABuildingItemWeaponUpgradeActor;
+class AFortPlayerController;
 class UFortWeaponItemDefinition;
 class UFortWeaponRangedItemDefinition;
 
@@ -72,3 +73,9 @@ struct FWeaponUpgradeItemRow : public FTableRowBase
 	static const FWeaponUpgradeItemRow* FindRecipe(const UDataTable* Table,
 		const UFortWeaponItemDefinition* Weapon, EFortWeaponUpgradeDirection Direction);
 };
+
+namespace FortWeaponUpgrade
+{
+	bool TryUpgradeEquippedWeapon(ABuildingItemWeaponUpgradeActor& Bench, AFortPlayerController& Controller,
+		EFortWeaponUpgradeDirection Direction);
+}

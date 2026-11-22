@@ -10,6 +10,7 @@ class AFortPickupAthena;
 class AFortPlayerController;
 class AFortPlayerPawn;
 class UFortWorldItem;
+class UFortWorldItemDefinition;
 class UWorld;
 struct FFortItemEntry;
 
@@ -50,6 +51,9 @@ namespace FortAthenaLootTransfer
 	// Removes ItemGuid from server quickbar tracking and replicates Remove via DelayedQuickBarActions
 	// (0x1423a83a0 / 0x1423684c0).
 	void OnItemRemoved(AFortPlayerController* Controller, const FGuid& ItemGuid);
+
+	int32 FindReplacementPrimarySlot(AFortPlayerController* Controller, const FGuid& ItemGuid,
+		const UFortWorldItemDefinition* Replacement);
 
 	// Full pickup lifecycle handlers replacing the limited immediate-collection stand-in.
 	bool HandlePickup(AFortPlayerPawn* Pawn, AFortPickup* Pickup,

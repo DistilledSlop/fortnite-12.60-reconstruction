@@ -1,6 +1,7 @@
 #include "FortAthenaLootSearch.h"
 
 #include "ABuildingContainer.h"
+#include "ABuildingItemWeaponUpgradeActor.h"
 #include "AFortGameModeAthena.h"
 #include "AFortPawn.h"
 #include "AFortPickupAthena.h"
@@ -26,6 +27,7 @@
 #include "UFortItemDefinition.h"
 #include "UFortWeaponItemDefinition.h"
 #include "UFortWorldItemDefinition.h"
+#include "WeaponUpgradeItemRow.h"
 #include "UObject/ScriptMacros.h"
 
 namespace
@@ -205,6 +207,23 @@ namespace
 			{
 				return;
 			}
+		}
+
+		if (ABuildingItemWeaponUpgradeActor* Bench = Cast<ABuildingItemWeaponUpgradeActor>(ReceivingActor))
+		{
+			AFortPlayerController* Controller = Cast<AFortPlayerController>(InteractingController);
+			if (FortAthenaLootSearch::IsEnabled() && Controller && InteractingPawn && IsValid(Bench) && !Bench->bDestroyed &&
+				Bench->GetWorld() == InteractingPawn->GetWorld() &&
+				FVector::DistSquared(Bench->GetActorLocation(), InteractingPawn->GetActorLocation()) <= FMath::Square(400.0f) &&
+				(InteractType == TInteractionType::IT_Simple || InteractType == TInteractionType::IT_LongPress) &&
+				(InteractionBeingAttempted == EInteractionBeingAttempted::FirstInteraction ||
+				 InteractionBeingAttempted == EInteractionBeingAttempted::SecondInteraction))
+			{
+				const EFortWeaponUpgradeDirection Direction = InteractionBeingAttempted == EInteractionBeingAttempted::FirstInteraction
+					? EFortWeaponUpgradeDirection::Vertical : EFortWeaponUpgradeDirection::Horizontal;
+				FortWeaponUpgrade::TryUpgradeEquippedWeapon(*Bench, *Controller, Direction);
+			}
+			return;
 		}
 
 		ABuildingContainer* Container = Cast<ABuildingContainer>(ReceivingActor);

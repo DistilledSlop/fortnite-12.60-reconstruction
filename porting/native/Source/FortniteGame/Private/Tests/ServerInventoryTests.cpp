@@ -13,6 +13,7 @@
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "EFortDelayedQuickBarAction.h"
+#include "EInteractionBeingAttempted.h"
 #include "EFortItemType.h"
 #include "EFortQuickBars.h"
 #include "EWorldItemDropBehavior.h"
@@ -26,7 +27,9 @@
 #include "Misc/AutomationTest.h"
 #include "Misc/ScopeExit.h"
 #include "ServerDamageExecution.h"
+#include "TInteractionType.h"
 #include "UFortAbilitySystemComponent.h"
+#include "UFortControllerComponent_Interaction.h"
 #include "UFortHealthSet.h"
 #include "UFortGameplayAbility.h"
 #include "UFortKismetLibrary.h"
@@ -768,6 +771,95 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 			}));
 	}
 	TestEqual(TEXT("The replacement pickup is depleted"), SwapPickup->PrimaryPickupItemEntry.Count, 0);
+	if (!Replacement)
+	{
+		return false;
+	}
+
+	ABuildingItemWeaponUpgradeActor* Bench = World->SpawnActor<ABuildingItemWeaponUpgradeActor>();
+	if (!TestNotNull(TEXT("Weapon upgrade bench fixture"), Bench))
+	{
+		return false;
+	}
+	ON_SCOPE_EXIT { Bench->Destroy(); };
+	if (!Bench->GetRootComponent())
+	{
+		USceneComponent* Root = NewObject<USceneComponent>(Bench);
+		Bench->SetRootComponent(Root);
+		Root->RegisterComponent();
+	}
+	Bench->SetActorLocation(Pawn->GetActorLocation());
+	Bench->UpgradeTable = NewObject<UDataTable>(Bench);
+	Bench->UpgradeTable->RowStruct = FWeaponUpgradeItemRow::StaticStruct();
+	UFortWeaponRangedItemDefinition* UpgradedDefinition = NewObject<UFortWeaponRangedItemDefinition>(Inventory);
+	UpgradedDefinition->ItemType = EFortItemType::WeaponRanged;
+	UpgradedDefinition->MaxStackSize = FScalableFloat(1.0f);
+	UpgradedDefinition->WeaponActorClass = AFortWeapon::StaticClass();
+	FWeaponUpgradeItemRow Recipe;
+	Recipe.CurrentWeaponDef = WideWeapon;
+	Recipe.UpgradedWeaponDef = UpgradedDefinition;
+	Recipe.Direction = EFortWeaponUpgradeDirection::Vertical;
+	Recipe.WoodCost = EFortWeaponUpgradeCosts::WoodUncommon;
+	Recipe.MetalCost = EFortWeaponUpgradeCosts::MetalUncommon;
+	Recipe.BrickCost = EFortWeaponUpgradeCosts::BrickUncommon;
+	Bench->UpgradeTable->AddRow(TEXT("Upgrade"), Recipe);
+	UFortResourceItemDefinition* Wood = NewObject<UFortResourceItemDefinition>(Inventory);
+	Wood->MaxStackSize = FScalableFloat(4.0f);
+	Wood->bAllowMultipleStacks = true;
+	UFortResourceItemDefinition* Metal = NewObject<UFortResourceItemDefinition>(Inventory);
+	UFortResourceItemDefinition* Brick = NewObject<UFortResourceItemDefinition>(Inventory);
+	Metal->MaxStackSize = FScalableFloat(10.0f);
+	Brick->MaxStackSize = FScalableFloat(10.0f);
+	Bench->WoodItem = Wood;
+	Bench->MetalItem = Metal;
+	Bench->BrickItem = Brick;
+	Bench->WoodCostCurve = FScalableFloat(5.0f);
+	Bench->MetalCostCurve = FScalableFloat(2.0f);
+	Bench->BrickCostCurve = FScalableFloat(1.0f);
+	FortAthenaInventory::GiveItem(Controller, Wood, 4);
+	FortAthenaInventory::GiveItem(Controller, Wood, 3);
+	UFortWorldItem* MetalStack = FortAthenaInventory::GiveItem(Controller, Metal, 5);
+	if (!TestNotNull(TEXT("Bench metal stack"), MetalStack))
+	{
+		return false;
+	}
+
+	const FGuid UpgradeSource = Replacement->ItemEntry.ItemGuid;
+	HeldWeapon->ItemEntryGuid = UpgradeSource;
+	Pawn->CurrentWeapon = HeldWeapon;
+	UFortControllerComponent_Interaction* Interaction = NewObject<UFortControllerComponent_Interaction>(Controller);
+	Interaction->RegisterComponent();
+	Interaction->ServerAttemptInteract(Bench, nullptr, TInteractionType::IT_LongPress, nullptr,
+		EInteractionBeingAttempted::FirstInteraction, 1);
+	TestTrue(TEXT("An unaffordable upgrade preserves the equipped inventory item"),
+		Inventory->NativeFindItemByGuid(UpgradeSource) == Replacement);
+	TestEqual(TEXT("An unaffordable upgrade preserves metal"), MetalStack->ItemEntry.Count, 5);
+	TestNull(TEXT("An unaffordable upgrade creates no result"), Inventory->NativeFindWorldItemByDefinition(UpgradedDefinition, true));
+
+	FortAthenaInventory::GiveItem(Controller, Brick, 1);
+	Interaction->ServerAttemptInteract(Bench, nullptr, TInteractionType::IT_LongPress, nullptr,
+		EInteractionBeingAttempted::FirstInteraction, 2);
+	TestNull(TEXT("A paid upgrade removes the equipped inventory item"), Inventory->NativeFindItemByGuid(UpgradeSource));
+	TestEqual(TEXT("A paid upgrade spends exactly two metal"), MetalStack->ItemEntry.Count, 3);
+	const UFortWorldItem* WoodRemainder = Inventory->NativeFindWorldItemByDefinition(Wood, true);
+	if (TestNotNull(TEXT("Wood remaining after spending from two stacks"), WoodRemainder))
+	{
+		TestEqual(TEXT("A paid upgrade spends exactly five wood"), WoodRemainder->ItemEntry.Count, 2);
+	}
+	TestNull(TEXT("A paid upgrade spends the last brick"), Inventory->NativeFindWorldItemByDefinition(Brick, true));
+	const UFortWorldItem* Upgraded = Inventory->NativeFindWorldItemByDefinition(UpgradedDefinition, true);
+	if (TestNotNull(TEXT("The upgrade grants its result"), Upgraded))
+	{
+		TestTrue(TEXT("The server equips the upgrade result"),
+			Pawn->CurrentWeapon && Pawn->CurrentWeapon->GetInventoryGUID() == Upgraded->ItemEntry.ItemGuid);
+		TestTrue(TEXT("The upgrade result uses the equipped weapon's slot"),
+			Controller->DelayedQuickBarActions.Items.ContainsByPredicate([&](const FDelayedQuickBarAction& Action)
+			{
+				return Action.Action == EFortDelayedQuickBarAction::Add && Action.ItemGuid == Upgraded->ItemEntry.ItemGuid &&
+					Action.QuickBarType == EFortQuickBars::Primary && Action.QuickBarSlot == 2;
+			}));
+	}
+
 	return true;
 }
 

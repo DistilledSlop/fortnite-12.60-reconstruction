@@ -54,7 +54,7 @@ The [wiki](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki) 
 ## Dedicated-server progress
 
 <!-- server-progress:start -->
-**114 of 178 server checks implemented (64.0%).** 80 verified, 34 awaiting verification, 64 open.
+**115 of 178 server checks implemented (64.6%).** 80 verified, 35 awaiting verification, 63 open.
 <!-- server-progress:end -->
 
 [![Dedicated-server reconstruction progress treemap](docs/progress/server/server-implementation-treemap-v5.svg)](docs/progress/server/index.html)

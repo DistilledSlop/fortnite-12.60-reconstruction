@@ -1,5 +1,13 @@
 #include "WeaponUpgradeItemRow.h"
 #include "ABuildingItemWeaponUpgradeActor.h"
+#include "AFortInventory.h"
+#include "AFortPawn.h"
+#include "AFortPlayerController.h"
+#include "AFortWeapon.h"
+#include "FortAthenaInventoryFlow.h"
+#include "FortAthenaLootTransfer.h"
+#include "UFortResourceItemDefinition.h"
+#include "UFortWorldItem.h"
 #include "UFortWeaponRangedItemDefinition.h"
 
 namespace
@@ -87,4 +95,85 @@ UFortWeaponItemDefinition* ABuildingItemWeaponUpgradeActor::GetUpgradedItemFromT
 {
 	const FWeaponUpgradeItemRow* Recipe = FWeaponUpgradeItemRow::FindRecipe(UpgradeTable, ItemToUpgrade, UpgradeDirection);
 	return Recipe ? Recipe->UpgradedWeaponDef : nullptr;
+}
+
+bool FortWeaponUpgrade::TryUpgradeEquippedWeapon(ABuildingItemWeaponUpgradeActor& Bench, AFortPlayerController& Controller,
+	EFortWeaponUpgradeDirection Direction)
+{
+	AFortPawn* Pawn = Cast<AFortPawn>(Controller.GetPawn());
+	AFortInventory* Inventory = Controller.WorldInventory;
+	if (!FortAthenaInventory::IsEnabled() || !Bench.HasAuthority() || !Controller.HasAuthority() ||
+		!Pawn || Pawn->IsDead() || Pawn->bIsDying || Pawn->bIsDBNO || !Pawn->CurrentWeapon ||
+		!Inventory || !Inventory->HasAuthority())
+	{
+		return false;
+	}
+
+	const FGuid WeaponGuid = Pawn->CurrentWeapon->GetInventoryGUID();
+	const UFortWorldItem* Source = Inventory->NativeFindItemByGuid(WeaponGuid);
+	const UFortWeaponItemDefinition* Definition = Source ? Cast<UFortWeaponItemDefinition>(Source->ItemEntry.ItemDefinition) : nullptr;
+	const FWeaponUpgradeItemRow* Recipe = FWeaponUpgradeItemRow::FindRecipe(Bench.UpgradeTable, Definition, Direction);
+	FIntVector Costs;
+	if (!Recipe || Source->ItemEntry.Count != 1 || Recipe->UpgradedWeaponDef->IsStackable() ||
+		!Recipe->TryResolveMaterialCosts(Bench, Costs))
+	{
+		return false;
+	}
+
+	const UFortResourceItemDefinition* Materials[] = {
+		Cast<UFortResourceItemDefinition>(Bench.WoodItem), Cast<UFortResourceItemDefinition>(Bench.MetalItem),
+		Cast<UFortResourceItemDefinition>(Bench.BrickItem)
+	};
+	if (!Materials[0] || !Materials[1] || !Materials[2] ||
+		Materials[0] == Materials[1] || Materials[0] == Materials[2] || Materials[1] == Materials[2])
+	{
+		return false;
+	}
+
+	struct FDebit
+	{
+		FGuid Guid;
+		int32 Count;
+	};
+	TArray<FDebit> Debits;
+	for (int32 Index = 0; Index < UE_ARRAY_COUNT(Materials); ++Index)
+	{
+		int32 Remaining = Costs[Index];
+		for (const UFortWorldItem* Item : Inventory->Inventory.ItemInstances)
+		{
+			if (Remaining == 0)
+			{
+				break;
+			}
+			if (Item && Item->ItemEntry.ItemDefinition == Materials[Index] && Item->ItemEntry.Count > 0)
+			{
+				const int32 Count = FMath::Min(Remaining, Item->ItemEntry.Count);
+				Debits.Add({Item->ItemEntry.ItemGuid, Count});
+				Remaining -= Count;
+			}
+		}
+		if (Remaining != 0)
+		{
+			return false;
+		}
+	}
+
+	const int32 Slot = FortAthenaLootTransfer::FindReplacementPrimarySlot(&Controller, WeaponGuid, Recipe->UpgradedWeaponDef);
+	if (Slot == INDEX_NONE)
+	{
+		return false;
+	}
+
+	// Defer source ability teardown so its callbacks cannot observe or interrupt the batch.
+	for (const FDebit& Debit : Debits)
+	{
+		FortAthenaInventory::RemoveItem(&Controller, Debit.Guid, Debit.Count, true);
+	}
+	FortAthenaInventory::RemoveItem(&Controller, WeaponGuid, 1, true);
+	UFortWorldItem* Replacement = FortAthenaInventory::GiveItem(&Controller, Recipe->UpgradedWeaponDef, 1, 1, 0, nullptr, Slot, true);
+	if (Replacement)
+	{
+		FortAthenaInventory::ExecuteInventoryItem(&Controller, Replacement->NativeGetItemGuid());
+	}
+	return Replacement != nullptr;
 }
