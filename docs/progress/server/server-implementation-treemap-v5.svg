@@ -448,7 +448,7 @@ Verified: Confirm the cooked bandage ability charges one unit of its own invento
 Verified: Debit the last bandage at authoritative ability cost commit and reject repayment from the depleted stack
 Verified: Resolve the cooked bandage stack cap of 15 and debit successive charges from the same stack
 Verified: Reject item-use charges against an unrelated inventory stack
-Open: Verify item use and gain, spend or loss reconcile with inventory including a cooked consumable activation that heals and debits its stack
+Open: Verify item use and gain, spend or loss reconcile with inventory including a cooked consumable activation that heals and debits its stack when GAS has no cached controller
 Implemented: Load the cooked upgrade bench table and resolve recipes by weapon and direction
 Implemented: Expose cooked recipe lookup to the upgrade bench actor and its Blueprints
 Open: Upgrade a weapon at a bench and charge the correct materials</title>

@@ -933,11 +933,25 @@ namespace
 		return Total >= MAX_int32 ? MAX_int32 : static_cast<int32>(FMath::CeilToDouble(Total));
 	}
 
+	AFortPlayerController* ResolveSourceStackController(const FGameplayAbilityActorInfo& ActorInfo)
+	{
+		if (AFortPlayerController* Controller = Cast<AFortPlayerController>(ActorInfo.PlayerController.Get()))
+		{
+			return Controller;
+		}
+		if (const AFortPawn* Pawn = Cast<AFortPawn>(ActorInfo.AvatarActor.Get()))
+		{
+			return Cast<AFortPlayerController>(Pawn->GetController());
+		}
+		return Cast<AFortPlayerController>(ActorInfo.OwnerActor.Get());
+	}
+
 	bool CanDebitSourceStack(const AFortPlayerController* Controller, const AFortWeapon& Weapon, int32 Cost)
 	{
 		AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
 		const UFortWorldItem* Item = Inventory ? Inventory->NativeFindItemByGuid(Weapon.ItemEntryGuid) : nullptr;
-		return Item && Item->ItemEntry.ItemDefinition == Weapon.WeaponData && Item->ItemEntry.Count >= Cost;
+		return Inventory && Inventory->HasAuthority() && Item &&
+			Item->ItemEntry.ItemDefinition == Weapon.WeaponData && Item->ItemEntry.Count >= Cost;
 	}
 }
 
@@ -960,7 +974,7 @@ bool UFortGameplayAbility::CheckCost(FGameplayAbilitySpecHandle Handle, const FG
 		return true;
 	}
 
-	AFortPlayerController* Controller = Cast<AFortPlayerController>(ActorInfo->PlayerController.Get());
+	AFortPlayerController* Controller = ResolveSourceStackController(*ActorInfo);
 	return CanDebitSourceStack(Controller, *Weapon, Cost);
 }
 
@@ -977,7 +991,7 @@ void UFortGameplayAbility::ApplyCost(FGameplayAbilitySpecHandle Handle, const FG
 	const int32 Cost = GetSourceStackCost(*this, Weapon, GetAbilityLevel(Handle, ActorInfo));
 	if (Cost > 0)
 	{
-		AFortPlayerController* Controller = Cast<AFortPlayerController>(ActorInfo->PlayerController.Get());
+		AFortPlayerController* Controller = ResolveSourceStackController(*ActorInfo);
 		if (CanDebitSourceStack(Controller, *Weapon, Cost))
 		{
 			FortAthenaInventory::RemoveItem(Controller, Weapon->ItemEntryGuid, Cost, true);

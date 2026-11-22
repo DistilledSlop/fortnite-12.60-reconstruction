@@ -744,7 +744,9 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 	const FGameplayAbilityActivationInfo ActivationInfo(Controller);
 	TestTrue(TEXT("Commit spends one bandage"), AbilityCDO->CommitAbilityCost(Handle, &ActorInfo, ActivationInfo));
 	TestEqual(TEXT("One bandage remains"), Item->ItemEntry.Count, 1);
-	TestTrue(TEXT("Commit can spend the last bandage"), AbilityCDO->CommitAbilityCost(Handle, &ActorInfo, ActivationInfo));
+	ActorInfo.PlayerController.Reset();
+	TestTrue(TEXT("Commit can spend the last bandage through the ability owner"),
+		AbilityCDO->CommitAbilityCost(Handle, &ActorInfo, ActivationInfo));
 	TestNull(TEXT("Depleted source stack is removed"), Inventory->NativeFindItemByGuid(Guid));
 	TestFalse(TEXT("Commit fails after the source stack is gone"), AbilityCDO->CommitAbilityCost(Handle, &ActorInfo, ActivationInfo));
 
