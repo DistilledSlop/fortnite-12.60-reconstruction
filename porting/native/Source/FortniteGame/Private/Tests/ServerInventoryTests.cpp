@@ -155,6 +155,41 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	TestTrue(TEXT("Exhausted ground pickup is reserved for flight"), Pickup->bPickedUp);
 	TestFalse(TEXT("A claimed pickup cannot grant items again"),
 		FortAthenaLootTransfer::HandlePickup(Pawn, Pickup, 0.25f, FVector::ZeroVector, false));
+	AFortPlayerControllerAthena* Contender = World->SpawnActor<AFortPlayerControllerAthena>();
+	AFortInventory* ContenderInventory = World->SpawnActor<AFortInventory>();
+	AFortPlayerPawnAthena* ContenderPawn = World->SpawnActor<AFortPlayerPawnAthena>(
+		Pawn->GetActorLocation() + FVector(150, 0, 0), FRotator::ZeroRotator);
+	ON_SCOPE_EXIT
+	{
+		if (Contender)
+		{
+			Contender->WorldInventory = nullptr;
+			Contender->Destroy();
+		}
+		if (ContenderPawn)
+		{
+			ContenderPawn->Destroy();
+		}
+		if (ContenderInventory)
+		{
+			ContenderInventory->Destroy();
+		}
+	};
+	if (!TestNotNull(TEXT("Pickup contender controller"), Contender) ||
+		!TestNotNull(TEXT("Pickup contender inventory"), ContenderInventory) ||
+		!TestNotNull(TEXT("Pickup contender pawn"), ContenderPawn))
+	{
+		return false;
+	}
+	Contender->Possess(ContenderPawn);
+	Contender->WorldInventory = ContenderInventory;
+	if (!TestTrue(TEXT("Contender controls its pawn"), ContenderPawn->GetController() == Contender))
+	{
+		return false;
+	}
+	TestFalse(TEXT("A second player cannot collect a claimed pickup"),
+		FortAthenaLootTransfer::HandlePickup(ContenderPawn, Pickup, 0.25f, FVector::ZeroVector, false));
+	TestEqual(TEXT("The losing contender receives no replicated items"), ContenderInventory->Inventory.ReplicatedEntries.Num(), 0);
 	TestEqual(TEXT("Claim retry preserves the inventory total"), Second->ItemEntry.Count, 8);
 	if (TestEqual(TEXT("Exactly one replicated stack survives the transfers"), Inventory->Inventory.ReplicatedEntries.Num(), 1))
 	{
