@@ -24,7 +24,7 @@ td:nth-child(2) { white-space: nowrap; }
 <img src="server-implementation-treemap-v5.svg" width="1000" height="720" style="max-width:100%;height:auto" alt="Dedicated-server progress treemap">
 <p>The server can host a local match for the original 12.60 client, including a Battle Bus drop onto Apollo. The goal is a complete multiplayer match with authoritative gameplay, replication, and the backend services the original client uses.</p>
 <!-- checks:start -->
-<p><strong>85/151 server checks implemented (56.3%).</strong> 62 are verified, 23 await verification, 66 remain open, and 7 client-only checks are tracked outside the server score.</p>
+<p><strong>86/152 server checks implemented (56.6%).</strong> 62 are verified, 24 await verification, 66 remain open, and 7 client-only checks are tracked outside the server score.</p>
 <p>Coverage = (implemented checks + verified checks) ÷ all server checks. Area and capability scores use the same formula. Every check has equal weight. Verified means the stated behavior has a recorded headless test, service test, or original-client observation. Implementation-only checks have a source reference. Each check contributes at most one point.</p>
 <h2>Match flow and player states <small>39/47 implemented (83.0%)</small></h2>
 <div class="table"><table aria-label="Match flow and player states">
@@ -97,11 +97,12 @@ td:nth-child(2) { white-space: nowrap; }
 <tr><th scope="row">Aiming and camera</th><td>Client only</td><td>Check shoulder camera positioning, ADS zoom and first-person scope transitions</td><td>—</td></tr>
 <tr><th scope="row">Aiming and camera</th><td>Client only</td><td>Check recoil presentation and controller aim-assist response</td><td>—</td></tr>
 </tbody></table></div>
-<h2>Items, inventory and loot <small>6/16 implemented (37.5%)</small></h2>
+<h2>Items, inventory and loot <small>7/17 implemented (41.2%)</small></h2>
 <div class="table"><table aria-label="Items, inventory and loot">
 <thead><tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Acceptance check</th><th scope="col">Evidence</th></tr></thead><tbody>
 <tr><th scope="row">Inventory operations</th><td>Implemented</td><td>Handle quickbar selection, pickup, swap and drop on the server</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/01a191ca">Source</a></td></tr>
 <tr><th scope="row">Inventory operations</th><td>Implemented</td><td>Transfer successfully spawned elimination drops out of the victim inventory</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp">Source</a></td></tr>
+<tr><th scope="row">Inventory operations</th><td>Implemented</td><td>Cap new inventory stacks and report the quantity accepted from pickups</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/native/Source/FortniteGame/Private/FortAthenaInventoryFlow.cpp">Source</a></td></tr>
 <tr><th scope="row">Inventory operations</th><td>Open</td><td>Verify five loadout slots and separate pickaxe, trap and material storage</td><td>—</td></tr>
 <tr><th scope="row">Inventory operations</th><td>Open</td><td>Verify slot reorder, stack split and auto-pickup rules on two clients</td><td>—</td></tr>
 <tr><th scope="row">Inventory operations</th><td>Open</td><td>Verify item use and gain, spend or loss reconcile with inventory</td><td>—</td></tr>

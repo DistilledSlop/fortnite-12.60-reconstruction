@@ -461,12 +461,12 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 	}
 
 	ScanInventory(Inventory, nullptr, TEXT("before"));
+	const int32 MaxStack = FMath::Max(1, Definition->NativeGetMaxStackSize(nullptr));
 	// Stack onto an existing entry of the same definition.
 	if (Count > 0 && Definition->IsStackable())
 	{
 		if (UFortWorldItem* Existing = Inventory->NativeFindWorldItemByDefinition(Definition, true))
 		{
-			const int32 MaxStack = Definition->NativeGetMaxStackSize(nullptr);
 			const int32 Room = FMath::Max(0, MaxStack - Existing->ItemEntry.Count);
 			const int32 Added = FMath::Min(Room, Count);
 			if (Added > 0)
@@ -493,6 +493,8 @@ UFortWorldItem* FortAthenaInventory::GiveItem(AFortPlayerController* Controller,
 			}
 		}
 	}
+
+	Count = FMath::Min(Count, MaxStack);
 
 	// Value-initialise: the generated structs declare their pointer members without initialisers, so a plain
 	// `FFortItemEntry Entry;` leaves FFortGiftingInfo::HeroType as stack garbage and GC then fails with "Invalid object".
