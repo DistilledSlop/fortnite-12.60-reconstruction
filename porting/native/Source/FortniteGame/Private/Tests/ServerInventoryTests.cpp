@@ -3,7 +3,6 @@
 #include "ABuildingWall.h"
 #include "AbilitySystemComponent.h"
 #include "AFortInventory.h"
-#include "AFortGameModeAthena.h"
 #include "AFortPickupAthena.h"
 #include "AFortPlayerPawnAthena.h"
 #include "AFortWeapon.h"
@@ -16,7 +15,6 @@
 #include "EFortQuickBars.h"
 #include "EWorldItemDropBehavior.h"
 #include "FortAthenaBuildDamage.h"
-#include "FortAthenaHealth.h"
 #include "FortAthenaInventoryFlow.h"
 #include "FortAthenaLootSearch.h"
 #include "FortAthenaLootTransfer.h"
@@ -26,7 +24,9 @@
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
 #include "Misc/ScopeExit.h"
+#include "ServerDamageExecution.h"
 #include "UFortAbilitySystemComponent.h"
+#include "UFortHealthSet.h"
 #include "UFortGameplayAbility.h"
 #include "UFortKismetLibrary.h"
 #include "UFortResourceItemDefinition.h"
@@ -781,19 +781,22 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 		return true;
 	}
 	Pawn = World->SpawnActor<AFortPlayerPawnAthena>(FVector(0, 0, 16000), FRotator::ZeroRotator);
-	AFortGameModeAthena* GameMode = World->GetAuthGameMode<AFortGameModeAthena>();
-	if (!TestNotNull(TEXT("Consumable pawn"), Pawn) || !TestNotNull(TEXT("Athena game mode"), GameMode))
+	AFortPlayerStateAthena* PlayerState = Cast<AFortPlayerStateAthena>(Controller->PlayerState);
+	if (!TestNotNull(TEXT("Consumable pawn"), Pawn) || !TestNotNull(TEXT("Consumable player state"), PlayerState))
 	{
 		return false;
 	}
 	Controller->Possess(Pawn);
-	FortAthenaHealth::SetupPlayer(GameMode, Controller);
-	UFortAbilitySystemComponent* PawnASC = Pawn->AbilitySystemComponent;
-	if (!TestNotNull(TEXT("Consumable pawn ability system"), PawnASC) ||
-		!TestTrue(TEXT("Consumable pawn has initialized health"), Pawn->bHealthSynced))
-	{
-		return false;
-	}
+	UFortAbilitySystemComponent* PawnASC = NewObject<UFortAbilitySystemComponent>(PlayerState);
+	PlayerState->AbilitySystemComponent = PawnASC;
+	Pawn->AbilitySystemComponent = PawnASC;
+	PawnASC->bSuppressGameplayCues = true;
+	PawnASC->RegisterComponent();
+	PawnASC->InitAbilityActorInfo(PlayerState, Pawn);
+	Pawn->HealthSet = NewObject<UFortHealthSet>(Pawn);
+	PawnASC->AddAttributeSetSubobject(Pawn->HealthSet);
+	Pawn->bHealthSynced = true;
+	UServerRecoveryEffect::BindHealingAttribute(*PawnASC);
 	Pawn->SetMaxHealth(100.0f);
 	Pawn->SetHealth(50.0f);
 
