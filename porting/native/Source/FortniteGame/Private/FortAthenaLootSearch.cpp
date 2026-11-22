@@ -631,16 +631,18 @@ bool FortAthenaLootSearch::CanDamageContainer(const ABuildingContainer* Containe
 		!Container->IsHidden() && Container->ActorHasTag(BreakableLootTag);
 }
 
-void FortAthenaLootSearch::ReleaseLootBeforeDestruction(ABuildingContainer* Container)
+bool FortAthenaLootSearch::TryReleaseLootBeforeDestruction(ABuildingContainer* Container)
 {
-	if (!CanDamageContainer(Container) || Container->bAlreadySearched)
-		return;
+	if (!CanDamageContainer(Container))
+		return false;
+	if (Container->bAlreadySearched)
+		return true;
+	if (!TryReleaseContainerLoot(Container))
+		return false;
 
-	if (TryReleaseContainerLoot(Container))
-	{
-		// The building death path handles presentation and removal.
-		Container->bAlreadySearched = true;
-	}
+	// The building death path handles presentation and removal.
+	Container->bAlreadySearched = true;
+	return true;
 }
 
 bool FortAthenaLootSearch::TrySearchContainer(AFortPlayerController* Controller, ABuildingContainer* Container)

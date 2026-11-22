@@ -54,6 +54,6 @@ namespace FortAthenaLootSearch
 	// Enables damage for an active, authored breakable container.
 	bool CanDamageContainer(const ABuildingContainer* Container);
 
-	// Releases unopened loot for an authored BreakableLootContainer on a lethal hit.
-	void ReleaseLootBeforeDestruction(ABuildingContainer* Container);
+	// Returns whether an authored breakable container can finish taking a lethal hit.
+	bool TryReleaseLootBeforeDestruction(ABuildingContainer* Container);
 }

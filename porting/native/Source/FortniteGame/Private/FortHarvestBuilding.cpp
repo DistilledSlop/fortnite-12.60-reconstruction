@@ -711,11 +711,9 @@ bool ApplyBuildingDamage(
 		return false;
 	}
 	// Only active containers explicitly authored as breakable accept building damage.
-	if (const ABuildingContainer* Container = Cast<ABuildingContainer>(Building))
-	{
-		if (!Building->bPlayerPlaced && !FortAthenaLootSearch::CanDamageContainer(Container))
-			return false;
-	}
+	ABuildingContainer* LootContainer = Cast<ABuildingContainer>(Building);
+	if (LootContainer && !Building->bPlayerPlaced && !FortAthenaLootSearch::CanDamageContainer(LootContainer))
+		return false;
 	if (Building->bPlayerPlaced)
 	{
 		return FortAthenaBuildDamage::OnPlayerBuiltPieceDamaged(Building, Damage, Instigator, Causer, Hit, bWeakSpot);
@@ -776,6 +774,8 @@ bool ApplyBuildingDamage(
 	const float ClampedDamage = FMath::Min(EffectiveDamage, OldHealth);
 	const float NewHealth = FMath::Max(0.0f, OldHealth - ClampedDamage);
 	const bool bKilledThisHit = (NewHealth <= 0.0f);
+	if (bKilledThisHit && LootContainer && !FortAthenaLootSearch::TryReleaseLootBeforeDestruction(LootContainer))
+		return false;
 
 	// 1. Update BuildingAttributeSet / ASC health (original 0x141bc4a90 / 0x141b990d0).
 	ForceBuildingHealth(Building, NewHealth);
@@ -855,13 +855,6 @@ bool ApplyBuildingDamage(
 	}
 
 	// 5. Destruction / death sequence (original 0x141c0c330 -> 0x141c00e60 -> 0x141bac110 -> 0x141c0be60 -> 0x141babc20).
-	if (ABuildingContainer* Container = Cast<ABuildingContainer>(Building))
-	{
-		FortAthenaLootSearch::ReleaseLootBeforeDestruction(Container);
-		if (!IsValid(Building) || Building->bDestroyed)
-			return true;
-	}
-
 	Building->bDestroyed = 1;
 	Building->OnDeathServer(ClampedDamage, DamageTags, Momentum, MutableHit, Instigator, Causer, EffectContext);
 	Building->OnDied.Broadcast(Building, ClampedDamage, Instigator, Causer, HitPoint, Hit.Component.Get(), Hit.BoneName, Momentum);
