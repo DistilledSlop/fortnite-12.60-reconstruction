@@ -630,6 +630,10 @@ void FortAthenaLootWorld::OnLevelAdded(AFortGameModeAthena* GameMode, ULevel* Le
 		return;
 	}
 
-	S.ScannedLevels.Add(TWeakObjectPtr<ULevel>(Level));
+	const TWeakObjectPtr<ULevel> WeakLevel(Level);
+	if (S.ScannedLevels.Contains(WeakLevel))
+		return;
+
+	S.ScannedLevels.Add(WeakLevel);
 	PopulateLoadedMarkers(GameMode, Level);
 }
