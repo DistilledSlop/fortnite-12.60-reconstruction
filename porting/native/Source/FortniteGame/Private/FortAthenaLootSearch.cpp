@@ -10,6 +10,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "EInteractionBeingAttempted.h"
 #include "Engine/DataTable.h"
+#include "Engine/Level.h"
 #include "Engine/World.h"
 #include "FFortBaseWeaponStats.h"
 #include "FFortLootLevelData.h"
@@ -38,6 +39,12 @@ namespace
 	constexpr float DefaultInteractValidationDistance = 500.0f;
 	TSet<ABuildingContainer*> ContainersBeingSearched;
 
+	bool IsContainerVisible(const ABuildingContainer* Container)
+	{
+		const ULevel* Level = Container->GetLevel();
+		return Level && Level->bIsVisible && !Container->IsHidden();
+	}
+
 	bool IsInteractableContainer(const ABuildingContainer* Container, FString& OutReason)
 	{
 		if (!IsValid(Container) || Container->IsPendingKill())
@@ -54,6 +61,11 @@ namespace
 		if (Container->bStartAlreadySearched_Athena)
 		{
 			OutReason = TEXT("world_loot_marker");
+			return false;
+		}
+		if (!IsContainerVisible(Container))
+		{
+			OutReason = TEXT("hidden_container");
 			return false;
 		}
 		// bAllowInteract is a native constructor default (BuildingSMActor, OriginalDefaults.json) that is 0 on the placed
@@ -636,7 +648,7 @@ bool FortAthenaLootSearch::CanDamageContainer(const ABuildingContainer* Containe
 	static const FName BreakableLootTag(TEXT("BreakableLootContainer"));
 	return IsEnabled() && IsValid(Container) && Container->HasAuthority() &&
 		!Container->bDestroyed && !Container->bStartAlreadySearched_Athena &&
-		!Container->IsHidden() && Container->ActorHasTag(BreakableLootTag);
+		IsContainerVisible(Container) && Container->ActorHasTag(BreakableLootTag);
 }
 
 bool FortAthenaLootSearch::TryReleaseLootBeforeDestruction(ABuildingContainer* Container)
