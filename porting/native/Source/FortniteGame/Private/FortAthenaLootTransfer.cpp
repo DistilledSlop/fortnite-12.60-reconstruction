@@ -458,13 +458,14 @@ namespace
 		OutSwapGuid.Invalidate();
 		OutSwapSlot = INDEX_NONE;
 
-		if (SwapGuidOpt && SwapGuidOpt->IsValid())
+		if (SwapGuidOpt)
 		{
-			if (IsGuidDroppablePrimary(PC, State, *SwapGuidOpt, OutSwapSlot))
+			if (!IsGuidDroppablePrimary(PC, State, *SwapGuidOpt, OutSwapSlot))
 			{
-				OutSwapGuid = *SwapGuidOpt;
-				return true;
+				return false;
 			}
+			OutSwapGuid = *SwapGuidOpt;
+			return true;
 		}
 
 		if (Pawn && Pawn->CurrentWeapon)

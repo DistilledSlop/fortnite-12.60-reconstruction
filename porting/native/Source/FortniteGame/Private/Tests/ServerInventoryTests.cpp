@@ -592,7 +592,37 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	Slots[2].AcceptedItemTypes.Add(EFortItemType::WeaponRanged);
 	TestTrue(TEXT("The same pickup succeeds once contiguous slots accept it"),
 		FortAthenaLootTransfer::HandlePickup(Pawn, WidePickup, 0.25f, FVector::ZeroVector, false));
-	TestNotNull(TEXT("Accepted pickup grants the two-slot weapon"), Inventory->NativeFindWorldItemByDefinition(WideWeapon, true));
+	UFortWorldItem* WideItem = Inventory->NativeFindWorldItemByDefinition(WideWeapon, true);
+	AFortWeapon* HeldWeapon = World->SpawnActor<AFortWeapon>();
+	ON_SCOPE_EXIT
+	{
+		if (HeldWeapon)
+		{
+			Pawn->CurrentWeapon = nullptr;
+			HeldWeapon->Destroy();
+		}
+	};
+	if (!TestNotNull(TEXT("Accepted pickup grants the two-slot weapon"), WideItem) ||
+		!TestNotNull(TEXT("Held weapon for swap fallback"), HeldWeapon))
+	{
+		return false;
+	}
+	WideWeapon->bCanBeDropped = true;
+	WideWeapon->DropBehavior = EWorldItemDropBehavior::DestroyOnDrop;
+	const FGuid HeldGuid = WideItem->NativeGetItemGuid();
+	HeldWeapon->ItemEntryGuid = HeldGuid;
+	Pawn->CurrentWeapon = HeldWeapon;
+	AFortPickupAthena* SwapPickup = FortAthenaLootTransfer::SpawnTossedPickupFromEntry(
+		World, WideEntry, Pawn->GetActorLocation(), FVector::ForwardVector, nullptr, 0, EFortPickupSpawnSource::Unset);
+	if (!TestNotNull(TEXT("Replacement pickup"), SwapPickup))
+	{
+		return false;
+	}
+	ON_SCOPE_EXIT { SwapPickup->Destroy(); };
+	TestFalse(TEXT("A stale swap GUID cannot substitute the held weapon"),
+		FortAthenaLootTransfer::HandlePickupWithSwap(Pawn, SwapPickup, FGuid::NewGuid(), 0.25f, FVector::ZeroVector, false, true));
+	TestTrue(TEXT("Rejected swap preserves the held stack"), Inventory->NativeFindItemByGuid(HeldGuid) == WideItem);
+	TestEqual(TEXT("Rejected swap preserves the world pickup"), SwapPickup->PrimaryPickupItemEntry.Count, 1);
 	return true;
 }
 
