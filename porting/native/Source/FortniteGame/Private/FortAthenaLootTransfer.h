@@ -55,6 +55,10 @@ namespace FortAthenaLootTransfer
 	int32 FindReplacementPrimarySlot(AFortPlayerController* Controller, const FGuid& ItemGuid,
 		const UFortWorldItemDefinition* Replacement);
 
+	void BlockAutoPickup(AFortPickup* Pickup);
+	bool TryAutoPickup(AFortPlayerPawn* Pawn, AFortPickup* Pickup);
+	void TickAutoPickup(UWorld* World);
+
 	// Full pickup lifecycle handlers replacing the limited immediate-collection stand-in.
 	bool HandlePickup(AFortPlayerPawn* Pawn, AFortPickup* Pickup,
 		float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound);

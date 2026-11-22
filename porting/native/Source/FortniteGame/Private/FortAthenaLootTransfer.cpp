@@ -11,11 +11,13 @@
 #include "AFortPlayerPawnAthena.h"
 #include "AFortWeapon.h"
 #include "Components/SceneComponent.h"
+#include "CollisionQueryParams.h"
 #include "EFortDelayedQuickBarAction.h"
 #include "EFortItemType.h"
 #include "EFortPickupSourceTypeFlag.h"
 #include "EFortPickupTossState.h"
 #include "Engine/World.h"
+#include "EngineUtils.h"
 #include "EWorldItemDropBehavior.h"
 #include "FDelayedQuickBarAction.h"
 #include "FFortItemEntry.h"
@@ -39,6 +41,8 @@ namespace
 	constexpr float MaxPickupRangeSq = 600.0f * 600.0f; // stand-in: range guard replacing bDoServerHandlePickupTrace
 
 	TSet<AFortPickup*> PickupsBeingGranted;
+	TSet<TWeakObjectPtr<AFortPickup>> BlockedAutoPickups;
+	constexpr float AutoPickupRangeSq = 125.0f * 125.0f;
 
 	struct FSlotLocation
 	{
@@ -848,7 +852,7 @@ namespace
 	}
 
 	bool HandlePickupInternal(AFortPlayerPawn* Pawn, AFortPickup* Pickup, const FGuid* SwapGuidOpt,
-		float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound, bool bExplicitSwapRpc)
+		float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound, bool bExplicitSwapRpc, bool bAutomatic = false)
 	{
 		if (!FortAthenaLootTransfer::IsEnabled() || !Pawn || !Pawn->HasAuthority() || Pawn->IsDead() || Pawn->bIsDBNO)
 		{
@@ -900,7 +904,7 @@ namespace
 					continue;
 				}
 				bool bDidSwap = false;
-				const bool bCanSwapHere = !bSwapUsed && (bExplicitSwapRpc || i == 0);
+				const bool bCanSwapHere = !bAutomatic && !bSwapUsed && (bExplicitSwapRpc || i == 0);
 				const int32 Accepted = GrantEntryToPlayer(Pawn, PC, Entry, SwapGuidOpt, bCanSwapHere, bDidSwap);
 				if (bDidSwap)
 				{
@@ -951,7 +955,7 @@ namespace
 
 		bool bDidSwap = false;
 		const int32 Accepted = GrantEntryToPlayer(
-			Pawn, PC, Pickup->PrimaryPickupItemEntry, SwapGuidOpt, true, bDidSwap);
+			Pawn, PC, Pickup->PrimaryPickupItemEntry, SwapGuidOpt, !bAutomatic, bDidSwap);
 		if (Accepted <= 0)
 		{
 			return false;
@@ -1255,6 +1259,98 @@ void FortAthenaLootTransfer::OnItemRemoved(AFortPlayerController* Controller, co
 
 	UE_LOG(LogTemp, Display, TEXT("LootTransfer: Removed quickbar slot pc=%s guid=%s bar=%d slot=%d"),
 		*Controller->GetName(), *ItemGuid.ToString(), static_cast<int32>(Loc.Bar), Loc.Slot);
+}
+
+void FortAthenaLootTransfer::BlockAutoPickup(AFortPickup* Pickup)
+{
+	if (Pickup && Pickup->HasAuthority())
+	{
+		BlockedAutoPickups.Add(Pickup);
+	}
+}
+
+bool FortAthenaLootTransfer::TryAutoPickup(AFortPlayerPawn* Pawn, AFortPickup* Pickup)
+{
+	if (!IsValid(Pawn) || !IsValid(Pickup) || Pickup->GetWorld() != Pawn->GetWorld() || Pickup->bPickedUp ||
+		Pickup->PickupLocationData.TossState == EFortPickupTossState::InProgress ||
+		Pickup->PawnWhoDroppedPickup == Pawn || BlockedAutoPickups.Contains(Pickup) ||
+		Pickup->MultiItemPickupEntries.Num() > 0 ||
+		FVector::DistSquared(Pawn->GetActorLocation(), Pickup->GetActorLocation()) > AutoPickupRangeSq)
+	{
+		return false;
+	}
+
+	const UFortItemDefinition* Definition = Pickup->PrimaryPickupItemEntry.ItemDefinition;
+	if (!Definition)
+	{
+		return false;
+	}
+	const EFortItemType Type = GetQuickBarItemType(Definition);
+	if (Type != EFortItemType::Ammo && Type != EFortItemType::WorldResource && !Definition->bForceAutoPickup)
+	{
+		return false;
+	}
+	FCollisionQueryParams TraceParams(SCENE_QUERY_STAT(AutoPickup), false, Pawn);
+	TraceParams.AddIgnoredActor(Pickup);
+	if (Pawn->GetWorld()->LineTraceTestByChannel(Pawn->GetActorLocation(), Pickup->GetActorLocation(),
+		ECC_Visibility, TraceParams))
+	{
+		return false;
+	}
+	return HandlePickupInternal(Pawn, Pickup, nullptr, 0.0f, FVector::ZeroVector, true, false, true);
+}
+
+void FortAthenaLootTransfer::TickAutoPickup(UWorld* World)
+{
+	if (!World || !IsEnabled())
+	{
+		return;
+	}
+	static TWeakObjectPtr<UWorld> LastWorld;
+	static float NextSweepTime = 0.0f;
+	const float Now = World->GetTimeSeconds();
+	if (LastWorld.Get() != World)
+	{
+		LastWorld = World;
+		NextSweepTime = Now;
+	}
+	if (Now < NextSweepTime)
+	{
+		return;
+	}
+	NextSweepTime = Now + 0.2f;
+	for (auto It = BlockedAutoPickups.CreateIterator(); It; ++It)
+	{
+		if (!(*It).IsValid())
+		{
+			It.RemoveCurrent();
+		}
+	}
+
+	TArray<AFortPlayerPawn*> Players;
+	for (auto It = World->GetPlayerControllerIterator(); It; ++It)
+	{
+		APlayerController* Controller = It->Get();
+		if (AFortPlayerPawn* Pawn = Controller ? Cast<AFortPlayerPawn>(Controller->GetPawn()) : nullptr)
+		{
+			if (Pawn->HasAuthority() && !Pawn->IsDead() && !Pawn->bIsDBNO)
+			{
+				Players.Add(Pawn);
+			}
+		}
+	}
+	if (Players.Num() == 0)
+	{
+		return;
+	}
+
+	for (TActorIterator<AFortPickup> It(World); It; ++It)
+	{
+		for (AFortPlayerPawn* Pawn : Players)
+		{
+			TryAutoPickup(Pawn, *It);
+		}
+	}
 }
 
 bool FortAthenaLootTransfer::HandlePickup(AFortPlayerPawn* Pawn, AFortPickup* Pickup,

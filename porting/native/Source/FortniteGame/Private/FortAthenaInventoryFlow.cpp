@@ -763,6 +763,7 @@ void FortAthenaInventory::Tick(UWorld* World)
 {
 	if (!IsEnabled() || !World)
 		return;
+	FortAthenaLootTransfer::TickAutoPickup(World);
 	FortAthenaCombatEquip::Prune();
 	// Resolution failures retry at most once per second per current weapon.
 	static TMap<TWeakObjectPtr<AFortWeapon>, double> NextAudit;
