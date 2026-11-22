@@ -515,6 +515,9 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	FortAthenaHealth::ApplyDamage(FirstPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
 	TestTrue(TEXT("Lethal damage knocks a player with a standing teammate"), FirstPawn->bIsDBNO && !FirstPawn->bIsDying);
 	TestEqual(TEXT("A knock fills the downed health pool"), FirstPawn->GetHealth(), 100.0f);
+	SecondPawn->bAllowDBNOCarry = true;
+	TestTrue(TEXT("A standing teammate can carry the knocked player"),
+		FortAthenaHealth::TryCarryDownedPlayer(Second, FirstPawn));
 
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakFirstPawn(FirstPawn);
 	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakSecondPawn(SecondPawn);
@@ -527,8 +530,15 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 		{
 			TestTrue(TEXT("Bleed ticks drain downed health while a teammate stands"),
 				DownedPawn->bIsDBNO && !DownedPawn->bIsDying && DownedPawn->GetHealth() < 100.0f);
+			TestTrue(TEXT("Bleed continues while the downed player is carried"),
+				DownedPawn->GetAttachParentActor() == StandingPawn && DownedPawn->bIsBeingDBNOCarried);
 			FortAthenaHealth::ApplyDamage(StandingPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
 			TestTrue(TEXT("The last standing member is eliminated without a knock"), StandingPawn->bIsDying && !StandingPawn->bIsDBNO);
+			TestTrue(TEXT("Eliminating the carrier releases the downed player and restores falling"),
+				!StandingPawn->DBNOHoistee && !StandingPawn->bIsDBNOCarrying &&
+				!DownedPawn->DBNOHoisterData.DBNOHoister && !DownedPawn->bIsBeingDBNOCarried &&
+				DownedPawn->DBNOHoisterData.DBNOCarryEvent == EFortDBNOCarryEvent::Dropped &&
+				!DownedPawn->GetAttachParentActor() && DownedPawn->GetCharacterMovement()->IsFalling());
 		}
 	}), 1.5f));
 
