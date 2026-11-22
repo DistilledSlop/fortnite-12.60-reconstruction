@@ -572,9 +572,8 @@ int32 FortAthenaInventory::CombineStacks(AFortPlayerController* Controller, cons
 		Replicated->Count = Target->ItemEntry.Count;
 		Inventory->Inventory.MarkItemDirty(*Replicated);
 	}
-	RemoveItem(Controller, SourceGuid, Moved);
-	Inventory->NativeNotifyInventoryChanged();
 	UE_LOG(LogTemp, Display, TEXT("Inventory: combined %d x %s into %s (now %d)"), Moved, *Target->ItemEntry.ItemDefinition->GetName(), *TargetGuid.ToString(), Target->ItemEntry.Count);
+	RemoveItem(Controller, SourceGuid, Moved);
 	return Moved;
 }
 

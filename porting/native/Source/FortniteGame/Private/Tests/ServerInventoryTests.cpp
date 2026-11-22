@@ -105,6 +105,30 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 		TestTrue(TEXT("Replicated stack retains the surviving GUID"), Entry.ItemGuid == SecondGuid);
 		TestEqual(TEXT("Replicated quantity matches the surviving stack"), Entry.Count, 7);
 	}
+	UFortWorldItem* MergeSource = FortAthenaInventory::GiveItem(Controller, Definition, 7);
+	if (!TestNotNull(TEXT("Overflow creates a source stack for merging"), MergeSource) ||
+		!TestTrue(TEXT("Merge source is a separate stack"), MergeSource != Second))
+	{
+		return false;
+	}
+	const FGuid MergeSourceGuid = MergeSource->NativeGetItemGuid();
+	TestEqual(TEXT("Grant fills the original stack before creating the merge source"), Second->ItemEntry.Count, 10);
+	TestEqual(TEXT("Overflow source keeps four units"), MergeSource->ItemEntry.Count, 4);
+	TestEqual(TEXT("A full destination rejects a merge"), FortAthenaInventory::CombineStacks(Controller, SecondGuid, MergeSourceGuid), 0);
+	TestEqual(TEXT("Free two units of stack capacity"), FortAthenaInventory::RemoveItem(Controller, SecondGuid, 2), 2);
+	TestEqual(TEXT("Merge moves only the available capacity"), FortAthenaInventory::CombineStacks(Controller, SecondGuid, MergeSourceGuid), 2);
+	TestEqual(TEXT("Merge fills the destination"), Second->ItemEntry.Count, 10);
+	TestEqual(TEXT("Merge preserves the excess in the source"), MergeSource->ItemEntry.Count, 2);
+	TestEqual(TEXT("Free room for the remaining source"), FortAthenaInventory::RemoveItem(Controller, SecondGuid, 5), 5);
+	TestEqual(TEXT("Merge moves the remaining source"), FortAthenaInventory::CombineStacks(Controller, SecondGuid, MergeSourceGuid), 2);
+	TestNull(TEXT("Merge removes the drained source GUID"), Inventory->NativeFindItemByGuid(MergeSourceGuid));
+	if (TestEqual(TEXT("Only the destination remains replicated after the merge"), Inventory->Inventory.ReplicatedEntries.Num(), 1))
+	{
+		const FFortItemEntry& Entry = Inventory->Inventory.ReplicatedEntries[0];
+		TestTrue(TEXT("Merged entry retains its destination GUID"), Entry.ItemGuid == SecondGuid);
+		TestEqual(TEXT("Replicated destination has the merged count"), Entry.Count, 7);
+	}
+
 	AFortPlayerPawnAthena* Pawn = World->SpawnActor<AFortPlayerPawnAthena>(FVector(0, 0, 16000), FRotator::ZeroRotator);
 	if (!TestNotNull(TEXT("Inventory transfer pawn"), Pawn))
 	{
