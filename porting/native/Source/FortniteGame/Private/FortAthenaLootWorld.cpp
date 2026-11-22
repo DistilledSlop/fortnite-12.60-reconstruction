@@ -329,10 +329,12 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 				if (FortAthenaLootSearch::ResolveContainerLootTierGroup(Container) == NAME_None)
 					return;
 
+				const bool bWantsCrate = Container->ActorHasTag(DeliveryCrateTag);
+				const bool bHideDeliveryMarker = bWantsCrate || !Container->bStartAlreadySearched_Athena;
 				Container->bStartAlreadySearched_Athena = true;
 				FScheduledDelivery Delivery;
 				Delivery.Delay = Delay;
-				Delivery.bSearchableCrate = Container->ActorHasTag(DeliveryCrateTag);
+				Delivery.bSearchableCrate = bWantsCrate;
 				if (Delivery.bSearchableCrate)
 				{
 					const USceneComponent* Root = Container->GetRootComponent();
@@ -348,10 +350,11 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 					}
 				}
 				S.ScheduledDeliveries.Add(Marker, Delivery);
-				if (Delivery.bSearchableCrate)
+				if (bHideDeliveryMarker)
 				{
 					Container->SetReplicates(true);
-					Container->SetReplicateMovement(true);
+					if (Delivery.bSearchableCrate)
+						Container->SetReplicateMovement(true);
 					Container->SetActorEnableCollision(false);
 					Container->SetActorHiddenInGame(true);
 					Container->ForceNetUpdate();
