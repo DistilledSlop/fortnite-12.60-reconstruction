@@ -4,7 +4,7 @@
 #include "WeaponHudKeyActionVisibility.generated.h"
 
 // Serialized in cooked utility-item Blueprint locals. Script struct block 0x147beecb0.
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FWeaponHudKeyActionVisibility
 {
 	GENERATED_BODY()
