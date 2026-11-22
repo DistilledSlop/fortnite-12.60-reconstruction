@@ -24,8 +24,6 @@ namespace
 		return FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient"));
 	}
 
-	// stand-in: the stripped server body does not reveal the building cost.
-	constexpr int32 BuildCost = 10;
 	// Largest builder-to-piece distance accepted (preview reach is a few grid cells; generous to absorb client/server position lag).
 	constexpr float MaxBuildReach = 2500.0f;
 	// Two pieces of one type whose centres are closer than this occupy the same grid slot (grid cells are 512 wide).
@@ -57,10 +55,11 @@ namespace
 		}
 		const ABuildingSMActor* Default = Cast<ABuildingSMActor>(Class->GetDefaultObject());
 		if (!Default) return;
-		const bool bInfinite = FParse::Param(FCommandLine::Get(), TEXT("FortniteInfiniteBuildMaterials"));
 		const EFortResourceType::Type ResourceType = Default->ResourceType.GetValue();
+		const bool bFreeBuild = Controller->bCraftFree || FParse::Param(FCommandLine::Get(), TEXT("FortniteInfiniteBuildMaterials"));
+		const int32 BuildCost = bFreeBuild ? 0 : FortAthenaBuildDamage::ComputePlacementCost(ResourceType);
 		const int32 AvailableMaterials = FortAthenaBuildDamage::CountBuildingMaterials(Controller, ResourceType);
-		if (!bInfinite && AvailableMaterials < BuildCost)
+		if (AvailableMaterials < BuildCost)
 		{
 			UE_LOG(LogTemp, Display, TEXT("Building: refused %s: %d resource type %d available, %d required"),
 				*Class->GetName(), AvailableMaterials, int32(Default->ResourceType.GetValue()), BuildCost);
@@ -97,7 +96,7 @@ namespace
 			UE_LOG(LogTemp, Warning, TEXT("Building: spawn of %s failed at %s"), *Class->GetName(), *FVector(Data.BuildLoc).ToString());
 			return;
 		}
-		if (!bInfinite && !FortAthenaBuildDamage::SpendBuildingMaterials(Controller, ResourceType, BuildCost))
+		if (!FortAthenaBuildDamage::SpendBuildingMaterials(Controller, ResourceType, BuildCost))
 		{
 			Piece->Destroy();
 			UE_LOG(LogTemp, Display, TEXT("Building: discarded %s because material payment failed"), *Class->GetName());

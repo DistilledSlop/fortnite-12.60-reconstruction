@@ -360,6 +360,11 @@ namespace
 	}
 } // namespace
 
+int32 ComputePlacementCost(EFortResourceType::Type ResourceType)
+{
+	return FMath::CeilToInt(BuildDamageGetBuildingCost(ResourceType, 0));
+}
+
 int32 CountBuildingMaterials(const AFortPlayerController* Controller, EFortResourceType::Type ResourceType)
 {
 	const AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
