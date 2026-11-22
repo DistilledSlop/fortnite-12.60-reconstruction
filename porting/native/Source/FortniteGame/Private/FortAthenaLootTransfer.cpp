@@ -577,7 +577,9 @@ namespace
 			}
 
 			const int32 StackHeadroom = ComputeExistingStackHeadroom(PC, Def);
-			const int32 FreeSlot = Slots ? FindFreeSlotRange(*Slots, MinSlot, MaxSlot, 1) : INDEX_NONE;
+			const UFortWorldItemDefinition* WorldDef = Cast<UFortWorldItemDefinition>(Def);
+			const int32 Span = WorldDef ? FMath::Max(1, static_cast<int32>(WorldDef->NumberOfSlotsToTake)) : 1;
+			const int32 FreeSlot = Slots ? FindFreeSlotRange(*Slots, MinSlot, MaxSlot, Span) : INDEX_NONE;
 
 			if (FreeSlot == INDEX_NONE)
 			{
@@ -594,6 +596,13 @@ namespace
 					{
 						UE_LOG(LogTemp, Display, TEXT("LootTransfer: Pickup rejected (primary bar full, no swappable weapon) pc=%s def=%s"),
 							*PC->GetName(), *Def->GetName());
+						return 0;
+					}
+
+					TArray<FGuid> SlotsAfterSwap = State.PrimarySlots;
+					ClearGuidFromSlots(SlotsAfterSwap, SwapGuid);
+					if (FindFreeSlotRange(SlotsAfterSwap, MinSlot, MaxSlot, Span) == INDEX_NONE)
+					{
 						return 0;
 					}
 

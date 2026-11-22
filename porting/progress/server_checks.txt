@@ -71,6 +71,7 @@ Inventory operations|implemented|Transfer successfully spawned elimination drops
 Inventory operations|implemented|Cap new inventory stacks and report the quantity accepted from pickups|porting/native/Source/FortniteGame/Private/FortAthenaInventoryFlow.cpp
 Inventory operations|implemented|Fill existing partial stacks before allocating a new stack|porting/native/Source/FortniteGame/Private/FortAthenaInventoryFlow.cpp
 Inventory operations|implemented|Check and spend building materials across matching inventory stacks|porting/native/Source/FortniteGame/Private/FortAthenaBuilding.cpp
+Inventory operations|implemented|Require enough contiguous quickbar slots before accepting a pickup or swapping an item|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
 Inventory operations|open|Verify five loadout slots and separate pickaxe, trap and material storage
 Inventory operations|open|Verify slot reorder, stack split and auto-pickup rules on two clients
 Inventory operations|open|Verify item use and gain, spend or loss reconcile with inventory
