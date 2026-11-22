@@ -1413,11 +1413,18 @@ void FortAthenaHealth::InstallRpcOverrides()
 }
 
 // Global-namespace wrappers for behaviour snippets (.inc bodies).
-void FortAthenaHealth_ReleaseCarryOnUnPossess(AFortPawn* Pawn)
+void FortAthenaHealth_HandlePawnUnPossessed(AFortPawn* Pawn)
 {
 	if (Pawn->HasAuthority() && FortAthenaHealth::IsEnabled())
 	{
 		ReleaseCarryConnections(Pawn);
+		AFortPlayerPawnAthena* Helper = Cast<AFortPlayerPawnAthena>(Pawn);
+		AFortPlayerPawnAthena* Target = Helper ? Cast<AFortPlayerPawnAthena>(Helper->ItemInteractionActor) : nullptr;
+		if (Target && Target->bIsDBNO && Target->DBNORevivalStacking > 0)
+		{
+			Helper->ItemInteractionActor = nullptr;
+			Helper->ForceNetUpdate();
+		}
 	}
 }
 

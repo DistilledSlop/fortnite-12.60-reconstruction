@@ -21,8 +21,8 @@
 
 void AFortPlayerPawnAthena::UnPossessed()
 {
-	extern void FortAthenaHealth_ReleaseCarryOnUnPossess(AFortPawn* Pawn);
-	FortAthenaHealth_ReleaseCarryOnUnPossess(this);
+	extern void FortAthenaHealth_HandlePawnUnPossessed(AFortPawn* Pawn);
+	FortAthenaHealth_HandlePawnUnPossessed(this);
 	Super::UnPossessed();
 }
 

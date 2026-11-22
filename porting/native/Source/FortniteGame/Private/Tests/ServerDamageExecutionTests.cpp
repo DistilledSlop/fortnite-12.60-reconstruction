@@ -202,9 +202,25 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 					Player->bIsDBNO && Player->DBNORevivalStacking == 0 && !Helper->ItemInteractionActor);
 				TestEqual(TEXT("Leaving revive range leaves downed health unchanged"), Player->GetHealth(), 60.0f);
 				TestFalse(TEXT("A revive cannot start outside range"), FortAthenaHealth::TryStartRevive(Reviver, Player));
-				Player->SetMaxHealth(20.0f);
 				Player->SetActorLocation(FVector(175, 0, 12000));
 				TestTrue(TEXT("Returning to range allows another revive"), FortAthenaHealth::TryStartRevive(Reviver, Player));
+				Reviver->UnPossess();
+				TestNull(TEXT("Unpossessing immediately clears the reviver's target"), Helper->ItemInteractionActor);
+				Reviver->Possess(Helper);
+				Helper->SetPlayerState(CastChecked<AFortPlayerStateAthena>(Fixtures[4].Get()));
+			}
+		}), 0.4f));
+		ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, Fixtures]()
+		{
+			AFortPlayerPawnAthena* Player = Cast<AFortPlayerPawnAthena>(Fixtures[3].Get());
+			AController* Reviver = Cast<AController>(Fixtures[0].Get());
+			if (Player && Reviver)
+			{
+				TestTrue(TEXT("Repossessing before the timer ticks still cancels the revive"),
+					Player->bIsDBNO && Player->DBNORevivalStacking == 0);
+				TestEqual(TEXT("The cancelled revive leaves downed health unchanged"), Player->GetHealth(), 60.0f);
+				Player->SetMaxHealth(20.0f);
+				TestTrue(TEXT("The reviver can restart after repossessing"), FortAthenaHealth::TryStartRevive(Reviver, Player));
 			}
 		}), 0.4f));
 	}
