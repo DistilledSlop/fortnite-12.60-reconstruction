@@ -1,6 +1,6 @@
 # Port progress dashboard
 
-The [dedicated-server board](../../docs/progress/server/index.html) tracks server capabilities using implementation evidence, headless tests, and original-client runs. Update a row when its evidence or acceptance check changes. The generator described below continues to publish the original combined client + server dashboard. The README treemap uses the original renderer and a [server acceptance checklist](render_server_progress.py). Each tile's fill is its recorded checks divided by its total checks. Tile area represents checklist size. Run `python3 porting/progress/render_server_progress.py` after updating the checklist.
+The [dedicated-server board](../../docs/progress/server/index.html) and README treemap share the [server acceptance ledger](server_checks.txt). Coverage is verified server checks divided by all server checks, with equal weight per check. Implementation-only and open checks remain in the denominator. Client-only checks are listed on the board and excluded from server coverage. Run `python3 porting/progress/render_server_progress.py` to refresh both views, or pass `--check` to check them. The rest of this guide describes the original combined dashboard.
 
 
 A generated dashboard for the Fortnite 12.60 Linux reconstruction: a squarified treemap of

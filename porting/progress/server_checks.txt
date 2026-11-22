@@ -1,0 +1,118 @@
+# Area headings start with ##. Each check is: capability | status | observable result | evidence.
+# Statuses: verified, implemented, open, client. Evidence is a commit, repository path or docs-relative screenshot path.
+## Match flow and player states
+Hosting and drop|verified|Build and boot the Linux dedicated target and run headless automation|417bfc45
+Hosting and drop|verified|Join the local server with the original client and enter Apollo|docs/screenshots/2026-11-13/vanilla-client-real-island-lit.png
+Hosting and drop|open|Populate a match with multiple original clients and complete the bus drop for each
+Bus driver|implemented|Record one thanks per player through the server RPC|94e5f612
+Bus driver|open|Show the corresponding bus-driver thanks message to the intended players
+DBNO|verified|Knock a player with a standing teammate and eliminate the last standing teammate|417bfc45
+DBNO|verified|Queue a crawl stance on knock|c6645a88
+DBNO|verified|Drain downed health and resolve a squad wipe on the bleed timer|417bfc45
+DBNO|verified|Pick up and drop a downed teammate|b3295a17
+DBNO|verified|Apply configured forward and upward throw velocity|d714d0e5
+DBNO|verified|Complete and cancel a timed teammate revive|2b0c4d87
+DBNO|open|Match crawl, carry, throw and revive state on two original clients
+Elimination and reboot|implemented|Spawn elimination inventory drops|cd80d9ea
+Elimination and reboot|open|Spawn, collect and expire a Reboot Card in a match
+Elimination and reboot|open|Consume a card and respawn eligible teammates through the van interaction channel
+Elimination and reboot|open|Replicate van cooldown and activation audio events
+Win and spectating|implemented|Select a winning team when the last opposing team is eliminated|5dbc71c4
+Win and spectating|verified|Reach a local results screen in the original client|docs/screenshots/2026-11-15/vanilla-client-local-test-results.png
+Win and spectating|implemented|Select an initial living spectator target after elimination|cd80d9ea
+Win and spectating|open|Switch between eligible teammates or the eliminator
+Win and spectating|open|Trigger victory results and synchronized slow motion in a multiplayer match
+Win and spectating|open|Return to lobby, requeue and clear previous match state
+## Weapons and gunplay
+Weapon lifecycle|implemented|Maintain authoritative ammo and reload state|f030b322
+Weapon lifecycle|open|Equip, fire and reload one representative of every supported gun and rarity
+Damage execution|verified|Resolve point damage against player-style health and shield attributes|1c459c7e
+Damage execution|verified|Resolve radial damage and shield overflow|1c459c7e
+Damage execution|verified|Apply a cooked explosive damage effect|7224cefa
+Damage execution|verified|Route authoritative damage to AI pawns and supported structures|porting/native/Source/FortniteGame/Private/Tests/ServerDamageExecutionTests.cpp
+Damage execution|open|Confirm damage per weapon and rarity against players, structures and entities
+Hit model|implemented|Spawn replicated gameplay projectiles through the server ability path|a06e80e6
+Hit model|open|Check hitscan hits against server geometry and valid targets
+Hit model|open|Measure projectile speed, drop and impact over known distances
+Hit model|open|Measure first-shot accuracy reset, sustained bloom and spread recovery
+Hit model|open|Count shotgun pellets and compare their server hit distribution
+Aiming and camera|open|Verify aim state and scoped firing reconcile with server shot origin
+Aiming and camera|client|Check shoulder camera positioning, ADS zoom and first-person scope transitions
+Aiming and camera|client|Check recoil presentation and controller aim-assist response
+## Items, inventory and loot
+Inventory operations|implemented|Handle quickbar selection, pickup, swap and drop on the server|01a191ca
+Inventory operations|open|Verify five loadout slots and separate pickaxe, trap and material storage
+Inventory operations|open|Verify slot reorder, stack split and auto-pickup rules on two clients
+Inventory operations|open|Verify item use and gain, spend or loss reconcile with inventory
+Inventory operations|open|Upgrade a weapon at a bench and charge the correct materials
+Loot sources|verified|Exercise reconstructed loot selection with the loot contract test|porting/native/Source/FortniteGame/Private/Tests/FortAthenaLootRollTests.cpp
+Loot sources|implemented|Search a chest and replicate its searched state|eacae928
+Loot sources|open|Verify chest, ammo crate and world loot contents and contested pickups
+Loot sources|open|Find and search a Loot Llama and validate its drops
+Loot sources|open|Spawn, land and open a supply drop, then verify its loot
+World items and traversal|verified|Apply selected cooked consumable recovery effects with server caps|8a616111
+World items and traversal|open|Use all supported small and large shield and healing items from inventory
+World items and traversal|open|Deploy and use crash pads and launch pads with replicated movement
+World items and traversal|implemented|Handle server zipline interaction RPCs|01a191ca
+World items and traversal|open|Verify zipline mount and dismount and representative map interactables
+## Map, environment and objectives
+World coverage|open|Load and traverse every named POI and verify collisions and streaming transitions
+World coverage|open|Award location discovery and sync map unlocks with the account
+World coverage|open|Verify supported vault doors accept the correct keycard and replicate unlock
+Environmental simulation|implemented|Route storm deaths through server match logic|65fc8d1b
+Environmental simulation|open|Run all normal storm phases with boundary, timing and damage checks
+Environmental simulation|open|Measure fall damage across height thresholds and exemptions
+Environmental simulation|open|Verify map boundaries, wind tunnels and environmental forces on two clients
+## AI, bots and bosses
+Match bots|open|Add bots to a lobby and count them correctly in teams and match population
+Match bots|open|Observe bots dropping, navigating, looting, fighting and participating in elimination
+Guards and bosses|open|Spawn guards and bosses at the expected locations with patrol routes
+Guards and bosses|open|Verify perception, alert transitions, target selection and combat
+Guards and bosses|open|Eliminate a boss and verify Mythic loot and vault-key drops
+## HUD, UI and feedback
+Map and squad pings|open|Replicate squad markers and enemy, item and danger pings to the proper recipients
+Map and squad pings|client|Verify minimap, full-screen map and squad communication wheel behavior
+Combat feedback|open|Send authoritative hit, shield break, headshot and directional damage events
+Combat feedback|open|Replicate kill-feed attribution including finishes and environmental deaths
+Combat feedback|client|Check crosshairs, hitmarker colors, floating numbers and directional indicators against events
+Accessibility and audio|open|Verify remote footsteps, chests, glides, shots and vehicles produce the expected cues
+Accessibility and audio|client|Check Visualize Sound Effects displays correct direction and cue types
+## Animations and networking
+Replicated actions|implemented|Replicate server-driven pickup toss trajectory|25cb9929
+Replicated actions|open|Match remote movement, pickup, loot spread, building and firing state across clients
+Replicated actions|client|Check visual animation timing and blending for player and item actions
+Prediction and reconciliation|open|Check rewind hit registration against recorded targets under injected latency
+Prediction and reconciliation|open|Measure movement and firing prediction corrections under latency and packet loss
+Tick rate and relevance|open|Record server tick-time distribution and packet load during a sustained multiplayer match
+Tick rate and relevance|open|Check nearby actors replicate and distant irrelevant actors leave network relevance
+## Lobby, accounts and Epic service compatibility
+Login and identity|verified|Exercise OAuth exchange-code handling against the local service|porting/server/tests/test_oauth_exchange_codes.py
+Login and identity|verified|Exercise username login and locker access at the backend boundary|porting/server/tests/test_username_locker_flow.py
+Login and identity|open|Sign in from a fresh original client, refresh login and reconnect without probe bypasses
+Epic service compatibility|open|Verify original-client local equivalents for account, entitlement, content and cloud-storage calls
+Epic service compatibility|open|Verify calendar, event, catalog, store, gifting and currency flows through the client
+Friends, parties and lobby|verified|Exercise friend acceptance and presence propagation in the backend|porting/server/tests/test_friend_accept_presence.py
+Friends, parties and lobby|verified|Exercise backend party lifecycle operations|porting/server/tests/test_party_lifecycle.py
+Friends, parties and lobby|open|Use invitations, ready states, leader changes, playlist selection and reconnect from multiple lobbies
+Friends, parties and lobby|open|Verify squad presence, chat and XMPP notifications across clients
+Matchmaking and sessions|verified|Exercise dedicated-server registration in the local registry|porting/server/tests/test_gameserver_registry.py
+Matchmaking and sessions|open|Queue a party through the original client, assign one session and join together
+Locker and cosmetic styles|verified|Exercise cosmetic equip identity in profile mutations|porting/server/tests/test_profile_equip_identity.py
+Locker and cosmetic styles|verified|Exercise profile loadout selection and persistence|porting/server/tests/test_profile_loadout_selection.py
+Locker and cosmetic styles|verified|Exercise per-slot wrap updates and persistence|porting/server/tests/test_profile_wrap_slots.py
+Locker and cosmetic styles|verified|Exercise persisted cosmetic variant changes|porting/server/tests/test_profile_variant_updates.py
+Locker and cosmetic styles|open|Persist and reselect presets, style choices and randomized slots across original-client reconnects
+In-match cosmetics|open|Apply selected outfit, style, back bling and harvesting tool to the pawn and replicate them
+In-match cosmetics|open|Apply glider, contrail and style during the drop and replicate them
+In-match cosmetics|open|Apply slot-specific wraps to weapons and supported vehicles
+In-match cosmetics|open|Replicate equipped emotes, sprays, emoticons and toys in a match
+In-match cosmetics|open|Carry reactive or progression-linked cosmetic changes through match events
+Battle Pass and progression|verified|Exercise Battle Pass profile behavior|porting/server/tests/test_profile_battle_pass.py
+Battle Pass and progression|verified|Exercise XP and leveling service logic|porting/server/tests/test_progression.py
+Battle Pass and progression|open|Earn match XP, unlock a tier and claim a reward through the original client
+Battle Pass and progression|open|Verify entitlements, rewards and levels persist across profile reload and reconnect
+Quests and challenges|verified|Exercise quest XP handling in the backend|porting/server/tests/test_quest_xp.py
+Quests and challenges|verified|Exercise quest claim and reward paths|porting/server/tests/test_quest_claim.py
+Quests and challenges|verified|Exercise weekly quest handling|porting/server/tests/test_weekly_quests.py
+Quests and challenges|open|Complete and persist daily, weekly, location, collectible and event objectives in an original-client match
+Quests and challenges|open|Verify prerequisite chains, faction and style rewards, and notifications through the original client
