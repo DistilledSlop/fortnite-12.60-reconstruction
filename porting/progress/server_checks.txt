@@ -79,6 +79,7 @@ Inventory operations|verified|Exercise capped grants, partial-stack top-ups and 
 Inventory operations|implemented|Reject swaps that cannot grant a single-stack item before dropping the outgoing item|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
 Inventory operations|open|Verify five loadout slots and separate pickaxe, trap and material storage
 Inventory operations|open|Verify slot reorder, stack split and auto-pickup rules on two clients
+Inventory operations|verified|Confirm the cooked bandage ability charges one unit of its own inventory definition at commit|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|open|Verify item use and gain, spend or loss reconcile with inventory
 Inventory operations|open|Upgrade a weapon at a bench and charge the correct materials
 Loot sources|verified|Exercise reconstructed loot selection with the loot contract test|porting/native/Source/FortniteGame/Private/Tests/FortAthenaLootRollTests.cpp
