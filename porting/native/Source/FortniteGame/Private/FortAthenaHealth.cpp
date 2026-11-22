@@ -366,7 +366,7 @@ namespace
 		Player->bWasCrouchedBeforeDBNO = Player->bIsCrouched;
 		Player->bIsDBNO = true;
 		Player->StopJumping();
-		Player->Crouch();
+		Player->GetCharacterMovement()->bWantsToCrouch = true;
 		const float KnockTime = World->GetTimeSeconds();
 		Player->DBNOStartTime = KnockTime;
 		Player->DBNORevivalStacking = 0;

@@ -515,6 +515,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	FortAthenaHealth::ApplyDamage(FirstPawn, 200.0f, FGameplayTagContainer(), nullptr, nullptr, true);
 	TestTrue(TEXT("Lethal damage knocks a player with a standing teammate"), FirstPawn->bIsDBNO && !FirstPawn->bIsDying);
 	TestEqual(TEXT("A knock fills the downed health pool"), FirstPawn->GetHealth(), 100.0f);
+	TestTrue(TEXT("A knock queues the crawl stance immediately"), FirstPawn->GetCharacterMovement()->bWantsToCrouch != 0);
 	SecondPawn->bAllowDBNOCarry = true;
 	TestTrue(TEXT("A standing teammate can carry the knocked player"),
 		FortAthenaHealth::TryCarryDownedPlayer(Second, FirstPawn));
