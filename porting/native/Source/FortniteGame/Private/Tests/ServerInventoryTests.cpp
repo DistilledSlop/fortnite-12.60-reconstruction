@@ -531,6 +531,15 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 		return false;
 	}
 	ON_SCOPE_EXIT { Bundle->Destroy(); };
+	// The primary entry is only a display entry while the pickup contains a bundle.
+	Bundle->MultiItemPickupEntries.Add(FFortItemEntry{});
+	TestFalse(TEXT("A bundle without a valid entry grants nothing"),
+		FortAthenaLootTransfer::HandlePickup(Pawn, Bundle, 0.25f, FVector::ZeroVector, false));
+	TestFalse(TEXT("Retrying a rejected bundle cannot claim the display entry"),
+		FortAthenaLootTransfer::HandlePickup(Pawn, Bundle, 0.25f, FVector::ZeroVector, false));
+	TestNull(TEXT("The rejected display entry never reaches inventory"),
+		Inventory->NativeFindWorldItemByDefinition(FirstBundleEntry.ItemDefinition, true));
+
 	Bundle->MultiItemPickupEntries = {FirstBundleEntry, SecondBundleEntry};
 	TestTrue(TEXT("Collecting a bundle with an aggregate count above int32 succeeds"),
 		FortAthenaLootTransfer::HandlePickup(Pawn, Bundle, 0.25f, FVector::ZeroVector, false));

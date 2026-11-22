@@ -868,7 +868,6 @@ namespace
 				FFortItemEntry& Entry = Pickup->MultiItemPickupEntries[i];
 				if (!Entry.ItemDefinition || Entry.Count <= 0)
 				{
-					Pickup->MultiItemPickupEntries.RemoveAt(i);
 					continue;
 				}
 				bool bDidSwap = false;
@@ -895,6 +894,11 @@ namespace
 				return false;
 			}
 
+			// Keep rejected bundles intact so a retry cannot grant their display entry as a standalone item.
+			Pickup->MultiItemPickupEntries.RemoveAll([](const FFortItemEntry& Entry)
+			{
+				return !Entry.ItemDefinition || Entry.Count <= 0;
+			});
 			if (Pickup->MultiItemPickupEntries.Num() > 0)
 			{
 				Pickup->PrimaryPickupItemEntry = Pickup->MultiItemPickupEntries[0];
