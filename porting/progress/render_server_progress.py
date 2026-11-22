@@ -9,6 +9,7 @@ import re
 import progress
 
 ROOT = Path(__file__).resolve().parents[2]
+README = ROOT / "README.md"
 LEDGER = ROOT / "porting/progress/server_checks.txt"
 BOARD = ROOT / "docs/progress/server/index.html"
 OUTPUT = BOARD.with_name("server-implementation-treemap-v5.svg")
@@ -137,7 +138,25 @@ def main():
     args = parser.parse_args()
     areas = read_checks()
     groups, counts = measure(areas)
-    outputs = {OUTPUT: render_svg(groups, counts), BOARD: render_board(areas, groups, counts)}
+    done = counts["verified"] + counts["implemented"]
+    total = counts.total() - counts["client"]
+    summary = (
+        f'**{done} of {total} server checks implemented ({done / total:.1%}).** '
+        f'{counts["verified"]} verified, {counts["implemented"]} awaiting verification, '
+        f'{counts["open"]} open.'
+    )
+    readme = README.read_text()
+    heading = "## Dedicated-server progress\n\n"
+    replacement = f"{heading}<!-- server-progress:start -->\n{summary}\n<!-- server-progress:end -->\n\n"
+    readme, matches = re.subn(
+        re.escape(heading) + r"(?:<!-- server-progress:start -->\n.*?\n<!-- server-progress:end -->\n\n)?",
+        lambda _: replacement,
+        readme,
+        flags=re.DOTALL,
+    )
+    if matches != 1:
+        parser.exit(1, "Expected one dedicated-server progress section in README.md\n")
+    outputs = {OUTPUT: render_svg(groups, counts), BOARD: render_board(areas, groups, counts), README: readme}
     for path, content in outputs.items():
         if args.check:
             if not path.is_file() or path.read_text() != content:

@@ -19,6 +19,7 @@
 #include "Misc/AutomationTest.h"
 #include "Misc/ScopeExit.h"
 #include "UFortGameplayAbility.h"
+#include "UFortKismetLibrary.h"
 #include "UFortResourceItemDefinition.h"
 #include "UFortWeaponItemDefinition.h"
 #include "UFortWeaponRangedItemDefinition.h"
@@ -378,6 +379,46 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 			TestEqual(TEXT("The bundle entry keeps its full quantity"), Entry->Count, BundleStackCount);
 		}
 	}
+
+	BundleFirst->bAllowMultipleStacks = true;
+	if (!TestNotNull(TEXT("A second large stack of the same item can be granted"),
+		FortAthenaInventory::GiveItem(Controller, BundleFirst, BundleStackCount)))
+	{
+		return false;
+	}
+	UFortKismetLibrary* Library = GetMutableDefault<UFortKismetLibrary>();
+	UFunction* QueryFunction = Library->FindFunction(FName(TEXT("K2_GetItemQuantityOnPlayer")));
+	UFunction* RemoveFunction = Library->FindFunction(FName(TEXT("K2_RemoveItemFromPlayer")));
+	if (!TestNotNull(TEXT("Blueprint quantity function"), QueryFunction) ||
+		!TestNotNull(TEXT("Blueprint removal function"), RemoveFunction))
+	{
+		return false;
+	}
+	struct
+	{
+		AFortPlayerController* PlayerController;
+		UFortItemDefinition* ItemDefinition;
+		int32 ReturnValue;
+	} Query{Controller, BundleFirst, 0};
+	Library->ProcessEvent(QueryFunction, &Query);
+	TestEqual(TEXT("Blueprint quantity saturates at the signed return limit"), Query.ReturnValue, MAX_int32);
+
+	struct
+	{
+		AFortPlayerController* PlayerController;
+		UFortWorldItemDefinition* ItemDefinition;
+		int32 AmountToRemove;
+		bool bForceRemoval;
+		int32 ReturnValue;
+	} Remove{Controller, BundleFirst, -1, false, 0};
+	Library->ProcessEvent(RemoveFunction, &Remove);
+	TestEqual(TEXT("Blueprint remove-all reports a saturated quantity"), Remove.ReturnValue, MAX_int32);
+	Query.ReturnValue = -1;
+	Library->ProcessEvent(QueryFunction, &Query);
+	TestEqual(TEXT("Blueprint remove-all fully removes both matching stacks"), Query.ReturnValue, 0);
+	Query.ItemDefinition = BundleSecond;
+	Library->ProcessEvent(QueryFunction, &Query);
+	TestEqual(TEXT("Blueprint remove-all preserves an unrelated stack"), Query.ReturnValue, BundleStackCount);
 	return true;
 }
 

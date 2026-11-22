@@ -18,7 +18,7 @@
 .grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style>
 <rect class="tm-bg" width="1000" height="720"/>
 <text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: 61.8% implemented</text>
-<text x="12" y="48" font-size="12" class="tm-head">107 of 173 server checks implemented | 73 verified | 66 open</text>
+<text x="12" y="48" font-size="12" class="tm-head">107 of 173 server checks implemented | 74 verified | 66 open</text>
 <g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Lobby, accounts and Epic service compatibility
 60.4% complete (32/53)
@@ -434,7 +434,7 @@ Verified: Exercise partial world pickup, split drop and remainder pickup on the 
 Verified: Reject repeat claims, reconcile discarded stacks and preserve empty magazines through drop and pickup
 Verified: Transfer a split drop between two server-side players and reject repeat claims
 Verified: Collect every entry in a multi-item pickup when the combined quantity exceeds a signed 32-bit count
-Implemented: Preserve Blueprint inventory quantity and removal results when matching stacks exceed a signed 32-bit count
+Verified: Preserve Blueprint inventory quantity and removal results when matching stacks exceed a signed 32-bit count
 Verified: Transfer eligible elimination loot once and preserve protected stacks
 Verified: Charge the exact repair material cost and preserve unrelated stacks on acceptance and rejection
 Open: Verify five loadout slots and separate pickaxe, trap and material storage
