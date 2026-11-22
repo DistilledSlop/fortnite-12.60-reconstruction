@@ -99693,5 +99693,20 @@
       "GameplayEffect.h"
     ],
     "notes": "Compatibility implementation for explicit authored damage magnitudes."
+  },
+  {
+    "class": "UFortDamageFormulaExecutionCalculation",
+    "function": "PostInitProperties",
+    "kind": "helper",
+    "signature": "void PostInitProperties()",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "override": true,
+    "inc_path": "porting/behavior/UFortDamageFormulaExecutionCalculation/PostInitProperties.inc",
+    "address": "0x0",
+    "confidence": "medium",
+    "status": "ported",
+    "notes": "Registers an engine GAS snapshot for the source base damage attribute."
   }
 ]

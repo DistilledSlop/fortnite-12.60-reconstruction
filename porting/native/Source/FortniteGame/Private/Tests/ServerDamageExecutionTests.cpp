@@ -13,6 +13,7 @@
 #include "ServerDamageExecution.h"
 #include "UFortAbilitySystemComponent.h"
 #include "UFortDamageFormulaExecutionCalculation.h"
+#include "UFortDamageSet.h"
 #include "UFortHealthSet.h"
 
 // UE 4.25 discovers dedicated-server tests under ClientContext.
@@ -157,6 +158,20 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	ASC->ApplyGameplayEffectSpecToSelf(BarrelDamage);
 	TestEqual(TEXT("Cooked explosive barrel effect consumes shield"), Pawn->GetShield(), 2.0f);
 	TestEqual(TEXT("Cooked explosive barrel effect preserves health while shield remains"), Pawn->GetHealth(), 75.0f);
+
+	ASC->AddAttributeSetSubobject(NewObject<UFortDamageSet>(Pawn));
+	const FGameplayAttribute BaseDamage(FindFProperty<FProperty>(UFortDamageSet::StaticClass(), TEXT("OutgoingBaseDamage")));
+	ASC->SetNumericAttributeBase(BaseDamage, 7.0f);
+	FGameplayEffectSpec CapturedDamage(FormulaEffect, ASC->MakeEffectContext(), 1.0f);
+	ASC->SetNumericAttributeBase(BaseDamage, 18.0f);
+	ASC->SetNumericAttributeBase(Shield, 20.0f);
+	ASC->ApplyGameplayEffectSpecToSelf(CapturedDamage);
+	TestEqual(TEXT("Implicit damage uses the source snapshot"), Pawn->GetShield(), 13.0f);
+
+	FGameplayEffectSpec ZeroDamage(FormulaEffect, ASC->MakeEffectContext(), 1.0f);
+	ZeroDamage.SetSetByCallerMagnitude(FName(TEXT("Damage")), 0.0f);
+	ASC->ApplyGameplayEffectSpecToSelf(ZeroDamage);
+	TestEqual(TEXT("Explicit zero suppresses source base damage"), Pawn->GetShield(), 13.0f);
 
 	ASC->SetNumericAttributeBase(Shield, 30);
 	FortAthenaHealth::ApplyDamage(Pawn, 5, FGameplayTagContainer(), nullptr, nullptr, true);
