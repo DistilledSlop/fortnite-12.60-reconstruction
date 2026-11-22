@@ -30,4 +30,6 @@ if [ "$refresh" -gt 0 ]; then
   (while sleep "$refresh"; do python3 -I "$here/progress.py" --quiet --no-record >/dev/null 2>&1 || true; done) &
 fi
 
+ln -sfn index.html "$out/combined.html"
+
 exec python3 -m http.server "$port" --bind 0.0.0.0 --directory "$out"

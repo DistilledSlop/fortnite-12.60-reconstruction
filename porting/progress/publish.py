@@ -258,6 +258,10 @@ def main():
         return
     d = json.loads((OUT / "progress.json").read_text())
     files = {n: (OUT / n).read_bytes() for n in PAGES}
+    files["combined.html"] = files.pop("index.html")
+    files["history.html"] = files["history.html"].replace(
+        b'href="index.html"', b'href="combined.html"'
+    )
     for p in sorted(OUT.glob("*.txt")):
         files[p.name] = p.read_bytes()
     stale = []

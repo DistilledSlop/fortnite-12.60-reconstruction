@@ -6,7 +6,7 @@ Reconstructing Fortnite Chapter 2 Season 2 as an Unreal Engine project, with rec
 
 [Wiki](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki) ·
 [Source reference](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Source-and-API-Index) ·
-[Progress](#progress) ·
+[Progress](#dedicated-server-progress) ·
 [Setup](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Setup-and-Workflow)
 
 <!-- badges:start -->
@@ -55,7 +55,7 @@ The [wiki](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki) 
 
 [![Dedicated-server reconstruction progress treemap](docs/progress/server/progress.svg)](docs/progress/server/index.html)
 
-[Detailed server board and evidence](docs/progress/server/index.html) · [Original client + server board](docs/index.html)
+[Detailed server board and evidence](docs/progress/server/index.html) · [Original client + server board](docs/combined.html)
 
 ## Repository
 
