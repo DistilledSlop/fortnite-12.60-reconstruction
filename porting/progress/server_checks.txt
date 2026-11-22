@@ -86,7 +86,7 @@ Inventory operations|verified|Remove items from a single server inventory stack 
 Inventory operations|verified|Transfer eligible elimination loot once and preserve protected stacks|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|verified|Charge the exact repair material cost and preserve unrelated stacks on acceptance and rejection|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|open|Verify five loadout slots and separate pickaxe, trap and material storage
-Inventory operations|open|Verify server stack merges preserve overflow, remove depleted sources and update replicated counts|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
+Inventory operations|open|Verify server stack merges preserve overflow, remove depleted sources and update replicated counts
 Inventory operations|open|Verify slot reorder, stack split and auto-pickup rules on two clients
 Inventory operations|verified|Confirm the cooked bandage ability charges one unit of its own inventory definition at commit|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|verified|Debit the last bandage at authoritative ability cost commit and reject repayment from the depleted stack|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
