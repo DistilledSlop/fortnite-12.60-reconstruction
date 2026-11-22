@@ -533,7 +533,7 @@ Open: Count shotgun pellets and compare their server hit distribution</title>
 <g><title>Weapon lifecycle
 50.0% complete (1/2)
 effort weight 2 | source: equal-weight server implementation checks
-Implemented: Maintain authoritative ammo and reload state
+Implemented: Maintain authoritative ammo and reload state. Restarting a cancelled reload invalidates its previous load and end timers
 Open: Equip, fire and reload one representative of every supported gun and rarity</title>
 <rect class="tile-body" x="663.5" y="480.3" width="56.0" height="97.1" rx="4"/>
 <clipPath id="servertm-c24"><rect x="663.52" y="480.33" width="56.04" height="97.11" rx="4"/></clipPath>

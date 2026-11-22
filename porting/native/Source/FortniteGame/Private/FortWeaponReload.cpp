@@ -28,9 +28,9 @@ namespace
 		return Value;
 	}
 
-	TSet<TWeakObjectPtr<AFortWeapon>>& PendingWeapons()
+	TMap<TWeakObjectPtr<AFortWeapon>, uint64>& PendingReloads()
 	{
-		static TSet<TWeakObjectPtr<AFortWeapon>> Value;
+		static TMap<TWeakObjectPtr<AFortWeapon>, uint64> Value;
 		return Value;
 	}
 
@@ -101,8 +101,7 @@ namespace
 		AFortPawn* Pawn = ASC ? Cast<AFortPawn>(ASC->GetAvatarActor()) : nullptr;
 		AFortWeapon* Weapon = Pawn ? Pawn->CurrentWeapon : nullptr;
 		UWorld* World = Pawn ? Pawn->GetWorld() : nullptr;
-		if (!Weapon || !World || !Weapon->HasAuthority() || !Weapon->ReloadAbilitySpecHandle.IsValid()
-			|| PendingWeapons().Contains(Weapon))
+		if (!Weapon || !World || !Weapon->HasAuthority() || !Weapon->ReloadAbilitySpecHandle.IsValid())
 		{
 			return;
 		}
@@ -113,15 +112,18 @@ namespace
 		}
 		const FGameplayAbilitySpecHandle Handle = Weapon->ReloadAbilitySpecHandle;
 		const float Duration = ReloadDuration(Weapon);
-		PendingWeapons().Add(Weapon);
+		// The same ability spec can be cancelled and activated again before its old timers fire.
+		static uint64 NextReloadId = 0;
+		const uint64 ReloadId = ++NextReloadId;
 		TWeakObjectPtr<AFortWeapon> WeakWeapon(Weapon);
+		PendingReloads().Add(WeakWeapon, ReloadId);
 		TWeakObjectPtr<UAbilitySystemComponent> WeakASC(ASC);
 		FTimerHandle LoadTimer;
-		World->GetTimerManager().SetTimer(LoadTimer, [WeakWeapon, WeakASC, Handle]()
+		World->GetTimerManager().SetTimer(LoadTimer, [WeakWeapon, WeakASC, Handle, ReloadId]()
 		{
 			AFortWeapon* Target = WeakWeapon.Get();
 			UAbilitySystemComponent* System = WeakASC.Get();
-			if (!Target || !System || !IsValid(Target) || !Target->IsEquipped())
+			if (PendingReloads().FindRef(WeakWeapon) != ReloadId || !Target || !System || !Target->IsEquipped())
 			{
 				return;
 			}
@@ -133,9 +135,13 @@ namespace
 			}
 		}, Duration * LoadPoint, false);
 		FTimerHandle EndTimer;
-		World->GetTimerManager().SetTimer(EndTimer, [WeakWeapon, WeakASC, Handle]()
+		World->GetTimerManager().SetTimer(EndTimer, [WeakWeapon, WeakASC, Handle, ReloadId]()
 		{
-			PendingWeapons().Remove(WeakWeapon);
+			if (PendingReloads().FindRef(WeakWeapon) != ReloadId)
+			{
+				return;
+			}
+			PendingReloads().Remove(WeakWeapon);
 			if (UAbilitySystemComponent* System = WeakASC.Get())
 			{
 				const FGameplayAbilitySpec* Active = System->FindAbilitySpecFromHandle(Handle);

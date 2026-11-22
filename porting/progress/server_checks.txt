@@ -50,7 +50,7 @@ Win and spectating|open|Switch between eligible teammates or the eliminator
 Win and spectating|open|Trigger victory results and synchronized slow motion in a multiplayer match
 Win and spectating|open|Return to lobby, requeue and clear previous match state
 ## Weapons and gunplay
-Weapon lifecycle|implemented|Maintain authoritative ammo and reload state|f030b322
+Weapon lifecycle|implemented|Maintain authoritative ammo and reload state. Restarting a cancelled reload invalidates its previous load and end timers|porting/native/Source/FortniteGame/Private/FortWeaponReload.cpp
 Weapon lifecycle|open|Equip, fire and reload one representative of every supported gun and rarity
 Damage execution|verified|Resolve point damage against player-style health and shield attributes|1c459c7e
 Damage execution|verified|Resolve radial damage and shield overflow|1c459c7e
