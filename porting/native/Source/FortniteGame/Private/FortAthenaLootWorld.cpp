@@ -451,17 +451,28 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 			continue;
 		}
 
-		if (Delivery.DescentStartTime < 0.0f)
-		{
+		const bool bStartingDescent = Delivery.DescentStartTime < 0.0f;
+		if (bStartingDescent)
 			Delivery.DescentStartTime = Now;
-			Marker->SetActorLocation(Delivery.LandingLocation + FVector::UpVector * DeliveryHeight);
-			Marker->SetActorHiddenInGame(false);
+
+		const float Progress = FMath::Clamp((Now - Delivery.DescentStartTime) / DeliveryDuration, 0.0f, 1.0f);
+		const FVector Target = Delivery.LandingLocation + FVector::UpVector * (DeliveryHeight * (1.0f - Progress));
+		Marker->SetActorLocation(Target);
+		if (!Marker->GetActorLocation().Equals(Target, 1.0f))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("LootWorld: delivery crate could not reach its position %s"), *Marker->GetPathName());
+			Marker->SetActorHiddenInGame(true);
 			Marker->ForceNetUpdate();
+			S.ProcessedContainers.Add(It.Key());
+			It.RemoveCurrent();
 			continue;
 		}
 
-		const float Progress = FMath::Clamp((Now - Delivery.DescentStartTime) / DeliveryDuration, 0.0f, 1.0f);
-		Marker->SetActorLocation(Delivery.LandingLocation + FVector::UpVector * (DeliveryHeight * (1.0f - Progress)));
+		if (bStartingDescent)
+		{
+			Marker->SetActorHiddenInGame(false);
+			Marker->ForceNetUpdate();
+		}
 		if (Progress >= 1.0f)
 		{
 			Marker->bStartAlreadySearched_Athena = false;
