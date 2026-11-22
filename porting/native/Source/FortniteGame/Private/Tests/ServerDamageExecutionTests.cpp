@@ -1,9 +1,11 @@
 #if WITH_DEV_AUTOMATION_TESTS
 
 #include "ABuildingWall.h"
+#include "AIController.h"
 #include "AFortPawn.h"
 #include "AFortAIPawn.h"
 #include "AFortPlayerPawnAthena.h"
+#include "AFortPlayerStateAthena.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "FortAthenaHealth.h"
@@ -61,6 +63,52 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 			TestFalse(TEXT("Downed movement blocks jump attempts"), Move->CanAttemptJump());
 		}
 		Crawler->Destroy();
+	}
+
+	AFortPlayerPawnAthena* Carrier = World->SpawnActor<AFortPlayerPawnAthena>(
+		FVector(0, 0, 12000), FRotator::ZeroRotator, SpawnParameters);
+	AFortPlayerPawnAthena* Downed = World->SpawnActor<AFortPlayerPawnAthena>(
+		FVector(175, 0, 12000), FRotator::ZeroRotator, SpawnParameters);
+	AAIController* CarryController = World->SpawnActor<AAIController>();
+	AFortPlayerStateAthena* CarrierState = World->SpawnActor<AFortPlayerStateAthena>();
+	AFortPlayerStateAthena* DownedState = World->SpawnActor<AFortPlayerStateAthena>();
+	if (TestNotNull(TEXT("Carry fixture carrier"), Carrier) && TestNotNull(TEXT("Carry fixture target"), Downed) &&
+		TestNotNull(TEXT("Carry fixture controller"), CarryController) &&
+		TestNotNull(TEXT("Carry fixture carrier state"), CarrierState) && TestNotNull(TEXT("Carry fixture target state"), DownedState))
+	{
+		CarryController->Possess(Carrier);
+		Carrier->SetPlayerState(CarrierState);
+		Downed->SetPlayerState(DownedState);
+		CarrierState->TeamIndex = DownedState->TeamIndex = 3;
+		Carrier->bAllowDBNOCarry = true;
+		TestFalse(TEXT("A standing player cannot be picked up"), FortAthenaHealth::TryCarryDownedPlayer(CarryController, Downed));
+		Downed->bIsDBNO = true;
+
+		if (TestTrue(TEXT("A nearby downed player can be picked up"), FortAthenaHealth::TryCarryDownedPlayer(CarryController, Downed)))
+		{
+			TestTrue(TEXT("Carry establishes both links and attaches the downed player"),
+				Carrier->DBNOHoistee == Downed && Downed->DBNOHoisterData.DBNOHoister == Carrier &&
+				Downed->GetAttachParentActor() == Carrier);
+			Carrier->ServerDropCarriedPlayer();
+			TestTrue(TEXT("The drop RPC removes the carry links and attachment"),
+				!Carrier->DBNOHoistee && !Downed->DBNOHoisterData.DBNOHoister && !Downed->GetAttachParentActor());
+			Downed->SetActorLocation(FVector(175, 0, 12000));
+			if (TestTrue(TEXT("A dropped player can be picked up again"), FortAthenaHealth::TryCarryDownedPlayer(CarryController, Downed)))
+			{
+				Carrier->ServerThrowCarriedPlayer();
+				TestTrue(TEXT("The throw RPC releases the player with the thrown event"),
+					!Carrier->DBNOHoistee && !Downed->GetAttachParentActor() &&
+					Downed->DBNOHoisterData.DBNOCarryEvent == EFortDBNOCarryEvent::Thrown);
+			}
+		}
+	}
+	for (AActor* Fixture : {static_cast<AActor*>(CarryController), static_cast<AActor*>(Carrier),
+		static_cast<AActor*>(Downed), static_cast<AActor*>(CarrierState), static_cast<AActor*>(DownedState)})
+	{
+		if (IsValid(Fixture))
+		{
+			Fixture->Destroy();
+		}
 	}
 
 	AFortPawn* Pawn = World->SpawnActor<AFortPawn>(FVector(0, 0, 10000), FRotator::ZeroRotator, SpawnParameters);
