@@ -66,7 +66,8 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 			Move->bWantsToCrouch = false;
 			Move->UpdateCharacterStateBeforeMovement(0.0f);
 			TestTrue(TEXT("Downed movement keeps crouch requested"), Move->bWantsToCrouch != 0);
-			TestFalse(TEXT("Downed movement blocks jump attempts"), Move->CanAttemptJump());
+			Move->bWantsToCrouch = false;
+			TestFalse(TEXT("A downed player cannot jump even if an incoming move clears crouch"), Move->CanAttemptJump());
 		}
 		Crawler->Destroy();
 	}
