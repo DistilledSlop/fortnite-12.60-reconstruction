@@ -2,11 +2,15 @@
 
 #include "AbilitySystemComponent.h"
 #include "AFortInventory.h"
+#include "AFortPickupAthena.h"
+#include "AFortPlayerPawnAthena.h"
 #include "AFortWeapon.h"
 #include "AFortPlayerControllerAthena.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
+#include "EngineUtils.h"
 #include "FortAthenaInventoryFlow.h"
+#include "FortAthenaLootTransfer.h"
 #include "Misc/AutomationTest.h"
 #include "Misc/ScopeExit.h"
 #include "UFortGameplayAbility.h"
@@ -94,6 +98,51 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 		TestTrue(TEXT("Replicated stack retains the surviving GUID"), Entry.ItemGuid == SecondGuid);
 		TestEqual(TEXT("Replicated quantity matches the surviving stack"), Entry.Count, 7);
 	}
+	AFortPlayerPawnAthena* Pawn = World->SpawnActor<AFortPlayerPawnAthena>(FVector(0, 0, 16000), FRotator::ZeroRotator);
+	if (!TestNotNull(TEXT("Inventory transfer pawn"), Pawn))
+	{
+		return false;
+	}
+	ON_SCOPE_EXIT { Pawn->Destroy(); };
+	Controller->Possess(Pawn);
+	Definition->bCanBeDropped = true;
+	Definition->bAllowMultipleStacks = false;
+
+	FFortItemEntry WorldEntry{};
+	WorldEntry.ItemDefinition = Definition;
+	WorldEntry.Count = 5;
+	AFortPickupAthena* Pickup = FortAthenaLootTransfer::SpawnTossedPickupFromEntry(
+		World, WorldEntry, Pawn->GetActorLocation(), FVector::ForwardVector, nullptr, 0, EFortPickupSpawnSource::Unset);
+	if (!TestNotNull(TEXT("World pickup"), Pickup))
+	{
+		return false;
+	}
+	ON_SCOPE_EXIT { Pickup->Destroy(); };
+
+	TestTrue(TEXT("Pickup fills the existing stack"), FortAthenaLootTransfer::HandlePickup(Pawn, Pickup, 0.25f, FVector::ZeroVector, false));
+	TestEqual(TEXT("Inventory reaches its cap"), Second->ItemEntry.Count, 10);
+	TestEqual(TEXT("Two units stay on the ground"), Pickup->PrimaryPickupItemEntry.Count, 2);
+
+	TestTrue(TEXT("Drop splits four units from the stack"), FortAthenaLootTransfer::AttemptInventoryDrop(Controller, SecondGuid, 4, false));
+	TestEqual(TEXT("Six units stay in inventory"), Second->ItemEntry.Count, 6);
+	AFortPickupAthena* Dropped = nullptr;
+	for (TActorIterator<AFortPickupAthena> It(World); It; ++It)
+	{
+		if (It->PawnWhoDroppedPickup == Pawn && It->PrimaryPickupItemEntry.ItemDefinition == Definition)
+		{
+			Dropped = *It;
+			break;
+		}
+	}
+	if (TestNotNull(TEXT("Split stack produced a world pickup"), Dropped))
+	{
+		TestEqual(TEXT("Split drop contains exactly four units"), Dropped->PrimaryPickupItemEntry.Count, 4);
+		Dropped->Destroy();
+	}
+
+	TestTrue(TEXT("Remaining ground units can be picked up after the split"), FortAthenaLootTransfer::HandlePickup(Pawn, Pickup, 0.25f, FVector::ZeroVector, false));
+	TestEqual(TEXT("Inventory, split drop and consumed ground stack account for all units"), Second->ItemEntry.Count, 8);
+	TestTrue(TEXT("Exhausted ground pickup is reserved for flight"), Pickup->bPickedUp);
 	return true;
 }
 

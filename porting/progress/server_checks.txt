@@ -77,6 +77,7 @@ Inventory operations|implemented|Honor destroy-on-drop and the outgoing inventor
 Inventory operations|implemented|Activate the actual assigned quickbar slot after replacing a held item|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
 Inventory operations|verified|Exercise capped grants, partial-stack top-ups and multi-stack spending against replicated inventory|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|implemented|Reject swaps that cannot grant a single-stack item before dropping the outgoing item|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
+Inventory operations|verified|Exercise partial world pickup, split drop and remainder pickup on the dedicated server|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|open|Verify five loadout slots and separate pickaxe, trap and material storage
 Inventory operations|open|Verify slot reorder, stack split and auto-pickup rules on two clients
 Inventory operations|verified|Confirm the cooked bandage ability charges one unit of its own inventory definition at commit|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
