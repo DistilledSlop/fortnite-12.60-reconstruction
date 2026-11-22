@@ -710,6 +710,28 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 		FortAthenaHealth::TryStartRevive(Second, FirstPawn));
 
 	AFortPlayerControllerAthena* Opponent = World->SpawnActor<AFortPlayerControllerAthena>();
+	AFortPlayerPawnAthena* OpponentPawn = World->SpawnActor<AFortPlayerPawnAthena>(
+		ThirdPawn->GetActorLocation() + FVector(100, 0, 0), FRotator::ZeroRotator, SpawnParameters);
+	AFortInventory* OpponentInventory = World->SpawnActor<AFortInventory>();
+	if (TestNotNull(TEXT("Pickup collector controller"), Opponent) &&
+		TestNotNull(TEXT("Pickup collector pawn"), OpponentPawn) &&
+		TestNotNull(TEXT("Pickup collector inventory"), OpponentInventory))
+	{
+		Opponent->Possess(OpponentPawn);
+		Opponent->WorldInventory = OpponentInventory;
+		OpponentPawn->GetCharacterMovement()->SetComponentTickEnabled(false);
+		UFortAbilitySystemComponent* OpponentASC = NewObject<UFortAbilitySystemComponent>(OpponentPawn);
+		OpponentPawn->AbilitySystemComponent = OpponentASC;
+		OpponentASC->RegisterComponent();
+		OpponentASC->InitAbilityActorInfo(OpponentPawn, OpponentPawn);
+		OpponentPawn->HealthSet = NewObject<UFortHealthSet>(OpponentPawn);
+		OpponentASC->AddAttributeSetSubobject(OpponentPawn->HealthSet);
+		OpponentPawn->bHealthSynced = true;
+		OpponentPawn->SetMaxHealth(100.0f);
+		OpponentPawn->SetHealth(100.0f);
+		TestTrue(TEXT("Pickup collector controls a healthy pawn"),
+			OpponentPawn->GetController() == Opponent && OpponentPawn->GetHealth() == 100.0f);
+	}
 	AFortPlayerStateAthena* OpponentState = Opponent ? Cast<AFortPlayerStateAthena>(Opponent->PlayerState) : nullptr;
 	if (TestNotNull(TEXT("Knock instigator has an opposing player state"), OpponentState))
 	{
@@ -734,6 +756,8 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	}
 	ThirdPawn->SetShouldDropItemsOnDeath(true);
 	const TWeakObjectPtr<AFortInventory> WeakDropInventory(DropInventory);
+	const TWeakObjectPtr<AFortInventory> WeakOpponentInventory(OpponentInventory);
+	const TWeakObjectPtr<AFortPlayerPawnAthena> WeakOpponentPawn(OpponentPawn);
 	const TWeakObjectPtr<UFortResourceItemDefinition> WeakDropDefinition(DropDefinition);
 	const TWeakObjectPtr<AFortPlayerControllerAthena> WeakOpponent(Opponent);
 	const TSharedRef<TOptional<float>> HealthAfterFirstBleed = MakeShared<TOptional<float>>();
@@ -775,7 +799,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 				});
 		}
 	}), 1.5f));
-	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakSecondPawn, WeakThirdPawn, HealthAfterFirstBleed, WeakDropInventory, WeakDropDefinition, DropGuid]()
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakSecondPawn, WeakThirdPawn, HealthAfterFirstBleed, WeakDropInventory, WeakDropDefinition, WeakOpponentInventory, WeakOpponentPawn, DropGuid]()
 	{
 		AFortPlayerPawnAthena* DownedPawn = WeakFirstPawn.Get();
 		AFortPlayerPawnAthena* CarrierPawn = WeakSecondPawn.Get();
@@ -815,6 +839,21 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 					++DropPickupCount;
 					TestTrue(TEXT("Death pickup retains the item definition"), It->PrimaryPickupItemEntry.ItemDefinition == WeakDropDefinition.Get());
 					TestEqual(TEXT("Death pickup retains the stack quantity"), It->PrimaryPickupItemEntry.Count, 3);
+					AFortPlayerPawnAthena* Collector = WeakOpponentPawn.Get();
+					AFortInventory* CollectorInventory = WeakOpponentInventory.Get();
+					if (TestNotNull(TEXT("Death pickup collector survives"), Collector) &&
+						TestNotNull(TEXT("Death pickup collector inventory survives"), CollectorInventory))
+					{
+						Collector->ServerHandlePickup(*It, 0.25f, FVector::ZeroVector, false);
+						TestTrue(TEXT("Death pickup is claimed"), It->bPickedUp);
+						Collector->ServerHandlePickup(*It, 0.25f, FVector::ZeroVector, false);
+						if (TestEqual(TEXT("Death pickup and retry grant one stack"), CollectorInventory->Inventory.ReplicatedEntries.Num(), 1))
+						{
+							const FFortItemEntry& Entry = CollectorInventory->Inventory.ReplicatedEntries[0];
+							TestTrue(TEXT("Collected death stack retains its definition"), Entry.ItemDefinition == WeakDropDefinition.Get());
+							TestEqual(TEXT("Collected death stack has exactly three units after retry"), Entry.Count, 3);
+						}
+					}
 					It->Destroy();
 				}
 			}
@@ -829,7 +868,7 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 
 	const TWeakObjectPtr<AFortGameStateAthena> WeakState(State);
 	const TWeakObjectPtr<AFortPlayerControllerAthena> WeakNoKnockController(NoKnockController);
-	const TArray<TWeakObjectPtr<AActor>> TeamFixtures = {First, Second, Third, NoKnockController, FirstPawn, SecondPawn, ThirdPawn, NoKnockPawn, Opponent, DBNOMutator, RetainedInventory, DropInventory};
+	const TArray<TWeakObjectPtr<AActor>> TeamFixtures = {First, Second, Third, NoKnockController, FirstPawn, SecondPawn, ThirdPawn, NoKnockPawn, Opponent, OpponentPawn, OpponentInventory, DBNOMutator, RetainedInventory, DropInventory};
 	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, WeakFirstPawn, WeakOpponent, WeakState, WeakNoKnockController, PreviousPlaylist, TeamFixtures, MutatorList]()
 	{
 		AFortPlayerPawnAthena* DownedPawn = WeakFirstPawn.Get();
