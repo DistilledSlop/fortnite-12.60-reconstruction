@@ -381,16 +381,18 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	}
 
 	BundleFirst->bAllowMultipleStacks = true;
-	if (!TestNotNull(TEXT("A second large stack of the same item can be granted"),
-		FortAthenaInventory::GiveItem(Controller, BundleFirst, BundleStackCount)))
+	UFortWorldItem* TargetStack = FortAthenaInventory::GiveItem(Controller, BundleFirst, BundleStackCount);
+	if (!TestNotNull(TEXT("A second large stack of the same item can be granted"), TargetStack))
 	{
 		return false;
 	}
 	UFortKismetLibrary* Library = GetMutableDefault<UFortKismetLibrary>();
 	UFunction* QueryFunction = Library->FindFunction(FName(TEXT("K2_GetItemQuantityOnPlayer")));
 	UFunction* RemoveFunction = Library->FindFunction(FName(TEXT("K2_RemoveItemFromPlayer")));
+	UFunction* RemoveByGuidFunction = Library->FindFunction(FName(TEXT("K2_RemoveItemFromPlayerByGuid")));
 	if (!TestNotNull(TEXT("Blueprint quantity function"), QueryFunction) ||
-		!TestNotNull(TEXT("Blueprint removal function"), RemoveFunction))
+		!TestNotNull(TEXT("Blueprint removal function"), RemoveFunction) ||
+		!TestNotNull(TEXT("Blueprint removal by GUID function"), RemoveByGuidFunction))
 	{
 		return false;
 	}
@@ -402,6 +404,25 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 	} Query{Controller, BundleFirst, 0};
 	Library->ProcessEvent(QueryFunction, &Query);
 	TestEqual(TEXT("Blueprint quantity saturates at the signed return limit"), Query.ReturnValue, MAX_int32);
+
+	struct
+	{
+		AFortPlayerController* PlayerController;
+		FGuid ItemGuid;
+		int32 AmountToRemove;
+		bool bForceRemoval;
+		int32 ReturnValue;
+	} RemoveByGuid{Controller, TargetStack->NativeGetItemGuid(), 0, false, -1};
+	Library->ProcessEvent(RemoveByGuidFunction, &RemoveByGuid);
+	TestEqual(TEXT("Zero-count GUID removal removes nothing"), RemoveByGuid.ReturnValue, 0);
+	TestEqual(TEXT("Zero-count GUID removal preserves the stack"), TargetStack->ItemEntry.Count, BundleStackCount);
+	RemoveByGuid.AmountToRemove = 2;
+	Library->ProcessEvent(RemoveByGuidFunction, &RemoveByGuid);
+	TestEqual(TEXT("GUID removal reports the amount removed"), RemoveByGuid.ReturnValue, 2);
+	TestEqual(TEXT("GUID removal debits the selected stack"), TargetStack->ItemEntry.Count, BundleStackCount - 2);
+	Library->ProcessEvent(QueryFunction, &Query);
+	TestEqual(TEXT("GUID removal preserves the other matching stack"), Query.ReturnValue, MAX_int32 - 1);
+	FortAthenaInventory::GiveItem(Controller, BundleFirst, 2);
 
 	struct
 	{
