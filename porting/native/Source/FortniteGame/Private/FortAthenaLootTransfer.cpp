@@ -1450,11 +1450,19 @@ int32 FortAthenaLootTransfer::DropAllOnDeath(AFortPlayerController* VictimContro
 	}
 	// stand-in: the original elimination drop (backpack pickup/spread rules) is not recovered; each droppable stack becomes one
 	// pickup tossed in a different direction so the loot fans out instead of stacking on one spot.
-	TArray<UFortWorldItem*> Items = Inventory->Inventory.ItemInstances;
+	TArray<FGuid> ItemGuids;
+	for (const UFortWorldItem* Item : Inventory->Inventory.ItemInstances)
+	{
+		if (Item)
+		{
+			ItemGuids.Add(Item->ItemEntry.ItemGuid);
+		}
+	}
 	int32 Spawned = 0;
 	const float BaseYaw = FMath::FRandRange(0.0f, 360.0f);
-	for (UFortWorldItem* Item : Items)
+	for (const FGuid& ItemGuid : ItemGuids)
 	{
+		const UFortWorldItem* Item = Inventory->NativeFindItemByGuid(ItemGuid);
 		UFortWorldItemDefinition* Def = Item ? Cast<UFortWorldItemDefinition>(Item->ItemEntry.ItemDefinition) : nullptr;
 		if (!Def || Item->ItemEntry.Count <= 0 || Def->DropBehavior == EWorldItemDropBehavior::DestroyOnDrop)
 		{
@@ -1465,11 +1473,23 @@ int32 FortAthenaLootTransfer::DropAllOnDeath(AFortPlayerController* VictimContro
 		BuildTossLocations(VictimPawn, Dir, TossStart, TossFinal, TossDir);
 		const uint8 SourceFlags = static_cast<uint8>(EFortPickupSourceTypeFlag::Player) |
 			static_cast<uint8>(EFortPickupSourceTypeFlag::Tossed);
-		if (SpawnTossedPickupFromEntry(World, Item->ItemEntry, TossStart, TossDir, VictimPawn, SourceFlags, EFortPickupSpawnSource::PlayerElimination))
+		const FFortItemEntry Entry = Item->ItemEntry;
+		AFortPickupAthena* Pickup = SpawnTossedPickupFromEntry(
+			World, Entry, TossStart, TossDir, VictimPawn, SourceFlags, EFortPickupSpawnSource::PlayerElimination);
+		if (!Pickup)
 		{
-			++Spawned;
+			continue;
 		}
+
+		const int32 Removed = FortAthenaInventory::RemoveItem(VictimController, ItemGuid, Entry.Count);
+		if (Removed <= 0)
+		{
+			Pickup->Destroy();
+			continue;
+		}
+		Pickup->PrimaryPickupItemEntry.Count = Removed;
+		++Spawned;
 	}
-	UE_LOG(LogTemp, Display, TEXT("LootTransfer: elimination drop pc=%s items=%d dropped=%d"), *GetNameSafe(VictimController), Items.Num(), Spawned);
+	UE_LOG(LogTemp, Display, TEXT("LootTransfer: elimination drop pc=%s items=%d dropped=%d"), *GetNameSafe(VictimController), ItemGuids.Num(), Spawned);
 	return Spawned;
 }

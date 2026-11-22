@@ -67,6 +67,7 @@ Aiming and camera|client|Check shoulder camera positioning, ADS zoom and first-p
 Aiming and camera|client|Check recoil presentation and controller aim-assist response
 ## Items, inventory and loot
 Inventory operations|implemented|Handle quickbar selection, pickup, swap and drop on the server|01a191ca
+Inventory operations|implemented|Transfer successfully spawned elimination drops out of the victim inventory|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
 Inventory operations|open|Verify five loadout slots and separate pickaxe, trap and material storage
 Inventory operations|open|Verify slot reorder, stack split and auto-pickup rules on two clients
 Inventory operations|open|Verify item use and gain, spend or loss reconcile with inventory
