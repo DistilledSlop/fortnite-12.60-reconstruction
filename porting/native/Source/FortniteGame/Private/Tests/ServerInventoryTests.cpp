@@ -424,6 +424,25 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 				return Action.Action == EFortDelayedQuickBarAction::Add && Action.ItemGuid == SecondGuid;
 			}));
 
+		const auto& PendingActions = Controller->DelayedQuickBarActions.Items;
+		if (TestTrue(TEXT("Multiple quickbar updates await acknowledgment"), PendingActions.Num() >= 3))
+		{
+			TArray<uint32> ExpectedRemainingIds;
+			for (int32 Index = 1; Index < PendingActions.Num(); ++Index)
+			{
+				ExpectedRemainingIds.Add(PendingActions[Index].ActionId);
+			}
+			const TArray<uint32> ProcessedIds = {PendingActions[0].ActionId};
+			Controller->ServerAcknowledgeDelayedQuickBarAction(ProcessedIds);
+			TArray<uint32> ActualRemainingIds;
+			for (const FDelayedQuickBarAction& Action : PendingActions)
+			{
+				ActualRemainingIds.Add(Action.ActionId);
+			}
+			TestTrue(TEXT("Partial acknowledgment preserves the order of pending quickbar updates"),
+				ActualRemainingIds == ExpectedRemainingIds);
+		}
+
 		UFortWeaponRangedItemDefinition* ExtraWeapon = NewObject<UFortWeaponRangedItemDefinition>(Inventory);
 		ExtraWeapon->ItemType = EFortItemType::WeaponRanged;
 		ExtraWeapon->MaxStackSize = FScalableFloat(1.0f);

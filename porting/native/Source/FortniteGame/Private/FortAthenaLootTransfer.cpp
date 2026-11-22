@@ -1486,16 +1486,13 @@ void FortAthenaLootTransfer::AcknowledgeDelayedQuickBarActions(AFortPlayerContro
 		return;
 	}
 
-	bool bRemovedAny = false;
-	for (int32 i = Controller->DelayedQuickBarActions.Items.Num() - 1; i >= 0; --i)
-	{
-		if (ProcessedActionIds.Contains(Controller->DelayedQuickBarActions.Items[i].ActionId))
+	// Pending adds and removes must keep their original order after a partial acknowledgment.
+	const int32 RemovedCount = Controller->DelayedQuickBarActions.Items.RemoveAll(
+		[&ProcessedActionIds](const FDelayedQuickBarAction& Action)
 		{
-			Controller->DelayedQuickBarActions.Items.RemoveAtSwap(i);
-			bRemovedAny = true;
-		}
-	}
-	if (bRemovedAny)
+			return ProcessedActionIds.Contains(Action.ActionId);
+		});
+	if (RemovedCount > 0)
 	{
 		Controller->DelayedQuickBarActions.MarkArrayDirty();
 		UE_LOG(LogTemp, Display, TEXT("LootTransfer: Acked %d delayed quickbar actions pc=%s remaining=%d"),
