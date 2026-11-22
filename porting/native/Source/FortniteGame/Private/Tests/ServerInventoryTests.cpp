@@ -623,6 +623,20 @@ bool FServerInventoryStacksTest::RunTest(const FString&)
 		FortAthenaLootTransfer::HandlePickupWithSwap(Pawn, SwapPickup, FGuid::NewGuid(), 0.25f, FVector::ZeroVector, false, true));
 	TestTrue(TEXT("Rejected swap preserves the held stack"), Inventory->NativeFindItemByGuid(HeldGuid) == WideItem);
 	TestEqual(TEXT("Rejected swap preserves the world pickup"), SwapPickup->PrimaryPickupItemEntry.Count, 1);
+	WideWeapon->bCanBeDropped = false;
+	TestFalse(TEXT("A protected held item cannot be swapped even by its exact GUID"),
+		FortAthenaLootTransfer::HandlePickupWithSwap(Pawn, SwapPickup, HeldGuid, 0.25f, FVector::ZeroVector, false, true));
+	TestTrue(TEXT("Rejected protected swap preserves its inventory item"), Inventory->NativeFindItemByGuid(HeldGuid) == WideItem);
+	WideWeapon->bCanBeDropped = true;
+	TestTrue(TEXT("A valid explicit swap accepts the replacement"),
+		FortAthenaLootTransfer::HandlePickupWithSwap(Pawn, SwapPickup, HeldGuid, 0.25f, FVector::ZeroVector, false, true));
+	TestNull(TEXT("The swap removes the exact outgoing inventory GUID"), Inventory->NativeFindItemByGuid(HeldGuid));
+	const UFortWorldItem* Replacement = Inventory->NativeFindWorldItemByDefinition(WideWeapon, true);
+	if (TestNotNull(TEXT("The replacement is granted"), Replacement))
+	{
+		TestEqual(TEXT("The replacement contains one item"), Replacement->ItemEntry.Count, 1);
+	}
+	TestEqual(TEXT("The replacement pickup is depleted"), SwapPickup->PrimaryPickupItemEntry.Count, 0);
 	return true;
 }
 

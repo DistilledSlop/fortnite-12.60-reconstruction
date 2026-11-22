@@ -363,7 +363,7 @@ namespace
 		P_FINISH;
 		P_NATIVE_BEGIN;
 		TArray<UFortWorldItem*> Items;
-		const AFortInventory* Inventory = PlayerController ? PlayerController->WorldInventory : nullptr;
+		AFortInventory* Inventory = PlayerController ? PlayerController->WorldInventory : nullptr;
 		UFortWorldItem* WorldItem = Cast<UFortWorldItem>(Item);
 		if (Inventory && WorldItem && Inventory->NativeFindItemByGuid(WorldItem->NativeGetItemGuid()) == WorldItem)
 		{
