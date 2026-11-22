@@ -548,6 +548,8 @@ FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnCon
 
 	TArray<AFortPickupAthena*> SpawnedPickups;
 	SpawnedPickups.Reserve(Drops.Num());
+	bool bContainerAvailable = true;
+	const FortAthenaLootRoll::FDrop* InterruptedDrop = nullptr;
 	for (int32 Index = 0; Index < Drops.Num(); ++Index)
 	{
 		const FortAthenaLootRoll::FDrop& Drop = Drops[Index];
@@ -558,37 +560,39 @@ FortAthenaLootSearch::EContainerLootResult FortAthenaLootSearch::RollAndSpawnCon
 		const FVector SpawnLoc = ComputeDropSpawnLocation(Container, WorldOrigin, Index, Drops.Num(), ScatterRadius, Random);
 		AFortPickupAthena* Pickup = Cast<AFortPickupAthena>(FortAthenaLoot::SpawnResolvedPickup(
 			World, SpawnLoc, Drop.Definition, Drop.Count, Drop.Level, LoadedAmmo, &WorldOrigin));
-		const bool bPickupSpawned = IsValid(Pickup);
-		if (bPickupSpawned)
-		{
+		if (IsValid(Pickup) && !Pickup->IsActorBeingDestroyed())
 			SpawnedPickups.Add(Pickup);
-		}
+		else
+			Pickup = nullptr;
 
 		// Spawn callbacks can destroy the source before its searched state is committed.
-		const bool bContainerAvailable = IsValid(Container) && !Container->IsActorBeingDestroyed() && !Container->bDestroyed;
-		if (!bPickupSpawned || !bContainerAvailable)
+		bContainerAvailable = IsValid(Container) && !Container->IsActorBeingDestroyed() && !Container->bDestroyed;
+		if (!Pickup || !bContainerAvailable)
 		{
-			// Keep a failed roll retryable without leaving part of its loot in the world.
-			for (AFortPickupAthena* Spawned : SpawnedPickups)
-			{
-				if (IsValid(Spawned))
-				{
-					Spawned->Destroy();
-				}
-			}
-			UE_LOG(LogTemp, Warning, TEXT("LootSearch: pickup spawn failed container=%s group=%s item=%s pickupSpawned=%d containerAvailable=%d"),
-				*GetNameSafe(Container), *TierGroup.ToString(), *GetNameSafe(Drop.Definition), bPickupSpawned, bContainerAvailable);
-			if (bContainerAvailable)
-				RetrySeeds.Add(ContainerKey, Seed);
-			return bContainerAvailable ? EContainerLootResult::SpawnFailed : EContainerLootResult::RollFailed;
+			InterruptedDrop = &Drop;
+			break;
 		}
+	}
+
+	// A later spawn callback can also remove an earlier pickup.
+	if (InterruptedDrop || SpawnedPickups.ContainsByPredicate([](const AFortPickupAthena* Pickup)
+		{ return !IsValid(Pickup) || Pickup->IsActorBeingDestroyed(); }))
+	{
+		for (AFortPickupAthena* Pickup : SpawnedPickups)
+		{
+			if (IsValid(Pickup))
+				Pickup->Destroy();
+		}
+		UE_LOG(LogTemp, Warning, TEXT("LootSearch: pickup batch rolled back container=%s group=%s interruptedItem=%s containerAvailable=%d"),
+			*GetNameSafe(Container), *TierGroup.ToString(),
+			InterruptedDrop ? *GetNameSafe(InterruptedDrop->Definition) : TEXT("None"), bContainerAvailable);
+		if (bContainerAvailable)
+			RetrySeeds.Add(ContainerKey, Seed);
+		return bContainerAvailable ? EContainerLootResult::SpawnFailed : EContainerLootResult::RollFailed;
 	}
 
 	for (const AFortPickupAthena* Pickup : SpawnedPickups)
 	{
-		if (!IsValid(Pickup))
-			continue;
-
 		const FFortItemEntry& Entry = Pickup->PrimaryPickupItemEntry;
 		const FVector& Rest = Pickup->PickupLocationData.FinalTossRestLocation;
 		UE_LOG(LogTemp, Display, TEXT("LootSearch:  spawned item=%s count=%d level=%d ammo=%d loc=(%.0f,%.0f,%.0f) source=%s pickupItemGuid=%s"),
