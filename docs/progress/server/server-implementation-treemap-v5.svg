@@ -18,7 +18,7 @@
 .grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style>
 <rect class="tm-bg" width="1000" height="720"/>
 <text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: 63.5% implemented</text>
-<text x="12" y="48" font-size="12" class="tm-head">113 of 178 server checks implemented | 78 verified | 65 open</text>
+<text x="12" y="48" font-size="12" class="tm-head">113 of 178 server checks implemented | 79 verified | 65 open</text>
 <g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Lobby, accounts and Epic service compatibility
 60.4% complete (32/53)
@@ -448,7 +448,7 @@ Verified: Confirm the cooked bandage ability charges one unit of its own invento
 Verified: Debit the last bandage at authoritative ability cost commit with or without a cached controller and reject repayment from the depleted stack
 Verified: Resolve the cooked bandage stack cap of 15 and debit successive charges from the same stack
 Verified: Reject item-use charges against an unrelated inventory stack
-Implemented: Activate a cooked bandage at the default montage rate, restore health and debit its stack through authoritative GAS. Headless assertions passed with a native weapon source; the test still reports cooked asset load errors
+Verified: Activate the cooked bandage primary ability with a native weapon source, restore 15 health and remove its last stack unit through authoritative GAS without a cached controller at activation
 Implemented: Load the cooked upgrade bench table and resolve recipes by weapon and direction
 Implemented: Expose cooked recipe lookup to the upgrade bench actor and its Blueprints
 Open: Upgrade a weapon at a bench and charge the correct materials</title>

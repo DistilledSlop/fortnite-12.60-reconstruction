@@ -21,8 +21,6 @@
 #include "FortHarvestBuilding.h"
 #include "FortWeaponReload.h"
 #include "Misc/AutomationTest.h"
-#include "Misc/CommandLine.h"
-#include "Misc/Parse.h"
 #include "Misc/ScopeExit.h"
 #include "ServerDamageExecution.h"
 #include "UFortAbilitySystemComponent.h"
@@ -775,11 +773,6 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 	TestFalse(TEXT("Commit rejects an unrelated source stack"), AbilityCDO->CommitAbilityCost(Handle, &ActorInfo, ActivationInfo));
 	AbilityCDO->ApplyCost(Handle, &ActorInfo, ActivationInfo);
 	TestEqual(TEXT("Applying the cost preserves the unrelated stack"), OtherItem->ItemEntry.Count, 2);
-	if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteInventoryAbilities")))
-	{
-		AddInfo(TEXT("Equip-and-use coverage requires -FortniteInventoryAbilities."));
-		return true;
-	}
 	Pawn = World->SpawnActor<AFortPlayerPawnAthena>(FVector(0, 0, 16000), FRotator::ZeroRotator);
 	AFortPlayerStateAthena* PlayerState = Cast<AFortPlayerStateAthena>(Controller->PlayerState);
 	if (!TestNotNull(TEXT("Consumable pawn"), Pawn) || !TestNotNull(TEXT("Consumable player state"), PlayerState))
@@ -818,6 +811,7 @@ bool FServerConsumableCostDataTest::RunTest(const FString&)
 	Equipped->ItemEntryGuid = LastBandageGuid;
 	Pawn->CurrentWeapon = Equipped;
 	Pawn->CurrentWeaponList.Add(Equipped);
+	// Grant the cooked primary ability directly so the headless test can run with the inventory ability audit disabled.
 	const FGameplayAbilitySpecHandle PrimaryHandle = PawnASC->GiveAbility(
 		FGameplayAbilitySpec(Ability->GetClass(), 1, INDEX_NONE, Equipped));
 	if (!TestTrue(TEXT("Cooked bandage ability is granted"), PrimaryHandle.IsValid()))
