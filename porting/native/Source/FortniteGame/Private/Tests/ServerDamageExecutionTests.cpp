@@ -70,13 +70,16 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	AFortPlayerPawnAthena* Downed = World->SpawnActor<AFortPlayerPawnAthena>(
 		FVector(175, 0, 12000), FRotator::ZeroRotator, SpawnParameters);
 	AAIController* CarryController = World->SpawnActor<AAIController>();
+	AAIController* DownedController = World->SpawnActor<AAIController>();
 	AFortPlayerStateAthena* CarrierState = World->SpawnActor<AFortPlayerStateAthena>();
 	AFortPlayerStateAthena* DownedState = World->SpawnActor<AFortPlayerStateAthena>();
 	if (TestNotNull(TEXT("Carry fixture carrier"), Carrier) && TestNotNull(TEXT("Carry fixture target"), Downed) &&
 		TestNotNull(TEXT("Carry fixture controller"), CarryController) &&
+		TestNotNull(TEXT("Downed fixture controller"), DownedController) &&
 		TestNotNull(TEXT("Carry fixture carrier state"), CarrierState) && TestNotNull(TEXT("Carry fixture target state"), DownedState))
 	{
 		CarryController->Possess(Carrier);
+		DownedController->Possess(Downed);
 		Carrier->SetPlayerState(CarrierState);
 		Downed->SetPlayerState(DownedState);
 		CarrierState->TeamIndex = DownedState->TeamIndex = 3;
@@ -102,14 +105,61 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 			}
 		}
 	}
-	for (AActor* Fixture : {static_cast<AActor*>(CarryController), static_cast<AActor*>(Carrier),
-		static_cast<AActor*>(Downed), static_cast<AActor*>(CarrierState), static_cast<AActor*>(DownedState)})
+	const TArray<TWeakObjectPtr<AActor>> Fixtures = {
+		CarryController, DownedController, Carrier, Downed, CarrierState, DownedState
+	};
+	if (Carrier && Downed && CarryController && DownedController && CarrierState && DownedState)
 	{
-		if (IsValid(Fixture))
+		Carrier->GetCharacterMovement()->SetComponentTickEnabled(false);
+		Downed->GetCharacterMovement()->SetComponentTickEnabled(false);
+		Downed->SetActorLocation(FVector(175, 0, 12000));
+		Downed->ReviveFromDBNOTime = 0.2f;
+
+		UFortAbilitySystemComponent* DownedASC = NewObject<UFortAbilitySystemComponent>(Downed);
+		Downed->AbilitySystemComponent = DownedASC;
+		DownedASC->RegisterComponent();
+		DownedASC->InitAbilityActorInfo(Downed, Downed);
+		Downed->HealthSet = NewObject<UFortHealthSet>(Downed);
+		DownedASC->AddAttributeSetSubobject(Downed->HealthSet);
+		Downed->bHealthSynced = true;
+		Downed->SetMaxHealth(100.0f);
+		Downed->SetHealth(60.0f);
+
+		TestTrue(TEXT("A standing teammate can start a timed revive"), FortAthenaHealth::TryStartRevive(CarryController, Downed));
+		Carrier->ServerSetInteractingItem(Downed, true);
+		TestNull(TEXT("Clearing interaction releases the reviver's target"), Carrier->ItemInteractionActor);
+		ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, Fixtures]()
 		{
-			Fixture->Destroy();
-		}
+			AFortPlayerPawnAthena* Player = Cast<AFortPlayerPawnAthena>(Fixtures[3].Get());
+			AController* Reviver = Cast<AController>(Fixtures[0].Get());
+			if (TestNotNull(TEXT("Revive target persists after cancellation"), Player))
+			{
+				TestTrue(TEXT("Cancellation leaves the player downed and clears revive progress"),
+					Player->bIsDBNO && Player->DBNORevivalStacking == 0);
+				TestEqual(TEXT("Cancellation leaves health unchanged"), Player->GetHealth(), 60.0f);
+				TestTrue(TEXT("A cancelled revive can be restarted"), FortAthenaHealth::TryStartRevive(Reviver, Player));
+			}
+		}), 0.4f));
 	}
+	ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, Fixtures]()
+	{
+		AFortPlayerPawnAthena* Helper = Cast<AFortPlayerPawnAthena>(Fixtures[2].Get());
+		AFortPlayerPawnAthena* Player = Cast<AFortPlayerPawnAthena>(Fixtures[3].Get());
+		if (Helper && Player && Fixtures[0].IsValid() && Fixtures[1].IsValid() && Fixtures[4].IsValid() && Fixtures[5].IsValid())
+		{
+			TestFalse(TEXT("A completed revive clears the downed state"), Player->bIsDBNO);
+			TestEqual(TEXT("A completed revive restores 30 health"), Player->GetHealth(), 30.0f);
+			TestTrue(TEXT("A completed revive clears both interaction states"),
+				!Helper->ItemInteractionActor && Player->DBNORevivalStacking == 0);
+		}
+		for (const TWeakObjectPtr<AActor>& Fixture : Fixtures)
+		{
+			if (AActor* Actor = Fixture.Get())
+			{
+				Actor->Destroy();
+			}
+		}
+	}), 0.4f));
 
 	AFortPawn* Pawn = World->SpawnActor<AFortPawn>(FVector(0, 0, 10000), FRotator::ZeroRotator, SpawnParameters);
 	if (!TestNotNull(TEXT("Damage test pawn"), Pawn))
