@@ -1249,19 +1249,25 @@ bool FortAthenaLootTransfer::AttemptInventoryDrop(AFortPlayerController* Control
 		}
 	}
 
-	FPlayerQuickBarState& State = GetOrCreateState(Controller);
-	const FSlotLocation OldLoc = FindItemSlot(State, ItemGuid);
-	if (bDroppingEntireStack && OldLoc.IsValid())
+	const int32 Removed = FortAthenaInventory::RemoveItem(Controller, ItemGuid, DropCount);
+	if (Removed <= 0)
 	{
-		EnqueueDelayedQuickBarAction(Controller, State, EFortDelayedQuickBarAction::Remove,
-			ItemGuid, Def, OldLoc.Bar, OldLoc.Slot, true);
-		if (TArray<FGuid>* Slots = State.GetBarArray(OldLoc.Bar))
+		if (SpawnedPickup)
 		{
-			ClearGuidFromSlots(*Slots, ItemGuid);
+			SpawnedPickup->Destroy();
+		}
+		return false;
+	}
+	if (SpawnedPickup)
+	{
+		SpawnedPickup->PrimaryPickupItemEntry.Count = Removed;
+		if (Removed < DropCount)
+		{
+			SpawnedPickup->PrimaryPickupItemEntry.LoadedAmmo = 0;
 		}
 	}
 
-	const int32 Removed = FortAthenaInventory::RemoveItem(Controller, ItemGuid, DropCount);
+	FPlayerQuickBarState& State = GetOrCreateState(Controller);
 	UFortWorldItem* RemainingItem = Controller->WorldInventory->NativeFindItemByGuid(ItemGuid);
 	const bool bNowGone = (!RemainingItem || RemainingItem->ItemEntry.Count <= 0);
 
@@ -1281,7 +1287,7 @@ bool FortAthenaLootTransfer::AttemptInventoryDrop(AFortPlayerController* Control
 		SpawnedPickup ? *SpawnedPickup->GetName() : TEXT("None"),
 		OutgoingEntry.LoadedAmmo);
 
-	return Removed > 0;
+	return true;
 }
 
 void FortAthenaLootTransfer::AcknowledgeDelayedQuickBarActions(AFortPlayerController* Controller,
