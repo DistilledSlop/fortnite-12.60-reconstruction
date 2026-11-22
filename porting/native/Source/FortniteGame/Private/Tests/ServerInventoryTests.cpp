@@ -821,6 +821,36 @@ bool FServerWeaponUpgradeRecipeTest::RunTest(const FString&)
 	Table->AddRow(TEXT("ConflictingCost"), Vertical);
 	TestNull(TEXT("Conflicting prices reject the recipe even when the result weapon matches"),
 		FWeaponUpgradeItemRow::FindRecipe(Table, Source, Vertical.Direction));
+
+	if (IsRunningDedicatedServer() && FortAthenaInventory::IsEnabled())
+	{
+		const UDataTable* CookedTable = LoadObject<UDataTable>(nullptr,
+			TEXT("/Game/Items/Datatables/AthenaWumbaData.AthenaWumbaData"));
+		if (!TestNotNull(TEXT("Cooked upgrade recipes"), CookedTable))
+		{
+			return false;
+		}
+		const FWeaponUpgradeItemRow* Pistol = CookedTable->FindRow<FWeaponUpgradeItemRow>(TEXT("62"), TEXT("Inventory test"));
+		const FWeaponUpgradeItemRow* Rifle = CookedTable->FindRow<FWeaponUpgradeItemRow>(TEXT("1001"), TEXT("Inventory test"));
+		if (!TestNotNull(TEXT("Cooked pistol upgrade"), Pistol) || !TestNotNull(TEXT("Cooked rifle sidegrade"), Rifle))
+		{
+			return false;
+		}
+		TestTrue(TEXT("Cooked pistol recipe resolves even when its price tier differs from the result rarity"),
+			Pistol->UpgradedWeaponDef && FWeaponUpgradeItemRow::FindRecipe(CookedTable, Pistol->CurrentWeaponDef,
+				EFortWeaponUpgradeDirection::Vertical) == Pistol);
+		TestTrue(TEXT("Cooked pistol uses the Very Rare material selectors"),
+			Pistol->WoodCost == EFortWeaponUpgradeCosts::WoodVeryRare &&
+			Pistol->MetalCost == EFortWeaponUpgradeCosts::MetalVeryRare &&
+			Pistol->BrickCost == EFortWeaponUpgradeCosts::BrickVeryRare);
+		TestTrue(TEXT("Cooked rifle resolves to its horizontal recipe"),
+			Rifle->UpgradedWeaponDef && FWeaponUpgradeItemRow::FindRecipe(CookedTable, Rifle->CurrentWeaponDef,
+				EFortWeaponUpgradeDirection::Horizontal) == Rifle);
+		TestTrue(TEXT("Cooked rifle uses the Common horizontal material selectors"),
+			Rifle->WoodCost == EFortWeaponUpgradeCosts::HorizontalWoodCommon &&
+			Rifle->MetalCost == EFortWeaponUpgradeCosts::HorizontalMetalCommon &&
+			Rifle->BrickCost == EFortWeaponUpgradeCosts::HorizontalBrickCommon);
+	}
 	return true;
 }
 
