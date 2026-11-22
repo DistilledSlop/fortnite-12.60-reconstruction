@@ -115,7 +115,8 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 			TestTrue(TEXT("The drop RPC removes the carry links and attachment"),
 				!Carrier->DBNOHoistee && !Downed->DBNOHoisterData.DBNOHoister && !Downed->GetAttachParentActor());
 			Downed->SetActorLocation(FVector(175, 0, 12000));
-			if (TestTrue(TEXT("A dropped player can be picked up again"), FortAthenaHealth::TryCarryDownedPlayer(CarryController, Downed)))
+			Carrier->ServerHoistDBNOPlayer(Downed);
+			if (TestTrue(TEXT("The hoist RPC can pick up a dropped player"), Carrier->DBNOHoistee == Downed))
 			{
 				Carrier->ThrowCarriedPlayerStrengthXY = 900.0f;
 				Carrier->ThrowCarriedPlayerStrengthZ = 450.0f;
@@ -168,6 +169,22 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 					Player->bIsDBNO && Player->DBNORevivalStacking == 0);
 				TestEqual(TEXT("Cancellation leaves health unchanged"), Player->GetHealth(), 60.0f);
 				TestTrue(TEXT("A cancelled revive can be restarted"), FortAthenaHealth::TryStartRevive(Reviver, Player));
+				Player->SetActorLocation(FVector(600, 0, 12000));
+			}
+		}), 0.4f));
+		ADD_LATENT_AUTOMATION_COMMAND(FDelayedFunctionLatentCommand(([this, Fixtures]()
+		{
+			AFortPlayerPawnAthena* Helper = Cast<AFortPlayerPawnAthena>(Fixtures[2].Get());
+			AFortPlayerPawnAthena* Player = Cast<AFortPlayerPawnAthena>(Fixtures[3].Get());
+			AController* Reviver = Cast<AController>(Fixtures[0].Get());
+			if (Helper && Player && Reviver)
+			{
+				TestTrue(TEXT("Leaving revive range cancels the timer and clears both interaction states"),
+					Player->bIsDBNO && Player->DBNORevivalStacking == 0 && !Helper->ItemInteractionActor);
+				TestEqual(TEXT("Leaving revive range leaves downed health unchanged"), Player->GetHealth(), 60.0f);
+				TestFalse(TEXT("A revive cannot start outside range"), FortAthenaHealth::TryStartRevive(Reviver, Player));
+				Player->SetActorLocation(FVector(175, 0, 12000));
+				TestTrue(TEXT("Returning to range allows another revive"), FortAthenaHealth::TryStartRevive(Reviver, Player));
 			}
 		}), 0.4f));
 	}

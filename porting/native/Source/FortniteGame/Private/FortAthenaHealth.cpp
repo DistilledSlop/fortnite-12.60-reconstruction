@@ -253,6 +253,18 @@ namespace
 		}
 	}
 
+	void ExecHoistDownedPlayer(UObject* Context, FFrame& Stack, RESULT_DECL)
+	{
+		P_GET_OBJECT(AFortPlayerPawn, Target);
+		P_FINISH;
+		AFortPlayerPawn* Carrier = Cast<AFortPlayerPawn>(Context);
+		AController* Controller = Carrier ? Carrier->GetController() : nullptr;
+		if (Controller && Controller->GetPawn() == Carrier)
+		{
+			FortAthenaHealth::TryCarryDownedPlayer(Controller, Target);
+		}
+	}
+
 	void ExecDropCarriedPlayer(UObject* Context, FFrame& Stack, RESULT_DECL)
 	{
 		P_FINISH;
@@ -1348,6 +1360,10 @@ void FortAthenaHealth::InstallRpcOverrides()
 		Interaction->SetNativeFunc(&ExecClearReviveInteraction);
 	}
 
+	if (UFunction* Hoist = AFortPlayerPawn::StaticClass()->FindFunctionByName(TEXT("ServerHoistDBNOPlayer")))
+	{
+		Hoist->SetNativeFunc(&ExecHoistDownedPlayer);
+	}
 	if (UFunction* Drop = AFortPlayerPawn::StaticClass()->FindFunctionByName(TEXT("ServerDropCarriedPlayer")))
 	{
 		Drop->SetNativeFunc(&ExecDropCarriedPlayer);
