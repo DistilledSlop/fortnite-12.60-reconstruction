@@ -78,11 +78,14 @@ Inventory operations|implemented|Activate the actual assigned quickbar slot afte
 Inventory operations|verified|Exercise capped grants, partial-stack top-ups and multi-stack spending against replicated inventory|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|implemented|Reject swaps that cannot grant a single-stack item before dropping the outgoing item|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
 Inventory operations|verified|Exercise partial world pickup, split drop and remainder pickup on the dedicated server|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
+Inventory operations|verified|Reject repeat claims, reconcile discarded stacks and preserve empty magazines through drop and pickup|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
+Inventory operations|verified|Transfer eligible elimination loot once and preserve protected stacks|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|open|Verify five loadout slots and separate pickaxe, trap and material storage
 Inventory operations|open|Verify slot reorder, stack split and auto-pickup rules on two clients
 Inventory operations|verified|Confirm the cooked bandage ability charges one unit of its own inventory definition at commit|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|verified|Debit the last bandage at authoritative ability cost commit and reject repayment from the depleted stack|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|verified|Resolve the cooked bandage stack cap of 15 and debit successive charges from the same stack|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
+Inventory operations|verified|Reject item-use charges against an unrelated inventory stack|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|open|Verify item use and gain, spend or loss reconcile with inventory
 Inventory operations|implemented|Load the cooked upgrade bench table and resolve recipes by weapon and direction|porting/native/Source/FortniteGame/Private/WeaponUpgradeItemRow.cpp
 Inventory operations|implemented|Expose cooked recipe lookup to the upgrade bench actor and its Blueprints|porting/native/Source/FortniteGame/Private/WeaponUpgradeItemRow.cpp
