@@ -318,6 +318,31 @@ bool FortAthenaHealth::TryCarryDownedPlayer(AController* Controller, AFortPawn* 
 
 namespace
 {
+	bool IsStanding(const AFortPlayerControllerAthena* Controller)
+	{
+		const AFortPawn* Pawn = Controller ? Cast<AFortPawn>(Controller->GetPawn()) : nullptr;
+		return Pawn && !Pawn->bIsDying && !Pawn->bIsDBNO && Pawn->GetHealth() > 0.0f;
+	}
+
+	bool HasStandingTeammate(const AFortPlayerPawnAthena* Player)
+	{
+		AFortPlayerControllerAthena* Controller = Cast<AFortPlayerControllerAthena>(Player->GetController());
+		const AFortPlayerStateAthena* PlayerState = Controller ? Cast<AFortPlayerStateAthena>(Controller->PlayerState) : nullptr;
+		const auto& Alive = GetAlivePlayers();
+		if (!PlayerState || !Alive.Contains(Controller))
+		{
+			return false;
+		}
+
+		return Alive.ContainsByPredicate([Controller, PlayerState](const auto& Entry)
+		{
+			const AFortPlayerControllerAthena* Teammate = Entry.Get();
+			const AFortPlayerStateAthena* TeammateState = Teammate ? Cast<AFortPlayerStateAthena>(Teammate->PlayerState) : nullptr;
+			return Teammate != Controller && TeammateState && TeammateState->TeamIndex == PlayerState->TeamIndex &&
+				IsStanding(Teammate);
+		});
+	}
+
 	bool TryKnockPlayer(AFortPawn* Pawn, const FGameplayTagContainer& DamageTags,
 	                    AController* InstigatedBy, AActor* DamageCauser)
 	{
@@ -332,23 +357,7 @@ namespace
 			return false;
 		}
 
-		AFortPlayerControllerAthena* Controller = Cast<AFortPlayerControllerAthena>(Player->GetController());
-		const AFortPlayerStateAthena* PlayerState = Controller ? Cast<AFortPlayerStateAthena>(Controller->PlayerState) : nullptr;
-		const auto& Alive = GetAlivePlayers();
-		if (!PlayerState || !Alive.Contains(Controller))
-		{
-			return false;
-		}
-
-		const bool bHasStandingTeammate = Alive.ContainsByPredicate([Controller, PlayerState](const auto& Entry)
-		{
-			const AFortPlayerControllerAthena* Teammate = Entry.Get();
-			const AFortPlayerStateAthena* TeammateState = Teammate ? Cast<AFortPlayerStateAthena>(Teammate->PlayerState) : nullptr;
-			const AFortPawn* TeammatePawn = Teammate ? Cast<AFortPawn>(Teammate->GetPawn()) : nullptr;
-			return Teammate != Controller && TeammateState && TeammateState->TeamIndex == PlayerState->TeamIndex &&
-				TeammatePawn && !TeammatePawn->bIsDying && !TeammatePawn->bIsDBNO && TeammatePawn->GetHealth() > 0.0f;
-		});
-		if (!bHasStandingTeammate)
+		if (!HasStandingTeammate(Player))
 		{
 			return false;
 		}
@@ -388,7 +397,8 @@ namespace
 				{
 					ReleaseCarryConnections(Downed);
 				}
-				FortAthenaHealth::ApplyDamage(Downed, 2.0f, DamageTags, WeakInstigator.Get(), WeakCauser.Get(), true);
+				const float Damage = HasStandingTeammate(Downed) ? 2.0f : Downed->GetHealth();
+				FortAthenaHealth::ApplyDamage(Downed, Damage, DamageTags, WeakInstigator.Get(), WeakCauser.Get(), true);
 			}), 1.2f, true);
 		return true;
 	}
@@ -508,6 +518,7 @@ bool FortAthenaHealth::GetSingleAliveTeam(AFortGameModeAthena* GameMode, TArray<
 	OutTeam.Reset();
 	if (!GameMode || RosterMode.Get() != GameMode) return false;
 	int32 Team = INDEX_NONE;
+	bool bHasStandingPlayer = false;
 	for (const TWeakObjectPtr<AFortPlayerControllerAthena>& Weak : GetAlivePlayers())
 	{
 		AFortPlayerControllerAthena* PC = Weak.Get();
@@ -516,8 +527,10 @@ bool FortAthenaHealth::GetSingleAliveTeam(AFortGameModeAthena* GameMode, TArray<
 		if (Team == INDEX_NONE) Team = PS->TeamIndex;
 		else if (Team != PS->TeamIndex) { OutTeam.Reset(); return false; }
 		OutTeam.Add(PC);
+		bHasStandingPlayer |= IsStanding(PC);
 	}
-	return OutTeam.Num() > 0;
+	if (!bHasStandingPlayer) OutTeam.Reset();
+	return bHasStandingPlayer;
 }
 
 int32 FortAthenaHealth::GetAliveTeamCount(AFortGameModeAthena* GameMode)
