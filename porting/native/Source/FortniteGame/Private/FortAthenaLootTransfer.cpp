@@ -1637,6 +1637,14 @@ void FortAthenaLootTransfer::BeginServerToss(AFortPickup* Pickup, const FVector&
 			M->SetComponentTickEnabled(false);
 		}
 		Target->SetActorLocation(Final);
+		const FVector RestLocation = Target->GetActorLocation();
+		if (!RestLocation.Equals(Final, 1.0f))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("LootTransfer: pickup %s stopped at %s instead of %s"),
+				*Target->GetName(), *RestLocation.ToString(), *Final.ToString());
+			Target->PickupLocationData.LootFinalPosition = RestLocation;
+			Target->PickupLocationData.FinalTossRestLocation = RestLocation;
+		}
 		Target->NetUpdateFrequency = 10.0f;
 		Target->PickupLocationData.TossState = EFortPickupTossState::AtRest;
 		Target->ForceNetUpdate();
