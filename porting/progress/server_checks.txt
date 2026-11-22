@@ -14,6 +14,7 @@ DBNO|verified|Apply configured forward and upward throw velocity|d714d0e5
 DBNO|verified|Clear a pending throw when a downed player is picked up again before the movement tick|7112068e
 DBNO|verified|Complete and cancel a timed teammate revive|2b0c4d87
 DBNO|verified|Set the replicated revive deadline on the server and clear it on cancellation or completion|porting/native/Source/FortniteGame/Private/Tests/ServerDamageExecutionTests.cpp
+DBNO|implemented|Clear the revive deadline immediately when the target is eliminated|porting/native/Source/FortniteGame/Private/FortAthenaHealth.cpp
 DBNO|verified|Keep revived health through the old bleed deadline and start a new bleed cycle on the next knock|2d2d3589
 DBNO|verified|Suppress knocks when a team playlist disables DBNO|ba715d19
 DBNO|implemented|Apply active DBNO mutator overrides before falling back to the playlist|porting/native/Source/FortniteGame/Private/FortAthenaHealth.cpp

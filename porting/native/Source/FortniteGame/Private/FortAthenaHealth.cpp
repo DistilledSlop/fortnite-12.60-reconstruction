@@ -1205,6 +1205,15 @@ namespace
 		ReleaseCarryConnections(VictimPawn);
 		ClearReviveInteraction(VictimPawn);
 		VictimPawn->bWasDBNOOnDeath = VictimPawn->bIsDBNO;
+		if (AFortPlayerPawnAthena* Player = Cast<AFortPlayerPawnAthena>(VictimPawn))
+		{
+			if (Player->DBNORevivalStacking != 0)
+			{
+				Player->DBNORevivalStacking = 0;
+				Player->ServerWorldTimeRevivalTime = -1.0f;
+				Player->ForceNetUpdate();
+			}
+		}
 		if (UCharacterMovementComponent* MoveComp = VictimPawn->GetCharacterMovement())
 		{
 			MoveComp->DisableMovement();
