@@ -197,6 +197,74 @@ AFortPlayerControllerAthena* FortAthenaHealth::GetSoleSurvivor(AFortGameModeAthe
 	return GetAlivePlayers()[0].Get();
 }
 
+namespace
+{
+	bool TryKnockPlayer(AFortPawn* Pawn, const FGameplayTagContainer& DamageTags,
+	                    AController* InstigatedBy, AActor* DamageCauser)
+	{
+		AFortPlayerPawnAthena* Player = Cast<AFortPlayerPawnAthena>(Pawn);
+		UWorld* World = Player ? Player->GetWorld() : nullptr;
+		AFortGameModeAthena* Mode = World ? Cast<AFortGameModeAthena>(World->GetAuthGameMode()) : nullptr;
+		const AFortGameStateAthena* State = World ? World->GetGameState<AFortGameStateAthena>() : nullptr;
+		const UFortPlaylistAthena* Playlist = State ? State->GetCurrentPlaylistAthena() : nullptr;
+		if (!Mode || RosterMode.Get() != Mode || !Playlist || Playlist->MaxTeamSize <= 1 ||
+			Player->bIsDBNO || Player->bIsDying || !Player->HasAuthority())
+		{
+			return false;
+		}
+
+		AFortPlayerControllerAthena* Controller = Cast<AFortPlayerControllerAthena>(Player->GetController());
+		const AFortPlayerStateAthena* PlayerState = Controller ? Cast<AFortPlayerStateAthena>(Controller->PlayerState) : nullptr;
+		const auto& Alive = GetAlivePlayers();
+		if (!PlayerState || !Alive.Contains(Controller))
+		{
+			return false;
+		}
+
+		const bool bHasStandingTeammate = Alive.ContainsByPredicate([Controller, PlayerState](const auto& Entry)
+		{
+			const AFortPlayerControllerAthena* Teammate = Entry.Get();
+			const AFortPlayerStateAthena* TeammateState = Teammate ? Cast<AFortPlayerStateAthena>(Teammate->PlayerState) : nullptr;
+			const AFortPawn* TeammatePawn = Teammate ? Cast<AFortPawn>(Teammate->GetPawn()) : nullptr;
+			return Teammate != Controller && TeammateState && TeammateState->TeamIndex == PlayerState->TeamIndex &&
+				TeammatePawn && !TeammatePawn->bIsDying && !TeammatePawn->bIsDBNO && TeammatePawn->GetHealth() > 0.0f;
+		});
+		if (!bHasStandingTeammate)
+		{
+			return false;
+		}
+
+		Player->bIsDBNO = true;
+		const float KnockTime = World->GetTimeSeconds();
+		Player->DBNOStartTime = KnockTime;
+		Player->SetHealth(100.0f);
+		Player->OnPlayerStartDBNO.Broadcast();
+		Player->OnDBNOStateChanged.Broadcast(Player, true);
+		Player->ForceNetUpdate();
+
+		const TSharedRef<FTimerHandle> BleedTimer = MakeShared<FTimerHandle>();
+		const TWeakObjectPtr<AController> WeakInstigator(InstigatedBy);
+		const TWeakObjectPtr<AActor> WeakCauser(DamageCauser);
+		const TWeakObjectPtr<AFortPlayerPawnAthena> WeakPlayer(Player);
+		const TWeakObjectPtr<UWorld> WeakWorld(World);
+		World->GetTimerManager().SetTimer(*BleedTimer, FTimerDelegate::CreateLambda(
+			[BleedTimer, WeakWorld, WeakPlayer, WeakInstigator, WeakCauser, DamageTags, KnockTime]()
+			{
+				AFortPlayerPawnAthena* Downed = WeakPlayer.Get();
+				if (!Downed || !Downed->bIsDBNO || Downed->bIsDying || Downed->DBNOStartTime != KnockTime)
+				{
+					if (UWorld* CurrentWorld = WeakWorld.Get())
+					{
+						CurrentWorld->GetTimerManager().ClearTimer(*BleedTimer);
+					}
+					return;
+				}
+				FortAthenaHealth::ApplyDamage(Downed, 2.0f, DamageTags, WeakInstigator.Get(), WeakCauser.Get(), true);
+			}), 1.2f, true);
+		return true;
+	}
+}
+
 bool FortAthenaHealth::GetSingleAliveTeam(AFortGameModeAthena* GameMode, TArray<AFortPlayerControllerAthena*>& OutTeam)
 {
 	OutTeam.Reset();
@@ -586,7 +654,10 @@ void FortAthenaHealth::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerCon
 							if (*ChangeSerial != Serial || !CurrentASC || !CurrentPawn ||
 								CurrentASC->GetAvatarActor() != CurrentPawn || CurrentPawn->bIsDying ||
 								(!bWasDowned && CurrentPawn->bIsDBNO) || CurrentPawn->GetHealth() > 0.0f) { return; }
-							FortAthenaHealth::HandlePlayerEliminated(CurrentPawn, DeathTags, WeakInstigator.Get(), WeakCauser.Get(), LethalDamage);
+							if (!TryKnockPlayer(CurrentPawn, DeathTags, WeakInstigator.Get(), WeakCauser.Get()))
+								{
+									FortAthenaHealth::HandlePlayerEliminated(CurrentPawn, DeathTags, WeakInstigator.Get(), WeakCauser.Get(), LethalDamage);
+								}
 						}));
 				});
 		}
@@ -738,7 +809,8 @@ void FortAthenaHealth::ApplyDamage(AFortPawn* VictimPawn, float DamageAmount, co
 	SharedCues.Magnitude = DamageAmount;
 	SharedCues.bIsShield = (ShieldDamage > 0.0f);
 	SharedCues.bIsShieldDestroyed = (ShieldDamage > 0.0f && VictimPawn->GetShield() <= 0.0f);
-	const bool bFatal = NewHealth <= 0.0f && (bWasDowned || !VictimPawn->bIsDBNO);
+	const bool bFatal = NewHealth <= 0.0f && (bWasDowned || !VictimPawn->bIsDBNO) &&
+		!TryKnockPlayer(VictimPawn, DamageTags, InstigatedBy, DamageCauser);
 	SharedCues.bIsFatal = bFatal;
 	SharedCues.bIsValid = true;
 
