@@ -18,6 +18,7 @@
 namespace
 {
 	const FName DeliveryCrateTag(TEXT("LootDeliveryCrate"));
+	const FName GroundCacheTag(TEXT("GroundLootCacheCandidate"));
 	constexpr float DeliveryHeight = 1800.0f;
 	constexpr float DeliveryDuration = 6.0f;
 
@@ -37,6 +38,8 @@ namespace
 		TSet<TWeakObjectPtr<ULevel>> ScannedLevels;
 		TArray<TWeakObjectPtr<ABuildingContainer>> PendingSpawnRetries;
 		TMap<TWeakObjectPtr<ABuildingContainer>, FScheduledDelivery> ScheduledDeliveries;
+		TMap<TWeakObjectPtr<ABuildingContainer>, bool> GroundCacheCandidates;
+		bool bGroundCachesSelected = false;
 		float DeliveryStartTime = -1.0f;
 		bool bLoggedWaitingForData = false;
 	};
@@ -58,6 +61,8 @@ namespace
 		S.ScannedLevels.Reset();
 		S.PendingSpawnRetries.Reset();
 		S.ScheduledDeliveries.Reset();
+		S.GroundCacheCandidates.Reset();
+		S.bGroundCachesSelected = false;
 		S.DeliveryStartTime = -1.0f;
 		S.bLoggedWaitingForData = false;
 		UE_LOG(LogTemp, Display, TEXT("LootWorld: reset state for world=%s"), *GetNameSafe(World));
@@ -156,6 +161,8 @@ void FortAthenaLootWorld::Reset()
 	S.ScannedLevels.Reset();
 	S.PendingSpawnRetries.Reset();
 	S.ScheduledDeliveries.Reset();
+	S.GroundCacheCandidates.Reset();
+	S.bGroundCachesSelected = false;
 	S.DeliveryStartTime = -1.0f;
 	S.bLoggedWaitingForData = false;
 }
@@ -191,8 +198,25 @@ int32 FortAthenaLootWorld::PopulateLoadedMarkers(AFortGameModeAthena* GameMode, 
 			return;
 
 		const TWeakObjectPtr<ABuildingContainer> Marker(Container);
-		if (S.ProcessedContainers.Contains(Marker) || S.ScheduledDeliveries.Contains(Marker))
+		if (S.ProcessedContainers.Contains(Marker) || S.ScheduledDeliveries.Contains(Marker) ||
+			S.GroundCacheCandidates.Contains(Marker))
+		{
 			return;
+		}
+
+		if (Container->ActorHasTag(GroundCacheTag))
+		{
+			if (S.bGroundCachesSelected)
+				S.ProcessedContainers.Add(Marker);
+			else
+				S.GroundCacheCandidates.Add(Marker, Container->GetActorEnableCollision());
+
+			Container->SetReplicates(true);
+			Container->SetActorEnableCollision(false);
+			Container->SetActorHiddenInGame(true);
+			Container->ForceNetUpdate();
+			return;
+		}
 
 		for (const FName& Tag : Container->Tags)
 		{
@@ -311,7 +335,41 @@ void FortAthenaLootWorld::Tick(AFortGameModeAthena* GameMode)
 	}
 
 	const AFortGameStateAthena* GameState = GameMode->GetGameState<AFortGameStateAthena>();
-	if (!GameState || GameState->GamePhase != EAthenaGamePhase::SafeZones)
+	if (!GameState)
+		return;
+
+	if (!S.bGroundCachesSelected &&
+		(GameState->GamePhase == EAthenaGamePhase::Aircraft || GameState->GamePhase == EAthenaGamePhase::SafeZones))
+	{
+		S.bGroundCachesSelected = true;
+		TArray<TWeakObjectPtr<ABuildingContainer>> Candidates;
+		for (const auto& Entry : S.GroundCacheCandidates)
+		{
+			ABuildingContainer* Container = Entry.Key.Get();
+			if (IsFloorLootMarkerCandidate(Container) && Container->GetLevel()->bIsVisible)
+				Candidates.Add(Entry.Key);
+			S.ProcessedContainers.Add(Entry.Key);
+		}
+
+		int32 RequestedCount = 1;
+		FParse::Value(FCommandLine::Get(), TEXT("GroundLootCacheCount="), RequestedCount);
+		const int32 Count = FMath::Clamp(RequestedCount, 0, Candidates.Num());
+		for (int32 Index = 0; Index < Count; ++Index)
+		{
+			Candidates.Swap(Index, FMath::RandRange(Index, Candidates.Num() - 1));
+			const TWeakObjectPtr<ABuildingContainer>& Selected = Candidates[Index];
+			if (ABuildingContainer* Container = Selected.Get())
+			{
+				Container->bStartAlreadySearched_Athena = false;
+				Container->SetActorHiddenInGame(false);
+				Container->SetActorEnableCollision(S.GroundCacheCandidates.FindChecked(Selected));
+				Container->ForceNetUpdate();
+			}
+		}
+		S.GroundCacheCandidates.Reset();
+	}
+
+	if (GameState->GamePhase != EAthenaGamePhase::SafeZones)
 		return;
 
 	const float Now = World->GetTimeSeconds();
