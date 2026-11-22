@@ -18,7 +18,7 @@
 .grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style>
 <rect class="tm-bg" width="1000" height="720"/>
 <text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: 52.2% implemented</text>
-<text x="12" y="48" font-size="12" class="tm-head">72 of 138 server checks implemented | 54 verified | 66 open</text>
+<text x="12" y="48" font-size="12" class="tm-head">72 of 138 server checks implemented | 55 verified | 66 open</text>
 <g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Lobby, accounts and Epic service compatibility
 60.4% complete (32/53)
@@ -337,7 +337,7 @@ Verified: Cancel a revive when the target leaves range and allow a retry
 Implemented: Keep knock attribution on bleed damage without replaying weapon hit cues
 Verified: Cap revive health at the standing health maximum
 Verified: Block ranged weapon ability activation while downed
-Implemented: Cancel active ranged weapon abilities when a player is knocked
+Verified: Cancel an active ranged weapon ability when a player is knocked
 Open: Match crawl, carry, throw and revive state on two original clients</title>
 <rect class="tile-body" x="389.1" y="25.0" width="239.8" height="341.8" rx="4"/>
 <clipPath id="servertm-c14"><rect x="389.06" y="25.00" width="239.81" height="341.76" rx="4"/></clipPath>
