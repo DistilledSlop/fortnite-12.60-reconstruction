@@ -113,3 +113,9 @@ Removed from the goal list: POIs (missing / no collision), styles (glider/emote/
 - Mechanism (engine `CharacterMovementComponent.cpp` ProcessClientTimeStampForTimeDiscrepancy ~8400-8540): the burst makes ClientDelta exceed ServerDelta, discrepancy passes MovementTimeDiscrepancyMaxTimeMargin 0.25, resolution mode starts, and the original DefaultGame.ini setting `bMovementTimeDiscrepancyForceCorrectionsDuringResolution=true` sets `bForceClientUpdate`, which sends corrections even with bIgnoreClientMovementErrorChecksAndCorrection (ServerMoveHandleClientError ~8836).
 - Change: dedicated server (-FortniteOriginalClient) sets ForceCorrectionsDuringResolution=false and MaxTimeMargin>=1.0 at engine init, and logs `GC: collection took N ms` for collections over 50 ms to confirm the stall source. Not proven: that the stall is GC (only the period matches); the new log line will show it.
 - Physics contact offsets (an earlier agent's lead) are already staged in the stage DefaultEngine.ini; not the cause here.
+
+### 2026-11-22 looting goal
+
+- **Open — supply drops.** The match flow skips supply-drop scheduling. Verify the full lifecycle from a scheduled drop through landing, search, and collectible item spawning.
+- **Open — loot llamas.** Verify that llamas appear in a live match and that opening one releases collectible loot once.
+- **Open — container verification.** The dedicated-server loot selection test passes. Verify a chest and an ammo crate through search and pickup in a connected match. Add coverage for the retry path in `08a8c33f` by forcing a pickup spawn to fail after an earlier pickup succeeds, then checking that the earlier pickup is removed and the container can be searched again.
