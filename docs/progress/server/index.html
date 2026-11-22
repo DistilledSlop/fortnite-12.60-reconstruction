@@ -24,9 +24,9 @@ td:nth-child(2) { white-space: nowrap; }
 <img src="server-implementation-treemap-v5.svg" width="1000" height="720" style="max-width:100%;height:auto" alt="Dedicated-server progress treemap">
 <p>The server can host a local match for the original 12.60 client, including a Battle Bus drop onto Apollo. The goal is a complete multiplayer match with authoritative gameplay, replication, and the backend services the original client uses.</p>
 <!-- checks:start -->
-<p><strong>68/134 server checks implemented (50.7%).</strong> 52 are verified, 16 await verification, 66 remain open, and 6 client-only checks are tracked outside the server score.</p>
+<p><strong>69/135 server checks implemented (51.1%).</strong> 52 are verified, 17 await verification, 66 remain open, and 6 client-only checks are tracked outside the server score.</p>
 <p>Coverage = (implemented checks + verified checks) ÷ all server checks. Area and capability scores use the same formula. Every check has equal weight. Verified means the stated behavior has a recorded headless test, service test, or original-client observation. Implementation-only checks have a source reference. Each check contributes at most one point.</p>
-<h2>Match flow and player states <small>23/31 implemented (74.2%)</small></h2>
+<h2>Match flow and player states <small>24/32 implemented (75.0%)</small></h2>
 <div class="table"><table aria-label="Match flow and player states">
 <thead><tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Acceptance check</th><th scope="col">Evidence</th></tr></thead><tbody>
 <tr><th scope="row">Hosting and drop</th><td>Verified</td><td>Build and boot the Linux dedicated target and run headless automation</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/417bfc45">Source</a></td></tr>
@@ -36,7 +36,7 @@ td:nth-child(2) { white-space: nowrap; }
 <tr><th scope="row">Bus driver</th><td>Implemented</td><td>Replicate the thanks flag on PlayerState for the original client&#x27;s bus-driver message</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/blob/main/porting/native/Source/FortniteGame/Generated/AFortPlayerStateAthena.cpp">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Knock a player with a standing teammate and eliminate the last standing teammate</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/417bfc45">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Queue a crawl stance on knock</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/c6645a88">Source</a></td></tr>
-<tr><th scope="row">DBNO</th><td>Verified</td><td>Drain downed health and resolve a squad wipe on the bleed timer</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/417bfc45">Source</a></td></tr>
+<tr><th scope="row">DBNO</th><td>Verified</td><td>Drain two downed health per bleed tick while a teammate stands and resolve squad wipes</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/6b2e9a77">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Pick up and drop a downed teammate</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/b3295a17">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Apply configured forward and upward throw velocity</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/d714d0e5">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Complete and cancel a timed teammate revive</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/2b0c4d87">Source</a></td></tr>
@@ -49,6 +49,7 @@ td:nth-child(2) { white-space: nowrap; }
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Use the configured drop height</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/3cd7cb5c">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Release a carried player immediately when the carrier loses possession</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/57bf159b">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Verified</td><td>Cancel a revive when the target leaves range and allow a retry</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/d29161c5">Source</a></td></tr>
+<tr><th scope="row">DBNO</th><td>Implemented</td><td>Keep knock attribution on bleed damage without replaying weapon hit cues</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/6b2e9a77">Source</a></td></tr>
 <tr><th scope="row">DBNO</th><td>Open</td><td>Match crawl, carry, throw and revive state on two original clients</td><td>—</td></tr>
 <tr><th scope="row">Elimination and reboot</th><td>Implemented</td><td>Spawn elimination inventory drops</td><td><a href="https://github.com/DistilledSlop/fortnite-12.60-reconstruction/commit/cd80d9ea">Source</a></td></tr>
 <tr><th scope="row">Elimination and reboot</th><td>Open</td><td>Spawn, collect and expire a Reboot Card in a match</td><td>—</td></tr>
