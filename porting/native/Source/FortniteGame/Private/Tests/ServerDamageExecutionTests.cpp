@@ -127,7 +127,8 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 
 	const FGameplayAttribute ShieldDamage(FindFProperty<FProperty>(UFortHealthSet::StaticClass(), TEXT("ShieldDamage")));
 	UGameplayEffect* AuthoredShieldDamage = NewObject<UGameplayEffect>(GetTransientPackage());
-	AuthoredShieldDamage->Modifiers[AuthoredShieldDamage->Modifiers.Add(DamageModifier)].Attribute = ShieldDamage;
+	AuthoredShieldDamage->Modifiers.Add(DamageModifier);
+	AuthoredShieldDamage->Modifiers.Last().Attribute = ShieldDamage;
 	FGameplayEffectSpec ShieldDamageSpec(AuthoredShieldDamage, ASC->MakeEffectContext(), 1.0f);
 	ASC->ApplyGameplayEffectSpecToSelf(ShieldDamageSpec);
 	TestEqual(TEXT("Authored ShieldDamage drains remaining shield"), Pawn->GetShield(), 0.0f);
@@ -141,6 +142,21 @@ bool FServerDamageExecutionTest::RunTest(const FString&)
 	ASC->SetNumericAttributeBase(Shield, 20.0f);
 	ASC->ApplyGameplayEffectSpecToSelf(FormulaSpec);
 	TestEqual(TEXT("Native execution emits explicit damage into the health set"), Pawn->GetShield(), 8.0f);
+
+	UClass* BarrelEffectClass = LoadClass<UGameplayEffect>(nullptr,
+		TEXT("/Game/Creative/Devices/ExplosiveBarrel/GE_CustomDamage_ExplosiveBarrel.GE_CustomDamage_ExplosiveBarrel_C"));
+	const FGameplayTag AbilityDamageTag = FGameplayTag::RequestGameplayTag(FName(TEXT("SetByCaller.AbilityDamage")), false);
+	if (!TestNotNull(TEXT("Staged explosive barrel effect"), BarrelEffectClass) ||
+		!TestTrue(TEXT("Authored ability damage tag is registered"), AbilityDamageTag.IsValid()))
+	{
+		Pawn->Destroy();
+		return false;
+	}
+	FGameplayEffectSpec BarrelDamage(GetDefault<UGameplayEffect>(BarrelEffectClass), ASC->MakeEffectContext(), 1.0f);
+	BarrelDamage.SetSetByCallerMagnitude(AbilityDamageTag, 6.0f);
+	ASC->ApplyGameplayEffectSpecToSelf(BarrelDamage);
+	TestEqual(TEXT("Cooked explosive barrel effect consumes shield"), Pawn->GetShield(), 2.0f);
+	TestEqual(TEXT("Cooked explosive barrel effect preserves health while shield remains"), Pawn->GetHealth(), 75.0f);
 
 	ASC->SetNumericAttributeBase(Shield, 30);
 	FortAthenaHealth::ApplyDamage(Pawn, 5, FGameplayTagContainer(), nullptr, nullptr, true);
