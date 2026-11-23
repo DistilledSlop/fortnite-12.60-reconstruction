@@ -187,6 +187,16 @@ namespace FortHarvest
         {
             const FGameplayAbilitySpec* Spec = ASC ? ASC->FindAbilitySpecFromHandle(SpecHandle) : nullptr;
             const UGameplayAbility* Ability = Spec ? Spec->Ability : nullptr;
+            static const bool bTraceCombat = FParse::Param(FCommandLine::Get(), TEXT("FortniteTraceCombat"));
+            if (bTraceCombat)
+            {
+                const AFortPawn* Pawn = ASC ? Cast<AFortPawn>(ASC->GetAvatarActor()) : nullptr;
+                const AFortWeapon* Weapon = Pawn ? Pawn->CurrentWeapon : nullptr;
+                UE_LOG(LogFortHarvest, Display, TEXT("CombatTrace: target data pawn=%s weapon=%s source=%s ability=%s spec=%s active=%d inputPressed=%d serverTargeting=%d entries=%d tag=%s"),
+                    *GetNameSafe(Pawn), *GetNameSafe(Weapon), *GetNameSafe(Spec ? Spec->SourceObject.Get() : nullptr),
+                    *GetNameSafe(Ability), *SpecHandle.ToString(), Spec && Spec->IsActive(), Spec && Spec->InputPressed,
+                    Weapon && Weapon->GetIsTargeting(), TargetData.Num(), *ApplicationTag.ToString());
+            }
             if (!Ability)
                 return;
             if (!IsMeleeAbility(Ability))

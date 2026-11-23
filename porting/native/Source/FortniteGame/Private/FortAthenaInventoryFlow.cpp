@@ -252,7 +252,7 @@ namespace
 		Pawn->OnWeaponAttachmentChangedDelegate.Broadcast(Weapon, Old);
 	}
 
-	bool SetCurrentWeapon(AFortPawn* Pawn, AFortWeapon* Weapon)
+	bool SetCurrentWeapon(AFortPlayerController* Controller, AFortPawn* Pawn, AFortWeapon* Weapon, UFortWeaponItemDefinition* Definition)
 	{
 		if (!Pawn || !Pawn->HasAuthority() || (Weapon && Weapon->GetOwner() && Weapon->GetOwner() != Pawn)
 			|| Pawn->CurrentWeapon == Weapon) return false;
@@ -266,6 +266,12 @@ namespace
 		if (Weapon) Weapon->ForceNetUpdate();
 		UpdateWeaponAttachment(Pawn);
 		if (Pawn->CurrentWeapon != Weapon) return false;
+		if (Weapon)
+		{
+			// Sending the equip RPC can serialize the weapon to its owner immediately.
+			GrantWeaponAbilities(Controller, Pawn, Weapon, Definition, false);
+			if (!IsValid(Weapon) || Pawn->CurrentWeapon != Weapon) return false;
+		}
 		if (Weapon && !Pawn->IsLocallyControlled())
 		{
 			Pawn->ClientInternalEquipWeapon(Weapon);
@@ -292,8 +298,10 @@ namespace
 		{
 			if (Existing && !Existing->IsPendingKill() && Existing->ItemEntryGuid == Guid)
 			{
-				SetCurrentWeapon(Pawn, Existing);
-				if (Pawn->CurrentWeapon == Existing) GrantWeaponAbilities(Controller, Pawn, Existing, Definition, false);
+				if (Pawn->CurrentWeapon == Existing)
+					GrantWeaponAbilities(Controller, Pawn, Existing, Definition, false);
+				else
+					SetCurrentWeapon(Controller, Pawn, Existing, Definition);
 				UE_LOG(LogTemp, Display, TEXT("Inventory: re-equipped %s (%s) on %s"), *Definition->GetName(), *Guid.ToString(), *Pawn->GetName());
 				return Existing;
 			}
@@ -331,8 +339,7 @@ namespace
 		Weapon->SetOwner(Pawn);
 		Weapon->SetInstigator(Pawn);
 		Weapon->ClientGivenTo(Pawn);
-		SetCurrentWeapon(Pawn, Weapon);
-		if (Pawn->CurrentWeapon == Weapon) GrantWeaponAbilities(Controller, Pawn, Weapon, Definition, false);
+		SetCurrentWeapon(Controller, Pawn, Weapon, Definition);
 		UE_LOG(LogTemp, Display, TEXT("Inventory: equipped %s (%s) as %s on %s"), *Definition->GetName(), *Guid.ToString(), *WeaponClass->GetName(), *Pawn->GetName());
 		return Weapon;
 	}
