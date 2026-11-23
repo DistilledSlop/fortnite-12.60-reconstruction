@@ -783,6 +783,27 @@ void FortAthenaInventory::Tick(UWorld* World)
 	}
 }
 
+void FortAthenaInventory::ClearWarmupInventory(AFortPlayerControllerAthena* Controller)
+{
+	AFortInventory* Inventory = Controller ? Controller->WorldInventory : nullptr;
+	if (!IsEnabled() || !Inventory || !Inventory->HasAuthority())
+	{
+		return;
+	}
+
+	TArray<FGuid> WarmupItems;
+	for (const FFortItemEntry& Entry : Inventory->Inventory.ReplicatedEntries)
+	{
+		WarmupItems.Add(Entry.ItemGuid);
+	}
+	for (const FGuid& Guid : WarmupItems)
+	{
+		RemoveItem(Controller, Guid, 0);
+	}
+	PickaxeGuids().Remove(Controller);
+	UE_LOG(LogTemp, Display, TEXT("Inventory: cleared %d warmup entries for %s"), WarmupItems.Num(), *Controller->GetName());
+}
+
 void FortAthenaInventory::SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller)
 {
 	if (!IsEnabled() || !Controller)

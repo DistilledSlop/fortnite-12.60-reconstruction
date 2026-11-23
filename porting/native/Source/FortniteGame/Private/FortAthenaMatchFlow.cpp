@@ -1035,6 +1035,10 @@ namespace FortAthenaMatchFlowPrivate
                 }
                 Pawn->Destroy();
             }
+            if (!bSecond && GameState->GamePhase == EAthenaGamePhase::Warmup)
+            {
+                FortAthenaInventory::ClearWarmupInventory(PC);
+            }
             // Controller slot +0x5d0 then 0x1447ba3f0(PC, NAME_Spectating). Inferred: ChangeState + ClientGotoState.
             PC->bPlayerIsWaiting = false;  // keeps ServerRestartPlayer from respawning while Spectating
             PC->ChangeState(NAME_Spectating);

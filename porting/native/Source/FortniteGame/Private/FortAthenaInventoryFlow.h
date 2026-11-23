@@ -27,6 +27,9 @@ namespace FortAthenaInventory
 	// server_systems/C-world-classes-and-abilities.md when the native game mode has none), then equips the pickaxe.
 	void SetupPlayer(AFortGameModeAthena* GameMode, AFortPlayerControllerAthena* Controller);
 
+	// Discard the warmup loadout before the match pawn receives its starting items.
+	void ClearWarmupInventory(AFortPlayerControllerAthena* Controller);
+
 	// Self-ammo definitions use stack count, including entries with an old magazine value.
 	int32 NormalizeLoadedAmmo(const UFortItemDefinition* Definition, int32 LoadedAmmo);
 
