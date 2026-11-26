@@ -67,6 +67,14 @@ class CloudStorageService:
                        "ON CONFLICT(account_id, name) DO UPDATE SET data = excluded.data, "
                        "uploaded = excluded.uploaded", (account_id, name, data, uploaded))
 
+    def _delete_user_file(self, account_id, name):
+        if self._user_db is None:
+            return self._user.get(account_id, {}).pop(name, None) is not None
+        with closing(sqlite3.connect(self._user_db)) as db, db:
+            cursor = db.execute("DELETE FROM user_files WHERE account_id = ? AND name = ?",
+                                (account_id, name))
+            return cursor.rowcount > 0
+
     def _system_files(self):
         """Regular files in the system directory, sorted by name. Hidden files are skipped."""
         if self.system_dir is None or not self.system_dir.is_dir():
@@ -152,6 +160,15 @@ class CloudStorageService:
         self._put_user_file(account_id, name, bytes(req.body), self.ctx.now())
         return 204, None
 
+    def user_delete(self, req, match):
+        account_id, name = match.group(1), match.group(2)
+        self.oauth.authenticate(req, account_id=account_id)
+        if not FILENAME.fullmatch(name):
+            raise ApiError(400, Err.INVALID_PAYLOAD, "The file name is not valid.")
+        if not self._delete_user_file(account_id, name):
+            raise ApiError(404, Err.CLOUD_FILE_NOT_FOUND, "The user storage file was not found.")
+        return 204, None
+
     def register(self, router):
         router.add("GET", r"/fortnite/api/cloudstorage/system", self.system_list,
                    name="cloudstorage.system.list", status="observed")
@@ -163,3 +180,5 @@ class CloudStorageService:
                    name="cloudstorage.user.file", status="observed")
         router.add("PUT", r"/fortnite/api/cloudstorage/user/([^/]+)/([^/]+)", self.user_put,
                    name="cloudstorage.user.put", status="observed")
+        router.add("DELETE", r"/fortnite/api/cloudstorage/user/([^/]+)/([^/]+)", self.user_delete,
+                   name="cloudstorage.user.delete", status="inferred")

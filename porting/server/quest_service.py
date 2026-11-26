@@ -87,6 +87,7 @@ VALID_EVENTS = (set(EVENTS) | {objective_event_key(objective, stat)
                              for name, quest in EVENT_QUESTS.items() if name not in SUPERLEVEL_QUESTS and name not in PEELY_QUESTS
                              for objective, stat, _ in quest['objectives']
                              if name not in DISCOVERY_QUESTS or stat is not None}) - ACQUISITION_EVENTS
+VALID_EVENTS_BY_FOLD = {event.casefold(): event for event in VALID_EVENTS}
 TOKENS = {'cosmeticvarianttoken:vtid_560_bananaagent_styleb': 'Stage2',
           'cosmeticvarianttoken:vtid_561_bananaagent_stylec': 'Stage3'}
 
@@ -454,14 +455,16 @@ class QuestService:
     def _validate_event(self, account_id, event, amount, event_id):
         if not isinstance(account_id, str) or not account_id or self.profiles.accounts.get(account_id) is None:
             raise ApiError(404, Err.PROFILE_ACCOUNT_NOT_FOUND, 'The account was not found.')
-        if not isinstance(event, str) or event not in VALID_EVENTS or isinstance(amount, bool) or not isinstance(amount, int) or not 1 <= amount <= 10000:
+        canonical = VALID_EVENTS_BY_FOLD.get(event.casefold()) if isinstance(event, str) else None
+        if canonical is None or isinstance(amount, bool) or not isinstance(amount, int) or not 1 <= amount <= 10000:
             raise _invalid('Invalid quest event.')
         if not isinstance(event_id, str) or not event_id or len(event_id) > 200:
             raise _invalid('Invalid quest event ID.')
+        return canonical
 
     def replay_progress(self, account_id, event, amount=1, *, event_id, match_id=None):
         """Return False for an exact receipt, None if absent; never create a profile."""
-        self._validate_event(account_id, event, amount, event_id)
+        event = self._validate_event(account_id, event, amount, event_id)
         payload = self._receipt_payload(event, amount, match_id)
         profile = self.profiles.existing_profile(account_id, 'athena')
         if profile is None:
@@ -766,7 +769,7 @@ class QuestService:
         Event names are prequalified stat rows or local inline-objective keys;
         mapping actual gameplay to those keys is the trusted caller’s responsibility. Event IDs must be unique to a gameplay occurrence.
         """
-        self._validate_event(account_id, event, amount, event_id)
+        event = self._validate_event(account_id, event, amount, event_id)
         ctx = CommandContext(self.profiles, account_id, 'athena', {})
         tx = ctx.tx('athena')
         receipts = dict(tx.profile['stats']['attributes'].get('local_quest_event_receipts', {}))

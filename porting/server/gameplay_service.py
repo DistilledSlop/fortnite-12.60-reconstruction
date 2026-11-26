@@ -10,6 +10,7 @@ import copy
 import logging
 
 from api_common import ApiError, Err
+from season12_discovery_data import DISCOVERY_QUESTS
 
 
 class GameplayService:
@@ -28,6 +29,22 @@ class GameplayService:
         if self.accounts.get(account_id) is None:
             raise ApiError(404, Err.ACCOUNT_NOT_FOUND, "The player account was not found.")
         return session
+
+    @staticmethod
+    def _discovered_locations(profile):
+        by_template = {item["templateId"].casefold(): item.get("attributes", {})
+                       for item in profile.get("items", {}).values()}
+        discovered = []
+        for quest_name, definition in DISCOVERY_QUESTS.items():
+            attrs = by_template.get(("quest:" + quest_name).casefold())
+            if not attrs:
+                continue
+            for objective, stat_row, _ in definition["objectives"]:
+                if stat_row is None:
+                    continue
+                if attrs.get("completion_" + objective.lower(), 0) >= 1:
+                    discovered.append(stat_row)
+        return discovered
 
     def player(self, req, match):
         self.gameservers.authorize(req)
@@ -53,6 +70,7 @@ class GameplayService:
             "bannerColor": attrs.get("banner_color_template", stats.get("banner_color", "")),
             "partyId": party["id"] if party else None,
             "partyMembers": [member["account_id"] for member in party["members"]] if party else [],
+            "discoveredLocations": self._discovered_locations(profile),
         }
 
     def report_player(self, req, match):

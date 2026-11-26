@@ -94,7 +94,20 @@ class GameServerService:
                 server['connectedPlayerIds'] = list(connected)
             else:
                 server['connectedPlayerIds'] = None
+            if (server['phase'].lower() not in JOINABLE_PHASES and
+                    phase.lower() in JOINABLE_PHASES and count == 0 and not connected):
+                # Returning to a joinable lobby with zero players clears stale reservations.
+                server['players'] = []
             server.update(phase=phase, numPlayers=count, joinable=joinable, heartbeat=self.ctx.now())
+        return 204, None
+
+    def deregister_server(self, req, session_id):
+        """Remove a live server session on clean shutdown; durable history remains."""
+        self.authorize(req)
+        with self._lock:
+            if session_id not in self._servers:
+                raise ApiError(404, Err.NOT_FOUND, 'Unknown game-server session.')
+            del self._servers[session_id]
         return 204, None
 
     def _live(self, server):
@@ -144,15 +157,24 @@ class GameServerService:
                 return server['id']
         return None
 
+    @staticmethod
+    def _playlist_aliases(playlist):
+        lowered = playlist.casefold()
+        stripped = lowered.removeprefix('playlist_')
+        if stripped and stripped != lowered:
+            return (lowered, stripped)
+        return (lowered, 'playlist_' + lowered)
+
     def result_participant(self, session_id, account_id, playlist):
         """Check immutable reservation history; never grants live admission."""
-        record = (session_id, account_id, playlist.casefold())
+        aliases = self._playlist_aliases(playlist)
         if self._database is None:
             with self._lock:
-                return record in self._participants
+                return any((session_id, account_id, p) in self._participants for p in aliases)
         with closing(sqlite3.connect(self._database)) as db:
             return db.execute("SELECT 1 FROM match_participants WHERE session_id=? "
-                              "AND account_id=? AND playlist=?", record).fetchone() is not None
+                              "AND account_id=? AND playlist IN (?,?)",
+                              (session_id, account_id, aliases[0], aliases[1])).fetchone() is not None
 
     def session(self, session_id):
         s = self.get_session(session_id)
@@ -204,3 +226,6 @@ class GameServerService:
         router.add('POST', r'/local/gameserver/([^/]+)/state',
                    lambda req, match: self.update_state(req, match.group(1)),
                    name='gameserver.state', status='guess')
+        router.add('DELETE', r'/local/gameserver/([^/]+)',
+                   lambda req, match: self.deregister_server(req, match.group(1)),
+                   name='gameserver.deregister', status='guess')

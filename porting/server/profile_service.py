@@ -654,7 +654,7 @@ def _set_cosmetic_locker_slots(ctx):
         updates = _check_variant_updates(entry)
         fields = CommandContext(ctx.service, ctx.account_id, ctx.profile_id, entry)
         category = fields.str_field("slotName")
-        item_id = fields.str_field("itemToSlot", allow_empty=True)
+        item_id = fields.str_field("itemToSlot", allow_empty=True, required=False) or ""
         index = fields.int_field("indexWithinSlot", maximum=WRAP_SLOT_COUNT - 1)
         _equip(ctx, locker_id, category, item_id, index, updates)
 
@@ -752,6 +752,37 @@ def _set_active_loadout_index(ctx):
     _locker(ctx, loadouts[index])
     tx.set_stat("active_loadout_index", index)
     tx.set_stat("last_applied_loadout", loadouts[index])
+    tx.set_stat("use_random_loadout", False)
+
+
+@command("SetRandomCosmeticLoadout", ("athena",), "observed",
+         "Optional random boolean; toggles use_random_loadout when omitted (local policy).")
+def _set_random_cosmetic_loadout(ctx):
+    tx = ctx.tx("athena")
+    if "random" in ctx.body:
+        target = ctx.bool_field("random")
+    else:
+        target = not bool(tx.profile["stats"]["attributes"].get("use_random_loadout", False))
+    tx.set_stat("use_random_loadout", target)
+
+
+@command("SetPinnedQuests", ("athena",), "observed",
+         "pinnedQuestIds: list of pinned quest instance IDs (reflected; JSON casing inferred).")
+def _set_pinned_quests(ctx):
+    ids = ctx.list_field("pinnedQuestIds")
+    if len(ids) > 50 or any(not isinstance(q, str) or not q or len(q) > 128 for q in ids):
+        raise _invalid("pinnedQuestIds must contain at most 50 nonempty quest ID strings.")
+    tx = ctx.tx("athena")
+    settings = dict(tx.profile["stats"]["attributes"].get("client_settings") or {})
+    settings["pinnedQuestInstances"] = list(dict.fromkeys(ids))
+    tx.set_stat("client_settings", settings)
+
+
+@command("SetPartyAssistQuest", ("athena",), "observed",
+         "questToPinAsPartyAssist: quest instance ID or empty string (reflected; JSON casing inferred).")
+def _set_party_assist_quest(ctx):
+    quest_id = ctx.str_field("questToPinAsPartyAssist", allow_empty=True, max_len=128)
+    ctx.tx("athena").set_stat("party_assist_quest", quest_id)
 
 
 @command("DeleteCosmeticLoadout", ("athena",), "observed",

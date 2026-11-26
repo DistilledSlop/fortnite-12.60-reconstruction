@@ -279,7 +279,8 @@ class ProgressionService:
             if not start <= ended_at <= end:
                 continue
             result = json.loads(encoded)
-            playlist = result["playlist"].lower()
+            raw_playlist = result["playlist"].lower()
+            playlist = raw_playlist.removeprefix("playlist_") or raw_playlist
             for name, amount in (("matchesplayed", 1), ("kills", result["kills"]),
                                  ("placetop1", int(result["placement"] == 1)),
                                  ("placetop10", int(result["placement"] <= 10)),
