@@ -18,7 +18,7 @@
 .grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style>
 <rect class="tm-bg" width="1000" height="720"/>
 <text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 server progress: 64.6% implemented</text>
-<text x="12" y="48" font-size="12" class="tm-head">115 of 178 server checks implemented | 80 verified | 63 open</text>
+<text x="12" y="48" font-size="12" class="tm-head">115 of 178 server checks implemented | 88 verified | 63 open</text>
 <g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Lobby, accounts and Epic service compatibility
 60.4% complete (32/53)
@@ -325,7 +325,7 @@ Verified: Set the replicated revive deadline on the server and clear it on cance
 Implemented: Clear the revive deadline immediately when the target is eliminated
 Verified: Keep revived health through the old bleed deadline and start a new bleed cycle on the next knock
 Verified: Suppress knocks when a team playlist disables DBNO
-Implemented: Apply active DBNO mutator overrides before falling back to the playlist
+Verified: Apply active DBNO mutator overrides before falling back to the playlist
 Verified: Apply match-wide active Off and On overrides to lethal hits in team playlists
 Verified: Allow a knock when storm damage prevents a conditional respawn
 Verified: Block jumping when the downed movement update clears crouch
@@ -376,7 +376,7 @@ Open: Return to lobby, requeue and clear previous match state</title>
 <g><title>Elimination and reboot
 25.0% complete (1/4)
 effort weight 4 | source: equal-weight server implementation checks
-Implemented: Spawn elimination inventory drops
+Verified: Spawn elimination inventory drops
 Open: Spawn, collect and expire a Reboot Card in a match
 Open: Consume a card and respawn eligible teammates through the van interaction channel
 Open: Replicate van cooldown and activation audio events</title>
@@ -420,13 +420,13 @@ Implemented: Replicate the thanks flag on PlayerState for the original client&#x
 97.0% complete (32/33)
 effort weight 33 | source: equal-weight server implementation checks
 Implemented: Handle quickbar selection, pickup, swap and drop on the server
-Implemented: Transfer successfully spawned elimination drops out of the victim inventory
+Verified: Transfer successfully spawned elimination drops out of the victim inventory
 Implemented: Cap new inventory stacks and report the quantity accepted from pickups
-Implemented: Fill existing partial stacks before allocating a new stack
+Verified: Fill existing partial stacks before allocating a new stack
 Implemented: Charge the configured placement cost across matching material stacks and discard unpaid placements
 Implemented: Require contiguous compatible quickbar slots before accepting a pickup or swapping an item
-Implemented: Preserve item level, durability and magazine ammo across pickups and stack merges while keeping self-ammo items stackable, magazine-free when dropped and excluded from magazine reloads
-Implemented: Reconcile manual drops with the quantity removed, clear quickbar slots and detach depleted stacks before weapon ability cancellation can re-enter inventory (callback ordering covered by the headless inventory suite)
+Verified: Preserve item level, durability and magazine ammo across pickups and stack merges while keeping self-ammo items stackable, magazine-free when dropped and excluded from magazine reloads
+Verified: Reconcile manual drops with the quantity removed, clear quickbar slots and detach depleted stacks before weapon ability cancellation can re-enter inventory (callback ordering covered by the headless inventory suite)
 Implemented: Honor destroy-on-drop and debit only the requested target during explicit pickup swaps
 Implemented: Prefer the outgoing quickbar slot on a pickup swap and activate the assigned slot when replacing the held item
 Verified: Exercise capped grants, reject zero-quantity grants without creating entries, and reconcile partial-stack top-ups and multi-stack spending against replicated inventory
@@ -449,9 +449,9 @@ Verified: Debit the last bandage at authoritative ability cost commit with or wi
 Verified: Resolve the cooked bandage stack cap of 15 and debit successive charges from the same stack
 Verified: Reject item-use charges against an unrelated inventory stack
 Verified: Activate the cooked bandage primary ability with a native weapon source, restore 15 health and remove its last stack unit through authoritative GAS without a cached controller at activation
-Implemented: Resolve cooked upgrade recipes by weapon and direction and evaluate their material selectors against the bench curves. Headless checks cover a pistol upgrade, a rifle sidegrade and invalid selectors
+Verified: Resolve cooked upgrade recipes by weapon and direction and evaluate their material selectors against the bench curves. Headless checks cover a pistol upgrade, a rifle sidegrade and invalid selectors
 Implemented: Expose cooked recipe lookup to the upgrade bench actor and its Blueprints
-Implemented: Process bench interactions on the server, preflight and charge all three materials across stacks, and replace the equipped weapon in its quickbar slot. Headless RPC checks cover insufficient funds, a fixture upgrade and a cooked rifle sidegrade using a native weapon actor</title>
+Verified: Process bench interactions on the server, preflight and charge all three materials across stacks, and replace the equipped weapon in its quickbar slot. Headless RPC checks cover insufficient funds, a fixture upgrade and a cooked rifle sidegrade using a native weapon actor</title>
 <rect class="tile-body" x="566.8" y="25.0" width="328.2" height="318.4" rx="4"/>
 <clipPath id="servertm-c19"><rect x="566.80" y="25.00" width="328.16" height="318.41" rx="4"/></clipPath>
 <g clip-path="url(#servertm-c19)"><rect class="tile-fill" x="566.80" y="34.65" width="328.16" height="308.76"/>

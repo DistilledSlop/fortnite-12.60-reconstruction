@@ -18,7 +18,7 @@ DBNO|verified|Set the replicated revive deadline on the server and clear it on c
 DBNO|implemented|Clear the revive deadline immediately when the target is eliminated|porting/native/Source/FortniteGame/Private/FortAthenaHealth.cpp
 DBNO|verified|Keep revived health through the old bleed deadline and start a new bleed cycle on the next knock|2d2d3589
 DBNO|verified|Suppress knocks when a team playlist disables DBNO|ba715d19
-DBNO|implemented|Apply active DBNO mutator overrides before falling back to the playlist|porting/native/Source/FortniteGame/Private/FortAthenaHealth.cpp
+DBNO|verified|Apply active DBNO mutator overrides before falling back to the playlist|porting/native/Source/FortniteGame/Private/Tests/ServerDamageExecutionTests.cpp
 DBNO|verified|Apply match-wide active Off and On overrides to lethal hits in team playlists|porting/native/Source/FortniteGame/Private/Tests/ServerDamageExecutionTests.cpp
 DBNO|verified|Allow a knock when storm damage prevents a conditional respawn|26846161
 DBNO|verified|Block jumping when the downed movement update clears crouch|d456d649
@@ -39,7 +39,7 @@ DBNO|verified|Cap revive health at the standing health maximum|2968c991
 DBNO|verified|Block ranged weapon ability activation while downed|a6403212
 DBNO|verified|Cancel an active ranged weapon ability when a player is knocked|2ac57536
 DBNO|client|Check crawl, carry, throw and revive presentation in a two-client match
-Elimination and reboot|implemented|Spawn elimination inventory drops|cd80d9ea
+Elimination and reboot|verified|Spawn elimination inventory drops|porting/native/Source/FortniteGame/Private/Tests/ServerDamageExecutionTests.cpp
 Elimination and reboot|open|Spawn, collect and expire a Reboot Card in a match
 Elimination and reboot|open|Consume a card and respawn eligible teammates through the van interaction channel
 Elimination and reboot|open|Replicate van cooldown and activation audio events
@@ -67,13 +67,13 @@ Aiming and camera|client|Check shoulder camera positioning, ADS zoom and first-p
 Aiming and camera|client|Check recoil presentation and controller aim-assist response
 ## Items, inventory and loot
 Inventory operations|implemented|Handle quickbar selection, pickup, swap and drop on the server|01a191ca
-Inventory operations|implemented|Transfer successfully spawned elimination drops out of the victim inventory|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
+Inventory operations|verified|Transfer successfully spawned elimination drops out of the victim inventory|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|implemented|Cap new inventory stacks and report the quantity accepted from pickups|porting/native/Source/FortniteGame/Private/FortAthenaInventoryFlow.cpp
-Inventory operations|implemented|Fill existing partial stacks before allocating a new stack|porting/native/Source/FortniteGame/Private/FortAthenaInventoryFlow.cpp
+Inventory operations|verified|Fill existing partial stacks before allocating a new stack|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|implemented|Charge the configured placement cost across matching material stacks and discard unpaid placements|porting/native/Source/FortniteGame/Private/FortAthenaBuilding.cpp
 Inventory operations|implemented|Require contiguous compatible quickbar slots before accepting a pickup or swapping an item|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
-Inventory operations|implemented|Preserve item level, durability and magazine ammo across pickups and stack merges while keeping self-ammo items stackable, magazine-free when dropped and excluded from magazine reloads|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
-Inventory operations|implemented|Reconcile manual drops with the quantity removed, clear quickbar slots and detach depleted stacks before weapon ability cancellation can re-enter inventory (callback ordering covered by the headless inventory suite)|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
+Inventory operations|verified|Preserve item level, durability and magazine ammo across pickups and stack merges while keeping self-ammo items stackable, magazine-free when dropped and excluded from magazine reloads|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
+Inventory operations|verified|Reconcile manual drops with the quantity removed, clear quickbar slots and detach depleted stacks before weapon ability cancellation can re-enter inventory (callback ordering covered by the headless inventory suite)|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|implemented|Honor destroy-on-drop and debit only the requested target during explicit pickup swaps|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
 Inventory operations|implemented|Prefer the outgoing quickbar slot on a pickup swap and activate the assigned slot when replacing the held item|porting/native/Source/FortniteGame/Private/FortAthenaLootTransfer.cpp
 Inventory operations|verified|Exercise capped grants, reject zero-quantity grants without creating entries, and reconcile partial-stack top-ups and multi-stack spending against replicated inventory|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
@@ -96,9 +96,9 @@ Inventory operations|verified|Debit the last bandage at authoritative ability co
 Inventory operations|verified|Resolve the cooked bandage stack cap of 15 and debit successive charges from the same stack|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|verified|Reject item-use charges against an unrelated inventory stack|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|verified|Activate the cooked bandage primary ability with a native weapon source, restore 15 health and remove its last stack unit through authoritative GAS without a cached controller at activation|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
-Inventory operations|implemented|Resolve cooked upgrade recipes by weapon and direction and evaluate their material selectors against the bench curves. Headless checks cover a pistol upgrade, a rifle sidegrade and invalid selectors|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
+Inventory operations|verified|Resolve cooked upgrade recipes by weapon and direction and evaluate their material selectors against the bench curves. Headless checks cover a pistol upgrade, a rifle sidegrade and invalid selectors|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Inventory operations|implemented|Expose cooked recipe lookup to the upgrade bench actor and its Blueprints|porting/native/Source/FortniteGame/Private/WeaponUpgradeItemRow.cpp
-Inventory operations|implemented|Process bench interactions on the server, preflight and charge all three materials across stacks, and replace the equipped weapon in its quickbar slot. Headless RPC checks cover insufficient funds, a fixture upgrade and a cooked rifle sidegrade using a native weapon actor|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
+Inventory operations|verified|Process bench interactions on the server, preflight and charge all three materials across stacks, and replace the equipped weapon in its quickbar slot. Headless RPC checks cover insufficient funds, a fixture upgrade and a cooked rifle sidegrade using a native weapon actor|porting/native/Source/FortniteGame/Private/Tests/ServerInventoryTests.cpp
 Loot sources|verified|Exercise reconstructed loot selection with the loot contract test|porting/native/Source/FortniteGame/Private/Tests/FortAthenaLootRollTests.cpp
 Loot sources|implemented|Search a chest and replicate its searched state|eacae928
 Loot sources|open|Verify chest, ammo crate and world loot contents and contested pickups. Headless checks cover Blueprint pickup tosses, rotation flags, class overrides, source metadata and owner-only collection
